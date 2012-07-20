@@ -1,0 +1,477 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		88D9864815B8F97800858AD6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D9864715B8F97800858AD6 /* UIKit.framework */; };
+		88D9864A15B8F97800858AD6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D9864915B8F97800858AD6 /* Foundation.framework */; };
+		88D9864C15B8F97800858AD6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D9864B15B8F97800858AD6 /* CoreGraphics.framework */; };
+		88D9864E15B8F97800858AD6 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D9864D15B8F97800858AD6 /* CoreData.framework */; };
+		88D9865415B8F97800858AD6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 88D9865215B8F97800858AD6 /* InfoPlist.strings */; };
+		88D9865615B8F97800858AD6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D9865515B8F97800858AD6 /* main.m */; };
+		88D9865A15B8F97800858AD6 /* luxeysAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D9865915B8F97800858AD6 /* luxeysAppDelegate.m */; };
+		88D9865D15B8F97800858AD6 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88D9865B15B8F97800858AD6 /* MainStoryboard.storyboard */; };
+		88D9866015B8F97800858AD6 /* Latte.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 88D9865E15B8F97800858AD6 /* Latte.xcdatamodeld */; };
+		88D9866315B8F97800858AD6 /* luxeysMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D9866215B8F97800858AD6 /* luxeysMasterViewController.m */; };
+		88D9866615B8F97800858AD6 /* luxeysDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D9866515B8F97800858AD6 /* luxeysDetailViewController.m */; };
+		88D9866E15B8F97800858AD6 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D9866D15B8F97800858AD6 /* SenTestingKit.framework */; };
+		88D9866F15B8F97800858AD6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D9864715B8F97800858AD6 /* UIKit.framework */; };
+		88D9867015B8F97800858AD6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D9864915B8F97800858AD6 /* Foundation.framework */; };
+		88D9867115B8F97800858AD6 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D9864D15B8F97800858AD6 /* CoreData.framework */; };
+		88D9867915B8F97800858AD6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 88D9867715B8F97800858AD6 /* InfoPlist.strings */; };
+		88D9867C15B8F97800858AD6 /* LatteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D9867B15B8F97800858AD6 /* LatteTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		88D9867215B8F97800858AD6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88D9863A15B8F97700858AD6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 88D9864215B8F97800858AD6;
+			remoteInfo = Latte;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		88D9864315B8F97800858AD6 /* Latte.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Latte.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		88D9864715B8F97800858AD6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		88D9864915B8F97800858AD6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		88D9864B15B8F97800858AD6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		88D9864D15B8F97800858AD6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		88D9865115B8F97800858AD6 /* Latte-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Latte-Info.plist"; sourceTree = "<group>"; };
+		88D9865315B8F97800858AD6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		88D9865515B8F97800858AD6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		88D9865715B8F97800858AD6 /* Latte-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Latte-Prefix.pch"; sourceTree = "<group>"; };
+		88D9865815B8F97800858AD6 /* luxeysAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = luxeysAppDelegate.h; sourceTree = "<group>"; };
+		88D9865915B8F97800858AD6 /* luxeysAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = luxeysAppDelegate.m; sourceTree = "<group>"; };
+		88D9865C15B8F97800858AD6 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		88D9865F15B8F97800858AD6 /* Latte.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Latte.xcdatamodel; sourceTree = "<group>"; };
+		88D9866115B8F97800858AD6 /* luxeysMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = luxeysMasterViewController.h; sourceTree = "<group>"; };
+		88D9866215B8F97800858AD6 /* luxeysMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = luxeysMasterViewController.m; sourceTree = "<group>"; };
+		88D9866415B8F97800858AD6 /* luxeysDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = luxeysDetailViewController.h; sourceTree = "<group>"; };
+		88D9866515B8F97800858AD6 /* luxeysDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = luxeysDetailViewController.m; sourceTree = "<group>"; };
+		88D9866C15B8F97800858AD6 /* LatteTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LatteTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		88D9866D15B8F97800858AD6 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		88D9867615B8F97800858AD6 /* LatteTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LatteTests-Info.plist"; sourceTree = "<group>"; };
+		88D9867815B8F97800858AD6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		88D9867A15B8F97800858AD6 /* LatteTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LatteTests.h; sourceTree = "<group>"; };
+		88D9867B15B8F97800858AD6 /* LatteTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LatteTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		88D9864015B8F97800858AD6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88D9864815B8F97800858AD6 /* UIKit.framework in Frameworks */,
+				88D9864A15B8F97800858AD6 /* Foundation.framework in Frameworks */,
+				88D9864C15B8F97800858AD6 /* CoreGraphics.framework in Frameworks */,
+				88D9864E15B8F97800858AD6 /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		88D9866815B8F97800858AD6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88D9866E15B8F97800858AD6 /* SenTestingKit.framework in Frameworks */,
+				88D9866F15B8F97800858AD6 /* UIKit.framework in Frameworks */,
+				88D9867015B8F97800858AD6 /* Foundation.framework in Frameworks */,
+				88D9867115B8F97800858AD6 /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		88D9863815B8F97700858AD6 = {
+			isa = PBXGroup;
+			children = (
+				88D9864F15B8F97800858AD6 /* Latte */,
+				88D9867415B8F97800858AD6 /* LatteTests */,
+				88D9864615B8F97800858AD6 /* Frameworks */,
+				88D9864415B8F97800858AD6 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		88D9864415B8F97800858AD6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				88D9864315B8F97800858AD6 /* Latte.app */,
+				88D9866C15B8F97800858AD6 /* LatteTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		88D9864615B8F97800858AD6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				88D9864715B8F97800858AD6 /* UIKit.framework */,
+				88D9864915B8F97800858AD6 /* Foundation.framework */,
+				88D9864B15B8F97800858AD6 /* CoreGraphics.framework */,
+				88D9864D15B8F97800858AD6 /* CoreData.framework */,
+				88D9866D15B8F97800858AD6 /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		88D9864F15B8F97800858AD6 /* Latte */ = {
+			isa = PBXGroup;
+			children = (
+				88D9865815B8F97800858AD6 /* luxeysAppDelegate.h */,
+				88D9865915B8F97800858AD6 /* luxeysAppDelegate.m */,
+				88D9865B15B8F97800858AD6 /* MainStoryboard.storyboard */,
+				88D9866115B8F97800858AD6 /* luxeysMasterViewController.h */,
+				88D9866215B8F97800858AD6 /* luxeysMasterViewController.m */,
+				88D9866415B8F97800858AD6 /* luxeysDetailViewController.h */,
+				88D9866515B8F97800858AD6 /* luxeysDetailViewController.m */,
+				88D9865E15B8F97800858AD6 /* Latte.xcdatamodeld */,
+				88D9865015B8F97800858AD6 /* Supporting Files */,
+			);
+			path = Latte;
+			sourceTree = "<group>";
+		};
+		88D9865015B8F97800858AD6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				88D9865115B8F97800858AD6 /* Latte-Info.plist */,
+				88D9865215B8F97800858AD6 /* InfoPlist.strings */,
+				88D9865515B8F97800858AD6 /* main.m */,
+				88D9865715B8F97800858AD6 /* Latte-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		88D9867415B8F97800858AD6 /* LatteTests */ = {
+			isa = PBXGroup;
+			children = (
+				88D9867A15B8F97800858AD6 /* LatteTests.h */,
+				88D9867B15B8F97800858AD6 /* LatteTests.m */,
+				88D9867515B8F97800858AD6 /* Supporting Files */,
+			);
+			path = LatteTests;
+			sourceTree = "<group>";
+		};
+		88D9867515B8F97800858AD6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				88D9867615B8F97800858AD6 /* LatteTests-Info.plist */,
+				88D9867715B8F97800858AD6 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		88D9864215B8F97800858AD6 /* Latte */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 88D9867F15B8F97800858AD6 /* Build configuration list for PBXNativeTarget "Latte" */;
+			buildPhases = (
+				88D9863F15B8F97800858AD6 /* Sources */,
+				88D9864015B8F97800858AD6 /* Frameworks */,
+				88D9864115B8F97800858AD6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Latte;
+			productName = Latte;
+			productReference = 88D9864315B8F97800858AD6 /* Latte.app */;
+			productType = "com.apple.product-type.application";
+		};
+		88D9866B15B8F97800858AD6 /* LatteTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 88D9868215B8F97800858AD6 /* Build configuration list for PBXNativeTarget "LatteTests" */;
+			buildPhases = (
+				88D9866715B8F97800858AD6 /* Sources */,
+				88D9866815B8F97800858AD6 /* Frameworks */,
+				88D9866915B8F97800858AD6 /* Resources */,
+				88D9866A15B8F97800858AD6 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				88D9867315B8F97800858AD6 /* PBXTargetDependency */,
+			);
+			name = LatteTests;
+			productName = LatteTests;
+			productReference = 88D9866C15B8F97800858AD6 /* LatteTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		88D9863A15B8F97700858AD6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = luxeys;
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = LUXEYS;
+			};
+			buildConfigurationList = 88D9863D15B8F97700858AD6 /* Build configuration list for PBXProject "Latte" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 88D9863815B8F97700858AD6;
+			productRefGroup = 88D9864415B8F97800858AD6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				88D9864215B8F97800858AD6 /* Latte */,
+				88D9866B15B8F97800858AD6 /* LatteTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		88D9864115B8F97800858AD6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88D9865415B8F97800858AD6 /* InfoPlist.strings in Resources */,
+				88D9865D15B8F97800858AD6 /* MainStoryboard.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		88D9866915B8F97800858AD6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88D9867915B8F97800858AD6 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		88D9866A15B8F97800858AD6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		88D9863F15B8F97800858AD6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88D9865615B8F97800858AD6 /* main.m in Sources */,
+				88D9865A15B8F97800858AD6 /* luxeysAppDelegate.m in Sources */,
+				88D9866015B8F97800858AD6 /* Latte.xcdatamodeld in Sources */,
+				88D9866315B8F97800858AD6 /* luxeysMasterViewController.m in Sources */,
+				88D9866615B8F97800858AD6 /* luxeysDetailViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		88D9866715B8F97800858AD6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88D9867C15B8F97800858AD6 /* LatteTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		88D9867315B8F97800858AD6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 88D9864215B8F97800858AD6 /* Latte */;
+			targetProxy = 88D9867215B8F97800858AD6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		88D9865215B8F97800858AD6 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				88D9865315B8F97800858AD6 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		88D9865B15B8F97800858AD6 /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				88D9865C15B8F97800858AD6 /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+		88D9867715B8F97800858AD6 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				88D9867815B8F97800858AD6 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		88D9867D15B8F97800858AD6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		88D9867E15B8F97800858AD6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		88D9868015B8F97800858AD6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Latte/Latte-Prefix.pch";
+				INFOPLIST_FILE = "Latte/Latte-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		88D9868115B8F97800858AD6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Latte/Latte-Prefix.pch";
+				INFOPLIST_FILE = "Latte/Latte-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		88D9868315B8F97800858AD6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Latte.app/Latte";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Latte/Latte-Prefix.pch";
+				INFOPLIST_FILE = "LatteTests/LatteTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		88D9868415B8F97800858AD6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Latte.app/Latte";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Latte/Latte-Prefix.pch";
+				INFOPLIST_FILE = "LatteTests/LatteTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		88D9863D15B8F97700858AD6 /* Build configuration list for PBXProject "Latte" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				88D9867D15B8F97800858AD6 /* Debug */,
+				88D9867E15B8F97800858AD6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		88D9867F15B8F97800858AD6 /* Build configuration list for PBXNativeTarget "Latte" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				88D9868015B8F97800858AD6 /* Debug */,
+				88D9868115B8F97800858AD6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		88D9868215B8F97800858AD6 /* Build configuration list for PBXNativeTarget "LatteTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				88D9868315B8F97800858AD6 /* Debug */,
+				88D9868415B8F97800858AD6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		88D9865E15B8F97800858AD6 /* Latte.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				88D9865F15B8F97800858AD6 /* Latte.xcdatamodel */,
+			);
+			currentVersion = 88D9865F15B8F97800858AD6 /* Latte.xcdatamodel */;
+			path = Latte.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 88D9863A15B8F97700858AD6 /* Project object */;
+}
