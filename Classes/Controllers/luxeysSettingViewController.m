@@ -7,158 +7,104 @@
 //
 
 #import "luxeysSettingViewController.h"
+#import "luxeysAppDelegate.h"
 
 @interface luxeysSettingViewController ()
 
 @end
-
 @implementation luxeysSettingViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
+- (id)init {
+    self = [super init];
     if (self) {
-        // Custom initialization
+        luxeysAppDelegate *app = (luxeysAppDelegate*)[[UIApplication sharedApplication] delegate];
+        
+        QRootElement *root = [[QRootElement alloc] init];
+        
+        root.title = @"設定";
+        root.grouped = YES;
+        
+        QSection *secPhoto = [[QSection alloc] initWithTitle:@"写真設定"];
+        QRadioElement *radioStatus = [[QRadioElement alloc] initWithItems:[[NSArray alloc]
+                                                                           initWithObjects:@"全体", @"会員まで", @"友達まで", @"非公開",nil]
+                                                                 selected:0
+                                                                    title:@"公開"];
+        radioStatus.key = @"picture_status";
+        radioStatus.controllerAction = @"handleUpdate:";
+        
+        [secPhoto addElement:radioStatus];
+        [root addSection:secPhoto];
+        
+        QSection *secProfile = [[QSection alloc] initWithTitle:@"プロフィール設定"];
+        QEntryElement *entryNickname = [[QEntryElement alloc] initWithTitle:@"ニックネーム" Value:[app.currentUser objectForKey:@"name"] Placeholder:@"ニックネーム"];
+        entryNickname.key = @"name";
+        entryNickname.controllerAction = @"handleUpdate:";
+        
+        QRadioElement *radioGender = [[QRadioElement alloc] initWithItems:[[NSArray alloc] initWithObjects:@"男性", @"女性", nil] selected:0 title:@"性別"];
+        radioGender.key = @"gender";
+        radioGender.controllerAction = @"handleUpdate:";
+        
+        QDateTimeInlineElement *pickBirth = [[QDateTimeInlineElement alloc] initWithTitle:@"生年月日" date:[NSDate date]];
+        pickBirth.key = @"birthday";
+        pickBirth.controllerAction = @"handleUpdate:";
+        
+        QEntryElement *entryOccupy = [[QEntryElement alloc] initWithTitle:@"職業" Value:[app.currentUser objectForKey:@"name"] Placeholder:@"職業"];
+        entryOccupy.key = @"occupation";
+        entryOccupy.controllerAction = @"handleUpdate:";
+        
+        pickBirth.mode = UIDatePickerModeDate;
+        [secProfile addElement:entryNickname];
+        [secProfile addElement:radioGender];
+        [secProfile addElement:pickBirth];
+        [root addSection:secProfile];
+        
+        QSection *subLogout = [[QSection alloc] init];
+        QButtonElement *buttonLogout = [[QButtonElement alloc] initWithTitle:@"ログアウト"];
+        buttonLogout.controllerAction = @"handleLogout:";
+        [subLogout addElement:buttonLogout];
+        [root addSection:subLogout];
+        
+        self.root = root;
+        self.resizeWhenKeyboardPresented =YES;
+        self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     }
     return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+- (void)setQuickDialogTableView:(QuickDialogTableView *)aQuickDialogTableView {
+    [super setQuickDialogTableView:aQuickDialogTableView];
+    
+    self.quickDialogTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    self.quickDialogTableView.styleProvider = self;
+    
+    ((QEntryElement *)[self.root elementWithKey:@"profile_nickname"]).delegate = self;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - Table view data source
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 30)];
-    
-    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, headerView.frame.size.width, headerView.frame.size.height)];
-    headerLabel.font = [UIFont boldSystemFontOfSize:14];
-    
-    switch (section) {
-        case 0:
-            headerLabel.text = @"写真設定";
-            break;
-        case 1:
-            headerLabel.text = @"プロフィール設定";
-            break;
-        default:
-            break;
+- (void) cell:(QEntryTableViewCell *)cell willAppearForElement:(QElement *)element atIndexPath:(NSIndexPath *)indexPath{
+    if ([element isKindOfClass:[QEntryElement class]] || [element isKindOfClass:[QRadioElement class]]){
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:14];
+        cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
+        cell.textLabel.textColor = [UIColor blackColor];
+        cell.detailTextLabel.textColor = [UIColor colorWithRed:0.39 green:0.36 blue:0.23 alpha:1.0000];
+        cell.textField.font = [UIFont systemFontOfSize:14];
+        cell.textField.textColor = [UIColor colorWithRed:0.39 green:0.36 blue:0.23 alpha:1.0000];
     }
-    
-    headerLabel.backgroundColor = [UIColor clearColor];
-    
-    [headerView addSubview:headerLabel];
-    
-    return headerView;
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleGray;
 }
 
--(float)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 30.0;
+- (void)handleLogout:(QButtonElement *) button {
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+    [app setToken:@""];
+    app.currentUser = nil;
+    [[NSNotificationCenter defaultCenter]
+       postNotificationName:@"LoggedOut"
+       object:self];
+    self.tabBarController.selectedIndex = 0;
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-//{
-//    // Return the number of sections.
-//    return 0;
-//}
-
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-//{
-//    switch (section) {
-//        case 0:
-//            return 1;
-//            break;
-//        case 1:
-//            return 0;
-//            break;
-//        case 2:
-//            return 0;
-//            break;
-//        default:
-//            return 0;
-//            break;
-//    }
-//}
-
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    static NSString *CellIdentifier = @"Cell";
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-//    if (cell == nil) {
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-//    }
-//    
-//    // Configure the cell...
-//    
-//    return cell;
-//}
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+-(void)handleUpdate:(QElement *) element {
+    NSLog(@"Change key:%@ to", element.key);
 }
 
 @end

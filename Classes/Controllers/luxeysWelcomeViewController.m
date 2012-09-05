@@ -9,15 +9,22 @@
 #import "luxeysWelcomeViewController.h"
 #import "luxeysLatteAPIClient.h"
 #import "SCImageCollectionViewItem.h"
+#import "luxeysPicDetailViewController.h"
+#import "luxeysAppDelegate.h"
 
 @interface luxeysWelcomeViewController ()
-
-@property (assign, nonatomic) NSInteger countPic;
 
 @end
 
 @implementation luxeysWelcomeViewController
 
+@synthesize buttonLeftMenu;
+@synthesize buttonNavRight;
+@synthesize navigationBarPanGestureRecognizer;
+@synthesize collectionView = _collectionView;
+
+BOOL loadingphoto = FALSE;
+int pagephoto = 1;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,43 +35,57 @@
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveLoggedIn:)
+                                                 name:@"LoggedIn"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveLoggedOut:)
+                                                 name:@"LoggedOut"
+                                               object:nil];
+    
+    return self;
+}
+
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.collectionView.extremitiesStyle = SSCollectionViewExtremitiesStyleScrolling;
-    self.collectionView.rowSpacing = 5;
-    self.collectionView.minimumColumnSpacing = 0;
-	
-//    UIImage *imageButtonNormal = [[UIImage imageNamed:@"bg_bt.png"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:0.0];
-//    UIImage *imageButtonOn = [[UIImage imageNamed:@"bg_bt_on.png"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:0.0];
-//    [self.buttonLogin setBackgroundImage:imageButtonNormal forState:UIControlStateNormal];
-//    [self.buttonLogin setBackgroundImage:imageButtonOn forState:UIControlStateHighlighted];
-    
 
+    _collectionView = [[SSCollectionView alloc] initWithFrame:CGRectMake(0, 0, 320, 416)];
+    
+    _collectionView.dataSource = self;
+    _collectionView.delegate = self;
+    _collectionView.extremitiesStyle = SSCollectionViewExtremitiesStyleScrolling;
+    _collectionView.rowSpacing = 5;
+    _collectionView.minimumColumnSpacing = 0;
+    _collectionView.scrollView.delegate = self;
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, 50, 0.0);
+    
+    _collectionView.scrollView.contentInset = contentInsets;
+    _collectionView.scrollView.scrollIndicatorInsets = contentInsets;
+
+    [self.view addSubview:_collectionView];
+    
     [[luxeysLatteAPIClient sharedClient] getPath:@"api/picture/latests"
                                       parameters:nil
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                             NSArray* pics = [JSON objectForKey:@"pics"];
-                                             self.countPic = [pics count];
+                                             _items = [[NSMutableArray alloc] init];
+                                             [_items addObjectsFromArray:[JSON objectForKey:@"pics"]];
                                              
-                                             _items = [NSArray array];
-                                             for (NSDictionary* pic in pics) {
-                                                 _items = [_items arrayByAddingObject:[pic objectForKey:@"url_square"]];
-                                             }
                                              [self.collectionView reloadData];
                                              
                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                                             message:@"Something went wrong (Welcome)"
-                                                                                            delegate:nil
-                                                                                   cancelButtonTitle:@"OK"
-                                                                                   otherButtonTitles:nil
-                                                                   ];
-                                             [alert show];
+                                             NSLog(@"Something went wrong (Welcome)");
                                          }];
+    
+    [self.buttonNavRight addTarget:self action:@selector(loginPressed:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark - SSCollectionViewDataSource
@@ -75,7 +96,7 @@
 
 
 - (NSUInteger)collectionView:(SSCollectionView *)aCollectionView numberOfItemsInSection:(NSUInteger)section {
-	return self.countPic;
+	return [_items count];
 }
 
 
@@ -87,25 +108,14 @@
 		item = [[SCImageCollectionViewItem alloc] initWithReuseIdentifier:itemIdentifier];
 	}
 	
-//	CGFloat size = 80.0f * [[UIScreen mainScreen] scale];
-//	NSInteger i = (50 * indexPath.section) + indexPath.row;
 
-	item.imageURL = [NSURL URLWithString:[_items objectAtIndex:indexPath.row]];
+    NSDictionary* pic = [_items objectAtIndex:indexPath.row];
+
+	item.imageURL = [NSURL URLWithString:[pic objectForKey:@"url_square"]];
 	
 	return item;
 }
 
-
-//- (UIView *)collectionView:(SSCollectionView *)aCollectionView viewForHeaderInSection:(NSUInteger)section {
-//	SSLabel *header = [[SSLabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 40.0f)];
-//	header.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-//	header.text = [NSString stringWithFormat:@"Section %i", section + 1];
-//	header.textEdgeInsets = UIEdgeInsetsMake(0.0f, 19.0f, 0.0f, 19.0f);
-//	header.shadowColor = [UIColor whiteColor];
-//	header.shadowOffset = CGSizeMake(0.0f, 1.0f);
-//	header.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.8f];
-//	return header;
-//}
 
 
 #pragma mark - SSCollectionViewDelegate
@@ -116,17 +126,92 @@
 
 
 - (void)collectionView:(SSCollectionView *)aCollectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-	NSString *title = [NSString stringWithFormat:@"You selected item %i in section %i!",
-					   indexPath.row + 1, indexPath.section + 1];
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:nil delegate:nil
-										  cancelButtonTitle:@"Oh, awesome!" otherButtonTitles:nil];
-	[alert show];
+    UIStoryboard *storyPicDetail = [UIStoryboard storyboardWithName:@"PictureStoryboard"
+                                                             bundle:nil];
+    luxeysPicDetailViewController* viewPicDetail = (luxeysPicDetailViewController*)[storyPicDetail instantiateInitialViewController];
+    viewPicDetail.picInfo = [_items objectAtIndex:indexPath.row];
+    [self.navigationController pushViewController:viewPicDetail animated:YES];
 }
 
 
 - (CGFloat)collectionView:(SSCollectionView *)aCollectionView heightForHeaderInSection:(NSUInteger)section {
-	return 40.0f;
+	return 5.0f;
 }
+
+- (UIView *)collectionView:(SSCollectionView *)aCollectionView viewForHeaderInSection:(NSUInteger)section {
+    return [[UIView alloc] init];
+}
+
+
+- (void)receiveLoggedIn:(NSNotification *) notification {
+    // Init side bar
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+    navigationBarPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:app.storyMain action:@selector(revealGesture:)];
+	[self.navigationController.navigationBar addGestureRecognizer:navigationBarPanGestureRecognizer];
+    
+    [self.buttonLeftMenu addTarget:app.storyMain action:@selector(revealLeft:) forControlEvents:UIControlEventTouchUpInside];
+    [self.buttonLeftMenu setHidden:NO];
+    [self.buttonNavRight removeTarget:self action:@selector(loginPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.buttonNavRight addTarget:app.storyMain action:@selector(revealRight:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    // Style
+    UIImage* imageNotify = [UIImage imageNamed:@"icon_info.png"];
+    [self.buttonNavRight setImage:imageNotify forState:UIControlStateNormal];
+    [self.buttonNavRight setImage:imageNotify forState:UIControlStateHighlighted];
+}
+
+- (void)receiveLoggedOut:(NSNotification *) notification {
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+    
+    [self.navigationController.navigationBar removeGestureRecognizer:navigationBarPanGestureRecognizer];
+    [self.buttonNavRight removeTarget:app.storyMain action:@selector(revealRight:) forControlEvents:UIControlEventTouchUpInside];
+    [self.buttonNavRight addTarget:self action:@selector(loginPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    // Style
+    UIImage* imageNotify = [UIImage imageNamed:@"icon_login.png"];
+    [self.buttonNavRight setImage:imageNotify forState:UIControlStateNormal];
+    [self.buttonNavRight setImage:imageNotify forState:UIControlStateHighlighted];
+}
+
+- (void)loginPressed:(id)sender {
+    [self performSegueWithIdentifier:@"Login" sender:self];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
+    CGPoint offset = aScrollView.contentOffset;
+    CGRect bounds = aScrollView.bounds;
+    CGSize size = aScrollView.contentSize;
+    UIEdgeInsets inset = aScrollView.contentInset;
+    float y = offset.y + bounds.size.height - inset.bottom;
+    float h = size.height;
+    
+    float reload_distance = 10;
+    if(y > h + reload_distance) {
+        if (!loadingphoto) {
+            NSLog(@"load more rows");
+            loadingphoto = TRUE;
+            
+            [[luxeysLatteAPIClient sharedClient] getPath:@"api/picture/latests"
+                                              parameters: [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:pagephoto+1]
+                                                                                      forKey:@"page"]
+                                                 success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                                     //[_collectionView beginUpdates];
+                                                     
+                                                     pagephoto += 1;
+                                                     loadingphoto = FALSE;
+                                                     
+                                                     [_items addObjectsFromArray:[JSON objectForKey:@"pics"]];
+                                                      
+                                                     [_collectionView reloadData];
+                                                     
+                                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                     NSLog(@"Something went wrong (Welcome)");
+                                                 }];
+        }
+    }
+}
+
 
 
 - (void)didReceiveMemoryWarning
@@ -136,7 +221,8 @@
 }
 
 - (void)viewDidUnload {
-    [self setButtonLogin:nil];
+    [self setButtonLeftMenu:nil];
+    [self setButtonNavRight:nil];
     [super viewDidUnload];
 }
 @end

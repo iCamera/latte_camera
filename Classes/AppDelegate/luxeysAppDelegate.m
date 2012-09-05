@@ -13,9 +13,11 @@
 #import <Security/Security.h>
 #import "luxeysTabBarViewController.h"
 #import "luxeysNavViewController.h"
+#import "luxeysLatteAPIClient.h"
 
 @implementation luxeysAppDelegate
 
+@synthesize currentUser = _currentUser;
 @synthesize window = _window;
 @synthesize tokenItem;
 @synthesize storyMain = _storyMain;
@@ -26,73 +28,90 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
-@synthesize fbsession = _fbsession;
+// @synthesize fbsession = _fbsession;
 
 // Facebook
-- (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication
-         annotation:(id)annotation {
-    // attempt to extract a token from the url
-    return [self.fbsession handleOpenURL:url];
-}
+// - (BOOL)application:(UIApplication *)application
+//             openURL:(NSURL *)url
+//   sourceApplication:(NSString *)sourceApplication
+//          annotation:(id)annotation {
+//     // attempt to extract a token from the url
+//     return [self.fbsession handleOpenURL:url];
+// }
 // FBSample logic
 
+void uncaughtExceptionHandler(NSException *exception) {
+    NSLog(@"CRASH: %@", exception);
+    NSLog(@"Stack Trace: %@", [exception callStackSymbols]);
+    // Internal error reporting
+}
+
 - (NSString*)getToken {
-    return [self.tokenItem objectForKey:(__bridge id)kSecAttrService];
+    return [self.tokenItem objectForKey:(id)CFBridgingRelease(kSecAttrService)];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     [self saveContext];
     // FBSample logic
-    [self.fbsession close];
+    // [self.fbsession close];
 }
 
 - (void)setToken:(NSString *)token{
-    [tokenItem setObject:token forKey:(__bridge id)kSecAttrService];
+    [tokenItem setObject:token forKey:(id)CFBridgingRelease(kSecAttrService)];
 }
 
 - (void)logOut{
     
 }
 
-- (BOOL)checkTokenValidity {
+- (void)checkTokenValidity {
     //FIX ME
-    return YES;
+    [[luxeysLatteAPIClient sharedClient] getPath:@"api/user/me"
+                                       parameters:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                   [self getToken], @"token", nil]
+                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                              if ([[JSON objectForKey:@"status"] integerValue] == 1) {
+                                                  self.currentUser = [JSON objectForKey:@"user"];
+                                                  
+                                                  [self createSideMain];
+                                                  
+                                                  [[NSNotificationCenter defaultCenter]
+                                                   postNotificationName:@"LoggedIn"
+                                                   object:self];
+                                              }
+                                          } failure:nil];
 }
 
 - (void)createSideMain {
-    luxeysSideMenuViewController *leftViewController = [[luxeysSideMenuViewController alloc] init];
+    // luxeysSideMenuViewController *leftViewController = [[luxeysSideMenuViewController alloc] init];
     luxeysRightSideViewController *rightViewController = [[luxeysRightSideViewController alloc] init];
     
-    ZUUIRevealController* rootController = [[ZUUIRevealController alloc]initWithFrontViewController:(UIViewController*)_viewMainNav
-                                                                           leftViewController:leftViewController
+    ZUUIRevealController* rootController = [[ZUUIRevealController alloc]initWithFrontViewController:(UIViewController*)_viewMainTab
+                                                                           leftViewController:nil
                                                                           rightViewController:rightViewController];
     _storyMain = rootController;
-    
-    [_viewMainTab addLoginBehavior];
+    self.window.rootViewController = _storyMain;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+    // Normal launch stuff
+    
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                             bundle: nil];
-    luxeysNavViewController *navMain = (luxeysNavViewController*)[mainStoryboard instantiateInitialViewController];
-    _viewMainNav = navMain;
-    _viewMainTab = (luxeysTabBarViewController*)navMain.topViewController;
+                                                             bundle:nil];
+    _viewMainTab = (luxeysTabBarViewController*)[mainStoryboard instantiateInitialViewController];
     
-    _storyMain = navMain;
-
-	tokenItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"Token" accessGroup:nil];
-    
-    if ([[self getToken] length] > 0) {
-        if ([self checkTokenValidity]) {
-            [self createSideMain];
-        }
-    }
-    
+    _storyMain = _viewMainTab;
     self.window.rootViewController = _storyMain;
     [self.window makeKeyAndVisible];
+    
+    // Check user auth async
+	tokenItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"Token" accessGroup:nil];
+    if ([[self getToken] length] > 0) {
+        [self checkTokenValidity];
+    }
+    
     return YES;
 }
 							

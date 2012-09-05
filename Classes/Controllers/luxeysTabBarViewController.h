@@ -7,18 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "luxeysButtonNav.h"
-#import "luxeysLoginViewController.h"
 
-@interface luxeysTabBarViewController : UITabBarController<UserLoginDelegate> {
-    
+
+@interface luxeysTabBarViewController : UITabBarController {
 }
 
-@property (strong, nonatomic) IBOutlet luxeysButtonNav *buttonReveal;
-@property (strong, nonatomic) UIPanGestureRecognizer *navigationBarPanGestureRecognizer;
-
-- (void)addLoginBehavior;
-- (void)removeLoginBehavior;
-- (IBAction)loginPressed:(id)sender;
+@property (nonatomic, getter=isTabBarHidden) BOOL tabBarHidden;
 
 @end

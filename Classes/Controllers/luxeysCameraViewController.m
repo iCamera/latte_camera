@@ -17,6 +17,7 @@
 @implementation luxeysCameraViewController
 @synthesize scrollEffect;
 @synthesize cameraView;
+@synthesize viewTimer;
 @synthesize imageBottom;
 @synthesize sheet;
 
@@ -89,10 +90,8 @@
 {
     [videoCamera stopCameraCapture];
     
-    [super viewWillDisappear:animated];
-    
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
-    self.navigationController.navigationBarHidden = NO;
+    [super viewWillDisappear:animated];
 }
 
 - (void)viewDidUnload {
@@ -100,13 +99,12 @@
     [self setScrollEffect:nil];
     [self setImageAutoFocus:nil];
     [self setImageBottom:nil];
+    [self setViewTimer:nil];
     [super viewDidUnload];
-    
-    NSLog(@"Unloaded Controller");
 }
 
 - (IBAction)setEffect:(id)sender {
-    UIButton* buttonEffect = (UIButton*)buttonEffect;
+    UIButton* buttonEffect = (UIButton*)sender;
     switch (buttonEffect.tag) {
         case 1:
             [self SetEffect1];
@@ -120,7 +118,6 @@
         case 4:
             [self SetEffect4];
             break;
-            
         default:
             break;
     }
@@ -239,16 +236,13 @@
 }
 
 - (IBAction)capture:(id)sender {
-    //GPUImageFilter* lastFilter =
     [videoCamera capturePhotoAsJPEGProcessedUpToFilter:[pipeFilter.filters objectAtIndex:1] withCompletionHandler:^(NSData *processedJPEG, NSError *error){
-        
-        // Save to assets library
-        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-        //        report_memory(@"After asset library creation");
+/*        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+        report_memory(@"After asset library creation");
         
         [library writeImageDataToSavedPhotosAlbum:processedJPEG metadata:nil completionBlock:^(NSURL *assetURL, NSError *error2)
          {
-             //             report_memory(@"After writing to library");
+             report_memory(@"After writing to library");
              if (error2) {
                  NSLog(@"ERROR: the image failed to be written");
              }
@@ -257,10 +251,10 @@
              }
 			 
              runOnMainQueueWithoutDeadlocking(^{
-                 //                 report_memory(@"Operation completed");
+                 report_memory(@"Operation completed");
                  //[photoCaptureButton setEnabled:YES];
              });
-         }];
+         }];*/
     }];
 }
 
@@ -290,6 +284,11 @@
 }
 
 - (IBAction)changeCamera:(id)sender {
+}
+
+- (IBAction)touchTimer:(id)sender {
+    // wait for time before begin
+    [viewTimer setHidden:!viewTimer.isHidden];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {

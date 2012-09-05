@@ -9,15 +9,13 @@
 #import "luxeysLoginViewController.h"
 #import "luxeysLatteAPIClient.h"
 #import "luxeysAppDelegate.h"
+#import "User.h"
 
 @interface luxeysLoginViewController ()
 
 @end
 
 @implementation luxeysLoginViewController
-
-@synthesize keychainItemWrapper;
-@synthesize delegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,9 +32,8 @@
 	// Do any additional setup after loading the view.
     //[self.navigationController setNavigationBarHidden:true];
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-    self.keychainItemWrapper = app.tokenItem;
-    self.textUser.text = [self.keychainItemWrapper objectForKey:(__bridge id)kSecAttrAccount];
-    self.textPass.text = [self.keychainItemWrapper objectForKey:(__bridge id)kSecValueData];
+    self.textUser.text = [app.tokenItem objectForKey:(id)CFBridgingRelease(kSecAttrAccount)];
+    self.textPass.text = [app.tokenItem objectForKey:(id)CFBridgingRelease(kSecValueData)];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -60,7 +57,6 @@
 - (IBAction)singleTap:(id)sender {
     [self.textUser resignFirstResponder];
     [self.textPass resignFirstResponder];
-    
 }
 
 - (IBAction)goBack:(id)sender {
@@ -68,18 +64,10 @@
 }
 
 - (IBAction)login:(id)sender {
-//    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle: nil];
-//    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-//    app.window.rootViewController = [mainStoryboard instantiateInitialViewController];
-    
-    //[self performSegueWithIdentifier:@"MainView" sender:self];
-    
-    //luxeysMainViewController *tabView = [[luxeysMainViewController alloc]init];
-    //[self.navigationController pushViewController:tabView animated:YES];
-    
+    NSLog(@"Login");
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-    [app.tokenItem setObject:self.textUser.text forKey:(__bridge id)kSecAttrAccount];
-    [app.tokenItem setObject:self.textPass.text forKey:(__bridge id)kSecValueData];
+    [app.tokenItem setObject:self.textUser.text forKey:(id)CFBridgingRelease(kSecAttrAccount)];
+    [app.tokenItem setObject:self.textPass.text forKey:(id)CFBridgingRelease(kSecValueData)];
     
     [[luxeysLatteAPIClient sharedClient] postPath:@"api/user/login"
                                        parameters:[NSDictionary dictionaryWithObjectsAndKeys:
@@ -96,20 +84,16 @@
                                                   [alert show];
                                               } else {
                                                   [app setToken:[JSON objectForKey:@"token"]];
+                                                  app.currentUser = [JSON objectForKey:@"user"];
                                                   [self.navigationController popViewControllerAnimated:YES];
                                                   
-                                                  // Invoke delegate
-                                                  [[self delegate] userLoggedIn];
-
+                                                  [[NSNotificationCenter defaultCenter]
+                                                   postNotificationName:@"LoggedIn"
+                                                   object:self];
                                               }
                                           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                                              message:@"Something went wrong (Login)"
-                                                                                             delegate:nil
-                                                                                    cancelButtonTitle:@"OK"
-                                                                                    otherButtonTitles:nil
-                                                                    ];
-                                              [alert show];
+                                            NSLog(@"Something went wrong (Login)");
                                           }];
 }
+
 @end

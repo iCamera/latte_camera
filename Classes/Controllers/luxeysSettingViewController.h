@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface luxeysSettingViewController : UITableViewController
+@interface luxeysSettingViewController : QuickDialogController<QuickDialogStyleProvider, QuickDialogEntryElementDelegate>
 
 @end

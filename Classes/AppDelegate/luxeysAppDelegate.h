@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <FacebookSDK/FacebookSDK.h>
+// #import <FacebookSDK/FacebookSDK.h>
 #import "KeychainItemWrapper.h"
 #import "luxeysCameraViewController.h"
+#import "luxeysTabBarViewController.h"
+#import "User.h"
 
-@class luxeysNavViewController, luxeysTabBarViewController;
+@class luxeysNavViewController;
 
 @interface luxeysAppDelegate : UIResponder <UIApplicationDelegate, UINavigationControllerDelegate> {
     KeychainItemWrapper *tokenItem;
@@ -29,7 +31,8 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-@property (strong, nonatomic) FBSession *fbsession;
+// @property (strong, nonatomic) FBSession *fbsession;
+@property (strong, nonatomic) NSDictionary *currentUser;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;

@@ -12,26 +12,49 @@
 #import "luxeysLoginViewController.h"
 #import "luxeysCameraViewController.h"
 
+#define kAnimationDuration .3
+
 @interface luxeysTabBarViewController ()
 
 @end
 
 @implementation luxeysTabBarViewController
 
-@synthesize navigationBarPanGestureRecognizer;
+UIButton* buttonCamera;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        
     }
     return self;
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder{
     self = [super initWithCoder:aDecoder];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveLoggedIn:)
+                                                 name:@"LoggedIn"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveLoggedOut:)
+                                                 name:@"LoggedOut"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showTab:)
+                                                 name:@"TabbarShow"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(hideTab:)
+                                                 name:@"TabbarHide"
+                                               object:nil];
+    
     return self;
 }
 
@@ -48,30 +71,30 @@
                                      nil] forState:UIControlStateNormal];
     }
     
-    UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
+    buttonCamera = [UIButton buttonWithType:UIButtonTypeCustom];
+    buttonCamera.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
     UIImage* buttonImage = [UIImage imageNamed:@"camera.png"];
     UIImage* buttonBg = [UIImage imageNamed:@"bg_bottom_center.png"];
-    button.frame = CGRectMake(0.0, 0.0, buttonBg.size.width, buttonBg.size.height);
-    button.showsTouchWhenHighlighted = YES;
+    buttonCamera.frame = CGRectMake(0.0, 0.0, buttonBg.size.width, buttonBg.size.height);
+    buttonCamera.showsTouchWhenHighlighted = YES;
 
-    [button setImage:buttonImage forState:UIControlStateNormal];
-    [button setImage:buttonImage forState:UIControlStateHighlighted];
-    [button setBackgroundImage:buttonBg forState:UIControlStateNormal];
-    [button setBackgroundImage:buttonBg forState:UIControlStateHighlighted];
+    [buttonCamera setImage:buttonImage forState:UIControlStateNormal];
+    [buttonCamera setImage:buttonImage forState:UIControlStateHighlighted];
+    [buttonCamera setBackgroundImage:buttonBg forState:UIControlStateNormal];
+    [buttonCamera setBackgroundImage:buttonBg forState:UIControlStateHighlighted];
     
     CGFloat heightDifference = buttonBg.size.height - self.tabBar.frame.size.height;
     if (heightDifference < 0)
-        button.center = self.tabBar.center;
+        buttonCamera.center = self.tabBar.center;
     else
     {
         CGPoint center = self.tabBar.center;
-        center.y = center.y - heightDifference/2.0;
-        button.center = center;
+        center.y = center.y - heightDifference/2.0 + 1;
+        buttonCamera.center = center;
     }
-    [button addTarget:self action:@selector(cameraView:) forControlEvents:UIControlEventTouchUpInside];
+    [buttonCamera addTarget:self action:@selector(cameraView:) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.view addSubview:button];
+    [self.view addSubview:buttonCamera];
     
     // Re-style tabbar item
     for(UIViewController *tab in self.viewControllers)
@@ -83,12 +106,13 @@
     }
 }
 
+
 - (void)cameraView:(id)sender {
-    [[UIApplication sharedApplication] setStatusBarHidden:YES];
     luxeysCameraViewController *viewCamera = [[UIStoryboard storyboardWithName:@"CameraStoryboard"
                                                                         bundle: nil] instantiateInitialViewController];
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     [UIView transitionWithView:app.window duration:0.5 options: UIViewAnimationOptionTransitionFlipFromLeft animations:^{
+        [[UIApplication sharedApplication] setStatusBarHidden:YES];
         app.storyCamera = viewCamera;
         app.window.rootViewController = viewCamera;
     } completion:nil];
@@ -102,38 +126,91 @@
 }
 
 - (void)viewDidUnload {
-    [self setButtonReveal:nil];
     [super viewDidUnload];
 }
 
-- (void)addLoginBehavior{
-    // Init side bar
-    //NSLog(NSStringFromClass([self.navigationController.parentViewController class]));
-    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-    navigationBarPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:app.storyMain action:@selector(revealGesture:)];
-	[self.navigationController.navigationBar addGestureRecognizer:navigationBarPanGestureRecognizer];
-        //[self.buttonReveal addTarget:self.navigationController.parentViewController action:@selector(revealToggle:) forControlEvents:UIControlEventTouchUpInside];
+- (void)viewWillDisappear:(BOOL)animated {
+    //[self setTabBarHidden:YES];
+}
+
+- (void)receiveLoggedIn:(NSNotification *) notification
+{
+    [[self.tabBar.items objectAtIndex:3] setEnabled:YES];
+    [[self.tabBar.items objectAtIndex:4] setEnabled:YES];
+}
+
+- (void)receiveLoggedOut:(NSNotification *) notification
+{
+    [[self.tabBar.items objectAtIndex:3] setEnabled:NO];
+    [[self.tabBar.items objectAtIndex:4] setEnabled:NO];
+}
+
+
+- (BOOL)isTabBarHidden {
+	CGRect viewFrame = self.view.frame;
+	CGRect tabBarFrame = self.tabBar.frame;
+	return tabBarFrame.origin.y >= viewFrame.size.height;
+}
+
+
+- (void)setTabBarHidden:(BOOL)hidden {
+	[self setTabBarHidden:hidden animated:NO];
+}
+
+
+- (void)setTabBarHidden:(BOOL)hidden animated:(BOOL)animated {
+	BOOL isHidden = self.tabBarHidden;
+	if(hidden == isHidden)
+		return;
+	UIView *transitionView = [[[self.view.subviews reverseObjectEnumerator] allObjects] lastObject];
+	if(transitionView == nil) {
+		NSLog(@"could not get the container view!");
+		return;
+	}
+	CGRect viewFrame = self.view.frame;
+	CGRect tabBarFrame = self.tabBar.frame;
+    CGRect cameraFrame = buttonCamera.frame;
+	CGRect containerFrame = transitionView.frame;
+	
+	containerFrame.size.height = viewFrame.size.height - (hidden ? 0 : tabBarFrame.size.height);
+    tabBarFrame.origin.y = viewFrame.size.height - (hidden ? (tabBarFrame.size.height - cameraFrame.size.height) : tabBarFrame.size.height);
+    cameraFrame.origin.y = viewFrame.size.height - (hidden ? 0 : cameraFrame.size.height);
+    if (hidden) {
+        transitionView.frame = containerFrame;
+        [UIView animateWithDuration:kAnimationDuration
+                         animations:^{
+                             self.tabBar.frame = tabBarFrame;
+                             buttonCamera.frame = cameraFrame;
+                         }
+         ];
+    } else {
+        [UIView animateWithDuration:kAnimationDuration
+                         animations:^{
+                             self.tabBar.frame = tabBarFrame;
+                             buttonCamera.frame = cameraFrame;
+                         }
+                         completion:^(BOOL finished) {
+                             transitionView.frame = containerFrame;
+                         }
+         ];
+    }
     
 }
 
-- (void)removeLoginBehavior{
-    [self.navigationController.navigationBar removeGestureRecognizer:navigationBarPanGestureRecognizer];
-    //[self.buttonReveal addTarget:self.navigationController.parentViewController action:@selector(revealToggle:) forControlEvents:UIControlEventTouchUpInside];
+- (void)showTab:(NSNotification *) notification
+{
+    [self setTabBarHidden:FALSE];
 }
 
-- (IBAction)loginPressed:(id)sender {
-    [self performSegueWithIdentifier:@"Login" sender:self];
+- (void)hideTab:(NSNotification *) notification
+{
+    [self setTabBarHidden:TRUE];
 }
 
-- (void)userLoggedIn {
-    [self addLoginBehavior];
-}
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"Login"]) {
-        luxeysLoginViewController *viewLogin = (luxeysLoginViewController*)segue.destinationViewController;
-        [viewLogin setDelegate:self];
-    }
+
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
+    NSLog(@"Tapped Tab %d", item.tag);
 }
 
 @end

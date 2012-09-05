@@ -17,6 +17,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *imageBottom;
 @property (strong, nonatomic) UIActionSheet *sheet;
 @property (strong, nonatomic) IBOutlet GPUImageView *cameraView;
+@property (strong, nonatomic) IBOutlet UIView *viewTimer;
 - (IBAction)setEffect:(id)sender;
 - (IBAction)cameraTouch:(UITapGestureRecognizer *)sender;
 - (IBAction)openImagePicker:(id)sender;
@@ -26,6 +27,7 @@
 - (IBAction)changeTimer:(id)sender;
 - (IBAction)changeFlash:(id)sender;
 - (IBAction)changeCamera:(id)sender;
+- (IBAction)touchTimer:(id)sender;
 @property (strong, nonatomic) IBOutlet UIImageView *imageAutoFocus;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollEffect;
 

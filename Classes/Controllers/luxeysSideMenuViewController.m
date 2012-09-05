@@ -35,34 +35,20 @@
     
     self.menuTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.footerImage.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_menu_background.png"]];
+
+    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:self.imageProfile.bounds];
+    self.imageProfile.layer.masksToBounds = NO;
     self.imageProfile.layer.shadowColor = [UIColor blackColor].CGColor;
-    self.imageProfile.layer.shadowOffset = CGSizeMake(0, 1);
-    self.imageProfile.layer.shadowOpacity = 1;
-    self.imageProfile.layer.shadowRadius = 1.0;
-    self.imageProfile.clipsToBounds = NO;
+    self.imageProfile.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
+    self.imageProfile.layer.shadowOpacity = 1.0f;
+    self.imageProfile.layer.shadowRadius = 1.0f;
+    self.imageProfile.layer.shadowPath = shadowPath.CGPath;
     
     // Load User Info
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-    
-    [[luxeysLatteAPIClient sharedClient] getPath:@"api/user/me"
-                                       parameters:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                   [app getToken], @"token",
-                                                   nil]
-                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                              NSDictionary* user = [JSON objectForKey:@"user"];
-                                              self.labelUsername.text = [user objectForKey:@"name"];
-                                              [self.imageProfile setImageWithURL:[NSURL URLWithString:[user objectForKey:@"profile_pic"]]];
-                                              NSLog(@"%@", [user objectForKey:@"profile_pic"]);
-                                              
-                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                                              message:@"Something went wrong (side)"
-                                                                                             delegate:nil
-                                                                                    cancelButtonTitle:@"OK"
-                                                                                    otherButtonTitles:nil
-                                                                    ];
-                                              [alert show];
-                                          }];
+    self.labelUsername.text = [app.currentUser objectForKey:@"name"];
+    [self.imageProfile setImageWithURL:[NSURL URLWithString:[app.currentUser objectForKey:@"profile_picture"]]];
+    //[tableView reload];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -131,7 +117,7 @@
         UINavigationController *viewNav = (UINavigationController*)viewMain.frontViewController;
         [viewNav.topViewController performSegueWithIdentifier:@"SettingPage" sender:nil];
     }
-    [viewMain revealToggle:self];
+    [viewMain revealLeft:self];
 }
 
 - (void)didReceiveMemoryWarning
