@@ -161,18 +161,22 @@
 }
 
 - (void)showUser:(UIButton*)button {
-    UIStoryboard* storyUser = [UIStoryboard storyboardWithName:@"UserStoryboard" bundle:nil];
-    luxeysUserViewController* viewUser = (luxeysUserViewController*)[storyUser instantiateInitialViewController];
-    
     if (button.tag == 0) {
-        viewUser.dictUser = [picInfo objectForKey:@"owner"];
+        [self performSegueWithIdentifier:@"UserProfile" sender:[picInfo objectForKey:@"owner"]];
     } else {
         NSArray* arComment = (NSArray*)[picInfo objectForKey:@"comments"];
         NSDictionary *dictComment = [arComment objectAtIndex:button.tag-1];
-        viewUser.dictUser = [dictComment objectForKey:@"user"];
+        
+        [self performSegueWithIdentifier:@"UserProfile" sender:[dictComment objectForKey:@"user"]];
     }
-    [self.navigationController pushViewController:viewUser animated:YES];
     
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"UserProfile"]) {
+        luxeysUserViewController* viewUser = segue.destinationViewController;
+        viewUser.dictUser = sender;
+    }
 }
 
 - (void)showKeyboard:(id)sender {

@@ -8,18 +8,23 @@
 
 #import <UIKit/UIKit.h>
 
-@interface luxeysUserViewController : UIViewController
+@interface luxeysUserViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UIScrollView *viewScroll;
 @property (strong, nonatomic) IBOutlet UIImageView *imageUser;
-@property (strong, nonatomic) IBOutlet UILabel *labelVote;
-@property (strong, nonatomic) IBOutlet UILabel *labelPhoto;
-@property (strong, nonatomic) IBOutlet UILabel *labelFriend;
 @property (strong, nonatomic) IBOutlet UIView *viewStats;
 @property (strong, nonatomic) IBOutlet UIView *viewContent;
 @property (strong, nonatomic) IBOutlet NSDictionary *dictUser;
 @property (strong, nonatomic) IBOutlet UIButton *buttonProfile;
 @property (strong, nonatomic) IBOutlet UIButton *buttonCalendar;
 @property (strong, nonatomic) IBOutlet UIButton *buttonMap;
+@property (strong, nonatomic) IBOutlet UITableView *tableProfile;
 - (IBAction)touchTab:(UIButton *)sender;
+- (IBAction)touchBack:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *buttonVoteCount;
+@property (strong, nonatomic) IBOutlet UIButton *buttonPhotoCount;
+@property (strong, nonatomic) IBOutlet UIButton *buttonFriendCount;
+- (IBAction)touchVoteCount:(id)sender;
+- (IBAction)touchPicCount:(id)sender;
+- (IBAction)touchFriendCount:(id)sender;
 
 @end

@@ -110,6 +110,7 @@ UIButton* buttonCamera;
 - (void)cameraView:(id)sender {
     luxeysCameraViewController *viewCamera = [[UIStoryboard storyboardWithName:@"CameraStoryboard"
                                                                         bundle: nil] instantiateInitialViewController];
+    
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     [UIView transitionWithView:app.window duration:0.5 options: UIViewAnimationOptionTransitionFlipFromLeft animations:^{
         [[UIApplication sharedApplication] setStatusBarHidden:YES];
@@ -210,7 +211,12 @@ UIButton* buttonCamera;
 
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
-    NSLog(@"Tapped Tab %d", item.tag);
+    if (item.tag == 5)
+    {
+        [[NSNotificationCenter defaultCenter]
+           postNotificationName:@"ShowTimeline"
+           object:self];
+    }
 }
 
 @end

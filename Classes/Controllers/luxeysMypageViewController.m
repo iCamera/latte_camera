@@ -14,6 +14,7 @@
 #import "SCImageCollectionViewItem.h"
 #import "luxeysPicDetailViewController.h"
 #import "luxeysTableViewCellPicture.h"
+#import "luxeysCellFriend.h"
 #import "luxeysImageUtils.h"
 #import <luxeysSettingViewController.h>
 
@@ -23,17 +24,22 @@
 
 @implementation luxeysMypageViewController
 @synthesize tableTimeline;
-@synthesize labelPicNum;
-@synthesize labelVote;
-@synthesize labelFriend;
+@synthesize tableFriend;
+@synthesize buttonVoteCount;
+@synthesize buttonPicCount;
+@synthesize buttonFriendCount;
 @synthesize buttonPhoto;
 @synthesize buttonCalendar;
+@synthesize viewScroll;
 @synthesize imageProfilePic;
 @synthesize viewStats;
 @synthesize buttonNavRight;
 @synthesize arPhoto;
 @synthesize arFeed;
+@synthesize arFriend;
 @synthesize collectionView = _collectionView;
+
+NSInteger tablemode = 1;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -68,15 +74,14 @@
     imageProfilePic.layer.shadowPath = shadowPath.CGPath;
     
     // Do any additional setup after loading the view.
-    [viewStats removeFromSuperview];
-    tableTimeline.frame = CGRectMake(0, 0, tableTimeline.frame.size.width, tableTimeline.frame.size.height);
-    
+    //[viewStats removeFromSuperview];
+    //tableTimeline.frame = CGRectMake(0, 0, tableTimeline.frame.size.width, tableTimeline.frame.size.height);
     
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     
-    labelFriend.text = [[app.currentUser objectForKey:@"count_friends"] stringValue];
-    labelVote.text = [[app.currentUser objectForKey:@"vote_count"] stringValue];
-    labelPicNum.text = [[app.currentUser objectForKey:@"count_pictures"] stringValue];
+    [buttonFriendCount setTitle:[[app.currentUser objectForKey:@"count_friends"] stringValue] forState:UIControlStateNormal];
+    [buttonVoteCount setTitle:[[app.currentUser objectForKey:@"vote_count"] stringValue] forState:UIControlStateNormal];
+    [buttonPicCount setTitle:[[app.currentUser objectForKey:@"count_pictures"] stringValue] forState:UIControlStateNormal];
     
     [self.imageProfilePic setImageWithURL:[NSURL URLWithString:[app.currentUser objectForKey:@"profile_picture"]]];
     self.viewStats.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
@@ -89,6 +94,13 @@
     
     //Timeline
     //UITableView *tableTimeline = [[UITableView alloc] initWithFrame:CGRectMake(0, 110, 320, 500) style:UITableViewStylePlain];
+    UIBezierPath *shadowPath2 = [UIBezierPath bezierPathWithRect:tableTimeline.bounds];
+    tableTimeline.layer.masksToBounds = NO;
+    tableTimeline.layer.shadowColor = [UIColor blackColor].CGColor;
+    tableTimeline.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+    tableTimeline.layer.shadowOpacity = 0.5f;
+    tableTimeline.layer.shadowRadius = 2.0f;
+    tableTimeline.layer.shadowPath = shadowPath2.CGPath;
     
     [[luxeysLatteAPIClient sharedClient] getPath:@"api/user/me/timeline"
                                       parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
@@ -100,10 +112,60 @@
                                                  }
                                              }
                                              [tableTimeline reloadData];
+                                             CGRect frameTime = tableTimeline.frame;
+                                             frameTime.size = tableTimeline.contentSize;
+                                             tableTimeline.frame = frameTime;
+                                             viewScroll.contentSize = CGSizeMake(320, tableTimeline.contentSize.height + 100);
                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                              NSLog(@"Something went wrong (Timeline)");
                                          }];
     
+    // Photo list
+    _collectionView = [[SSCollectionView alloc] initWithFrame:tableTimeline.frame];
+    _collectionView.extremitiesStyle = SSCollectionViewExtremitiesStyleScrolling;
+    _collectionView.scrollView.scrollEnabled = FALSE;
+    _collectionView.hidden = TRUE;
+    _collectionView.rowSpacing = 5;
+    _collectionView.minimumColumnSpacing = 2;
+    
+    _collectionView.dataSource = self;
+    _collectionView.delegate = self;
+    
+    [viewScroll addSubview:_collectionView];
+
+    UIBezierPath *shadowPath3 = [UIBezierPath bezierPathWithRect:_collectionView.bounds];
+    _collectionView.layer.masksToBounds = NO;
+    _collectionView.layer.shadowColor = [UIColor blackColor].CGColor;
+    _collectionView.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+    _collectionView.layer.shadowOpacity = 0.5f;
+    _collectionView.layer.shadowRadius = 2.0f;
+    _collectionView.layer.shadowPath = shadowPath3.CGPath;
+    
+    [[luxeysLatteAPIClient sharedClient] getPath:@"api/picture/user/me"
+                                      parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                             arPhoto = [JSON objectForKey:@"pictures"];
+                                             [_collectionView reloadData];
+                                             CGRect frameTime = tableTimeline.frame;
+                                             frameTime.size = _collectionView.scrollView.contentSize;
+                                             _collectionView.frame = frameTime;
+
+                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                            NSLog(@"Something went wrong (Photolist)");
+                                         }];
+
+    [[luxeysLatteAPIClient sharedClient] getPath:@"api/user/me/friend"
+                                      parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                             arFriend = [JSON objectForKey:@"friends"];
+                                             [tableFriend reloadData];
+                                             CGRect frameTime = tableTimeline.frame;
+                                             frameTime.size = tableFriend.contentSize;
+                                             tableFriend.frame = frameTime;
+
+                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                            NSLog(@"Something went wrong (Friendlist)");
+                                         }];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -111,60 +173,85 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [arFeed count];
+    if (tableView == tableTimeline)
+        return [arFeed count];
+    else
+        return [arFriend count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *picInfo = [arFeed objectAtIndex:indexPath.row];
-    float newheight = [luxeysImageUtils heightFromWidth:300
-                                                  width:[[picInfo objectForKey:@"width"] floatValue]
-                                                 height:[[picInfo objectForKey:@"height"] floatValue]];
-    NSLog(@"%f", newheight + 100);
-    return newheight + 100;
+    if (tableView == tableTimeline)
+    {
+        NSDictionary *picInfo = [arFeed objectAtIndex:indexPath.row];
+        float newheight = [luxeysImageUtils heightFromWidth:300
+                                                      width:[[picInfo objectForKey:@"width"] floatValue]
+                                                     height:[[picInfo objectForKey:@"height"] floatValue]];
+        return newheight + 100;
+    } else
+    return 50;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    luxeysTableViewCellPicture* cellSingle = [tableView dequeueReusableCellWithIdentifier:@"Picture"];
-    
-    if (nil == cellSingle) {
-        cellSingle = [[luxeysTableViewCellPicture alloc] initWithStyle:UITableViewCellStyleDefault
-                                                                 reuseIdentifier:@"Picture"];
+    if (tableView == tableTimeline)
+    {
+        luxeysTableViewCellPicture* cellSingle = [tableView dequeueReusableCellWithIdentifier:@"Picture"];
+        if (nil == cellSingle) {
+            cellSingle = [[luxeysTableViewCellPicture alloc] initWithStyle:UITableViewCellStyleDefault
+                                                                     reuseIdentifier:@"Picture"];
+        }
+        
+        [cellSingle setPicture:[arFeed objectAtIndex:indexPath.row]];
+        return cellSingle;
     }
-    
-    [cellSingle setPicture:[arFeed objectAtIndex:indexPath.row]];
-    
-    return cellSingle;
+    else {
+        luxeysCellFriend* cellFriend = [tableView dequeueReusableCellWithIdentifier:@"Friend"];
+        if (nil == cellFriend) {
+            cellFriend = [[luxeysCellFriend alloc] initWithStyle:UITableViewCellStyleDefault
+                                                                     reuseIdentifier:@"Friend"];
+        }
+        [cellFriend setUser:[arFriend objectAtIndex:indexPath.row]];
+        return cellFriend;
+    }
 }
 
-- (void)loadPhotolist {
+- (void)switchPhotolist {
     //Photo list
-    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-    
-    _collectionView = [[SSCollectionView alloc] initWithFrame:tableTimeline.frame];
-    _collectionView.extremitiesStyle = SSCollectionViewExtremitiesStyleScrolling;
-    _collectionView.rowSpacing = 5;
-    _collectionView.minimumColumnSpacing = 2;
-    
-    _collectionView.dataSource = self;
-    _collectionView.delegate = self;
-    
-    
-    [[luxeysLatteAPIClient sharedClient] getPath:@"api/picture/user/me"
-                                      parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
-                                         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                             arPhoto = [JSON objectForKey:@"pictures"];
-                                             
-                                             [_collectionView reloadData];
-                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                                             message:@"Something went wrong (Mypage)"
-                                                                                            delegate:nil
-                                                                                   cancelButtonTitle:@"OK"
-                                                                                   otherButtonTitles:nil
-                                                                   ];
-                                             [alert show];
-                                         }];
-    [self.view addSubview:_collectionView];
+    buttonPhoto.enabled = NO;
+    buttonCalendar.enabled = YES;
+    buttonFriendCount.enabled = TRUE;
+    _collectionView.hidden = FALSE;
+    tableTimeline.hidden = TRUE;
+    tableFriend.hidden = TRUE;
+    viewScroll.contentSize = CGSizeMake(320, _collectionView.scrollView.contentSize.height + 100);
+}
+
+- (void)switchTimeline {
+    buttonCalendar.enabled = YES;
+    buttonPhoto.enabled = YES;
+    buttonFriendCount.enabled = TRUE;
+    tableTimeline.hidden = FALSE;
+    _collectionView.hidden = TRUE;
+    tableFriend.hidden = TRUE;
+    viewScroll.contentSize = CGSizeMake(320, tableTimeline.contentSize.height + 100);
+}
+
+- (void)switchCalendar {
+    buttonCalendar.enabled = NO;
+    buttonPhoto.enabled = YES;
+    buttonFriendCount.enabled = TRUE;
+    tableTimeline.hidden = TRUE;
+    _collectionView.hidden = TRUE;
+    tableFriend.hidden = TRUE;
+}
+
+- (void)switchFriendlist {
+    buttonCalendar.enabled = YES;
+    buttonPhoto.enabled = YES;
+    buttonFriendCount.enabled = FALSE;
+    tableTimeline.hidden = TRUE;
+    _collectionView.hidden = TRUE;
+    tableFriend.hidden = FALSE;
+    viewScroll.contentSize = CGSizeMake(320, tableFriend.contentSize.height + 100);
 }
 
 - (void)viewDidUnload
@@ -175,9 +262,11 @@
     [self setButtonPhoto:nil];
     [self setButtonCalendar:nil];
     [self setTableTimeline:nil];
-    [self setLabelPicNum:nil];
-    [self setLabelVote:nil];
-    [self setLabelFriend:nil];
+    [self setViewScroll:nil];
+    [self setButtonVoteCount:nil];
+    [self setButtonPicCount:nil];
+    [self setButtonFriendCount:nil];
+    [self setTableFriend:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -191,15 +280,10 @@
     sender.enabled = NO;
     switch (sender.tag) {
         case 1:
-            buttonCalendar.enabled = YES;
-            [tableTimeline removeFromSuperview];
-            [self loadPhotolist];
+            [self switchPhotolist];
             break;
         case 2:
-            buttonPhoto.enabled = YES;
-            [_collectionView removeFromSuperview];
-            [self.view addSubview:tableTimeline];
-            [tableTimeline reloadData];
+            [self switchCalendar];
             break;
     }
 }
@@ -235,41 +319,36 @@
 }
 
 - (void)collectionView:(SSCollectionView *)aCollectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    UIStoryboard *storyPicDetail = [UIStoryboard storyboardWithName:@"PictureStoryboard"
-                                                             bundle:nil];
-    luxeysPicDetailViewController* viewPicDetail = (luxeysPicDetailViewController*)[storyPicDetail instantiateInitialViewController];
-    viewPicDetail.picInfo = [arPhoto objectAtIndex:indexPath.row];
-    [self.navigationController pushViewController:viewPicDetail animated:YES];
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    CGFloat sectionHeaderHeight = viewStats.frame.size.height;
-    if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
-        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
-    } else if (scrollView.contentOffset.y>=sectionHeaderHeight) {
-        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
-    }
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    return viewStats;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return viewStats.frame.size.height;
-}
-
-- (CGFloat)collectionView:(SSCollectionView *)aCollectionView heightForHeaderInSection:(NSUInteger)section {
-    return viewStats.frame.size.height;
+    [self performSegueWithIdentifier:@"PictureDetail" sender:[arPhoto objectAtIndex:indexPath.row]];
 }
 
 - (UIView *)collectionView:(SSCollectionView *)aCollectionView viewForHeaderInSection:(NSUInteger)section {
-    return viewStats;
+    return [[UIView alloc] init];
+}
+
+- (CGFloat)collectionView:(SSCollectionView *)aCollectionView heightForHeaderInSection:(NSUInteger)section {
+    return 5;
 }
 
 - (void)showTimeline:(NSNotification *) notification {
-    
+    [self switchTimeline];
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"PictureDetail"]) {
+        luxeysPicDetailViewController* viewPicDetail = segue.destinationViewController;
+        viewPicDetail.picInfo = sender;
+    }
+}
 
+- (IBAction)touchVoteCount:(id)sender {
+}
+
+- (IBAction)touchPicCount:(id)sender {
+    [self switchPhotolist];
+}
+
+- (IBAction)touchFriendCount:(id)sender {
+    [self switchFriendlist];
+}
 @end

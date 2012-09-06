@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface luxeysRightSideViewController : UIViewController
+@interface luxeysRightSideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @end

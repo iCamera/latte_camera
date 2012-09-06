@@ -126,13 +126,15 @@ int pagephoto = 1;
 
 
 - (void)collectionView:(SSCollectionView *)aCollectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    UIStoryboard *storyPicDetail = [UIStoryboard storyboardWithName:@"PictureStoryboard"
-                                                             bundle:nil];
-    luxeysPicDetailViewController* viewPicDetail = (luxeysPicDetailViewController*)[storyPicDetail instantiateInitialViewController];
-    viewPicDetail.picInfo = [_items objectAtIndex:indexPath.row];
-    [self.navigationController pushViewController:viewPicDetail animated:YES];
+    [self performSegueWithIdentifier:@"PictureDetail" sender:[_items objectAtIndex:indexPath.row]];
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"PictureDetail"]) {
+        luxeysPicDetailViewController* viewPicDetail = segue.destinationViewController;
+        viewPicDetail.picInfo = sender;
+    }
+}
 
 - (CGFloat)collectionView:(SSCollectionView *)aCollectionView heightForHeaderInSection:(NSUInteger)section {
 	return 5.0f;

@@ -12,7 +12,6 @@
 #import "ZUUIRevealController.h"
 #import <Security/Security.h>
 #import "luxeysTabBarViewController.h"
-#import "luxeysNavViewController.h"
 #import "luxeysLatteAPIClient.h"
 
 @implementation luxeysAppDelegate
@@ -84,7 +83,10 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)createSideMain {
     // luxeysSideMenuViewController *leftViewController = [[luxeysSideMenuViewController alloc] init];
-    luxeysRightSideViewController *rightViewController = [[luxeysRightSideViewController alloc] init];
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    
+    luxeysRightSideViewController *rightViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"RightSide"];
     
     ZUUIRevealController* rootController = [[ZUUIRevealController alloc]initWithFrontViewController:(UIViewController*)_viewMainTab
                                                                            leftViewController:nil

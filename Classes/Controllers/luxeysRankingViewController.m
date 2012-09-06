@@ -25,6 +25,7 @@
 @synthesize buttonMonthly;
 @synthesize tableRank;
 @synthesize viewTab;
+@synthesize viewScroll;
 @synthesize arPics;
 
 NSString* ranktype = @"daily";
@@ -43,8 +44,16 @@ BOOL loadingrank = FALSE;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+  // Do any additional setup after loading the view.
     self.viewTab.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
+    UIBezierPath *shadowPath2 = [UIBezierPath bezierPathWithRect:tableRank.bounds];
+    tableRank.layer.masksToBounds = NO;
+    tableRank.layer.shadowColor = [UIColor blackColor].CGColor;
+    tableRank.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+    tableRank.layer.shadowOpacity = 0.5f;
+    tableRank.layer.shadowRadius = 2.0f;
+    tableRank.layer.shadowPath = shadowPath2.CGPath;
+    
     [self loadRanking];
 }
 
@@ -55,6 +64,7 @@ BOOL loadingrank = FALSE;
     [self setButtonMonthly:nil];
     [self setTableRank:nil];
     [self setViewTab:nil];
+    [self setViewScroll:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -68,6 +78,11 @@ BOOL loadingrank = FALSE;
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                              arPics = [[NSMutableArray alloc] initWithArray:[JSON objectForKey:@"pics"]];
                                              [tableRank reloadData];
+                                             
+                                             CGRect frame = tableRank.frame;
+                                             frame.size.height = tableRank.contentSize.height;
+                                             tableRank.frame = frame;
+                                             viewScroll.contentSize = CGSizeMake(320, tableRank.contentSize.height + viewTab.frame.size.height);
                                              loadingrank = FALSE;
                                          }
                                          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -89,6 +104,12 @@ BOOL loadingrank = FALSE;
                                              if (arNew != NULL) {
                                                  [arPics addObjectsFromArray:arNew];
                                                  [tableRank reloadData];
+                                                 
+                                                 CGRect frame = tableRank.frame;
+                                                 frame.size = tableRank.contentSize;
+                                                 tableRank.frame = frame;
+                                                 viewScroll.contentSize = CGSizeMake(320, tableRank.contentSize.height + viewTab.frame.size.height);
+                                                 
                                                  loadingrank =  FALSE;
                                              }
                                          }
@@ -137,10 +158,6 @@ BOOL loadingrank = FALSE;
 
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return viewTab.frame.size.height;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger count = [arPics count];
     if (count > 4) {
@@ -154,10 +171,6 @@ BOOL loadingrank = FALSE;
     else
         return 0;
     
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    return viewTab;
 }
 
 - (void)initButton:(UIButton*)button index:(NSInteger)index {
@@ -258,7 +271,7 @@ BOOL loadingrank = FALSE;
         float newheight = [luxeysImageUtils heightFromWidth:300
                                                       width:[[dictPic objectForKey:@"width"] floatValue]
                                                      height:[[dictPic objectForKey:@"height"] floatValue]];
-        return newheight + 20;
+        return newheight + 10;
     }
     else if (indexPath.row == 1)
         return 103;
@@ -267,13 +280,6 @@ BOOL loadingrank = FALSE;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    CGFloat sectionHeaderHeight = viewTab.frame.size.height;
-    if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
-        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, scrollView.contentInset.bottom, 0);
-    } else if (scrollView.contentOffset.y>=sectionHeaderHeight) {
-        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, scrollView.contentInset.bottom, 0);
-    }
-    
     //Load more
     CGPoint offset = scrollView.contentOffset;
     CGRect bounds = scrollView.bounds;
@@ -291,11 +297,14 @@ BOOL loadingrank = FALSE;
 }
 
 - (void)didSelectPic:(UIButton*)buttonImage {
-    UIStoryboard *storyPicDetail = [UIStoryboard storyboardWithName:@"PictureStoryboard"
-                                                             bundle:nil];
-    luxeysPicDetailViewController* viewPicDetail = (luxeysPicDetailViewController*)[storyPicDetail instantiateInitialViewController];
-    viewPicDetail.picInfo = [arPics objectAtIndex:buttonImage.tag];
-    [self.navigationController pushViewController:viewPicDetail animated:YES];
+    [self performSegueWithIdentifier:@"PictureDetail" sender:[arPics objectAtIndex:buttonImage.tag]];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"PictureDetail"]) {
+        luxeysPicDetailViewController* viewPicDetail = segue.destinationViewController;
+        viewPicDetail.picInfo = sender;
+    }
 }
 
 @end
