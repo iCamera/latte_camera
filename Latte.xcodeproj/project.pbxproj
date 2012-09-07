@@ -61,9 +61,10 @@
 		88B47B9C15DE552B00FD9C72 /* luxeysWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B47B9715DE552B00FD9C72 /* luxeysWelcomeViewController.m */; };
 		88C8EECA15E24C9100A8CCE4 /* luxeysCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88C8EEC515E24C9100A8CCE4 /* luxeysCameraViewController.m */; };
 		88C8EECB15E24C9100A8CCE4 /* luxeysLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88C8EEC715E24C9100A8CCE4 /* luxeysLoginViewController.m */; };
-		88CF1DE915E7114E0063A15E /* luxeysTableViewCellComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CF1DE815E7114E0063A15E /* luxeysTableViewCellComment.m */; };
+		88CEB33315F99259001E848C /* luxeysPicInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CEB33215F99259001E848C /* luxeysPicInfoViewController.m */; };
+		88CF1DE915E7114E0063A15E /* luxeysCellComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CF1DE815E7114E0063A15E /* luxeysCellComment.m */; };
 		88CF1E0515E746960063A15E /* SCImageCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CF1E0415E746960063A15E /* SCImageCollectionViewItem.m */; };
-		88CF1E0815E746AC0063A15E /* luxeysTableViewCellPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CF1E0715E746AC0063A15E /* luxeysTableViewCellPicture.m */; };
+		88CF1E0815E746AC0063A15E /* luxeysCellPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CF1E0715E746AC0063A15E /* luxeysCellPicture.m */; };
 		88CF201C15E751550063A15E /* bg_add_comment_iine.png in Resources */ = {isa = PBXBuildFile; fileRef = 88CF1F9F15E751550063A15E /* bg_add_comment_iine.png */; };
 		88CF201D15E751550063A15E /* bg_add_comment_iine@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88CF1FA015E751550063A15E /* bg_add_comment_iine@2x.png */; };
 		88CF201E15E751550063A15E /* bg_calender_photo.png in Resources */ = {isa = PBXBuildFile; fileRef = 88CF1FA115E751550063A15E /* bg_calender_photo.png */; };
@@ -423,12 +424,14 @@
 		88C8EEC515E24C9100A8CCE4 /* luxeysCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysCameraViewController.m; path = Classes/Controllers/luxeysCameraViewController.m; sourceTree = "<group>"; };
 		88C8EEC615E24C9100A8CCE4 /* luxeysLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysLoginViewController.h; path = Classes/Controllers/luxeysLoginViewController.h; sourceTree = "<group>"; };
 		88C8EEC715E24C9100A8CCE4 /* luxeysLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysLoginViewController.m; path = Classes/Controllers/luxeysLoginViewController.m; sourceTree = "<group>"; };
-		88CF1DE715E7114E0063A15E /* luxeysTableViewCellComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysTableViewCellComment.h; path = Classes/CustomControls/luxeysTableViewCellComment.h; sourceTree = SOURCE_ROOT; };
-		88CF1DE815E7114E0063A15E /* luxeysTableViewCellComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysTableViewCellComment.m; path = Classes/CustomControls/luxeysTableViewCellComment.m; sourceTree = SOURCE_ROOT; };
+		88CEB33115F99259001E848C /* luxeysPicInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysPicInfoViewController.h; path = Classes/Controllers/luxeysPicInfoViewController.h; sourceTree = "<group>"; };
+		88CEB33215F99259001E848C /* luxeysPicInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysPicInfoViewController.m; path = Classes/Controllers/luxeysPicInfoViewController.m; sourceTree = "<group>"; };
+		88CF1DE715E7114E0063A15E /* luxeysCellComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysCellComment.h; path = Classes/CustomControls/luxeysCellComment.h; sourceTree = SOURCE_ROOT; };
+		88CF1DE815E7114E0063A15E /* luxeysCellComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysCellComment.m; path = Classes/CustomControls/luxeysCellComment.m; sourceTree = SOURCE_ROOT; };
 		88CF1E0315E746960063A15E /* SCImageCollectionViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCImageCollectionViewItem.h; path = Classes/CustomControls/SCImageCollectionViewItem.h; sourceTree = SOURCE_ROOT; };
 		88CF1E0415E746960063A15E /* SCImageCollectionViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCImageCollectionViewItem.m; path = Classes/CustomControls/SCImageCollectionViewItem.m; sourceTree = SOURCE_ROOT; };
-		88CF1E0615E746AC0063A15E /* luxeysTableViewCellPicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysTableViewCellPicture.h; path = ../Classes/Controllers/luxeysTableViewCellPicture.h; sourceTree = "<group>"; };
-		88CF1E0715E746AC0063A15E /* luxeysTableViewCellPicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysTableViewCellPicture.m; path = ../Classes/Controllers/luxeysTableViewCellPicture.m; sourceTree = "<group>"; };
+		88CF1E0615E746AC0063A15E /* luxeysCellPicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysCellPicture.h; path = ../Classes/Controllers/luxeysCellPicture.h; sourceTree = "<group>"; };
+		88CF1E0715E746AC0063A15E /* luxeysCellPicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysCellPicture.m; path = ../Classes/Controllers/luxeysCellPicture.m; sourceTree = "<group>"; };
 		88CF1F9F15E751550063A15E /* bg_add_comment_iine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_add_comment_iine.png; sourceTree = "<group>"; };
 		88CF1FA015E751550063A15E /* bg_add_comment_iine@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_add_comment_iine@2x.png"; sourceTree = "<group>"; };
 		88CF1FA115E751550063A15E /* bg_calender_photo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_calender_photo.png; sourceTree = "<group>"; };
@@ -793,8 +796,12 @@
 				88B47B7515DE551800FD9C72 /* luxeysButtonNormal.m */,
 				88B47B7615DE551800FD9C72 /* luxeysButtonOrange.h */,
 				88B47B7715DE551800FD9C72 /* luxeysButtonOrange.m */,
+				88CF1DE715E7114E0063A15E /* luxeysCellComment.h */,
+				88CF1DE815E7114E0063A15E /* luxeysCellComment.m */,
 				8809818C15F8532F00B81A4F /* luxeysCellFriend.h */,
 				8809818D15F8532F00B81A4F /* luxeysCellFriend.m */,
+				88CF1E0615E746AC0063A15E /* luxeysCellPicture.h */,
+				88CF1E0715E746AC0063A15E /* luxeysCellPicture.m */,
 				88CF232015EB0687008B1937 /* luxeysCellProfile.h */,
 				88CF232115EB0687008B1937 /* luxeysCellProfile.m */,
 				88390E2B15F5CC9D00CDCA3B /* luxeysCellRankLv1.h */,
@@ -811,10 +818,6 @@
 				88B47B7D15DE551800FD9C72 /* luxeysNavBar.m */,
 				88B47B8015DE551800FD9C72 /* luxeysTabBar.h */,
 				88B47B8115DE551800FD9C72 /* luxeysTabBar.m */,
-				88CF1DE715E7114E0063A15E /* luxeysTableViewCellComment.h */,
-				88CF1DE815E7114E0063A15E /* luxeysTableViewCellComment.m */,
-				88CF1E0615E746AC0063A15E /* luxeysTableViewCellPicture.h */,
-				88CF1E0715E746AC0063A15E /* luxeysTableViewCellPicture.m */,
 				88B47B8215DE551800FD9C72 /* luxeysTextField.h */,
 				88B47B8315DE551800FD9C72 /* luxeysTextField.m */,
 				88CF1E0315E746960063A15E /* SCImageCollectionViewItem.h */,
@@ -1147,6 +1150,8 @@
 				8897374D15E491F4002F4717 /* luxeysMypageViewController.m */,
 				8899DEE415E4D28F00D57B57 /* luxeysPicDetailViewController.h */,
 				8899DEE515E4D28F00D57B57 /* luxeysPicDetailViewController.m */,
+				88CEB33115F99259001E848C /* luxeysPicInfoViewController.h */,
+				88CEB33215F99259001E848C /* luxeysPicInfoViewController.m */,
 				88390E2815F5C53D00CDCA3B /* luxeysRankingViewController.h */,
 				88390E2915F5C53D00CDCA3B /* luxeysRankingViewController.m */,
 				88B47B9015DE552B00FD9C72 /* luxeysRightSideViewController.h */,
@@ -1738,9 +1743,9 @@
 				8897394F15E4A63C002F4717 /* luxeysImageViewShadow.m in Sources */,
 				8899DEE715E4D29000D57B57 /* luxeysPicDetailViewController.m in Sources */,
 				8899DEEF15E4E9F600D57B57 /* luxeysLabelStats.m in Sources */,
-				88CF1DE915E7114E0063A15E /* luxeysTableViewCellComment.m in Sources */,
+				88CF1DE915E7114E0063A15E /* luxeysCellComment.m in Sources */,
 				88CF1E0515E746960063A15E /* SCImageCollectionViewItem.m in Sources */,
-				88CF1E0815E746AC0063A15E /* luxeysTableViewCellPicture.m in Sources */,
+				88CF1E0815E746AC0063A15E /* luxeysCellPicture.m in Sources */,
 				88CF20AB15E7634B0063A15E /* luxeysImageUtils.m in Sources */,
 				88CF232215EB0687008B1937 /* luxeysCellProfile.m in Sources */,
 				88390E2A15F5C53D00CDCA3B /* luxeysRankingViewController.m in Sources */,
@@ -1748,6 +1753,7 @@
 				88390E3015F5CCB300CDCA3B /* luxeysCellRankLv2.m in Sources */,
 				88390E3315F5CCD000CDCA3B /* luxeysCellRankLv3.m in Sources */,
 				8809818E15F8532F00B81A4F /* luxeysCellFriend.m in Sources */,
+				88CEB33315F99259001E848C /* luxeysPicInfoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

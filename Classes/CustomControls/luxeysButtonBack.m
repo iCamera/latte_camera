@@ -20,7 +20,6 @@
 //        [self setS]
         self.titleLabel.shadowOffset = CGSizeMake(0, 1);
         [self.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
-        NSLog(@"Init button");
     }
     return self;
 }

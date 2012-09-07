@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 LUXEYS. All rights reserved.
 //
 
-#import "luxeysTableViewCellComment.h"
+#import "luxeysCellComment.h"
 #import "UIImageView+AFNetworking.h"
 
 @implementation luxeysTableViewCellComment

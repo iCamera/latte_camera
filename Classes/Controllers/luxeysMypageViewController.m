@@ -13,10 +13,11 @@
 #import "SSCollectionView.h"
 #import "SCImageCollectionViewItem.h"
 #import "luxeysPicDetailViewController.h"
-#import "luxeysTableViewCellPicture.h"
+#import "luxeysCellPicture.h"
 #import "luxeysCellFriend.h"
 #import "luxeysImageUtils.h"
 #import <luxeysSettingViewController.h>
+#import "luxeysPicInfoViewController.h"
 
 @interface luxeysMypageViewController ()
 
@@ -195,20 +196,27 @@ NSInteger tablemode = 1;
     if (tableView == tableTimeline)
     {
         luxeysTableViewCellPicture* cellSingle = [tableView dequeueReusableCellWithIdentifier:@"Picture"];
-        if (nil == cellSingle) {
-            cellSingle = [[luxeysTableViewCellPicture alloc] initWithStyle:UITableViewCellStyleDefault
-                                                                     reuseIdentifier:@"Picture"];
-        }
+        // if (nil == cellSingle) {
+        //     cellSingle = [[luxeysTableViewCellPicture alloc] initWithStyle:UITableViewCellStyleDefault
+        //                                                              reuseIdentifier:@"Picture"];
+        // }
         
         [cellSingle setPicture:[arFeed objectAtIndex:indexPath.row]];
+        cellSingle.buttonInfo.tag = indexPath.row;
+        cellSingle.buttonComment.tag = indexPath.row;
+        
+        [cellSingle.buttonInfo addTarget:self action:@selector(showInfo:) forControlEvents:UIControlEventTouchUpInside];
+        // [cellSingle.buttonComment addTarget:self action:@selector(showInfo:) forControlEvents:UIControlEventTouchUpInside];
+        // [cellSingle.buttonLike addTarget:self action:@selector(showInfo:) forControlEvents:UIControlEventTouchUpInside];
+        // [cellSingle.buttonMap addTarget:self action:@selector(showInfo:) forControlEvents:UIControlEventTouchUpInside];
         return cellSingle;
     }
     else {
         luxeysCellFriend* cellFriend = [tableView dequeueReusableCellWithIdentifier:@"Friend"];
-        if (nil == cellFriend) {
-            cellFriend = [[luxeysCellFriend alloc] initWithStyle:UITableViewCellStyleDefault
-                                                                     reuseIdentifier:@"Friend"];
-        }
+        // if (nil == cellFriend) {
+        //     cellFriend = [[luxeysCellFriend alloc] initWithStyle:UITableViewCellStyleDefault
+        //                                                              reuseIdentifier:@"Friend"];
+        // }
         [cellFriend setUser:[arFriend objectAtIndex:indexPath.row]];
         return cellFriend;
     }
@@ -339,6 +347,11 @@ NSInteger tablemode = 1;
         luxeysPicDetailViewController* viewPicDetail = segue.destinationViewController;
         viewPicDetail.picInfo = sender;
     }
+    if ([segue.identifier isEqualToString:@"PictureInfo"]) {
+        luxeysPicInfoViewController *viewInfo = segue.destinationViewController;
+        UIButton *tmp = sender;
+        [viewInfo setPicture:[arFeed objectAtIndex:tmp.tag]];
+    }
 }
 
 - (IBAction)touchVoteCount:(id)sender {
@@ -350,5 +363,9 @@ NSInteger tablemode = 1;
 
 - (IBAction)touchFriendCount:(id)sender {
     [self switchFriendlist];
+}
+
+- (void)showInfo:(UIButton*)sender {
+    [self performSegueWithIdentifier:@"PictureInfo" sender:sender];
 }
 @end

@@ -180,20 +180,7 @@
 - (void)QEntryDidEndEditingElement:(QEntryElement *)element andCell:(QEntryTableViewCell *)cell {
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     NSMutableDictionary *param = [NSMutableDictionary dictionaryWithObject:[app getToken] forKey:@"token"];
-    
-    if ([element.key isEqualToString:@"name"]) {
-        if (element.textValue.length == 0) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                            message:@"Name must not be empty"
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-            [alert show];
-            return;
-        }
-    }
-    
-    [param setValue:element.textValue forKey:element.key];
+    [param setObject:element.textValue forKey:element.key];
     
     [[luxeysLatteAPIClient sharedClient] postPath:@"api/user/me/update"
                                        parameters: param
@@ -202,6 +189,7 @@
                                           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                               NSLog(@"Something went wrong (Setting)");
                                           }];
+    NSLog(@"end edit");
 }
 
 @end

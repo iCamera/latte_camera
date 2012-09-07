@@ -19,6 +19,8 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonUser;
 @property (strong, nonatomic) IBOutlet UIView *viewStats;
 @property (strong, nonatomic) IBOutlet UIButton *buttonComment;
+@property (strong, nonatomic) IBOutlet UIButton *buttonInfo;
+@property (strong, nonatomic) IBOutlet UIButton *buttonMap;
 
 - (void)setPicture:(NSDictionary*)dictInfo;
 

@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 LUXEYS. All rights reserved.
 //
 
-#import "luxeysTableViewCellPicture.h"
+#import "luxeysCellPicture.h"
 #import "UIImageView+AFNetworking.h"
 #import "luxeysImageUtils.h"
 #import "luxeysLatteAPIClient.h"
@@ -23,6 +23,8 @@
 @synthesize labelComment;
 @synthesize viewStats;
 @synthesize buttonComment;
+@synthesize buttonInfo;
+@synthesize buttonMap;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

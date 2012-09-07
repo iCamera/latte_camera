@@ -191,7 +191,6 @@ int pagephoto = 1;
     float reload_distance = 10;
     if(y > h + reload_distance) {
         if (!loadingphoto) {
-            NSLog(@"load more rows");
             loadingphoto = TRUE;
             
             [[luxeysLatteAPIClient sharedClient] getPath:@"api/picture/latests"

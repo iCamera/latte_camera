@@ -8,13 +8,14 @@
 
 #import "luxeysPicDetailViewController.h"
 
-#import "luxeysTableViewCellPicture.h"
-#import "luxeysTableViewCellComment.h"
+#import "luxeysCellPicture.h"
+#import "luxeysCellComment.h"
 #import "luxeysAppDelegate.h"
 #import "luxeysImageUtils.h"
 #import "luxeysUserViewController.h"
 #import "luxeysButtonBrown30.h"
 #import "luxeysLatteAPIClient.h"
+#import "luxeysPicInfoViewController.h"
 
 @interface luxeysPicDetailViewController ()
 
@@ -130,9 +131,12 @@
         [cellPicInfo setPicture:picInfo];
         
         [cellPicInfo.buttonComment addTarget:self action:@selector(showKeyboard:) forControlEvents:UIControlEventTouchUpInside];
+        [cellPicInfo.buttonLike addTarget:self action:@selector(touchLike:) forControlEvents:UIControlEventTouchUpInside];
         
         cellPicInfo.buttonUser.tag = indexPath.row;
+        
         [cellPicInfo.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
+        [cellPicInfo.buttonInfo addTarget:self action:@selector(showInfo:) forControlEvents:UIControlEventTouchUpInside];
         
         luxeysAppDelegate* app = (luxeysAppDelegate*)[[UIApplication sharedApplication] delegate];
         if (app.currentUser != nil) {
@@ -169,13 +173,20 @@
         
         [self performSegueWithIdentifier:@"UserProfile" sender:[dictComment objectForKey:@"user"]];
     }
-    
+}
+
+- (void)showInfo:(id)sender {
+    [self performSegueWithIdentifier:@"PictureInfo" sender:self];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"UserProfile"]) {
         luxeysUserViewController* viewUser = segue.destinationViewController;
         viewUser.dictUser = sender;
+    }
+    if ([segue.identifier isEqualToString:@"PictureInfo"]) {
+        luxeysPicInfoViewController *viewInfo = segue.destinationViewController;
+        [viewInfo setPicture:picInfo];
     }
 }
 
@@ -239,8 +250,23 @@
 }
 
 - (BOOL)sendComment {
-    luxeysAppDelegate* app = (luxeysAppDelegate*)[[UIApplication sharedApplication] delegate]; 
     if (textComment.text.length < 3000) {
+        // Submit comment
+        luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+        NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
+                               [app getToken], @"token",
+                               textComment.text, @"description", nil];
+        
+        NSString *url = [NSString stringWithFormat:@"api/picture/%d/comment_post", [[picInfo objectForKey:@"id"] integerValue]];
+        
+        [[luxeysLatteAPIClient sharedClient] postPath:url
+                                           parameters:param
+                                              success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                                  
+                                              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                  NSLog(@"Something went wrong (Comment)");
+                                              }];
+
         textComment.text = @"";
         [self.textComment resignFirstResponder];
         NSDictionary *dictComment = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -273,6 +299,20 @@
 
 - (IBAction)touchSend:(id)sender {
     [self sendComment];
+}
+
+- (void)touchLike:(id)sender {
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+    NSDictionary *param = [NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"];
+    
+    NSString *url = [NSString stringWithFormat:@"api/picture/%d/vote_post", [[picInfo objectForKey:@"id"] integerValue]];
+    [[luxeysLatteAPIClient sharedClient] postPath:url
+                                       parameters:param
+                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                              
+                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                              NSLog(@"Something went wrong (Vote)");
+                                          }];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
