@@ -11,6 +11,7 @@
 #import "luxeysImageUtils.h"
 #import "luxeysLatteAPIClient.h"
 #import "luxeysAppDelegate.h"
+#import "UIButton+AsyncImage.h"
 
 @implementation luxeysTableViewCellPicture
 @synthesize labelTitle;
@@ -43,13 +44,13 @@
     // Configure the view for the selected state
 }
 
-- (void)setPicture:(NSDictionary*)dictInfo
+- (void)setPicture:(NSDictionary*)pic user:(NSDictionary*)user
 {
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-    NSDictionary* user = [dictInfo objectForKey:@"owner"];
+    // NSDictionary* user = [pic objectForKey:@"owner"];
     // Increase counter
     NSString *url = [NSString stringWithFormat:@"api/picture/counter/%d/%d",
-                     [[dictInfo objectForKey:@"id"] integerValue],
+                     [[pic objectForKey:@"id"] integerValue],
                      [[user objectForKey:@"id"] integerValue]];
     
     [[luxeysLatteAPIClient sharedClient] getPath:url
@@ -57,34 +58,33 @@
                                          success:nil
                                          failure:nil];
     // Do any additional setup after loading the view from its nib.
-    labelTitle.text = [dictInfo objectForKey:@"title"];
+    labelTitle.text = [pic objectForKey:@"title"];
     
-    UIImageView* imageUser = [[UIImageView alloc] init];
-    NSURLRequest *theRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[user objectForKey:@"profile_picture"]]
-                                              cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                          timeoutInterval:60.0];
-    
-    [imageUser setImageWithURLRequest:theRequest
-                     placeholderImage:nil
-                              success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                  [buttonUser setBackgroundImage:image forState:UIControlStateNormal];
-                              }
-                              failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                                 
-                              }
-     ];
+    [buttonUser loadBackground:[user objectForKey:@"profile_picture"]];
     labelAuthor.text = [user objectForKey:@"name"];
     
-    [imagePic setImageWithURL:[NSURL URLWithString:[dictInfo objectForKey:@"url_medium"]]];
+    [imagePic setImageWithURL:[NSURL URLWithString:[pic objectForKey:@"url_medium"]]];
     
     float newheight = [luxeysImageUtils heightFromWidth:300
-                                                  width:[[dictInfo objectForKey:@"width"] floatValue]
-                                                 height:[[dictInfo objectForKey:@"height"] floatValue]];
-    labelAccess.text = [[dictInfo objectForKey:@"pageviews"] stringValue];
-    labelLike.text = [[dictInfo objectForKey:@"vote_count"] stringValue];
-    labelComment.text = [[dictInfo objectForKey:@"comment_count"] stringValue];
+                                                  width:[[pic objectForKey:@"width"] floatValue]
+                                                 height:[[pic objectForKey:@"height"] floatValue]];
+    labelAccess.text = [[pic objectForKey:@"pageviews"] stringValue];
+    labelLike.text = [[pic objectForKey:@"vote_count"] stringValue];
+    labelComment.text = [[pic objectForKey:@"comment_count"] stringValue];
     imagePic.frame = CGRectMake(imagePic.frame.origin.x, imagePic.frame.origin.y, 300, newheight);
-    viewStats.frame = CGRectMake(0, imagePic.frame.origin.y + imagePic.frame.size.height + 10, viewStats.frame.size.width, viewStats.frame.size.height);
+    viewStats.autoresizingMask = UIViewAutoresizingNone;
+    viewStats.frame = CGRectMake(0, newheight + 70, viewStats.frame.size.width, viewStats.frame.size.height);
+
+    if (![pic objectForKey:@"is_voted"]) {
+        buttonLike.enabled = YES;
+    } else if ([pic objectForKey:@"can_vote"]) {
+        buttonLike.enabled = YES;
+    }
+
+    if ([pic objectForKey:@"can_comment"]) {
+        buttonComment.enabled = YES;
+    }
+
     //self.view.frame = CGRectMake(0, 0, 320, imagePic.frame.size.height + 100);
     //[buttonUser addTarget:self.parentViewController action:@selector(touchUser:) forControlEvents:UIControlEventTouchUpInside];
     

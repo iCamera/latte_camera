@@ -225,7 +225,9 @@
 - (IBAction)openImagePicker:(id)sender {
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc]init];
     imagePicker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-    [self presentModalViewController:imagePicker animated: YES];
+    [self presentViewController:imagePicker animated:YES completion:^{
+        //
+    }];
 }
 
 - (IBAction)close:(id)sender {

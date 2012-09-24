@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface luxeysRightSideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@property (strong, nonatomic) IBOutlet UITableView *tableNotify;
+- (IBAction)touchTab:(id)sender;
 
 @end

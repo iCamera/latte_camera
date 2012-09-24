@@ -21,7 +21,6 @@
 @synthesize tokenItem;
 @synthesize storyMain = _storyMain;
 @synthesize storyCamera = _storyCamera;
-@synthesize viewMainNav = _viewMainNav;
 @synthesize viewMainTab = _viewMainTab;
 
 @synthesize managedObjectContext = _managedObjectContext;

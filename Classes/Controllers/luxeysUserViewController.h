@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface luxeysUserViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
-@property (strong, nonatomic) IBOutlet UIScrollView *viewScroll;
 @property (strong, nonatomic) IBOutlet UIImageView *imageUser;
 @property (strong, nonatomic) IBOutlet UIView *viewStats;
 @property (strong, nonatomic) IBOutlet UIView *viewContent;
@@ -22,9 +21,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonFriendCount;
 - (IBAction)touchTab:(UIButton *)sender;
 - (IBAction)touchBack:(id)sender;
-- (IBAction)touchVoteCount:(id)sender;
-- (IBAction)touchPicCount:(id)sender;
-- (IBAction)touchFriendCount:(id)sender;
 
 @property (strong, nonatomic) NSDictionary *dictUser;
 @end

@@ -57,7 +57,7 @@ int pagephoto = 1;
 {
     [super viewDidLoad];
 
-    _collectionView = [[SSCollectionView alloc] initWithFrame:CGRectMake(0, 0, 320, 416)];
+    _collectionView = [[SSCollectionView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height-44)];
     
     _collectionView.dataSource = self;
     _collectionView.delegate = self;
@@ -149,7 +149,7 @@ int pagephoto = 1;
     // Init side bar
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     navigationBarPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:app.storyMain action:@selector(revealGesture:)];
-	[self.navigationController.navigationBar addGestureRecognizer:navigationBarPanGestureRecognizer];
+    [self.navigationController.navigationBar addGestureRecognizer:navigationBarPanGestureRecognizer];
     
     [self.buttonLeftMenu addTarget:app.storyMain action:@selector(revealLeft:) forControlEvents:UIControlEventTouchUpInside];
     [self.buttonLeftMenu setHidden:NO];

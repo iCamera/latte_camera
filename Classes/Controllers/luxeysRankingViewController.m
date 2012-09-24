@@ -23,9 +23,7 @@
 @synthesize buttonDaily;
 @synthesize buttonWeekly;
 @synthesize buttonMonthly;
-@synthesize tableRank;
 @synthesize viewTab;
-@synthesize viewScroll;
 @synthesize arPics;
 
 NSString* ranktype = @"daily";
@@ -46,13 +44,6 @@ BOOL loadingrank = FALSE;
     [super viewDidLoad];
   // Do any additional setup after loading the view.
     self.viewTab.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
-    UIBezierPath *shadowPath2 = [UIBezierPath bezierPathWithRect:tableRank.bounds];
-    tableRank.layer.masksToBounds = NO;
-    tableRank.layer.shadowColor = [UIColor blackColor].CGColor;
-    tableRank.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-    tableRank.layer.shadowOpacity = 0.5f;
-    tableRank.layer.shadowRadius = 2.0f;
-    tableRank.layer.shadowPath = shadowPath2.CGPath;
     
     [self loadRanking];
 }
@@ -62,9 +53,7 @@ BOOL loadingrank = FALSE;
     [self setButtonDaily:nil];
     [self setButtonWeekly:nil];
     [self setButtonMonthly:nil];
-    [self setTableRank:nil];
     [self setViewTab:nil];
-    [self setViewScroll:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -77,12 +66,8 @@ BOOL loadingrank = FALSE;
                                       parameters: nil
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                              arPics = [[NSMutableArray alloc] initWithArray:[JSON objectForKey:@"pics"]];
-                                             [tableRank reloadData];
+                                             [self.tableView reloadData];
                                              
-                                             CGRect frame = tableRank.frame;
-                                             frame.size.height = tableRank.contentSize.height;
-                                             tableRank.frame = frame;
-                                             viewScroll.contentSize = CGSizeMake(320, tableRank.contentSize.height + viewTab.frame.size.height);
                                              loadingrank = FALSE;
                                          }
                                          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -103,12 +88,7 @@ BOOL loadingrank = FALSE;
 
                                              if (arNew != NULL) {
                                                  [arPics addObjectsFromArray:arNew];
-                                                 [tableRank reloadData];
-                                                 
-                                                 CGRect frame = tableRank.frame;
-                                                 frame.size = tableRank.contentSize;
-                                                 tableRank.frame = frame;
-                                                 viewScroll.contentSize = CGSizeMake(320, tableRank.contentSize.height + viewTab.frame.size.height);
+                                                 [self.tableView reloadData];
                                                  
                                                  loadingrank =  FALSE;
                                              }
@@ -210,10 +190,10 @@ BOOL loadingrank = FALSE;
                                                           width:[[dictPic objectForKey:@"width"] floatValue]
                                                          height:[[dictPic objectForKey:@"height"] floatValue]];
             
-            cellLv1.buttonPic1.frame = CGRectMake(cellLv1.buttonPic1.frame.origin.x,
-                                                  cellLv1.buttonPic1.frame.origin.y,
-                                                  300,
-                                                  newheight);
+            // cellLv1.buttonPic1.frame = CGRectMake(cellLv1.buttonPic1.frame.origin.x,
+            //                                       cellLv1.buttonPic1.frame.origin.y,
+            //                                       300,
+            //                                       newheight);
             
         [self initButton:cellLv1.buttonPic1 index:0];
         
@@ -307,7 +287,7 @@ BOOL loadingrank = FALSE;
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 5;
 }
 

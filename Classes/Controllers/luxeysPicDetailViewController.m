@@ -16,9 +16,12 @@
 #import "luxeysButtonBrown30.h"
 #import "luxeysLatteAPIClient.h"
 #import "luxeysPicInfoViewController.h"
+#import "luxeysLatteAPIClient.h"
 
-@interface luxeysPicDetailViewController ()
-
+@interface luxeysPicDetailViewController () {
+    luxeysTableViewCellPicture *cellPicInfo;
+    NSMutableArray *comments;
+}
 @end
 
 @implementation luxeysPicDetailViewController
@@ -64,6 +67,17 @@
     if (app.currentUser != nil) {
         textComment.enabled = TRUE;
     }
+
+    NSString *url = [NSString stringWithFormat:@"api/picture/%d", [[picInfo objectForKey:@"id"] integerValue]];
+    [[luxeysLatteAPIClient sharedClient] getPath:url
+                                      parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                             [cellPicInfo setPicture:[JSON objectForKey:@"picture"] user:[JSON objectForKey:@"user"]];
+                                             comments = [NSMutableArray arrayWithArray:[JSON objectForKey:@"comments"]];
+                                             [tablePic reloadData];
+                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                             NSLog(@"Something went wrong (PicInfo)");
+                                         }];
 }
 
 - (void)viewDidUnload
@@ -116,19 +130,12 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [[picInfo objectForKey:@"comments"] count] + 1;
+    return comments.count + 1;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        luxeysTableViewCellPicture* cellPicInfo = [tableView dequeueReusableCellWithIdentifier:@"Picture"];
-        
-        if (nil == cellPicInfo) {
-            cellPicInfo = (luxeysTableViewCellPicture*)[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                                              reuseIdentifier:@"Picture"];
-        }
-        
-        [cellPicInfo setPicture:picInfo];
+        cellPicInfo = [tableView dequeueReusableCellWithIdentifier:@"Picture"];
         
         [cellPicInfo.buttonComment addTarget:self action:@selector(showKeyboard:) forControlEvents:UIControlEventTouchUpInside];
         [cellPicInfo.buttonLike addTarget:self action:@selector(touchLike:) forControlEvents:UIControlEventTouchUpInside];
@@ -137,13 +144,7 @@
         
         [cellPicInfo.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
         [cellPicInfo.buttonInfo addTarget:self action:@selector(showInfo:) forControlEvents:UIControlEventTouchUpInside];
-        
-        luxeysAppDelegate* app = (luxeysAppDelegate*)[[UIApplication sharedApplication] delegate];
-        if (app.currentUser != nil) {
-            cellPicInfo.buttonLike.enabled = TRUE;
-            cellPicInfo.buttonComment.enabled = TRUE;
-        }
-        
+                
         return cellPicInfo;
     } else {
         luxeysTableViewCellComment* cellComment = [tableView dequeueReusableCellWithIdentifier:@"Comment"];
@@ -153,9 +154,7 @@
                                            reuseIdentifier:@"Comment"];
                     }
         
-        
-        NSArray* arComment = (NSArray*)[picInfo objectForKey:@"comments"];
-        [cellComment setComment:[arComment objectAtIndex:indexPath.row-1]];
+        [cellComment setComment:[comments objectAtIndex:indexPath.row-1]];
         cellComment.buttonUser.tag = indexPath.row;
         [cellComment.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -262,23 +261,17 @@
         [[luxeysLatteAPIClient sharedClient] postPath:url
                                            parameters:param
                                               success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                  
+                                                  NSDictionary *comment = [JSON objectForKey:@"comment"];
+                                                  [comments addObject:comment];
+                                                  NSIndexPath *path = [NSIndexPath indexPathForRow:comments.count inSection:0];
+                                                  [tablePic insertRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationRight];
+                                                  [tablePic scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionTop animated:YES];
                                               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                   NSLog(@"Something went wrong (Comment)");
                                               }];
 
         textComment.text = @"";
         [self.textComment resignFirstResponder];
-        NSDictionary *dictComment = [NSDictionary dictionaryWithObjectsAndKeys:
-                                     textComment.text, @"description",
-                                     app.currentUser, @"user",
-                                     nil];
-        
-        luxeysTableViewCellComment* cellComment = [tablePic dequeueReusableCellWithIdentifier:@"Comment"];
-        [cellComment setComment:dictComment];
-        cellComment.buttonUser.tag = 0;
-//        [tablePic add
-        //[cellComment.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
         return TRUE;
     } else {
         return FALSE;
@@ -303,13 +296,18 @@
 
 - (void)touchLike:(id)sender {
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-    NSDictionary *param = [NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"];
+    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
+                           [app getToken], @"token",
+                           @"1", @"vote_type",
+                           nil];
     
     NSString *url = [NSString stringWithFormat:@"api/picture/%d/vote_post", [[picInfo objectForKey:@"id"] integerValue]];
     [[luxeysLatteAPIClient sharedClient] postPath:url
                                        parameters:param
                                           success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                              
+                                              cellPicInfo.buttonLike.enabled = NO;
+                                              NSNumber *vote_count = [NSNumber numberWithInt:[cellPicInfo.labelLike.text integerValue] + 1 ];
+                                              cellPicInfo.labelLike.text = [vote_count stringValue];
                                           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                               NSLog(@"Something went wrong (Vote)");
                                           }];

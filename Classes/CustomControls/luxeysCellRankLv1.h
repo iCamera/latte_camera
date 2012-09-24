@@ -10,5 +10,6 @@
 
 @interface luxeysCellRankLv1 : UITableViewCell
 @property (strong, nonatomic) IBOutlet UIButton *buttonPic1;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *topPicHeightConstant;
 
 @end

@@ -22,6 +22,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonInfo;
 @property (strong, nonatomic) IBOutlet UIButton *buttonMap;
 
-- (void)setPicture:(NSDictionary*)dictInfo;
+- (void)setPicture:(NSDictionary*)dictInfo user:(NSDictionary*)user;
 
 @end
