@@ -19,6 +19,8 @@
 #import <luxeysSettingViewController.h>
 #import "luxeysPicInfoViewController.h"
 #import "luxeysUserViewController.h"
+#import "luxeysTemplatePicTimeline.h"
+#import "luxeysTemplateTimelinePicMulti.h"
 
 @interface luxeysMypageViewController () {
     int tableMode;
@@ -80,7 +82,10 @@
     [buttonPicCount setTitle:[[app.currentUser objectForKey:@"count_pictures"] stringValue] forState:UIControlStateNormal];
     
     [imageProfilePic setImageWithURL:[NSURL URLWithString:[app.currentUser objectForKey:@"profile_picture"]]];
-    viewStats.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
+//    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
+    self.viewStats.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
+    self.tableView.backgroundColor = [UIColor whiteColor];
+    
     [self.navigationItem setTitle:[app.currentUser objectForKey:@"name"]];
     
     //Init sidebar
@@ -92,11 +97,7 @@
                                       parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                              feeds = [[NSMutableArray alloc] init];
-                                             for (NSDictionary *dictFeed in [JSON objectForKey:@"feeds"]) {
-                                                 if ([[dictFeed objectForKey:@"target_model"] integerValue] == 1) {
-                                                     [feeds addObjectsFromArray:[dictFeed objectForKey:@"target_data"]];
-                                                 }
-                                             }
+                                             feeds = [NSMutableArray arrayWithArray:[JSON objectForKey:@"feeds"]];
                                              [self.tableView reloadData];
                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                              NSLog(@"Something went wrong (Timeline)");
@@ -123,12 +124,23 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    if (tableMode == 1) {
+        return feeds.count;
+    } else
+        return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableMode == 1) {
-        return feeds.count;
+        NSDictionary *feed = [feeds objectAtIndex:section];
+        NSArray *targets = [feed objectForKey:@"targets"];
+        if (targets.count == 1) {
+            NSDictionary *pic = [targets objectAtIndex:0];
+            NSInteger commentCount = [[pic objectForKey:@"comment_count"] integerValue];
+            return commentCount>3?3:commentCount;
+        } else
+            return 0;
+        
     }
     else if (tableMode == 2) {
         return (pictures.count/4) + (pictures.count%4>0?1:0);
@@ -140,21 +152,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableMode == 1)
     {
-        NSDictionary *pic = [feeds objectAtIndex:indexPath.row];
-        float newheight = [luxeysImageUtils heightFromWidth:300
-                                                      width:[[pic objectForKey:@"width"] floatValue]
-                                                     height:[[pic objectForKey:@"height"] floatValue]];
-        NSInteger cellHeight = newheight + 100;
-        NSInteger commentCount = [[pic objectForKey:@"comment_count"] integerValue];
-        if (commentCount > 0) {
-            cellHeight += 20;
-        }
-        if (commentCount > 3) {
-            cellHeight += 120;
-        } else {
-            cellHeight += commentCount * 30;
-        }
-        return cellHeight;
+        return 35;
     } else if (tableMode == 2) {
         return 78;
     }
@@ -179,44 +177,59 @@
     return view;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (tableMode == 1) {
+        NSDictionary *feed = [feeds objectAtIndex:section];
+        NSArray *targets = [feed objectForKey:@"targets"];
+        if (targets.count == 1) {
+            NSDictionary *pic = [targets objectAtIndex:0];
+            float newheight = [luxeysImageUtils heightFromWidth:300
+                                                          width:[[pic objectForKey:@"width"] floatValue]
+                                                         height:[[pic objectForKey:@"height"] floatValue]];
+            return newheight + 100;
+        }
+        else {
+            return 250;
+        }
+    } else
+        return 0;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (tableMode == 1) {
+        NSDictionary *feed = [feeds objectAtIndex:section];
+        NSDictionary *user = [feed objectForKey:@"user"];
+        NSArray *targets = [feed objectForKey:@"targets"];
+        
+        if (targets.count == 1) {
+            NSDictionary *pic = [targets objectAtIndex:0];
+            
+            luxeysTemplatePicTimeline *viewPic = [[luxeysTemplatePicTimeline alloc] initWithPic:pic user:user section:section sender:self];
+            
+            return viewPic.view;
+        }
+        else {
+            luxeysTemplateTimelinePicMulti *viewMultiPic = [[luxeysTemplateTimelinePicMulti alloc] initWithPics:targets user:user section:section sender:self];
+            return viewMultiPic.view;
+        }
+    }
+    else
+        return nil;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableMode == 1)
     {
-        luxeysTableViewCellPicture* cellSingle = [tableView dequeueReusableCellWithIdentifier:@"Picture"];
-        
-        NSDictionary *pic = [feeds objectAtIndex:indexPath.row];
-        NSDictionary *user = [pic objectForKey:@"user"];
-        
-        [cellSingle setPicture:pic user:user];
-        
-        cellSingle.buttonInfo.tag = indexPath.row;
-        cellSingle.buttonComment.tag = indexPath.row;
-        cellSingle.buttonUser.tag = indexPath.row;
-        
-        [cellSingle.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
-        
-        NSInteger commentCount = [[pic objectForKey:@"comment_count"] integerValue];
+        NSDictionary *feed = [feeds objectAtIndex:indexPath.section];
+        NSArray *targets = [feed objectForKey:@"targets"];
+        NSDictionary *pic = [targets objectAtIndex:0];
         NSArray *comments = [pic objectForKey:@"comments"];
+        luxeysTableViewCellComment* cellComment = [tableView dequeueReusableCellWithIdentifier:@"Comment"];
+        [cellComment setComment:[comments objectAtIndex:indexPath.row]];
         
-        for (int i = 0; i < commentCount; i++) {
-            NSDictionary *comment = [comments objectAtIndex:i];
-            UIView *viewComment = [self createComment:comment];
-            CGRect frame = cellSingle.viewStats.frame;
-            frame.origin.y += 10 + i*35;
-            viewComment.frame = frame;
-            [cellSingle addSubview:viewComment];
-
-            if (i == 2)
-                break;
-        }
-        
-        
-        [cellSingle.buttonInfo addTarget:self action:@selector(showInfo:) forControlEvents:UIControlEventTouchUpInside];
-        [cellSingle.buttonComment addTarget:self action:@selector(showComment:) forControlEvents:UIControlEventTouchUpInside];
-        [cellSingle.buttonLike addTarget:self action:@selector(submitLike:) forControlEvents:UIControlEventTouchUpInside];
-        // [cellSingle.buttonMap addTarget:self action:@selector(showInfo:) forControlEvents:UIControlEventTouchUpInside];
-        
-        return cellSingle;
+        cellComment.backgroundView = [[UIView alloc] initWithFrame:cellComment.bounds];
+//        cellComment.backgroundView.backgroundColor = [UIColor whiteColor];
+        return cellComment;
     }
     else if (tableMode == 2) {
         UITableViewCell *cellPic = [[UITableViewCell alloc] init];
@@ -234,11 +247,16 @@
                 [cellPic addSubview:button];
             }
         }
+        cellPic.backgroundView = [[UIView alloc] initWithFrame:cellPic.bounds];
+//        cellPic.backgroundView.backgroundColor = [UIColor whiteColor];
         return cellPic;
     }
     else {
         luxeysCellFriend* cellFriend = [tableView dequeueReusableCellWithIdentifier:@"Friend"];
         [cellFriend setUser:[friends objectAtIndex:indexPath.row]];
+        cellFriend.backgroundView = [[UIView alloc] initWithFrame:cellFriend.bounds];
+//        cellFriend.backgroundView.backgroundColor = [UIColor whiteColor];
+
         return cellFriend;
     }
 }
@@ -359,7 +377,12 @@
 }
 
 - (void)showComment:(UIButton*)sender {
-    
+    NSLog(@"Show comment");
+    NSDictionary *feed = [feeds objectAtIndex:sender.tag];
+    NSArray *targets = [feed objectForKey:@"targets"];
+    NSDictionary *pic = [targets objectAtIndex:0];
+    [self performSegueWithIdentifier:@"PictureDetail" sender:pic];
+//    [self performSegueWithIdentifier:@"Comment" sender:self];
 }
 
 - (void)showUser:(UIButton*)sender {
@@ -369,7 +392,7 @@
 }
 
 - (void)submitLike:(UIButton*)sender {
-    
+    NSLog(@"Submit like");
 }
 
 

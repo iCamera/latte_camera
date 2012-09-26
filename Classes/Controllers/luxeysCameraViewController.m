@@ -10,7 +10,11 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "luxeysAppDelegate.h"
 
-@interface luxeysCameraViewController ()
+@interface luxeysCameraViewController () {
+    GPUImageFilterPipeline *pipeFilter;
+    UIImage *lastFrame;
+    UIImageView *lastFrameView;
+}
 
 @end
 
@@ -20,6 +24,9 @@
 @synthesize viewTimer;
 @synthesize imageBottom;
 @synthesize sheet;
+@synthesize buttonCapture;
+@synthesize buttonYes;
+@synthesize buttonNo;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -176,8 +183,7 @@
             break;
     }
     
-    [pipeFilter replaceFilterAtIndex:0 withFilter:(GPUImageFilter*)lens];
-    //[pipeFilter.filters[1] prepareForImageCapture];
+    [pipeFilter replaceFilterAtIndex:0 withFilter:(id)lens];
 }
 
 
@@ -238,8 +244,21 @@
 }
 
 - (IBAction)capture:(id)sender {
-    [videoCamera capturePhotoAsJPEGProcessedUpToFilter:[pipeFilter.filters objectAtIndex:1] withCompletionHandler:^(NSData *processedJPEG, NSError *error){
-/*        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    GPUImageFilter* lens = pipeFilter.filters[0];
+    lastFrame = [lens imageFromCurrentlyProcessedOutput];
+    lastFrameView = [[UIImageView alloc] initWithFrame:cameraView.frame];
+    [lastFrameView setImage:lastFrame];
+    [self.view addSubview:lastFrameView];
+    
+//    [videoCamera stopCameraCapture];
+    
+    cameraView.hidden = true;
+    buttonCapture.hidden = true;
+    buttonNo.hidden = false;
+    buttonYes.hidden = false;
+    
+/*    [videoCamera capturePhotoAsJPEGProcessedUpToFilter:[pipeFilter.filters objectAtIndex:1] withCompletionHandler:^(NSData *processedJPEG, NSError *error){
+        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
         report_memory(@"After asset library creation");
         
         [library writeImageDataToSavedPhotosAlbum:processedJPEG metadata:nil completionBlock:^(NSURL *assetURL, NSError *error2)
@@ -256,8 +275,8 @@
                  report_memory(@"Operation completed");
                  //[photoCaptureButton setEnabled:YES];
              });
-         }];*/
-    }];
+         }];
+    }];*/
 }
 
 - (IBAction)changeLens:(id)sender {
@@ -437,4 +456,14 @@
 }
 
 
+- (IBAction)touchNo:(id)sender {
+    cameraView.hidden = false;
+    lastFrameView.hidden = YES;
+    buttonNo.hidden = true;
+    buttonYes.hidden = true;
+    buttonCapture.hidden = false;
+}
+
+- (IBAction)touchYes:(id)sender {
+}
 @end

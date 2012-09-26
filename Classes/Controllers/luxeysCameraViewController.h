@@ -11,7 +11,6 @@
 
 @interface luxeysCameraViewController : UIViewController <UIActionSheetDelegate> {
     GPUImageStillCamera *videoCamera;
-    GPUImageFilterPipeline *pipeFilter;
     UIActionSheet *sheet;
 }
 @property (strong, nonatomic) IBOutlet UIImageView *imageBottom;
@@ -30,5 +29,10 @@
 - (IBAction)touchTimer:(id)sender;
 @property (strong, nonatomic) IBOutlet UIImageView *imageAutoFocus;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollEffect;
+@property (strong, nonatomic) IBOutlet UIButton *buttonCapture;
+@property (strong, nonatomic) IBOutlet UIButton *buttonYes;
+@property (strong, nonatomic) IBOutlet UIButton *buttonNo;
+- (IBAction)touchNo:(id)sender;
+- (IBAction)touchYes:(id)sender;
 
 @end
