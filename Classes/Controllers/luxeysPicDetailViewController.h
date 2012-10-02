@@ -7,10 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EGORefreshTableHeaderView.h"
+#import "luxeysCellPicture.h"
+#import "luxeysCellComment.h"
+#import "luxeysAppDelegate.h"
+#import "luxeysImageUtils.h"
+#import "luxeysUserViewController.h"
+#import "luxeysButtonBrown30.h"
+#import "luxeysLatteAPIClient.h"
+#import "luxeysPicInfoViewController.h"
+#import "luxeysLatteAPIClient.h"
+#import "LuxeysPicture.h"
 
 @class luxeysTableViewCellComment, luxeysButtonBrown30;
 
-@interface luxeysPicDetailViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
+@interface luxeysPicDetailViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, EGORefreshTableHeaderDelegate>
 
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *gestureTap;
 @property (strong, nonatomic) NSDictionary *picInfo;
@@ -18,6 +29,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *textComment;
 @property (strong, nonatomic) IBOutlet luxeysButtonBrown30 *buttonSend;
 @property (strong, nonatomic) IBOutlet UITableView *tablePic;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintCommentView;
 - (IBAction)touchBackground:(id)sender;
 - (IBAction)touchBack:(id)sender;
 - (IBAction)changeText:(id)sender;

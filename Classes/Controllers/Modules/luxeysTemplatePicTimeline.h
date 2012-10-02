@@ -22,6 +22,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonComment;
 @property (strong, nonatomic) IBOutlet UIButton *buttonInfo;
 @property (strong, nonatomic) IBOutlet UIButton *buttonMap;
+@property (strong, nonatomic) IBOutlet UIButton *buttonShowComment;
 
 - (id)initWithPic:(NSDictionary *)pic user:(NSDictionary *)user section:(NSInteger)section sender:(id)sender;
 

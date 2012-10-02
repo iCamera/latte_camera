@@ -12,7 +12,11 @@
 #import "luxeysPicDetailViewController.h"
 #import "luxeysAppDelegate.h"
 
-@interface luxeysWelcomeViewController ()
+@interface luxeysWelcomeViewController () {
+    UIActivityIndicatorView *indicator;
+    int pagephoto;
+    BOOL loadEnded;
+}
 
 @end
 
@@ -23,14 +27,11 @@
 @synthesize navigationBarPanGestureRecognizer;
 @synthesize collectionView = _collectionView;
 
-BOOL loadingphoto = FALSE;
-int pagephoto = 1;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-
+        
     }
     return self;
 }
@@ -48,6 +49,12 @@ int pagephoto = 1;
                                                  name:@"LoggedOut"
                                                object:nil];
     
+    loadEnded = false;
+    pagephoto = 1;
+    indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    indicator.hidesWhenStopped = true;
+    [indicator setCenter:CGPointMake(160, 20)];
+    
     return self;
 }
 
@@ -56,7 +63,7 @@ int pagephoto = 1;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     _collectionView = [[SSCollectionView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height-44)];
     
     _collectionView.dataSource = self;
@@ -70,7 +77,7 @@ int pagephoto = 1;
     
     _collectionView.scrollView.contentInset = contentInsets;
     _collectionView.scrollView.scrollIndicatorInsets = contentInsets;
-
+    
     [self.view addSubview:_collectionView];
     
     [[luxeysLatteAPIClient sharedClient] getPath:@"api/picture/latests"
@@ -108,9 +115,9 @@ int pagephoto = 1;
 		item = [[SCImageCollectionViewItem alloc] initWithReuseIdentifier:itemIdentifier];
 	}
 	
-
+    
     NSDictionary* pic = [_items objectAtIndex:indexPath.row];
-
+    
 	item.imageURL = [NSURL URLWithString:[pic objectForKey:@"url_square"]];
 	
 	return item;
@@ -142,6 +149,17 @@ int pagephoto = 1;
 
 - (UIView *)collectionView:(SSCollectionView *)aCollectionView viewForHeaderInSection:(NSUInteger)section {
     return [[UIView alloc] init];
+}
+
+- (CGFloat)collectionView:(SSCollectionView *)aCollectionView heightForFooterInSection:(NSUInteger)section {
+	return 40.0f;
+}
+
+
+- (UIView *)collectionView:(SSCollectionView *)aCollectionView viewForFooterInSection:(NSUInteger)section {
+    UIView *view = [[UIView alloc] init];
+    [view addSubview:indicator];
+    return view;
 }
 
 
@@ -181,6 +199,8 @@ int pagephoto = 1;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
+    if (loadEnded)
+        return;
     CGPoint offset = aScrollView.contentOffset;
     CGRect bounds = aScrollView.bounds;
     CGSize size = aScrollView.contentSize;
@@ -188,26 +208,32 @@ int pagephoto = 1;
     float y = offset.y + bounds.size.height - inset.bottom;
     float h = size.height;
     
-    float reload_distance = 10;
+    float reload_distance = -100;
     if(y > h + reload_distance) {
-        if (!loadingphoto) {
-            loadingphoto = TRUE;
+        if (!indicator.isAnimating) {
+            [indicator startAnimating];
             
             [[luxeysLatteAPIClient sharedClient] getPath:@"api/picture/latests"
                                               parameters: [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:pagephoto+1]
                                                                                       forKey:@"page"]
                                                  success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                     //[_collectionView beginUpdates];
+                                                     
                                                      
                                                      pagephoto += 1;
-                                                     loadingphoto = FALSE;
+                                                     NSArray *pics = [JSON objectForKey:@"pics"];
                                                      
-                                                     [_items addObjectsFromArray:[JSON objectForKey:@"pics"]];
-                                                      
-                                                     [_collectionView reloadData];
+                                                     if (pics.count > 0) {
+                                                         [_items addObjectsFromArray:[JSON objectForKey:@"pics"]];
+                                                         [_collectionView reloadData];
+                                                     } else {
+                                                         loadEnded = true;
+                                                     }
+                                                     
+                                                     [indicator stopAnimating];
                                                      
                                                  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                      NSLog(@"Something went wrong (Welcome)");
+                                                     [indicator stopAnimating];
                                                  }];
         }
     }

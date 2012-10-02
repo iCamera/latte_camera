@@ -8,20 +8,22 @@
 
 #import "luxeysPicInfoViewController.h"
 #import "luxeysCellProfile.h"
+#import "luxeysLatteAPIClient.h"
 #import "UIImageView+AFNetworking.h"
+#import "luxeysAppDelegate.h"
 
 @interface luxeysPicInfoViewController () {
     NSDictionary *exif;
     NSArray *keyBasic;
     NSArray *keyExif;
     NSMutableArray *sections;
+    NSDictionary *pic;
 }
 @end
 
 @implementation luxeysPicInfoViewController
 
 @synthesize tableInfo;
-@synthesize picture = _picture;
 @synthesize labelTitle;
 @synthesize imagePic;
 @synthesize viewHeader;
@@ -39,9 +41,15 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    [imagePic setImageWithURL:[NSURL URLWithString:[_picture objectForKey:@"url_square"]]];
     
     viewHeader.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = CGRectMake(0, 40, 320, 10);
+    gradient.colors = [NSArray arrayWithObjects:
+                       (id)[[UIColor clearColor] CGColor],
+                       (id)[[[UIColor blackColor] colorWithAlphaComponent:0.2f] CGColor],
+                       nil];
+    [viewHeader.layer insertSublayer:gradient atIndex:0];
     
 //    CGRect frame = tableInfo.frame;
 //    frame.size = tableInfo.contentSize;
@@ -57,8 +65,35 @@
     imagePic.layer.shadowRadius = 1.0f;
     imagePic.layer.shadowPath = shadowPath.CGPath;
     
+    NSString *url = [NSString stringWithFormat:@"api/picture/%d", [[pic objectForKey:@"id"] integerValue]];
+
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+    [[luxeysLatteAPIClient sharedClient] getPath:url
+                                      parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                             pic = [JSON objectForKey:@"picture"];
+                                             
+                                             [imagePic setImageWithURL:[NSURL URLWithString:[pic objectForKey:@"url_square"]]];
+                                             
+                                             NSMutableSet *keyBasicSet = [NSMutableSet setWithObjects:@"taken_at", @"created_at", @"tags", nil];
+                                             NSSet *allField = [NSSet setWithArray:[pic allKeys]];
+                                             [keyBasicSet intersectSet:allField];
+                                             keyBasic = [keyBasicSet allObjects];
+                                             
+                                             sections = [[NSMutableArray alloc] init];
+                                             [sections addObject:keyBasic];
+                                             exif = [pic objectForKey:@"exif"];
+                                             if (exif.count > 0) {
+                                                 [sections addObject:exif];
+                                                 keyExif = [exif allKeys];
+                                             }
+                                             labelTitle.text = [pic objectForKey:@"title"];
+                                             
+                                             [tableInfo reloadData];
+                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                             NSLog(@"Something went wrong (PicInfo)");
+                                         }];
     
-    labelTitle.text = [_picture objectForKey:@"title"];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -90,20 +125,8 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)setPicture:(NSDictionary *)picture {
-    sections = [[NSMutableArray alloc] init];
-    _picture = picture;
-    
-    NSMutableSet *keyBasicSet = [NSMutableSet setWithObjects:@"taken_at", @"created_at", @"tags", nil];
-    NSSet *allField = [NSSet setWithArray:[picture allKeys]];
-    [keyBasicSet intersectSet:allField];
-    keyBasic = [keyBasicSet allObjects];
-    [sections addObject:keyBasic];
-    exif = [picture objectForKey:@"exif"];
-    if (exif.count > 0) {
-        [sections addObject:exif];
-        keyExif = [exif allKeys];
-    }
+- (void)setPicture:(NSDictionary *)aPicture {
+    pic = aPicture;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -123,7 +146,7 @@
     luxeysCellProfile *cell = [tableView dequeueReusableCellWithIdentifier:@"Profile"];
     if (indexPath.section == 0)
     {        
-        cell.labelDetail.text = [_picture objectForKey:[keyBasic objectAtIndex:indexPath.row]];
+        cell.labelDetail.text = [pic objectForKey:[keyBasic objectAtIndex:indexPath.row]];
         if ([[keyBasic objectAtIndex:indexPath.row] isEqualToString:@"taken_at"]) {
             cell.labelField.text = @"撮影月日";
         }

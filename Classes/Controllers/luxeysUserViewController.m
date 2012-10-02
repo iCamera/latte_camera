@@ -69,6 +69,14 @@
     imageUser.layer.shadowOpacity = 1.0f;
     imageUser.layer.shadowRadius = 1.0f;
     imageUser.layer.shadowPath = shadowPath.CGPath;
+    
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = CGRectMake(0, 120, 320, 10);
+    gradient.colors = [NSArray arrayWithObjects:
+                       (id)[[UIColor clearColor] CGColor],
+                       (id)[[[UIColor blackColor] colorWithAlphaComponent:0.2f] CGColor],
+                       nil];
+    [viewStats.layer insertSublayer:gradient atIndex:0];
 
     // UIBezierPath *shadowPath2 = [UIBezierPath bezierPathWithRect:tableProfile.bounds];
     // tableProfile.layer.masksToBounds = NO;
@@ -81,7 +89,6 @@
     viewStats.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     
     // Data
-    [self.imageUser setImageWithURL:[NSURL URLWithString:[dictUser objectForKey:@"profile_picture"]]];
     [self.navigationItem setTitle:[dictUser objectForKey:@"name"]];
     
     luxeysAppDelegate* app = (luxeysAppDelegate*)[[UIApplication sharedApplication] delegate];
@@ -94,6 +101,8 @@
                                              [buttonFriendCount setTitle:[[userDetail objectForKey:@"count_friends"] stringValue] forState:UIControlStateNormal];
                                              [buttonPhotoCount setTitle:[[userDetail objectForKey:@"count_pictures"] stringValue] forState:UIControlStateNormal];
                                              [buttonVoteCount setTitle:[[userDetail objectForKey:@"vote_count"] stringValue] forState:UIControlStateNormal];
+                                             
+                                             [self.imageUser setImageWithURL:[NSURL URLWithString:[userDetail objectForKey:@"profile_picture"]]];
                                              
                                              NSSet *allField = [NSSet setWithArray:[userDetail allKeys]];
                                              [showSet intersectSet:allField];

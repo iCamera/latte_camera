@@ -14,13 +14,13 @@
 
 #define kAnimationDuration .3
 
-@interface luxeysTabBarViewController ()
+@interface luxeysTabBarViewController () {
+    UIButton* buttonCamera;
+}
 
 @end
 
 @implementation luxeysTabBarViewController
-
-UIButton* buttonCamera;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -110,13 +110,13 @@ UIButton* buttonCamera;
 - (void)cameraView:(id)sender {
     luxeysCameraViewController *viewCamera = [[UIStoryboard storyboardWithName:@"CameraStoryboard"
                                                                         bundle: nil] instantiateInitialViewController];
-    
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-    [UIView transitionWithView:app.window duration:0.5 options: UIViewAnimationOptionTransitionFlipFromLeft animations:^{
-        [[UIApplication sharedApplication] setStatusBarHidden:YES];
-        app.storyCamera = viewCamera;
-        app.window.rootViewController = viewCamera;
-    } completion:nil];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    app.storyCamera = viewCamera;
+    app.window.rootViewController = viewCamera;
+/*    [UIView transitionWithView:app.window duration:0.5 options: UIViewAnimationOptionTransitionFlipFromLeft animations:^{
+        
+    } completion:nil];*/
 }
 
 

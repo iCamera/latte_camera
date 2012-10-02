@@ -9,6 +9,7 @@
 #import "luxeysTemplateTimelinePicMulti.h"
 #import "UIButton+AsyncImage.h"
 #import "luxeysPicDetailViewController.h"
+#import "luxeysTemplateTimlinePicMultiItem.h"
 
 @interface luxeysTemplateTimelinePicMulti () {
     NSArray *pics;
@@ -58,14 +59,29 @@
     
     CGSize size = CGSizeMake(10, 190);
     for (NSDictionary *pic in pics) {
-        UIButton *buttonImage = [[UIButton alloc] initWithFrame:CGRectMake(size.width, 10, 170, 170)];
-        buttonImage.tag = [[pic objectForKey:@"id"] integerValue];
-        [buttonImage loadBackground:[pic objectForKey:@"url_square"]];
-        [buttonImage addTarget:sender action:@selector(showPicWithID:) forControlEvents:UIControlEventTouchUpInside];
-        size.width += 180;
-        [scrollImage addSubview:buttonImage];
+        luxeysTemplateTimlinePicMultiItem *viewPic = [[luxeysTemplateTimlinePicMultiItem alloc] initWithPic:pic parent:sender];
+        viewPic.view.frame = CGRectMake(size.width, 2, 190, 190);
+        [scrollImage addSubview:viewPic.view];
+        
+        size.width += 200;
     }
     scrollImage.contentSize = size;
+    
+    buttonUser.layer.borderColor = [[UIColor whiteColor] CGColor];
+    buttonUser.layer.borderWidth = 2;
+    UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:buttonUser.bounds];
+    buttonUser.layer.masksToBounds = NO;
+    buttonUser.layer.shadowColor = [UIColor blackColor].CGColor;
+    buttonUser.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+    buttonUser.layer.shadowOpacity = 0.5f;
+    buttonUser.layer.shadowRadius = 1.5f;
+    buttonUser.layer.shadowPath = shadowPathPic.CGPath;
+    
+    if (section != 0) {
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 1)];
+        lineView.backgroundColor = [UIColor colorWithRed:0.74f green:0.72f blue:0.66f alpha:1];
+        [self.view addSubview:lineView];
+    }
 }
 
 - (void)didReceiveMemoryWarning

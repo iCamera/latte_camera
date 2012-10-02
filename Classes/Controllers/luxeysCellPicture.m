@@ -75,13 +75,12 @@
     viewStats.autoresizingMask = UIViewAutoresizingNone;
     viewStats.frame = CGRectMake(0, newheight + 70, viewStats.frame.size.width, viewStats.frame.size.height);
 
-    if (![pic objectForKey:@"is_voted"]) {
-        buttonLike.enabled = YES;
-    } else if ([pic objectForKey:@"can_vote"]) {
-        buttonLike.enabled = YES;
-    }
+    if ([[pic objectForKey:@"can_vote"] boolValue])
+        if (![[pic objectForKey:@"is_voted"] boolValue])
+            buttonLike.enabled = YES;
 
-    if ([pic objectForKey:@"can_comment"]) {
+
+    if ([[pic objectForKey:@"can_comment"] boolValue]) {
         buttonComment.enabled = YES;
     }
 
@@ -92,7 +91,7 @@
     UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:buttonUser.bounds];
     buttonUser.layer.masksToBounds = NO;
     buttonUser.layer.shadowColor = [UIColor blackColor].CGColor;
-    buttonUser.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+    buttonUser.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
     buttonUser.layer.shadowOpacity = 1.0f;
     buttonUser.layer.shadowRadius = 1.0f;
     buttonUser.layer.shadowPath = shadowPath.CGPath;
@@ -100,7 +99,7 @@
     UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:imagePic.bounds];
     imagePic.layer.masksToBounds = NO;
     imagePic.layer.shadowColor = [UIColor blackColor].CGColor;
-    imagePic.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+    imagePic.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
     imagePic.layer.shadowOpacity = 1.0f;
     imagePic.layer.shadowRadius = 2.0f;
     imagePic.layer.shadowPath = shadowPathPic.CGPath;

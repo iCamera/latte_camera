@@ -15,7 +15,11 @@
 #import "luxeysLatteAPIClient.h"
 #import "luxeysPicDetailViewController.h"
 
-@interface luxeysRankingViewController ()
+@interface luxeysRankingViewController () {
+    BOOL loadEnded;
+    NSString* ranktype;
+    NSInteger rankpage;
+}
 
 @end
 
@@ -25,10 +29,7 @@
 @synthesize buttonMonthly;
 @synthesize viewTab;
 @synthesize arPics;
-
-NSString* ranktype = @"daily";
-NSInteger rankpage = 1;
-BOOL loadingrank = FALSE;
+@synthesize loadIndicator;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -44,6 +45,18 @@ BOOL loadingrank = FALSE;
     [super viewDidLoad];
   // Do any additional setup after loading the view.
     self.viewTab.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
+    
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = CGRectMake(0, 70, 320, 10);
+    gradient.colors = [NSArray arrayWithObjects:
+                       (id)[[UIColor clearColor] CGColor],
+                       (id)[[[UIColor blackColor] colorWithAlphaComponent:0.2f] CGColor],
+                       nil];
+    [viewTab.layer insertSublayer:gradient atIndex:0];
+    
+    loadEnded = FALSE;
+    ranktype = @"daily";
+    rankpage = 1;
     
     [self loadRanking];
 }
@@ -61,17 +74,19 @@ BOOL loadingrank = FALSE;
 - (void)loadRanking {
     NSString* url = [NSString stringWithFormat:@"api/picture/ranking/%@/%d", ranktype, rankpage];
     
-    loadingrank = TRUE;
+    [loadIndicator startAnimating];
+    
     [[luxeysLatteAPIClient sharedClient] getPath:url
                                       parameters: nil
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                              arPics = [[NSMutableArray alloc] initWithArray:[JSON objectForKey:@"pics"]];
                                              [self.tableView reloadData];
                                              
-                                             loadingrank = FALSE;
+                                             [loadIndicator stopAnimating];
                                          }
                                          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                              NSLog(@"Something went wrong (Ranking)");
+                                             [loadIndicator stopAnimating];
                                          }
      ];
 }
@@ -80,21 +95,24 @@ BOOL loadingrank = FALSE;
     rankpage += 1;
     NSString* url = [NSString stringWithFormat:@"api/picture/ranking/%@/%d", ranktype, rankpage];
     
-    loadingrank = TRUE;
+    [loadIndicator startAnimating];
     [[luxeysLatteAPIClient sharedClient] getPath:url
                                       parameters: nil
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                              NSArray *arNew = [JSON objectForKey:@"pics"];
+                                             if (arNew.count == 0)
+                                                 loadEnded = true;
 
                                              if (arNew != NULL) {
                                                  [arPics addObjectsFromArray:arNew];
                                                  [self.tableView reloadData];
-                                                 
-                                                 loadingrank =  FALSE;
                                              }
+                                             
+                                             [loadIndicator stopAnimating];
                                          }
                                          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                              NSLog(@"Something went wrong (Ranking)");
+                                             [loadIndicator stopAnimating];
                                          }
      ];
 }
@@ -106,6 +124,8 @@ BOOL loadingrank = FALSE;
 }
 
 - (IBAction)touchTab:(UIButton*)sender {
+    loadEnded = false;
+    
     switch (sender.tag) {
         case 1:{
             buttonDaily.enabled = FALSE;
@@ -135,7 +155,6 @@ BOOL loadingrank = FALSE;
         }
         break;
     }
-
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -172,7 +191,19 @@ BOOL loadingrank = FALSE;
                                }
                                failure:nil
      ];
+    button.layer.borderColor = [[UIColor whiteColor] CGColor];
+    button.layer.borderWidth = 3;
+    UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:button.bounds];
+    button.layer.masksToBounds = NO;
+    button.layer.shadowColor = [UIColor blackColor].CGColor;
+    button.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+    button.layer.shadowOpacity = 0.5f;
+    button.layer.shadowRadius = 1.5f;
+    button.layer.shadowPath = shadowPathPic.CGPath;
+    
     button.tag = index;
+    
+    
     [button addTarget:self action:@selector(didSelectPic:) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -181,22 +212,10 @@ BOOL loadingrank = FALSE;
         luxeysCellRankLv1 *cellLv1 = [tableView dequeueReusableCellWithIdentifier:@"First"];
         if (nil == cellLv1) {
             cellLv1 = [[luxeysCellRankLv1 alloc] initWithStyle:UITableViewCellStyleDefault
-                                                                     reuseIdentifier:@"First"];
+                                               reuseIdentifier:@"First"];
         }
         
-            NSDictionary *dictPic = [arPics objectAtIndex:0];
-            
-            float newheight = [luxeysImageUtils heightFromWidth:300
-                                                          width:[[dictPic objectForKey:@"width"] floatValue]
-                                                         height:[[dictPic objectForKey:@"height"] floatValue]];
-            
-            // cellLv1.buttonPic1.frame = CGRectMake(cellLv1.buttonPic1.frame.origin.x,
-            //                                       cellLv1.buttonPic1.frame.origin.y,
-            //                                       300,
-            //                                       newheight);
-            
         [self initButton:cellLv1.buttonPic1 index:0];
-        
         return cellLv1;
     } else if (indexPath.row == 1) {
         luxeysCellRankLv2 *cellLv2 = [tableView dequeueReusableCellWithIdentifier:@"Second"];
@@ -240,6 +259,8 @@ BOOL loadingrank = FALSE;
             [self initButton:cellLv3.buttonPic4 index:(indexPath.row-2)*4+7];
         }
         
+        cellLv3.layer.masksToBounds = NO;
+        
         return cellLv3;
     }
 }
@@ -256,11 +277,14 @@ BOOL loadingrank = FALSE;
     else if (indexPath.row == 1)
         return 103;
     else
-        return 78;
+        return 80;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     //Load more
+    if (loadEnded)
+        return;
+    
     CGPoint offset = scrollView.contentOffset;
     CGRect bounds = scrollView.bounds;
     CGSize size = scrollView.contentSize;
@@ -268,9 +292,9 @@ BOOL loadingrank = FALSE;
     float y = offset.y + bounds.size.height - inset.bottom;
     float h = size.height;
     
-    float reload_distance = 10;
+    float reload_distance = -100;
     if(y > h + reload_distance) {
-        if (!loadingrank) {
+        if (!loadIndicator.isAnimating) {
             [self loadMore];
         }
     }
@@ -285,14 +309,6 @@ BOOL loadingrank = FALSE;
         luxeysPicDetailViewController* viewPicDetail = segue.destinationViewController;
         viewPicDetail.picInfo = sender;
     }
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 5;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    return [[UIView alloc] init];
 }
 
 @end

@@ -13,10 +13,10 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonWeekly;
 @property (strong, nonatomic) IBOutlet UIButton *buttonMonthly;
 @property (strong, nonatomic) IBOutlet UIView *viewTab;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadIndicator;
 
 @property (strong, nonatomic) NSMutableArray *arPics;
 - (IBAction)touchTab:(UIButton*)sender;
-
 
 - (void)loadRanking;
 - (void)loadMore;

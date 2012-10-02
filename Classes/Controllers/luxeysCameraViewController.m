@@ -62,11 +62,8 @@
     if ([currentCamera lockForConfiguration:&error]) {
         NSLog(@"Config");
         
-        //currentCamera.focusMode = AVCaptureFocusModeContinuousAutoFocus;
-        //currentCamera.exposureMode = AVCaptureExposureModeContinuousAutoExposure;
         currentCamera.whiteBalanceMode = AVCaptureWhiteBalanceModeLocked;
-        //currentCamera.flashMode = AVCaptureFlashModeOn;
-        //currentCamera.torchMode = AVCaptureTorchModeOn;
+//        currentCamera.flashMode = AVCaptureFlashModeOn;
         
         [currentCamera unlockForConfiguration];
     }
@@ -465,5 +462,9 @@
 }
 
 - (IBAction)touchYes:(id)sender {
+}
+
+- (IBAction)flipCamera:(id)sender {
+    
 }
 @end

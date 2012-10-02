@@ -9,7 +9,7 @@
 #import "luxeysLatteAPIClient.h"
 #import "AFJSONRequestOperation.h"
 
-static NSString * const kLatteAPIBaseURLString = @"http://127.0.0.1:5000/";
+static NSString * const kLatteAPIBaseURLString = @"http://192.168.3.1:5000/";
 
 @implementation luxeysLatteAPIClient
 

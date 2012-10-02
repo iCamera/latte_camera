@@ -8,18 +8,11 @@
 
 #import "luxeysPicDetailViewController.h"
 
-#import "luxeysCellPicture.h"
-#import "luxeysCellComment.h"
-#import "luxeysAppDelegate.h"
-#import "luxeysImageUtils.h"
-#import "luxeysUserViewController.h"
-#import "luxeysButtonBrown30.h"
-#import "luxeysLatteAPIClient.h"
-#import "luxeysPicInfoViewController.h"
-#import "luxeysLatteAPIClient.h"
-
 @interface luxeysPicDetailViewController () {
     luxeysTableViewCellPicture *cellPicInfo;
+    EGORefreshTableHeaderView *refreshHeaderView;
+    BOOL reloading;
+    LuxeysPicture *pic;
     NSMutableArray *comments;
 }
 @end
@@ -32,6 +25,7 @@
 @synthesize textComment;
 @synthesize buttonSend;
 @synthesize tablePic;
+@synthesize constraintCommentView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -58,16 +52,33 @@
     textComment.leftView = paddingView;
     textComment.leftViewMode = UITextFieldViewModeAlways;
     
-    // Do any additional setup after loading the view from its nib.
-    luxeysAppDelegate* app = (luxeysAppDelegate*)[[UIApplication sharedApplication] delegate];
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];
     
+    refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tablePic.bounds.size.height, self.view.frame.size.width, self.tablePic.bounds.size.height)];
+    refreshHeaderView.delegate = self;
+    [self.tablePic addSubview:refreshHeaderView];
+
+
+    CGRect frameTable = self.view.bounds;
+    CGRect frameComment = viewTextbox.frame;
+    frameTable.size.height -= frameComment.size.height;
+    tablePic.frame = frameTable;
+    
+    frameComment.origin.y = self.view.bounds.size.height-frameComment.size.height-44;
+    viewTextbox.frame = frameComment;
+    
+    [self reloadView];
+}
+
+- (void)reloadView {
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[[UIApplication sharedApplication] delegate];
     if (app.currentUser != nil) {
         textComment.enabled = TRUE;
     }
-
+    
+    
     NSString *url = [NSString stringWithFormat:@"api/picture/%d", [[picInfo objectForKey:@"id"] integerValue]];
     [[luxeysLatteAPIClient sharedClient] getPath:url
                                       parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
@@ -75,9 +86,11 @@
                                              [cellPicInfo setPicture:[JSON objectForKey:@"picture"] user:[JSON objectForKey:@"user"]];
                                              comments = [NSMutableArray arrayWithArray:[JSON objectForKey:@"comments"]];
                                              [tablePic reloadData];
+                                             [self doneLoadingTableViewData];
                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                              NSLog(@"Something went wrong (PicInfo)");
                                          }];
+    
 }
 
 - (void)viewDidUnload
@@ -120,7 +133,12 @@
                                                      height:[[picInfo objectForKey:@"height"] floatValue]];
         return newheight + 100;
     } else {
-        return 50;
+        NSDictionary *comment = [comments objectAtIndex:indexPath.row-1];
+        NSString *strComment = [comment objectForKey:@"description"];
+        CGSize labelSize = [strComment sizeWithFont:[UIFont systemFontOfSize:11]
+                                  constrainedToSize:CGSizeMake(255.0f, MAXFLOAT)
+                                      lineBreakMode:NSLineBreakByWordWrapping];
+        return MAX(labelSize.height + 33, 50);
     }
 }
 
@@ -204,15 +222,15 @@
     
     // Step 1: Get the size of the keyboard.
     CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-    
+
     
     // Step 2: Adjust the bottom content inset of your scroll view by the keyboard height.
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height, 0.0);
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height + viewTextbox.frame.size.height, 0.0);
     tablePic.contentInset = contentInsets;
     tablePic.scrollIndicatorInsets = contentInsets;
     
     
-    
+ 
     viewTextbox.frame = CGRectMake(0,
                                    self.view.frame.size.height-keyboardSize.height-viewTextbox.frame.size.height,
                                    viewTextbox.frame.size.width,
@@ -232,7 +250,7 @@
     [UIView setAnimationCurve:[[[notification userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
     [UIView setAnimationDuration:[[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue]];
     
-    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, viewTextbox.frame.size.height, 0.0);
     tablePic.contentInset = contentInsets;
     tablePic.scrollIndicatorInsets = contentInsets;
 
@@ -317,5 +335,41 @@
 {
     return [self sendComment];
 }
+
+- (void)reloadTableViewDataSource{
+    reloading = YES;
+}
+
+- (void)doneLoadingTableViewData{
+    reloading = NO;
+    [refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tablePic];
+}
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
+    [self reloadTableViewDataSource];
+    
+    [self reloadView];
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+    
+    return reloading; // should return if data source model is reloading
+    
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+    
+    return [NSDate date]; // should return date data source was last changed
+    
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    [refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+}
+
 
 @end

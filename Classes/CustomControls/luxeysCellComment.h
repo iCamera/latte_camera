@@ -10,9 +10,10 @@
 
 @interface luxeysTableViewCellComment : UITableViewCell
 
-@property (strong, nonatomic) IBOutlet UITextView *textComment;
+@property (strong, nonatomic) IBOutlet UILabel *textComment;
 @property (strong, nonatomic) IBOutlet UILabel *labelAuthor;
 @property (strong, nonatomic) IBOutlet UIButton *buttonUser;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintCommentHeight;
 
 - (void)setComment:(NSDictionary*)comment;
 

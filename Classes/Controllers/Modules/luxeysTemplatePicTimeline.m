@@ -35,6 +35,7 @@
 @synthesize buttonComment;
 @synthesize buttonInfo;
 @synthesize buttonMap;
+@synthesize buttonShowComment;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -90,43 +91,59 @@
     viewStats.autoresizingMask = UIViewAutoresizingNone;
     viewStats.frame = CGRectMake(0, newheight + 60, viewStats.frame.size.width, viewStats.frame.size.height);
     
-    if (![pic objectForKey:@"is_voted"]) {
-        buttonLike.enabled = YES;
-    } else if ([pic objectForKey:@"can_vote"]) {
-        buttonLike.enabled = YES;
-    }
+    if ([[pic objectForKey:@"can_vote"] boolValue])
+        if (![[pic objectForKey:@"is_voted"] boolValue])
+            buttonLike.enabled = YES;
     
-    if ([pic objectForKey:@"can_comment"]) {
+    if ([[pic objectForKey:@"can_comment"] boolValue]) {
         buttonComment.enabled = YES;
     }
     
     buttonInfo.tag = section;
     buttonComment.tag = section;
     buttonUser.tag = section;
+    buttonShowComment.tag = section;
     
     [buttonUser addTarget:sender action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
     [buttonInfo addTarget:sender action:@selector(showInfo:) forControlEvents:UIControlEventTouchUpInside];
     [buttonComment addTarget:sender action:@selector(showComment:) forControlEvents:UIControlEventTouchUpInside];
     [buttonLike addTarget:sender action:@selector(submitLike:) forControlEvents:UIControlEventTouchUpInside];
     [buttonMap addTarget:sender action:@selector(showMap:) forControlEvents:UIControlEventTouchUpInside];
+    [buttonShowComment addTarget:sender action:@selector(toggleComment:) forControlEvents:UIControlEventTouchUpInside];
     
     // Style
+    buttonUser.layer.borderColor = [[UIColor whiteColor] CGColor];
+    buttonUser.layer.borderWidth = 2;
     UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:buttonUser.bounds];
     buttonUser.layer.masksToBounds = NO;
     buttonUser.layer.shadowColor = [UIColor blackColor].CGColor;
     buttonUser.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-    buttonUser.layer.shadowOpacity = 1.0f;
-    buttonUser.layer.shadowRadius = 1.0f;
+    buttonUser.layer.shadowOpacity = 0.5f;
+    buttonUser.layer.shadowRadius = 1.5f;
     buttonUser.layer.shadowPath = shadowPath.CGPath;
     
+    imagePic.layer.borderColor = [[UIColor whiteColor] CGColor];
+    imagePic.layer.borderWidth = 5;
     UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:imagePic.bounds];
     imagePic.layer.masksToBounds = NO;
     imagePic.layer.shadowColor = [UIColor blackColor].CGColor;
     imagePic.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-    imagePic.layer.shadowOpacity = 1.0f;
-    imagePic.layer.shadowRadius = 2.0f;
+    imagePic.layer.shadowOpacity = 0.5f;
+    imagePic.layer.shadowRadius = 1.5f;
     imagePic.layer.shadowPath = shadowPathPic.CGPath;
     
+    if (section != 0) {
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 1)];
+        lineView.backgroundColor = [UIColor colorWithRed:0.74f green:0.72f blue:0.66f alpha:1];
+        [self.view addSubview:lineView];
+    }
+    
+    buttonShowComment.layer.cornerRadius = 5;
+    buttonShowComment.layer.masksToBounds = YES;
+    
+    NSArray *comments = [pic objectForKey:@"comments"];
+    buttonShowComment.hidden = comments.count <= 3;
+
 //    UIBezierPath *shadowPathView = [UIBezierPath bezierPathWithRect:self.view.bounds];
 //    self.view.layer.masksToBounds = NO;
 //    self.view.layer.shadowColor = [UIColor blackColor].CGColor;

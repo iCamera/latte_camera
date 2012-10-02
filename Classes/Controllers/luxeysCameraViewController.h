@@ -34,5 +34,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonNo;
 - (IBAction)touchNo:(id)sender;
 - (IBAction)touchYes:(id)sender;
+- (IBAction)flipCamera:(id)sender;
 
 @end

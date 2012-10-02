@@ -10,8 +10,10 @@
 #import "luxeysAppDelegate.h"
 #import "luxeysLatteAPIClient.h"
 #import "luxeysCellFriendRequest.h"
+#import "luxeysCellNotify.h"
 #import "UIImageView+AFNetworking.h"
 #import "luxeysUserViewController.h"
+#import "luxeysPicDetailViewController.h"
 
 @interface luxeysRightSideViewController () {
     NSMutableArray *notifies;
@@ -20,6 +22,8 @@
     int tableMode;
     int page;
     int limit;
+    EGORefreshTableHeaderView *refreshHeaderView;
+    BOOL reloading;
 }
 
 @end
@@ -44,10 +48,9 @@
                                                  selector:@selector(receiveLoggedIn:)
                                                      name:@"LoggedIn"
                                                    object:nil];
-
         page = 1;
         limit = 12;
-        tableMode = 1;
+        tableMode = 0;
     }
     return self;
 }
@@ -57,6 +60,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - tableNotify.bounds.size.height, self.view.frame.size.width, tableNotify.bounds.size.height)];
+    refreshHeaderView.delegate = self;
+    [tableNotify addSubview:refreshHeaderView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -87,8 +93,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableMode == 0) {
-        UITableViewCell* cellSingle = [tableView dequeueReusableCellWithIdentifier:@"Notify"];
-        return cellSingle;
+        luxeysCellNotify* cellNotify = [tableView dequeueReusableCellWithIdentifier:@"Notify"];
+        NSDictionary *notify = [notifies objectAtIndex:indexPath.row];
+        [cellNotify setNotify:notify];
+        return cellNotify;
     } else {
         luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
         
@@ -141,18 +149,27 @@
     }
 }
 
-- (void)receiveLoggedIn:(NSNotification *) notification {
+- (void)reloadNotify {
+    tableMode = 0;
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     [[luxeysLatteAPIClient sharedClient] getPath:@"api/user/me/notify"
-                                     parameters: [NSDictionary dictionaryWithObjectsAndKeys:
-                                                  [app getToken], @"token",
-                                                  nil]
-                                        success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                            //[tableNotify reloadData];
-                                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                            NSLog(@"Something went wrong (Notify)");
-                                        }];
+                                      parameters: [NSDictionary dictionaryWithObjectsAndKeys:
+                                                   [app getToken], @"token",
+                                                   nil]
+                                         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                             notifies = [NSMutableArray arrayWithArray:[JSON objectForKey:@"notifies"]];
+                                             [tableNotify reloadData];
+                                             [self doneLoadingTableViewData];
+                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                             NSLog(@"Something went wrong (Notify)");
+                                             [self doneLoadingTableViewData];
+                                         }];
+}
+
+- (void)receiveLoggedIn:(NSNotification *) notification {
+    [self reloadNotify];
     
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     [[luxeysLatteAPIClient sharedClient] getPath:@"api/user/me/friendrequest"
                                       parameters: [NSDictionary dictionaryWithObjectsAndKeys:
                                                    [app getToken], @"token",
@@ -188,5 +205,69 @@
     UINavigationController *nav = (id)app.viewMainTab.selectedViewController;
     [nav pushViewController:viewUser animated:YES];
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+    if (tableMode == 0) {
+        NSDictionary *notify = [notifies objectAtIndex:indexPath.row];
+
+        
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                                 bundle:nil];
+        luxeysPicDetailViewController *viewPic = [mainStoryboard instantiateViewControllerWithIdentifier:@"Picture"];
+        viewPic.picInfo = [notify objectForKey:@"target"];
+        app.viewMainTab.selectedIndex = 4; // Switch to mypage
+        UINavigationController *nav = (UINavigationController *)app.viewMainTab.selectedViewController;
+        [nav pushViewController:viewPic animated:YES];
+    }
+    
+    [app.storyMain performSelector:@selector(revealRight:)];
+
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (void)reloadTableViewDataSource{
+	//  should be calling your tableviews data source model to reload
+	//  put here just for demo
+	reloading = YES;
+}
+
+- (void)doneLoadingTableViewData{
+	//  model should call this when its done loading
+	reloading = NO;
+	[refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableNotify];
+	
+}
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
+	
+	[self reloadTableViewDataSource];
+	[self reloadNotify];
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+	
+	return reloading; // should return if data source model is reloading
+	
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+	
+	return [NSDate date]; // should return date data source was last changed
+	
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+	
+	[refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+    
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+	
+	[refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+	
+}
+
 
 @end

@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EGORefreshTableHeaderView.h"
 
-@interface luxeysRightSideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface luxeysRightSideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, EGORefreshTableHeaderDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *tableNotify;
 - (IBAction)touchTab:(id)sender;
 

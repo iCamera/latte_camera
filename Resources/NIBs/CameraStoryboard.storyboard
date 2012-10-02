@@ -12,7 +12,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="haP-3S-Ims" customClass="GPUImageView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="haP-3S-Ims" userLabel="CameraView" customClass="GPUImageView">
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bg_camera_bt.png" translatesAutoresizingMaskIntoConstraints="NO" id="26o-rW-3Bd">
                                         <constraints>
@@ -88,6 +88,19 @@
                                 </state>
                                 <connections>
                                     <action selector="changeLens:" destination="qh6-II-akr" eventType="touchUpInside" id="Hx1-4b-Xx1"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sZg-e0-fMB">
+                                <fontDescription key="fontDescription" type="boldSystem" size="button"/>
+                                <state key="normal" image="icon_lens.png" backgroundImage="bg_camera_bt3.png">
+                                    <color key="titleColor" red="0.1960784314" green="0.30980392159999998" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <state key="highlighted" backgroundImage="bg_camera_bt3.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="changeLens:" destination="qh6-II-akr" eventType="touchUpInside" id="xQE-GP-xpR"/>
+                                    <action selector="flipCamera:" destination="qh6-II-akr" eventType="touchUpInside" id="2Ox-HS-gX0"/>
                                 </connections>
                             </button>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vcd-4B-c7j">
@@ -320,13 +333,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="iQL-nW-Waw" firstAttribute="bottom" secondItem="PB7-p3-8R3" secondAttribute="bottom" type="default" id="0DC-F5-oYb"/>
                             <constraint firstAttribute="trailing" secondItem="iQL-nW-Waw" secondAttribute="trailing" constant="10" id="0y1-aW-O9u"/>
                             <constraint firstItem="nh0-56-tN6" firstAttribute="trailing" secondItem="hTk-68-DVB" secondAttribute="trailing" type="default" id="2ir-G0-Twj"/>
+                            <constraint firstItem="sZg-e0-fMB" firstAttribute="bottom" secondItem="iQL-nW-Waw" secondAttribute="bottom" type="default" id="3M0-xk-X34"/>
                             <constraint firstItem="AlN-14-DB6" firstAttribute="top" secondItem="lpV-ub-V1k" secondAttribute="top" type="default" id="7OQ-8V-eWr"/>
                             <constraint firstItem="jLe-DC-2gl" firstAttribute="trailing" secondItem="hTk-68-DVB" secondAttribute="trailing" type="default" id="AsW-ij-6ef"/>
                             <constraint firstItem="nh0-56-tN6" firstAttribute="bottom" secondItem="hTk-68-DVB" secondAttribute="bottom" type="default" id="HBU-68-VC9"/>
                             <constraint firstItem="lpV-ub-V1k" firstAttribute="bottom" secondItem="PB7-p3-8R3" secondAttribute="bottom" type="default" id="HhD-fe-ZrJ"/>
+                            <constraint firstItem="sZg-e0-fMB" firstAttribute="bottom" secondItem="PB7-p3-8R3" secondAttribute="bottom" type="default" id="Hij-8E-tGy"/>
                             <constraint firstAttribute="bottom" secondItem="jLe-DC-2gl" secondAttribute="bottom" constant="50" id="IJS-7D-8ap"/>
                             <constraint firstItem="AlN-14-DB6" firstAttribute="leading" secondItem="Vcd-4B-c7j" secondAttribute="leading" type="default" id="Jc3-Zl-Wo6"/>
                             <constraint firstItem="haP-3S-Ims" firstAttribute="trailing" secondItem="hTk-68-DVB" secondAttribute="trailing" type="default" id="Omh-6E-Tio"/>
@@ -336,17 +350,20 @@
                             <constraint firstItem="OOG-L8-sQG" firstAttribute="top" secondItem="hTk-68-DVB" secondAttribute="top" type="default" id="W3f-xI-KCN"/>
                             <constraint firstItem="AlN-14-DB6" firstAttribute="leading" secondItem="hTk-68-DVB" secondAttribute="leading" constant="10" id="Wfe-lv-LPU"/>
                             <constraint firstItem="AlN-14-DB6" firstAttribute="top" secondItem="hTk-68-DVB" secondAttribute="top" constant="4" id="Y5W-iR-yuz"/>
-                            <constraint firstAttribute="bottom" secondItem="haP-3S-Ims" secondAttribute="bottom" constant="120" id="Z0m-nC-DCh"/>
                             <constraint firstItem="OOG-L8-sQG" firstAttribute="leading" secondItem="hTk-68-DVB" secondAttribute="leading" type="default" id="ZYd-XF-HrZ"/>
-                            <constraint firstItem="jLe-DC-2gl" firstAttribute="top" secondItem="hTk-68-DVB" secondAttribute="top" constant="360" id="Zi3-eA-Rlu"/>
+                            <constraint firstItem="jLe-DC-2gl" firstAttribute="top" relation="greaterThanOrEqual" secondItem="hTk-68-DVB" secondAttribute="top" constant="360" type="user" id="Zi3-eA-Rlu"/>
                             <constraint firstItem="jLe-DC-2gl" firstAttribute="leading" secondItem="hTk-68-DVB" secondAttribute="leading" type="default" id="eJQ-kC-Bkv"/>
                             <constraint firstAttribute="trailing" secondItem="Vcd-4B-c7j" secondAttribute="trailing" constant="108" id="eU8-FU-EIi"/>
                             <constraint firstItem="Vcd-4B-c7j" firstAttribute="top" secondItem="hTk-68-DVB" secondAttribute="top" constant="43" id="esc-2g-Qzb"/>
                             <constraint firstItem="haP-3S-Ims" firstAttribute="leading" secondItem="hTk-68-DVB" secondAttribute="leading" type="default" id="fk1-af-Trl"/>
                             <constraint firstItem="lpV-ub-V1k" firstAttribute="leading" secondItem="AlN-14-DB6" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="hRc-SA-0iS"/>
+                            <constraint firstItem="sZg-e0-fMB" firstAttribute="top" secondItem="iQL-nW-Waw" secondAttribute="top" type="default" id="jfe-pC-UZz"/>
                             <constraint firstItem="nh0-56-tN6" firstAttribute="leading" secondItem="hTk-68-DVB" secondAttribute="leading" type="default" id="l1Y-Z7-U8g"/>
-                            <constraint firstItem="PB7-p3-8R3" firstAttribute="top" secondItem="iQL-nW-Waw" secondAttribute="top" type="default" id="pB6-cn-8Ex"/>
+                            <constraint firstItem="jLe-DC-2gl" firstAttribute="top" secondItem="hTk-68-DVB" secondAttribute="top" constant="360" id="tjI-Bo-0co"/>
+                            <constraint firstAttribute="bottom" secondItem="haP-3S-Ims" secondAttribute="bottom" constant="120" id="vfG-Dm-waM"/>
+                            <constraint firstItem="iQL-nW-Waw" firstAttribute="leading" secondItem="sZg-e0-fMB" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="wcZ-tD-O0Z"/>
                             <constraint firstItem="haP-3S-Ims" firstAttribute="top" secondItem="hTk-68-DVB" secondAttribute="top" constant="40" id="x7P-zu-711"/>
+                            <constraint firstItem="sZg-e0-fMB" firstAttribute="top" secondItem="PB7-p3-8R3" secondAttribute="top" type="default" id="ybo-3X-gdM"/>
                         </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>

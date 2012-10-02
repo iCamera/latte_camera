@@ -8,11 +8,13 @@
 
 #import "luxeysCellComment.h"
 #import "UIImageView+AFNetworking.h"
+#import "UIButton+AsyncImage.h"
 
 @implementation luxeysTableViewCellComment
 @synthesize textComment;
 @synthesize labelAuthor;
 @synthesize buttonUser;
+@synthesize constraintCommentHeight;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -32,22 +34,17 @@
 
 - (void)setComment:(NSDictionary *)comment {
     NSDictionary* user = [comment objectForKey:@"user"];
-    UIImageView* imageUser = [[UIImageView alloc] init];
-    NSURLRequest *theRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[user objectForKey:@"profile_picture"]]
-                                                cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                            timeoutInterval:60.0];
-    
-    [imageUser setImageWithURLRequest:theRequest
-                     placeholderImage:nil
-                              success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                  [buttonUser setBackgroundImage:image forState:UIControlStateNormal];
-                              }
-                              failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                                  
-                              }
-     ];
+    [buttonUser loadBackground:[user objectForKey:@"profile_picture"]];
     textComment.text = [comment objectForKey:@"description"];
     labelAuthor.text = [user objectForKey:@"name"];
+    
+    CGSize labelSize = [textComment.text sizeWithFont:[UIFont systemFontOfSize:11]
+                              constrainedToSize:CGSizeMake(255.0f, MAXFLOAT)
+                                  lineBreakMode:NSLineBreakByWordWrapping];
+    
+    constraintCommentHeight.constant = labelSize.height;
+    
+    buttonUser.layer.cornerRadius = 3;
 }
 
 @end
