@@ -7,8 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UIImageView+AFNetworking.h"
+#import "luxeysImageUtils.h"
+#import "luxeysLatteAPIClient.h"
+#import "luxeysAppDelegate.h"
+#import "UIButton+AsyncImage.h"
+#import "LuxeysPicture.h"
+#import "LuxeysUser.h"
 
-@interface luxeysTemplatePicTimeline : UIViewController
+@interface luxeysTemplatePicTimeline : UIViewController {
+    LuxeysPicture *pic;
+    LuxeysUser *user;
+    id sender;
+    NSInteger section;
+}
 
 @property (strong, nonatomic) IBOutlet UILabel *labelTitle;
 @property (strong, nonatomic) IBOutlet UIImageView *imagePic;
@@ -24,6 +36,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonMap;
 @property (strong, nonatomic) IBOutlet UIButton *buttonShowComment;
 
-- (id)initWithPic:(NSDictionary *)pic user:(NSDictionary *)user section:(NSInteger)section sender:(id)sender;
+- (id)initWithPic:(LuxeysPicture *)pic user:(LuxeysUser *)user section:(NSInteger)section sender:(id)sender;
 
 @end

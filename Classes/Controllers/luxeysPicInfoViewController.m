@@ -7,18 +7,8 @@
 //
 
 #import "luxeysPicInfoViewController.h"
-#import "luxeysCellProfile.h"
-#import "luxeysLatteAPIClient.h"
-#import "UIImageView+AFNetworking.h"
-#import "luxeysAppDelegate.h"
 
-@interface luxeysPicInfoViewController () {
-    NSDictionary *exif;
-    NSArray *keyBasic;
-    NSArray *keyExif;
-    NSMutableArray *sections;
-    NSDictionary *pic;
-}
+@interface luxeysPicInfoViewController ()
 @end
 
 @implementation luxeysPicInfoViewController
@@ -51,11 +41,6 @@
                        nil];
     [viewHeader.layer insertSublayer:gradient atIndex:0];
     
-//    CGRect frame = tableInfo.frame;
-//    frame.size = tableInfo.contentSize;
-//    tableInfo.frame = frame;
-//    self.viewScroll.contentSize = CGSizeMake(320, frame.size.height + 50);
-
 
     UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:imagePic.bounds];
     imagePic.layer.masksToBounds = NO;
@@ -65,29 +50,30 @@
     imagePic.layer.shadowRadius = 1.0f;
     imagePic.layer.shadowPath = shadowPath.CGPath;
     
-    NSString *url = [NSString stringWithFormat:@"api/picture/%d", [[pic objectForKey:@"id"] integerValue]];
+    NSString *url = [NSString stringWithFormat:@"api/picture/%d", picID];
 
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     [[luxeysLatteAPIClient sharedClient] getPath:url
                                       parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                             pic = [JSON objectForKey:@"picture"];
+                                             picDict = [JSON objectForKey:@"picture"];
+                                             pic = [LuxeysPicture instanceFromDictionary:picDict];
                                              
-                                             [imagePic setImageWithURL:[NSURL URLWithString:[pic objectForKey:@"url_square"]]];
+                                             [imagePic setImageWithURL:[NSURL URLWithString:pic.urlSquare]];
                                              
                                              NSMutableSet *keyBasicSet = [NSMutableSet setWithObjects:@"taken_at", @"created_at", @"tags", nil];
-                                             NSSet *allField = [NSSet setWithArray:[pic allKeys]];
+                                             NSSet *allField = [NSSet setWithArray:[picDict allKeys]];
                                              [keyBasicSet intersectSet:allField];
                                              keyBasic = [keyBasicSet allObjects];
                                              
                                              sections = [[NSMutableArray alloc] init];
                                              [sections addObject:keyBasic];
-                                             exif = [pic objectForKey:@"exif"];
+                                             exif = [picDict objectForKey:@"exif"];
                                              if (exif.count > 0) {
                                                  [sections addObject:exif];
                                                  keyExif = [exif allKeys];
                                              }
-                                             labelTitle.text = [pic objectForKey:@"title"];
+                                             labelTitle.text = pic.title;
                                              
                                              [tableInfo reloadData];
                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -125,8 +111,8 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)setPicture:(NSDictionary *)aPicture {
-    pic = aPicture;
+- (void)setPictureID:(int)aPicID {
+    picID = aPicID;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -146,7 +132,7 @@
     luxeysCellProfile *cell = [tableView dequeueReusableCellWithIdentifier:@"Profile"];
     if (indexPath.section == 0)
     {        
-        cell.labelDetail.text = [pic objectForKey:[keyBasic objectAtIndex:indexPath.row]];
+        cell.labelDetail.text = [picDict objectForKey:[keyBasic objectAtIndex:indexPath.row]];
         if ([[keyBasic objectAtIndex:indexPath.row] isEqualToString:@"taken_at"]) {
             cell.labelField.text = @"撮影月日";
         }

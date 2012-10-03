@@ -13,5 +13,9 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonPic2;
 @property (strong, nonatomic) IBOutlet UIButton *buttonPic3;
 @property (strong, nonatomic) IBOutlet UIButton *buttonPic4;
+@property (strong, nonatomic) IBOutlet UIView *badgeRank5;
+@property (strong, nonatomic) IBOutlet UIView *badgeRank8;
+@property (strong, nonatomic) IBOutlet UIView *badgeRank7;
+@property (strong, nonatomic) IBOutlet UIView *badgeRank6;
 
 @end

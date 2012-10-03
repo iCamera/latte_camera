@@ -8,19 +8,12 @@
 
 #import "luxeysPicDetailViewController.h"
 
-@interface luxeysPicDetailViewController () {
-    luxeysTableViewCellPicture *cellPicInfo;
-    EGORefreshTableHeaderView *refreshHeaderView;
-    BOOL reloading;
-    LuxeysPicture *pic;
-    NSMutableArray *comments;
-}
+@interface luxeysPicDetailViewController ()
 @end
 
 @implementation luxeysPicDetailViewController
 
 @synthesize gestureTap;
-@synthesize picInfo;
 @synthesize viewTextbox;
 @synthesize textComment;
 @synthesize buttonSend;
@@ -32,6 +25,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        loaded = FALSE;
     }
     return self;
 }
@@ -60,10 +54,9 @@
     refreshHeaderView.delegate = self;
     [self.tablePic addSubview:refreshHeaderView];
 
-
     CGRect frameTable = self.view.bounds;
     CGRect frameComment = viewTextbox.frame;
-    frameTable.size.height -= frameComment.size.height;
+    frameTable.size.height -= 44+viewTextbox.frame.size.height;
     tablePic.frame = frameTable;
     
     frameComment.origin.y = self.view.bounds.size.height-frameComment.size.height-44;
@@ -79,17 +72,31 @@
     }
     
     
-    NSString *url = [NSString stringWithFormat:@"api/picture/%d", [[picInfo objectForKey:@"id"] integerValue]];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+    NSString *url = [NSString stringWithFormat:@"api/picture/%d", picID];
     [[luxeysLatteAPIClient sharedClient] getPath:url
                                       parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                             [cellPicInfo setPicture:[JSON objectForKey:@"picture"] user:[JSON objectForKey:@"user"]];
-                                             comments = [NSMutableArray arrayWithArray:[JSON objectForKey:@"comments"]];
-                                             [tablePic reloadData];
+                                             user = [LuxeysUser instanceFromDictionary:[JSON objectForKey:@"user"]];
+                                             pic = [LuxeysPicture instanceFromDictionary:[JSON objectForKey:@"picture"]];
+                                             comments = [LuxeysComment mutableArrayFromDictionary:JSON withKey:@"comments"];
+                                             
                                              [self doneLoadingTableViewData];
+                                             loaded = TRUE;
+
+                                             [tablePic reloadData];
+
+                                             dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                             NSLog(@"Something went wrong (PicInfo)");
+                                             NSLog(@"Something went wrong (PicDetail)");
+                                             dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
                                          }];
+    });
     
 }
 
@@ -129,17 +136,21 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         float newheight = [luxeysImageUtils heightFromWidth:300
-                                                      width:[[picInfo objectForKey:@"width"] floatValue]
-                                                     height:[[picInfo objectForKey:@"height"] floatValue]];
+                                                      width:[pic.width floatValue]
+                                                     height:[pic.height floatValue]];
         return newheight + 100;
     } else {
-        NSDictionary *comment = [comments objectAtIndex:indexPath.row-1];
-        NSString *strComment = [comment objectForKey:@"description"];
+        LuxeysComment *comment = [comments objectAtIndex:indexPath.row-1];
+        NSString *strComment = comment.descriptionText;
         CGSize labelSize = [strComment sizeWithFont:[UIFont systemFontOfSize:11]
                                   constrainedToSize:CGSizeMake(255.0f, MAXFLOAT)
                                       lineBreakMode:NSLineBreakByWordWrapping];
         return MAX(labelSize.height + 33, 50);
     }
+}
+
+- (void)setPictureID:(int)aPicID {
+    picID = aPicID;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -148,17 +159,21 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return comments.count + 1;
+    if (loaded)
+        return comments.count + 1;
+    return 0;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         cellPicInfo = [tableView dequeueReusableCellWithIdentifier:@"Picture"];
         
+        [cellPicInfo setPicture:pic user:user];
+        
         [cellPicInfo.buttonComment addTarget:self action:@selector(showKeyboard:) forControlEvents:UIControlEventTouchUpInside];
         [cellPicInfo.buttonLike addTarget:self action:@selector(touchLike:) forControlEvents:UIControlEventTouchUpInside];
         
-        cellPicInfo.buttonUser.tag = indexPath.row;
+        cellPicInfo.buttonUser.tag = [user.userId longValue];
         
         [cellPicInfo.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
         [cellPicInfo.buttonInfo addTarget:self action:@selector(showInfo:) forControlEvents:UIControlEventTouchUpInside];
@@ -172,8 +187,10 @@
                                            reuseIdentifier:@"Comment"];
                     }
         
-        [cellComment setComment:[comments objectAtIndex:indexPath.row-1]];
-        cellComment.buttonUser.tag = indexPath.row;
+        LuxeysComment *comment = [comments objectAtIndex:indexPath.row-1];
+        [cellComment setComment:comment];
+        
+        cellComment.buttonUser.tag = [comment.user.userId longValue];
         [cellComment.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
         
         
@@ -182,28 +199,21 @@
 }
 
 - (void)showUser:(UIButton*)button {
-    if (button.tag == 0) {
-        [self performSegueWithIdentifier:@"UserProfile" sender:[picInfo objectForKey:@"owner"]];
-    } else {
-        NSArray* arComment = (NSArray*)[picInfo objectForKey:@"comments"];
-        NSDictionary *dictComment = [arComment objectAtIndex:button.tag-1];
-        
-        [self performSegueWithIdentifier:@"UserProfile" sender:[dictComment objectForKey:@"user"]];
-    }
+    [self performSegueWithIdentifier:@"UserProfile" sender:button];
 }
 
 - (void)showInfo:(id)sender {
     [self performSegueWithIdentifier:@"PictureInfo" sender:self];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UIButton *)button {
     if ([segue.identifier isEqualToString:@"UserProfile"]) {
         luxeysUserViewController* viewUser = segue.destinationViewController;
-        viewUser.dictUser = sender;
+        [viewUser setUserID:button.tag];
     }
     if ([segue.identifier isEqualToString:@"PictureInfo"]) {
         luxeysPicInfoViewController *viewInfo = segue.destinationViewController;
-        [viewInfo setPicture:picInfo];
+        [viewInfo setPictureID:picID];
     }
 }
 
@@ -225,7 +235,7 @@
 
     
     // Step 2: Adjust the bottom content inset of your scroll view by the keyboard height.
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height + viewTextbox.frame.size.height, 0.0);
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height, 0.0);
     tablePic.contentInset = contentInsets;
     tablePic.scrollIndicatorInsets = contentInsets;
     
@@ -250,7 +260,7 @@
     [UIView setAnimationCurve:[[[notification userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
     [UIView setAnimationDuration:[[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue]];
     
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, viewTextbox.frame.size.height, 0.0);
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
     tablePic.contentInset = contentInsets;
     tablePic.scrollIndicatorInsets = contentInsets;
 
@@ -274,12 +284,12 @@
                                [app getToken], @"token",
                                textComment.text, @"description", nil];
         
-        NSString *url = [NSString stringWithFormat:@"api/picture/%d/comment_post", [[picInfo objectForKey:@"id"] integerValue]];
+        NSString *url = [NSString stringWithFormat:@"api/picture/%d/comment_post", picID];
         
         [[luxeysLatteAPIClient sharedClient] postPath:url
                                            parameters:param
                                               success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                  NSDictionary *comment = [JSON objectForKey:@"comment"];
+                                                  LuxeysComment *comment = [LuxeysComment instanceFromDictionary:[JSON objectForKey:@"comment"]];
                                                   [comments addObject:comment];
                                                   NSIndexPath *path = [NSIndexPath indexPathForRow:comments.count inSection:0];
                                                   [tablePic insertRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationRight];
@@ -319,7 +329,7 @@
                            @"1", @"vote_type",
                            nil];
     
-    NSString *url = [NSString stringWithFormat:@"api/picture/%d/vote_post", [[picInfo objectForKey:@"id"] integerValue]];
+    NSString *url = [NSString stringWithFormat:@"api/picture/%d/vote_post", picID];
     [[luxeysLatteAPIClient sharedClient] postPath:url
                                        parameters:param
                                           success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {

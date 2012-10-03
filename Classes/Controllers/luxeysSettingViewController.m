@@ -29,14 +29,14 @@
     
     //Logic
     
-    [self loading:YES];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
     
     luxeysAppDelegate *app = (luxeysAppDelegate*)[[UIApplication sharedApplication] delegate];
     
     [[luxeysLatteAPIClient sharedClient] getPath:@"api/user/me"
                                        parameters: [NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"]
                                           success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                              [self loading:NO];
                                               
                                               NSDictionary *user = [JSON objectForKey:@"user"];
                                               
@@ -65,10 +65,18 @@
 
                                               
                                               [self.quickDialogTableView reloadData];
+
+                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
                                               
                                           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                               NSLog(@"Something went wrong (Load setting)");
+                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
                                           }];
+    });
 }
 
 - (void)setQuickDialogTableView:(QuickDialogTableView *)aQuickDialogTableView {

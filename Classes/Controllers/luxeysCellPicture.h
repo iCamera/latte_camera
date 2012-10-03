@@ -7,8 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "luxeysImageUtils.h"
+#import "luxeysLatteAPIClient.h"
+#import "luxeysAppDelegate.h"
+#import "UIButton+AsyncImage.h"
+#import "LuxeysUser.h"
+#import "LuxeysPicture.h"
+#import "UIImageView+AFNetworking.h"
 
-@interface luxeysTableViewCellPicture : UITableViewCell
+@interface luxeysTableViewCellPicture : UITableViewCell {
+}
 @property (strong, nonatomic) IBOutlet UILabel *labelTitle;
 @property (strong, nonatomic) IBOutlet UIImageView *imagePic;
 @property (strong, nonatomic) IBOutlet UILabel *labelAccess;
@@ -22,6 +30,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonInfo;
 @property (strong, nonatomic) IBOutlet UIButton *buttonMap;
 
-- (void)setPicture:(NSDictionary*)dictInfo user:(NSDictionary*)user;
+- (void)setPicture:(LuxeysPicture *)aPicture user:(LuxeysUser *)aUser;
 
 @end

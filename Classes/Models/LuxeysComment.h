@@ -1,8 +1,9 @@
 #import <Foundation/Foundation.h>
+#import "LuxeysObject.h"
 
 @class LuxeysUser;
 
-@interface LuxeysComment : NSObject {
+@interface LuxeysComment : LuxeysObject {
 
     NSNumber *luxeysCommentId;
     NSString *createdAt;

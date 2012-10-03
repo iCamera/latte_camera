@@ -17,7 +17,7 @@
 @synthesize model;
 @synthesize pageviews;
 @synthesize takenAt;
-@synthesize luxeysPictureId;
+@synthesize pictureId;
 @synthesize title;
 @synthesize urlLarge;
 @synthesize urlMedium;
@@ -25,6 +25,8 @@
 @synthesize urlSquare;
 @synthesize voteCount;
 @synthesize width;
+@synthesize exif;
+@synthesize user;
 
 + (LuxeysPicture *)instanceFromDictionary:(NSDictionary *)aDictionary {
 
@@ -60,6 +62,12 @@
 
         }
 
+    } else if ([key isEqualToString:@"user"]) {
+        
+        if ([value isKindOfClass:[NSDictionary class]]) {
+            self.user = [LuxeysUser instanceFromDictionary:value];
+        }
+        
     } else {
         [super setValue:value forKey:key];
     }
@@ -84,7 +92,7 @@
     } else if ([key isEqualToString:@"taken_at"]) {
         [self setValue:value forKey:@"takenAt"];
     } else if ([key isEqualToString:@"id"]) {
-        [self setValue:value forKey:@"luxeysPictureId"];
+        [self setValue:value forKey:@"pictureId"];
     } else if ([key isEqualToString:@"url_large"]) {
         [self setValue:value forKey:@"urlLarge"];
     } else if ([key isEqualToString:@"url_medium"]) {
@@ -95,6 +103,8 @@
         [self setValue:value forKey:@"urlSquare"];
     } else if ([key isEqualToString:@"vote_count"]) {
         [self setValue:value forKey:@"voteCount"];
+    } else if ([key isEqualToString:@"exif"]) {
+        [self setValue:value forKey:@"exif"];
     } else {
         [super setValue:value forUndefinedKey:key];
     }

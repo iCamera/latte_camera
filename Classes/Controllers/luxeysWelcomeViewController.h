@@ -10,15 +10,24 @@
 #import "SSCollectionView.h"
 #import "luxeysButtonBrown30.h"
 #import "luxeysLoginViewController.h"
+#import "LuxeysPicture.h"
+#import "MBProgressHUD.h"
+#import "luxeysLatteAPIClient.h"
+#import "SCImageCollectionViewItem.h"
+#import "luxeysPicDetailViewController.h"
+#import "luxeysAppDelegate.h"
 
 @interface luxeysWelcomeViewController : UIViewController<SSCollectionViewDataSource, SSCollectionViewDelegate, UIScrollViewDelegate> {
     NSMutableArray *_items;
+    UIActivityIndicatorView *indicator;
+    int pagephoto;
+    BOOL loadEnded;
+    SSCollectionView *collectionView;
 }
 
 @property (strong, nonatomic) IBOutlet luxeysButtonBrown30 *buttonLeftMenu;
 @property (strong, nonatomic) IBOutlet luxeysButtonBrown30 *buttonNavRight;
 @property (strong, nonatomic) UIPanGestureRecognizer *navigationBarPanGestureRecognizer;
-@property (nonatomic, retain, readonly) SSCollectionView *collectionView;
 
 - (IBAction)loginPressed:(id)sender;
 

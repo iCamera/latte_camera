@@ -7,11 +7,6 @@
 //
 
 #import "luxeysCellPicture.h"
-#import "UIImageView+AFNetworking.h"
-#import "luxeysImageUtils.h"
-#import "luxeysLatteAPIClient.h"
-#import "luxeysAppDelegate.h"
-#import "UIButton+AsyncImage.h"
 
 @implementation luxeysTableViewCellPicture
 @synthesize labelTitle;
@@ -44,43 +39,43 @@
     // Configure the view for the selected state
 }
 
-- (void)setPicture:(NSDictionary*)pic user:(NSDictionary*)user
+- (void)setPicture:(LuxeysPicture *)pic user:(LuxeysUser *)user;
 {
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     // NSDictionary* user = [pic objectForKey:@"owner"];
     // Increase counter
     NSString *url = [NSString stringWithFormat:@"api/picture/counter/%d/%d",
-                     [[pic objectForKey:@"id"] integerValue],
-                     [[user objectForKey:@"id"] integerValue]];
+                     [pic.pictureId integerValue],
+                     [user.userId integerValue]];
     
     [[luxeysLatteAPIClient sharedClient] getPath:url
                                       parameters:[NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"]
                                          success:nil
                                          failure:nil];
     // Do any additional setup after loading the view from its nib.
-    labelTitle.text = [pic objectForKey:@"title"];
+    labelTitle.text = pic.title;
     
-    [buttonUser loadBackground:[user objectForKey:@"profile_picture"]];
-    labelAuthor.text = [user objectForKey:@"name"];
+    [buttonUser loadBackground:user.profilePicture];
+    labelAuthor.text = user.name;
     
-    [imagePic setImageWithURL:[NSURL URLWithString:[pic objectForKey:@"url_medium"]]];
+    [imagePic setImageWithURL:[NSURL URLWithString:pic.urlMedium]];
     
     float newheight = [luxeysImageUtils heightFromWidth:300
-                                                  width:[[pic objectForKey:@"width"] floatValue]
-                                                 height:[[pic objectForKey:@"height"] floatValue]];
-    labelAccess.text = [[pic objectForKey:@"pageviews"] stringValue];
-    labelLike.text = [[pic objectForKey:@"vote_count"] stringValue];
-    labelComment.text = [[pic objectForKey:@"comment_count"] stringValue];
+                                                  width:[pic.width floatValue]
+                                                 height:[pic.height floatValue]];
+    labelAccess.text = [pic.pageviews stringValue];
+    labelLike.text = [pic.voteCount stringValue];
+    labelComment.text = [pic.commentCount stringValue];
     imagePic.frame = CGRectMake(imagePic.frame.origin.x, imagePic.frame.origin.y, 300, newheight);
     viewStats.autoresizingMask = UIViewAutoresizingNone;
     viewStats.frame = CGRectMake(0, newheight + 70, viewStats.frame.size.width, viewStats.frame.size.height);
 
-    if ([[pic objectForKey:@"can_vote"] boolValue])
-        if (![[pic objectForKey:@"is_voted"] boolValue])
+    if (pic.canVote)
+        if (!pic.isVoted)
             buttonLike.enabled = YES;
 
 
-    if ([[pic objectForKey:@"can_comment"] boolValue]) {
+    if (pic.canComment) {
         buttonComment.enabled = YES;
     }
 

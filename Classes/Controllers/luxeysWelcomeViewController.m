@@ -7,17 +7,8 @@
 //
 
 #import "luxeysWelcomeViewController.h"
-#import "luxeysLatteAPIClient.h"
-#import "SCImageCollectionViewItem.h"
-#import "luxeysPicDetailViewController.h"
-#import "luxeysAppDelegate.h"
 
-@interface luxeysWelcomeViewController () {
-    UIActivityIndicatorView *indicator;
-    int pagephoto;
-    BOOL loadEnded;
-}
-
+@interface luxeysWelcomeViewController ()
 @end
 
 @implementation luxeysWelcomeViewController
@@ -25,7 +16,6 @@
 @synthesize buttonLeftMenu;
 @synthesize buttonNavRight;
 @synthesize navigationBarPanGestureRecognizer;
-@synthesize collectionView = _collectionView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -64,33 +54,46 @@
 {
     [super viewDidLoad];
     
-    _collectionView = [[SSCollectionView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height-44)];
+    collectionView = [[SSCollectionView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height-44)];
     
-    _collectionView.dataSource = self;
-    _collectionView.delegate = self;
-    _collectionView.extremitiesStyle = SSCollectionViewExtremitiesStyleScrolling;
-    _collectionView.rowSpacing = 5;
-    _collectionView.minimumColumnSpacing = 0;
-    _collectionView.scrollView.delegate = self;
+    collectionView.dataSource = self;
+    collectionView.delegate = self;
+    collectionView.extremitiesStyle = SSCollectionViewExtremitiesStyleScrolling;
+    collectionView.rowSpacing = 5;
+    collectionView.minimumColumnSpacing = 0;
+    collectionView.scrollView.delegate = self;
     
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, 50, 0.0);
     
-    _collectionView.scrollView.contentInset = contentInsets;
-    _collectionView.scrollView.scrollIndicatorInsets = contentInsets;
+    collectionView.scrollView.contentInset = contentInsets;
+    collectionView.scrollView.scrollIndicatorInsets = contentInsets;
     
-    [self.view addSubview:_collectionView];
+    [self.view addSubview:collectionView];
     
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
     [[luxeysLatteAPIClient sharedClient] getPath:@"api/picture/latests"
                                       parameters:nil
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                              _items = [[NSMutableArray alloc] init];
-                                             [_items addObjectsFromArray:[JSON objectForKey:@"pics"]];
-                                             
-                                             [self.collectionView reloadData];
-                                             
+                                             for (NSDictionary *pic in [JSON objectForKey:@"pics"]) {
+                                                 [_items addObject:[LuxeysPicture instanceFromDictionary:pic]];
+                                             }
+                                             [collectionView reloadData];
+
+                                             dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
+
                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+
+                                            dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
+
                                              NSLog(@"Something went wrong (Welcome)");
                                          }];
+    });
     
     [self.buttonNavRight addTarget:self action:@selector(loginPressed:) forControlEvents:UIControlEventTouchUpInside];
 }
@@ -116,9 +119,9 @@
 	}
 	
     
-    NSDictionary* pic = [_items objectAtIndex:indexPath.row];
+    LuxeysPicture *pic = [_items objectAtIndex:indexPath.row];
     
-	item.imageURL = [NSURL URLWithString:[pic objectForKey:@"url_square"]];
+	item.imageURL = [NSURL URLWithString:pic.urlSquare];
 	
 	return item;
 }
@@ -133,13 +136,14 @@
 
 
 - (void)collectionView:(SSCollectionView *)aCollectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:@"PictureDetail" sender:[_items objectAtIndex:indexPath.row]];
+    LuxeysPicture *pic = [_items objectAtIndex:indexPath.row];
+    [self performSegueWithIdentifier:@"PictureDetail" sender:pic];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(LuxeysPicture *)sender {
     if ([segue.identifier isEqualToString:@"PictureDetail"]) {
         luxeysPicDetailViewController* viewPicDetail = segue.destinationViewController;
-        viewPicDetail.picInfo = sender;
+        [viewPicDetail setPictureID:[sender.pictureId integerValue]];
     }
 }
 
@@ -223,8 +227,10 @@
                                                      NSArray *pics = [JSON objectForKey:@"pics"];
                                                      
                                                      if (pics.count > 0) {
-                                                         [_items addObjectsFromArray:[JSON objectForKey:@"pics"]];
-                                                         [_collectionView reloadData];
+                                                         for (NSDictionary *pic in pics) {
+                                                             [_items addObject:[LuxeysPicture instanceFromDictionary:pic]];
+                                                         }
+                                                         [collectionView reloadData];
                                                      } else {
                                                          loadEnded = true;
                                                      }

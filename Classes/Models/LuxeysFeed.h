@@ -1,21 +1,21 @@
 #import <Foundation/Foundation.h>
+#import "LuxeysObject.h"
 
 @class LuxeysUser;
 
-@interface LuxeysFeed : NSObject {
-
+@interface LuxeysFeed : LuxeysObject {
+    NSNumber *feedID;
     NSNumber *count;
-    NSNumber *userID;
     NSNumber *model;
     NSMutableArray *targets;
     LuxeysUser *user;
 
 }
 
+@property (nonatomic, copy) NSNumber *feedID;
 @property (nonatomic, copy) NSNumber *count;
-@property (nonatomic, copy) NSNumber *userID;
 @property (nonatomic, copy) NSNumber *model;
-@property (nonatomic, copy) NSMutableArray *targets;
+@property (nonatomic, retain) NSMutableArray *targets;
 @property (nonatomic, strong) LuxeysUser *user;
 
 + (LuxeysFeed *)instanceFromDictionary:(NSDictionary *)aDictionary;

@@ -6,7 +6,7 @@
 @implementation LuxeysFeed
 
 @synthesize count;
-@synthesize userID;
+@synthesize feedID;
 @synthesize model;
 @synthesize targets;
 @synthesize user;
@@ -61,7 +61,7 @@
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key {
 
     if ([key isEqualToString:@"id"]) {
-        [self setValue:value forKey:@"userID"];
+        [self setValue:value forKey:@"feedID"];
     } else {
         [super setValue:value forUndefinedKey:key];
     }

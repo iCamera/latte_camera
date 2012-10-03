@@ -7,24 +7,8 @@
 //
 
 #import "luxeysRightSideViewController.h"
-#import "luxeysAppDelegate.h"
-#import "luxeysLatteAPIClient.h"
-#import "luxeysCellFriendRequest.h"
-#import "luxeysCellNotify.h"
-#import "UIImageView+AFNetworking.h"
-#import "luxeysUserViewController.h"
-#import "luxeysPicDetailViewController.h"
 
-@interface luxeysRightSideViewController () {
-    NSMutableArray *notifies;
-    NSArray *requests;
-    NSArray *ignores;
-    int tableMode;
-    int page;
-    int limit;
-    EGORefreshTableHeaderView *refreshHeaderView;
-    BOOL reloading;
-}
+@interface luxeysRightSideViewController ()
 
 @end
 
@@ -102,10 +86,10 @@
         
         if (indexPath.section == 0) {
             luxeysCellFriendRequest *cellRequest = [tableView dequeueReusableCellWithIdentifier:@"Request"];
-            NSDictionary *user = [requests objectAtIndex:indexPath.row];
-            cellRequest.userName.text = [user objectForKey:@"name"];
+            LuxeysUser *user = [requests objectAtIndex:indexPath.row];
+            cellRequest.userName.text = user.name;
 
-            NSURLRequest *theRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[user objectForKey:@"profile_picture"]]
+            NSURLRequest *theRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:user.profilePicture]
                                                             cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                         timeoutInterval:60.0];
                 
@@ -118,7 +102,7 @@
                                        failure:nil
             ];
             
-            cellRequest.buttonProfile.tag = indexPath.row;
+            cellRequest.buttonProfile.tag = [user.userId integerValue];
             
             [cellRequest.buttonAdd addTarget:self action:@selector(addRequest:) forControlEvents:UIControlEventTouchUpInside];
             [cellRequest.buttonIgnore addTarget:self action:@selector(ingoreRequest:) forControlEvents:UIControlEventTouchUpInside];
@@ -128,10 +112,10 @@
             return cellRequest;
         } else {
             luxeysCellFriendRequest *cellIgnore = [tableView dequeueReusableCellWithIdentifier:@"Ignore"];
-            NSDictionary *user = [ignores objectAtIndex:indexPath.row];
-            cellIgnore.userName.text = [user objectForKey:@"name"];
+            LuxeysUser *user = [ignores objectAtIndex:indexPath.row];
+            cellIgnore.userName.text = user.name;
             
-            NSURLRequest *theRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[user objectForKey:@"profile_picture"]]
+            NSURLRequest *theRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:user.profilePicture]
                                                         cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                     timeoutInterval:60.0];
             
@@ -175,8 +159,8 @@
                                                    [app getToken], @"token",
                                                    nil]
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                             requests = [JSON objectForKey:@"requests"];
-                                             ignores = [JSON objectForKey:@"ignores"];
+                                             requests = [LuxeysUser mutableArrayFromDictionary:JSON withKey:@"requests"];
+                                             ignores = [LuxeysUser mutableArrayFromDictionary:JSON withKey:@"ignores"];
                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                              NSLog(@"Something went wrong (Notify)");
                                          }];
@@ -201,7 +185,9 @@
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
     luxeysUserViewController *viewUser = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserProfile"];
-    viewUser.dictUser = [requests objectAtIndex:sender.tag];
+    
+    LuxeysUser *user = [requests objectAtIndex:sender.tag];
+    [viewUser setUserID:[user.userId integerValue]];
     UINavigationController *nav = (id)app.viewMainTab.selectedViewController;
     [nav pushViewController:viewUser animated:YES];
 }
@@ -210,18 +196,18 @@
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     if (tableMode == 0) {
         NSDictionary *notify = [notifies objectAtIndex:indexPath.row];
-
         
         UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                                  bundle:nil];
         luxeysPicDetailViewController *viewPic = [mainStoryboard instantiateViewControllerWithIdentifier:@"Picture"];
-        viewPic.picInfo = [notify objectForKey:@"target"];
+        LuxeysPicture *pic = [LuxeysPicture instanceFromDictionary:[notify objectForKey:@"target"]];
+        [viewPic setPictureID:[pic.pictureId integerValue]];
         app.viewMainTab.selectedIndex = 4; // Switch to mypage
         UINavigationController *nav = (UINavigationController *)app.viewMainTab.selectedViewController;
         [nav pushViewController:viewPic animated:YES];
     }
     
-    [app.storyMain performSelector:@selector(revealRight:)];
+    [app.storyMain performSelector:@selector(revealRight:) withObject:self];
 
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

@@ -7,8 +7,6 @@
 //
 
 #import "luxeysCellComment.h"
-#import "UIImageView+AFNetworking.h"
-#import "UIButton+AsyncImage.h"
 
 @implementation luxeysTableViewCellComment
 @synthesize textComment;
@@ -32,11 +30,10 @@
     // Configure the view for the selected state
 }
 
-- (void)setComment:(NSDictionary *)comment {
-    NSDictionary* user = [comment objectForKey:@"user"];
-    [buttonUser loadBackground:[user objectForKey:@"profile_picture"]];
-    textComment.text = [comment objectForKey:@"description"];
-    labelAuthor.text = [user objectForKey:@"name"];
+- (void)setComment:(LuxeysComment *)comment {
+    [buttonUser loadBackground:comment.user.profilePicture];
+    textComment.text = comment.descriptionText;
+    labelAuthor.text = comment.user.name;
     
     CGSize labelSize = [textComment.text sizeWithFont:[UIFont systemFontOfSize:11]
                               constrainedToSize:CGSizeMake(255.0f, MAXFLOAT)

@@ -7,12 +7,8 @@
 //
 
 #import "luxeysTemplateTimlinePicMultiItem.h"
-#import "UIButton+AsyncImage.h"
 
-@interface luxeysTemplateTimlinePicMultiItem () {
-    NSDictionary *pic;
-    id parent;
-}
+@interface luxeysTemplateTimlinePicMultiItem ()
 
 @end
 
@@ -31,7 +27,7 @@
     return self;
 }
 
-- (id)initWithPic:(NSDictionary *)aPic parent:(id)aParent
+- (id)initWithPic:(LuxeysPicture *)aPic parent:(id)aParent
 {
     self = [super init];
     if (self) {
@@ -44,7 +40,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [buttonImage loadBackground:[pic objectForKey:@"url_square"]];
+    [buttonImage loadBackground:pic.urlSquare];
     
     buttonImage.layer.borderColor = [[UIColor whiteColor] CGColor];
     buttonImage.layer.borderWidth = 5;
@@ -59,21 +55,21 @@
     buttonComment.layer.cornerRadius = 5;
     buttonVote.layer.cornerRadius = 5;
     
-    [buttonComment setTitle:[[pic objectForKey:@"comment_count"] stringValue] forState:UIControlStateNormal];
-    [buttonVote setTitle:[[pic objectForKey:@"vote_count"] stringValue] forState:UIControlStateNormal];
+    [buttonComment setTitle:[pic.commentCount stringValue] forState:UIControlStateNormal];
+    [buttonVote setTitle:[pic.voteCount stringValue] forState:UIControlStateNormal];
     
-    if ([[pic objectForKey:@"can_vote"] boolValue])
-        if (![[pic objectForKey:@"is_voted"] boolValue])
+    if (pic.canVote)
+        if (!pic.isVoted)
             buttonVote.enabled = YES;
     
     
-    buttonComment.tag = [[pic objectForKey:@"id"] integerValue];
-    buttonImage.tag = [[pic objectForKey:@"id"] integerValue];
-    buttonVote.tag = [[pic objectForKey:@"id"] integerValue];
+    buttonComment.tag = [pic.pictureId integerValue];
+    buttonImage.tag = [pic.pictureId integerValue];
+    buttonVote.tag = [pic.pictureId integerValue];
     
     
     [buttonImage addTarget:parent action:@selector(showPicWithID:) forControlEvents:UIControlEventTouchUpInside];
-    [buttonComment addTarget:parent action:@selector(showPicWithID:) forControlEvents:UIControlEventTouchUpInside];
+    [buttonComment addTarget:parent action:@selector(showComment:) forControlEvents:UIControlEventTouchUpInside];
     [buttonVote addTarget:parent action:@selector(showPicWithID:) forControlEvents:UIControlEventTouchUpInside];
 
     // Do any additional setup after loading the view from its nib.

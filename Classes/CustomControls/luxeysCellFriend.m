@@ -7,7 +7,6 @@
 //
 
 #import "luxeysCellFriend.h"
-#import "UIImageView+AFNetworking.h"
 
 @implementation luxeysCellFriend
 @synthesize buttonUser;
@@ -30,9 +29,9 @@
     // Configure the view for the selected state
 }
 
-- (void)setUser:(NSDictionary*)user {
+- (void)setUser:(LuxeysUser *)user {
     UIImageView* imageUser = [[UIImageView alloc] init];
-    NSURLRequest *theRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[user objectForKey:@"profile_picture"]]
+    NSURLRequest *theRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:user.profilePicture]
                                                 cachePolicy:NSURLRequestUseProtocolCachePolicy
                                             timeoutInterval:60.0];
     
@@ -46,7 +45,7 @@
                               }
      ];
     //textComment.text = [comment objectForKey:@"description"];
-    labelName.text = [user objectForKey:@"name"];
+    labelName.text = user.name;
 }
 
 @end

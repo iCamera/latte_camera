@@ -7,10 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "UIImageView+AFNetworking.h"
+#import "luxeysLatteAPIClient.h"
+#import "luxeysAppDelegate.h"
+#import "luxeysCellComment.h"
 #import "luxeysButtonBrown30.h"
+#import "LuxeysPicture.h"
+#import "LuxeysComment.h"
+#import "LuxeysUser.h"
+#import "LuxeysFeed.h"
 
-@interface luxeysPicCommentViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@interface luxeysPicCommentViewController : UIViewController<UITableViewDataSource, UITableViewDelegate> {
+    LuxeysPicture *pic;
+    LuxeysUser *user;
+    UIViewController *parent;
+    NSInteger picID;
+}
+
 @property (strong, nonatomic) IBOutlet UITableView *tableComment;
 @property (strong, nonatomic) IBOutlet UIImageView *viewImage;
 @property (strong, nonatomic) IBOutlet UILabel *labelTitle;
@@ -25,6 +38,5 @@
 - (IBAction)tapBackground:(id)sender;
 - (IBAction)changeText:(id)sender;
 
-- (void)setPic:(NSDictionary *)aPic;
-
+- (void)setPic:(LuxeysPicture *)aPic withUser:(LuxeysUser *)aUser withParent:(UIViewController *)aParent;
 @end

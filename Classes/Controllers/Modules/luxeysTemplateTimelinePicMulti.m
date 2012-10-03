@@ -7,16 +7,8 @@
 //
 
 #import "luxeysTemplateTimelinePicMulti.h"
-#import "UIButton+AsyncImage.h"
-#import "luxeysPicDetailViewController.h"
-#import "luxeysTemplateTimlinePicMultiItem.h"
 
-@interface luxeysTemplateTimelinePicMulti () {
-    NSArray *pics;
-    NSDictionary *user;
-    UIViewController *sender;
-    NSInteger section;
-}
+@interface luxeysTemplateTimelinePicMulti ()
 @end
 
 @implementation luxeysTemplateTimelinePicMulti
@@ -35,13 +27,13 @@
     return self;
 }
 
-- (id)initWithPics:(NSArray *)_pics user:(NSDictionary *)_user section:(NSInteger)_section sender:(id)_sender {
+- (id)initWithPics:(NSArray *)aPics user:(LuxeysUser *)aUser section:(NSInteger)aSection sender:(id)aSender {
     self = [super init];
     if (self) {
-        pics = _pics;
-        user = _user;
-        section = _section;
-        sender = _sender;
+        pics = aPics;
+        user = aUser;
+        section = aSection;
+        sender = aSender;
     }
     return self;
 }
@@ -51,14 +43,14 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    labelUser.text = [user objectForKey:@"name"];
+    labelUser.text = user.name;
     buttonUser.tag = section;
     
-    [buttonUser loadBackground:[user objectForKey:@"profile_picture"]];
+    [buttonUser loadBackground:user.profilePicture];
     [buttonUser addTarget:sender action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
     
     CGSize size = CGSizeMake(10, 190);
-    for (NSDictionary *pic in pics) {
+    for (LuxeysPicture *pic in pics) {
         luxeysTemplateTimlinePicMultiItem *viewPic = [[luxeysTemplateTimlinePicMultiItem alloc] initWithPic:pic parent:sender];
         viewPic.view.frame = CGRectMake(size.width, 2, 190, 190);
         [scrollImage addSubview:viewPic.view];

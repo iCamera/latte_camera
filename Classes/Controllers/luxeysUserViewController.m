@@ -7,21 +7,8 @@
 //
 
 #import "luxeysUserViewController.h"
-#import "UIImageView+AFNetworking.h"
-#import "luxeysLatteAPIClient.h"
-#import "luxeysAppDelegate.h"
-#import "luxeysCellProfile.h"
-#import "luxeysPicDetailViewController.h"
 
-@interface luxeysUserViewController () {
-@private
-    NSMutableSet *showSet;
-    NSArray *showField;
-    NSArray *friends;
-    NSArray *photos;
-    NSDictionary *userDetail;
-    int tableMode;
-}
+@interface luxeysUserViewController () 
 @end
 
 @implementation luxeysUserViewController
@@ -31,7 +18,6 @@
 @synthesize imageUser;
 @synthesize viewStats;
 @synthesize viewContent;
-@synthesize dictUser;
 @synthesize buttonProfile;
 @synthesize buttonCalendar;
 @synthesize buttonMap;
@@ -77,34 +63,27 @@
                        (id)[[[UIColor blackColor] colorWithAlphaComponent:0.2f] CGColor],
                        nil];
     [viewStats.layer insertSublayer:gradient atIndex:0];
-
-    // UIBezierPath *shadowPath2 = [UIBezierPath bezierPathWithRect:tableProfile.bounds];
-    // tableProfile.layer.masksToBounds = NO;
-    // tableProfile.layer.shadowColor = [UIColor blackColor].CGColor;
-    // tableProfile.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-    // tableProfile.layer.shadowOpacity = 0.5f;
-    // tableProfile.layer.shadowRadius = 2.0f;
-    // tableProfile.layer.shadowPath = shadowPath2.CGPath;
     
     viewStats.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     
     // Data
-    [self.navigationItem setTitle:[dictUser objectForKey:@"name"]];
     
     luxeysAppDelegate* app = (luxeysAppDelegate*)[[UIApplication sharedApplication] delegate];
     
-    NSString* strURL = [NSString stringWithFormat:@"api/user/%d", [[dictUser objectForKey:@"id"] integerValue]];
+    NSString* strURL = [NSString stringWithFormat:@"api/user/%d", userID];
     [[luxeysLatteAPIClient sharedClient] getPath:strURL
                                       parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                             userDetail = [JSON objectForKey:@"user"];
-                                             [buttonFriendCount setTitle:[[userDetail objectForKey:@"count_friends"] stringValue] forState:UIControlStateNormal];
-                                             [buttonPhotoCount setTitle:[[userDetail objectForKey:@"count_pictures"] stringValue] forState:UIControlStateNormal];
-                                             [buttonVoteCount setTitle:[[userDetail objectForKey:@"vote_count"] stringValue] forState:UIControlStateNormal];
+                                             userDict = [JSON objectForKey:@"user"];
+                                             user =  [LuxeysUser instanceFromDictionary:userDict];
+                                             [self.navigationItem setTitle:user.name];
+                                             [buttonFriendCount setTitle:[user.countFriends stringValue] forState:UIControlStateNormal];
+                                             [buttonPhotoCount setTitle:[user.countPictures stringValue] forState:UIControlStateNormal];
+                                             [buttonVoteCount setTitle:[user.voteCount stringValue] forState:UIControlStateNormal];
                                              
-                                             [self.imageUser setImageWithURL:[NSURL URLWithString:[userDetail objectForKey:@"profile_picture"]]];
+                                             [self.imageUser setImageWithURL:[NSURL URLWithString:user.profilePicture]];
                                              
-                                             NSSet *allField = [NSSet setWithArray:[userDetail allKeys]];
+                                             NSSet *allField = [NSSet setWithArray:[userDict allKeys]];
                                              [showSet intersectSet:allField];
                                              showField = [showSet allObjects];
                                              [tableProfile reloadData];
@@ -113,7 +92,7 @@
                                             NSLog(@"Something went wrong (User - Profile)");
                                          }];
     
-    NSString* urlFriends = [NSString stringWithFormat:@"api/user/%d/friend", [[dictUser objectForKey:@"id"] integerValue]];
+    NSString* urlFriends = [NSString stringWithFormat:@"api/user/%d/friend", userID];
     [[luxeysLatteAPIClient sharedClient] getPath:urlFriends
                                       parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -123,11 +102,11 @@
                                             NSLog(@"Something went wrong (User - Friendlist)");
                                          }];
 
-    NSString* urlPhotos = [NSString stringWithFormat:@"api/picture/user/%d", [[dictUser objectForKey:@"id"] integerValue]];
+    NSString* urlPhotos = [NSString stringWithFormat:@"api/picture/user/%d", userID];
     [[luxeysLatteAPIClient sharedClient] getPath:urlPhotos
                                       parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                             photos = [JSON objectForKey:@"pictures"];
+                                             photos = [LuxeysPicture mutableArrayFromDictionary:JSON withKey:@"pictures"];
 
                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                             NSLog(@"Something went wrong (User - Photolist)");
@@ -278,7 +257,12 @@
             cell.labelField.text = @"自己紹介";
         }
         
-        cell.labelDetail.text = [userDetail objectForKey:strKey];
+        if ([strKey isEqualToString:@"gender"]) {
+            cell.labelDetail.text = [[userDict objectForKey:strKey] stringValue];
+        } else {
+            cell.labelDetail.text = [userDict objectForKey:strKey];
+        }
+        
         
         return cell;
     } else if (tableMode == 5) {
@@ -287,22 +271,12 @@
         {
             NSInteger index = indexPath.row*4+i;
             if (index < photos.count) {
-                NSDictionary *pic = [photos objectAtIndex:index];
+                LuxeysPicture *pic = [photos objectAtIndex:index];
 
                 UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(10+(i*77), 10, 67, 67)];
-                NSURLRequest *theRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[pic objectForKey:@"url_square"]]
-                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                                        timeoutInterval:60.0];
-                
-                UIImageView* imageFirst = [[UIImageView alloc] init];
-                [imageFirst setImageWithURLRequest:theRequest
-                                  placeholderImage:nil
-                                           success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                               [button setBackgroundImage:image forState:UIControlStateNormal];
-                                           }
-                                           failure:nil
-                 ];
-                button.tag = index;
+
+                [button loadBackground:pic.urlSquare];
+                button.tag = [pic.pictureId longValue];
                 [button addTarget:self action:@selector(showPhoto:) forControlEvents:UIControlEventTouchUpInside];
                 [cellPic addSubview:button];
             }
@@ -321,14 +295,18 @@
 }
 
 - (void)showPhoto:(UIButton*)sender {
-    [self performSegueWithIdentifier:@"PictureDetail" sender:[photos objectAtIndex:sender.tag]];
+    [self performSegueWithIdentifier:@"PictureDetail" sender:sender];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UIButton *)sender {
     if ([segue.identifier isEqualToString:@"PictureDetail"]) {
         luxeysPicDetailViewController* viewPicDetail = segue.destinationViewController;
-        viewPicDetail.picInfo = sender;
+        [viewPicDetail setPictureID:sender.tag];
     }
+}
+
+- (void)setUserID:(int)aUserID {
+    userID = aUserID;
 }
 
 @end

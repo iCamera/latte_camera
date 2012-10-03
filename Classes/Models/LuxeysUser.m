@@ -6,6 +6,7 @@
 @synthesize birthdate;
 @synthesize birthdatePublic;
 @synthesize birthyearPublic;
+@synthesize bloodType;
 @synthesize countFollows;
 @synthesize countFriends;
 @synthesize countPictures;
@@ -16,7 +17,7 @@
 @synthesize hobby;
 @synthesize hometown;
 @synthesize hometownPublic;
-@synthesize luxeysUserId;
+@synthesize userId;
 @synthesize introduction;
 @synthesize isUnregister;
 @synthesize name;
@@ -32,6 +33,14 @@
     return instance;
 
 }
+
++ (NSMutableArray *)mutableArrayFromDictionary:(NSDictionary *)aDictionary withKey:(NSString *)aKey {
+    NSMutableArray *ret = [[NSMutableArray alloc] init];
+    for (NSDictionary *user in [aDictionary objectForKey:aKey])
+        [ret addObject:[LuxeysUser instanceFromDictionary:user]];
+    return ret;
+}
+
 
 - (void)setAttributesFromDictionary:(NSDictionary *)aDictionary {
 
@@ -49,6 +58,8 @@
         [self setValue:value forKey:@"birthdatePublic"];
     } else if ([key isEqualToString:@"birthyear_public"]) {
         [self setValue:value forKey:@"birthyearPublic"];
+    } else if ([key isEqualToString:@"bloodtype"]) {
+        [self setValue:value forKey:@"bloodType"];
     } else if ([key isEqualToString:@"count_follows"]) {
         [self setValue:value forKey:@"countFollows"];
     } else if ([key isEqualToString:@"count_friends"]) {
@@ -64,7 +75,7 @@
     } else if ([key isEqualToString:@"hometown_public"]) {
         [self setValue:value forKey:@"hometownPublic"];
     } else if ([key isEqualToString:@"id"]) {
-        [self setValue:value forKey:@"luxeysUserId"];
+        [self setValue:value forKey:@"userId"];
     } else if ([key isEqualToString:@"is_unregister"]) {
         [self setValue:value forKey:@"isUnregister"];
     } else if ([key isEqualToString:@"picture_status"]) {

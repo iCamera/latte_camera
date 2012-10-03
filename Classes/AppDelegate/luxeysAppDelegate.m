@@ -69,7 +69,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                                                    [self getToken], @"token", nil]
                                           success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                               if ([[JSON objectForKey:@"status"] integerValue] == 1) {
-                                                  self.currentUser = [JSON objectForKey:@"user"];
+                                                  self.currentUser = [LuxeysUser instanceFromDictionary:[JSON objectForKey:@"user"]];
                                                   
                                                   [self createSideMain];
                                                   

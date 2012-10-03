@@ -46,8 +46,8 @@
     
     // Load User Info
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-    self.labelUsername.text = [app.currentUser objectForKey:@"name"];
-    [self.imageProfile setImageWithURL:[NSURL URLWithString:[app.currentUser objectForKey:@"profile_picture"]]];
+    self.labelUsername.text = app.currentUser.name;
+    [self.imageProfile setImageWithURL:[NSURL URLWithString:app.currentUser.profilePicture]];
     //[tableView reload];
 }
 

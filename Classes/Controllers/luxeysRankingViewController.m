@@ -7,19 +7,8 @@
 //
 
 #import "luxeysRankingViewController.h"
-#import "luxeysCellRankLv1.h"
-#import "luxeysCellRankLv2.h"
-#import "luxeysCellRankLv3.h"
-#import "UIImageView+AFNetworking.h"
-#import "luxeysImageUtils.h"
-#import "luxeysLatteAPIClient.h"
-#import "luxeysPicDetailViewController.h"
 
-@interface luxeysRankingViewController () {
-    BOOL loadEnded;
-    NSString* ranktype;
-    NSInteger rankpage;
-}
+@interface luxeysRankingViewController ()
 
 @end
 
@@ -28,7 +17,6 @@
 @synthesize buttonWeekly;
 @synthesize buttonMonthly;
 @synthesize viewTab;
-@synthesize arPics;
 @synthesize loadIndicator;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -74,21 +62,28 @@
 - (void)loadRanking {
     NSString* url = [NSString stringWithFormat:@"api/picture/ranking/%@/%d", ranktype, rankpage];
     
-    [loadIndicator startAnimating];
     
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
     [[luxeysLatteAPIClient sharedClient] getPath:url
                                       parameters: nil
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                             arPics = [[NSMutableArray alloc] initWithArray:[JSON objectForKey:@"pics"]];
+                                             pics = [LuxeysPicture mutableArrayFromDictionary:JSON withKey:@"pics"];
                                              [self.tableView reloadData];
-                                             
-                                             [loadIndicator stopAnimating];
+
+                                             dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
                                          }
                                          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                              NSLog(@"Something went wrong (Ranking)");
-                                             [loadIndicator stopAnimating];
+                                             
+                                             dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
                                          }
      ];
+    });
 }
 
 - (void)loadMore {
@@ -99,14 +94,14 @@
     [[luxeysLatteAPIClient sharedClient] getPath:url
                                       parameters: nil
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                             NSArray *arNew = [JSON objectForKey:@"pics"];
-                                             if (arNew.count == 0)
+                                             NSArray *newPics = [JSON objectForKey:@"pics"];
+                                             for (NSDictionary *pic in newPics) {
+                                                 [pics addObject:[LuxeysPicture instanceFromDictionary:pic]];
+                                             }
+                                             
+                                             if (newPics.count == 0)
                                                  loadEnded = true;
 
-                                             if (arNew != NULL) {
-                                                 [arPics addObjectsFromArray:arNew];
-                                                 [self.tableView reloadData];
-                                             }
                                              
                                              [loadIndicator stopAnimating];
                                          }
@@ -158,7 +153,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger count = [arPics count];
+    NSInteger count = pics.count;
     if (count > 4) {
         NSInteger ret = (count - 4) / 4 + 2;
         return ret;
@@ -173,24 +168,13 @@
 }
 
 - (void)initButton:(UIButton*)button index:(NSInteger)index {
-    NSDictionary *dictPic = [arPics objectAtIndex:index];
-    NSString* url;
+    LuxeysPicture *pic = [pics objectAtIndex:index];
     if (index == 0)
-        url = [dictPic objectForKey:@"url_medium"];
+        [button loadBackground:pic.urlMedium];
     else
-        url = [dictPic objectForKey:@"url_square"];
-    NSURLRequest *theRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:url]
-                                                cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                            timeoutInterval:60.0];
-    
-    UIImageView* imageFirst = [[UIImageView alloc] init];
-    [imageFirst setImageWithURLRequest:theRequest
-                      placeholderImage:nil
-                               success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                   [button setBackgroundImage:image forState:UIControlStateNormal];
-                               }
-                               failure:nil
-     ];
+        [button loadBackground:pic.urlSquare];
+
+
     button.layer.borderColor = [[UIColor whiteColor] CGColor];
     button.layer.borderWidth = 3;
     UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:button.bounds];
@@ -201,8 +185,7 @@
     button.layer.shadowRadius = 1.5f;
     button.layer.shadowPath = shadowPathPic.CGPath;
     
-    button.tag = index;
-    
+    button.tag = [pic.pictureId integerValue];
     
     [button addTarget:self action:@selector(didSelectPic:) forControlEvents:UIControlEventTouchUpInside];
 }
@@ -214,7 +197,9 @@
             cellLv1 = [[luxeysCellRankLv1 alloc] initWithStyle:UITableViewCellStyleDefault
                                                reuseIdentifier:@"First"];
         }
-        
+        CGRect frame = cellLv1.buttonPic1.frame;
+        frame.size.height = [self tableView:self.tableView heightForRowAtIndexPath:indexPath] - 10;
+        cellLv1.buttonPic1.frame = frame;
         [self initButton:cellLv1.buttonPic1 index:0];
         return cellLv1;
     } else if (indexPath.row == 1) {
@@ -227,11 +212,11 @@
             [self initButton:cellLv2.buttonPic2 index:1];
             
             
-            if ([arPics count] > 2) {
+            if (pics.count > 2) {
                 [self initButton:cellLv2.buttonPic3 index:2];
             }
             
-            if ([arPics count] > 3) {
+            if (pics.count > 3) {
                 [self initButton:cellLv2.buttonPic4 index:3];
             }
         
@@ -246,16 +231,16 @@
         
         [self initButton:cellLv3.buttonPic1 index:(indexPath.row-2)*4+4];
         
-        if ([arPics count] > (indexPath.row-2)*4+5) {
+        if (pics.count > (indexPath.row-2)*4+5) {
             [self initButton:cellLv3.buttonPic2 index:(indexPath.row-2)*4+5];
         }
         
-        if ([arPics count] > (indexPath.row-2)*4+6) {
+        if (pics.count > (indexPath.row-2)*4+6) {
             [self initButton:cellLv3.buttonPic3 index:(indexPath.row-2)*4+6];
         }
         
         
-        if ([arPics count] > (indexPath.row-2)*4+7) {
+        if (pics.count > (indexPath.row-2)*4+7) {
             [self initButton:cellLv3.buttonPic4 index:(indexPath.row-2)*4+7];
         }
         
@@ -267,15 +252,15 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        NSDictionary *dictPic = [arPics objectAtIndex:0];
+        LuxeysPicture *pic = [pics objectAtIndex:0];
         
         float newheight = [luxeysImageUtils heightFromWidth:300
-                                                      width:[[dictPic objectForKey:@"width"] floatValue]
-                                                     height:[[dictPic objectForKey:@"height"] floatValue]];
+                                                      width:[pic.width floatValue]
+                                                     height:[pic.height floatValue]];
         return newheight + 10;
     }
     else if (indexPath.row == 1)
-        return 103;
+        return 105;
     else
         return 80;
 }
@@ -301,13 +286,13 @@
 }
 
 - (void)didSelectPic:(UIButton*)buttonImage {
-    [self performSegueWithIdentifier:@"PictureDetail" sender:[arPics objectAtIndex:buttonImage.tag]];
+    [self performSegueWithIdentifier:@"PictureDetail" sender:buttonImage];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UIButton *)sender {
     if ([segue.identifier isEqualToString:@"PictureDetail"]) {
         luxeysPicDetailViewController* viewPicDetail = segue.destinationViewController;
-        viewPicDetail.picInfo = sender;
+        [viewPicDetail setPictureID:sender.tag];
     }
 }
 

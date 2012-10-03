@@ -7,8 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "luxeysCellProfile.h"
+#import "luxeysLatteAPIClient.h"
+#import "UIImageView+AFNetworking.h"
+#import "luxeysAppDelegate.h"
+#import "LuxeysPicture.h"
 
-@interface luxeysPicInfoViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface luxeysPicInfoViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
+    NSDictionary *exif;
+    NSDictionary *picDict;
+    NSArray *keyBasic;
+    NSArray *keyExif;
+    NSMutableArray *sections;
+    LuxeysPicture *pic;
+    int picID;
+}
 
 @property (strong, nonatomic) IBOutlet UITableView *tableInfo;
 @property (strong, nonatomic) IBOutlet UILabel *labelTitle;
@@ -16,5 +29,5 @@
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
 
 - (IBAction)touchBack:(id)sender;
-- (void)setPicture:(NSDictionary *)aPicture;
+- (void)setPictureID:(int)aPicID;
 @end

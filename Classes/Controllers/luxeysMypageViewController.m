@@ -7,35 +7,8 @@
 //
 
 #import "luxeysMypageViewController.h"
-#import "luxeysAppDelegate.h"
-#import "luxeysLatteAPIClient.h"
-#import "UIImageView+AFNetworking.h"
-#import "luxeysPicDetailViewController.h"
-#import "luxeysCellPicture.h"
-#import "luxeysCellFriend.h"
-#import "luxeysImageUtils.h"
-#import "luxeysCellComment.h"
-#import "UIButton+AsyncImage.h"
-#import <luxeysSettingViewController.h>
-#import "luxeysPicInfoViewController.h"
-#import "luxeysUserViewController.h"
-#import "luxeysTemplatePicTimeline.h"
-#import "luxeysTemplateTimelinePicMulti.h"
-#import "luxeysPicCommentViewController.h"
-#import "LuxeysFeed.h"
 
-@interface luxeysMypageViewController () {
-    int tableMode;
-    int lastFeedID;
-    NSMutableArray *feeds;
-    NSArray *pictures;
-    NSArray *friends;
-    NSMutableDictionary *toggleSection;
-    NSArray *allTab;
-    BOOL reloading;
-    NSMutableArray *lxFeeds;
-    EGORefreshTableHeaderView *refreshHeaderView;
-}
+@interface luxeysMypageViewController ()
 
 @end
 
@@ -70,7 +43,8 @@
                                              selector:@selector(showTimeline:)
                                                  name:@"ShowTimeline"
                                                object:nil];
-    tableMode = 1;
+    tableMode = kTableTimeline;
+    timelineMode = kListAll;
     toggleSection = [[NSMutableDictionary alloc] init];
     return self;
 }
@@ -122,19 +96,51 @@
               buttonTimelineFriend,
               buttonTimelineMe,
               nil];
-
+    
     [self reloadView];
 }
 
-- (void)reloadView {
+- (void)reloadTimeline {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        
+        luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+        [[luxeysLatteAPIClient sharedClient] getPath:@"api/user/me/timeline"
+                                          parameters: [NSDictionary dictionaryWithObjectsAndKeys:
+                                                       [app getToken], @"token",
+                                                       [NSNumber numberWithInteger:timelineMode], @"listtype",
+                                                       nil]
+                                             success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                                 feeds = [LuxeysFeed mutableArrayFromDictionary:JSON
+                                                                                        withKey:@"feeds"];
+                                                 LuxeysFeed *lastFeed = feeds.lastObject;
+                                                 lastFeedID = [lastFeed.feedID integerValue];
+                                                 
+                                                 [self.tableView reloadData];
+                                                 [self doneLoadingTableViewData];
+                                                 
+                                                 
+                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
+                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                 NSLog(@"Something went wrong (Timeline)");
+                                                 
+                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
+                                             }];
+    });
+}
+
+- (void)reloadProfile {
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     
     [[luxeysLatteAPIClient sharedClient] getPath:@"api/user/me"
                                       parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                             NSDictionary *dictUser = [JSON objectForKey:@"user"];
-                                             LuxeysUser *user = [LuxeysUser instanceFromDictionary:dictUser];
-                                             app.currentUser = dictUser;
+                                             LuxeysUser *user = [LuxeysUser instanceFromDictionary:[JSON objectForKey:@"user"]];
+                                             app.currentUser = user;
                                              
                                              [imageProfilePic setImageWithURL:[NSURL URLWithString:user.profilePicture]];
                                              
@@ -145,67 +151,158 @@
                                              [buttonFollowCount setTitle:[user.countFollows stringValue] forState:UIControlStateNormal];
                                              
                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                             NSLog(@"Something went wrong (Photolist)");
-                                         }];
-    
-    
-    [[luxeysLatteAPIClient sharedClient] getPath:@"api/user/me/timeline"
-                                      parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
-                                         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                             feeds = [NSMutableArray arrayWithArray:[JSON objectForKey:@"feeds"]];
-                                             NSDictionary *feed = feeds.lastObject;
-                                             lastFeedID = [[feed objectForKey:@"id"] integerValue];
-                                             if (tableMode == 1) {
-                                                 [self.tableView reloadData];
-                                                 [self doneLoadingTableViewData];
-                                             }
-                                             
-                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                             NSLog(@"Something went wrong (Timeline)");
-                                         }];
-    
-    
-    [[luxeysLatteAPIClient sharedClient] getPath:@"api/picture/user/me"
-                                      parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
-                                         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                             pictures = [JSON objectForKey:@"pictures"];
-                                             if (tableMode == 2) {
-                                                 [self.tableView reloadData];
-                                                 [self doneLoadingTableViewData];
-                                             }
-                                             
-                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                             NSLog(@"Something went wrong (Photolist)");
-                                         }];
-    
-    [[luxeysLatteAPIClient sharedClient] getPath:@"api/user/me/friend"
-                                      parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
-                                         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                             friends = [JSON objectForKey:@"friends"];
-                                             if (tableMode == 3) {
-                                                 [self.tableView reloadData];
-                                                 [self doneLoadingTableViewData];
-                                             }
-                                             
-                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                             NSLog(@"Something went wrong (Friendlist)");
+                                             NSLog(@"Something went wrong (Profile)");
                                          }];
 }
 
+- (void)reloadPicList {
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+    
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [[luxeysLatteAPIClient sharedClient] getPath:@"api/picture/user/me"
+                                          parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                             success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                                 pictures = [LuxeysPicture mutableArrayFromDictionary:JSON
+                                                                                              withKey:@"pictures"];
+                                                 
+                                                 
+                                                 [self.tableView reloadData];
+                                                 [self doneLoadingTableViewData];
+                                                 
+                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
+                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                 NSLog(@"Something went wrong (Photolist)");
+                                                 [self doneLoadingTableViewData];
+                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
+                                             }];
+    });
+}
+
+- (void)reloadFriends {
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+    
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [[luxeysLatteAPIClient sharedClient] getPath:@"api/user/me/friend"
+                                          parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                             success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                                 friends = [LuxeysUser mutableArrayFromDictionary:JSON
+                                                                                          withKey:@"friends"];
+                                                 
+                                                 
+                                                 [self.tableView reloadData];
+                                                 [self doneLoadingTableViewData];
+                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
+                                                 
+                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                 NSLog(@"Something went wrong (Friendlist)");
+                                                 [self doneLoadingTableViewData];
+                                                 
+                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
+                                             }];
+    });
+}
+
+- (void)reloadFollowings {
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+    
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [[luxeysLatteAPIClient sharedClient] getPath:@"api/user/me/following"
+                                          parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                             success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                                 followings = [LuxeysUser mutableArrayFromDictionary:JSON
+                                                                                             withKey:@"following"];
+                                                 
+                                                 [self.tableView reloadData];
+                                                 [self doneLoadingTableViewData];
+                                                 
+                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
+                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                 NSLog(@"Something went wrong (Friendlist)");
+                                                 [self doneLoadingTableViewData];
+                                                 
+                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
+                                             }];
+    });
+}
+
+- (void)reloadVoted {
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+    
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [[luxeysLatteAPIClient sharedClient] getPath:@"api/picture/user/interesting/me"
+                                          parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                             success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                                 votes = [LuxeysPicture mutableArrayFromDictionary:JSON
+                                                                                              withKey:@"pictures"];
+                                                 
+                                                 
+                                                 [self.tableView reloadData];
+                                                 [self doneLoadingTableViewData];
+                                                 
+                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
+                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                 NSLog(@"Something went wrong (Photolist)");
+                                                 [self doneLoadingTableViewData];
+                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
+                                             }];
+    });
+}
+
+
+- (void)reloadView {
+    [self reloadProfile];
+    
+    switch (tableMode) {
+        case kTableTimeline:
+            [self reloadTimeline];
+            break;
+        case kTableFollowings:
+            [self reloadFollowings];
+            break;
+        case kTablePicList:
+            [self reloadPicList];
+            break;
+        case kTableFriends:
+            [self reloadFriends];
+            break;
+        case kTableVoted:
+            [self reloadVoted];
+            break;
+        default:
+            break;
+    }
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (tableMode == 1) {
+    if (tableMode == kTableTimeline) {
         return feeds.count;
     } else
         return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (tableMode == 1) {
-        NSDictionary *feed = [feeds objectAtIndex:section];
-        NSArray *targets = [feed objectForKey:@"targets"];
-        if (targets.count == 1) {
-            NSDictionary *pic = [targets objectAtIndex:0];
-            NSInteger commentCount = [[pic objectForKey:@"comment_count"] integerValue];
+    if (tableMode == kTableTimeline) {
+        LuxeysFeed *feed = [feeds objectAtIndex:section];
+        
+        if (feed.targets.count == 1) {
+            LuxeysPicture *pic = [feed.targets objectAtIndex:0];
+            NSInteger commentCount = [pic.commentCount integerValue];
             
             NSString *key = [NSString stringWithFormat:@"%d", section];
             if ([toggleSection objectForKey:key] == nil)
@@ -216,44 +313,48 @@
             return 0;
         
     }
-    else if (tableMode == 2) {
+    else if (tableMode == kTablePicList) {
         return (pictures.count/4) + (pictures.count%4>0?1:0);
     }
-    else
+    else if (tableMode == kTableVoted) {
+        return (votes.count/4) + (votes.count%4>0?1:0);
+    }
+    else if (tableMode == kTableFollowings) {
+        return followings.count;
+    }
+    else if (tableMode == kTableFriends) {
         return friends.count;
+    } else
+        return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableMode == 1)
+    if (tableMode == kTableTimeline)
     {
-        NSDictionary *feed = [feeds objectAtIndex:indexPath.section];
-        NSArray *targets = [feed objectForKey:@"targets"];
-        NSDictionary *pic = [targets objectAtIndex:0];
-        NSArray *comments = [pic objectForKey:@"comments"];
-        NSDictionary *comment = [comments objectAtIndex:indexPath.row];
+        LuxeysFeed *feed = [feeds objectAtIndex:indexPath.section];
+        LuxeysPicture *pic = [feed.targets objectAtIndex:0];
+        LuxeysComment *comment = [pic.comments objectAtIndex:indexPath.row];
         
-        NSString *strComment = [comment objectForKey:@"description"];
-        CGSize labelSize = [strComment sizeWithFont:[UIFont systemFontOfSize:11]
-                                  constrainedToSize:CGSizeMake(255.0f, MAXFLOAT)
-                                      lineBreakMode:NSLineBreakByWordWrapping];
+        CGSize labelSize = [comment.descriptionText sizeWithFont:[UIFont systemFontOfSize:11]
+                                               constrainedToSize:CGSizeMake(255.0f, MAXFLOAT)
+                                                   lineBreakMode:NSLineBreakByWordWrapping];
         return labelSize.height + 25;
-    } else if (tableMode == 2) {
+    } else if ((tableMode == kTableVoted) || (tableMode == kTablePicList)) {
         return 78;
     }
     else
         return 50;
 }
 
-- (UIView *)createComment:(NSDictionary *)comment {
-    NSDictionary *user = [comment objectForKey:@"user"];
+- (UIView *)createComment:(LuxeysComment *)comment {
     UIView *view = [[UIView alloc] init];
     UIButton *picUser = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 25, 25)];
     UILabel *labelUser = [[UILabel alloc] initWithFrame:CGRectMake(35, 5, 200, 20)];
     UILabel *labelComment = [[UILabel alloc] initWithFrame:CGRectMake(35, 25, 200, 20)];
     
-    labelComment.text = [comment objectForKey:@"description"];
-    labelUser.text = [user objectForKey:@"name"];
-    [picUser loadBackground:[user objectForKey:@"profile_picture"]];
+    labelComment.text = comment.descriptionText;
+    labelUser.text = comment.user.name;
+    [picUser loadBackground:comment.user.profilePicture];
     
     [view addSubview:picUser];
     [view addSubview:labelUser];
@@ -262,16 +363,14 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (tableMode == 1) {
-        NSDictionary *feed = [feeds objectAtIndex:section];
-        NSArray *targets = [feed objectForKey:@"targets"];
-        if (targets.count == 1) {
-            NSDictionary *pic = [targets objectAtIndex:0];
-            NSArray *comments = [pic objectForKey:@"comments"];
+    if (tableMode == kTableTimeline) {
+        LuxeysFeed *feed = [feeds objectAtIndex:section];
+        if (feed.targets.count == 1) {
+            LuxeysPicture *pic = [feed.targets objectAtIndex:0];
             float newheight = [luxeysImageUtils heightFromWidth:300
-                                                          width:[[pic objectForKey:@"width"] floatValue]
-                                                         height:[[pic objectForKey:@"height"] floatValue]];
-            if (comments.count > 3)
+                                                          width:[pic.width floatValue]
+                                                         height:[pic.height floatValue]];
+            if ([pic.commentCount integerValue] > 3)
                 return newheight + 115;
             else
                 return newheight + 90;
@@ -284,18 +383,16 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (tableMode == 1) {
-        NSDictionary *feed = [feeds objectAtIndex:section];
-        NSDictionary *user = [feed objectForKey:@"user"];
-        NSArray *targets = [feed objectForKey:@"targets"];
+    if (tableMode == kTableTimeline) {
+        LuxeysFeed *feed = [feeds objectAtIndex:section];
         
-        if (targets.count == 1) {
-            NSDictionary *pic = [targets objectAtIndex:0];
-            luxeysTemplatePicTimeline *viewPic = [[luxeysTemplatePicTimeline alloc] initWithPic:pic user:user section:section sender:self];
+        if (feed.targets.count == 1) {
+            LuxeysPicture *pic = [feed.targets objectAtIndex:0];
+            luxeysTemplatePicTimeline *viewPic = [[luxeysTemplatePicTimeline alloc] initWithPic:pic user:feed.user section:section sender:self];
             return viewPic.view;
         }
         else {
-            luxeysTemplateTimelinePicMulti *viewMultiPic = [[luxeysTemplateTimelinePicMulti alloc] initWithPics:targets user:user section:section sender:self];
+            luxeysTemplateTimelinePicMulti *viewMultiPic = [[luxeysTemplateTimelinePicMulti alloc] initWithPics:feed.targets user:feed.user section:section sender:self];
             return viewMultiPic.view;
         }
     }
@@ -304,14 +401,12 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableMode == 1)
+    if (tableMode == kTableTimeline)
     {
-        NSDictionary *feed = [feeds objectAtIndex:indexPath.section];
-        NSArray *targets = [feed objectForKey:@"targets"];
-        NSDictionary *pic = [targets objectAtIndex:0];
-        NSArray *comments = [pic objectForKey:@"comments"];
+        LuxeysFeed *feed = [feeds objectAtIndex:indexPath.section];
+        LuxeysPicture *pic = [feed.targets objectAtIndex:0];
         luxeysTableViewCellComment* cellComment = [tableView dequeueReusableCellWithIdentifier:@"Comment"];
-        [cellComment setComment:[comments objectAtIndex:indexPath.row]];
+        [cellComment setComment:[pic.comments objectAtIndex:indexPath.row]];
         
         cellComment.backgroundView = [[UIView alloc] init];
         cellComment.backgroundView.backgroundColor = [UIColor colorWithRed:0.91f green:0.90f blue:0.88 alpha:1];
@@ -322,41 +417,56 @@
         
         return cellComment;
     }
-    else if (tableMode == 2) {
+    else if ((tableMode == kTableVoted) || (tableMode == kTablePicList)) {
         UITableViewCell *cellPic = [[UITableViewCell alloc] init];
         for (int i = 0; i < 4; ++i)
         {
             NSInteger index = indexPath.row*4+i;
-            if (index < pictures.count) {
-                NSDictionary *pic = [pictures objectAtIndex:index];
-                
-                UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(10+(i*77), 10, 67, 67)];
-                [button loadBackground:[pic objectForKey:@"url_square"]];
-                button.layer.borderColor = [[UIColor whiteColor] CGColor];
-                button.layer.borderWidth = 3;
-                
-                UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:button.bounds];
-                button.layer.masksToBounds = NO;
-                button.layer.shadowColor = [UIColor blackColor].CGColor;
-                button.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-                button.layer.shadowOpacity = 0.5f;
-                button.layer.shadowRadius = 1.5f;
-                button.layer.shadowPath = shadowPath.CGPath;
-                
-                button.tag = index;
-                [button addTarget:self action:@selector(showDetail:) forControlEvents:UIControlEventTouchUpInside];
-                [cellPic addSubview:button];
+            
+            LuxeysPicture *pic;
+            if (tableMode == kTableVoted) {
+                if (index >= votes.count)
+                    break;
+                pic = [votes objectAtIndex:index];
             }
+            if (tableMode == kTablePicList) {
+                if (index >= pictures.count)
+                    break;
+                pic = [pictures objectAtIndex:index];
+            }
+            
+            
+            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(10+(i*77), 10, 67, 67)];
+            [button loadBackground:pic.urlSquare];
+            button.layer.borderColor = [[UIColor whiteColor] CGColor];
+            button.layer.borderWidth = 3;
+            
+            UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:button.bounds];
+            button.layer.masksToBounds = NO;
+            button.layer.shadowColor = [UIColor blackColor].CGColor;
+            button.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+            button.layer.shadowOpacity = 0.5f;
+            button.layer.shadowRadius = 1.5f;
+            button.layer.shadowPath = shadowPath.CGPath;
+            
+            button.tag = [pic.pictureId integerValue];
+            [button addTarget:self action:@selector(showDetail:) forControlEvents:UIControlEventTouchUpInside];
+            [cellPic addSubview:button];
+            
         }
         cellPic.backgroundView = [[UIView alloc] initWithFrame:cellPic.bounds];
-        //        cellPic.backgroundView.backgroundColor = [UIColor whiteColor];
+        
         return cellPic;
     }
     else {
         luxeysCellFriend* cellFriend = [tableView dequeueReusableCellWithIdentifier:@"Friend"];
-        [cellFriend setUser:[friends objectAtIndex:indexPath.row]];
+        if (tableMode == kTableFriends) {
+            [cellFriend setUser:[friends objectAtIndex:indexPath.row]];
+        } else if (tableMode == kTableFollowings) {
+            [cellFriend setUser:[followings objectAtIndex:indexPath.row]];
+        }
+        
         cellFriend.backgroundView = [[UIView alloc] initWithFrame:cellFriend.bounds];
-        //        cellFriend.backgroundView.backgroundColor = [UIColor whiteColor];
         
         return cellFriend;
     }
@@ -380,11 +490,15 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)switchTimeline {
-    tableMode = 1;
+- (void)switchTimeline:(int)mode {
+    tableMode = kTableTimeline;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    [self.tableView reloadData];
-
+    if (timelineMode != mode) {
+        timelineMode = mode;
+        [self reloadTimeline];
+    } else
+        [self.tableView reloadData];
+    
 }
 
 - (IBAction)touchTab:(UIButton *)sender {
@@ -395,25 +509,45 @@
     sender.enabled = NO;
     switch (sender.tag) {
         case 1:
+            tableMode = kTableVoted;
+            if (votes == nil)
+                [self reloadVoted];
+            else
+                [self.tableView reloadData];
+            break;
         case 2:
-            tableMode = 2;
-            self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-            [self.tableView reloadData];
+            tableMode = kTablePicList;
+            if (pictures == nil)
+                [self reloadPicList];
+            else
+                [self.tableView reloadData];
             break;
         case 3:
+            tableMode = kTableFriends;
+            if (friends == nil)
+                [self reloadFriends];
+            else
+                [self.tableView reloadData];
+            break;
         case 4:
-            tableMode = 4;
-            self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-            [self.tableView reloadData];
+            tableMode = kTableFollowings;
+            if (followings == nil)
+                [self reloadFollowings];
+            else
+                [self.tableView reloadData];
             break;
         case 5:
-        case 6:
-        case 7:
-        case 8:
-            [self switchTimeline];
+            [self switchTimeline:kListAll];
             break;
-
-            
+        case 6:
+            [self switchTimeline:kListMe];
+            break;
+        case 7:
+            [self switchTimeline:kListFriend];
+            break;
+        case 8:
+            [self switchTimeline:kListFollow];
+            break;
     }
 }
 
@@ -426,28 +560,27 @@
 
 
 - (void)showTimeline:(NSNotification *) notification {
-    [self switchTimeline];
+    [self switchTimeline:kListAll];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UIButton *)button {
     if ([segue.identifier isEqualToString:@"PictureDetail"]) {
         luxeysPicDetailViewController* viewPicDetail = segue.destinationViewController;
-        viewPicDetail.picInfo = sender;
+        [viewPicDetail setPictureID:button.tag];
     }
     else if ([segue.identifier isEqualToString:@"PictureInfo"]) {
         luxeysPicInfoViewController *viewInfo = segue.destinationViewController;
-        UIButton *tmp = sender;
-        NSDictionary *feed = [feeds objectAtIndex:tmp.tag];
-        NSArray *targets = [feed objectForKey:@"targets"];
-        NSDictionary *pic = [targets objectAtIndex:0];
-        [viewInfo setPicture:pic];
+        [viewInfo setPictureID:button.tag];
     }
     else if ([segue.identifier isEqualToString:@"Comment"]) {
+        LuxeysFeed *feed = [self feedFromPicID:button.tag];
+        LuxeysPicture *pic = [self picFromPicID:button.tag];
+        
         luxeysPicCommentViewController *viewComment = segue.destinationViewController;
-        [viewComment setPic:sender];
+        [viewComment setPic:pic withUser:feed.user withParent:self];
     } else if ([segue.identifier isEqualToString:@"UserProfile"]) {
         luxeysUserViewController *viewUser = segue.destinationViewController;
-        viewUser.dictUser = sender;
+        [viewUser setUserID:button.tag];
     }
 }
 
@@ -456,21 +589,15 @@
 }
 
 - (void)showDetail:(UIButton*)sender {
-    [self performSegueWithIdentifier:@"PictureDetail" sender:[pictures objectAtIndex:sender.tag]];
+    [self performSegueWithIdentifier:@"PictureDetail" sender:sender];
 }
 
 - (void)showComment:(UIButton*)sender {
-    NSLog(@"Show comment");
-    NSDictionary *feed = [feeds objectAtIndex:sender.tag];
-    NSArray *targets = [feed objectForKey:@"targets"];
-    NSDictionary *pic = [targets objectAtIndex:0];    
-    [self performSegueWithIdentifier:@"Comment" sender:pic];
+    [self performSegueWithIdentifier:@"Comment" sender:sender];
 }
 
 - (void)showUser:(UIButton*)sender {
-    NSDictionary *feed = [feeds objectAtIndex:sender.tag];
-    NSDictionary *user = [feed objectForKey:@"user"];
-    [self performSegueWithIdentifier:@"UserProfile" sender:user];
+    [self performSegueWithIdentifier:@"UserProfile" sender:sender];
 }
 
 - (void)submitLike:(UIButton*)sender {
@@ -478,24 +605,16 @@
 }
 
 - (void)showPicWithID:(UIButton*)sender {
-    for (NSDictionary *feed in feeds) {
-        for (NSDictionary *pic in [feed objectForKey:@"targets"]) {
-            if ([[pic objectForKey:@"id"] integerValue] == sender.tag) {
-                [self performSegueWithIdentifier:@"PictureDetail" sender:pic];
-            }
-        }
-    }
+    [self performSegueWithIdentifier:@"PictureDetail" sender:sender];
 }
 
 - (void)toggleComment:(UIButton*)sender {
     NSInteger section = sender.tag;
     
     NSMutableArray *indexes = [[NSMutableArray alloc] init];
-    NSDictionary *feed = [feeds objectAtIndex:section];
-    NSArray *targets = [feed objectForKey:@"targets"];
-    NSDictionary *pic = [targets objectAtIndex:0];
-    NSArray *comments = [pic objectForKey:@"comments"];
-    for (int i = 3; i < comments.count; i++) {
+    LuxeysFeed *feed = [feeds objectAtIndex:section];
+    LuxeysPicture *pic = [feed.targets objectAtIndex:0];
+    for (int i = 3; i < pic.comments.count; i++) {
         [indexes addObject:[NSIndexPath indexPathForItem:i inSection:section]];
     }
     
@@ -546,6 +665,38 @@
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
     [refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
 }
+
+- (void)submitComment:(LuxeysPicture *)pic {
+    long section = [feeds indexOfObject:[self feedFromPicID:[pic.pictureId longValue]]];
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+- (LuxeysFeed *)feedFromPicID:(long)picID {
+    for (LuxeysFeed *feed in feeds) {
+        if ([feed.model integerValue] == kModelPicture) {
+            for (LuxeysPicture *pic in feed.targets) {
+                if ([pic.pictureId integerValue] == picID) {
+                    return feed;
+                }
+            }
+        }
+    }
+    return nil;
+}
+
+- (LuxeysPicture *)picFromPicID:(long)picID {
+    for (LuxeysFeed *feed in feeds) {
+        if ([feed.model integerValue] == kModelPicture) {
+            for (LuxeysPicture *pic in feed.targets) {
+                if ([pic.pictureId integerValue] == picID) {
+                    return pic;
+                }
+            }
+        }
+    }
+    return nil;
+}
+
 
 
 @end

@@ -7,6 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UIImageView+AFNetworking.h"
+#import "UIButton+AsyncImage.h"
+#import "LuxeysComment.h"
+#import "LuxeysUser.h"
 
 @interface luxeysTableViewCellComment : UITableViewCell
 
@@ -15,6 +19,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonUser;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintCommentHeight;
 
-- (void)setComment:(NSDictionary*)comment;
+- (void)setComment:(LuxeysComment *)comment;
 
 @end
