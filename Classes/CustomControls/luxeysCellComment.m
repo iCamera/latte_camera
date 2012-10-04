@@ -42,6 +42,7 @@
     constraintCommentHeight.constant = labelSize.height;
     
     buttonUser.layer.cornerRadius = 3;
+    buttonUser.clipsToBounds = YES;
 }
 
 @end

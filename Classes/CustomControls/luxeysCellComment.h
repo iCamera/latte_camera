@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIImageView+AFNetworking.h"
 #import "UIButton+AsyncImage.h"
 #import "LuxeysComment.h"
 #import "LuxeysUser.h"

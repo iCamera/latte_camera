@@ -7,8 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LuxeysUser.h"
+#import "LuxeysPicture.h"
 
-@interface luxeysCellNotify : UITableViewCell
+@interface luxeysCellNotify : UITableViewCell {
+    LuxeysPicture *pic;
+    NSArray *users;
+}
 @property (strong, nonatomic) IBOutlet UIImageView *viewImage;
 @property (strong, nonatomic) IBOutlet UILabel *labelNotify;
 

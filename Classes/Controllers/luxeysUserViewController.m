@@ -8,7 +8,7 @@
 
 #import "luxeysUserViewController.h"
 
-@interface luxeysUserViewController () 
+@interface luxeysUserViewController ()
 @end
 
 @implementation luxeysUserViewController
@@ -22,6 +22,7 @@
 @synthesize buttonCalendar;
 @synthesize buttonMap;
 @synthesize tableProfile;
+@synthesize labelNickname;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -36,7 +37,7 @@
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     
-    tableMode = 1;
+    tableMode = kTableProfile;
     
     return self;
 }
@@ -66,51 +67,146 @@
     
     viewStats.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     
+    allTab = [NSArray arrayWithObjects:
+              buttonCalendar,
+              buttonMap,
+              buttonProfile,
+              buttonFriendCount,
+              buttonPhotoCount,
+              buttonVoteCount,
+              nil];
+
+    // Pull to refresh
+    refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - tableProfile.bounds.size.height, self.view.frame.size.width, tableProfile.bounds.size.height)];
+    refreshHeaderView.delegate = self;
+    [tableProfile addSubview:refreshHeaderView];
+
     // Data
-    
+    [self reloadProfile];
+}
+
+- (void)reloadProfile {
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[[UIApplication sharedApplication] delegate];
+    NSString* strURL = [NSString stringWithFormat:@"api/user/%d", userID];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [[luxeysLatteAPIClient sharedClient] getPath:strURL
+                                          parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                             success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                                 userDict = [JSON objectForKey:@"user"];
+                                                 user =  [LuxeysUser instanceFromDictionary:userDict];
+                                                 labelNickname.text = user.name;
+                                                 [buttonFriendCount setTitle:[user.countFriends stringValue] forState:UIControlStateNormal];
+                                                 [buttonPhotoCount setTitle:[user.countPictures stringValue] forState:UIControlStateNormal];
+                                                 [buttonVoteCount setTitle:[user.voteCount stringValue] forState:UIControlStateNormal];
+                                                 
+                                                 [self.imageUser setImageWithURL:[NSURL URLWithString:user.profilePicture]];
+                                                 
+                                                 NSSet *allField = [NSSet setWithArray:[userDict allKeys]];
+                                                 [showSet intersectSet:allField];
+                                                 showField = [showSet allObjects];
+                                                 [tableProfile reloadData];
+                                                 
+                                                 [self doneLoadingTableViewData];
+                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
+                                             }
+                                             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                 NSLog(@"Something went wrong (User - Profile)");
+                                                 
+                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
+                                             }];
+    });
+}
+
+- (void)reloadFriends {
     luxeysAppDelegate* app = (luxeysAppDelegate*)[[UIApplication sharedApplication] delegate];
     
-    NSString* strURL = [NSString stringWithFormat:@"api/user/%d", userID];
-    [[luxeysLatteAPIClient sharedClient] getPath:strURL
-                                      parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
-                                         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                             userDict = [JSON objectForKey:@"user"];
-                                             user =  [LuxeysUser instanceFromDictionary:userDict];
-                                             [self.navigationItem setTitle:user.name];
-                                             [buttonFriendCount setTitle:[user.countFriends stringValue] forState:UIControlStateNormal];
-                                             [buttonPhotoCount setTitle:[user.countPictures stringValue] forState:UIControlStateNormal];
-                                             [buttonVoteCount setTitle:[user.voteCount stringValue] forState:UIControlStateNormal];
-                                             
-                                             [self.imageUser setImageWithURL:[NSURL URLWithString:user.profilePicture]];
-                                             
-                                             NSSet *allField = [NSSet setWithArray:[userDict allKeys]];
-                                             [showSet intersectSet:allField];
-                                             showField = [showSet allObjects];
-                                             [tableProfile reloadData];
-                                         }
-                                         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                            NSLog(@"Something went wrong (User - Profile)");
-                                         }];
-    
-    NSString* urlFriends = [NSString stringWithFormat:@"api/user/%d/friend", userID];
-    [[luxeysLatteAPIClient sharedClient] getPath:urlFriends
-                                      parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
-                                         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                             friends = [JSON objectForKey:@"friends"];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        NSString* urlFriends = [NSString stringWithFormat:@"api/user/%d/friend", userID];
+        [[luxeysLatteAPIClient sharedClient] getPath:urlFriends
+                                          parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                             success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                                 friends = [LuxeysUser mutableArrayFromDictionary:JSON withKey:@"friends"];
+                                                 [tableProfile reloadData];
 
-                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                            NSLog(@"Something went wrong (User - Friendlist)");
-                                         }];
+                                                 [self doneLoadingTableViewData];
+                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
+                                                 
+                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                 NSLog(@"Something went wrong (User - Friendlist)");
+                                                 
+                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
+                                             }];
+    });
+}
 
+- (void)reloadPicList {
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[[UIApplication sharedApplication] delegate];
     NSString* urlPhotos = [NSString stringWithFormat:@"api/picture/user/%d", userID];
-    [[luxeysLatteAPIClient sharedClient] getPath:urlPhotos
-                                      parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
-                                         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                             photos = [LuxeysPicture mutableArrayFromDictionary:JSON withKey:@"pictures"];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [[luxeysLatteAPIClient sharedClient] getPath:urlPhotos
+                                          parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                             success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                                 photos = [LuxeysPicture mutableArrayFromDictionary:JSON withKey:@"pictures"];
+                                                 [tableProfile reloadData];
 
-                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                            NSLog(@"Something went wrong (User - Photolist)");
-                                         }];
+                                                 [self doneLoadingTableViewData];
+                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
+                                                 
+                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                 NSLog(@"Something went wrong (User - Photolist)");
+                                                 
+                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
+                                             }];
+    });
+}
+
+- (void)reloadInterest {
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[[UIApplication sharedApplication] delegate];
+    NSString* urlPhotos = [NSString stringWithFormat:@"api/picture/user/interesting/%d", userID];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [[luxeysLatteAPIClient sharedClient] getPath:urlPhotos
+                                          parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                             success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                                 interests = [LuxeysPicture mutableArrayFromDictionary:JSON withKey:@"pictures"];
+                                                 [tableProfile reloadData];
+
+                                                 [self doneLoadingTableViewData];
+                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
+                                                 
+                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                 NSLog(@"Something went wrong (User - Interesting)");
+                                                 
+                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
+                                             }];
+    });
+}
+
+- (void)reloadMap {
+    
+}
+
+- (void)reloadCalendar {
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -133,79 +229,67 @@
     [super viewDidUnload];
 }
 
-- (void)switchProfile {
-    //tableProfile.style = UITableViewStyleGrouped;
-    buttonCalendar.enabled = YES;
-    buttonMap.enabled = YES;
-    buttonVoteCount.enabled = YES;
-    buttonPhotoCount.enabled = YES;
-    buttonFriendCount.enabled = YES;
-}
-
-- (void)switchCalendar {
-    buttonProfile.enabled = YES;
-    buttonMap.enabled = YES;
-    buttonVoteCount.enabled = YES;
-    buttonPhotoCount.enabled = YES;
-    buttonFriendCount.enabled = YES;
-}
-
-- (void)switchMap {
-    buttonCalendar.enabled = YES;
-    buttonProfile.enabled = YES;
-    buttonVoteCount.enabled = YES;
-    buttonPhotoCount.enabled = YES;
-    buttonFriendCount.enabled = YES;
-}
-
-- (void)switchVote {
-    buttonCalendar.enabled = YES;
-    buttonProfile.enabled = YES;
-    buttonMap.enabled = YES;
-    buttonPhotoCount.enabled = YES;
-    buttonFriendCount.enabled = YES;
-}
-
-- (void)switchFriend {
-    buttonProfile.enabled = YES;
-    buttonCalendar.enabled = YES;
-    buttonProfile.enabled = YES;
-    buttonVoteCount.enabled = YES;
-    buttonPhotoCount.enabled = YES;
-}
-
-- (void)switchPhoto {
-    buttonProfile.enabled = YES;
-    buttonCalendar.enabled = YES;
-    buttonProfile.enabled = YES;
-    buttonVoteCount.enabled = YES;
-    buttonFriendCount.enabled = YES;
+- (void)reloadView {
+    switch (tableMode) {
+        case kTableProfile:
+            [self reloadProfile];
+            break;
+        case kTableFriends:
+            [self reloadFriends];
+            break;
+        case kTablePicList:
+            [self reloadPicList];
+            break;
+        case kTableVotes:
+            [self reloadInterest];
+            break;
+        default:
+            break;
+    }
 }
 
 - (IBAction)touchTab:(UIButton *)sender {
+    for (UIButton *button in allTab) {
+        button.enabled = YES;
+    }
+
     sender.enabled = NO;
-    tableMode = sender.tag;
     switch (sender.tag) {
         case 1:
-            [self switchProfile];
+            tableMode = kTableProfile;
+            if (user == nil)
+                [self reloadProfile];
+            else
+                [tableProfile reloadData];
             break;
         case 2:
-            [self switchCalendar];
+            tableMode = kTableCalendar;
             break;
         case 3:
-            [self switchMap];
+            tableMode = kTableMap;
             break;
         case 4:
-            [self switchVote];
+            tableMode = kTableVotes;
+            if (interests == nil)
+                [self reloadInterest];
+            else
+                [tableProfile reloadData];
             break;
         case 5:
-            [self switchPhoto];
+            tableMode = kTablePicList;
+            if (photos == nil)
+                [self reloadPicList];
+            else
+                [tableProfile reloadData];
             break;
         case 6:
-            [self switchFriend];
+            tableMode = kTableFriends;
+            if (friends == nil)
+                [self reloadFriends];
+            else
+                [tableProfile reloadData];
             break;
     }
-    [tableProfile reloadData];
 }
 
 - (IBAction)touchBack:(id)sender {
@@ -219,11 +303,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (tableMode == 1)
-    {
+    if (tableMode == kTableProfile) {
         return [showField count];
-    } else if (tableMode == 5) {
+    } else if (tableMode == kTablePicList) {
         return (photos.count/4) + (photos.count%4>0?1:0);
+    } else if (tableMode == kTableVotes) {
+        return (interests.count/4) + (interests.count%4>0?1:0);
+    } else if (tableMode == kTableFriends) {
+        return friends.count;
     } else {
         return 0;
     }
@@ -231,7 +318,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (tableMode == 1)
+    if (tableMode == kTableProfile)
     {
         static NSString *CellIdentifier = @"Profile";
         luxeysCellProfile *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -265,33 +352,64 @@
         
         
         return cell;
-    } else if (tableMode == 5) {
+    } else if ((tableMode == kTablePicList) || (tableMode == kTableVotes)) {
         UITableViewCell *cellPic = [[UITableViewCell alloc] init];
         for (int i = 0; i < 4; ++i)
         {
             NSInteger index = indexPath.row*4+i;
-            if (index < photos.count) {
-                LuxeysPicture *pic = [photos objectAtIndex:index];
-
-                UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(10+(i*77), 10, 67, 67)];
-
-                [button loadBackground:pic.urlSquare];
-                button.tag = [pic.pictureId longValue];
-                [button addTarget:self action:@selector(showPhoto:) forControlEvents:UIControlEventTouchUpInside];
-                [cellPic addSubview:button];
+            LuxeysPicture *pic;
+            if (tableMode == kTablePicList) {
+                if (index >= photos.count)
+                    break;
+                pic = [photos objectAtIndex:index];
             }
+
+            if (tableMode == kTableVotes) {
+                if (index >= interests.count)
+                    break;
+                pic = [interests objectAtIndex:index];
+            }
+            
+            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(10+(i*77), 10, 67, 67)];
+            [button loadBackground:pic.urlSquare];
+            button.tag = [pic.pictureId longValue];
+            [button addTarget:self action:@selector(showPhoto:) forControlEvents:UIControlEventTouchUpInside];
+            
+            button.layer.borderColor = [[UIColor whiteColor] CGColor];
+            button.layer.borderWidth = 3;
+            
+            UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:button.bounds];
+            button.layer.masksToBounds = NO;
+            button.layer.shadowColor = [UIColor blackColor].CGColor;
+            button.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+            button.layer.shadowOpacity = 0.5f;
+            button.layer.shadowRadius = 1.5f;
+            button.layer.shadowPath = shadowPath.CGPath;
+            
+            [cellPic addSubview:button];
         }
         return cellPic;
-    }
+    } else if (tableMode == kTableFriends) {
+        LuxeysUser *friend = [friends objectAtIndex:indexPath.row];
+        luxeysCellFriend* cellFriend = [tableProfile dequeueReusableCellWithIdentifier:@"Friend"];
+        [cellFriend setUser:friend];
+        [cellFriend.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
+        cellFriend.buttonUser.tag = [friend.userId integerValue];
+        
+        return cellFriend;
+    } else
+        return [[UITableViewCell alloc] init];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableMode == 1)
-    {
+    if (tableMode == kTableProfile) {
+        return 30;
+    } else if (tableMode == kTableFriends) {
         return 50;
-    } else if (tableMode == 5) {
+    } else if ((tableMode == kTablePicList) || (tableMode == kTableVotes)) {
         return 78;
-    }
+    } else
+        return 0;
 }
 
 - (void)showPhoto:(UIButton*)sender {
@@ -307,6 +425,49 @@
 
 - (void)setUserID:(int)aUserID {
     userID = aUserID;
+}
+
+- (void)showUser:(UIButton *)button {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    luxeysUserViewController *viewUser = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserProfile"];
+    [viewUser setUserID:button.tag];
+    [self.navigationController pushViewController:viewUser animated:YES];
+}
+
+- (void)reloadTableViewDataSource{
+    reloading = YES;
+}
+
+- (void)doneLoadingTableViewData{
+    reloading = NO;
+    [refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:tableProfile];
+}
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
+    [self reloadTableViewDataSource];
+    
+    [self reloadView];
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+    
+    return reloading; // should return if data source model is reloading
+    
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+    
+    return [NSDate date]; // should return date data source was last changed
+    
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    [refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
 }
 
 @end

@@ -53,6 +53,8 @@
     }
     if (target) {
         [viewImage setImageWithURL:[NSURL URLWithString:[target objectForKey:@"url_square"]]];
+        viewImage.layer.cornerRadius = 3;
+        viewImage.clipsToBounds = YES;
     }
 }
 

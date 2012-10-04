@@ -247,7 +247,6 @@
                                                  votes = [LuxeysPicture mutableArrayFromDictionary:JSON
                                                                                               withKey:@"pictures"];
                                                  
-                                                 
                                                  [self.tableView reloadData];
                                                  [self doneLoadingTableViewData];
                                                  
@@ -406,7 +405,12 @@
         LuxeysFeed *feed = [feeds objectAtIndex:indexPath.section];
         LuxeysPicture *pic = [feed.targets objectAtIndex:0];
         luxeysTableViewCellComment* cellComment = [tableView dequeueReusableCellWithIdentifier:@"Comment"];
-        [cellComment setComment:[pic.comments objectAtIndex:indexPath.row]];
+        
+        LuxeysComment *comment = [pic.comments objectAtIndex:indexPath.row];
+        [cellComment setComment:comment];
+        
+        cellComment.buttonUser.tag = [comment.user.userId integerValue];
+        [cellComment.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
         
         cellComment.backgroundView = [[UIView alloc] init];
         cellComment.backgroundView.backgroundColor = [UIColor colorWithRed:0.91f green:0.90f blue:0.88 alpha:1];
@@ -459,16 +463,22 @@
         return cellPic;
     }
     else {
-        luxeysCellFriend* cellFriend = [tableView dequeueReusableCellWithIdentifier:@"Friend"];
+        luxeysCellFriend* cellUser;
+        LuxeysUser *user;
         if (tableMode == kTableFriends) {
-            [cellFriend setUser:[friends objectAtIndex:indexPath.row]];
+            cellUser = [tableView dequeueReusableCellWithIdentifier:@"Friend"];
+            user = [friends objectAtIndex:indexPath.row];
         } else if (tableMode == kTableFollowings) {
-            [cellFriend setUser:[followings objectAtIndex:indexPath.row]];
+            cellUser = [tableView dequeueReusableCellWithIdentifier:@"Following"];
+            user = [followings objectAtIndex:indexPath.row];
         }
         
-        cellFriend.backgroundView = [[UIView alloc] initWithFrame:cellFriend.bounds];
+        [cellUser setUser:user];
+        cellUser.buttonUser.tag = [user.userId integerValue];
+        [cellUser.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
+        cellUser.backgroundView = [[UIView alloc] initWithFrame:cellUser.bounds];
         
-        return cellFriend;
+        return cellUser;
     }
 }
 
@@ -601,7 +611,34 @@
 }
 
 - (void)submitLike:(UIButton*)sender {
-    NSLog(@"Submit like");
+    sender.enabled = FALSE;
+    LuxeysFeed *feed = [self feedFromPicID:sender.tag];
+    LuxeysPicture *pic = [self picFromPicID:sender.tag];
+    pic.isVoted = TRUE;
+    if ([feed.count integerValue] > 1) {
+        NSInteger likeCount = [sender.titleLabel.text integerValue];
+        NSNumber *num = [NSNumber numberWithInteger:likeCount + 1];
+        [sender setTitle:[num stringValue] forState:UIControlStateDisabled];
+    } else {
+        pic.voteCount = [NSNumber numberWithInteger:[pic.voteCount integerValue] + 1];
+        long section = [feeds indexOfObject:feed];
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+    
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
+                           [app getToken], @"token",
+                           @"1", @"vote_type",
+                           nil];
+    
+    NSString *url = [NSString stringWithFormat:@"api/picture/%d/vote_post", sender.tag];
+    [[luxeysLatteAPIClient sharedClient] postPath:url
+                                       parameters:param
+                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                                 NSLog(@"Submited like"); 
+                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                              NSLog(@"Something went wrong (Vote)");
+                                          }];
 }
 
 - (void)showPicWithID:(UIButton*)sender {

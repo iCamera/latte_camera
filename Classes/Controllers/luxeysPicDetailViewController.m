@@ -177,6 +177,7 @@
         
         [cellPicInfo.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
         [cellPicInfo.buttonInfo addTarget:self action:@selector(showInfo:) forControlEvents:UIControlEventTouchUpInside];
+        [cellPicInfo.buttonMap addTarget:self action:@selector(showMap:) forControlEvents:UIControlEventTouchUpInside];
                 
         return cellPicInfo;
     } else {
@@ -206,6 +207,11 @@
     [self performSegueWithIdentifier:@"PictureInfo" sender:self];
 }
 
+- (void)showMap:(id)sender {
+    [self performSegueWithIdentifier:@"PictureMap" sender:self];
+}
+
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UIButton *)button {
     if ([segue.identifier isEqualToString:@"UserProfile"]) {
         luxeysUserViewController* viewUser = segue.destinationViewController;
@@ -215,6 +221,11 @@
         luxeysPicInfoViewController *viewInfo = segue.destinationViewController;
         [viewInfo setPictureID:picID];
     }
+    if ([segue.identifier isEqualToString:@"PictureMap"]) {
+        luxeysPicMapViewController *viewMap = segue.destinationViewController;
+        [viewMap setPointWithLongitude:[pic.longitude floatValue] andLatitude:[pic.latitude floatValue]];
+    }
+
 }
 
 - (void)showKeyboard:(id)sender {

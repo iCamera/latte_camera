@@ -17,6 +17,7 @@
 #import "luxeysLatteAPIClient.h"
 #import "luxeysPicInfoViewController.h"
 #import "luxeysLatteAPIClient.h"
+#import "luxeysPicMapViewController.h"
 #import "LuxeysPicture.h"
 #import "LuxeysUser.h"
 #import "LuxeysComment.h"

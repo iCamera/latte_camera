@@ -11,6 +11,8 @@
 		8805439F161964030091A40F /* luxeysCellNotify.m in Sources */ = {isa = PBXBuildFile; fileRef = 8805439E161964030091A40F /* luxeysCellNotify.m */; };
 		8809818E15F8532F00B81A4F /* luxeysCellFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = 8809818D15F8532F00B81A4F /* luxeysCellFriend.m */; };
 		880C4B17161C2A1400252C6A /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 880C4AFC161C2A1400252C6A /* MBProgressHUD.m */; };
+		880C4B3A161C723800252C6A /* luxeysPicMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 880C4B39161C723800252C6A /* luxeysPicMapViewController.m */; };
+		880C4B3D161C7A7500252C6A /* PicturePin.m in Sources */ = {isa = PBXBuildFile; fileRef = 880C4B3C161C7A7500252C6A /* PicturePin.m */; };
 		88137DC7160AF31500E99665 /* luxeysCellFriendRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 88137DC6160AF31500E99665 /* luxeysCellFriendRequest.m */; };
 		881D2F3915DE560000062101 /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 881D2F3615DE560000062101 /* KeychainItemWrapper.m */; };
 		881D2F3A15DE560000062101 /* luxeysLatteAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 881D2F3815DE560000062101 /* luxeysLatteAPIClient.m */; };
@@ -432,6 +434,10 @@
 		8809818D15F8532F00B81A4F /* luxeysCellFriend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysCellFriend.m; path = Classes/CustomControls/luxeysCellFriend.m; sourceTree = SOURCE_ROOT; };
 		880C4AFB161C2A1400252C6A /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		880C4AFC161C2A1400252C6A /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		880C4B38161C723700252C6A /* luxeysPicMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysPicMapViewController.h; path = Classes/Controllers/luxeysPicMapViewController.h; sourceTree = "<group>"; };
+		880C4B39161C723800252C6A /* luxeysPicMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysPicMapViewController.m; path = Classes/Controllers/luxeysPicMapViewController.m; sourceTree = "<group>"; };
+		880C4B3B161C7A7500252C6A /* PicturePin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PicturePin.h; path = Classes/Models/PicturePin.h; sourceTree = "<group>"; };
+		880C4B3C161C7A7500252C6A /* PicturePin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PicturePin.m; path = Classes/Models/PicturePin.m; sourceTree = "<group>"; };
 		88137DC5160AF31500E99665 /* luxeysCellFriendRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysCellFriendRequest.h; path = Classes/CustomControls/luxeysCellFriendRequest.h; sourceTree = SOURCE_ROOT; };
 		88137DC6160AF31500E99665 /* luxeysCellFriendRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysCellFriendRequest.m; path = Classes/CustomControls/luxeysCellFriendRequest.m; sourceTree = SOURCE_ROOT; };
 		881D2F3515DE560000062101 /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeychainItemWrapper.h; path = Classes/Helpers/KeychainItemWrapper.h; sourceTree = "<group>"; };
@@ -1366,6 +1372,8 @@
 				88B08D3515D34B3D003CB0D3 /* Latte.xcdatamodeld */,
 				8887546C161AF90500DD033E /* LuxeysObject.h */,
 				8887546D161AF90500DD033E /* LuxeysObject.m */,
+				880C4B3B161C7A7500252C6A /* PicturePin.h */,
+				880C4B3C161C7A7500252C6A /* PicturePin.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1474,6 +1482,8 @@
 				881D2F8715E2092300062101 /* luxeysUserViewController.m */,
 				88B47B9615DE552B00FD9C72 /* luxeysWelcomeViewController.h */,
 				88B47B9715DE552B00FD9C72 /* luxeysWelcomeViewController.m */,
+				880C4B38161C723700252C6A /* luxeysPicMapViewController.h */,
+				880C4B39161C723800252C6A /* luxeysPicMapViewController.m */,
 			);
 			name = Windows;
 			sourceTree = "<group>";
@@ -2198,6 +2208,8 @@
 				88875468161ADF9700DD033E /* LuxeysUser.m in Sources */,
 				8887546E161AF90500DD033E /* LuxeysObject.m in Sources */,
 				880C4B17161C2A1400252C6A /* MBProgressHUD.m in Sources */,
+				880C4B3A161C723800252C6A /* luxeysPicMapViewController.m in Sources */,
+				880C4B3D161C7A7500252C6A /* PicturePin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

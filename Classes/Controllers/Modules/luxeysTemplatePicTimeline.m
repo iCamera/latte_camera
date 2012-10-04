@@ -89,9 +89,15 @@
         buttonComment.enabled = YES;
     }
     
+    if ((pic.latitude != nil) && (pic.longitude != nil)) {
+        buttonMap.enabled = YES;
+    }
+    
+    labelAccess.tag = -[pic.pictureId integerValue];
+    buttonLike.tag = [pic.pictureId integerValue];
     buttonInfo.tag = [pic.pictureId integerValue];
     buttonComment.tag = [pic.pictureId integerValue];
-    buttonUser.tag = [pic.pictureId integerValue];
+    buttonUser.tag = [user.userId integerValue];
     buttonShowComment.tag = section;
     
     [buttonUser addTarget:sender action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];

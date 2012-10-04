@@ -30,21 +30,10 @@
 }
 
 - (void)setUser:(LuxeysUser *)user {
-    UIImageView* imageUser = [[UIImageView alloc] init];
-    NSURLRequest *theRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:user.profilePicture]
-                                                cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                            timeoutInterval:60.0];
-    
-    [imageUser setImageWithURLRequest:theRequest
-                     placeholderImage:nil
-                              success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                  [buttonUser setBackgroundImage:image forState:UIControlStateNormal];
-                              }
-                              failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                                  
-                              }
-     ];
-    //textComment.text = [comment objectForKey:@"description"];
+    [buttonUser loadBackground:user.profilePicture];
+    buttonUser.layer.cornerRadius = 3;
+    buttonUser.clipsToBounds = YES;
+    labelIntro.text = user.introduction;
     labelName.text = user.name;
 }
 

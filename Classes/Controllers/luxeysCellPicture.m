@@ -78,6 +78,10 @@
     if (pic.canComment) {
         buttonComment.enabled = YES;
     }
+    
+    if ((pic.latitude != nil) && (pic.longitude != nil)) {
+        buttonMap.enabled = YES;
+    }
 
     //self.view.frame = CGRectMake(0, 0, 320, imagePic.frame.size.height + 100);
     //[buttonUser addTarget:self.parentViewController action:@selector(touchUser:) forControlEvents:UIControlEventTouchUpInside];

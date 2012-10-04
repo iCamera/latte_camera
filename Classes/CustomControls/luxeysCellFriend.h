@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIImageView+AFNetworking.h"
+#import "UIButton+AsyncImage.h"
 #import "LuxeysUser.h"
 
 @interface luxeysCellFriend : UITableViewCell

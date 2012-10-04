@@ -667,7 +667,7 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="1oo-9S-rhk">
-                            <rect key="frame" x="0.0" y="284" width="320" height="40"/>
+                            <rect key="frame" x="0.0" y="334" width="320" height="40"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="gray" id="30b-0d-qAV">
@@ -720,8 +720,50 @@
                                     <outlet property="labelName" destination="r3U-9j-Apo" id="xls-5o-kWL"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="Following" rowHeight="50" id="joC-Rt-m6G" customClass="luxeysCellFriend">
+                                <rect key="frame" x="0.0" y="217" width="320" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="10" y="0.0" width="300" height="49"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Intro" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="BAR-Sh-T5X">
+                                            <rect key="frame" x="48" y="23" width="164" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="Spf-0h-bAF">
+                                            <rect key="frame" x="48" y="7" width="164" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="p1Q-7s-qaz">
+                                            <rect key="frame" x="10" y="10" width="30" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                            <state key="normal" backgroundImage="user.gif">
+                                                <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <state key="highlighted">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <color key="backgroundColor" red="0.90588241820000004" green="0.8980392814" blue="0.87843143940000001" alpha="1" colorSpace="deviceRGB"/>
+                                <connections>
+                                    <outlet property="buttonUser" destination="p1Q-7s-qaz" id="tW9-Ce-kIZ"/>
+                                    <outlet property="labelIntro" destination="BAR-Sh-T5X" id="BnW-8t-H4g"/>
+                                    <outlet property="labelName" destination="Spf-0h-bAF" id="vCH-bf-qfh"/>
+                                </connections>
+                            </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="0.0" reuseIdentifier="Comment" rowHeight="57" id="akA-i4-PNZ" customClass="luxeysTableViewCellComment">
-                                <rect key="frame" x="0.0" y="217" width="320" height="57"/>
+                                <rect key="frame" x="0.0" y="267" width="320" height="57"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="10" y="0.0" width="300" height="56"/>
@@ -821,11 +863,12 @@
                         <segue destination="Qcw-tp-Cmg" kind="push" identifier="PictureInfo" id="yTe-tJ-A3P"/>
                         <segue destination="Js6-jp-wI3" kind="push" identifier="UserProfile" id="u0d-QM-VsA"/>
                         <segue destination="VlD-nX-p2P" kind="modal" identifier="Comment" modalTransitionStyle="crossDissolve" id="ut7-6g-swq"/>
+                        <segue destination="XyX-35-9as" kind="push" identifier="PictureMap" id="1tI-wB-IuL"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HVc-Wm-P1o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-381" y="-25"/>
+            <point key="canvasLocation" x="-381" y="-3"/>
         </scene>
         <!--Luxeys Pic Comment View Controller-->
         <scene sceneID="Z4c-29-9RW">
@@ -1505,7 +1548,7 @@
                                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="suA-Vy-bNo">
+                                                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="suA-Vy-bNo">
                                                             <rect key="frame" x="265" y="0.0" width="20" height="20"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                             <state key="normal" image="bt_map.png">
@@ -1656,6 +1699,7 @@
                         <outlet property="viewTextbox" destination="biY-Ea-OHY" id="K6a-Kh-AXJ"/>
                         <segue destination="Js6-jp-wI3" kind="push" identifier="UserProfile" id="wdy-1j-7ui"/>
                         <segue destination="Qcw-tp-Cmg" kind="push" identifier="PictureInfo" id="GC0-dD-MnT"/>
+                        <segue destination="XyX-35-9as" kind="push" identifier="PictureMap" id="ZIs-3a-Tm6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i0S-DS-9Bs" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1672,7 +1716,7 @@
             <objects>
                 <viewController id="Qcw-tp-Cmg" customClass="luxeysPicInfoViewController" sceneMemberID="viewController">
                     <view key="view" autoresizesSubviews="NO" contentMode="scaleToFill" id="MWZ-GI-LnL">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" canCancelContentTouches="NO" bouncesZoom="NO" dataMode="prototypes" style="grouped" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="42" sectionHeaderHeight="10" sectionFooterHeight="10" id="AGR-xl-IHB">
@@ -1767,6 +1811,73 @@
             </objects>
             <point key="canvasLocation" x="-399" y="-1303"/>
         </scene>
+        <!--Luxeys Pic Map View Controller-->
+        <scene sceneID="1Ch-9B-nNu">
+            <objects>
+                <viewController id="XyX-35-9as" customClass="luxeysPicMapViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cQP-81-odQ">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="KUy-Mv-FP4">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="XyX-35-9as" id="om1-w0-z56"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Xh5-qm-m6A">
+                        <barButtonItem key="leftBarButtonItem" style="done" id="2u8-7G-QIC">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="zzs-9Z-8aP" customClass="luxeysButtonBack">
+                                <rect key="frame" x="5" y="7" width="60" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <size key="titleShadowOffset" width="0.0" height="1"/>
+                                <state key="normal" title="戻る">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="goBack:" destination="mAm-aD-jCP" eventType="touchUpInside" id="fLF-Rl-S1l"/>
+                                    <action selector="touchBack:" destination="XyX-35-9as" eventType="touchUpInside" id="07q-92-5G0"/>
+                                    <action selector="touchBack:" destination="Js6-jp-wI3" eventType="touchUpInside" id="kgu-kT-n4c"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="xQM-Hx-d6V">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="40q-20-f7r" customClass="luxeysButtonBrown30">
+                                <rect key="frame" x="244" y="7" width="71" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <size key="titleShadowOffset" width="0.0" height="1"/>
+                                <state key="normal" title="マップへ">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="touchApp:" destination="XyX-35-9as" eventType="touchUpInside" id="Buu-0C-nZz"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="mapPic" destination="KUy-Mv-FP4" id="FU7-hR-goB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BtR-KZ-zKp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="117" y="-1338"/>
+        </scene>
         <!--Luxeys User View Controller - Latte-->
         <scene sceneID="hDJ-Ws-f0N">
             <objects>
@@ -1775,7 +1886,7 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" canCancelContentTouches="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="vCg-ZL-Ped">
+                            <tableView opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="vCg-ZL-Ped">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
                                 <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1809,21 +1920,6 @@
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="qsW-GT-7s2">
                                             <rect key="frame" x="240" y="10" width="70" height="25"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
-                                            <size key="titleShadowOffset" width="0.0" height="1"/>
-                                            <state key="normal" backgroundImage="bg_friends.png">
-                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <color key="titleShadowColor" red="0.1960784314" green="0.30980392159999998" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
-                                            </state>
-                                            <state key="disabled" backgroundImage="bg_friends_off.png">
-                                                <color key="titleColor" red="0.1960784314" green="0.30980392159999998" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
-                                            </state>
-                                            <state key="highlighted" backgroundImage="bg_friends_on.png">
-                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            </state>
-                                        </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Yxn-4p-HJM">
-                                            <rect key="frame" x="164" y="10" width="70" height="25"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                             <size key="titleShadowOffset" width="0.0" height="1"/>
                                             <state key="normal" backgroundImage="bg_friends.png">
@@ -1902,6 +1998,9 @@
                                                 <color key="titleColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <state key="disabled">
+                                                <color key="titleColor" red="0.73725491759999995" green="0.72156864399999998" blue="0.66274511810000003" alpha="1" colorSpace="deviceRGB"/>
+                                            </state>
                                             <state key="highlighted">
                                                 <color key="titleColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                             </state>
@@ -1916,6 +2015,9 @@
                                             <state key="normal" title="123">
                                                 <color key="titleColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <state key="disabled">
+                                                <color key="titleColor" red="0.73725491759999995" green="0.72156864399999998" blue="0.66274511810000003" alpha="1" colorSpace="deviceRGB"/>
                                             </state>
                                             <state key="highlighted">
                                                 <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -1932,6 +2034,9 @@
                                                 <color key="titleColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <state key="disabled">
+                                                <color key="titleColor" red="0.73725491759999995" green="0.72156864399999998" blue="0.66274511810000003" alpha="1" colorSpace="deviceRGB"/>
+                                            </state>
                                             <state key="highlighted">
                                                 <color key="titleColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                             </state>
@@ -1939,7 +2044,15 @@
                                                 <action selector="touchTab:" destination="Js6-jp-wI3" eventType="touchUpInside" id="5Ds-eN-BJA"/>
                                             </connections>
                                         </button>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Nickname" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="e4V-zq-yCm">
+                                            <rect key="frame" x="92" y="13" width="140" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.40000003579999999" green="0.36470589040000001" blue="0.22352942819999999" alpha="1" colorSpace="deviceRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </view>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="Friend" rowHeight="50" id="Y8e-fu-QNK" customClass="luxeysCellFriend">
@@ -2055,6 +2168,7 @@
                         <outlet property="buttonProfile" destination="i2I-ah-wYQ" id="6Og-58-vH6"/>
                         <outlet property="buttonVoteCount" destination="vsN-Tn-de8" id="WK4-qI-f1q"/>
                         <outlet property="imageUser" destination="qzN-Tr-VTq" id="3YU-OM-uLt"/>
+                        <outlet property="labelNickname" destination="e4V-zq-yCm" id="RU8-mG-bhW"/>
                         <outlet property="tableProfile" destination="vCg-ZL-Ped" id="BIX-1K-fLC"/>
                         <outlet property="viewStats" destination="WUS-uj-N3S" id="wV6-5U-LcU"/>
                         <segue destination="dih-F0-8jN" kind="push" identifier="PictureDetail" id="8ne-Uk-nUr"/>
@@ -2267,6 +2381,14 @@
                 <relationship kind="outlet" name="viewHeader" candidateClass="UIView"/>
             </relationships>
         </class>
+        <class className="luxeysPicMapViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysPicMapViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="touchApp:"/>
+                <relationship kind="action" name="touchBack:"/>
+                <relationship kind="outlet" name="mapPic" candidateClass="MKMapView"/>
+            </relationships>
+        </class>
         <class className="luxeysRankingViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysRankingViewController.h"/>
             <relationships>
@@ -2332,6 +2454,7 @@
                 <relationship kind="outlet" name="buttonProfile" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonVoteCount" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="imageUser" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="labelNickname" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="tableProfile" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="viewContent" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewStats" candidateClass="UIView"/>
@@ -2352,8 +2475,9 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="XsL-yG-6rG"/>
-        <segue reference="wdy-1j-7ui"/>
-        <segue reference="GC0-dD-MnT"/>
+        <segue reference="dsB-7i-kX9"/>
+        <segue reference="yTe-tJ-A3P"/>
+        <segue reference="u0d-QM-VsA"/>
+        <segue reference="1tI-wB-IuL"/>
     </inferredMetricsTieBreakers>
 </document>

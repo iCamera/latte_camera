@@ -91,9 +91,11 @@
     NSString* url = [NSString stringWithFormat:@"api/picture/ranking/%@/%d", ranktype, rankpage];
     
     [loadIndicator startAnimating];
+    [self.tableView beginUpdates];
     [[luxeysLatteAPIClient sharedClient] getPath:url
                                       parameters: nil
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                             int rowCountPrev = [self.tableView numberOfRowsInSection:0];
                                              NSArray *newPics = [JSON objectForKey:@"pics"];
                                              for (NSDictionary *pic in newPics) {
                                                  [pics addObject:[LuxeysPicture instanceFromDictionary:pic]];
@@ -101,13 +103,22 @@
                                              
                                              if (newPics.count == 0)
                                                  loadEnded = true;
+                                             else {
+                                                 int newRows = newPics.count / 4 + (newPics.count%4>0?1:0);
+                                                 NSMutableArray *paths = [[NSMutableArray alloc] init];
+                                                 for (int i = 0; i < newRows ; i++) {
+                                                     [paths addObject:[NSIndexPath indexPathForRow:i+rowCountPrev inSection:0]];
+                                                 }
+                                                 [self.tableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationAutomatic];
+                                             }
 
-                                             
+                                             [self.tableView endUpdates];
                                              [loadIndicator stopAnimating];
                                          }
                                          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                              NSLog(@"Something went wrong (Ranking)");
                                              [loadIndicator stopAnimating];
+                                             [self.tableView endUpdates];
                                          }
      ];
 }
@@ -155,7 +166,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger count = pics.count;
     if (count > 4) {
-        NSInteger ret = (count - 4) / 4 + 2;
+        NSInteger ret = (count - 4) / 4 + 2 + ((count-4)%4>0?1:0);
         return ret;
     }
     else if (count > 1)
@@ -165,6 +176,10 @@
     else
         return 0;
     
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
 }
 
 - (void)initButton:(UIButton*)button index:(NSInteger)index {
@@ -244,10 +259,16 @@
             [self initButton:cellLv3.buttonPic4 index:(indexPath.row-2)*4+7];
         }
         
-        cellLv3.layer.masksToBounds = NO;
+        /*if (indexPath.row == 2) {
+            cellLv3.badgeRank8.hidden = pics.count < 8;
+            cellLv3.badgeRank7.hidden = pics.count < 7;
+            cellLv3.badgeRank6.hidden = pics.count < 6;
+            cellLv3.badgeRank5.hidden = pics.count < 5;
+        }*/
         
         return cellLv3;
     }
+
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

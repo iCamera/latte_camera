@@ -44,7 +44,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - tableNotify.bounds.size.height, self.view.frame.size.width, tableNotify.bounds.size.height)];
+    refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - tableNotify.bounds.size.height, tableNotify.frame.size.width, tableNotify.bounds.size.height)];
     refreshHeaderView.delegate = self;
     [tableNotify addSubview:refreshHeaderView];
 }

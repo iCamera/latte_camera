@@ -70,7 +70,7 @@
     
     [buttonImage addTarget:parent action:@selector(showPicWithID:) forControlEvents:UIControlEventTouchUpInside];
     [buttonComment addTarget:parent action:@selector(showComment:) forControlEvents:UIControlEventTouchUpInside];
-    [buttonVote addTarget:parent action:@selector(showPicWithID:) forControlEvents:UIControlEventTouchUpInside];
+    [buttonVote addTarget:parent action:@selector(submitLike:) forControlEvents:UIControlEventTouchUpInside];
 
     // Do any additional setup after loading the view from its nib.
 }
