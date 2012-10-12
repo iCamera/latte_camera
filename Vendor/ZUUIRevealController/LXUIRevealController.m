@@ -30,9 +30,9 @@
  
  */
 
-#import "ZUUIRevealController.h"
+#import "LXUIRevealController.h"
 
-@interface ZUUIRevealController()
+@interface LXUIRevealController()
 
 // Private Properties:
 @property (strong, nonatomic) UIView *frontView;
@@ -65,7 +65,7 @@
 
 @end
 
-@implementation ZUUIRevealController
+@implementation LXUIRevealController
 
 @synthesize previousPanOffset = _previousPanOffset;
 @synthesize currentFrontViewPosition = _currentFrontViewPosition;
@@ -418,7 +418,7 @@
 - (void)revealGesture:(UIPanGestureRecognizer *)recognizer
 {	
 	// Ask the delegate (if appropriate) if we are allowed to proceed with our interaction:
-	if ([self.delegate conformsToProtocol:@protocol(ZUUIRevealControllerDelegate)])
+	if ([self.delegate conformsToProtocol:@protocol(LXUIRevealControllerDelegate)])
 	{
 		// We're going to be revealing.
 		if (FrontViewPositionCenter == self.currentFrontViewPosition)
@@ -472,7 +472,7 @@
 - (void)_handleRevealGestureStateBeganWithRecognizer:(UIPanGestureRecognizer *)recognizer
 {
 	// Check if a delegate exists
-	if ([self.delegate conformsToProtocol:@protocol(ZUUIRevealControllerDelegate)])
+	if ([self.delegate conformsToProtocol:@protocol(LXUIRevealControllerDelegate)])
 	{
 		// Determine whether we're going to be revealing or hiding.
 		if (FrontViewPositionCenter == self.currentFrontViewPosition)

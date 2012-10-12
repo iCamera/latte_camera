@@ -6,9 +6,9 @@
 //  Copyright (c) 2012年 LUXEYS. All rights reserved.
 //
 
-#import "LuxeysObject.h"
+#import "ModelObject.h"
 
-@implementation LuxeysObject
+@implementation ModelObject
 
 + (NSMutableArray *)mutableArrayFromDictionary:(NSDictionary *)aDictionary withKey:(NSString *)aKey {
     NSMutableArray *ret = [[NSMutableArray alloc] init];

@@ -10,6 +10,7 @@
 
 @implementation luxeysTableViewCellPicture
 @synthesize labelTitle;
+@synthesize labelDate;
 @synthesize imagePic;
 @synthesize labelAccess;
 @synthesize labelLike;
@@ -39,7 +40,7 @@
     // Configure the view for the selected state
 }
 
-- (void)setPicture:(LuxeysPicture *)pic user:(LuxeysUser *)user;
+- (void)setPicture:(Picture *)pic user:(User *)user;
 {
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     // NSDictionary* user = [pic objectForKey:@"owner"];
@@ -48,7 +49,7 @@
                      [pic.pictureId integerValue],
                      [user.userId integerValue]];
     
-    [[luxeysLatteAPIClient sharedClient] getPath:url
+    [[LatteAPIClient sharedClient] getPath:url
                                       parameters:[NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"]
                                          success:nil
                                          failure:nil];
@@ -60,9 +61,11 @@
     
     [imagePic setImageWithURL:[NSURL URLWithString:pic.urlMedium]];
     
-    float newheight = [luxeysImageUtils heightFromWidth:300
+    float newheight = [luxeysUtils heightFromWidth:300
                                                   width:[pic.width floatValue]
                                                  height:[pic.height floatValue]];
+    
+    labelDate.text = [luxeysUtils timeDeltaFromNow:pic.createdAt];
     labelAccess.text = [pic.pageviews stringValue];
     labelLike.text = [pic.voteCount stringValue];
     labelComment.text = [pic.commentCount stringValue];

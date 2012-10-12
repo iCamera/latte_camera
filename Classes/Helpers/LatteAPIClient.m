@@ -6,18 +6,18 @@
 //  Copyright (c) 2012 LUXEYS. All rights reserved.
 //
 
-#import "luxeysLatteAPIClient.h"
+#import "LatteAPIClient.h"
 #import "AFJSONRequestOperation.h"
 
 static NSString * const kLatteAPIBaseURLString = @"http://192.168.3.1:5000/";
 
-@implementation luxeysLatteAPIClient
+@implementation LatteAPIClient
 
-+ (luxeysLatteAPIClient *)sharedClient {
-    static luxeysLatteAPIClient *_sharedClient = nil;
++ (LatteAPIClient *)sharedClient {
+    static LatteAPIClient *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedClient = [[luxeysLatteAPIClient alloc] initWithBaseURL:[NSURL URLWithString:kLatteAPIBaseURLString]];
+        _sharedClient = [[LatteAPIClient alloc] initWithBaseURL:[NSURL URLWithString:kLatteAPIBaseURLString]];
     });
     
     return _sharedClient;

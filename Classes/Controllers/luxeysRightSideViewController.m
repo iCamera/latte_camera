@@ -84,59 +84,49 @@
     } else {
         luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
         
+        luxeysCellFriendRequest *cellRequest;
+        User *user;
         if (indexPath.section == 0) {
-            luxeysCellFriendRequest *cellRequest = [tableView dequeueReusableCellWithIdentifier:@"Request"];
-            LuxeysUser *user = [requests objectAtIndex:indexPath.row];
-            cellRequest.userName.text = user.name;
-
-            NSURLRequest *theRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:user.profilePicture]
-                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                                        timeoutInterval:60.0];
-                
-            UIImageView* imageFirst = [[UIImageView alloc] init];
-            [imageFirst setImageWithURLRequest:theRequest
-                              placeholderImage:nil
-                                       success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                               [cellRequest.buttonProfile setBackgroundImage:image forState:UIControlStateNormal];
-                                           }
-                                       failure:nil
-            ];
-            
-            cellRequest.buttonProfile.tag = [user.userId integerValue];
-            
-            [cellRequest.buttonAdd addTarget:self action:@selector(addRequest:) forControlEvents:UIControlEventTouchUpInside];
-            [cellRequest.buttonIgnore addTarget:self action:@selector(ingoreRequest:) forControlEvents:UIControlEventTouchUpInside];
-            [cellRequest.buttonProfile addTarget:self action:@selector(showRequestUser:) forControlEvents:UIControlEventTouchUpInside];
-            [cellRequest.buttonProfile addTarget:app.storyMain action:@selector(revealRight:) forControlEvents:UIControlEventTouchUpInside];
-            
-            return cellRequest;
-        } else {
-            luxeysCellFriendRequest *cellIgnore = [tableView dequeueReusableCellWithIdentifier:@"Ignore"];
-            LuxeysUser *user = [ignores objectAtIndex:indexPath.row];
-            cellIgnore.userName.text = user.name;
-            
-            NSURLRequest *theRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:user.profilePicture]
-                                                        cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                                    timeoutInterval:60.0];
-            
-            UIImageView* imageFirst = [[UIImageView alloc] init];
-            [imageFirst setImageWithURLRequest:theRequest
-                              placeholderImage:nil
-                                       success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                           [cellIgnore.buttonProfile setBackgroundImage:image forState:UIControlStateNormal];
-                                       }
-                                       failure:nil
-             ];
-            
-            return cellIgnore;
+            cellRequest = [tableView dequeueReusableCellWithIdentifier:@"Request"];
+            user = [requests objectAtIndex:indexPath.row];
+        } else if (indexPath.section == 1) {
+            cellRequest = [tableView dequeueReusableCellWithIdentifier:@"Ignore"];
+            user = [ignores objectAtIndex:indexPath.row];
         }
+        [cellRequest setUser:user];
+        
+        [cellRequest.buttonAdd addTarget:self action:@selector(addRequest:) forControlEvents:UIControlEventTouchUpInside];
+        [cellRequest.buttonIgnore addTarget:self action:@selector(ingoreRequest:) forControlEvents:UIControlEventTouchUpInside];
+        [cellRequest.buttonProfile addTarget:self action:@selector(showRequestUser:) forControlEvents:UIControlEventTouchUpInside];
+        [cellRequest.buttonProfile addTarget:app.storyMain action:@selector(revealRight:) forControlEvents:UIControlEventTouchUpInside];
+        
+        return cellRequest;        
+    }
+}
+
+- (void)reloadView {
+    switch (tableMode) {
+        case 0:
+            if (notifies == nil) {
+                [self reloadNotify];
+            } else {
+                [tableNotify reloadData];
+            }
+            break;
+        case 1:
+            if ((requests == nil) || (ignores == nil)) {
+                [self reloadRequest];
+            } else {
+                [tableNotify reloadData];
+            }
+
+            break;
     }
 }
 
 - (void)reloadNotify {
-    tableMode = 0;
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-    [[luxeysLatteAPIClient sharedClient] getPath:@"api/user/me/notify"
+    [[LatteAPIClient sharedClient] getPath:@"api/user/me/notify"
                                       parameters: [NSDictionary dictionaryWithObjectsAndKeys:
                                                    [app getToken], @"token",
                                                    nil]
@@ -150,20 +140,26 @@
                                          }];
 }
 
-- (void)receiveLoggedIn:(NSNotification *) notification {
-    [self reloadNotify];
-    
+- (void)reloadRequest {
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-    [[luxeysLatteAPIClient sharedClient] getPath:@"api/user/me/friendrequest"
+    [[LatteAPIClient sharedClient] getPath:@"api/user/me/friendrequest"
                                       parameters: [NSDictionary dictionaryWithObjectsAndKeys:
                                                    [app getToken], @"token",
                                                    nil]
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                             requests = [LuxeysUser mutableArrayFromDictionary:JSON withKey:@"requests"];
-                                             ignores = [LuxeysUser mutableArrayFromDictionary:JSON withKey:@"ignores"];
+                                             requests = [User mutableArrayFromDictionary:JSON withKey:@"requests"];
+                                             ignores = [User mutableArrayFromDictionary:JSON withKey:@"ignores"];
+                                             [tableNotify reloadData];
                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                              NSLog(@"Something went wrong (Notify)");
                                          }];
+}
+
+- (void)receiveLoggedIn:(NSNotification *) notification {
+    requests = nil;
+    ignores = nil;
+    notifies = nil;
+    [self reloadView];
 }
 
 - (IBAction)touchTab:(UISegmentedControl*)sender {
@@ -186,7 +182,7 @@
                                                              bundle:nil];
     luxeysUserViewController *viewUser = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserProfile"];
     
-    LuxeysUser *user = [requests objectAtIndex:sender.tag];
+    User *user = [requests objectAtIndex:sender.tag];
     [viewUser setUserID:[user.userId integerValue]];
     UINavigationController *nav = (id)app.viewMainTab.selectedViewController;
     [nav pushViewController:viewUser animated:YES];
@@ -200,7 +196,7 @@
         UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                                  bundle:nil];
         luxeysPicDetailViewController *viewPic = [mainStoryboard instantiateViewControllerWithIdentifier:@"Picture"];
-        LuxeysPicture *pic = [LuxeysPicture instanceFromDictionary:[notify objectForKey:@"target"]];
+        Picture *pic = [Picture instanceFromDictionary:[notify objectForKey:@"target"]];
         [viewPic setPictureID:[pic.pictureId integerValue]];
         app.viewMainTab.selectedIndex = 4; // Switch to mypage
         UINavigationController *nav = (UINavigationController *)app.viewMainTab.selectedViewController;

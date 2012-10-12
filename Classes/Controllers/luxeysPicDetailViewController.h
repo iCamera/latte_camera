@@ -11,16 +11,16 @@
 #import "luxeysCellPicture.h"
 #import "luxeysCellComment.h"
 #import "luxeysAppDelegate.h"
-#import "luxeysImageUtils.h"
+#import "luxeysUtils.h"
 #import "luxeysUserViewController.h"
 #import "luxeysButtonBrown30.h"
-#import "luxeysLatteAPIClient.h"
+#import "LatteAPIClient.h"
 #import "luxeysPicInfoViewController.h"
-#import "luxeysLatteAPIClient.h"
+#import "LatteAPIClient.h"
 #import "luxeysPicMapViewController.h"
-#import "LuxeysPicture.h"
-#import "LuxeysUser.h"
-#import "LuxeysComment.h"
+#import "Picture.h"
+#import "User.h"
+#import "Comment.h"
 #import "MBProgressHUD.h"
 
 @class luxeysTableViewCellComment, luxeysButtonBrown30;
@@ -28,8 +28,8 @@
 @interface luxeysPicDetailViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, EGORefreshTableHeaderDelegate> {
     luxeysTableViewCellPicture *cellPicInfo;
     EGORefreshTableHeaderView *refreshHeaderView;
-    LuxeysPicture *pic;
-    LuxeysUser *user;
+    Picture *pic;
+    User *user;
     int picID;
     BOOL reloading;
     BOOL loaded;

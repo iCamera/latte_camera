@@ -10,15 +10,15 @@
 #import "UIButton+AsyncImage.h"
 #import "luxeysPicDetailViewController.h"
 #import "luxeysTemplateTimlinePicMultiItem.h"
-#import "LuxeysUser.h"
-#import "LuxeysPicture.h"
+#import "User.h"
+#import "Picture.h"
+#import "Feed.h"
 
 
 @interface luxeysTemplateTimelinePicMulti : UIViewController {
-    NSArray *pics;
-    LuxeysUser *user;
     UIViewController *sender;
     NSInteger section;
+    Feed *feed;
 }
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonUser;
@@ -26,6 +26,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *labelDate;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollImage;
 
-- (id)initWithPics:(NSArray *)_pics user:(LuxeysUser *)_user section:(NSInteger)_section sender:(id)_sender;
+- (id)initWithFeed:(Feed *)aFeed section:(NSInteger)aSection sender:(id)aSender;
 
 @end

@@ -1,6 +1,6 @@
-#import "LuxeysUser.h"
+#import "User.h"
 
-@implementation LuxeysUser
+@implementation User
 
 @synthesize age;
 @synthesize birthdate;
@@ -26,9 +26,9 @@
 @synthesize profilePicture;
 @synthesize voteCount;
 
-+ (LuxeysUser *)instanceFromDictionary:(NSDictionary *)aDictionary {
++ (User *)instanceFromDictionary:(NSDictionary *)aDictionary {
 
-    LuxeysUser *instance = [[LuxeysUser alloc] init];
+    User *instance = [[User alloc] init];
     [instance setAttributesFromDictionary:aDictionary];
     return instance;
 
@@ -37,7 +37,7 @@
 + (NSMutableArray *)mutableArrayFromDictionary:(NSDictionary *)aDictionary withKey:(NSString *)aKey {
     NSMutableArray *ret = [[NSMutableArray alloc] init];
     for (NSDictionary *user in [aDictionary objectForKey:aKey])
-        [ret addObject:[LuxeysUser instanceFromDictionary:user]];
+        [ret addObject:[User instanceFromDictionary:user]];
     return ret;
 }
 

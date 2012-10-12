@@ -4,16 +4,116 @@
 		"selected_items":
 		[
 			[
+				"with",
+				"colorWithRed:(CGFloat) green:(CGFloat) blue:(CGFloat) alpha:(CGFloat)	UIColor *"
+			],
+			[
+				"col",
+				"collectionView	SSCollectionView *"
+			],
+			[
+				"CGS",
+				"CGSize	struct"
+			],
+			[
+				"la",
+				"label	UILabel *"
+			],
+			[
+				"pr",
+				"prev	UIButton *"
+			],
+			[
+				"init",
+				"initWithFrame:(CGRect)	id"
+			],
+			[
+				"day",
+				"daysInMonth	NSInteger"
+			],
+			[
+				"setF",
+				"setFont:(UIFont *)	void"
+			],
+			[
+				"kTab",
+				"kTableCalendar	macro"
+			],
+			[
+				"height",
+				"tableView:(UITableView *) heightForHeaderInSection:(NSInteger)	CGFloat"
+			],
+			[
+				"lab",
+				"labelBigDate	UILabel *"
+			],
+			[
+				"in",
+				"introduction	NSString *"
+			],
+			[
+				"kTable",
+				"kTablePicList	macro"
+			],
+			[
+				"kTabl",
+				"kTableFriends	macro"
+			],
+			[
+				"kTal",
+				"kTableProfile	macro"
+			],
+			[
+				"kt",
+				"kTablePicList	macro"
+			],
+			[
+				"kTa",
+				"kTableProfile	macro"
+			],
+			[
+				"mu",
+				"mutableArrayFromDictionary:(NSDictionary *) withKey:(NSString *)	NSMutableArray *"
+			],
+			[
+				"Luxey",
+				"LuxeysUser	class"
+			],
+			[
+				"but",
+				"buttonVoteCount	UIButton *"
+			],
+			[
+				"kT",
+				"kTablePicList	macro"
+			],
+			[
+				"objec",
+				"objectForKey:(id)	id"
+			],
+			[
+				"button",
+				"buttonComment	UIButton *"
+			],
+			[
+				"NSMu",
+				"NSMutableArray	class"
+			],
+			[
+				"UIViewAut",
+				"UIViewAutoresizingNone	enum UIViewAutoresizing"
+			],
+			[
+				"auto",
+				"autoresizingMask	UIViewAutoresizing"
+			],
+			[
 				"UITAbleViewSt",
 				"UITableViewStyleGrouped	enum UITableViewStyle"
 			],
 			[
 				"butt",
 				"buttonFriendCount	UIButton *"
-			],
-			[
-				"button",
-				"buttonVoteCount	UIButton *"
 			],
 			[
 				"buttonP",
@@ -74,10 +174,6 @@
 			[
 				"arr",
 				"arrayWithObjects:(id), ..., nil	id"
-			],
-			[
-				"but",
-				"buttonVoteCount	UIButton *"
 			],
 			[
 				"UIControlStat",
@@ -156,10 +252,6 @@
 				"luxeysUserViewController	class"
 			],
 			[
-				"in",
-				"instantiateViewControllerWithIdentifier:(NSString *)	id"
-			],
-			[
 				"stor",
 				"storyUser	UIStoryboard*"
 			],
@@ -202,10 +294,6 @@
 			[
 				"User",
 				"UserToken"
-			],
-			[
-				"pr",
-				"primary"
 			],
 			[
 				"facebook_",
@@ -426,94 +514,6 @@
 			[
 				"text-",
 				"text-decoration"
-			],
-			[
-				"ver",
-				"vertical-align:   (property)"
-			],
-			[
-				"wit",
-				"width:   (property)"
-			],
-			[
-				"return",
-				"returnpath"
-			],
-			[
-				"snap",
-				"snap_info"
-			],
-			[
-				"comment",
-				"comment_list"
-			],
-			[
-				"add",
-				"addClass"
-			],
-			[
-				"cur",
-				"currentPath"
-			],
-			[
-				"curr",
-				"currentTitle"
-			],
-			[
-				"pu",
-				"pushState"
-			],
-			[
-				"r",
-				"right  (value)"
-			],
-			[
-				"single",
-				"singleTap"
-			],
-			[
-				"singl",
-				"singleTap"
-			],
-			[
-				"remove",
-				"removeClass"
-			],
-			[
-				"padding",
-				"padding-top"
-			],
-			[
-				"z",
-				"z-index"
-			],
-			[
-				"pre",
-				"preventDefault"
-			],
-			[
-				"transform-",
-				"-webkit-transform-origin:   (property)"
-			],
-			[
-				"webkit-tr",
-				"-webkit-transition:   (property)"
-			],
-			[
-				"inline",
-				"inline-block  (value)"
-			],
-			[
-				"inli",
-				"inline-block  (value)"
-			],
-			[
-				"ve",
-				"vertical-align:   (property)"
-			],
-			[
-				"tra",
-				"translate"
 			]
 		]
 	},
@@ -523,9 +523,13 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 107.0,
+		"height": 267.0,
 		"selected_items":
 		[
+			[
+				"Package Control: ",
+				"Package Control: Upgrade Package"
+			],
 			[
 				"clang",
 				"SublimeClang: Clear cache"
@@ -535,15 +539,11 @@
 				"SublimeClang: Clear cache"
 			],
 			[
-				"Package Control: ",
-				"Package Control: Install Package"
-			],
-			[
 				"log",
 				"Git: Log Current File"
 			]
 		],
-		"width": 449.0
+		"width": 593.0
 	},
 	"console":
 	{
@@ -560,24 +560,61 @@
 	},
 	"file_history":
 	[
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysRightSideViewController.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicDetailViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysWelcomeViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/AppDelegate/luxeysAppDelegate.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysRightSideViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysMypageViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysUserViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysTabBarViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicInfoViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysUserViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysMypageViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysRankingViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysRankingViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysUserViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysNavBar.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysMypageViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellComment.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCameraViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/AFNetworking/Example/Classes/Models/User.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCellNotify.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicCommentViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysUserViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysUserCalendarViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Utils/luxeysUtils.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysWelcomeViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysWelcomeViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCellPicture.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Utils/luxeysUtils.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Models/LuxeysPicture.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCellPicture.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysUserCalendarViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysWelcome2ViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysWelcome2ViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellFriend.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellFriend.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellComment.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysRightSideViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicDetailViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/AppDelegate/luxeysAppDelegate.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysSettingViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysSettingViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicInfoViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicDetailViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Models/LuxeysPicture.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/AFNetworking/AFNetworking/AFJSONUtilities.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/luxeysLatteAPIClient.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/luxeysLatteAPIClient.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysTabBarViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysRightSideViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/sample/SampleDataBuilder.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/quickdialog/QDateTimeInlineElement.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/sample/JsonDataSampleController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/sample/ExampleViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/quickdialog/QMultilineElement.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Resources/lattesetting.json",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/quickdialog/QDateTimeElement.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/sample/Resources/jsondatasample.json",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/quickdialog/QRadioItemElement.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/quickdialog/QRadioElement.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/quickdialog/QEntryElement.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Resources/luxeysSetting.json",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellRankLv3.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCell4Pics.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellRankLv3.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCell4Pics.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCellPicture.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysSettingViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicInfoViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Latte/Latte-Prefix.pch",
 		"/Users/dungbx/Desktop/Luxeys/Latte/latte.sublime-project",
@@ -585,17 +622,9 @@
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/quickdialog/QuickDialogEntryElementDelegate.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/quickdialog/QElement.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/quickdialog/QElement.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/luxeysLatteAPIClient.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysTableViewCellComment.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/quickdialog/QRadioElement.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/quickdialog/QEntryElement.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysTableViewCellPicture.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellFriend.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellFriend.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/sample/JsonDataSampleController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/sample/SampleDataBuilder.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysLoginViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicDetailViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/quickdialog/QuickDialogController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/quickdialog/QLabelElement.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/quickdialog/QRootElement.h",
@@ -603,11 +632,8 @@
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/Modules/luxeysUserProfileViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/Modules/luxeysUserProfileViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysLoginViewController.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysWelcomeViewController.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysRankingViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/quickdialog/QRadioElement.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/quickdialog/QButtonElement.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/sample/ExampleViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/quickdialog/QEntryElement.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/sample/LoginController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/sample/Resources/loginform.json",
@@ -617,14 +643,12 @@
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/quickdialog/QEntryTableViewCell.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/sample/ExampleAppDelegate.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/AFNetworking/Example/Prefix.pch",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysMypageViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysSideMenuViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysSideMenuViewController.h",
 		"/Users/dungbx/Library/Application Support/Sublime Text 2/Packages/SublimeClang/SublimeClang.sublime-settings",
 		"/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIStoryboard.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/AppDelegate/luxeysAppDelegate.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Utils/luxeysImageUtils.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCameraViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/resize.sh",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/AFNetworking/Example/AppDelegate.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysButtonBrown30.h",
@@ -663,31 +687,7 @@
 		"/Users/dungbx/Desktop/Luxeys/git/latte/templates/pc/user/mypage/index.html",
 		"/Users/dungbx/Desktop/Luxeys/git/latte/lib/fileutil.py",
 		"/Users/dungbx/Desktop/Luxeys/git/latte/lib/jinja2/ext.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/templates/pc/user/mypage/part_left_side.html",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/templates/pc/component/user/user_stats.html",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/translations/en/LC_MESSAGES/messages.po",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/templates/pc/macro/picture/upload.html",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/templates/pc/picture/picture/upload.html",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/apps/pc/picture/picture.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/apps/pc/picture/json.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/model/notice.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/model/place.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/lib/helper.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/lib/flaskext/babel.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/templates/pc/picture/picture/detail.html",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/lib/jinja_loader.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/templates/pc/travel/place_edit/edit_hotel_user.html",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/lib/jinja2/optimizer.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/templates/pc/picture/picture/part_pics.html",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/templates/pc/user/profile/index.html",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/templates/pc/user/setting/external_service.html",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/templates/pc/user/setting/part_left_side.html",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/templates/pc/entry/review/view_spot.html",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/templates/pc/component/user/message_box.html",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/static/css/button.css",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/messages.pot",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/static/css/user.css",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/static/css/main.css"
+		"/Users/dungbx/Desktop/Luxeys/git/latte/templates/pc/user/mypage/part_left_side.html"
 	],
 	"find":
 	{
@@ -698,6 +698,8 @@
 		"height": 0.0,
 		"where_history":
 		[
+			"",
+			"*.json",
 			"",
 			"*.m",
 			"*.py",
@@ -744,6 +746,57 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"SetFilter",
+			"blackCo",
+			"doneLoadingTableViewData",
+			"loadRanking",
+			"showPho",
+			"label",
+			"header",
+			"luxeysImageUtils",
+			"reloadF",
+			"storyb",
+			"storybo",
+			"labelFriend",
+			"reloadView",
+			"button",
+			"cellFriend",
+			"labelAccess",
+			"_collectionView",
+			"currentUser",
+			"currentUser object",
+			"currentUser",
+			"NSJSONSerialization ",
+			"imagePic",
+			"sendComment",
+			"heightfor",
+			"heigh",
+			"ins",
+			"ges",
+			"revealRight",
+			"Radio",
+			"alert",
+			"current_residence",
+			"handleUpdate",
+			", \"bind\":\"boolValue:bool\"",
+			"selected",
+			"select",
+			"QDynamicDataSection",
+			"dyna",
+			"textValue",
+			"handleBindWithJsonData",
+			"QEntryElement",
+			", \"delegate\":\"self\"",
+			"delegate",
+			"handleUpdate",
+			"create",
+			"vote",
+			"buttonLike",
+			"dictInfo",
+			"buttonVote",
+			"format",
+			"get_picture",
+			"table",
 			"PictureDetail",
 			"viewMainTab",
 			"viewMainNav",
@@ -820,58 +873,7 @@
 			"luxeysAppDelegate",
 			"selected",
 			"textField",
-			"styleProvider",
-			"willAppearForElement",
-			"textLabel",
-			"login",
-			"willAppearForElement",
-			"delegate",
-			"dele",
-			"SampleDataBuilder",
-			"setQuickDialogTableView",
-			"willAppearForElement",
-			"onAbout",
-			"createDetailsForm",
-			"json",
-			"loginform",
-			"createSampleControls",
-			"root",
-			"createSampleControls",
-			"imageProfilePic",
-			"imageProfile",
-			"imageProfilePic",
-			"self.",
-			"viewProfile.view",
-			"ayer.shadowOffset = CGSizeMake(0, 1);",
-			"self.",
-			"setDictProfile",
-			"layer",
-			" ];",
-			"ios",
-			"        \n",
-			"comment",
-			"view",
-			"prefetch_users",
-			"jQuery",
-			"(jQuery)",
-			"m4r-Bk-FC9",
-			"dRA-eI-ME8",
-			"t9s-lJ-yf8",
-			"eyl-k3-cE5",
-			"cameraVi",
-			"api",
-			"pic.",
-			"pic",
-			"response_class",
-			"abort",
-			"request.value",
-			"reques",
-			"token",
-			"csrf",
-			"on_csrf",
-			"csr",
-			"csrf",
-			"generate_password_hash"
+			"styleProvider"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -951,36 +953,204 @@
 		"selected_items":
 		[
 			[
-				"userview",
+				"camera",
+				"Classes/Controllers/luxeysCameraViewController.m"
+			],
+			[
+				"cellno",
+				"Classes/Controllers/luxeysCellNotify.m"
+			],
+			[
+				"cellcomm",
+				"Classes/CustomControls/luxeysCellComment.m"
+			],
+			[
+				"mypag",
+				"Classes/Controllers/luxeysMypageViewController.m"
+			],
+			[
+				"nav",
+				"Classes/CustomControls/luxeysNavBar.m"
+			],
+			[
+				"came",
+				"Classes/Controllers/luxeysCameraViewController.m"
+			],
+			[
+				"user",
 				"Classes/Controllers/luxeysUserViewController.m"
 			],
 			[
-				"welcom",
-				"Classes/Controllers/luxeysWelcomeViewController.m"
-			],
-			[
-				"tab",
-				"Classes/Controllers/luxeysTabBarViewController.m"
-			],
-			[
-				"dele",
-				"Classes/AppDelegate/luxeysAppDelegate.m"
+				"rankin",
+				"Classes/Controllers/luxeysRankingViewController.m"
 			],
 			[
 				"mypage",
 				"Classes/Controllers/luxeysMypageViewController.m"
 			],
 			[
-				"rights",
+				"welcom",
+				"Classes/Controllers/luxeysWelcomeViewController.m"
+			],
+			[
+				"luxeyu",
+				"Classes/Utils/luxeysUtils.m"
+			],
+			[
+				"userview",
+				"Classes/Controllers/luxeysUserViewController.m"
+			],
+			[
+				"cellcom",
+				"Classes/CustomControls/luxeysCellComment.m"
+			],
+			[
+				"cellpic",
+				"Classes/Controllers/luxeysCellPicture.m"
+			],
+			[
+				"ranking",
+				"Classes/Controllers/luxeysRankingViewController.m"
+			],
+			[
+				"cellpi",
+				"Classes/Controllers/luxeysCellPicture.m"
+			],
+			[
+				"picture",
+				"Classes/Models/LuxeysPicture.m"
+			],
+			[
+				"util",
+				"Classes/Utils/luxeysUtils.h"
+			],
+			[
+				"comment",
+				"Classes/Controllers/luxeysPicCommentViewController.m"
+			],
+			[
+				"uservi",
+				"Classes/Controllers/luxeysUserViewController.m"
+			],
+			[
+				"calen",
+				"Classes/Controllers/luxeysUserCalendarViewController.m"
+			],
+			[
+				"welcome",
+				"Classes/Controllers/luxeysWelcomeViewController.m"
+			],
+			[
+				"wec",
+				"Classes/Controllers/luxeysWelcome2ViewController.m"
+			],
+			[
+				"cellf",
+				"Classes/CustomControls/luxeysCellFriend.m"
+			],
+			[
+				"dele",
+				"Classes/AppDelegate/luxeysAppDelegate.m"
+			],
+			[
+				"detail",
+				"Classes/Controllers/luxeysPicDetailViewController.m"
+			],
+			[
+				"cellfri",
+				"Classes/CustomControls/luxeysCellFriend.m"
+			],
+			[
+				"rightside",
 				"Classes/Controllers/luxeysRightSideViewController.m"
 			],
 			[
-				"picdeta",
-				"Classes/Controllers/luxeysPicDetailViewController.m"
+				"ranki",
+				"Classes/Controllers/luxeysRankingViewController.m"
+			],
+			[
+				"setting",
+				"Classes/Controllers/luxeysSettingViewController.m"
+			],
+			[
+				"picinfo",
+				"Classes/Controllers/luxeysPicInfoViewController.m"
+			],
+			[
+				"luxeysp",
+				"Classes/Controllers/luxeysPicDetailViewController.h"
+			],
+			[
+				"latteapi",
+				"Classes/Helpers/luxeysLatteAPIClient.h"
+			],
+			[
+				"afjsonutilities",
+				"Vendor/AFNetworking/AFNetworking/AFJSONUtilities.m"
 			],
 			[
 				"picinf",
 				"Classes/Controllers/luxeysPicInfoViewController.m"
+			],
+			[
+				"picde",
+				"Classes/Controllers/luxeysPicDetailViewController.m"
+			],
+			[
+				"rights",
+				"Classes/Controllers/luxeysRightSideViewController.h"
+			],
+			[
+				"tabbar",
+				"Classes/Controllers/luxeysTabBarViewController.m"
+			],
+			[
+				"tabb",
+				"Classes/Controllers/luxeysTabBarViewController.m"
+			],
+			[
+				"qdatetime",
+				"Vendor/QuickDialog/quickdialog/QDateTimeElement.h"
+			],
+			[
+				"qdatetimeinlineelement",
+				"Vendor/QuickDialog/quickdialog/QDateTimeInlineElement.m"
+			],
+			[
+				"qradioitemelement",
+				"Vendor/QuickDialog/quickdialog/QRadioItemElement.m"
+			],
+			[
+				"qradioelement",
+				"Vendor/QuickDialog/quickdialog/QRadioElement.m"
+			],
+			[
+				"qmultilineelement",
+				"Vendor/QuickDialog/quickdialog/QMultilineElement.m"
+			],
+			[
+				"qentryelement",
+				"Vendor/QuickDialog/quickdialog/QEntryElement.m"
+			],
+			[
+				".json",
+				"Vendor/QuickDialog/sample/Resources/jsondatasample.json"
+			],
+			[
+				"lattes",
+				"Resources/lattesetting.json"
+			],
+			[
+				"json",
+				"Resources/luxeysSetting.json"
+			],
+			[
+				"tab",
+				"Classes/Controllers/luxeysTabBarViewController.m"
+			],
+			[
+				"picdeta",
+				"Classes/Controllers/luxeysPicDetailViewController.m"
 			],
 			[
 				"pici",
@@ -991,20 +1161,12 @@
 				"Classes/Controllers/luxeysUserViewController.m"
 			],
 			[
-				"user",
-				"Classes/Controllers/luxeysUserViewController.h"
-			],
-			[
 				"right",
 				"Classes/Controllers/luxeysRightSideViewController.m"
 			],
 			[
 				"wecl",
 				"Classes/Controllers/luxeysWelcomeViewController.m"
-			],
-			[
-				"ranking",
-				"Classes/Controllers/luxeysRankingViewController.m"
 			],
 			[
 				"cellran",
@@ -1023,10 +1185,6 @@
 				"Classes/CustomControls/luxeysCell4Pics.h"
 			],
 			[
-				"setting",
-				"Classes/Controllers/luxeysSettingViewController.m"
-			],
-			[
 				"rank",
 				"Classes/Controllers/luxeysRankingViewController.m"
 			],
@@ -1039,18 +1197,6 @@
 				"Classes/Controllers/luxeysSettingViewController.m"
 			],
 			[
-				"ranki",
-				"Classes/Controllers/luxeysRankingViewController.m"
-			],
-			[
-				"detail",
-				"Classes/Controllers/luxeysPicDetailViewController.m"
-			],
-			[
-				"rankin",
-				"Classes/Controllers/luxeysRankingViewController.m"
-			],
-			[
 				"welco",
 				"Classes/Controllers/luxeysWelcomeViewController.m"
 			],
@@ -1059,24 +1205,8 @@
 				"Classes/Controllers/luxeysSettingViewController.m"
 			],
 			[
-				"picde",
-				"Classes/Controllers/luxeysPicDetailViewController.m"
-			],
-			[
 				"picdetail",
 				"Classes/Controllers/luxeysPicDetailViewController.m"
-			],
-			[
-				"uservi",
-				"Classes/Controllers/luxeysUserViewController.m"
-			],
-			[
-				"picinfo",
-				"Classes/Controllers/luxeysPicInfoViewController.h"
-			],
-			[
-				"cellcom",
-				"Classes/CustomControls/luxeysTableViewCellComment.m"
 			],
 			[
 				"quickdialogentryelementdelegate",
@@ -1095,10 +1225,6 @@
 				"Vendor/QuickDialog/quickdialog/QRadioElement.m"
 			],
 			[
-				"qentryelement",
-				"Vendor/QuickDialog/quickdialog/QEntryElement.m"
-			],
-			[
 				"luxeyslatteapiclient",
 				"Classes/Helpers/luxeysLatteAPIClient.m"
 			],
@@ -1107,24 +1233,12 @@
 				"Vendor/QuickDialog/quickdialog/QElement.m"
 			],
 			[
-				"qradioelement",
-				"Vendor/QuickDialog/quickdialog/QRadioElement.m"
-			],
-			[
 				"usercon",
 				"Classes/Controllers/luxeysUserViewController.m"
 			],
 			[
 				"cellfr",
 				"Classes/CustomControls/luxeysCellFriend.h"
-			],
-			[
-				"cellpic",
-				"Classes/Controllers/luxeysTableViewCellPicture.m"
-			],
-			[
-				"mypag",
-				"Classes/Controllers/luxeysMypageViewController.m"
 			],
 			[
 				"luxeysb",
@@ -1163,20 +1277,12 @@
 				"Classes/Controllers/Modules/luxeysUserProfileViewController.h"
 			],
 			[
-				"tabb",
-				"Classes/Controllers/luxeysTabBarViewController.m"
-			],
-			[
 				"luxeylo",
 				"Classes/Controllers/luxeysLoginViewController.m"
 			],
 			[
 				"userp",
 				"Classes/Controllers/Modules/luxeysUserProfileViewController.m"
-			],
-			[
-				"cellcomm",
-				"Classes/CustomControls/luxeysTableViewCellComment.m"
 			],
 			[
 				"luxey",
@@ -1189,10 +1295,6 @@
 			[
 				"loginvie",
 				"Classes/Controllers/luxeysLoginViewController.h"
-			],
-			[
-				"cellpi",
-				"Classes/Controllers/luxeysTableViewCellPicture.m"
 			],
 			[
 				"celpic",
@@ -1271,10 +1373,6 @@
 				"templates/pc/component/user/mypage_stats.html"
 			],
 			[
-				"picture",
-				"model/picture.py"
-			],
-			[
 				"stat",
 				"templates/pc/macro/statusbar.html"
 			],
@@ -1323,10 +1421,6 @@
 				"apps/pc/user/register.py"
 			],
 			[
-				"util",
-				"lib/util.py"
-			],
-			[
 				"login.",
 				"apps/pc/user/login.py"
 			],
@@ -1369,98 +1463,6 @@
 			[
 				"jin",
 				"lib/jinja_loader.py"
-			],
-			[
-				"ext.",
-				"lib/jinja2/ext.py"
-			],
-			[
-				"help",
-				"lib/helper.py"
-			],
-			[
-				"place.py",
-				"model/place.py"
-			],
-			[
-				"no",
-				"model/notice.py"
-			],
-			[
-				"file",
-				"lib/fileutil.py"
-			],
-			[
-				"json",
-				"apps/pc/picture/json.py"
-			],
-			[
-				"co",
-				"config.py"
-			],
-			[
-				"exter",
-				"templates/pc/user/setting/external_service.html"
-			],
-			[
-				"user.css",
-				"static/css/user.css"
-			],
-			[
-				"main.cs",
-				"static/css/main.css"
-			],
-			[
-				"button",
-				"static/css/button.css"
-			],
-			[
-				"message_box.htm",
-				"templates/pc/component/user/message_box.html"
-			],
-			[
-				"view",
-				"templates/pc/entry/review/view_spot.html"
-			],
-			[
-				"butt",
-				"static/css/button.css"
-			],
-			[
-				"part_left_side.html",
-				"templates/pc/user/setting/part_left_side.html"
-			],
-			[
-				"part_left",
-				"templates/pc/user/setting/part_left_side.html"
-			],
-			[
-				"create",
-				"templates/pc/picture/album/create.html"
-			],
-			[
-				"scrip",
-				"templates/pc/macro/picture/script_plup.html"
-			],
-			[
-				"uplo",
-				"templates/pc/macro/picture/upload_plup.html"
-			],
-			[
-				"user.",
-				"model/user.py"
-			],
-			[
-				"config",
-				"config.py"
-			],
-			[
-				"o",
-				"lib/tweepy/oauth.py"
-			],
-			[
-				"js_a",
-				"src/apps/fashion/templates/_js_area.php"
 			]
 		],
 		"width": 0.0
@@ -1477,6 +1479,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": false,
-	"side_bar_width": 267.0,
+	"side_bar_width": 312.0,
 	"status_bar_visible": true
 }

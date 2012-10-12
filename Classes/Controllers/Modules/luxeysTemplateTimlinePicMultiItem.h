@@ -8,16 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "UIButton+AsyncImage.h"
-#import "LuxeysPicture.h"
+#import "Picture.h"
 
 @interface luxeysTemplateTimlinePicMultiItem : UIViewController {
-    LuxeysPicture *pic;
+    Picture *pic;
     id parent;
 }
 @property (strong, nonatomic) IBOutlet UIButton *buttonComment;
 @property (strong, nonatomic) IBOutlet UIButton *buttonImage;
 @property (strong, nonatomic) IBOutlet UIButton *buttonVote;
 
-- (id)initWithPic:(LuxeysPicture *)aPic parent:(id)aParent;
+- (id)initWithPic:(Picture *)aPic parent:(id)aParent;
 
 @end

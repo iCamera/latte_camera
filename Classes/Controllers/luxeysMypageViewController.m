@@ -54,6 +54,7 @@
 {
     [super viewDidLoad];
     
+    
     UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:imageProfilePic.bounds];
     imageProfilePic.layer.masksToBounds = NO;
     imageProfilePic.layer.shadowColor = [UIColor blackColor].CGColor;
@@ -61,6 +62,10 @@
     imageProfilePic.layer.shadowOpacity = 1.0f;
     imageProfilePic.layer.shadowRadius = 1.0f;
     imageProfilePic.layer.shadowPath = shadowPath.CGPath;
+    
+   imageProfilePic.layer.cornerRadius = 5;
+   imageProfilePic.clipsToBounds = YES;
+  
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = CGRectMake(0, 120, 320, 10);
@@ -105,15 +110,15 @@
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         
         luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-        [[luxeysLatteAPIClient sharedClient] getPath:@"api/user/me/timeline"
+        [[LatteAPIClient sharedClient] getPath:@"api/user/me/timeline"
                                           parameters: [NSDictionary dictionaryWithObjectsAndKeys:
                                                        [app getToken], @"token",
                                                        [NSNumber numberWithInteger:timelineMode], @"listtype",
                                                        nil]
                                              success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                 feeds = [LuxeysFeed mutableArrayFromDictionary:JSON
+                                                 feeds = [Feed mutableArrayFromDictionary:JSON
                                                                                         withKey:@"feeds"];
-                                                 LuxeysFeed *lastFeed = feeds.lastObject;
+                                                 Feed *lastFeed = feeds.lastObject;
                                                  lastFeedID = [lastFeed.feedID integerValue];
                                                  
                                                  [self.tableView reloadData];
@@ -136,10 +141,10 @@
 - (void)reloadProfile {
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     
-    [[luxeysLatteAPIClient sharedClient] getPath:@"api/user/me"
+    [[LatteAPIClient sharedClient] getPath:@"api/user/me"
                                       parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                             LuxeysUser *user = [LuxeysUser instanceFromDictionary:[JSON objectForKey:@"user"]];
+                                             User *user = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
                                              app.currentUser = user;
                                              
                                              [imageProfilePic setImageWithURL:[NSURL URLWithString:user.profilePicture]];
@@ -159,10 +164,10 @@
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [[luxeysLatteAPIClient sharedClient] getPath:@"api/picture/user/me"
+        [[LatteAPIClient sharedClient] getPath:@"api/picture/user/me"
                                           parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                              success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                 pictures = [LuxeysPicture mutableArrayFromDictionary:JSON
+                                                 pictures = [Picture mutableArrayFromDictionary:JSON
                                                                                               withKey:@"pictures"];
                                                  
                                                  
@@ -186,10 +191,10 @@
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [[luxeysLatteAPIClient sharedClient] getPath:@"api/user/me/friend"
+        [[LatteAPIClient sharedClient] getPath:@"api/user/me/friend"
                                           parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                              success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                 friends = [LuxeysUser mutableArrayFromDictionary:JSON
+                                                 friends = [User mutableArrayFromDictionary:JSON
                                                                                           withKey:@"friends"];
                                                  
                                                  
@@ -214,10 +219,10 @@
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [[luxeysLatteAPIClient sharedClient] getPath:@"api/user/me/following"
+        [[LatteAPIClient sharedClient] getPath:@"api/user/me/following"
                                           parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                              success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                 followings = [LuxeysUser mutableArrayFromDictionary:JSON
+                                                 followings = [User mutableArrayFromDictionary:JSON
                                                                                              withKey:@"following"];
                                                  
                                                  [self.tableView reloadData];
@@ -241,10 +246,10 @@
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [[luxeysLatteAPIClient sharedClient] getPath:@"api/picture/user/interesting/me"
+        [[LatteAPIClient sharedClient] getPath:@"api/picture/user/interesting/me"
                                           parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                              success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                 votes = [LuxeysPicture mutableArrayFromDictionary:JSON
+                                                 votes = [Picture mutableArrayFromDictionary:JSON
                                                                                               withKey:@"pictures"];
                                                  
                                                  [self.tableView reloadData];
@@ -297,10 +302,10 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableMode == kTableTimeline) {
-        LuxeysFeed *feed = [feeds objectAtIndex:section];
+        Feed *feed = [feeds objectAtIndex:section];
         
         if (feed.targets.count == 1) {
-            LuxeysPicture *pic = [feed.targets objectAtIndex:0];
+            Picture *pic = [feed.targets objectAtIndex:0];
             NSInteger commentCount = [pic.commentCount integerValue];
             
             NSString *key = [NSString stringWithFormat:@"%d", section];
@@ -330,9 +335,9 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableMode == kTableTimeline)
     {
-        LuxeysFeed *feed = [feeds objectAtIndex:indexPath.section];
-        LuxeysPicture *pic = [feed.targets objectAtIndex:0];
-        LuxeysComment *comment = [pic.comments objectAtIndex:indexPath.row];
+        Feed *feed = [feeds objectAtIndex:indexPath.section];
+        Picture *pic = [feed.targets objectAtIndex:0];
+        Comment *comment = [pic.comments objectAtIndex:indexPath.row];
         
         CGSize labelSize = [comment.descriptionText sizeWithFont:[UIFont systemFontOfSize:11]
                                                constrainedToSize:CGSizeMake(255.0f, MAXFLOAT)
@@ -345,7 +350,7 @@
         return 50;
 }
 
-- (UIView *)createComment:(LuxeysComment *)comment {
+- (UIView *)createComment:(Comment *)comment {
     UIView *view = [[UIView alloc] init];
     UIButton *picUser = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 25, 25)];
     UILabel *labelUser = [[UILabel alloc] initWithFrame:CGRectMake(35, 5, 200, 20)];
@@ -363,10 +368,10 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (tableMode == kTableTimeline) {
-        LuxeysFeed *feed = [feeds objectAtIndex:section];
+        Feed *feed = [feeds objectAtIndex:section];
         if (feed.targets.count == 1) {
-            LuxeysPicture *pic = [feed.targets objectAtIndex:0];
-            float newheight = [luxeysImageUtils heightFromWidth:300
+            Picture *pic = [feed.targets objectAtIndex:0];
+            float newheight = [luxeysUtils heightFromWidth:300
                                                           width:[pic.width floatValue]
                                                          height:[pic.height floatValue]];
             if ([pic.commentCount integerValue] > 3)
@@ -378,20 +383,20 @@
             return 245;
         }
     } else
-        return 0;
+        return 1;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (tableMode == kTableTimeline) {
-        LuxeysFeed *feed = [feeds objectAtIndex:section];
+        Feed *feed = [feeds objectAtIndex:section];
         
         if (feed.targets.count == 1) {
-            LuxeysPicture *pic = [feed.targets objectAtIndex:0];
+            Picture *pic = [feed.targets objectAtIndex:0];
             luxeysTemplatePicTimeline *viewPic = [[luxeysTemplatePicTimeline alloc] initWithPic:pic user:feed.user section:section sender:self];
             return viewPic.view;
         }
         else {
-            luxeysTemplateTimelinePicMulti *viewMultiPic = [[luxeysTemplateTimelinePicMulti alloc] initWithPics:feed.targets user:feed.user section:section sender:self];
+            luxeysTemplateTimelinePicMulti *viewMultiPic = [[luxeysTemplateTimelinePicMulti alloc] initWithFeed:feed section:section sender:self];
             return viewMultiPic.view;
         }
     }
@@ -402,11 +407,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableMode == kTableTimeline)
     {
-        LuxeysFeed *feed = [feeds objectAtIndex:indexPath.section];
-        LuxeysPicture *pic = [feed.targets objectAtIndex:0];
+        Feed *feed = [feeds objectAtIndex:indexPath.section];
+        Picture *pic = [feed.targets objectAtIndex:0];
         luxeysTableViewCellComment* cellComment = [tableView dequeueReusableCellWithIdentifier:@"Comment"];
         
-        LuxeysComment *comment = [pic.comments objectAtIndex:indexPath.row];
+        Comment *comment = [pic.comments objectAtIndex:indexPath.row];
         [cellComment setComment:comment];
         
         cellComment.buttonUser.tag = [comment.user.userId integerValue];
@@ -414,8 +419,8 @@
         
         cellComment.backgroundView = [[UIView alloc] init];
         cellComment.backgroundView.backgroundColor = [UIColor colorWithRed:0.91f green:0.90f blue:0.88 alpha:1];
-        cellComment.backgroundView.layer.cornerRadius = 5;
-        cellComment.backgroundView.layer.masksToBounds = YES;
+        // cellComment.backgroundView.layer.cornerRadius = 5;
+        // cellComment.backgroundView.layer.masksToBounds = YES;
         cellComment.backgroundView.layer.borderWidth = 0.5f;
         cellComment.backgroundView.layer.borderColor = [[UIColor whiteColor] CGColor];
         
@@ -427,7 +432,7 @@
         {
             NSInteger index = indexPath.row*4+i;
             
-            LuxeysPicture *pic;
+            Picture *pic;
             if (tableMode == kTableVoted) {
                 if (index >= votes.count)
                     break;
@@ -464,7 +469,7 @@
     }
     else {
         luxeysCellFriend* cellUser;
-        LuxeysUser *user;
+        User *user;
         if (tableMode == kTableFriends) {
             cellUser = [tableView dequeueReusableCellWithIdentifier:@"Friend"];
             user = [friends objectAtIndex:indexPath.row];
@@ -570,6 +575,11 @@
 
 
 - (void)showTimeline:(NSNotification *) notification {
+    for (UIButton *button in allTab) {
+        button.enabled = YES;
+    }
+    buttonTimelineAll.enabled = NO;
+    
     [self switchTimeline:kListAll];
 }
 
@@ -583,8 +593,8 @@
         [viewInfo setPictureID:button.tag];
     }
     else if ([segue.identifier isEqualToString:@"Comment"]) {
-        LuxeysFeed *feed = [self feedFromPicID:button.tag];
-        LuxeysPicture *pic = [self picFromPicID:button.tag];
+        Feed *feed = [self feedFromPicID:button.tag];
+        Picture *pic = [self picFromPicID:button.tag];
         
         luxeysPicCommentViewController *viewComment = segue.destinationViewController;
         [viewComment setPic:pic withUser:feed.user withParent:self];
@@ -612,8 +622,8 @@
 
 - (void)submitLike:(UIButton*)sender {
     sender.enabled = FALSE;
-    LuxeysFeed *feed = [self feedFromPicID:sender.tag];
-    LuxeysPicture *pic = [self picFromPicID:sender.tag];
+    Feed *feed = [self feedFromPicID:sender.tag];
+    Picture *pic = [self picFromPicID:sender.tag];
     pic.isVoted = TRUE;
     if ([feed.count integerValue] > 1) {
         NSInteger likeCount = [sender.titleLabel.text integerValue];
@@ -632,7 +642,7 @@
                            nil];
     
     NSString *url = [NSString stringWithFormat:@"api/picture/%d/vote_post", sender.tag];
-    [[luxeysLatteAPIClient sharedClient] postPath:url
+    [[LatteAPIClient sharedClient] postPath:url
                                        parameters:param
                                           success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                                  NSLog(@"Submited like"); 
@@ -649,8 +659,8 @@
     NSInteger section = sender.tag;
     
     NSMutableArray *indexes = [[NSMutableArray alloc] init];
-    LuxeysFeed *feed = [feeds objectAtIndex:section];
-    LuxeysPicture *pic = [feed.targets objectAtIndex:0];
+    Feed *feed = [feeds objectAtIndex:section];
+    Picture *pic = [feed.targets objectAtIndex:0];
     for (int i = 3; i < pic.comments.count; i++) {
         [indexes addObject:[NSIndexPath indexPathForItem:i inSection:section]];
     }
@@ -660,6 +670,11 @@
     if ([toggleSection objectForKey:key] == nil) {
         [toggleSection setObject:check forKey:key];
         [self.tableView insertRowsAtIndexPaths:indexes withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+        NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:section];
+        CGRect rect = [self.tableView rectForRowAtIndexPath:path];
+        rect.origin.y -= 30;
+        [self.tableView setContentOffset:rect.origin animated:YES];
         
     } else {
         [toggleSection removeObjectForKey:key];
@@ -703,15 +718,15 @@
     [refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
 }
 
-- (void)submitComment:(LuxeysPicture *)pic {
+- (void)submitComment:(Picture *)pic {
     long section = [feeds indexOfObject:[self feedFromPicID:[pic.pictureId longValue]]];
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
-- (LuxeysFeed *)feedFromPicID:(long)picID {
-    for (LuxeysFeed *feed in feeds) {
+- (Feed *)feedFromPicID:(long)picID {
+    for (Feed *feed in feeds) {
         if ([feed.model integerValue] == kModelPicture) {
-            for (LuxeysPicture *pic in feed.targets) {
+            for (Picture *pic in feed.targets) {
                 if ([pic.pictureId integerValue] == picID) {
                     return feed;
                 }
@@ -721,10 +736,10 @@
     return nil;
 }
 
-- (LuxeysPicture *)picFromPicID:(long)picID {
-    for (LuxeysFeed *feed in feeds) {
+- (Picture *)picFromPicID:(long)picID {
+    for (Feed *feed in feeds) {
         if ([feed.model integerValue] == kModelPicture) {
-            for (LuxeysPicture *pic in feed.targets) {
+            for (Picture *pic in feed.targets) {
                 if ([pic.pictureId integerValue] == picID) {
                     return pic;
                 }

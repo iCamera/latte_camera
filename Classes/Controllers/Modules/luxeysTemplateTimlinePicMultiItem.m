@@ -27,7 +27,7 @@
     return self;
 }
 
-- (id)initWithPic:(LuxeysPicture *)aPic parent:(id)aParent
+- (id)initWithPic:(Picture *)aPic parent:(id)aParent
 {
     self = [super init];
     if (self) {

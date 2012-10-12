@@ -32,15 +32,7 @@
 	if ((self = [super initWithStyle:SSCollectionViewItemStyleImage reuseIdentifier:aReuseIdentifier])) {
 		self.imageView.backgroundColor = [UIColor colorWithWhite:0.95f alpha:1.0f];
         
-        self.imageView.layer.borderColor = [[UIColor whiteColor] CGColor];
-        self.imageView.layer.borderWidth = 5;
-        UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:self.imageView.bounds];
-        self.imageView.layer.masksToBounds = NO;
-        self.imageView.layer.shadowColor = [UIColor blackColor].CGColor;
-        self.imageView.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-        self.imageView.layer.shadowOpacity = 0.5f;
-        self.imageView.layer.shadowRadius = 1.5f;
-        self.imageView.layer.shadowPath = shadowPathPic.CGPath;
+        
 	}
 	return self;
 }

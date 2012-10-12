@@ -1,14 +1,16 @@
 #import <Foundation/Foundation.h>
-#import "LuxeysObject.h"
+#import "ModelObject.h"
+#import "luxeysUtils.h"
 
-@class LuxeysUser;
+@class User;
 
-@interface LuxeysFeed : LuxeysObject {
+@interface Feed : ModelObject {
     NSNumber *feedID;
     NSNumber *count;
     NSNumber *model;
+    NSDate *updatedAt;
     NSMutableArray *targets;
-    LuxeysUser *user;
+    User *user;
 
 }
 
@@ -16,9 +18,10 @@
 @property (nonatomic, copy) NSNumber *count;
 @property (nonatomic, copy) NSNumber *model;
 @property (nonatomic, retain) NSMutableArray *targets;
-@property (nonatomic, strong) LuxeysUser *user;
+@property (nonatomic, strong) User *user;
+@property (nonatomic, copy) NSDate *updatedAt;
 
-+ (LuxeysFeed *)instanceFromDictionary:(NSDictionary *)aDictionary;
++ (Feed *)instanceFromDictionary:(NSDictionary *)aDictionary;
 - (void)setAttributesFromDictionary:(NSDictionary *)aDictionary;
 
 @end

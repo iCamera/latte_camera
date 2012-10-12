@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "luxeysAppDelegate.h"
-#import "luxeysLatteAPIClient.h"
+#import "LatteAPIClient.h"
 #import "UIImageView+AFNetworking.h"
 #import "luxeysPicDetailViewController.h"
 #import "luxeysCellPicture.h"
 #import "luxeysCellFriend.h"
-#import "luxeysImageUtils.h"
+#import "luxeysUtils.h"
 #import "luxeysCellComment.h"
 #import "UIButton+AsyncImage.h"
 #import <luxeysSettingViewController.h>
@@ -24,9 +24,9 @@
 #import "luxeysPicCommentViewController.h"
 #import "luxeysButtonBrown30.h"
 #import "EGORefreshTableHeaderView.h"
-#import "LuxeysFeed.h"
-#import "LuxeysUser.h"
-#import "LuxeysPicture.h"
+#import "Feed.h"
+#import "User.h"
+#import "Picture.h"
 #import "MBProgressHUD.h"
 
 #define kTableTimeline 1
@@ -76,7 +76,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonTimelineFollow;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadIndicator;
 
-- (LuxeysFeed *)feedFromPicID:(long)picID;
+- (Feed *)feedFromPicID:(long)picID;
 
 
 @end

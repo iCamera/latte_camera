@@ -56,7 +56,6 @@
     viewImage.layer.shadowPath = shadowPath.CGPath;
     
     
-    
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];
@@ -64,10 +63,10 @@
     if ([pic.commentCount longValue] != pic.comments.count) { //Comments was not loaded
         luxeysAppDelegate* app = (luxeysAppDelegate*)[[UIApplication sharedApplication] delegate];
         NSString *url = [NSString stringWithFormat:@"api/picture/%d", picID];
-        [[luxeysLatteAPIClient sharedClient] getPath:url
+        [[LatteAPIClient sharedClient] getPath:url
                                           parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                              success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                 pic.comments = [LuxeysComment mutableArrayFromDictionary:JSON withKey:@"comments"];
+                                                 pic.comments = [Comment mutableArrayFromDictionary:JSON withKey:@"comments"];
                                                  
                                                  [tableComment reloadData];
                                              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -88,7 +87,7 @@
     tableComment.scrollIndicatorInsets = contentInsets;
 }
 
-- (void)setPic:(LuxeysPicture *)aPic withUser:(LuxeysUser *)aUser withParent:(UIViewController *)aParent {
+- (void)setPic:(Picture *)aPic withUser:(User *)aUser withParent:(UIViewController *)aParent {
     pic = aPic;
     picID = [pic.pictureId integerValue];
     user = aUser;
@@ -111,16 +110,15 @@
         
         NSString *url = [NSString stringWithFormat:@"api/picture/%d/comment_post", picID];
         
-        [[luxeysLatteAPIClient sharedClient] postPath:url
+        [[LatteAPIClient sharedClient] postPath:url
                                            parameters:param
                                               success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                  LuxeysComment *comment = [LuxeysComment instanceFromDictionary:[JSON objectForKey:@"comment"]];
+                                                  Comment *comment = [Comment instanceFromDictionary:[JSON objectForKey:@"comment"]];
                                                   [pic.comments insertObject:comment atIndex:0];
                                                   pic.commentCount = [NSNumber numberWithInteger:[pic.commentCount integerValue] + 1];
                                                   
-                                                  [self dismissViewControllerAnimated:YES completion:^{
-                                                      [parent performSelector:@selector(submitComment:) withObject:pic];
-                                                  }];
+                                                  [parent performSelector:@selector(submitComment:) withObject:pic];
+                                                  [self.navigationController popViewControllerAnimated:YES];
                                               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                   NSLog(@"Something went wrong (Comment)");
                                               }];
@@ -136,7 +134,8 @@
 }
 
 - (IBAction)touchClose:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+    // [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)touchSubmit:(id)sender {
@@ -211,10 +210,10 @@
         cellComment = (luxeysTableViewCellComment*)[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                                           reuseIdentifier:@"Comment"];
     }
-    LuxeysComment *comment = [[[pic.comments reverseObjectEnumerator] allObjects] objectAtIndex:indexPath.row];
+    Comment *comment = [[[pic.comments reverseObjectEnumerator] allObjects] objectAtIndex:indexPath.row];
     [cellComment setComment:comment];
-    cellComment.buttonUser.tag = indexPath.row;
-    [cellComment.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
+    // cellComment.buttonUser.tag = indexPath.row;
+    // [cellComment.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
     
     return cellComment;
 }
@@ -228,11 +227,29 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    LuxeysComment *comment = [[[pic.comments reverseObjectEnumerator] allObjects] objectAtIndex:indexPath.row];
+    Comment *comment = [[[pic.comments reverseObjectEnumerator] allObjects] objectAtIndex:indexPath.row];
     CGSize labelSize = [comment.descriptionText sizeWithFont:[UIFont systemFontOfSize:11]
                               constrainedToSize:CGSizeMake(255.0f, MAXFLOAT)
                                   lineBreakMode:NSLineBreakByWordWrapping];
     return MAX(labelSize.height + 33, 50);
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"TabbarHide"
+     object:self];
+    
+    [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"TabbarShow"
+     object:self];
+    
+    [super viewWillDisappear:animated];
 }
 
 @end

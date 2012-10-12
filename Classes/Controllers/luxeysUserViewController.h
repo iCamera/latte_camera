@@ -9,15 +9,17 @@
 #import <UIKit/UIKit.h>
 
 #import "UIButton+AsyncImage.h"
-#import "luxeysLatteAPIClient.h"
+#import "LatteAPIClient.h"
 #import "luxeysAppDelegate.h"
 #import "luxeysCellProfile.h"
 #import "luxeysPicDetailViewController.h"
+#import "luxeysUserCalendarViewController.h"
 #import "luxeysCellFriend.h"
-#import "LuxeysUser.h"
-#import "LuxeysPicture.h"
+#import "User.h"
+#import "Picture.h"
 #import "MBProgressHUD.h"
 #import "EGORefreshTableHeaderView.h"
+#import "luxeysButtonBrown30.h"
 
 #define kTableProfile 1
 #define kTableFriends 2
@@ -33,7 +35,11 @@
     NSArray *friends;
     NSMutableArray *photos;
     NSMutableArray *interests;
-    LuxeysUser *user;
+    NSMutableDictionary *currentMonthPics;
+    NSDate *currentMonth;
+    
+    NSInteger daysInMonth;
+    User *user;
     int tableMode;
     int userID;
     NSArray *allTab;

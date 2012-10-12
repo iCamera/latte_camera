@@ -69,33 +69,45 @@
     collectionView.scrollView.scrollIndicatorInsets = contentInsets;
     
     [self.view addSubview:collectionView];
+
+    refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - collectionView.bounds.size.height, self.view.frame.size.width, collectionView.bounds.size.height)];
+    refreshHeaderView.delegate = self;
+    [collectionView.scrollView addSubview:refreshHeaderView];
     
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-    [[luxeysLatteAPIClient sharedClient] getPath:@"api/picture/latests"
-                                      parameters:nil
-                                         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                             _items = [[NSMutableArray alloc] init];
-                                             for (NSDictionary *pic in [JSON objectForKey:@"pics"]) {
-                                                 [_items addObject:[LuxeysPicture instanceFromDictionary:pic]];
-                                             }
-                                             [collectionView reloadData];
-
-                                             dispatch_async(dispatch_get_main_queue(), ^{
-                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
-                                                 });
-
-                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
-                                            dispatch_async(dispatch_get_main_queue(), ^{
-                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
-                                                 });
-
-                                             NSLog(@"Something went wrong (Welcome)");
-                                         }];
-    });
+    [self reloadView];
     
     [self.buttonNavRight addTarget:self action:@selector(loginPressed:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)reloadView {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [[LatteAPIClient sharedClient] getPath:@"api/picture/latests"
+                                          parameters:nil
+                                             success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                                 _items = [[NSMutableArray alloc] init];
+                                                 for (NSDictionary *pic in [JSON objectForKey:@"pics"]) {
+                                                     [_items addObject:[Picture instanceFromDictionary:pic]];
+                                                 }
+                                                 [collectionView reloadData];
+                                                 
+                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
+                                                 
+                                                 [self doneLoadingTableViewData];
+                                                 
+                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                 
+                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
+                                                 
+                                                 [self doneLoadingTableViewData];
+                                                 
+                                                 NSLog(@"Something went wrong (Welcome)");
+                                             }];
+    });
 }
 
 #pragma mark - SSCollectionViewDataSource
@@ -119,7 +131,7 @@
 	}
 	
     
-    LuxeysPicture *pic = [_items objectAtIndex:indexPath.row];
+    Picture *pic = [_items objectAtIndex:indexPath.row];
     
 	item.imageURL = [NSURL URLWithString:pic.urlSquare];
 	
@@ -136,11 +148,11 @@
 
 
 - (void)collectionView:(SSCollectionView *)aCollectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    LuxeysPicture *pic = [_items objectAtIndex:indexPath.row];
+    Picture *pic = [_items objectAtIndex:indexPath.row];
     [self performSegueWithIdentifier:@"PictureDetail" sender:pic];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(LuxeysPicture *)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(Picture *)sender {
     if ([segue.identifier isEqualToString:@"PictureDetail"]) {
         luxeysPicDetailViewController* viewPicDetail = segue.destinationViewController;
         [viewPicDetail setPictureID:[sender.pictureId integerValue]];
@@ -203,6 +215,8 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
+    [refreshHeaderView egoRefreshScrollViewDidScroll:aScrollView];
+
     if (loadEnded)
         return;
     CGPoint offset = aScrollView.contentOffset;
@@ -217,7 +231,7 @@
         if (!indicator.isAnimating) {
             [indicator startAnimating];
             
-            [[luxeysLatteAPIClient sharedClient] getPath:@"api/picture/latests"
+            [[LatteAPIClient sharedClient] getPath:@"api/picture/latests"
                                               parameters: [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:pagephoto+1]
                                                                                       forKey:@"page"]
                                                  success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -228,7 +242,7 @@
                                                      
                                                      if (pics.count > 0) {
                                                          for (NSDictionary *pic in pics) {
-                                                             [_items addObject:[LuxeysPicture instanceFromDictionary:pic]];
+                                                             [_items addObject:[Picture instanceFromDictionary:pic]];
                                                          }
                                                          [collectionView reloadData];
                                                      } else {
@@ -245,6 +259,36 @@
     }
 }
 
+- (void)reloadTableViewDataSource{
+    reloading = YES;
+}
+
+- (void)doneLoadingTableViewData{
+    reloading = NO;
+    [refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:collectionView.scrollView];
+}
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
+    [self reloadTableViewDataSource];
+    
+    [self reloadView];
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+    
+    return reloading; // should return if data source model is reloading
+    
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+    
+    return [NSDate date]; // should return date data source was last changed
+    
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    [refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+}
 
 
 - (void)didReceiveMemoryWarning

@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-@interface luxeysImageUtils : NSObject
+@interface luxeysUtils : NSObject
 
 + (float)heightFromWidth:(float)newwidth width:(float)width height:(float)height;
++ (NSString *)timeDeltaFromNow:(NSDate *)aDate;
++ (NSDate *)dateFromJSON:(NSString *)aDate;
 
 @end

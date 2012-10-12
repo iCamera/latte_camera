@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8802253615BD3E7E00CF901A /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8802253515BD3E7E00CF901A /* AssetsLibrary.framework */; };
+		8802CC3D1627AC8000D06649 /* luxeysCollectionCellPic.m in Sources */ = {isa = PBXBuildFile; fileRef = 8802CC3C1627AC8000D06649 /* luxeysCollectionCellPic.m */; };
 		8805439F161964030091A40F /* luxeysCellNotify.m in Sources */ = {isa = PBXBuildFile; fileRef = 8805439E161964030091A40F /* luxeysCellNotify.m */; };
 		8809818E15F8532F00B81A4F /* luxeysCellFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = 8809818D15F8532F00B81A4F /* luxeysCellFriend.m */; };
 		880C4B17161C2A1400252C6A /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 880C4AFC161C2A1400252C6A /* MBProgressHUD.m */; };
@@ -15,18 +16,21 @@
 		880C4B3D161C7A7500252C6A /* PicturePin.m in Sources */ = {isa = PBXBuildFile; fileRef = 880C4B3C161C7A7500252C6A /* PicturePin.m */; };
 		88137DC7160AF31500E99665 /* luxeysCellFriendRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 88137DC6160AF31500E99665 /* luxeysCellFriendRequest.m */; };
 		881D2F3915DE560000062101 /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 881D2F3615DE560000062101 /* KeychainItemWrapper.m */; };
-		881D2F3A15DE560000062101 /* luxeysLatteAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 881D2F3815DE560000062101 /* luxeysLatteAPIClient.m */; };
+		881D2F3A15DE560000062101 /* LatteAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 881D2F3815DE560000062101 /* LatteAPIClient.m */; };
 		881D2F5215E1DE8C00062101 /* luxeysSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 881D2F5015E1DE8C00062101 /* luxeysSettingViewController.m */; };
 		881D2F8915E2092400062101 /* luxeysUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 881D2F8715E2092300062101 /* luxeysUserViewController.m */; };
-		8821099115DDFE9300E1A179 /* ZUUIRevealController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8821098F15DDFE8300E1A179 /* ZUUIRevealController.m */; };
+		8821099115DDFE9300E1A179 /* LXUIRevealController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8821098F15DDFE8300E1A179 /* LXUIRevealController.m */; };
 		88390E2A15F5C53D00CDCA3B /* luxeysRankingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88390E2915F5C53D00CDCA3B /* luxeysRankingViewController.m */; };
 		88390E2D15F5CC9D00CDCA3B /* luxeysCellRankLv1.m in Sources */ = {isa = PBXBuildFile; fileRef = 88390E2C15F5CC9D00CDCA3B /* luxeysCellRankLv1.m */; };
 		88390E3015F5CCB300CDCA3B /* luxeysCellRankLv2.m in Sources */ = {isa = PBXBuildFile; fileRef = 88390E2F15F5CCB300CDCA3B /* luxeysCellRankLv2.m */; };
 		88390E3315F5CCD000CDCA3B /* luxeysCellRankLv3.m in Sources */ = {isa = PBXBuildFile; fileRef = 88390E3215F5CCD000CDCA3B /* luxeysCellRankLv3.m */; };
+		884208A1161ECEB10082755C /* luxeysHeaderCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = 884208A0161ECEB10082755C /* luxeysHeaderCalendar.m */; };
 		884B5A7E160FF10A0059102E /* user.gif in Resources */ = {isa = PBXBuildFile; fileRef = 884B5A7D160FF10A0059102E /* user.gif */; };
 		884B5A81160FF24B0059102E /* UIButton+AsyncImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 884B5A80160FF24B0059102E /* UIButton+AsyncImage.m */; };
 		884B5A8D16106E6B0059102E /* luxeysTemplatePicTimeline.m in Sources */ = {isa = PBXBuildFile; fileRef = 884B5A8B16106E6B0059102E /* luxeysTemplatePicTimeline.m */; };
 		884B5A8E16106E6B0059102E /* luxeysTemplatePicTimeline.xib in Resources */ = {isa = PBXBuildFile; fileRef = 884B5A8C16106E6B0059102E /* luxeysTemplatePicTimeline.xib */; };
+		88503048161EBF410093927B /* luxeysCellPicCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = 88503047161EBF410093927B /* luxeysCellPicCalendar.m */; };
+		8850304B161EC0C70093927B /* luxeysUserCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8850304A161EC0C70093927B /* luxeysUserCalendarViewController.m */; };
 		8864139916158E2F00181E52 /* icon_comment2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8864139316158E2F00181E52 /* icon_comment2.png */; };
 		8864139A16158E2F00181E52 /* icon_comment2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8864139416158E2F00181E52 /* icon_comment2@2x.png */; };
 		8864139B16158E2F00181E52 /* icon_comment3.png in Resources */ = {isa = PBXBuildFile; fileRef = 8864139516158E2F00181E52 /* icon_comment3.png */; };
@@ -56,11 +60,24 @@
 		887D18D615EB6109002D82E4 /* br_usermenu_left_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 887D18D015EB6109002D82E4 /* br_usermenu_left_on@2x.png */; };
 		887D18D715EB6109002D82E4 /* br_usermenu_right_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 887D18D115EB6109002D82E4 /* br_usermenu_right_on.png */; };
 		887D18D815EB6109002D82E4 /* br_usermenu_right_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 887D18D215EB6109002D82E4 /* br_usermenu_right_on@2x.png */; };
-		88875465161ADF9700DD033E /* LuxeysComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 8887545E161ADF9700DD033E /* LuxeysComment.m */; };
-		88875466161ADF9700DD033E /* LuxeysFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 88875460161ADF9700DD033E /* LuxeysFeed.m */; };
-		88875467161ADF9700DD033E /* LuxeysPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = 88875462161ADF9700DD033E /* LuxeysPicture.m */; };
-		88875468161ADF9700DD033E /* LuxeysUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 88875464161ADF9700DD033E /* LuxeysUser.m */; };
-		8887546E161AF90500DD033E /* LuxeysObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8887546D161AF90500DD033E /* LuxeysObject.m */; };
+		887E40931625493B0060623C /* luxeysImagePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 887E4092162549310060623C /* luxeysImagePickerViewController.m */; };
+		887E4095162552C20060623C /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 887E4094162552C10060623C /* icon.png */; };
+		887E40971625536C0060623C /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 887E40961625536B0060623C /* icon@2x.png */; };
+		887E40A116257A310060623C /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 887E40A016257A300060623C /* Default@2x.png */; };
+		887E40A316257B950060623C /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 887E40A216257B950060623C /* Default.png */; };
+		887E40BE16266AB20060623C /* LXNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 887E40BD16266AB20060623C /* LXNavigationController.m */; };
+		887E40C116269A1C0060623C /* target.png in Resources */ = {isa = PBXBuildFile; fileRef = 887E40BF16269A1C0060623C /* target.png */; };
+		887E40C216269A1C0060623C /* target@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 887E40C016269A1C0060623C /* target@2x.png */; };
+		887E40C51626A9860060623C /* luxeysPicEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 887E40C41626A9840060623C /* luxeysPicEditViewController.m */; };
+		887E40D11626CE380060623C /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 887E40CE1626CE300060623C /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		887E40D21626CE380060623C /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 887E40CF1626CE330060623C /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		887E40D31626CE380060623C /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 887E40D01626CE350060623C /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		887E40D61626DB520060623C /* luxeysFavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 887E40D51626DB510060623C /* luxeysFavViewController.m */; };
+		88875465161ADF9700DD033E /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 8887545E161ADF9700DD033E /* Comment.m */; };
+		88875466161ADF9700DD033E /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = 88875460161ADF9700DD033E /* Feed.m */; };
+		88875467161ADF9700DD033E /* Picture.m in Sources */ = {isa = PBXBuildFile; fileRef = 88875462161ADF9700DD033E /* Picture.m */; };
+		88875468161ADF9700DD033E /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 88875464161ADF9700DD033E /* User.m */; };
+		8887546E161AF90500DD033E /* ModelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8887546D161AF90500DD033E /* ModelObject.m */; };
 		8897374E15E491F4002F4717 /* luxeysMypageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8897374D15E491F4002F4717 /* luxeysMypageViewController.m */; };
 		8897375815E499D9002F4717 /* CameraStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8897375515E499D9002F4717 /* CameraStoryboard.storyboard */; };
 		8897375915E499D9002F4717 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8897375615E499D9002F4717 /* MainStoryboard.storyboard */; };
@@ -120,7 +137,6 @@
 		88A49B8115B8FD5700CEA262 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A49B7C15B8FD5700CEA262 /* CoreVideo.framework */; };
 		88A49B8215B8FD5700CEA262 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A49B7D15B8FD5700CEA262 /* OpenGLES.framework */; };
 		88A49B8315B8FD5700CEA262 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A49B7E15B8FD5700CEA262 /* QuartzCore.framework */; };
-		88B08D3715D34B3D003CB0D3 /* Latte.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 88B08D3515D34B3D003CB0D3 /* Latte.xcdatamodeld */; };
 		88B08D4415D369EC003CB0D3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B08D4315D369EC003CB0D3 /* Security.framework */; };
 		88B47B3415DE522F00FD9C72 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B47B2015DE522F00FD9C72 /* AFHTTPClient.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		88B47B3515DE522F00FD9C72 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B47B2215DE522F00FD9C72 /* AFHTTPRequestOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -280,7 +296,7 @@
 		88CF20A415E757330063A15E /* icon_setting@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88CF20A315E757330063A15E /* icon_setting@2x.png */; };
 		88CF20A715E7584A0063A15E /* bg_status.png in Resources */ = {isa = PBXBuildFile; fileRef = 88CF20A515E7584A0063A15E /* bg_status.png */; };
 		88CF20A815E7584A0063A15E /* bg_status@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88CF20A615E7584A0063A15E /* bg_status@2x.png */; };
-		88CF20AB15E7634B0063A15E /* luxeysImageUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CF20AA15E7634B0063A15E /* luxeysImageUtils.m */; };
+		88CF20AB15E7634B0063A15E /* luxeysUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CF20AA15E7634B0063A15E /* luxeysUtils.m */; };
 		88CF20AE15E779B70063A15E /* bg_input_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 88CF20AC15E779B70063A15E /* bg_input_back.png */; };
 		88CF20AF15E779B70063A15E /* bg_input_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88CF20AD15E779B70063A15E /* bg_input_back@2x.png */; };
 		88CF20D015E783090063A15E /* arrow_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 88CF20B015E783000063A15E /* arrow_left.png */; };
@@ -428,6 +444,8 @@
 
 /* Begin PBXFileReference section */
 		8802253515BD3E7E00CF901A /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		8802CC3B1627AC8000D06649 /* luxeysCollectionCellPic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysCollectionCellPic.h; path = Classes/CustomControls/luxeysCollectionCellPic.h; sourceTree = "<group>"; };
+		8802CC3C1627AC8000D06649 /* luxeysCollectionCellPic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysCollectionCellPic.m; path = Classes/CustomControls/luxeysCollectionCellPic.m; sourceTree = "<group>"; };
 		8805439D161964030091A40F /* luxeysCellNotify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysCellNotify.h; path = Classes/Controllers/luxeysCellNotify.h; sourceTree = SOURCE_ROOT; };
 		8805439E161964030091A40F /* luxeysCellNotify.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysCellNotify.m; path = Classes/Controllers/luxeysCellNotify.m; sourceTree = SOURCE_ROOT; };
 		8809818C15F8532F00B81A4F /* luxeysCellFriend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysCellFriend.h; path = Classes/CustomControls/luxeysCellFriend.h; sourceTree = SOURCE_ROOT; };
@@ -442,14 +460,14 @@
 		88137DC6160AF31500E99665 /* luxeysCellFriendRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysCellFriendRequest.m; path = Classes/CustomControls/luxeysCellFriendRequest.m; sourceTree = SOURCE_ROOT; };
 		881D2F3515DE560000062101 /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeychainItemWrapper.h; path = Classes/Helpers/KeychainItemWrapper.h; sourceTree = "<group>"; };
 		881D2F3615DE560000062101 /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeychainItemWrapper.m; path = Classes/Helpers/KeychainItemWrapper.m; sourceTree = "<group>"; };
-		881D2F3715DE560000062101 /* luxeysLatteAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysLatteAPIClient.h; path = Classes/Helpers/luxeysLatteAPIClient.h; sourceTree = "<group>"; };
-		881D2F3815DE560000062101 /* luxeysLatteAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysLatteAPIClient.m; path = Classes/Helpers/luxeysLatteAPIClient.m; sourceTree = "<group>"; };
+		881D2F3715DE560000062101 /* LatteAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LatteAPIClient.h; path = Classes/Helpers/LatteAPIClient.h; sourceTree = "<group>"; };
+		881D2F3815DE560000062101 /* LatteAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LatteAPIClient.m; path = Classes/Helpers/LatteAPIClient.m; sourceTree = "<group>"; };
 		881D2F4F15E1DE8C00062101 /* luxeysSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysSettingViewController.h; path = Classes/Controllers/luxeysSettingViewController.h; sourceTree = "<group>"; };
 		881D2F5015E1DE8C00062101 /* luxeysSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysSettingViewController.m; path = Classes/Controllers/luxeysSettingViewController.m; sourceTree = "<group>"; };
 		881D2F8615E2092300062101 /* luxeysUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysUserViewController.h; path = Classes/Controllers/luxeysUserViewController.h; sourceTree = "<group>"; };
 		881D2F8715E2092300062101 /* luxeysUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysUserViewController.m; path = Classes/Controllers/luxeysUserViewController.m; sourceTree = "<group>"; };
-		8821098E15DDFE8300E1A179 /* ZUUIRevealController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZUUIRevealController.h; path = Vendor/ZUUIRevealController/ZUUIRevealController.h; sourceTree = "<group>"; };
-		8821098F15DDFE8300E1A179 /* ZUUIRevealController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZUUIRevealController.m; path = Vendor/ZUUIRevealController/ZUUIRevealController.m; sourceTree = "<group>"; };
+		8821098E15DDFE8300E1A179 /* LXUIRevealController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LXUIRevealController.h; path = Vendor/ZUUIRevealController/LXUIRevealController.h; sourceTree = "<group>"; };
+		8821098F15DDFE8300E1A179 /* LXUIRevealController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LXUIRevealController.m; path = Vendor/ZUUIRevealController/LXUIRevealController.m; sourceTree = "<group>"; };
 		88390E2815F5C53D00CDCA3B /* luxeysRankingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysRankingViewController.h; path = Classes/Controllers/luxeysRankingViewController.h; sourceTree = "<group>"; };
 		88390E2915F5C53D00CDCA3B /* luxeysRankingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysRankingViewController.m; path = Classes/Controllers/luxeysRankingViewController.m; sourceTree = "<group>"; };
 		88390E2B15F5CC9D00CDCA3B /* luxeysCellRankLv1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysCellRankLv1.h; path = Classes/CustomControls/luxeysCellRankLv1.h; sourceTree = SOURCE_ROOT; };
@@ -458,12 +476,18 @@
 		88390E2F15F5CCB300CDCA3B /* luxeysCellRankLv2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysCellRankLv2.m; path = Classes/CustomControls/luxeysCellRankLv2.m; sourceTree = SOURCE_ROOT; };
 		88390E3115F5CCD000CDCA3B /* luxeysCellRankLv3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysCellRankLv3.h; path = Classes/CustomControls/luxeysCellRankLv3.h; sourceTree = SOURCE_ROOT; };
 		88390E3215F5CCD000CDCA3B /* luxeysCellRankLv3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysCellRankLv3.m; path = Classes/CustomControls/luxeysCellRankLv3.m; sourceTree = SOURCE_ROOT; };
+		8842089F161ECEB10082755C /* luxeysHeaderCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysHeaderCalendar.h; path = Classes/CustomControls/luxeysHeaderCalendar.h; sourceTree = SOURCE_ROOT; };
+		884208A0161ECEB10082755C /* luxeysHeaderCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysHeaderCalendar.m; path = Classes/CustomControls/luxeysHeaderCalendar.m; sourceTree = SOURCE_ROOT; };
 		884B5A7D160FF10A0059102E /* user.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = user.gif; sourceTree = "<group>"; };
 		884B5A7F160FF24B0059102E /* UIButton+AsyncImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+AsyncImage.h"; path = "Classes/CustomControls/UIButton+AsyncImage.h"; sourceTree = SOURCE_ROOT; };
 		884B5A80160FF24B0059102E /* UIButton+AsyncImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+AsyncImage.m"; path = "Classes/CustomControls/UIButton+AsyncImage.m"; sourceTree = SOURCE_ROOT; };
 		884B5A8A16106E6B0059102E /* luxeysTemplatePicTimeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysTemplatePicTimeline.h; path = Classes/Controllers/Modules/luxeysTemplatePicTimeline.h; sourceTree = "<group>"; };
 		884B5A8B16106E6B0059102E /* luxeysTemplatePicTimeline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysTemplatePicTimeline.m; path = Classes/Controllers/Modules/luxeysTemplatePicTimeline.m; sourceTree = "<group>"; };
 		884B5A8C16106E6B0059102E /* luxeysTemplatePicTimeline.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = luxeysTemplatePicTimeline.xib; path = Classes/Controllers/Modules/luxeysTemplatePicTimeline.xib; sourceTree = "<group>"; };
+		88503046161EBF410093927B /* luxeysCellPicCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysCellPicCalendar.h; path = Classes/CustomControls/luxeysCellPicCalendar.h; sourceTree = SOURCE_ROOT; };
+		88503047161EBF410093927B /* luxeysCellPicCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysCellPicCalendar.m; path = Classes/CustomControls/luxeysCellPicCalendar.m; sourceTree = SOURCE_ROOT; };
+		88503049161EC0C70093927B /* luxeysUserCalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysUserCalendarViewController.h; path = Classes/Controllers/luxeysUserCalendarViewController.h; sourceTree = "<group>"; };
+		8850304A161EC0C70093927B /* luxeysUserCalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysUserCalendarViewController.m; path = Classes/Controllers/luxeysUserCalendarViewController.m; sourceTree = "<group>"; };
 		8864139316158E2F00181E52 /* icon_comment2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_comment2.png; sourceTree = "<group>"; };
 		8864139416158E2F00181E52 /* icon_comment2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_comment2@2x.png"; sourceTree = "<group>"; };
 		8864139516158E2F00181E52 /* icon_comment3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_comment3.png; sourceTree = "<group>"; };
@@ -495,16 +519,35 @@
 		887D18D015EB6109002D82E4 /* br_usermenu_left_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "br_usermenu_left_on@2x.png"; sourceTree = "<group>"; };
 		887D18D115EB6109002D82E4 /* br_usermenu_right_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = br_usermenu_right_on.png; sourceTree = "<group>"; };
 		887D18D215EB6109002D82E4 /* br_usermenu_right_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "br_usermenu_right_on@2x.png"; sourceTree = "<group>"; };
-		8887545D161ADF9700DD033E /* LuxeysComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LuxeysComment.h; path = Classes/Models/LuxeysComment.h; sourceTree = "<group>"; };
-		8887545E161ADF9700DD033E /* LuxeysComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LuxeysComment.m; path = Classes/Models/LuxeysComment.m; sourceTree = "<group>"; };
-		8887545F161ADF9700DD033E /* LuxeysFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LuxeysFeed.h; path = Classes/Models/LuxeysFeed.h; sourceTree = "<group>"; };
-		88875460161ADF9700DD033E /* LuxeysFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LuxeysFeed.m; path = Classes/Models/LuxeysFeed.m; sourceTree = "<group>"; };
-		88875461161ADF9700DD033E /* LuxeysPicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LuxeysPicture.h; path = Classes/Models/LuxeysPicture.h; sourceTree = "<group>"; };
-		88875462161ADF9700DD033E /* LuxeysPicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LuxeysPicture.m; path = Classes/Models/LuxeysPicture.m; sourceTree = "<group>"; };
-		88875463161ADF9700DD033E /* LuxeysUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LuxeysUser.h; path = Classes/Models/LuxeysUser.h; sourceTree = "<group>"; };
-		88875464161ADF9700DD033E /* LuxeysUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LuxeysUser.m; path = Classes/Models/LuxeysUser.m; sourceTree = "<group>"; };
-		8887546C161AF90500DD033E /* LuxeysObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LuxeysObject.h; path = Classes/Models/LuxeysObject.h; sourceTree = "<group>"; };
-		8887546D161AF90500DD033E /* LuxeysObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LuxeysObject.m; path = Classes/Models/LuxeysObject.m; sourceTree = "<group>"; };
+		887E40911625492D0060623C /* luxeysImagePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysImagePickerViewController.h; path = Classes/Controllers/luxeysImagePickerViewController.h; sourceTree = "<group>"; };
+		887E4092162549310060623C /* luxeysImagePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysImagePickerViewController.m; path = Classes/Controllers/luxeysImagePickerViewController.m; sourceTree = "<group>"; };
+		887E4094162552C10060623C /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		887E40961625536B0060623C /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
+		887E40A016257A300060623C /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		887E40A216257B950060623C /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		887E40BC16266AB20060623C /* LXNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LXNavigationController.h; path = Classes/CustomControls/LXNavigationController.h; sourceTree = SOURCE_ROOT; };
+		887E40BD16266AB20060623C /* LXNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LXNavigationController.m; path = Classes/CustomControls/LXNavigationController.m; sourceTree = SOURCE_ROOT; };
+		887E40BF16269A1C0060623C /* target.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = target.png; sourceTree = "<group>"; };
+		887E40C016269A1C0060623C /* target@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "target@2x.png"; sourceTree = "<group>"; };
+		887E40C31626A9840060623C /* luxeysPicEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysPicEditViewController.h; path = Classes/Controllers/luxeysPicEditViewController.h; sourceTree = "<group>"; };
+		887E40C41626A9840060623C /* luxeysPicEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysPicEditViewController.m; path = Classes/Controllers/luxeysPicEditViewController.m; sourceTree = "<group>"; };
+		887E40C81626CC310060623C /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = ../../../Documents/FacebookSDK/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle; sourceTree = "<group>"; };
+		887E40C91626CC320060623C /* FBUserSettingsViewResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FBUserSettingsViewResources.bundle; path = ../../../Documents/FacebookSDK/FacebookSDK.framework/Versions/A/Resources/FBUserSettingsViewResources.bundle; sourceTree = "<group>"; };
+		887E40CE1626CE300060623C /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		887E40CF1626CE330060623C /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		887E40D01626CE350060623C /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		887E40D41626DB4F0060623C /* luxeysFavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysFavViewController.h; path = Classes/Controllers/luxeysFavViewController.h; sourceTree = "<group>"; };
+		887E40D51626DB510060623C /* luxeysFavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysFavViewController.m; path = Classes/Controllers/luxeysFavViewController.m; sourceTree = "<group>"; };
+		8887545D161ADF9700DD033E /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Comment.h; path = Classes/Models/Comment.h; sourceTree = "<group>"; };
+		8887545E161ADF9700DD033E /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Comment.m; path = Classes/Models/Comment.m; sourceTree = "<group>"; };
+		8887545F161ADF9700DD033E /* Feed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Feed.h; path = Classes/Models/Feed.h; sourceTree = "<group>"; };
+		88875460161ADF9700DD033E /* Feed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Feed.m; path = Classes/Models/Feed.m; sourceTree = "<group>"; };
+		88875461161ADF9700DD033E /* Picture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Picture.h; path = Classes/Models/Picture.h; sourceTree = "<group>"; };
+		88875462161ADF9700DD033E /* Picture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Picture.m; path = Classes/Models/Picture.m; sourceTree = "<group>"; };
+		88875463161ADF9700DD033E /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = Classes/Models/User.h; sourceTree = "<group>"; };
+		88875464161ADF9700DD033E /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = Classes/Models/User.m; sourceTree = "<group>"; };
+		8887546C161AF90500DD033E /* ModelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModelObject.h; path = Classes/Models/ModelObject.h; sourceTree = "<group>"; };
+		8887546D161AF90500DD033E /* ModelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ModelObject.m; path = Classes/Models/ModelObject.m; sourceTree = "<group>"; };
 		8897374C15E491F3002F4717 /* luxeysMypageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysMypageViewController.h; path = Classes/Controllers/luxeysMypageViewController.h; sourceTree = "<group>"; };
 		8897374D15E491F4002F4717 /* luxeysMypageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysMypageViewController.m; path = Classes/Controllers/luxeysMypageViewController.m; sourceTree = "<group>"; };
 		8897375515E499D9002F4717 /* CameraStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CameraStoryboard.storyboard; path = Resources/NIBs/CameraStoryboard.storyboard; sourceTree = "<group>"; };
@@ -568,7 +611,6 @@
 		88A49B7C15B8FD5700CEA262 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		88A49B7D15B8FD5700CEA262 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		88A49B7E15B8FD5700CEA262 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		88B08D3615D34B3D003CB0D3 /* Latte.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Latte.xcdatamodel; sourceTree = "<group>"; };
 		88B08D4315D369EC003CB0D3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		88B47B1F15DE522F00FD9C72 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		88B47B2015DE522F00FD9C72 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
@@ -756,8 +798,8 @@
 		88CF20A315E757330063A15E /* icon_setting@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_setting@2x.png"; sourceTree = "<group>"; };
 		88CF20A515E7584A0063A15E /* bg_status.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_status.png; sourceTree = "<group>"; };
 		88CF20A615E7584A0063A15E /* bg_status@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_status@2x.png"; sourceTree = "<group>"; };
-		88CF20A915E7634B0063A15E /* luxeysImageUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysImageUtils.h; path = Classes/Utils/luxeysImageUtils.h; sourceTree = "<group>"; };
-		88CF20AA15E7634B0063A15E /* luxeysImageUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysImageUtils.m; path = Classes/Utils/luxeysImageUtils.m; sourceTree = "<group>"; };
+		88CF20A915E7634B0063A15E /* luxeysUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysUtils.h; path = Classes/Utils/luxeysUtils.h; sourceTree = "<group>"; };
+		88CF20AA15E7634B0063A15E /* luxeysUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysUtils.m; path = Classes/Utils/luxeysUtils.m; sourceTree = "<group>"; };
 		88CF20AC15E779B70063A15E /* bg_input_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_input_back.png; sourceTree = "<group>"; };
 		88CF20AD15E779B70063A15E /* bg_input_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_input_back@2x.png"; sourceTree = "<group>"; };
 		88CF20B015E783000063A15E /* arrow_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_left.png; sourceTree = "<group>"; };
@@ -960,6 +1002,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				887E40D11626CE380060623C /* Accounts.framework in Frameworks */,
+				887E40D21626CE380060623C /* AdSupport.framework in Frameworks */,
+				887E40D31626CE380060623C /* Social.framework in Frameworks */,
 				88E96B4815EDCCC100FB9CC8 /* libGPUImage.a in Frameworks */,
 				88E96B3815EDCC4100FB9CC8 /* libSSToolkit.a in Frameworks */,
 				88E96B2515EDCBC800FB9CC8 /* CoreLocation.framework in Frameworks */,
@@ -992,13 +1037,13 @@
 			path = Vendor/MBProgressHUD;
 			sourceTree = "<group>";
 		};
-		8821098D15DDFE6B00E1A179 /* ZUUICustom */ = {
+		8821098D15DDFE6B00E1A179 /* LXUICustom */ = {
 			isa = PBXGroup;
 			children = (
-				8821098E15DDFE8300E1A179 /* ZUUIRevealController.h */,
-				8821098F15DDFE8300E1A179 /* ZUUIRevealController.m */,
+				8821098E15DDFE8300E1A179 /* LXUIRevealController.h */,
+				8821098F15DDFE8300E1A179 /* LXUIRevealController.m */,
 			);
-			name = ZUUICustom;
+			name = LXUICustom;
 			sourceTree = "<group>";
 		};
 		884904D615D0FE7C0066D007 /* CustomControls */ = {
@@ -1046,6 +1091,12 @@
 				88CF1E0415E746960063A15E /* SCImageCollectionViewItem.m */,
 				884B5A7F160FF24B0059102E /* UIButton+AsyncImage.h */,
 				884B5A80160FF24B0059102E /* UIButton+AsyncImage.m */,
+				88503046161EBF410093927B /* luxeysCellPicCalendar.h */,
+				88503047161EBF410093927B /* luxeysCellPicCalendar.m */,
+				8842089F161ECEB10082755C /* luxeysHeaderCalendar.h */,
+				884208A0161ECEB10082755C /* luxeysHeaderCalendar.m */,
+				887E40BC16266AB20060623C /* LXNavigationController.h */,
+				887E40BD16266AB20060623C /* LXNavigationController.m */,
 			);
 			name = CustomControls;
 			path = Latte;
@@ -1066,6 +1117,8 @@
 		8897383D15E49C87002F4717 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				887E40BF16269A1C0060623C /* target.png */,
+				887E40C016269A1C0060623C /* target@2x.png */,
 				886413A81615AF3300181E52 /* br_usermenu2_left_on.png */,
 				886413A91615AF3300181E52 /* br_usermenu2_left_on@2x.png */,
 				886413AA1615AF3300181E52 /* br_usermenu2_left.png */,
@@ -1352,8 +1405,8 @@
 			children = (
 				881D2F3515DE560000062101 /* KeychainItemWrapper.h */,
 				881D2F3615DE560000062101 /* KeychainItemWrapper.m */,
-				881D2F3715DE560000062101 /* luxeysLatteAPIClient.h */,
-				881D2F3815DE560000062101 /* luxeysLatteAPIClient.m */,
+				881D2F3715DE560000062101 /* LatteAPIClient.h */,
+				881D2F3815DE560000062101 /* LatteAPIClient.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1361,19 +1414,18 @@
 		88B08D3115D3480E003CB0D3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				8887545D161ADF9700DD033E /* LuxeysComment.h */,
-				8887545E161ADF9700DD033E /* LuxeysComment.m */,
-				8887545F161ADF9700DD033E /* LuxeysFeed.h */,
-				88875460161ADF9700DD033E /* LuxeysFeed.m */,
-				88875461161ADF9700DD033E /* LuxeysPicture.h */,
-				88875462161ADF9700DD033E /* LuxeysPicture.m */,
-				88875463161ADF9700DD033E /* LuxeysUser.h */,
-				88875464161ADF9700DD033E /* LuxeysUser.m */,
-				88B08D3515D34B3D003CB0D3 /* Latte.xcdatamodeld */,
-				8887546C161AF90500DD033E /* LuxeysObject.h */,
-				8887546D161AF90500DD033E /* LuxeysObject.m */,
+				8887545D161ADF9700DD033E /* Comment.h */,
+				8887545E161ADF9700DD033E /* Comment.m */,
+				8887545F161ADF9700DD033E /* Feed.h */,
+				88875460161ADF9700DD033E /* Feed.m */,
+				8887546C161AF90500DD033E /* ModelObject.h */,
+				8887546D161AF90500DD033E /* ModelObject.m */,
+				88875461161ADF9700DD033E /* Picture.h */,
+				88875462161ADF9700DD033E /* Picture.m */,
 				880C4B3B161C7A7500252C6A /* PicturePin.h */,
 				880C4B3C161C7A7500252C6A /* PicturePin.m */,
+				88875463161ADF9700DD033E /* User.h */,
+				88875464161ADF9700DD033E /* User.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1431,8 +1483,8 @@
 		88CF1DEA15E715E80063A15E /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				88CF20A915E7634B0063A15E /* luxeysImageUtils.h */,
-				88CF20AA15E7634B0063A15E /* luxeysImageUtils.m */,
+				88CF20A915E7634B0063A15E /* luxeysUtils.h */,
+				88CF20AA15E7634B0063A15E /* luxeysUtils.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -1449,6 +1501,8 @@
 				8864139F161593C700181E52 /* luxeysTemplateTimlinePicMultiItem.h */,
 				886413A0161593C700181E52 /* luxeysTemplateTimlinePicMultiItem.m */,
 				886413A1161593C700181E52 /* luxeysTemplateTimlinePicMultiItem.xib */,
+				8802CC3B1627AC8000D06649 /* luxeysCollectionCellPic.h */,
+				8802CC3C1627AC8000D06649 /* luxeysCollectionCellPic.m */,
 			);
 			name = Template;
 			sourceTree = "<group>";
@@ -1468,6 +1522,8 @@
 				8899DEE515E4D28F00D57B57 /* luxeysPicDetailViewController.m */,
 				88CEB33115F99259001E848C /* luxeysPicInfoViewController.h */,
 				88CEB33215F99259001E848C /* luxeysPicInfoViewController.m */,
+				880C4B38161C723700252C6A /* luxeysPicMapViewController.h */,
+				880C4B39161C723800252C6A /* luxeysPicMapViewController.m */,
 				88390E2815F5C53D00CDCA3B /* luxeysRankingViewController.h */,
 				88390E2915F5C53D00CDCA3B /* luxeysRankingViewController.m */,
 				88B47B9015DE552B00FD9C72 /* luxeysRightSideViewController.h */,
@@ -1478,12 +1534,18 @@
 				88B47B9315DE552B00FD9C72 /* luxeysSideMenuViewController.m */,
 				88B47B9415DE552B00FD9C72 /* luxeysTabBarViewController.h */,
 				88B47B9515DE552B00FD9C72 /* luxeysTabBarViewController.m */,
+				88503049161EC0C70093927B /* luxeysUserCalendarViewController.h */,
+				8850304A161EC0C70093927B /* luxeysUserCalendarViewController.m */,
 				881D2F8615E2092300062101 /* luxeysUserViewController.h */,
 				881D2F8715E2092300062101 /* luxeysUserViewController.m */,
 				88B47B9615DE552B00FD9C72 /* luxeysWelcomeViewController.h */,
 				88B47B9715DE552B00FD9C72 /* luxeysWelcomeViewController.m */,
-				880C4B38161C723700252C6A /* luxeysPicMapViewController.h */,
-				880C4B39161C723800252C6A /* luxeysPicMapViewController.m */,
+				887E40911625492D0060623C /* luxeysImagePickerViewController.h */,
+				887E4092162549310060623C /* luxeysImagePickerViewController.m */,
+				887E40C31626A9840060623C /* luxeysPicEditViewController.h */,
+				887E40C41626A9840060623C /* luxeysPicEditViewController.m */,
+				887E40D41626DB4F0060623C /* luxeysFavViewController.h */,
+				887E40D51626DB510060623C /* luxeysFavViewController.m */,
 			);
 			name = Windows;
 			sourceTree = "<group>";
@@ -1495,7 +1557,7 @@
 				88E952B8161994DA00E44619 /* EGOTableViewPullRefresh */,
 				88E96A6315EDC81500FB9CC8 /* quickdialog */,
 				88B47AFC15DE503F00FD9C72 /* AFNetworking */,
-				8821098D15DDFE6B00E1A179 /* ZUUICustom */,
+				8821098D15DDFE6B00E1A179 /* LXUICustom */,
 			);
 			name = Vendor;
 			sourceTree = "<group>";
@@ -1503,6 +1565,15 @@
 		88D9863815B8F97700858AD6 = {
 			isa = PBXGroup;
 			children = (
+				887E40CE1626CE300060623C /* Accounts.framework */,
+				887E40CF1626CE330060623C /* AdSupport.framework */,
+				887E40D01626CE350060623C /* Social.framework */,
+				887E40C81626CC310060623C /* FacebookSDKResources.bundle */,
+				887E40C91626CC320060623C /* FBUserSettingsViewResources.bundle */,
+				887E40A216257B950060623C /* Default.png */,
+				887E40A016257A300060623C /* Default@2x.png */,
+				887E40961625536B0060623C /* icon@2x.png */,
+				887E4094162552C10060623C /* icon.png */,
 				8897375315E499C9002F4717 /* Resources */,
 				88D9865015B8F97800858AD6 /* Supporting Files */,
 				88B08D3215D34826003CB0D3 /* Classes */,
@@ -2137,6 +2208,12 @@
 				88E952CC161994DA00E44619 /* grayArrow@2x.png in Resources */,
 				88E952CD161994DA00E44619 /* whiteArrow.png in Resources */,
 				88E952CE161994DA00E44619 /* whiteArrow@2x.png in Resources */,
+				887E4095162552C20060623C /* icon.png in Resources */,
+				887E40971625536C0060623C /* icon@2x.png in Resources */,
+				887E40A116257A310060623C /* Default@2x.png in Resources */,
+				887E40A316257B950060623C /* Default.png in Resources */,
+				887E40C116269A1C0060623C /* target.png in Resources */,
+				887E40C216269A1C0060623C /* target@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2147,10 +2224,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8821099115DDFE9300E1A179 /* ZUUIRevealController.m in Sources */,
+				8821099115DDFE9300E1A179 /* LXUIRevealController.m in Sources */,
 				88D9865615B8F97800858AD6 /* main.m in Sources */,
 				88D9865A15B8F97800858AD6 /* luxeysAppDelegate.m in Sources */,
-				88B08D3715D34B3D003CB0D3 /* Latte.xcdatamodeld in Sources */,
 				88B47B3415DE522F00FD9C72 /* AFHTTPClient.m in Sources */,
 				88B47B3515DE522F00FD9C72 /* AFHTTPRequestOperation.m in Sources */,
 				88B47B3615DE522F00FD9C72 /* AFImageRequestOperation.m in Sources */,
@@ -2173,7 +2249,7 @@
 				88B47B9B15DE552B00FD9C72 /* luxeysTabBarViewController.m in Sources */,
 				88B47B9C15DE552B00FD9C72 /* luxeysWelcomeViewController.m in Sources */,
 				881D2F3915DE560000062101 /* KeychainItemWrapper.m in Sources */,
-				881D2F3A15DE560000062101 /* luxeysLatteAPIClient.m in Sources */,
+				881D2F3A15DE560000062101 /* LatteAPIClient.m in Sources */,
 				881D2F5215E1DE8C00062101 /* luxeysSettingViewController.m in Sources */,
 				881D2F8915E2092400062101 /* luxeysUserViewController.m in Sources */,
 				88C8EECA15E24C9100A8CCE4 /* luxeysCameraViewController.m in Sources */,
@@ -2185,7 +2261,7 @@
 				88CF1DE915E7114E0063A15E /* luxeysCellComment.m in Sources */,
 				88CF1E0515E746960063A15E /* SCImageCollectionViewItem.m in Sources */,
 				88CF1E0815E746AC0063A15E /* luxeysCellPicture.m in Sources */,
-				88CF20AB15E7634B0063A15E /* luxeysImageUtils.m in Sources */,
+				88CF20AB15E7634B0063A15E /* luxeysUtils.m in Sources */,
 				88CF232215EB0687008B1937 /* luxeysCellProfile.m in Sources */,
 				88390E2A15F5C53D00CDCA3B /* luxeysRankingViewController.m in Sources */,
 				88390E2D15F5CC9D00CDCA3B /* luxeysCellRankLv1.m in Sources */,
@@ -2202,14 +2278,22 @@
 				886413A2161593C700181E52 /* luxeysTemplateTimlinePicMultiItem.m in Sources */,
 				8805439F161964030091A40F /* luxeysCellNotify.m in Sources */,
 				88E952C6161994DA00E44619 /* EGORefreshTableHeaderView.m in Sources */,
-				88875465161ADF9700DD033E /* LuxeysComment.m in Sources */,
-				88875466161ADF9700DD033E /* LuxeysFeed.m in Sources */,
-				88875467161ADF9700DD033E /* LuxeysPicture.m in Sources */,
-				88875468161ADF9700DD033E /* LuxeysUser.m in Sources */,
-				8887546E161AF90500DD033E /* LuxeysObject.m in Sources */,
+				88875465161ADF9700DD033E /* Comment.m in Sources */,
+				88875466161ADF9700DD033E /* Feed.m in Sources */,
+				88875467161ADF9700DD033E /* Picture.m in Sources */,
+				88875468161ADF9700DD033E /* User.m in Sources */,
+				8887546E161AF90500DD033E /* ModelObject.m in Sources */,
 				880C4B17161C2A1400252C6A /* MBProgressHUD.m in Sources */,
 				880C4B3A161C723800252C6A /* luxeysPicMapViewController.m in Sources */,
 				880C4B3D161C7A7500252C6A /* PicturePin.m in Sources */,
+				88503048161EBF410093927B /* luxeysCellPicCalendar.m in Sources */,
+				8850304B161EC0C70093927B /* luxeysUserCalendarViewController.m in Sources */,
+				884208A1161ECEB10082755C /* luxeysHeaderCalendar.m in Sources */,
+				887E40931625493B0060623C /* luxeysImagePickerViewController.m in Sources */,
+				887E40BE16266AB20060623C /* LXNavigationController.m in Sources */,
+				887E40C51626A9860060623C /* luxeysPicEditViewController.m in Sources */,
+				887E40D61626DB520060623C /* luxeysFavViewController.m in Sources */,
+				8802CC3D1627AC8000D06649 /* luxeysCollectionCellPic.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2271,6 +2355,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = NO;
+				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -2293,6 +2378,7 @@
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = Release;
 		};
@@ -2301,18 +2387,19 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_ENTITLEMENTS = Latte/Latte.entitlements;
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../../Documents/FacebookSDK\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Latte/Latte-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/Vendor/SSToolkit\"/**",
-					"\"$(SRCROOT)\"/**",
-				);
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Vendor/SSToolkit\"/**";
 				INFOPLIST_FILE = "Latte/Latte-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-fobjc-arc",
+					"-lsqlite3.0",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Vendor/QuickDialog\"/** \"\"$(SRCROOT)/Vendor/GPUImage/framework/Source\"/**";
@@ -2325,18 +2412,19 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_ENTITLEMENTS = Latte/Latte.entitlements;
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../../Documents/FacebookSDK\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Latte/Latte-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/Vendor/SSToolkit\"/**",
-					"\"$(SRCROOT)\"/**",
-				);
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Vendor/SSToolkit\"/**";
 				INFOPLIST_FILE = "Latte/Latte-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-fobjc-arc",
+					"-lsqlite3.0",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Vendor/QuickDialog\"/** \"\"$(SRCROOT)/Vendor/GPUImage/framework/Source\"/**";
@@ -2366,19 +2454,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		88B08D3515D34B3D003CB0D3 /* Latte.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				88B08D3615D34B3D003CB0D3 /* Latte.xcdatamodel */,
-			);
-			currentVersion = 88B08D3615D34B3D003CB0D3 /* Latte.xcdatamodel */;
-			path = Latte.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 88D9863A15B8F97700858AD6 /* Project object */;
 }

@@ -9,7 +9,7 @@
 #import "luxeysSettingViewController.h"
 #import "luxeysAppDelegate.h"
 #import "luxeysButtonBack.h"
-#import "luxeysLatteAPIClient.h"
+#import "LatteAPIClient.h"
 
 @interface luxeysSettingViewController ()
 
@@ -34,7 +34,7 @@
     
     luxeysAppDelegate *app = (luxeysAppDelegate*)[[UIApplication sharedApplication] delegate];
     
-    [[luxeysLatteAPIClient sharedClient] getPath:@"api/user/me"
+    [[LatteAPIClient sharedClient] getPath:@"api/user/me"
                                        parameters: [NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"]
                                           success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                               
@@ -155,7 +155,7 @@
         }
     }
     
-    [[luxeysLatteAPIClient sharedClient] postPath:@"api/user/me/update"
+    [[LatteAPIClient sharedClient] postPath:@"api/user/me/update"
                                        parameters: param
                                           success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                               [self loading:NO];
@@ -176,6 +176,21 @@
 
 }
 
+
+- (void)sectionHeaderWillAppearForSection:(QSection *)section atIndex:(NSInteger)indexPath {
+    if (section.title == nil) {
+        return;
+    }
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, 30)];
+    [title setFont:[UIFont boldSystemFontOfSize:12]];
+    title.textColor = [UIColor colorWithRed:101.0/255.0 green:90.0/255.0 blue:56.0/255.0 alpha:1];
+    title.text = section.title;
+    [view addSubview:title];
+    title.backgroundColor = [UIColor clearColor];
+    view.backgroundColor = [UIColor clearColor];
+    section.headerView = view;
+}
 
 - (void)displayViewController:(UIViewController *)newController {
     [super displayViewController:newController];

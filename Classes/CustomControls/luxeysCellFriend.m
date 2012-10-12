@@ -29,7 +29,7 @@
     // Configure the view for the selected state
 }
 
-- (void)setUser:(LuxeysUser *)user {
+- (void)setUser:(User *)user {
     [buttonUser loadBackground:user.profilePicture];
     buttonUser.layer.cornerRadius = 3;
     buttonUser.clipsToBounds = YES;

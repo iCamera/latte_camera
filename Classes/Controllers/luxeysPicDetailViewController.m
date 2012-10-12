@@ -75,12 +75,12 @@
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
     NSString *url = [NSString stringWithFormat:@"api/picture/%d", picID];
-    [[luxeysLatteAPIClient sharedClient] getPath:url
+    [[LatteAPIClient sharedClient] getPath:url
                                       parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                             user = [LuxeysUser instanceFromDictionary:[JSON objectForKey:@"user"]];
-                                             pic = [LuxeysPicture instanceFromDictionary:[JSON objectForKey:@"picture"]];
-                                             comments = [LuxeysComment mutableArrayFromDictionary:JSON withKey:@"comments"];
+                                             user = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
+                                             pic = [Picture instanceFromDictionary:[JSON objectForKey:@"picture"]];
+                                             comments = [Comment mutableArrayFromDictionary:JSON withKey:@"comments"];
                                              
                                              [self doneLoadingTableViewData];
                                              loaded = TRUE;
@@ -135,12 +135,12 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        float newheight = [luxeysImageUtils heightFromWidth:300
+        float newheight = [luxeysUtils heightFromWidth:300
                                                       width:[pic.width floatValue]
                                                      height:[pic.height floatValue]];
         return newheight + 100;
     } else {
-        LuxeysComment *comment = [comments objectAtIndex:indexPath.row-1];
+        Comment *comment = [comments objectAtIndex:indexPath.row-1];
         NSString *strComment = comment.descriptionText;
         CGSize labelSize = [strComment sizeWithFont:[UIFont systemFontOfSize:11]
                                   constrainedToSize:CGSizeMake(255.0f, MAXFLOAT)
@@ -188,7 +188,7 @@
                                            reuseIdentifier:@"Comment"];
                     }
         
-        LuxeysComment *comment = [comments objectAtIndex:indexPath.row-1];
+        Comment *comment = [comments objectAtIndex:indexPath.row-1];
         [cellComment setComment:comment];
         
         cellComment.buttonUser.tag = [comment.user.userId longValue];
@@ -235,7 +235,6 @@
 
 - (void)keyboardWillShow:(NSNotification *)notification
 {
-    
     [self.tablePic addGestureRecognizer:gestureTap];
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationCurve:[[[notification userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
@@ -297,10 +296,10 @@
         
         NSString *url = [NSString stringWithFormat:@"api/picture/%d/comment_post", picID];
         
-        [[luxeysLatteAPIClient sharedClient] postPath:url
+        [[LatteAPIClient sharedClient] postPath:url
                                            parameters:param
                                               success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                  LuxeysComment *comment = [LuxeysComment instanceFromDictionary:[JSON objectForKey:@"comment"]];
+                                                  Comment *comment = [Comment instanceFromDictionary:[JSON objectForKey:@"comment"]];
                                                   [comments addObject:comment];
                                                   NSIndexPath *path = [NSIndexPath indexPathForRow:comments.count inSection:0];
                                                   [tablePic insertRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationRight];
@@ -341,7 +340,7 @@
                            nil];
     
     NSString *url = [NSString stringWithFormat:@"api/picture/%d/vote_post", picID];
-    [[luxeysLatteAPIClient sharedClient] postPath:url
+    [[LatteAPIClient sharedClient] postPath:url
                                        parameters:param
                                           success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                               cellPicInfo.buttonLike.enabled = NO;

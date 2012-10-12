@@ -7,9 +7,8 @@
 //
 
 #import "luxeysLoginViewController.h"
-#import "luxeysLatteAPIClient.h"
+#import "LatteAPIClient.h"
 #import "luxeysAppDelegate.h"
-#import "User.h"
 
 @interface luxeysLoginViewController ()
 
@@ -64,12 +63,11 @@
 }
 
 - (IBAction)login:(id)sender {
-    NSLog(@"Login");
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     [app.tokenItem setObject:self.textUser.text forKey:(id)CFBridgingRelease(kSecAttrAccount)];
     [app.tokenItem setObject:self.textPass.text forKey:(id)CFBridgingRelease(kSecValueData)];
     
-    [[luxeysLatteAPIClient sharedClient] postPath:@"api/user/login"
+    [[LatteAPIClient sharedClient] postPath:@"api/user/login"
                                        parameters:[NSDictionary dictionaryWithObjectsAndKeys:
                                                    self.textUser.text, @"mail",
                                                    self.textPass.text, @"password", nil]

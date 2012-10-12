@@ -2,7 +2,7 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1536</int>
-		<string key="IBDocument.SystemVersion">12C54</string>
+		<string key="IBDocument.SystemVersion">12C60</string>
 		<string key="IBDocument.InterfaceBuilderVersion">2840</string>
 		<string key="IBDocument.AppKitVersion">1187.34</string>
 		<string key="IBDocument.HIToolboxVersion">625.00</string>
@@ -168,7 +168,7 @@
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">1316</int>
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
-						<string key="NSFrame">{{139, 23}, {42, 21}}</string>
+						<string key="NSFrame">{{174, 23}, {73, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="703266296"/>
@@ -185,6 +185,7 @@
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
 						<float key="IBUIMinimumFontSize">10</float>
+						<int key="IBUITextAlignment">2</int>
 						<reference key="IBUIFontDescription" ref="1020613401"/>
 						<reference key="IBUIFont" ref="65952335"/>
 					</object>
@@ -444,7 +445,7 @@
 					<object class="IBUIButton" id="576992490">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">264</int>
-						<string key="NSFrame">{{10, 135}, {300, 25}}</string>
+						<string key="NSFrame">{{9, 135}, {302, 25}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -617,6 +618,14 @@
 					</object>
 					<int key="connectionID">93</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">labelDate</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="5998772"/>
+					</object>
+					<int key="connectionID">94</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -634,12 +643,12 @@
 							<reference ref="838344308"/>
 							<reference ref="965231233"/>
 							<reference ref="787950275"/>
-							<reference ref="5998772"/>
 							<reference ref="235599876"/>
 							<reference ref="703266296"/>
 							<reference ref="304537553"/>
 							<reference ref="688264733"/>
 							<reference ref="576992490"/>
+							<reference ref="5998772"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -812,7 +821,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">93</int>
+			<int key="maxID">94</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -838,6 +847,7 @@
 						<string key="labelAccess">UILabel</string>
 						<string key="labelAuthor">UILabel</string>
 						<string key="labelComment">UILabel</string>
+						<string key="labelDate">UILabel</string>
 						<string key="labelLike">UILabel</string>
 						<string key="labelTitle">UILabel</string>
 						<string key="viewStats">UIView</string>
@@ -881,6 +891,10 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="labelComment">
 							<string key="name">labelComment</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="labelDate">
+							<string key="name">labelDate</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="labelLike">

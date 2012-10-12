@@ -11,6 +11,7 @@
 @implementation luxeysTableViewCellComment
 @synthesize textComment;
 @synthesize labelAuthor;
+@synthesize labelDate;
 @synthesize buttonUser;
 @synthesize constraintCommentHeight;
 
@@ -30,10 +31,11 @@
     // Configure the view for the selected state
 }
 
-- (void)setComment:(LuxeysComment *)comment {
+- (void)setComment:(Comment *)comment {
     [buttonUser loadBackground:comment.user.profilePicture];
     textComment.text = comment.descriptionText;
     labelAuthor.text = comment.user.name;
+    labelDate.text = [luxeysUtils timeDeltaFromNow:comment.createdAt];
     
     CGSize labelSize = [textComment.text sizeWithFont:[UIFont systemFontOfSize:11]
                               constrainedToSize:CGSizeMake(255.0f, MAXFLOAT)
@@ -41,8 +43,8 @@
     
     constraintCommentHeight.constant = labelSize.height;
     
-    buttonUser.layer.cornerRadius = 3;
-    buttonUser.clipsToBounds = YES;
+    // buttonUser.layer.cornerRadius = 3;
+    // buttonUser.clipsToBounds = YES;
 }
 
 @end

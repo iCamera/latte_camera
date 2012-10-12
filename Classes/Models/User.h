@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
-#import "LuxeysObject.h"
+#import "ModelObject.h"
 
-@interface LuxeysUser : LuxeysObject {
+@interface User : ModelObject {
 
     NSString *age;
     NSString *birthdate;
@@ -53,7 +53,7 @@
 @property (nonatomic, copy) NSString *profilePicture;
 @property (nonatomic, copy) NSNumber *voteCount;
 
-+ (LuxeysUser *)instanceFromDictionary:(NSDictionary *)aDictionary;
++ (User *)instanceFromDictionary:(NSDictionary *)aDictionary;
 - (void)setAttributesFromDictionary:(NSDictionary *)aDictionary;
 + (NSMutableArray *)mutableArrayFromDictionary:(NSDictionary *)aDictionary withKey:(NSString *)aKey;
 

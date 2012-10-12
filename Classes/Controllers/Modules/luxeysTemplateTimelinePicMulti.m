@@ -27,13 +27,12 @@
     return self;
 }
 
-- (id)initWithPics:(NSArray *)aPics user:(LuxeysUser *)aUser section:(NSInteger)aSection sender:(id)aSender {
+- (id)initWithFeed:(Feed *)aFeed section:(NSInteger)aSection sender:(id)aSender {
     self = [super init];
     if (self) {
-        pics = aPics;
-        user = aUser;
         section = aSection;
         sender = aSender;
+        feed = aFeed;
     }
     return self;
 }
@@ -43,14 +42,15 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    labelUser.text = user.name;
+    labelUser.text = feed.user.name;
+    labelDate.text = [luxeysUtils timeDeltaFromNow:feed.updatedAt];
     buttonUser.tag = section;
     
-    [buttonUser loadBackground:user.profilePicture];
+    [buttonUser loadBackground:feed.user.profilePicture];
     [buttonUser addTarget:sender action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
     
     CGSize size = CGSizeMake(10, 190);
-    for (LuxeysPicture *pic in pics) {
+    for (Picture *pic in feed.targets) {
         luxeysTemplateTimlinePicMultiItem *viewPic = [[luxeysTemplateTimlinePicMultiItem alloc] initWithPic:pic parent:sender];
         viewPic.view.frame = CGRectMake(size.width, 2, 190, 190);
         [scrollImage addSubview:viewPic.view];

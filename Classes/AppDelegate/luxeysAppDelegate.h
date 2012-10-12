@@ -11,7 +11,7 @@
 #import "KeychainItemWrapper.h"
 #import "luxeysCameraViewController.h"
 #import "luxeysTabBarViewController.h"
-#import "LuxeysUser.h"
+#import "User.h"
 
 @class luxeysNavViewController;
 
@@ -32,7 +32,7 @@
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 // @property (strong, nonatomic) FBSession *fbsession;
-@property (strong, nonatomic) LuxeysUser *currentUser;
+@property (strong, nonatomic) User *currentUser;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;

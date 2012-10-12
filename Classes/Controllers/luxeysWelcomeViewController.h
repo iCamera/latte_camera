@@ -10,19 +10,22 @@
 #import "SSCollectionView.h"
 #import "luxeysButtonBrown30.h"
 #import "luxeysLoginViewController.h"
-#import "LuxeysPicture.h"
+#import "Picture.h"
 #import "MBProgressHUD.h"
-#import "luxeysLatteAPIClient.h"
+#import "LatteAPIClient.h"
 #import "SCImageCollectionViewItem.h"
 #import "luxeysPicDetailViewController.h"
 #import "luxeysAppDelegate.h"
+#import "EGORefreshTableHeaderView.h"
 
-@interface luxeysWelcomeViewController : UIViewController<SSCollectionViewDataSource, SSCollectionViewDelegate, UIScrollViewDelegate> {
+@interface luxeysWelcomeViewController : UIViewController<SSCollectionViewDataSource, SSCollectionViewDelegate, UIScrollViewDelegate, EGORefreshTableHeaderDelegate> {
     NSMutableArray *_items;
     UIActivityIndicatorView *indicator;
     int pagephoto;
     BOOL loadEnded;
+    BOOL reloading;
     SSCollectionView *collectionView;
+    EGORefreshTableHeaderView *refreshHeaderView;
 }
 
 @property (strong, nonatomic) IBOutlet luxeysButtonBrown30 *buttonLeftMenu;

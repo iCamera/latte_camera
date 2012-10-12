@@ -1,8 +1,8 @@
-#import "LuxeysPicture.h"
+#import "Picture.h"
 
-#import "LuxeysComment.h"
+#import "Comment.h"
 
-@implementation LuxeysPicture
+@implementation Picture
 
 @synthesize canComment;
 @synthesize canVote;
@@ -28,9 +28,9 @@
 @synthesize exif;
 @synthesize user;
 
-+ (LuxeysPicture *)instanceFromDictionary:(NSDictionary *)aDictionary {
++ (Picture *)instanceFromDictionary:(NSDictionary *)aDictionary {
 
-    LuxeysPicture *instance = [[LuxeysPicture alloc] init];
+    Picture *instance = [[Picture alloc] init];
     [instance setAttributesFromDictionary:aDictionary];
     return instance;
 
@@ -54,7 +54,7 @@
 
             NSMutableArray *myMembers = [NSMutableArray arrayWithCapacity:[value count]];
             for (id valueMember in value) {
-                LuxeysComment *populatedMember = [LuxeysComment instanceFromDictionary:valueMember];
+                Comment *populatedMember = [Comment instanceFromDictionary:valueMember];
                 [myMembers addObject:populatedMember];
             }
 
@@ -63,12 +63,13 @@
         }
 
     } else if ([key isEqualToString:@"user"]) {
-        
         if ([value isKindOfClass:[NSDictionary class]]) {
-            self.user = [LuxeysUser instanceFromDictionary:value];
+            self.user = [User instanceFromDictionary:value];
         }
-        
-    } else {
+    } else if ([key isEqualToString:@"created_at"]) {
+        self.createdAt = [luxeysUtils dateFromJSON:value];
+    }
+    else {
         [super setValue:value forKey:key];
     }
 

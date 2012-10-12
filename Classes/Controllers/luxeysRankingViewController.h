@@ -11,16 +11,19 @@
 #import "luxeysCellRankLv2.h"
 #import "luxeysCellRankLv3.h"
 #import "UIButton+AsyncImage.h"
-#import "luxeysImageUtils.h"
-#import "luxeysLatteAPIClient.h"
+#import "luxeysUtils.h"
+#import "LatteAPIClient.h"
 #import "luxeysPicDetailViewController.h"
 #import "MBProgressHUD.h"
+#import "EGORefreshTableHeaderView.h"
 
-@interface luxeysRankingViewController : UITableViewController <UIScrollViewDelegate> {
+@interface luxeysRankingViewController : UITableViewController <EGORefreshTableHeaderDelegate> {
     BOOL loadEnded;
     NSString* ranktype;
     NSInteger rankpage;
     NSMutableArray *pics;
+    BOOL reloading;
+    EGORefreshTableHeaderView *refreshHeaderView;
 }
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonDaily;

@@ -7,7 +7,6 @@
 //
 
 #import "luxeysNavBar.h"
-#import <QuartzCore/CALayer.h>
 
 @implementation luxeysNavBar
 

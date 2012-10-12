@@ -7,17 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "luxeysUtils.h"
 #import "UIButton+AsyncImage.h"
-#import "LuxeysComment.h"
-#import "LuxeysUser.h"
+#import "Comment.h"
+#import "User.h"
 
 @interface luxeysTableViewCellComment : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UILabel *textComment;
 @property (strong, nonatomic) IBOutlet UILabel *labelAuthor;
 @property (strong, nonatomic) IBOutlet UIButton *buttonUser;
+@property (strong, nonatomic) IBOutlet UILabel *labelDate;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintCommentHeight;
 
-- (void)setComment:(LuxeysComment *)comment;
+- (void)setComment:(Comment *)comment;
 
 @end

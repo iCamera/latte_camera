@@ -9,10 +9,10 @@
 #import "luxeysAppDelegate.h"
 #import "luxeysSideMenuViewController.h"
 #import "luxeysRightSideViewController.h"
-#import "ZUUIRevealController.h"
+#import "LXUIRevealController.h"
 #import <Security/Security.h>
 #import "luxeysTabBarViewController.h"
-#import "luxeysLatteAPIClient.h"
+#import "LatteAPIClient.h"
 
 @implementation luxeysAppDelegate
 
@@ -64,12 +64,12 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)checkTokenValidity {
     //FIX ME
-    [[luxeysLatteAPIClient sharedClient] getPath:@"api/user/me"
+    [[LatteAPIClient sharedClient] getPath:@"api/user/me"
                                        parameters:[NSDictionary dictionaryWithObjectsAndKeys:
                                                    [self getToken], @"token", nil]
                                           success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                               if ([[JSON objectForKey:@"status"] integerValue] == 1) {
-                                                  self.currentUser = [LuxeysUser instanceFromDictionary:[JSON objectForKey:@"user"]];
+                                                  self.currentUser = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
                                                   
                                                   [self createSideMain];
                                                   
@@ -87,7 +87,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     luxeysRightSideViewController *rightViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"RightSide"];
     
-    ZUUIRevealController* rootController = [[ZUUIRevealController alloc]initWithFrontViewController:(UIViewController*)_viewMainTab
+    LXUIRevealController* rootController = [[LXUIRevealController alloc]initWithFrontViewController:(UIViewController*)_viewMainTab
                                                                            leftViewController:nil
                                                                           rightViewController:rightViewController];
     _storyMain = rootController;

@@ -8,22 +8,21 @@
 
 #import <UIKit/UIKit.h>
 #import "luxeysCellProfile.h"
-#import "luxeysLatteAPIClient.h"
+#import "LatteAPIClient.h"
 #import "UIImageView+AFNetworking.h"
 #import "luxeysAppDelegate.h"
-#import "LuxeysPicture.h"
+#import "Picture.h"
 
-@interface luxeysPicInfoViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
+@interface luxeysPicInfoViewController : UITableViewController {
     NSDictionary *exif;
     NSDictionary *picDict;
     NSArray *keyBasic;
     NSArray *keyExif;
     NSMutableArray *sections;
-    LuxeysPicture *pic;
+    Picture *pic;
     int picID;
 }
 
-@property (strong, nonatomic) IBOutlet UITableView *tableInfo;
 @property (strong, nonatomic) IBOutlet UILabel *labelTitle;
 @property (strong, nonatomic) IBOutlet UIImageView *imagePic;
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;

@@ -8,15 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "luxeysAppDelegate.h"
-#import "luxeysLatteAPIClient.h"
+#import "LatteAPIClient.h"
 #import "luxeysCellFriendRequest.h"
 #import "luxeysCellNotify.h"
-#import "UIImageView+AFNetworking.h"
+#import "UIButton+AsyncImage.h"
 #import "luxeysUserViewController.h"
 #import "luxeysPicDetailViewController.h"
 #import "EGORefreshTableHeaderView.h"
-#import "LuxeysUser.h"
-#import "LuxeysPicture.h"
+#import "User.h"
+#import "Picture.h"
 
 @interface luxeysRightSideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, EGORefreshTableHeaderDelegate> {
     NSMutableArray *notifies;

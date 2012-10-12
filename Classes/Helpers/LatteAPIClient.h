@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "AFHTTPClient.h"
 
-@interface luxeysLatteAPIClient : AFHTTPClient
+@interface LatteAPIClient : AFHTTPClient
 
-+ (luxeysLatteAPIClient *)sharedClient;
++ (LatteAPIClient *)sharedClient;
 
 @end

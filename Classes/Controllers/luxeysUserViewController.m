@@ -38,6 +38,7 @@
     self = [super initWithCoder:aDecoder];
     
     tableMode = kTableProfile;
+    currentMonth = [NSDate date];
     
     return self;
 }
@@ -90,17 +91,18 @@
     NSString* strURL = [NSString stringWithFormat:@"api/user/%d", userID];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [[luxeysLatteAPIClient sharedClient] getPath:strURL
+        [[LatteAPIClient sharedClient] getPath:strURL
                                           parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                              success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                                  userDict = [JSON objectForKey:@"user"];
-                                                 user =  [LuxeysUser instanceFromDictionary:userDict];
+                                                 user =  [User instanceFromDictionary:userDict];
                                                  labelNickname.text = user.name;
                                                  [buttonFriendCount setTitle:[user.countFriends stringValue] forState:UIControlStateNormal];
                                                  [buttonPhotoCount setTitle:[user.countPictures stringValue] forState:UIControlStateNormal];
                                                  [buttonVoteCount setTitle:[user.voteCount stringValue] forState:UIControlStateNormal];
                                                  
-                                                 [self.imageUser setImageWithURL:[NSURL URLWithString:user.profilePicture]];
+                                                 if (user.profilePicture != nil)
+                                                    [self.imageUser setImageWithURL:[NSURL URLWithString:user.profilePicture]];
                                                  
                                                  NSSet *allField = [NSSet setWithArray:[userDict allKeys]];
                                                  [showSet intersectSet:allField];
@@ -128,10 +130,10 @@
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         NSString* urlFriends = [NSString stringWithFormat:@"api/user/%d/friend", userID];
-        [[luxeysLatteAPIClient sharedClient] getPath:urlFriends
+        [[LatteAPIClient sharedClient] getPath:urlFriends
                                           parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                              success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                 friends = [LuxeysUser mutableArrayFromDictionary:JSON withKey:@"friends"];
+                                                 friends = [User mutableArrayFromDictionary:JSON withKey:@"friends"];
                                                  [tableProfile reloadData];
 
                                                  [self doneLoadingTableViewData];
@@ -154,10 +156,10 @@
     NSString* urlPhotos = [NSString stringWithFormat:@"api/picture/user/%d", userID];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [[luxeysLatteAPIClient sharedClient] getPath:urlPhotos
+        [[LatteAPIClient sharedClient] getPath:urlPhotos
                                           parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                              success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                 photos = [LuxeysPicture mutableArrayFromDictionary:JSON withKey:@"pictures"];
+                                                 photos = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
                                                  [tableProfile reloadData];
 
                                                  [self doneLoadingTableViewData];
@@ -180,10 +182,10 @@
     NSString* urlPhotos = [NSString stringWithFormat:@"api/picture/user/interesting/%d", userID];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [[luxeysLatteAPIClient sharedClient] getPath:urlPhotos
+        [[LatteAPIClient sharedClient] getPath:urlPhotos
                                           parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                              success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                 interests = [LuxeysPicture mutableArrayFromDictionary:JSON withKey:@"pictures"];
+                                                 interests = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
                                                  [tableProfile reloadData];
 
                                                  [self doneLoadingTableViewData];
@@ -206,7 +208,41 @@
 }
 
 - (void)reloadCalendar {
-    
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[[UIApplication sharedApplication] delegate];
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyyMM"];
+    NSString* urlPhotos = [NSString stringWithFormat:@"api/picture/album/by_month/%@/%d", [dateFormat stringFromDate:currentMonth], userID];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [[LatteAPIClient sharedClient] getPath:urlPhotos
+                                          parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                             success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                                 NSMutableArray *pics = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
+                                                 currentMonthPics = [[NSMutableDictionary alloc]init];
+                                                 NSDateFormatter *dayFormat = [[NSDateFormatter alloc] init];
+                                                 [dayFormat setDateFormat:@"dd"];
+                                                 
+                                                 for (Picture *pic in pics) {
+                                                     NSString* key = [dayFormat stringFromDate:pic.createdAt];
+                                                     [currentMonthPics setObject:pic forKey:key];
+                                                 }
+                                                 
+                                                 [tableProfile reloadData];
+                                                 
+                                                 [self doneLoadingTableViewData];
+                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
+                                                 
+                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                 NSLog(@"Something went wrong (User - Interesting)");
+                                                 
+                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                 });
+                                             }];
+    });
+    //[self performSegueWithIdentifier:@"Calendar" sender:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -243,6 +279,9 @@
         case kTableVotes:
             [self reloadInterest];
             break;
+        case kTableCalendar:
+            [self reloadCalendar];
+            break;
         default:
             break;
     }
@@ -264,6 +303,7 @@
             break;
         case 2:
             tableMode = kTableCalendar;
+            [self reloadCalendar];
             break;
         case 3:
             tableMode = kTableMap;
@@ -311,6 +351,8 @@
         return (interests.count/4) + (interests.count%4>0?1:0);
     } else if (tableMode == kTableFriends) {
         return friends.count;
+    } else if (tableMode == kTableCalendar) {
+        return 1;
     } else {
         return 0;
     }
@@ -357,7 +399,7 @@
         for (int i = 0; i < 4; ++i)
         {
             NSInteger index = indexPath.row*4+i;
-            LuxeysPicture *pic;
+            Picture *pic;
             if (tableMode == kTablePicList) {
                 if (index >= photos.count)
                     break;
@@ -390,15 +432,82 @@
         }
         return cellPic;
     } else if (tableMode == kTableFriends) {
-        LuxeysUser *friend = [friends objectAtIndex:indexPath.row];
+        User *friend = [friends objectAtIndex:indexPath.row];
         luxeysCellFriend* cellFriend = [tableProfile dequeueReusableCellWithIdentifier:@"Friend"];
         [cellFriend setUser:friend];
         [cellFriend.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
         cellFriend.buttonUser.tag = [friend.userId integerValue];
         
         return cellFriend;
+    } else if (tableMode == kTableCalendar) {
+        UITableViewCell *cell = [[UITableViewCell alloc] init];
+        
+        for (int i = 0; i < daysInMonth; i++) {
+            NSInteger row = i/5;
+            NSInteger col = i%5;
+            
+            NSString *key = [NSString stringWithFormat:@"%2d", i];
+            Picture *pic = [currentMonthPics objectForKey:key];
+            [cell addSubview:[self viewForCalendarPic:pic atRow:row atColumn:col cellIndex:i]];
+        }
+        return cell;
     } else
         return [[UITableViewCell alloc] init];
+}
+
+- (UIView *)viewForCalendarPic:(Picture *)pic atRow:(NSInteger)row atColumn:(NSInteger)col cellIndex:(NSInteger)cellIndex {
+    UIView *viewDate = [[UIView alloc] initWithFrame:CGRectMake(col*63, row*63, 61, 61)];
+    
+    UIImageView *imageLabel = [[UIImageView alloc] init];
+    UILabel *labelBig = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 15)];
+    UILabel *labelSmall = [[UILabel alloc] init];
+    labelSmall.backgroundColor = [UIColor clearColor];
+    labelSmall.backgroundColor = [UIColor clearColor];
+    labelSmall.textAlignment = NSTextAlignmentCenter;
+    labelBig.backgroundColor = [UIColor clearColor];
+    labelBig.textAlignment = NSTextAlignmentCenter;
+    
+    [labelBig setFont:[UIFont systemFontOfSize:15]];
+    labelBig.text = [NSString stringWithFormat:@"%d", cellIndex+1];
+    labelSmall.text = [NSString stringWithFormat:@"%d", cellIndex+1];
+    [labelSmall setFont:[UIFont systemFontOfSize:11]];
+    labelSmall.textColor = [UIColor whiteColor];
+    
+    if (cellIndex < 9) {
+        imageLabel.frame = CGRectMake(10, 0, 15, 20);
+        labelSmall.frame =  CGRectMake(5, 4, 16, 11);
+        [imageLabel setImage:[UIImage imageNamed:@"deco_calender.png"]];
+    } else {
+        imageLabel.frame = CGRectMake(10, 0, 22, 20);
+        labelSmall.frame =  CGRectMake(8, 4, 20, 11);
+        [imageLabel setImage:[UIImage imageNamed:@"deco_calender_wide.png"]];
+    }
+    
+    UIView *border = [[UIView alloc] initWithFrame:CGRectMake(5, 3, 58, 58)];
+    border.backgroundColor = [UIColor colorWithRed:188.0/255.0 green:184.0/255.0 blue:169.0/255.0 alpha:1];
+    UIView *bg = [[UIView alloc] initWithFrame:CGRectMake(2, 2, 54, 54)];
+    bg.backgroundColor = [UIColor colorWithRed:228.0/255.0 green:226.0/255.0 blue:220.0/255.0 alpha:1];
+    
+    [labelBig setCenter:bg.center];
+    [labelBig setFont:[UIFont fontWithName:@"Baskerville-Bold" size:14]];
+    labelBig.textColor = [UIColor colorWithRed:187.0/255.0 green:184.0/255.0 blue:169.0/255.0 alpha:1];
+    
+    [border addSubview:bg];
+    [viewDate addSubview:border];
+    
+    if (pic != nil) {
+        [viewDate addSubview:imageLabel];
+        [viewDate addSubview:labelSmall];
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(1, 1, 52, 52)];
+        [button loadBackground:pic.urlSquare];
+        button.tag = [pic.pictureId integerValue];
+        [button addTarget:self action:@selector(showPhoto:) forControlEvents:UIControlEventTouchUpInside];
+        [bg addSubview:button];
+    } else {
+        [border addSubview:labelBig];
+    }
+    
+    return viewDate;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -408,7 +517,15 @@
         return 50;
     } else if ((tableMode == kTablePicList) || (tableMode == kTableVotes)) {
         return 78;
-    } else
+    } else if (tableMode == kTableCalendar) {
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        NSRange days = [calendar rangeOfUnit:NSDayCalendarUnit
+                                      inUnit:NSMonthCalendarUnit
+                                     forDate:currentMonth];
+        daysInMonth = days.length;
+        return (daysInMonth/5 + (daysInMonth%5>0?1:0)) * 63;
+    }
+    else
         return 0;
 }
 
@@ -420,6 +537,10 @@
     if ([segue.identifier isEqualToString:@"PictureDetail"]) {
         luxeysPicDetailViewController* viewPicDetail = segue.destinationViewController;
         [viewPicDetail setPictureID:sender.tag];
+    }
+    if ([segue.identifier isEqualToString:@"Calendar"]) {
+        luxeysUserCalendarViewController* viewCalendar = segue.destinationViewController;
+        [viewCalendar setUserID:userID];
     }
 }
 
@@ -469,5 +590,61 @@
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
     [refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
 }
+
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (tableMode == kTableCalendar) {
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.8];
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 3, 100, 30)];
+        label.textAlignment = NSTextAlignmentCenter;
+        
+        luxeysButtonBrown30 *prev = [[luxeysButtonBrown30 alloc] initWithFrame:CGRectMake(5, 5, 60, 30)];
+        luxeysButtonBrown30 *next = [[luxeysButtonBrown30 alloc] initWithFrame:CGRectMake(255, 5, 60, 30)];
+        [prev addTarget:self action:@selector(prevMonth:) forControlEvents:UIControlEventTouchUpInside];
+        [next addTarget:self action:@selector(nextMonth:) forControlEvents:UIControlEventTouchUpInside];
+        [prev setTitle:@"Prev" forState:UIControlStateNormal];
+        [next setTitle:@"Next" forState:UIControlStateNormal];
+        label.center = CGPointMake(160, 15);
+        
+        
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        [dateFormat setDateFormat:@"yyyy/MM"];
+        label.text = [dateFormat stringFromDate:currentMonth];
+        label.textColor = [UIColor colorWithRed:101.0/255.0	green:90.0/255.0 blue:56.0/255.0 alpha:1];
+        label.backgroundColor = [UIColor clearColor];
+        [label setFont:[UIFont fontWithName:@"Baskerville-SemiBold" size:16]];
+        [view addSubview:prev];
+        [view addSubview:next];
+        [view addSubview:label];
+        return view;
+    }
+    return nil;
+}
+
+- (void)nextMonth:(id)sender {
+    NSDateComponents* dateComponents = [[NSDateComponents alloc]init];
+    [dateComponents setMonth:1];
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+    currentMonth = [calendar dateByAddingComponents:dateComponents toDate:currentMonth options:0];
+    [self reloadCalendar];
+}
+
+- (void)prevMonth:(id)sender {
+    NSDateComponents* dateComponents = [[NSDateComponents alloc]init];
+    [dateComponents setMonth:-1];
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+    currentMonth = [calendar dateByAddingComponents:dateComponents toDate:currentMonth options:0];
+    [self reloadCalendar];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (tableMode == kTableCalendar) {
+        return 40;
+    }
+    return 0;
+}
+
 
 @end

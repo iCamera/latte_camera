@@ -1,8 +1,8 @@
-#import "LuxeysComment.h"
+#import "Comment.h"
 
-#import "LuxeysUser.h"
+#import "User.h"
 
-@implementation LuxeysComment
+@implementation Comment
 
 @synthesize luxeysCommentId;
 @synthesize createdAt;
@@ -10,9 +10,9 @@
 @synthesize hidden;
 @synthesize user;
 
-+ (LuxeysComment *)instanceFromDictionary:(NSDictionary *)aDictionary {
++ (Comment *)instanceFromDictionary:(NSDictionary *)aDictionary {
 
-    LuxeysComment *instance = [[LuxeysComment alloc] init];
+    Comment *instance = [[Comment alloc] init];
     [instance setAttributesFromDictionary:aDictionary];
     return instance;
 
@@ -33,9 +33,11 @@
     if ([key isEqualToString:@"user"]) {
 
         if ([value isKindOfClass:[NSDictionary class]]) {
-            self.user = [LuxeysUser instanceFromDictionary:value];
+            self.user = [User instanceFromDictionary:value];
         }
 
+    } else if ([key isEqualToString:@"created_at"]) {
+        self.createdAt = [luxeysUtils dateFromJSON:value];
     } else {
         [super setValue:value forKey:key];
     }

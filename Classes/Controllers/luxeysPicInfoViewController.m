@@ -13,7 +13,6 @@
 
 @implementation luxeysPicInfoViewController
 
-@synthesize tableInfo;
 @synthesize labelTitle;
 @synthesize imagePic;
 @synthesize viewHeader;
@@ -53,11 +52,11 @@
     NSString *url = [NSString stringWithFormat:@"api/picture/%d", picID];
 
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-    [[luxeysLatteAPIClient sharedClient] getPath:url
+    [[LatteAPIClient sharedClient] getPath:url
                                       parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                              picDict = [JSON objectForKey:@"picture"];
-                                             pic = [LuxeysPicture instanceFromDictionary:picDict];
+                                             pic = [Picture instanceFromDictionary:picDict];
                                              
                                              [imagePic setImageWithURL:[NSURL URLWithString:pic.urlSquare]];
                                              
@@ -75,31 +74,15 @@
                                              }
                                              labelTitle.text = pic.title;
                                              
-                                             [tableInfo reloadData];
+                                             [self.tableView reloadData];
                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                              NSLog(@"Something went wrong (PicInfo)");
                                          }];
     
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    [tableInfo setNeedsDisplay];
-    
-    
-//    CGRect frame = tableInfo.frame;
-//    frame.size = tableInfo.contentSize;
-//    tableInfo.frame = frame;
-//    self.viewScroll.contentSize = CGSizeMake(320, frame.size.height + 50);
-    
-//    [viewScroll setNeedsLayout];
-    
-}
-
 - (void)viewDidUnload
 {
-    [self setTableInfo:nil];
     [self setLabelTitle:nil];
     [self setImagePic:nil];
     [self setViewHeader:nil];
@@ -169,6 +152,24 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return [sections count];
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *view = [[UIView alloc] init];
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, 30)];
+    [title setFont:[UIFont boldSystemFontOfSize:12]];
+    title.textColor = [UIColor colorWithRed:101.0/255.0 green:90.0/255.0 blue:56.0/255.0 alpha:1];
+    if (section == 1) {
+        title.text = @"カメラ情報";
+    }
+    title.text = @"詳細情報";
+    [view addSubview:title];
+    
+    return view;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 30;
 }
 
 @end

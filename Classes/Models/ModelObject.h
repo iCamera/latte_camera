@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface LuxeysObject : NSObject
+@interface ModelObject : NSObject
 
 + (NSMutableArray *)mutableArrayFromDictionary:(NSDictionary *)aDictionary withKey:(NSString *)aKey;
 + (NSObject *)instanceFromDictionary:(NSDictionary *)aDictionary;

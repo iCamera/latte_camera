@@ -8,8 +8,8 @@
 
 #import "luxeysSideMenuViewController.h"
 #import "luxeysAppDelegate.h"
-#import "luxeysLatteAPIClient.h"
-#import "ZUUIRevealController.h"
+#import "LatteAPIClient.h"
+#import "LXUIRevealController.h"
 #import "UIImageView+AFNetworking.h"
 #import <QuartzCore/CALayer.h>
 
@@ -107,7 +107,7 @@
 
 - (void) tableView: (UITableView *) tableView didSelectRowAtIndexPath: (NSIndexPath *) indexPath {
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-    ZUUIRevealController *viewMain = (ZUUIRevealController*)app.storyMain;
+    LXUIRevealController *viewMain = (LXUIRevealController*)app.storyMain;
 
     if (indexPath.row == 3) {
         

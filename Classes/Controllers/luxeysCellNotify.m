@@ -28,11 +28,12 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+    
 }
 
 - (void)setNotify:(NSDictionary *)notify {
     NSDictionary *target = [notify objectForKey:@"target"];
-    NSArray *users = [notify objectForKey:@"users"];
+    users = [notify objectForKey:@"users"];
     labelNotify.text = @"";
     for (NSDictionary *user in users) {
         labelNotify.text = [labelNotify.text stringByAppendingString:[user objectForKey:@"name"]];
@@ -51,11 +52,20 @@
         default:
             break;
     }
+    
+    CGRect frame = labelNotify.frame;
+    CGSize labelSize = [labelNotify.text sizeWithFont:[UIFont systemFontOfSize:11]
+                                     constrainedToSize:CGSizeMake(200.0f, MAXFLOAT)
+                                         lineBreakMode:NSLineBreakByWordWrapping];
+    frame.size.height = labelSize.height;
+    labelNotify.frame = frame;
     if (target) {
         [viewImage setImageWithURL:[NSURL URLWithString:[target objectForKey:@"url_square"]]];
-        viewImage.layer.cornerRadius = 3;
-        viewImage.clipsToBounds = YES;
+        // viewImage.layer.cornerRadius = 3;
+        // viewImage.clipsToBounds = YES;
     }
+    self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg_menu.png"]];
+    [self setSelectedBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg_menu_on.png"]]];
 }
 
 @end

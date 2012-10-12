@@ -33,6 +33,10 @@
     [super viewDidLoad];
   // Do any additional setup after loading the view.
     self.viewTab.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
+
+    refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
+    refreshHeaderView.delegate = self;
+    [self.tableView addSubview:refreshHeaderView];
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = CGRectMake(0, 70, 320, 10);
@@ -65,15 +69,17 @@
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-    [[luxeysLatteAPIClient sharedClient] getPath:url
+    [[LatteAPIClient sharedClient] getPath:url
                                       parameters: nil
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                             pics = [LuxeysPicture mutableArrayFromDictionary:JSON withKey:@"pics"];
+                                             pics = [Picture mutableArrayFromDictionary:JSON withKey:@"pics"];
                                              [self.tableView reloadData];
 
                                              dispatch_async(dispatch_get_main_queue(), ^{
                                                      [MBProgressHUD hideHUDForView:self.view animated:YES];
                                                  });
+                                             
+                                             [self doneLoadingTableViewData];
                                          }
                                          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                              NSLog(@"Something went wrong (Ranking)");
@@ -81,6 +87,8 @@
                                              dispatch_async(dispatch_get_main_queue(), ^{
                                                      [MBProgressHUD hideHUDForView:self.view animated:YES];
                                                  });
+                                             
+                                             [self doneLoadingTableViewData];
                                          }
      ];
     });
@@ -92,13 +100,13 @@
     
     [loadIndicator startAnimating];
     [self.tableView beginUpdates];
-    [[luxeysLatteAPIClient sharedClient] getPath:url
+    [[LatteAPIClient sharedClient] getPath:url
                                       parameters: nil
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                              int rowCountPrev = [self.tableView numberOfRowsInSection:0];
                                              NSArray *newPics = [JSON objectForKey:@"pics"];
                                              for (NSDictionary *pic in newPics) {
-                                                 [pics addObject:[LuxeysPicture instanceFromDictionary:pic]];
+                                                 [pics addObject:[Picture instanceFromDictionary:pic]];
                                              }
                                              
                                              if (newPics.count == 0)
@@ -183,7 +191,7 @@
 }
 
 - (void)initButton:(UIButton*)button index:(NSInteger)index {
-    LuxeysPicture *pic = [pics objectAtIndex:index];
+    Picture *pic = [pics objectAtIndex:index];
     if (index == 0)
         [button loadBackground:pic.urlMedium];
     else
@@ -273,9 +281,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        LuxeysPicture *pic = [pics objectAtIndex:0];
+        Picture *pic = [pics objectAtIndex:0];
         
-        float newheight = [luxeysImageUtils heightFromWidth:300
+        float newheight = [luxeysUtils heightFromWidth:300
                                                       width:[pic.width floatValue]
                                                      height:[pic.height floatValue]];
         return newheight + 10;
@@ -287,6 +295,8 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+    
     //Load more
     if (loadEnded)
         return;
@@ -315,6 +325,37 @@
         luxeysPicDetailViewController* viewPicDetail = segue.destinationViewController;
         [viewPicDetail setPictureID:sender.tag];
     }
+}
+
+- (void)reloadTableViewDataSource{
+    reloading = YES;
+}
+
+- (void)doneLoadingTableViewData{
+    reloading = NO;
+    [refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+}
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
+    [self reloadTableViewDataSource];
+    rankpage = 1;
+    [self loadRanking];
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+    
+    return reloading; // should return if data source model is reloading
+    
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+    
+    return [NSDate date]; // should return date data source was last changed
+    
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    [refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
 }
 
 @end

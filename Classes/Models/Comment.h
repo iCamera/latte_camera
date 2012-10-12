@@ -1,25 +1,26 @@
 #import <Foundation/Foundation.h>
-#import "LuxeysObject.h"
+#import "ModelObject.h"
+#import "luxeysUtils.h"
 
-@class LuxeysUser;
+@class User;
 
-@interface LuxeysComment : LuxeysObject {
+@interface Comment : ModelObject {
 
     NSNumber *luxeysCommentId;
-    NSString *createdAt;
+    NSDate *createdAt;
     NSString *descriptionText;
     BOOL hidden;
-    LuxeysUser *user;
+    User *user;
 
 }
 
 @property (nonatomic, copy) NSNumber *luxeysCommentId;
-@property (nonatomic, copy) NSString *createdAt;
+@property (nonatomic, copy) NSDate *createdAt;
 @property (nonatomic, copy) NSString *descriptionText;
 @property (nonatomic, assign) BOOL hidden;
-@property (nonatomic, strong) LuxeysUser *user;
+@property (nonatomic, strong) User *user;
 
-+ (LuxeysComment *)instanceFromDictionary:(NSDictionary *)aDictionary;
++ (Comment *)instanceFromDictionary:(NSDictionary *)aDictionary;
 - (void)setAttributesFromDictionary:(NSDictionary *)aDictionary;
 
 @end

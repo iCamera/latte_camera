@@ -14,9 +14,7 @@
 
 #define kAnimationDuration .3
 
-@interface luxeysTabBarViewController () {
-    UIButton* buttonCamera;
-}
+@interface luxeysTabBarViewController ()
 
 @end
 
@@ -70,12 +68,24 @@
                                      [NSValue valueWithUIOffset:UIOffsetMake(0, 1)], UITextAttributeTextShadowOffset,
                                      nil] forState:UIControlStateNormal];
     }
+
     
-    buttonCamera = [UIButton buttonWithType:UIButtonTypeCustom];
-    buttonCamera.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
+    UILabel *labelCamera = [[UILabel alloc] init];
+    labelCamera.frame = CGRectMake(0.0, 0.0, 60, 11);
+    labelCamera.font = [UIFont boldSystemFontOfSize:10];
+    labelCamera.text = @"写真を撮る";
+    labelCamera.backgroundColor = [UIColor clearColor];
+    labelCamera.textColor = [UIColor whiteColor];
+    labelCamera.shadowOffset = CGSizeMake(0, 1);
+    labelCamera.textAlignment = NSTextAlignmentCenter;
+
+    UIButton *buttonCamera = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage* buttonImage = [UIImage imageNamed:@"camera.png"];
     UIImage* buttonBg = [UIImage imageNamed:@"bg_bottom_center.png"];
-    buttonCamera.frame = CGRectMake(0.0, 0.0, buttonBg.size.width, buttonBg.size.height);
+
+    viewCamera = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, buttonBg.size.width, buttonBg.size.height)];
+    viewCamera.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
+    buttonCamera.frame = viewCamera.frame;
     buttonCamera.showsTouchWhenHighlighted = YES;
 
     [buttonCamera setImage:buttonImage forState:UIControlStateNormal];
@@ -85,35 +95,40 @@
     
     CGFloat heightDifference = buttonBg.size.height - self.tabBar.frame.size.height;
     if (heightDifference < 0)
-        buttonCamera.center = self.tabBar.center;
+        viewCamera.center = self.tabBar.center;
     else
     {
         CGPoint center = self.tabBar.center;
         center.y = center.y - heightDifference/2.0 + 1;
-        buttonCamera.center = center;
+        viewCamera.center = center;
     }
     [buttonCamera addTarget:self action:@selector(cameraView:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.view addSubview:buttonCamera];
+
+    [viewCamera addSubview:buttonCamera];
+    CGPoint center = buttonCamera.center;
+    center.y += 20;
+    labelCamera.center = center;
+    [viewCamera addSubview:labelCamera];
+    [self.view addSubview:viewCamera];
     
     // Re-style tabbar item
-    for(UIViewController *tab in self.viewControllers)
-        
-    {
+    for(UIViewController *tab in self.viewControllers) {
         [tab.tabBarItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                [UIColor whiteColor], UITextAttributeTextColor, nil]
+                                                [UIColor whiteColor], UITextAttributeTextColor,
+                                                CGSizeMake(0, 1), UITextAttributeTextShadowOffset,
+                                                nil]
                                       forState:UIControlStateNormal];
     }
 }
 
 
 - (void)cameraView:(id)sender {
-    luxeysCameraViewController *viewCamera = [[UIStoryboard storyboardWithName:@"CameraStoryboard"
+    luxeysCameraViewController *viewCapture = [[UIStoryboard storyboardWithName:@"CameraStoryboard"
                                                                         bundle: nil] instantiateInitialViewController];
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    app.storyCamera = viewCamera;
-    app.window.rootViewController = viewCamera;
+    app.storyCamera = viewCapture;
+    app.window.rootViewController = viewCapture;
 /*    [UIView transitionWithView:app.window duration:0.5 options: UIViewAnimationOptionTransitionFlipFromLeft animations:^{
         
     } completion:nil];*/
@@ -170,7 +185,7 @@
 	}
 	CGRect viewFrame = self.view.frame;
 	CGRect tabBarFrame = self.tabBar.frame;
-    CGRect cameraFrame = buttonCamera.frame;
+    CGRect cameraFrame = viewCamera.frame;
 	CGRect containerFrame = transitionView.frame;
 	
 	containerFrame.size.height = viewFrame.size.height - (hidden ? 0 : tabBarFrame.size.height);
@@ -181,14 +196,14 @@
         [UIView animateWithDuration:kAnimationDuration
                          animations:^{
                              self.tabBar.frame = tabBarFrame;
-                             buttonCamera.frame = cameraFrame;
+                             viewCamera.frame = cameraFrame;
                          }
          ];
     } else {
         [UIView animateWithDuration:kAnimationDuration
                          animations:^{
                              self.tabBar.frame = tabBarFrame;
-                             buttonCamera.frame = cameraFrame;
+                             viewCamera.frame = cameraFrame;
                          }
                          completion:^(BOOL finished) {
                              transitionView.frame = containerFrame;
@@ -196,6 +211,12 @@
          ];
     }
     
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    
+    [super viewWillAppear:animated];
 }
 
 - (void)showTab:(NSNotification *) notification

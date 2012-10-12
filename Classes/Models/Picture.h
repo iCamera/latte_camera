@@ -1,14 +1,15 @@
 #import <Foundation/Foundation.h>
-#import "LuxeysObject.h"
-#import "LuxeysUser.h"
+#import "ModelObject.h"
+#import "User.h"
+#import "luxeysUtils.h"
 
-@interface LuxeysPicture : LuxeysObject {
+@interface Picture : ModelObject {
 
     BOOL canComment;
     BOOL canVote;
     NSNumber *commentCount;
     NSMutableArray *comments;
-    NSString *createdAt;
+    NSDate *createdAt;
     NSString *descriptionText;
     NSNumber *height;
     BOOL isVoted;
@@ -26,14 +27,14 @@
     NSNumber *voteCount;
     NSNumber *width;
     NSDictionary *exif;
-    LuxeysUser *user;
+    User *user;
 }
 
 @property (nonatomic, assign) BOOL canComment;
 @property (nonatomic, assign) BOOL canVote;
 @property (nonatomic, copy) NSNumber *commentCount;
 @property (nonatomic, retain) NSMutableArray *comments;
-@property (nonatomic, copy) NSString *createdAt;
+@property (nonatomic, copy) NSDate *createdAt;
 @property (nonatomic, copy) NSString *descriptionText;
 @property (nonatomic, copy) NSNumber *height;
 @property (nonatomic, assign) BOOL isVoted;
@@ -51,9 +52,9 @@
 @property (nonatomic, copy) NSNumber *voteCount;
 @property (nonatomic, copy) NSNumber *width;
 @property (nonatomic, copy) NSDictionary *exif;
-@property (nonatomic, strong) LuxeysUser *user;
+@property (nonatomic, strong) User *user;
 
-+ (LuxeysPicture *)instanceFromDictionary:(NSDictionary *)aDictionary;
++ (Picture *)instanceFromDictionary:(NSDictionary *)aDictionary;
 - (void)setAttributesFromDictionary:(NSDictionary *)aDictionary;
 
 @end

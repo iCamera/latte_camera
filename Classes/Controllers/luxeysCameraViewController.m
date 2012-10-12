@@ -10,11 +10,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "luxeysAppDelegate.h"
 
-@interface luxeysCameraViewController () {
-    GPUImageFilterPipeline *pipeFilter;
-    UIImage *lastFrame;
-    UIImageView *lastFrameView;
-}
+@interface luxeysCameraViewController ()
 
 @end
 
@@ -27,12 +23,17 @@
 @synthesize buttonCapture;
 @synthesize buttonYes;
 @synthesize buttonNo;
+@synthesize buttonTimer;
+@synthesize buttonFlash;
+@synthesize buttonFlip;
+@synthesize gesturePan;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        isEditing = FALSE;
     }
     return self;
 }
@@ -68,20 +69,25 @@
         [currentCamera unlockForConfiguration];
     }
     
-       
-    GPUImageCropFilter *lens = [[GPUImageCropFilter alloc] init];
-    [lens setCropRegion: CGRectMake(0.0f, 0.125f, 1.0f, 0.75f)];
+    GPUImageBrightnessFilter *dummy = [[GPUImageBrightnessFilter alloc] init];
+    
+    crop = [[GPUImageCropFilter alloc] init];
+    [crop setCropRegion: CGRectMake(0.0f, 0.125f, 1.0f, 0.75f)];
+
     
     // Basic filter:
     GPUImageSharpenFilter *filter = [[GPUImageSharpenFilter alloc]init];
     [filter setSharpness:0.5f];
-    pipeFilter = [[GPUImageFilterPipeline alloc] initWithOrderedFilters:[NSArray arrayWithObjects: lens, filter, nil]
+    pipeFilter = [[GPUImageFilterPipeline alloc] initWithOrderedFilters:[NSArray arrayWithObjects: dummy, crop, filter, nil]
                                                                   input:videoCamera
                                                                  output:cameraView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [videoCamera startCameraCapture];
+    self.navigationController.navigationBarHidden = YES;
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [videoCamera startCameraCapture];
+    });
 }
 
 - (void)didReceiveMemoryWarning
@@ -92,9 +98,11 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [videoCamera stopCameraCapture];
-    
-    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    [videoCamera pauseCameraCapture];
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [videoCamera stopCameraCapture];
+    });
+//    [[UIApplication sharedApplication] setStatusBarHidden:NO];
     [super viewWillDisappear:animated];
 }
 
@@ -107,9 +115,8 @@
     [super viewDidUnload];
 }
 
-- (IBAction)setEffect:(id)sender {
-    UIButton* buttonEffect = (UIButton*)sender;
-    switch (buttonEffect.tag) {
+- (void)applyCurrentEffect {
+    switch (currentEffect) {
         case 1:
             [self SetEffect1];
             break;
@@ -125,30 +132,49 @@
         default:
             break;
     }
-    
+    if (isEditing) {
+        [self showStillImage];
+    }
+}
+
+- (void)showStillImage {
+    GPUImagePicture *stillImageSource = [[GPUImagePicture alloc] initWithImage:imageOrg];
+    pipeFilter.input = stillImageSource;
+    [crop setCropRegion: CGRectMake(0.0f, 0.0f, 1.0f, 1.0f)];
+    [stillImageSource processImage];
+    [crop setCropRegion: CGRectMake(0.0f, 0.125f, 1.0f, 0.75f)];
+}
+
+- (IBAction)setEffect:(id)sender {
+    UIButton* buttonEffect = (UIButton*)sender;
+    currentEffect = buttonEffect.tag;
+    [self applyCurrentEffect];
 }
 
 - (void)setLens:(NSInteger)lensIndex  {
     NSLog(@"Lens #%d", lensIndex);
-    GPUImageCropFilter *crop = [[GPUImageCropFilter alloc] init];
     GPUImageFilterGroup *lens = [[GPUImageFilterGroup alloc] init];
     GPUImagePinchDistortionFilter *distord = [[GPUImagePinchDistortionFilter alloc]init];
     GPUImageTiltShiftFilter *tilt = [[GPUImageTiltShiftFilter alloc]init];
+    GPUImageSharpenFilter *sharpen = [[GPUImageSharpenFilter alloc] init];
+    sharpen.sharpness = 4.0f;
     
-    [crop setCropRegion: CGRectMake(0.0f, 0.125f, 1.0f, 0.75f)];
     [lens setInitialFilters:[NSArray arrayWithObject:crop]];
+    [crop addTarget:sharpen];
+    
     [lens addFilter:crop];
+    [lens addFilter:sharpen];
     
     switch (lensIndex) {
         case 0: {
-            [lens setTerminalFilter:crop];
+            [lens setTerminalFilter:sharpen];
             break;
         }
             
         case 1: {
             [distord setScale:0.1f];
             
-            [crop addTarget: distord];
+            [sharpen addTarget: distord];
             [distord addTarget: tilt];
             
             [lens addFilter:distord];
@@ -166,7 +192,7 @@
             [distord setRadius:0.75f];
             
             
-            [crop addTarget: distord];
+            [sharpen addTarget: distord];
             [distord addTarget: crop2];
             
             [lens addFilter:distord];
@@ -180,55 +206,78 @@
             break;
     }
     
-    [pipeFilter replaceFilterAtIndex:0 withFilter:(id)lens];
+    [pipeFilter replaceFilterAtIndex:1 withFilter:(id)lens];
+
+    if (isEditing) {
+        [self showStillImage];
+    }
+}
+
+- (void)updateTargetPoint {
+    AVCaptureDevice *device = videoCamera.inputCamera;
+    CGSize frameSize = [[self cameraView] frame].size;
+    
+    CGPoint location = self.imageAutoFocus.center;
+    
+    if ([videoCamera cameraPosition] == AVCaptureDevicePositionFront) {
+        location.x = frameSize.width - location.x;
+    }
+    
+    CGPoint pointOfInterest = CGPointMake(location.y / frameSize.height + 0.125, 1.f - (location.x / frameSize.width));
+    
+    
+    if ([device isFocusPointOfInterestSupported] && [device isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
+        NSError *error;
+        if ([device lockForConfiguration:&error]) {
+            [device setFocusPointOfInterest:pointOfInterest];
+            
+            [device setFocusMode:AVCaptureFocusModeAutoFocus];
+            
+            if([device isExposurePointOfInterestSupported] && [device isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure])
+            {
+                
+                [device setExposurePointOfInterest:pointOfInterest];
+                [device setExposureMode:AVCaptureExposureModeContinuousAutoExposure];
+                
+            }
+            
+            [device unlockForConfiguration];
+            
+            NSLog(@"FOCUS OK");
+        } else {
+            NSLog(@"ERROR = %@", error);
+        }
+    }
+}
+
+- (void)capturePhotoAsync {
+    [videoCamera capturePhotoAsJPEGProcessedUpToFilter:[pipeFilter.filters objectAtIndex:0] withCompletionHandler:^(NSData *processedJPEG, NSError *error){
+        imageOrg = [UIImage imageWithData:processedJPEG];
+        [self showStillImage];
+    }];
+}
+
+- (void)saveToLibAsync {
+    UIImage *imageProcessed = [pipeFilter currentFilteredFrame];
+    UIImageWriteToSavedPhotosAlbum(imageProcessed, nil, nil, nil);    
 }
 
 
 - (IBAction)cameraTouch:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateRecognized) {
         CGPoint location = [sender locationInView:self.cameraView];
-        AVCaptureDevice *device = videoCamera.inputCamera;
-        CGPoint pointOfInterest = CGPointMake(.5f, .5f);
-        NSLog(@"taplocation x = %f y = %f", location.x, location.y);
-        CGSize frameSize = [[self cameraView] frame].size;
+        self.imageAutoFocus.center = location;
         
-        if ([videoCamera cameraPosition] == AVCaptureDevicePositionFront) {
-            location.x = frameSize.width - location.x;
-        }
-
-        pointOfInterest = CGPointMake(location.y / frameSize.height + 0.125, 1.f - (location.x / frameSize.width));
-        NSLog(@"pointofinterest x = %f y = %f", pointOfInterest.x, pointOfInterest.y);
-        
-        
-        if ([device isFocusPointOfInterestSupported] && [device isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
-            NSError *error;
-            if ([device lockForConfiguration:&error]) {
-                [device setFocusPointOfInterest:pointOfInterest];
-                
-                [device setFocusMode:AVCaptureFocusModeAutoFocus];
-                
-                if([device isExposurePointOfInterestSupported] && [device isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure])
-                {
-                    
-                    [device setExposurePointOfInterest:pointOfInterest];
-                    [device setExposureMode:AVCaptureExposureModeContinuousAutoExposure];
-                    self.imageAutoFocus.center = location;
-                }
-                
-                [device unlockForConfiguration];
-                
-                NSLog(@"FOCUS OK");
-            } else {
-                NSLog(@"ERROR = %@", error);
-            }  
-        }
+        [self updateTargetPoint];
     }
 }
 
 - (IBAction)openImagePicker:(id)sender {
-    UIImagePickerController *imagePicker = [[UIImagePickerController alloc]init];
-    imagePicker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-    [self presentViewController:imagePicker animated:YES completion:^{
+    imagePicker = [[UIImagePickerController alloc]init];
+    [imagePicker.navigationBar setBackgroundImage:[UIImage imageNamed: @"bg_head.png"] forBarMetrics:UIBarMetricsDefault];
+    imagePicker.delegate = (id)self;
+    //imagePicker.sourceType = UIImagePickerController;
+    [self presentViewController:imagePicker animated:NO completion:^{
         //
     }];
 }
@@ -242,38 +291,10 @@
 
 - (IBAction)capture:(id)sender {
     GPUImageFilter* lens = pipeFilter.filters[0];
-    lastFrame = [lens imageFromCurrentlyProcessedOutput];
-    lastFrameView = [[UIImageView alloc] initWithFrame:cameraView.frame];
-    [lastFrameView setImage:lastFrame];
-    [self.view addSubview:lastFrameView];
+    imageOrg = [lens imageFromCurrentlyProcessedOutput];
     
-//    [videoCamera stopCameraCapture];
-    
-    cameraView.hidden = true;
-    buttonCapture.hidden = true;
-    buttonNo.hidden = false;
-    buttonYes.hidden = false;
-    
-/*    [videoCamera capturePhotoAsJPEGProcessedUpToFilter:[pipeFilter.filters objectAtIndex:1] withCompletionHandler:^(NSData *processedJPEG, NSError *error){
-        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-        report_memory(@"After asset library creation");
-        
-        [library writeImageDataToSavedPhotosAlbum:processedJPEG metadata:nil completionBlock:^(NSURL *assetURL, NSError *error2)
-         {
-             report_memory(@"After writing to library");
-             if (error2) {
-                 NSLog(@"ERROR: the image failed to be written");
-             }
-             else {
-                 NSLog(@"PHOTO SAVED - assetURL: %@", assetURL);
-             }
-			 
-             runOnMainQueueWithoutDeadlocking(^{
-                 report_memory(@"Operation completed");
-                 //[photoCaptureButton setEnabled:YES];
-             });
-         }];
-    }];*/
+    [self switchEditImage];
+    [self capturePhotoAsync];
 }
 
 - (IBAction)changeLens:(id)sender {
@@ -309,6 +330,11 @@
     [viewTimer setHidden:!viewTimer.isHidden];
 }
 
+- (IBAction)touchSave:(id)sender {
+    [self saveToLibAsync];
+    [self performSegueWithIdentifier:@"Edit" sender:self];
+}
+
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
 	NSLog(@"Sheet %d Button %d", actionSheet.tag, buttonIndex);
     switch (actionSheet.tag) {
@@ -325,7 +351,7 @@
 }
 
 - (void)SetFilter:(GPUImageFilterGroup*)filter{
-    [pipeFilter replaceFilterAtIndex:1 withFilter:(GPUImageFilter*)filter];
+    [pipeFilter replaceFilterAtIndex:2 withFilter:(GPUImageFilter*)filter];
 }
 
 - (void)SetEffectOrg {
@@ -406,6 +432,7 @@
                                      [NSValue valueWithCGPoint:CGPointMake(231.0f/255.0f, 228.0f/255.0f)],
                                      [NSValue valueWithCGPoint:CGPointMake(1.0, 1.0)],
                                      nil]];
+    
     [tonecurve setRGBControlPoints:[NSArray arrayWithObjects:
                                     [NSValue valueWithCGPoint:CGPointMake(0.0, 0.0)],
                                     [NSValue valueWithCGPoint:CGPointMake(23.0f/255.0f, 20.0f/255.0f)],
@@ -452,19 +479,66 @@
     NSLog(@"Change Effect3");
 }
 
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    [imagePicker dismissViewControllerAnimated:NO completion:nil];
+    imageOrg = [info valueForKey:UIImagePickerControllerOriginalImage];
+    
+    [self switchEditImage];
+}
+
+- (void)switchCamera {
+    isEditing = NO;
+    buttonNo.hidden = YES;
+    buttonYes.hidden = YES;
+    buttonCapture.hidden = NO;
+    buttonFlash.hidden = NO;
+    buttonTimer.hidden = NO;
+    buttonFlip.hidden = NO;
+    
+    [videoCamera resumeCameraCapture];
+}
+
+- (void)switchEditImage {
+    isEditing = YES;
+    buttonCapture.hidden = YES;
+    buttonNo.hidden = NO;
+    buttonYes.hidden = NO;
+    buttonFlash.hidden = YES;
+    buttonTimer.hidden = YES;
+    buttonFlip.hidden = YES;
+    
+    [videoCamera pauseCameraCapture];
+    [self showStillImage];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"Edit"]) {
+        luxeysPicEditViewController *controllerPicEdit = segue.destinationViewController;
+    }
+}
 
 - (IBAction)touchNo:(id)sender {
-    cameraView.hidden = false;
-    lastFrameView.hidden = YES;
-    buttonNo.hidden = true;
-    buttonYes.hidden = true;
-    buttonCapture.hidden = false;
+    [self switchCamera];
 }
 
-- (IBAction)touchYes:(id)sender {
-}
 
 - (IBAction)flipCamera:(id)sender {
     
+}
+
+- (IBAction)panTarget:(UIPanGestureRecognizer *)sender {
+    NSLog(@"Pan pan");
+    CGPoint translation = [sender translationInView:cameraView];
+    sender.view.center = CGPointMake(sender.view.center.x + translation.x,
+                                         sender.view.center.y + translation.y);
+    [sender setTranslation:CGPointMake(0, 0) inView:cameraView];
+    
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        [self updateTargetPoint];
+    }
+}
+
+- (void)handleTap:(UITapGestureRecognizer *)sender {
+    NSLog(@"Tapped");
 }
 @end

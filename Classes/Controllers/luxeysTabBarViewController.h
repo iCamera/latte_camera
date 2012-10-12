@@ -10,6 +10,7 @@
 
 
 @interface luxeysTabBarViewController : UITabBarController {
+    UIView *viewCamera;
 }
 
 @property (nonatomic, getter=isTabBarHidden) BOOL tabBarHidden;

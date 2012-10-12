@@ -1,19 +1,20 @@
-#import "LuxeysFeed.h"
+#import "Feed.h"
 
-#import "LuxeysPicture.h"
-#import "LuxeysUser.h"
+#import "Picture.h"
+#import "User.h"
 
-@implementation LuxeysFeed
+@implementation Feed
 
 @synthesize count;
 @synthesize feedID;
 @synthesize model;
 @synthesize targets;
 @synthesize user;
+@synthesize updatedAt;
 
-+ (LuxeysFeed *)instanceFromDictionary:(NSDictionary *)aDictionary {
++ (Feed *)instanceFromDictionary:(NSDictionary *)aDictionary {
 
-    LuxeysFeed *instance = [[LuxeysFeed alloc] init];
+    Feed *instance = [[Feed alloc] init];
     [instance setAttributesFromDictionary:aDictionary];
     return instance;
 
@@ -37,7 +38,7 @@
 
             NSMutableArray *myMembers = [NSMutableArray arrayWithCapacity:((NSArray*)value).count];
             for (id valueMember in value) {
-                LuxeysPicture *populatedMember = [LuxeysPicture instanceFromDictionary:valueMember];
+                Picture *populatedMember = [Picture instanceFromDictionary:valueMember];
                 [myMembers addObject:populatedMember];
             }
 
@@ -48,9 +49,11 @@
     } else if ([key isEqualToString:@"user"]) {
 
         if ([value isKindOfClass:[NSDictionary class]]) {
-            self.user = [LuxeysUser instanceFromDictionary:value];
+            self.user = [User instanceFromDictionary:value];
         }
 
+    } else if ([key isEqualToString:@"updated_at"]) {
+        self.updatedAt = [luxeysUtils dateFromJSON:value];
     } else {
         [super setValue:value forKey:key];
     }

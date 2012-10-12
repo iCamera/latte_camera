@@ -8,13 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "UIButton+AsyncImage.h"
-#import "LuxeysUser.h"
+#import "User.h"
 
 @interface luxeysCellFriend : UITableViewCell
 @property (strong, nonatomic) IBOutlet UIButton *buttonUser;
 @property (strong, nonatomic) IBOutlet UILabel *labelName;
 @property (strong, nonatomic) IBOutlet UILabel *labelIntro;
 
-- (void)setUser:(LuxeysUser*)user;
+- (void)setUser:(User*)user;
 
 @end
