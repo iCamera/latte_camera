@@ -21,5 +21,6 @@
     BOOL reloading;
     EGORefreshTableHeaderView *refreshHeaderView;
 }
+@property (strong, nonatomic) IBOutlet luxeysButtonBrown30 *buttonNavRight;
 
 @end

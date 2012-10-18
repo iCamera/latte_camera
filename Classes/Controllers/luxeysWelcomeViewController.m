@@ -15,7 +15,6 @@
 
 @synthesize buttonLeftMenu;
 @synthesize buttonNavRight;
-@synthesize navigationBarPanGestureRecognizer;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,21 +28,24 @@
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(receiveLoggedIn:)
-                                                 name:@"LoggedIn"
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(receiveLoggedOut:)
-                                                 name:@"LoggedOut"
-                                               object:nil];
-    
-    loadEnded = false;
-    pagephoto = 1;
-    indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    indicator.hidesWhenStopped = true;
-    [indicator setCenter:CGPointMake(160, 20)];
+    if (self)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(receiveLoggedIn:)
+                                                     name:@"LoggedIn"
+                                                   object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(receiveLoggedOut:)
+                                                     name:@"LoggedOut"
+                                                   object:nil];
+        
+        loadEnded = false;
+        pagephoto = 1;
+        indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        indicator.hidesWhenStopped = true;
+        [indicator setCenter:CGPointMake(160, 20)];
+    }
     
     return self;
 }
@@ -182,6 +184,7 @@
 - (void)receiveLoggedIn:(NSNotification *) notification {
     // Init side bar
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+
     navigationBarPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:app.storyMain action:@selector(revealGesture:)];
     [self.navigationController.navigationBar addGestureRecognizer:navigationBarPanGestureRecognizer];
     
@@ -201,6 +204,7 @@
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     
     [self.navigationController.navigationBar removeGestureRecognizer:navigationBarPanGestureRecognizer];
+    
     [self.buttonNavRight removeTarget:app.storyMain action:@selector(revealRight:) forControlEvents:UIControlEventTouchUpInside];
     [self.buttonNavRight addTarget:self action:@selector(loginPressed:) forControlEvents:UIControlEventTouchUpInside];
     

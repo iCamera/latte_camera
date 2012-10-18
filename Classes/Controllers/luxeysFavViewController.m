@@ -14,6 +14,8 @@
 
 @implementation luxeysFavViewController
 
+@synthesize buttonNavRight;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -30,6 +32,12 @@
     refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.collectionView.bounds.size.height, self.view.frame.size.width, self.collectionView.bounds.size.height)];
     refreshHeaderView.delegate = self;
     [self.collectionView addSubview:refreshHeaderView];
+
+    //Init sidebar
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+    UIPanGestureRecognizer *navigationBarPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:app.storyMain action:@selector(revealGesture:)];
+    [self.navigationController.navigationBar addGestureRecognizer:navigationBarPanGestureRecognizer];
+    [buttonNavRight addTarget:app.storyMain action:@selector(revealRight:) forControlEvents:UIControlEventTouchUpInside];
 
     [self reloadFav];
 }
@@ -134,4 +142,6 @@
 }
 
 
+- (IBAction)touchNotify:(id)sender {
+}
 @end

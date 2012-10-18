@@ -15,6 +15,7 @@
 @end
 
 @implementation luxeysCameraViewController
+
 @synthesize scrollEffect;
 @synthesize cameraView;
 @synthesize viewTimer;
@@ -26,14 +27,20 @@
 @synthesize buttonTimer;
 @synthesize buttonFlash;
 @synthesize buttonFlip;
+@synthesize buttonCrop;
 @synthesize gesturePan;
+@synthesize viewBottomBar;
+@synthesize imageAutoFocus;
+@synthesize buttonPick;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        isEditing = FALSE;
+        isEditing = false;
+        isCrop = true;
+        isReady = false;
     }
     return self;
 }
@@ -41,7 +48,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [self setupCameraAspect];
     
 	// Do any additional setup after loading the view.
     UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:imageBottom.bounds];
@@ -54,40 +61,16 @@
     
     scrollEffect.contentSize=CGSizeMake(500,60);
     
-    videoCamera = [[GPUImageStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionBack];
-    [videoCamera setOutputImageOrientation:UIInterfaceOrientationPortrait];
+    camera = [[AVCameraManager alloc] initWithView:cameraView];
     
-    AVCaptureDevice *currentCamera = videoCamera.inputCamera;
-
-    NSError *error = nil;
-    if ([currentCamera lockForConfiguration:&error]) {
-        NSLog(@"Config");
-        
-        currentCamera.whiteBalanceMode = AVCaptureWhiteBalanceModeLocked;
-//        currentCamera.flashMode = AVCaptureFlashModeOn;
-        
-        [currentCamera unlockForConfiguration];
-    }
-    
-    GPUImageBrightnessFilter *dummy = [[GPUImageBrightnessFilter alloc] init];
-    
-    crop = [[GPUImageCropFilter alloc] init];
-    [crop setCropRegion: CGRectMake(0.0f, 0.125f, 1.0f, 0.75f)];
-
-    
-    // Basic filter:
-    GPUImageSharpenFilter *filter = [[GPUImageSharpenFilter alloc]init];
-    [filter setSharpness:0.5f];
-    pipeFilter = [[GPUImageFilterPipeline alloc] initWithOrderedFilters:[NSArray arrayWithObjects: dummy, crop, filter, nil]
-                                                                  input:videoCamera
-                                                                 output:cameraView];
+    imagePicker = [[UIImagePickerController alloc]init];
+    [imagePicker.navigationBar setBackgroundImage:[UIImage imageNamed: @"bg_head.png"] forBarMetrics:UIBarMetricsDefault];
+    imagePicker.delegate = (id)self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     self.navigationController.navigationBarHidden = YES;
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [videoCamera startCameraCapture];
-    });
+    [self startCamera];
 }
 
 - (void)didReceiveMemoryWarning
@@ -98,11 +81,11 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [videoCamera pauseCameraCapture];
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [videoCamera stopCameraCapture];
-    });
-//    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    if (!isEditing) {
+        [camera pauseCamera];
+        [self stopCamera];
+    }
+    
     [super viewWillDisappear:animated];
 }
 
@@ -118,16 +101,19 @@
 - (void)applyCurrentEffect {
     switch (currentEffect) {
         case 1:
-            [self SetEffect1];
+            [camera changeEffect:[FilterManager effect1]];
             break;
         case 2:
-            [self SetEffect2];
+            [camera changeEffect:[FilterManager effect2]];
             break;
         case 3:
-            [self SetEffect3];
+            [camera changeEffect:[FilterManager effect3]];
             break;
         case 4:
-            [self SetEffect4];
+            [camera changeEffect:[FilterManager effect4]];
+            break;
+        case 5:
+            [camera changeEffect:[FilterManager effect5]];
             break;
         default:
             break;
@@ -138,11 +124,8 @@
 }
 
 - (void)showStillImage {
-    GPUImagePicture *stillImageSource = [[GPUImagePicture alloc] initWithImage:imageOrg];
-    pipeFilter.input = stillImageSource;
-    [crop setCropRegion: CGRectMake(0.0f, 0.0f, 1.0f, 1.0f)];
-    [stillImageSource processImage];
-    [crop setCropRegion: CGRectMake(0.0f, 0.125f, 1.0f, 0.75f)];
+//    imageProcessed = [camera processImage:imageOrg];
+    [camera processImage:imageOrg];
 }
 
 - (IBAction)setEffect:(id)sender {
@@ -151,115 +134,25 @@
     [self applyCurrentEffect];
 }
 
-- (void)setLens:(NSInteger)lensIndex  {
-    NSLog(@"Lens #%d", lensIndex);
-    GPUImageFilterGroup *lens = [[GPUImageFilterGroup alloc] init];
-    GPUImagePinchDistortionFilter *distord = [[GPUImagePinchDistortionFilter alloc]init];
-    GPUImageTiltShiftFilter *tilt = [[GPUImageTiltShiftFilter alloc]init];
-    GPUImageSharpenFilter *sharpen = [[GPUImageSharpenFilter alloc] init];
-    sharpen.sharpness = 4.0f;
-    
-    [lens setInitialFilters:[NSArray arrayWithObject:crop]];
-    [crop addTarget:sharpen];
-    
-    [lens addFilter:crop];
-    [lens addFilter:sharpen];
-    
-    switch (lensIndex) {
-        case 0: {
-            [lens setTerminalFilter:sharpen];
-            break;
-        }
-            
-        case 1: {
-            [distord setScale:0.1f];
-            
-            [sharpen addTarget: distord];
-            [distord addTarget: tilt];
-            
-            [lens addFilter:distord];
-            [lens addFilter:tilt];
-            
-            [lens setTerminalFilter:tilt];
-            break;
-        }
-            
-        case 2: {
-            GPUImageCropFilter *crop2 = [[GPUImageCropFilter alloc] init];
-            [crop2 setCropRegion: CGRectMake(0.05, 0.05, 0.9, 0.9)];
-            
-            [distord setScale:-0.2f];
-            [distord setRadius:0.75f];
-            
-            
-            [sharpen addTarget: distord];
-            [distord addTarget: crop2];
-            
-            [lens addFilter:distord];
-            [lens addFilter:crop2];
-            
-            
-            [lens setTerminalFilter:crop2];
-            break;
-        }
-        default:
-            break;
-    }
-    
-    [pipeFilter replaceFilterAtIndex:1 withFilter:(id)lens];
-
-    if (isEditing) {
-        [self showStillImage];
-    }
-}
 
 - (void)updateTargetPoint {
-    AVCaptureDevice *device = videoCamera.inputCamera;
-    CGSize frameSize = [[self cameraView] frame].size;
+//    CGSize size = cameraView.frame.size;
+    CGPoint point = CGPointMake(imageAutoFocus.center.x/320.0, (imageAutoFocus.center.y+60.0)/480.0);
     
-    CGPoint location = self.imageAutoFocus.center;
-    
-    if ([videoCamera cameraPosition] == AVCaptureDevicePositionFront) {
-        location.x = frameSize.width - location.x;
-    }
-    
-    CGPoint pointOfInterest = CGPointMake(location.y / frameSize.height + 0.125, 1.f - (location.x / frameSize.width));
-    
-    
-    if ([device isFocusPointOfInterestSupported] && [device isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
-        NSError *error;
-        if ([device lockForConfiguration:&error]) {
-            [device setFocusPointOfInterest:pointOfInterest];
-            
-            [device setFocusMode:AVCaptureFocusModeAutoFocus];
-            
-            if([device isExposurePointOfInterestSupported] && [device isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure])
-            {
-                
-                [device setExposurePointOfInterest:pointOfInterest];
-                [device setExposureMode:AVCaptureExposureModeContinuousAutoExposure];
-                
-            }
-            
-            [device unlockForConfiguration];
-            
-            NSLog(@"FOCUS OK");
-        } else {
-            NSLog(@"ERROR = %@", error);
-        }
-    }
+    [camera setFocusPoint:point];
+    [camera setMetteringPoint:point];
 }
 
 - (void)capturePhotoAsync {
-    [videoCamera capturePhotoAsJPEGProcessedUpToFilter:[pipeFilter.filters objectAtIndex:0] withCompletionHandler:^(NSData *processedJPEG, NSError *error){
-        imageOrg = [UIImage imageWithData:processedJPEG];
+    [camera.videoCamera capturePhotoAsImageProcessedUpToFilter:(id)camera.pipeline.filters[0] withCompletionHandler:^(UIImage *processedImage, NSError *error) {
+        imageOrg = processedImage;
+        [self switchEditImage];
         [self showStillImage];
     }];
 }
 
 - (void)saveToLibAsync {
-    UIImage *imageProcessed = [pipeFilter currentFilteredFrame];
-    UIImageWriteToSavedPhotosAlbum(imageProcessed, nil, nil, nil);    
+//    UIImageWriteToSavedPhotosAlbum(imageProcessed, nil, nil, nil);
 }
 
 
@@ -273,28 +166,19 @@
 }
 
 - (IBAction)openImagePicker:(id)sender {
-    imagePicker = [[UIImagePickerController alloc]init];
-    [imagePicker.navigationBar setBackgroundImage:[UIImage imageNamed: @"bg_head.png"] forBarMetrics:UIBarMetricsDefault];
-    imagePicker.delegate = (id)self;
-    //imagePicker.sourceType = UIImagePickerController;
-    [self presentViewController:imagePicker animated:NO completion:^{
-        //
-    }];
+    [self presentViewController:imagePicker animated:NO completion:nil];
 }
 
 - (IBAction)close:(id)sender {
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-    [UIView transitionWithView:app.window duration:0.5 options: UIViewAnimationOptionTransitionFlipFromLeft animations:^{
-        app.window.rootViewController = app.storyMain;
-    } completion:nil];
+    app.window.rootViewController = app.storyMain;
 }
 
 - (IBAction)capture:(id)sender {
-    GPUImageFilter* lens = pipeFilter.filters[0];
-    imageOrg = [lens imageFromCurrentlyProcessedOutput];
-    
-    [self switchEditImage];
-    [self capturePhotoAsync];
+    if (isReady) {
+        buttonPick.hidden = true;
+        [self capturePhotoAsync];
+    }
 }
 
 - (IBAction)changeLens:(id)sender {
@@ -304,17 +188,6 @@
                           destructiveButtonTitle:nil
                                otherButtonTitles:@"Nomal", @"Tilt Shift", @"Fish Eye", nil];
     [sheet setTag:0];
-    sheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
-    [sheet showInView:self.view];
-}
-
-- (IBAction)changeTimer:(id)sender {
-    sheet = [[UIActionSheet alloc] initWithTitle:@"タイマー"
-                                        delegate:self
-                               cancelButtonTitle:@"キャンセル"
-                          destructiveButtonTitle:nil
-                               otherButtonTitles:@"Single", @"10s", @"10s continuous", nil];
-    [sheet setTag:1];
     sheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
     [sheet showInView:self.view];
 }
@@ -335,155 +208,62 @@
     [self performSegueWithIdentifier:@"Edit" sender:self];
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-	NSLog(@"Sheet %d Button %d", actionSheet.tag, buttonIndex);
-    switch (actionSheet.tag) {
+- (IBAction)toggleCrop:(id)sender {
+    isCrop = !isCrop;
+    [self setupCameraAspect];
+    [camera toggleCrop];
+}
+
+- (void)setupCameraAspect {
+    [cameraView removeConstraint:cameraAspect];
+    if (isCrop) {
+        cameraAspect = [NSLayoutConstraint constraintWithItem:cameraView
+                                                    attribute:NSLayoutAttributeHeight
+                                                    relatedBy:NSLayoutRelationEqual
+                                                       toItem:cameraView
+                                                    attribute:NSLayoutAttributeWidth
+                                                   multiplier:1.0
+                                                     constant:0.0];
+    } else {
+        cameraAspect = [NSLayoutConstraint constraintWithItem:cameraView
+                                                    attribute:NSLayoutAttributeHeight
+                                                    relatedBy:NSLayoutRelationEqual
+                                                       toItem:cameraView
+                                                    attribute:NSLayoutAttributeWidth
+                                                   multiplier:4.0/3.0
+                                                     constant:0.0];
+    }
+    
+    cameraAspect.priority = 400;
+    [cameraView addConstraint:cameraAspect];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {    
+    switch (buttonIndex) {
         case 0:
-            if (buttonIndex != actionSheet.cancelButtonIndex)
-            {
-                [self setLens:buttonIndex];
-            }
+            [camera changeLens:[FilterManager lensNormal]];
+            break;
+        case 1:
+            [camera changeLens:[FilterManager lensTilt]];
+            break;
+        case 2:
+            [camera changeLens:[FilterManager lensFish]];
             break;
             
         default:
             break;
     }
-}
-
-- (void)SetFilter:(GPUImageFilterGroup*)filter{
-    [pipeFilter replaceFilterAtIndex:2 withFilter:(GPUImageFilter*)filter];
-}
-
-- (void)SetEffectOrg {
-    NSLog(@"Change Effect ORG");
-}
-
-- (void)SetEffect1 {
     
-    GPUImageExposureFilter *exposure = [[GPUImageExposureFilter alloc] init];
-    GPUImageVignetteFilter *vignettefilter = [[GPUImageVignetteFilter alloc] init];
-    GPUImageToneCurveFilter *tonecurve = [[GPUImageToneCurveFilter alloc] init];
-    
-    exposure.exposure = 0.1;
-    vignettefilter.vignetteStart = 0.6;
-    vignettefilter.vignetteEnd = 0.8;
-    [tonecurve setRedControlPoints:[NSArray arrayWithObjects:
-                                    [NSValue valueWithCGPoint:CGPointMake(0.0, 0.0)],
-                                    [NSValue valueWithCGPoint:CGPointMake(102.0f/255.0f, 90.0f/255.0f)],
-                                    [NSValue valueWithCGPoint:CGPointMake(111.0f/255.0f, 108.0f/255.0f)],
-                                    [NSValue valueWithCGPoint:CGPointMake(1.0, 1.0)],
-                                    nil]];
-    [tonecurve setGreenControlPoints:[NSArray arrayWithObjects:
-                                      [NSValue valueWithCGPoint:CGPointMake(0.0, 0.0)],
-                                      [NSValue valueWithCGPoint:CGPointMake(83.0f/255.0f, 73.0f/255.0f)],
-                                      [NSValue valueWithCGPoint:CGPointMake(93.0f/255.0f, 90.0f/255.0f)],
-                                      [NSValue valueWithCGPoint:CGPointMake(1.0, 1.0)],
-                                      nil]];
-    
-    [tonecurve setBlueControlPoints:[NSArray arrayWithObjects:
-                                     [NSValue valueWithCGPoint:CGPointMake(0.0, 0.0)],
-                                     [NSValue valueWithCGPoint:CGPointMake(86.0f/255.0f, 100.0f/255.0f)],
-                                     [NSValue valueWithCGPoint:CGPointMake(121.0f/255.0f, 118.0f/255.0f)],
-                                     [NSValue valueWithCGPoint:CGPointMake(1.0, 1.0)],
-                                     nil]];
-    
-    [exposure addTarget:tonecurve];
-    [tonecurve addTarget:vignettefilter];
-    
-    GPUImageFilterGroup *blueish = [[GPUImageFilterGroup alloc] init];
-    
-    [blueish addFilter:exposure];
-    [blueish addFilter:tonecurve];
-    
-    [blueish addFilter:vignettefilter];
-    
-    [blueish setInitialFilters:[NSArray arrayWithObject:exposure]];
-    [blueish setTerminalFilter:vignettefilter];
-    
-    [self SetFilter:blueish];
-    NSLog(@"Change Effect1");
-}
-
-- (void)SetEffect4 {
-    
-    GPUImageExposureFilter *exposure = [[GPUImageExposureFilter alloc] init];
-    GPUImageVignetteFilter *vignettefilter = [[GPUImageVignetteFilter alloc] init];
-    GPUImageToneCurveFilter *tonecurve = [[GPUImageToneCurveFilter alloc] init];
-    
-    exposure.exposure = 0.1;
-    vignettefilter.vignetteStart = 0.6;
-    vignettefilter.vignetteEnd = 0.8;
-    [tonecurve setRedControlPoints:[NSArray arrayWithObjects:
-                                    [NSValue valueWithCGPoint:CGPointMake(0.0, 0.0)],
-                                    [NSValue valueWithCGPoint:CGPointMake(69.0f/255.0f, 69.0f/255.0f)],
-                                    [NSValue valueWithCGPoint:CGPointMake(213.0f/255.0f, 218.0f/255.0f)],
-                                    [NSValue valueWithCGPoint:CGPointMake(1.0, 1.0)],
-                                    nil]];
-    [tonecurve setGreenControlPoints:[NSArray arrayWithObjects:
-                                      [NSValue valueWithCGPoint:CGPointMake(0.0, 0.0)],
-                                      [NSValue valueWithCGPoint:CGPointMake(52.0f/255.0f, 47.0f/255.0f)],
-                                      [NSValue valueWithCGPoint:CGPointMake(189.0f/255.0f, 196.0f/255.0f)],
-                                      [NSValue valueWithCGPoint:CGPointMake(1.0, 1.0)],
-                                      nil]];
-    
-    [tonecurve setBlueControlPoints:[NSArray arrayWithObjects:
-                                     [NSValue valueWithCGPoint:CGPointMake(0.0, 0.0)],
-                                     [NSValue valueWithCGPoint:CGPointMake(41.0f/255.0f, 46.0f/255.0f)],
-                                     [NSValue valueWithCGPoint:CGPointMake(231.0f/255.0f, 228.0f/255.0f)],
-                                     [NSValue valueWithCGPoint:CGPointMake(1.0, 1.0)],
-                                     nil]];
-    
-    [tonecurve setRGBControlPoints:[NSArray arrayWithObjects:
-                                    [NSValue valueWithCGPoint:CGPointMake(0.0, 0.0)],
-                                    [NSValue valueWithCGPoint:CGPointMake(23.0f/255.0f, 20.0f/255.0f)],
-                                    [NSValue valueWithCGPoint:CGPointMake(157.0f/255.0f, 173.0f/255.0f)],
-                                    [NSValue valueWithCGPoint:CGPointMake(1.0, 1.0)],
-                                    nil]];
-    
-    [exposure addTarget:tonecurve];
-    [tonecurve addTarget:vignettefilter];
-    
-    GPUImageFilterGroup *blueish = [[GPUImageFilterGroup alloc] init];
-    
-    [blueish addFilter:exposure];
-    [blueish addFilter:tonecurve];
-    
-    [blueish addFilter:vignettefilter];
-    
-    [blueish setInitialFilters:[NSArray arrayWithObject:exposure]];
-    [blueish setTerminalFilter:vignettefilter];
-    
-    [self SetFilter:blueish];
-    NSLog(@"Change Effect1");
-}
-
-- (void)SetEffect2 {
-    GPUImageGrayscaleFilter *gray = [[GPUImageGrayscaleFilter alloc] init];
-    
-    GPUImageFilterGroup *mono = [[GPUImageFilterGroup alloc] init];
-    [mono setInitialFilters:[NSArray arrayWithObject:gray]];
-    [mono setTerminalFilter:gray];
-    
-    [self SetFilter:mono];
-    NSLog(@"Change Effect2");
-}
-
-- (void)SetEffect3 {
-    GPUImageSepiaFilter *sepia = [[GPUImageSepiaFilter alloc] init];
-    
-    GPUImageFilterGroup *mono = [[GPUImageFilterGroup alloc] init];
-    [mono setInitialFilters:[NSArray arrayWithObject:sepia]];
-    [mono setTerminalFilter:sepia];
-
-    [self SetFilter:mono];
-    NSLog(@"Change Effect3");
+    [self applyCurrentEffect];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [imagePicker dismissViewControllerAnimated:NO completion:nil];
-    imageOrg = [info valueForKey:UIImagePickerControllerOriginalImage];
+    UIImage *imageTmp = [info valueForKey:UIImagePickerControllerOriginalImage];
+    imageOrg = [imageTmp fixOrientation];
     
     [self switchEditImage];
+    [self applyCurrentEffect];
 }
 
 - (void)switchCamera {
@@ -494,8 +274,16 @@
     buttonFlash.hidden = NO;
     buttonTimer.hidden = NO;
     buttonFlip.hidden = NO;
+    buttonCrop.hidden = NO;
+    imageAutoFocus.hidden = NO;
+    buttonPick.hidden = NO;
     
-    [videoCamera resumeCameraCapture];
+    if (isReady) {
+        [camera resumeCamera];
+    } else {
+        [self startCamera];
+    }
+
 }
 
 - (void)switchEditImage {
@@ -506,9 +294,13 @@
     buttonFlash.hidden = YES;
     buttonTimer.hidden = YES;
     buttonFlip.hidden = YES;
+    buttonCrop.hidden = YES;
+    imageAutoFocus.hidden = YES;
+    viewTimer.hidden = YES;
     
-    [videoCamera pauseCameraCapture];
-    [self showStillImage];
+    if (isReady) {
+        [camera pauseCamera];
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -523,14 +315,18 @@
 
 
 - (IBAction)flipCamera:(id)sender {
-    
+    NSLog(@"Toggle Camera");
+    [camera toggleCamera];
 }
 
 - (IBAction)panTarget:(UIPanGestureRecognizer *)sender {
     NSLog(@"Pan pan");
     CGPoint translation = [sender translationInView:cameraView];
-    sender.view.center = CGPointMake(sender.view.center.x + translation.x,
+    CGPoint center = CGPointMake(sender.view.center.x + translation.x,
                                          sender.view.center.y + translation.y);
+    center.x = center.x<0?0:(center.x>320?320:center.x);
+    center.y = center.y<0?0:(center.y>cameraView.frame.size.height?cameraView.frame.size.height:center.y);
+    sender.view.center = center;
     [sender setTranslation:CGPointMake(0, 0) inView:cameraView];
     
     if (sender.state == UIGestureRecognizerStateEnded) {
@@ -540,5 +336,19 @@
 
 - (void)handleTap:(UITapGestureRecognizer *)sender {
     NSLog(@"Tapped");
+}
+
+- (void)startCamera {
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [camera startCamera];
+        isReady = true;
+    });
+}
+
+- (void)stopCamera {
+    isReady = false;
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [camera stopCamera];
+    });
 }
 @end

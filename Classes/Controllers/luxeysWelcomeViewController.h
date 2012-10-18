@@ -26,11 +26,11 @@
     BOOL reloading;
     SSCollectionView *collectionView;
     EGORefreshTableHeaderView *refreshHeaderView;
+    UIPanGestureRecognizer *navigationBarPanGestureRecognizer;
 }
 
 @property (strong, nonatomic) IBOutlet luxeysButtonBrown30 *buttonLeftMenu;
 @property (strong, nonatomic) IBOutlet luxeysButtonBrown30 *buttonNavRight;
-@property (strong, nonatomic) UIPanGestureRecognizer *navigationBarPanGestureRecognizer;
 
 - (IBAction)loginPressed:(id)sender;
 

@@ -18,6 +18,7 @@
 @synthesize buttonMonthly;
 @synthesize viewTab;
 @synthesize loadIndicator;
+@synthesize buttonNavRight;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -25,6 +26,25 @@
     if (self) {
         // Custom initialization
     }
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    
+    if (self)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(receiveLoggedIn:)
+                                                     name:@"LoggedIn"
+                                                   object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(receiveLoggedOut:)
+                                                     name:@"LoggedOut"
+                                                   object:nil];
+    }
+    
     return self;
 }
 
@@ -50,6 +70,10 @@
     ranktype = @"daily";
     rankpage = 1;
     
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+
+    [buttonNavRight addTarget:app.storyMain action:@selector(revealRight:) forControlEvents:UIControlEventTouchUpInside];
+
     [self loadRanking];
 }
 
@@ -325,6 +349,20 @@
         luxeysPicDetailViewController* viewPicDetail = segue.destinationViewController;
         [viewPicDetail setPictureID:sender.tag];
     }
+}
+
+- (void)receiveLoggedIn:(NSNotification *) notification {
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+    navigationBarPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:app.storyMain action:@selector(revealGesture:)];
+    [self.navigationController.navigationBar addGestureRecognizer:navigationBarPanGestureRecognizer];
+
+    buttonNavRight.hidden = false;
+}
+
+- (void)receiveLoggedOut:(NSNotification *) notification {
+    [self.navigationController.navigationBar removeGestureRecognizer:navigationBarPanGestureRecognizer];
+
+    buttonNavRight.hidden = true;
 }
 
 - (void)reloadTableViewDataSource{

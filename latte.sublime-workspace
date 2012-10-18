@@ -4,6 +4,78 @@
 		"selected_items":
 		[
 			[
+				"du",
+				"dummy	GPUImageBrightnessFilter *"
+			],
+			[
+				"GPUImageFilter",
+				"GPUImageExposureFilter	class"
+			],
+			[
+				"AVCaptureExposureMode",
+				"AVCaptureExposureModeAutoExpose	enum <anonymous>"
+			],
+			[
+				"sh",
+				"sharpen	GPUImageSharpenFilter *"
+			],
+			[
+				"came",
+				"cameraView	GPUImageView *"
+			],
+			[
+				"vi",
+				"videoCamera	GPUImageStillCamera *"
+			],
+			[
+				"cl",
+				"clipsToBounds	BOOL"
+			],
+			[
+				"bu",
+				"buttonUser	UIButton *"
+			],
+			[
+				"mas",
+				"masksToBounds	BOOL"
+			],
+			[
+				"se",
+				"section	NSInteger"
+			],
+			[
+				"bac",
+				"backgroundView	UIView *"
+			],
+			[
+				"lab",
+				"labelCamera	UILabel *"
+			],
+			[
+				"view",
+				"viewCamera	UIView *"
+			],
+			[
+				"la",
+				"labelCamera	UILabel *"
+			],
+			[
+				"UITextAttribut",
+				"UITextAttributeTextShadowOffset	NSString *const"
+			],
+			[
+				"text",
+				"textColor	UIColor *"
+			],
+			[
+				"but",
+				"buttonCamera	UIButton *"
+			],
+			[
+				"h",
+				"hidden	BOOL"
+			],
+			[
 				"with",
 				"colorWithRed:(CGFloat) green:(CGFloat) blue:(CGFloat) alpha:(CGFloat)	UIColor *"
 			],
@@ -14,10 +86,6 @@
 			[
 				"CGS",
 				"CGSize	struct"
-			],
-			[
-				"la",
-				"label	UILabel *"
 			],
 			[
 				"pr",
@@ -42,10 +110,6 @@
 			[
 				"height",
 				"tableView:(UITableView *) heightForHeaderInSection:(NSInteger)	CGFloat"
-			],
-			[
-				"lab",
-				"labelBigDate	UILabel *"
 			],
 			[
 				"in",
@@ -78,10 +142,6 @@
 			[
 				"Luxey",
 				"LuxeysUser	class"
-			],
-			[
-				"but",
-				"buttonVoteCount	UIButton *"
 			],
 			[
 				"kT",
@@ -146,10 +206,6 @@
 			[
 				"f",
 				"frame	CGRect"
-			],
-			[
-				"view",
-				"viewInfo	luxeysPicInfoViewController *"
 			],
 			[
 				"luxeysPi",
@@ -218,10 +274,6 @@
 			[
 				"conte",
 				"contentSize	CGSize"
-			],
-			[
-				"bu",
-				"buttonWeekly	UIButton *"
 			],
 			[
 				"table",
@@ -344,10 +396,6 @@
 				"keyword"
 			],
 			[
-				"text",
-				"text-align"
-			],
-			[
 				"rec",
 				"recruit_index"
 			],
@@ -466,54 +514,6 @@
 			[
 				"for",
 				"for	for (…) {…}"
-			],
-			[
-				"call",
-				"connect_facebook_callback"
-			],
-			[
-				"albu",
-				"albumkey"
-			],
-			[
-				"album",
-				"album_id"
-			],
-			[
-				"roll",
-				"rollback_on_exception"
-			],
-			[
-				"ca",
-				"category"
-			],
-			[
-				"background-c",
-				"background-color:   (property)"
-			],
-			[
-				"url",
-				"url_for"
-			],
-			[
-				"no",
-				"nowrap  (value)"
-			],
-			[
-				"margin-",
-				"margin-bottom:   (property)"
-			],
-			[
-				"fi",
-				"first-child"
-			],
-			[
-				"border-",
-				"border-collapse:   (property)"
-			],
-			[
-				"text-",
-				"text-decoration"
 			]
 		]
 	},
@@ -560,23 +560,62 @@
 	},
 	"file_history":
 	[
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysMypageViewController.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysRankingViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/FilterShowcase/FilterShowcase/ShowcaseFilterViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Models/Comment.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Models/Comment.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/FilterManager.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/AVCameraManager.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCameraViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCameraViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/FilterShowcase/FilterShowcase/ShowcaseFilterViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/FilterManager.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageToneCurveFilter.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageToneCurveFilter.m",
+		"/Users/dungbx/Downloads/filmcurves 2/proviaesque.acv",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageUnsharpMaskFilter.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageUnsharpMaskFilter.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/Modules/luxeysTemplateTimelinePicMulti.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/Modules/luxeysTemplateTimelinePicMulti.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Models/Picture.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Models/Picture.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Models/Feed.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Models/Feed.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicCommentViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCellNotify.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/AVCameraManager.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/Modules/luxeysTemplateTimlinePicMultiItem.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellFriend.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellFriendRequest.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/Modules/luxeysTemplatePicTimeline.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellComment.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysMypageViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicDetailViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCollectionCellPic.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCollectionCellPic.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysRankingViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysMypageViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysFavViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysFavViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysTabBarViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellRankLv1.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Resources/NIBs/MainStoryboard.storyboard",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCellPicture.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicEditViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicEditViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageFilterPipeline.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysTabBarViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysSettingViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicDetailViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysImagePickerViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysRankingViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysUserViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysNavBar.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysMypageViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellComment.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCameraViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/AFNetworking/Example/Classes/Models/User.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCellNotify.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicCommentViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysUserViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysUserCalendarViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Utils/luxeysUtils.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysWelcomeViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysWelcomeViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCellPicture.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Utils/luxeysUtils.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Models/LuxeysPicture.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCellPicture.h",
@@ -584,20 +623,15 @@
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysWelcome2ViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysWelcome2ViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellFriend.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellFriend.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellComment.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysRightSideViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicDetailViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/AppDelegate/luxeysAppDelegate.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysSettingViewController.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysSettingViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicInfoViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicDetailViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Models/LuxeysPicture.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/AFNetworking/AFNetworking/AFJSONUtilities.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/luxeysLatteAPIClient.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/luxeysLatteAPIClient.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysTabBarViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysRightSideViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/sample/SampleDataBuilder.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/quickdialog/QDateTimeInlineElement.m",
@@ -653,41 +687,7 @@
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/AFNetworking/Example/AppDelegate.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysButtonBrown30.h",
 		"/Users/dungbx/Desktop/Luxeys/git/latte/apps/component/user.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/model/user.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/apps/api/user/profile.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/templates/pc/component/user/mypage_stats.html",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/apps/api/picture/func.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/apps/__init__.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/static/js/uploadify2/jquery.uploadify.v2.1.4.js",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/config.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/static/js/flot/jquery.flot.stack.js",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/apps/api/user/auth.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/model/picture.py",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Resources/NIBs/CameraStoryboard_bak.storyboard",
-		"/Users/dungbx/Dev/DDMenuController/DDMenuController/DDMenuController-Prefix.pch",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/apps/api/picture/__init__.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/lib/flaskext/csrf.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/apps/api/user/__init__.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/apps/pc/user/register.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/apps/api/__init__.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/apps/api/picture/picture.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/apps/pc/user/login.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/main.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/server.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/lib/util.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/model/__init__.py",
-		"/Users/dungbx/Dev/MFSideMenu/README.mdown",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Latte/luxeysCameraViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/templates/pc/entry/review/index_user_all.html",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/templates/pc/user/layout.html",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/README.txt",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/static/js/smart.coffee",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/babel.cfg",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/templates/pc/layout.html",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/templates/pc/user/mypage/index.html",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/lib/fileutil.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/lib/jinja2/ext.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/templates/pc/user/mypage/part_left_side.html"
+		"/Users/dungbx/Desktop/Luxeys/git/latte/model/user.py"
 	],
 	"find":
 	{
@@ -746,6 +746,45 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"{",
+			"	",
+			"spline",
+			", ",
+			",",
+			"	",
+			".mix",
+			"needsSe",
+			"sourcePicture",
+			"needsSe",
+			"GPUImageDissolveBlendFilter",
+			"GPUImageUnsharpMaskFilter",
+			"second",
+			"GPUImageGaussianSelectiveBlurFilter",
+			"Const",
+			"cameraView",
+			"crop",
+			"buttonShowComment",
+			"layer.cornerRadius",
+			"corner",
+			"tab",
+			"button",
+			"- (void)setPic:(Picture *)aPic;",
+			"timelineM",
+			"sheet",
+			"button",
+			"tap",
+			"keyboardWillShow",
+			"gestureTap",
+			"showKeyboard",
+			"pause",
+			"statusbar",
+			"isStillPhoto",
+			"showStillImage",
+			"switchEditImage",
+			"_refreshFilters",
+			"crop",
+			"showStillImage",
+			"crop",
 			"SetFilter",
 			"blackCo",
 			"doneLoadingTableViewData",
@@ -834,46 +873,7 @@
 			"NSLog",
 			"Friend",
 			"labelAuthor",
-			"indexPath.row",
-			"cellSingle",
-			"tableFriend",
-			"collectionView",
-			"CollectionView",
-			"collectionView",
-			"CollectionView",
-			"collectionView",
-			"prepare",
-			"Something",
-			"self sele",
-			"displayViewControllerForRoot",
-			"didSelectPic",
-			"viewProfile.view",
-			"arData",
-			"tableTimeline",
-			"imageProfilePic",
-			"viewScroll",
-			"loadPhotolist",
-			"tableTimeline",
-			"viewProfile.view",
-			"initWithDict",
-			"selected",
-			"initWithItems",
-			"isEqualToString",
-			"keychainItemWrapper",
-			"First",
-			"Lv2",
-			"Lv1",
-			"Button",
-			"setSelected",
-			"action",
-			"_placeholder",
-			"exampleAction",
-			"value",
-			"currentUser",
-			"luxeysAppDelegate",
-			"selected",
-			"textField",
-			"styleProvider"
+			"indexPath.row"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -953,7 +953,155 @@
 		"selected_items":
 		[
 			[
+				"gpuimagetonecurvefilter",
+				"Vendor/GPUImage/framework/Source/GPUImageToneCurveFilter.m"
+			],
+			[
+				"filter",
+				"Classes/Helpers/FilterManager.m"
+			],
+			[
+				"gpuimageunsharpmaskfilter",
+				"Vendor/GPUImage/framework/Source/GPUImageUnsharpMaskFilter.m"
+			],
+			[
+				"camer",
+				"Classes/Controllers/luxeysCameraViewController.m"
+			],
+			[
+				"came",
+				"Classes/Helpers/AVCameraManager.m"
+			],
+			[
+				"avca",
+				"Classes/Helpers/AVCameraManager.h"
+			],
+			[
 				"camera",
+				"Classes/Controllers/luxeysCameraViewController.m"
+			],
+			[
+				"celln",
+				"Classes/Controllers/luxeysCellNotify.m"
+			],
+			[
+				"picmul",
+				"Classes/Controllers/Modules/luxeysTemplateTimelinePicMulti.m"
+			],
+			[
+				"pictu",
+				"Classes/Models/Picture.h"
+			],
+			[
+				"feed",
+				"Classes/Models/Feed.h"
+			],
+			[
+				"cellcom",
+				"Classes/CustomControls/luxeysCellComment.m"
+			],
+			[
+				"commen",
+				"Classes/Models/Comment.m"
+			],
+			[
+				"mypage",
+				"Classes/Controllers/luxeysMypageViewController.m"
+			],
+			[
+				"templatepi",
+				"Classes/Controllers/Modules/luxeysTemplatePicTimeline.m"
+			],
+			[
+				"comment",
+				"Classes/Models/Comment.h"
+			],
+			[
+				"mypag",
+				"Classes/Controllers/luxeysMypageViewController.m"
+			],
+			[
+				"detail",
+				"Classes/Controllers/luxeysPicDetailViewController.m"
+			],
+			[
+				"picde",
+				"Classes/Controllers/luxeysPicDetailViewController.m"
+			],
+			[
+				"piccom",
+				"Classes/Controllers/luxeysPicCommentViewController.m"
+			],
+			[
+				"ranking",
+				"Classes/Controllers/luxeysRankingViewController.m"
+			],
+			[
+				"cell",
+				"Classes/CustomControls/luxeysCellRankLv1.m"
+			],
+			[
+				"collectionc",
+				"Classes/CustomControls/luxeysCollectionCellPic.m"
+			],
+			[
+				"story",
+				"Resources/NIBs/MainStoryboard.storyboard"
+			],
+			[
+				"cellpi",
+				"Classes/Controllers/luxeysCellPicture.m"
+			],
+			[
+				"collection",
+				"Classes/CustomControls/luxeysCollectionCellPic.m"
+			],
+			[
+				"fav",
+				"Classes/Controllers/luxeysFavViewController.m"
+			],
+			[
+				"main",
+				"Resources/NIBs/MainStoryboard.storyboard"
+			],
+			[
+				"tabb",
+				"Classes/Controllers/luxeysTabBarViewController.m"
+			],
+			[
+				"picedit",
+				"Classes/Controllers/luxeysPicEditViewController.m"
+			],
+			[
+				"rankin",
+				"Classes/Controllers/luxeysRankingViewController.m"
+			],
+			[
+				"picedi",
+				"Classes/Controllers/luxeysPicEditViewController.m"
+			],
+			[
+				"picd",
+				"Classes/Controllers/luxeysPicDetailViewController.m"
+			],
+			[
+				"setting",
+				"Classes/Controllers/luxeysSettingViewController.m"
+			],
+			[
+				"piced",
+				"Classes/Controllers/luxeysPicEditViewController.m"
+			],
+			[
+				"tabbar",
+				"Classes/Controllers/luxeysTabBarViewController.m"
+			],
+			[
+				"gpuimagefilterpipeline",
+				"Vendor/GPUImage/framework/Source/GPUImageFilterPipeline.m"
+			],
+			[
+				"camere",
 				"Classes/Controllers/luxeysCameraViewController.m"
 			],
 			[
@@ -965,28 +1113,12 @@
 				"Classes/CustomControls/luxeysCellComment.m"
 			],
 			[
-				"mypag",
-				"Classes/Controllers/luxeysMypageViewController.m"
-			],
-			[
 				"nav",
 				"Classes/CustomControls/luxeysNavBar.m"
 			],
 			[
-				"came",
-				"Classes/Controllers/luxeysCameraViewController.m"
-			],
-			[
 				"user",
 				"Classes/Controllers/luxeysUserViewController.m"
-			],
-			[
-				"rankin",
-				"Classes/Controllers/luxeysRankingViewController.m"
-			],
-			[
-				"mypage",
-				"Classes/Controllers/luxeysMypageViewController.m"
 			],
 			[
 				"welcom",
@@ -1001,19 +1133,7 @@
 				"Classes/Controllers/luxeysUserViewController.m"
 			],
 			[
-				"cellcom",
-				"Classes/CustomControls/luxeysCellComment.m"
-			],
-			[
 				"cellpic",
-				"Classes/Controllers/luxeysCellPicture.m"
-			],
-			[
-				"ranking",
-				"Classes/Controllers/luxeysRankingViewController.m"
-			],
-			[
-				"cellpi",
 				"Classes/Controllers/luxeysCellPicture.m"
 			],
 			[
@@ -1023,10 +1143,6 @@
 			[
 				"util",
 				"Classes/Utils/luxeysUtils.h"
-			],
-			[
-				"comment",
-				"Classes/Controllers/luxeysPicCommentViewController.m"
 			],
 			[
 				"uservi",
@@ -1053,10 +1169,6 @@
 				"Classes/AppDelegate/luxeysAppDelegate.m"
 			],
 			[
-				"detail",
-				"Classes/Controllers/luxeysPicDetailViewController.m"
-			],
-			[
 				"cellfri",
 				"Classes/CustomControls/luxeysCellFriend.m"
 			],
@@ -1067,10 +1179,6 @@
 			[
 				"ranki",
 				"Classes/Controllers/luxeysRankingViewController.m"
-			],
-			[
-				"setting",
-				"Classes/Controllers/luxeysSettingViewController.m"
 			],
 			[
 				"picinfo",
@@ -1093,20 +1201,8 @@
 				"Classes/Controllers/luxeysPicInfoViewController.m"
 			],
 			[
-				"picde",
-				"Classes/Controllers/luxeysPicDetailViewController.m"
-			],
-			[
 				"rights",
 				"Classes/Controllers/luxeysRightSideViewController.h"
-			],
-			[
-				"tabbar",
-				"Classes/Controllers/luxeysTabBarViewController.m"
-			],
-			[
-				"tabb",
-				"Classes/Controllers/luxeysTabBarViewController.m"
 			],
 			[
 				"qdatetime",
@@ -1175,10 +1271,6 @@
 			[
 				"cell4pi",
 				"Classes/CustomControls/luxeysCell4Pics.m"
-			],
-			[
-				"cell",
-				"Classes/CustomControls/luxeysCellRankLv3.h"
 			],
 			[
 				"cell4",
@@ -1371,98 +1463,6 @@
 			[
 				"mypage_stats",
 				"templates/pc/component/user/mypage_stats.html"
-			],
-			[
-				"stat",
-				"templates/pc/macro/statusbar.html"
-			],
-			[
-				"func",
-				"apps/api/picture/func.py"
-			],
-			[
-				"pictu",
-				"model/picture.py"
-			],
-			[
-				"enty",
-				"model/entry.py"
-			],
-			[
-				"pic",
-				"model/picture.py"
-			],
-			[
-				"picture.",
-				"model/picture.py"
-			],
-			[
-				"user.py",
-				"model/user.py"
-			],
-			[
-				"profile.ht",
-				"templates/pc/user/profile/index.html"
-			],
-			[
-				"profil",
-				"apps/pc/user/profile.py"
-			],
-			[
-				"csrf",
-				"lib/flaskext/csrf.py"
-			],
-			[
-				"server",
-				"server.py"
-			],
-			[
-				"regis",
-				"apps/pc/user/register.py"
-			],
-			[
-				"login.",
-				"apps/pc/user/login.py"
-			],
-			[
-				"coffee",
-				"static/js/smart.coffee"
-			],
-			[
-				"mess",
-				"translations/en/LC_MESSAGES/messages.po"
-			],
-			[
-				"helper",
-				"lib/helper.py"
-			],
-			[
-				"upload.html",
-				"templates/pc/picture/picture/upload.html"
-			],
-			[
-				"macrou",
-				"templates/pc/macro/picture/upload.html"
-			],
-			[
-				"ext",
-				"lib/jinja2/ext.py"
-			],
-			[
-				"messa",
-				"translations/en/LC_MESSAGES/messages.po"
-			],
-			[
-				"noti",
-				"model/notice.py"
-			],
-			[
-				"layout",
-				"templates/pc/layout.html"
-			],
-			[
-				"jin",
-				"lib/jinja_loader.py"
 			]
 		],
 		"width": 0.0
