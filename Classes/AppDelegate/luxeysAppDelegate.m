@@ -9,19 +9,19 @@
 #import "luxeysAppDelegate.h"
 #import "luxeysSideMenuViewController.h"
 #import "luxeysRightSideViewController.h"
-#import "LXUIRevealController.h"
 #import <Security/Security.h>
 #import "luxeysTabBarViewController.h"
 #import "LatteAPIClient.h"
 
 @implementation luxeysAppDelegate
 
-@synthesize currentUser = _currentUser;
-@synthesize window = _window;
+@synthesize currentUser;
+@synthesize apns;
+@synthesize window;
 @synthesize tokenItem;
-@synthesize storyMain = _storyMain;
-@synthesize storyCamera = _storyCamera;
-@synthesize viewMainTab = _viewMainTab;
+@synthesize storyCamera;
+@synthesize viewMainTab;
+@synthesize revealController;
 
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
@@ -45,7 +45,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (NSString*)getToken {
-    return [self.tokenItem objectForKey:(id)CFBridgingRelease(kSecAttrService)];
+    return [tokenItem objectForKey:(id)CFBridgingRelease(kSecAttrService)];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -69,29 +69,15 @@ void uncaughtExceptionHandler(NSException *exception) {
                                                    [self getToken], @"token", nil]
                                           success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                               if ([[JSON objectForKey:@"status"] integerValue] == 1) {
-                                                  self.currentUser = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
-                                                  
-                                                  [self createSideMain];
+                                                  currentUser = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
+                                                  if (apns != nil)
+                                                      [self updateUserAPNS];
                                                   
                                                   [[NSNotificationCenter defaultCenter]
                                                    postNotificationName:@"LoggedIn"
                                                    object:self];
                                               }
                                           } failure:nil];
-}
-
-- (void)createSideMain {
-    // luxeysSideMenuViewController *leftViewController = [[luxeysSideMenuViewController alloc] init];
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                             bundle:nil];
-    
-    luxeysRightSideViewController *rightViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"RightSide"];
-    
-    LXUIRevealController* rootController = [[LXUIRevealController alloc]initWithFrontViewController:(UIViewController*)_viewMainTab
-                                                                           leftViewController:nil
-                                                                          rightViewController:rightViewController];
-    _storyMain = rootController;
-    self.window.rootViewController = _storyMain;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -101,11 +87,19 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
-    _viewMainTab = (luxeysTabBarViewController*)[mainStoryboard instantiateInitialViewController];
+    viewMainTab = (luxeysTabBarViewController*)[mainStoryboard instantiateInitialViewController];
+    luxeysRightSideViewController *rightViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"RightSide"];
     
-    _storyMain = _viewMainTab;
-    self.window.rootViewController = _storyMain;
-    [self.window makeKeyAndVisible];
+    revealController = [[LXUIRevealController alloc]initWithFrontViewController:(UIViewController*)viewMainTab
+                                                             leftViewController:nil
+                                                            rightViewController:rightViewController];
+    
+    window.rootViewController = revealController;
+    [window makeKeyAndVisible];
+    
+    // Register for Push Notification
+    application.applicationIconBadgeNumber = 0;
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     
     // Check user auth async
 	tokenItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"Token" accessGroup:nil];
@@ -115,26 +109,65 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     return YES;
 }
-							
+
+- (void)updateUserAPNS {
+    [[LatteAPIClient sharedClient] postPath:@"api/user/me/update"
+                                parameters:[NSDictionary dictionaryWithObjectsAndKeys:
+                                            [self getToken], @"token",
+                                            apns, @"apns",
+                                            nil]
+                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       if ([[JSON objectForKey:@"status"] integerValue] == 1) {
+                                           self.currentUser = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
+                                           
+                                           [[NSNotificationCenter defaultCenter]
+                                            postNotificationName:@"LoggedIn"
+                                            object:self];
+                                       }
+                                   } failure:nil];
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    apns = [[[[deviceToken description]
+                                  stringByReplacingOccurrencesOfString: @"<" withString: @""]
+                                 stringByReplacingOccurrencesOfString: @">" withString: @""]
+                                stringByReplacingOccurrencesOfString: @" " withString: @""];
+    if (currentUser != nil) {
+        [self updateUserAPNS];
+    }
+}
+
+- (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err {
+    NSLog(@"Error in registration. Error: %@", err);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
+    NSLog(@"received push");
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
+    NSLog(@"Resign active");
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
+    NSLog(@"Enter Background");
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
+    NSLog(@"Enter Foregound");
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    NSLog(@"Become active");
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 

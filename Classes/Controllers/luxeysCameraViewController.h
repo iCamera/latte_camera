@@ -7,29 +7,37 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 #import "GPUImage.h"
 #import "AVCameraManager.h"
 #import "FilterManager.h"
 #import "luxeysNavBar.h"
 #import "luxeysPicEditViewController.h"
+#import "GPUImageStillCamera+captureWithMeta.h"
+#import "luxeysUtils.h"
 #import "UIImage+fixOrientation.h"
+#import "UIImage+imageByScalingProportionallyToSize.h"
 
 #define kTimerNone       0
 #define kTimer5s         1
 #define kTimer10s        2
 #define kTimerContinuous 3
 
-@interface luxeysCameraViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate> {
+@interface luxeysCameraViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, AVCameraManagerDelegate, CLLocationManagerDelegate> {
     AVCameraManager *camera;
     UIActionSheet *sheet;
     UIImagePickerController *imagePicker;
-    UIImage *imageOrg;
+    NSMutableDictionary *imageMeta;
+
     BOOL isEditing;
     BOOL isCrop;
     BOOL isReady;
+    BOOL isFinishedProcessing;
     NSInteger currentEffect;
     NSLayoutConstraint *cameraAspect;
     NSInteger timerMode;
+    CLLocationManager *locationManager;
+    CLLocation *bestEffortAtLocation;
 }
 @property (strong, nonatomic) IBOutlet UIView *viewBottomBar;
 @property (strong, nonatomic) IBOutlet UIImageView *imageBottom;
@@ -47,6 +55,7 @@
 - (IBAction)touchTimer:(id)sender;
 - (IBAction)touchSave:(id)sender;
 - (IBAction)toggleCrop:(id)sender;
+- (IBAction)toggleEffect:(id)sender;
 @property (strong, nonatomic) IBOutlet UIImageView *imageAutoFocus;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollEffect;
 @property (strong, nonatomic) IBOutlet UIButton *buttonCapture;
@@ -61,5 +70,6 @@
 - (IBAction)touchNo:(id)sender;
 - (IBAction)flipCamera:(id)sender;
 - (IBAction)panTarget:(UIPanGestureRecognizer *)sender;
+- (IBAction)setTimer:(id)sender;
 
 @end

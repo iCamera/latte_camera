@@ -7,13 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "User.h"
+#import "MBProgressHUD.h"
 
 @class KeychainItemWrapper;
 
-@interface luxeysLoginViewController : UIViewController
+@interface luxeysLoginViewController : UIViewController {
+    MBProgressHUD *HUD;
+}
 
 @property (strong, nonatomic) IBOutlet UITextField *textPass;
 @property (strong, nonatomic) IBOutlet UITextField *textUser;
+@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapView;
 
 - (IBAction)registerClick:(id)sender;
 - (IBAction)singleTap:(id)sender;

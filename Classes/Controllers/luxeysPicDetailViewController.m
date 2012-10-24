@@ -17,6 +17,7 @@
 @synthesize viewTextbox;
 @synthesize textComment;
 @synthesize buttonSend;
+@synthesize buttonEdit;
 @synthesize tablePic;
 @synthesize constraintCommentView;
 
@@ -80,6 +81,10 @@
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                              user = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
                                              pic = [Picture instanceFromDictionary:[JSON objectForKey:@"picture"]];
+                                             if (pic.canEdit) {
+                                                 buttonEdit.hidden = false;
+                                             }
+                                             
                                              comments = [Comment mutableArrayFromDictionary:JSON withKey:@"comments"];
                                              
                                              [self doneLoadingTableViewData];
@@ -330,6 +335,15 @@
 
 - (IBAction)touchSend:(id)sender {
     [self sendComment];
+}
+
+- (IBAction)touchEdit:(id)sender {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"CameraStoryboard"
+                                                             bundle:nil];
+    
+    luxeysPicEditViewController *viewEditPic = [mainStoryboard instantiateViewControllerWithIdentifier:@"PicEdit"];
+    viewEditPic.picture = pic;
+    [self.navigationController pushViewController:viewEditPic animated:YES];
 }
 
 - (void)touchLike:(id)sender {

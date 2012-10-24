@@ -42,7 +42,7 @@
 
 #define kModelPicture 1
 
-@interface luxeysMypageViewController : UITableViewController <EGORefreshTableHeaderDelegate> {
+@interface luxeysMypageViewController : UITableViewController <EGORefreshTableHeaderDelegate, MBProgressHUDDelegate> {
     int tableMode;
     int timelineMode;
     int lastFeedID;
@@ -56,6 +56,7 @@
     NSMutableDictionary *toggleSection;
     NSMutableArray *lxFeeds;
     EGORefreshTableHeaderView *refreshHeaderView;
+    MBProgressHUD *HUD;
 }
 
 @property (strong, nonatomic) IBOutlet UIImageView *imageProfilePic;

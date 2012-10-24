@@ -190,7 +190,7 @@ static GPUImagePicture *texture;
     [contrast addTarget:brightness];
 
     GPUImageFilterGroup *filter = [[GPUImageFilterGroup alloc] init];
-    [filter addFilter:texture];
+//    [filter addFilter:texture];
     [filter addFilter:rgb];
     [filter addFilter:exposure];
     [filter addFilter:vignettefilter];

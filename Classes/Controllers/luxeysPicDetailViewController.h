@@ -14,9 +14,10 @@
 #import "luxeysUtils.h"
 #import "luxeysUserViewController.h"
 #import "luxeysButtonBrown30.h"
+
 #import "LatteAPIClient.h"
 #import "luxeysPicInfoViewController.h"
-#import "LatteAPIClient.h"
+#import "luxeysPicEditViewController.h"
 #import "luxeysPicMapViewController.h"
 #import "Picture.h"
 #import "User.h"
@@ -34,6 +35,7 @@
     BOOL reloading;
     BOOL loaded;
     NSMutableArray *comments;
+    MBProgressHUD *HUD;
 }
 
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *gestureTap;
@@ -42,12 +44,15 @@
 @property (strong, nonatomic) IBOutlet luxeysButtonBrown30 *buttonSend;
 @property (strong, nonatomic) IBOutlet UITableView *tablePic;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintCommentView;
+@property (strong, nonatomic) IBOutlet luxeysButtonBrown30 *buttonEdit;
 
 - (IBAction)touchBackground:(id)sender;
 - (IBAction)touchBack:(id)sender;
 - (IBAction)changeText:(id)sender;
 - (IBAction)touchSend:(id)sender;
+- (IBAction)touchEdit:(id)sender;
 
 - (void)setPictureID:(int)aPicID;
+- (void)reloadView;
 
 @end

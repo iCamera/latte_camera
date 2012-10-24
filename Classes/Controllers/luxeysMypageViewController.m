@@ -54,7 +54,6 @@
 {
     [super viewDidLoad];
     
-    
     UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:imageProfilePic.bounds];
     imageProfilePic.layer.masksToBounds = NO;
     imageProfilePic.layer.shadowColor = [UIColor blackColor].CGColor;
@@ -63,9 +62,9 @@
     imageProfilePic.layer.shadowRadius = 1.0f;
     imageProfilePic.layer.shadowPath = shadowPath.CGPath;
     
-   imageProfilePic.layer.cornerRadius = 5;
-   imageProfilePic.clipsToBounds = YES;
-  
+    imageProfilePic.layer.cornerRadius = 5;
+    imageProfilePic.clipsToBounds = YES;
+    
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = CGRectMake(0, 120, 320, 10);
@@ -86,9 +85,9 @@
     self.tableView.backgroundColor = [UIColor whiteColor];
     
     //Init sidebar
-    UIPanGestureRecognizer *navigationBarPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:app.storyMain action:@selector(revealGesture:)];
+    UIPanGestureRecognizer *navigationBarPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:app.revealController action:@selector(revealGesture:)];
     [self.navigationController.navigationBar addGestureRecognizer:navigationBarPanGestureRecognizer];
-    [buttonNavRight addTarget:app.storyMain action:@selector(revealRight:) forControlEvents:UIControlEventTouchUpInside];
+    [buttonNavRight addTarget:app.revealController action:@selector(revealRight:) forControlEvents:UIControlEventTouchUpInside];
     
     
     allTab = [NSArray arrayWithObjects:
@@ -102,170 +101,148 @@
               buttonTimelineMe,
               nil];
     
+    HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+	HUD.mode = MBProgressHUDModeText;
+	HUD.labelText = @"Loading...";
+	HUD.margin = 10.f;
+	HUD.yOffset = 150.f;
+    
     [self reloadView];
 }
 
 - (void)reloadTimeline {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        
-        luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-        [[LatteAPIClient sharedClient] getPath:@"api/user/me/timeline"
-                                          parameters: [NSDictionary dictionaryWithObjectsAndKeys:
-                                                       [app getToken], @"token",
-                                                       [NSNumber numberWithInteger:timelineMode], @"listtype",
-                                                       nil]
-                                             success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                 feeds = [Feed mutableArrayFromDictionary:JSON
-                                                                                        withKey:@"feeds"];
-                                                 Feed *lastFeed = feeds.lastObject;
-                                                 lastFeedID = [lastFeed.feedID integerValue];
-                                                 
-                                                 [self.tableView reloadData];
-                                                 [self doneLoadingTableViewData];
-                                                 
-                                                 
-                                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
-                                                 });
-                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                                 NSLog(@"Something went wrong (Timeline)");
-                                                 
-                                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
-                                                 });
-                                             }];
-    });
+    [HUD show:YES];
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+    [[LatteAPIClient sharedClient] getPath:@"api/user/me/timeline"
+                                parameters: [NSDictionary dictionaryWithObjectsAndKeys:
+                                             [app getToken], @"token",
+                                             [NSNumber numberWithInteger:timelineMode], @"listtype",
+                                             nil]
+                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       feeds = [Feed mutableArrayFromDictionary:JSON
+                                                                        withKey:@"feeds"];
+                                       Feed *lastFeed = feeds.lastObject;
+                                       lastFeedID = [lastFeed.feedID integerValue];
+                                       
+                                       [self.tableView reloadData];
+                                       [self doneLoadingTableViewData];
+                                       
+                                       
+                                       [HUD hide:YES];
+                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       NSLog(@"Something went wrong (Timeline)");
+                                       
+                                       [HUD hide:YES];
+                                   }];
 }
 
 - (void)reloadProfile {
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     
     [[LatteAPIClient sharedClient] getPath:@"api/user/me"
-                                      parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
-                                         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                             User *user = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
-                                             app.currentUser = user;
-                                             
-                                             [imageProfilePic setImageWithURL:[NSURL URLWithString:user.profilePicture]];
-                                             
-                                             labelNickname.text = user.name;
-                                             [buttonFriendCount setTitle:[user.countFriends stringValue] forState:UIControlStateNormal];
-                                             [buttonVoteCount setTitle:[user.voteCount stringValue] forState:UIControlStateNormal];
-                                             [buttonPicCount setTitle:[user.countPictures stringValue] forState:UIControlStateNormal];
-                                             [buttonFollowCount setTitle:[user.countFollows stringValue] forState:UIControlStateNormal];
-                                             
-                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                             NSLog(@"Something went wrong (Profile)");
-                                         }];
+                                parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       User *user = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
+                                       app.currentUser = user;
+                                       
+                                       [imageProfilePic setImageWithURL:[NSURL URLWithString:user.profilePicture]];
+                                       
+                                       labelNickname.text = user.name;
+                                       [buttonFriendCount setTitle:[user.countFriends stringValue] forState:UIControlStateNormal];
+                                       [buttonVoteCount setTitle:[user.voteCount stringValue] forState:UIControlStateNormal];
+                                       [buttonPicCount setTitle:[user.countPictures stringValue] forState:UIControlStateNormal];
+                                       [buttonFollowCount setTitle:[user.countFollows stringValue] forState:UIControlStateNormal];
+                                       
+                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       NSLog(@"Something went wrong (Profile)");
+                                   }];
 }
 
 - (void)reloadPicList {
+    [HUD show:YES];
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         [[LatteAPIClient sharedClient] getPath:@"api/picture/user/me"
-                                          parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
-                                             success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                 pictures = [Picture mutableArrayFromDictionary:JSON
-                                                                                              withKey:@"pictures"];
-                                                 
-                                                 
-                                                 [self.tableView reloadData];
-                                                 [self doneLoadingTableViewData];
-                                                 
-                                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
-                                                 });
-                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                                 NSLog(@"Something went wrong (Photolist)");
-                                                 [self doneLoadingTableViewData];
-                                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
-                                                 });
-                                             }];
+                                    parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                       success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                           pictures = [Picture mutableArrayFromDictionary:JSON
+                                                                                  withKey:@"pictures"];
+                                           
+                                           
+                                           [self.tableView reloadData];
+                                           [self doneLoadingTableViewData];
+                                           
+                                           [HUD hide:YES];
+                                       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                           NSLog(@"Something went wrong (Photolist)");
+                                           [self doneLoadingTableViewData];
+                                           [HUD hide:YES];
+                                       }];
     });
 }
 
 - (void)reloadFriends {
+    [HUD show:YES];
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [[LatteAPIClient sharedClient] getPath:@"api/user/me/friend"
-                                          parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
-                                             success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                 friends = [User mutableArrayFromDictionary:JSON
-                                                                                          withKey:@"friends"];
-                                                 
-                                                 
-                                                 [self.tableView reloadData];
-                                                 [self doneLoadingTableViewData];
-                                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
-                                                 });
-                                                 
-                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                                 NSLog(@"Something went wrong (Friendlist)");
-                                                 [self doneLoadingTableViewData];
-                                                 
-                                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
-                                                 });
-                                             }];
-    });
+    [[LatteAPIClient sharedClient] getPath:@"api/user/me/friend"
+                                parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       friends = [User mutableArrayFromDictionary:JSON
+                                                                          withKey:@"friends"];
+                                       
+                                       [HUD hide:YES];
+                                       [self doneLoadingTableViewData];
+                                       [self.tableView reloadData];
+                                       
+                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       NSLog(@"Something went wrong (Friendlist)");
+                                       [self doneLoadingTableViewData];
+                                       
+                                       [HUD hide:YES];
+                                   }];
 }
 
 - (void)reloadFollowings {
+    [HUD show:YES];
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [[LatteAPIClient sharedClient] getPath:@"api/user/me/following"
-                                          parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
-                                             success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                 followings = [User mutableArrayFromDictionary:JSON
-                                                                                             withKey:@"following"];
-                                                 
-                                                 [self.tableView reloadData];
-                                                 [self doneLoadingTableViewData];
-                                                 
-                                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
-                                                 });
-                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                                 NSLog(@"Something went wrong (Friendlist)");
-                                                 [self doneLoadingTableViewData];
-                                                 
-                                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
-                                                 });
-                                             }];
-    });
+    [[LatteAPIClient sharedClient] getPath:@"api/user/me/following"
+                                parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       followings = [User mutableArrayFromDictionary:JSON
+                                                                             withKey:@"following"];
+                                       
+                                       [self doneLoadingTableViewData];
+                                       [HUD hide:YES];
+                                       [self.tableView reloadData];
+                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       NSLog(@"Something went wrong (Friendlist)");
+                                       [self doneLoadingTableViewData];
+                                       [HUD hide:YES];
+                                   }];
 }
 
 - (void)reloadVoted {
+    [HUD show:YES];
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [[LatteAPIClient sharedClient] getPath:@"api/picture/user/interesting/me"
-                                          parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
-                                             success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                 votes = [Picture mutableArrayFromDictionary:JSON
-                                                                                              withKey:@"pictures"];
-                                                 
-                                                 [self.tableView reloadData];
-                                                 [self doneLoadingTableViewData];
-                                                 
-                                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
-                                                 });
-                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                                 NSLog(@"Something went wrong (Photolist)");
-                                                 [self doneLoadingTableViewData];
-                                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
-                                                 });
-                                             }];
-    });
+    [[LatteAPIClient sharedClient] getPath:@"api/picture/user/interesting/me"
+                                parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       votes = [Picture mutableArrayFromDictionary:JSON
+                                                                           withKey:@"pictures"];
+                                       
+                                       [self.tableView reloadData];
+                                       [self doneLoadingTableViewData];
+                                       
+                                       [HUD hide:YES];
+                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       NSLog(@"Something went wrong (Photolist)");
+                                       [self doneLoadingTableViewData];
+                                       [HUD hide:YES];
+                                   }];
 }
 
 
@@ -372,8 +349,8 @@
         if (feed.targets.count == 1) {
             Picture *pic = [feed.targets objectAtIndex:0];
             float newheight = [luxeysUtils heightFromWidth:300
-                                                          width:[pic.width floatValue]
-                                                         height:[pic.height floatValue]];
+                                                     width:[pic.width floatValue]
+                                                    height:[pic.height floatValue]];
             if ([pic.commentCount integerValue] > 3)
                 return newheight + 115;
             else
@@ -520,7 +497,6 @@
     for (UIButton *button in allTab) {
         button.enabled = YES;
     }
-    
     sender.enabled = NO;
     switch (sender.tag) {
         case 1:
@@ -643,12 +619,12 @@
     
     NSString *url = [NSString stringWithFormat:@"api/picture/%d/vote_post", sender.tag];
     [[LatteAPIClient sharedClient] postPath:url
-                                       parameters:param
-                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                 NSLog(@"Submited like"); 
-                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                              NSLog(@"Something went wrong (Vote)");
-                                          }];
+                                 parameters:param
+                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                        NSLog(@"Submited like");
+                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                        NSLog(@"Something went wrong (Vote)");
+                                    }];
 }
 
 - (void)showPicWithID:(UIButton*)sender {

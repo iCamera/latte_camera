@@ -4,6 +4,42 @@
 		"selected_items":
 		[
 			[
+				"scro",
+				"scrollEffect	UIScrollView *"
+			],
+			[
+				"size",
+				"sizeOfPhoto	CGSize"
+			],
+			[
+				"image",
+				"imageMeta	NSMutableDictionary *"
+			],
+			[
+				"NSMu",
+				"NSMutableDictionary	class"
+			],
+			[
+				"loca",
+				"location	CLLocation *"
+			],
+			[
+				"NSMutableD",
+				"NSMutableDictionary	class"
+			],
+			[
+				"sel",
+				"selected	BOOL"
+			],
+			[
+				"se",
+				"selected	BOOL"
+			],
+			[
+				"but",
+				"buttonNavRight	luxeysButtonBrown30 *"
+			],
+			[
 				"du",
 				"dummy	GPUImageBrightnessFilter *"
 			],
@@ -40,10 +76,6 @@
 				"masksToBounds	BOOL"
 			],
 			[
-				"se",
-				"section	NSInteger"
-			],
-			[
 				"bac",
 				"backgroundView	UIView *"
 			],
@@ -66,10 +98,6 @@
 			[
 				"text",
 				"textColor	UIColor *"
-			],
-			[
-				"but",
-				"buttonCamera	UIButton *"
 			],
 			[
 				"h",
@@ -154,10 +182,6 @@
 			[
 				"button",
 				"buttonComment	UIButton *"
-			],
-			[
-				"NSMu",
-				"NSMutableArray	class"
 			],
 			[
 				"UIViewAut",
@@ -284,10 +308,6 @@
 				"view	UIView *"
 			],
 			[
-				"sel",
-				"self	id"
-			],
-			[
 				"inser",
 				"insertItemsAtIndexPaths:(NSArray *) withItemAnimation:(SSCollectionViewItemAnimation)	void"
 			],
@@ -318,10 +338,6 @@
 			[
 				"NSI",
 				"NSInteger	typedef"
-			],
-			[
-				"image",
-				"imageRight"
 			],
 			[
 				"bui",
@@ -498,27 +514,115 @@
 			[
 				"aut",
 				"picture_auto_facebook_upload"
-			],
-			[
-				"c",
-				"comment"
-			],
-			[
-				"open",
-				"urlopen  (function)"
-			],
-			[
-				"get_",
-				"get_by_id"
-			],
-			[
-				"for",
-				"for	for (…) {…}"
 			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"file": "Classes/Controllers/luxeysCameraViewController.m",
+			"settings":
+			{
+				"buffer_size": 12578,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Vendor/GPUImage/framework/Source/GPUImageOutput.m",
+			"settings":
+			{
+				"buffer_size": 10667,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Vendor/GPUImage/framework/Source/GPUImageVideoCamera.h",
+			"settings":
+			{
+				"buffer_size": 3874,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Vendor/GPUImage/framework/Source/GPUImageFilter.m",
+			"settings":
+			{
+				"buffer_size": 30245,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Vendor/GPUImage/framework/Source/GPUImageFilter.h",
+			"settings":
+			{
+				"buffer_size": 5417,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Classes/Helpers/UIImage+fixOrientation.m",
+			"settings":
+			{
+				"buffer_size": 3556,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Vendor/GPUImage/framework/Source/GPUImageStillCamera.m",
+			"settings":
+			{
+				"buffer_size": 13070,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Vendor/GPUImage/framework/Source/GPUImageStillCamera.h",
+			"settings":
+			{
+				"buffer_size": 1085,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Vendor/GPUImage/framework/Source/GPUImagePicture.h",
+			"settings":
+			{
+				"buffer_size": 551,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Vendor/GPUImage/framework/Source/GPUImagePicture.m",
+			"settings":
+			{
+				"buffer_size": 6722,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Vendor/GPUImage/framework/Source/GPUImageFilterPipeline.m",
+			"settings":
+			{
+				"buffer_size": 6299,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Vendor/GPUImage/framework/Source/GPUImageRawDataInput.h",
+			"settings":
+			{
+				"buffer_size": 632,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Vendor/GPUImage/framework/Source/GPUImageRawDataInput.m",
+			"settings":
+			{
+				"buffer_size": 1554,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -560,13 +664,42 @@
 	},
 	"file_history":
 	[
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageView.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageVideoCamera.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysRightSideViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageStillCamera.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCellNotify.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysWelcomeViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysTabBarViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImagePicture.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Utils/luxeysUtils.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Utils/luxeysUtils.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCameraViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImagePicture.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageFilter.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageFilter.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageStillCamera.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/GPUImageStillCamera+captureWithMeta.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/GPUImageStillCamera+captureWithMeta.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysMypageViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicEditViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicEditViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysSettingViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCameraViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysMypageViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCellNotify.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysRankingViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/UIImage+fixOrientation.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysRankingViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/SimplePhotoFilter/SimplePhotoFilter/PhotoViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/SimplePhotoFilter/SimplePhotoFilter/PhotoViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysFavViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysWelcomeViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/FilterShowcase/FilterShowcase/ShowcaseFilterViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Models/Comment.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Models/Comment.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/FilterManager.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/AVCameraManager.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCameraViewController.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCameraViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/FilterShowcase/FilterShowcase/ShowcaseFilterViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/FilterManager.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageToneCurveFilter.h",
@@ -581,42 +714,28 @@
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Models/Feed.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Models/Feed.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicCommentViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCellNotify.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/AVCameraManager.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/Modules/luxeysTemplateTimlinePicMultiItem.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellFriend.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellFriendRequest.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/Modules/luxeysTemplatePicTimeline.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellComment.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysMypageViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicDetailViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCollectionCellPic.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCollectionCellPic.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysRankingViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysMypageViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysFavViewController.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysFavViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysTabBarViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellRankLv1.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Resources/NIBs/MainStoryboard.storyboard",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCellPicture.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicEditViewController.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicEditViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageFilterPipeline.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysTabBarViewController.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysSettingViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicDetailViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysImagePickerViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysRankingViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysUserViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysNavBar.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/AFNetworking/Example/Classes/Models/User.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysUserViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysUserCalendarViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Utils/luxeysUtils.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysWelcomeViewController.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysWelcomeViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Utils/luxeysUtils.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Models/LuxeysPicture.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCellPicture.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysUserCalendarViewController.h",
@@ -624,7 +743,6 @@
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysWelcome2ViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellFriend.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellComment.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysRightSideViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/AppDelegate/luxeysAppDelegate.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysSettingViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicInfoViewController.m",
@@ -673,21 +791,7 @@
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/sample/Resources/loginform.json",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/quickdialog/QuickDialogTableDelegate.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/sample/LoginController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/quickdialog/QuickDialogStyleProvider.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/quickdialog/QEntryTableViewCell.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/sample/ExampleAppDelegate.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/AFNetworking/Example/Prefix.pch",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysSideMenuViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysSideMenuViewController.h",
-		"/Users/dungbx/Library/Application Support/Sublime Text 2/Packages/SublimeClang/SublimeClang.sublime-settings",
-		"/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIStoryboard.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/AppDelegate/luxeysAppDelegate.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Utils/luxeysImageUtils.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/resize.sh",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/AFNetworking/Example/AppDelegate.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysButtonBrown30.h",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/apps/component/user.py",
-		"/Users/dungbx/Desktop/Luxeys/git/latte/model/user.py"
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/quickdialog/QuickDialogStyleProvider.h"
 	],
 	"find":
 	{
@@ -698,6 +802,7 @@
 		"height": 0.0,
 		"where_history":
 		[
+			"*.m",
 			"",
 			"*.json",
 			"",
@@ -746,6 +851,67 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"targets",
+			"target",
+			"shouldRedrawUsingCoreGraphics",
+			"forcedMaximumSize",
+			"force",
+			"input",
+			"_input",
+			"updateOrientationSendToTargets",
+			"device ",
+			"updateOrientationSendToTargets",
+			"orien",
+			"processVideoSampleBuffer",
+			"captureOu",
+			"capture",
+			"GPUImagePicture",
+			"processVideoSampleBuffer",
+			"captureOutput",
+			"output",
+			"photoOutput",
+			"captureOutput",
+			"photoOutput",
+			"CaptureOu",
+			"output",
+			"process",
+			"processVideoSampleBuffer",
+			"Buffer",
+			"setInputRotation",
+			"orien",
+			"rotat",
+			"ori",
+			"orienta",
+			"UIImageOrientationUp",
+			"rotat",
+			"orien",
+			"updateTargetPoint",
+			"Ref",
+			"Rf",
+			"CGImageR",
+			"target",
+			"captureOutput",
+			"kCVPixelFormatType_32BGRA",
+			"kCVPixelBufferCGImageCompatibilityKey",
+			"resize",
+			"sheet",
+			"app",
+			"metadataDict",
+			"imageData",
+			"stringByAppendingString",
+			"switchTimeline",
+			"showTimeline",
+			"ShowTimeline",
+			"photoOutput",
+			"capturePhotoAs",
+			"filter",
+			"capture",
+			"navigationBarPanGestureRecognizer",
+			"receiveLoggedIn",
+			"UIPanGestureRecognizer",
+			"navigationBarPanGestureRecognizer",
+			"buttonNavRight",
+			"receiveLoggedIn",
 			"{",
 			"	",
 			"spline",
@@ -812,68 +978,7 @@
 			"heigh",
 			"ins",
 			"ges",
-			"revealRight",
-			"Radio",
-			"alert",
-			"current_residence",
-			"handleUpdate",
-			", \"bind\":\"boolValue:bool\"",
-			"selected",
-			"select",
-			"QDynamicDataSection",
-			"dyna",
-			"textValue",
-			"handleBindWithJsonData",
-			"QEntryElement",
-			", \"delegate\":\"self\"",
-			"delegate",
-			"handleUpdate",
-			"create",
-			"vote",
-			"buttonLike",
-			"dictInfo",
-			"buttonVote",
-			"format",
-			"get_picture",
-			"table",
-			"PictureDetail",
-			"viewMainTab",
-			"viewMainNav",
-			"ins",
-			"height",
-			"arPhoto",
-			"frame",
-			"tableNotify",
-			"initBu",
-			"frame",
-			"inse",
-			"frame",
-			"viewScroll",
-			"inse",
-			"frame",
-			"tablePic",
-			"frame",
-			"viewScroll",
-			"createDetailsForm",
-			"details",
-			"Login",
-			"section",
-			"imageUser",
-			"tableProfile",
-			"showField",
-			"showSet",
-			"setPicture",
-			"showInfo",
-			"Init button",
-			"load more",
-			"luxeysLatteAPIC",
-			"      ",
-			"tableProfile",
-			"entryNickname",
-			"NSLog",
-			"Friend",
-			"labelAuthor",
-			"indexPath.row"
+			"revealRight"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -898,8 +1003,1576 @@
 	"groups":
 	[
 		{
+			"selected": 1,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "Classes/Controllers/luxeysCameraViewController.m",
+					"settings":
+					{
+						"buffer_size": 12578,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Vendor/GPUImage/framework/Source/GPUImageOutput.m",
+					"settings":
+					{
+						"buffer_size": 10667,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7223,
+								7223
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3461.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "Vendor/GPUImage/framework/Source/GPUImageVideoCamera.h",
+					"settings":
+					{
+						"buffer_size": 3874,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3874,
+								3874
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1098.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "Vendor/GPUImage/framework/Source/GPUImageFilter.m",
+					"settings":
+					{
+						"buffer_size": 30245,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								29043,
+								29043
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 12339.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "Vendor/GPUImage/framework/Source/GPUImageFilter.h",
+					"settings":
+					{
+						"buffer_size": 5417,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5417,
+								5417
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1264.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "Classes/Helpers/UIImage+fixOrientation.m",
+					"settings":
+					{
+						"buffer_size": 3556,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								350,
+								370
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "Vendor/GPUImage/framework/Source/GPUImageStillCamera.m",
+					"settings":
+					{
+						"buffer_size": 13070,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5707,
+								5707
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1583.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "Vendor/GPUImage/framework/Source/GPUImageStillCamera.h",
+					"settings":
+					{
+						"buffer_size": 1085,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1068,
+								1068
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Objective-C/Objective-C.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "Vendor/GPUImage/framework/Source/GPUImagePicture.h",
+					"settings":
+					{
+						"buffer_size": 551,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								137,
+								154
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Objective-C/Objective-C.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "Vendor/GPUImage/framework/Source/GPUImagePicture.m",
+					"settings":
+					{
+						"buffer_size": 6722,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1731.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "Vendor/GPUImage/framework/Source/GPUImageFilterPipeline.m",
+					"settings":
+					{
+						"buffer_size": 6299,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5592,
+								5592
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "Vendor/GPUImage/framework/Source/GPUImageRawDataInput.h",
+					"settings":
+					{
+						"buffer_size": 632,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								632,
+								632
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Objective-C/Objective-C.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "Vendor/GPUImage/framework/Source/GPUImageRawDataInput.m",
+					"settings":
+					{
+						"buffer_size": 1554,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								992,
+								992
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 100.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -953,6 +2626,174 @@
 		"selected_items":
 		[
 			[
+				"gpuimagevi",
+				"Vendor/GPUImage/framework/Source/GPUImageView.m"
+			],
+			[
+				"gpuimagerawdatainput",
+				"Vendor/GPUImage/framework/Source/GPUImageRawDataInput.h"
+			],
+			[
+				"gpuimagepic",
+				"Vendor/GPUImage/framework/Source/GPUImagePicture.m"
+			],
+			[
+				"gpufilte",
+				"Vendor/GPUImage/framework/Source/GPUImageFilter.h"
+			],
+			[
+				"gpuimagepip",
+				"Vendor/GPUImage/framework/Source/GPUImageFilterPipeline.m"
+			],
+			[
+				"gpuimagep",
+				"Vendor/GPUImage/framework/Source/GPUImagePicture.h"
+			],
+			[
+				"gpuimagef",
+				"Vendor/GPUImage/framework/Source/GPUImageFilter.m"
+			],
+			[
+				"still",
+				"Vendor/GPUImage/framework/Source/GPUImageStillCamera.m"
+			],
+			[
+				"gpuimagestil",
+				"Vendor/GPUImage/framework/Source/GPUImageStillCamera.m"
+			],
+			[
+				"gpuimagesti",
+				"Vendor/GPUImage/framework/Source/GPUImageStillCamera.m"
+			],
+			[
+				"gpuimageou",
+				"Vendor/GPUImage/framework/Source/GPUImageOutput.m"
+			],
+			[
+				"uiimage",
+				"Classes/Helpers/UIImage+fixOrientation.m"
+			],
+			[
+				"gpuimagefi",
+				"Vendor/GPUImage/framework/Source/GPUImageFilter.m"
+			],
+			[
+				"gpuimagevide",
+				"Vendor/GPUImage/framework/Source/GPUImageVideoCamera.m"
+			],
+			[
+				"cameravi",
+				"Classes/Controllers/luxeysCameraViewController.m"
+			],
+			[
+				"right",
+				"Classes/Controllers/luxeysRightSideViewController.m"
+			],
+			[
+				"cellno",
+				"Classes/Controllers/luxeysCellNotify.m"
+			],
+			[
+				"welcom",
+				"Classes/Controllers/luxeysWelcomeViewController.m"
+			],
+			[
+				"tab",
+				"Classes/Controllers/luxeysTabBarViewController.m"
+			],
+			[
+				"gpufi",
+				"Vendor/GPUImage/framework/Source/GPUImageFilter.m"
+			],
+			[
+				"gpuimagestillcamera",
+				"Vendor/GPUImage/framework/Source/GPUImageStillCamera.m"
+			],
+			[
+				"camera",
+				"Classes/Controllers/luxeysCameraViewController.m"
+			],
+			[
+				"setting",
+				"Classes/Controllers/luxeysSettingViewController.m"
+			],
+			[
+				"camerav",
+				"Classes/Controllers/luxeysCameraViewController.m"
+			],
+			[
+				"tabb",
+				"Classes/Controllers/luxeysTabBarViewController.m"
+			],
+			[
+				"luxeysu",
+				"Classes/Utils/luxeysUtils.m"
+			],
+			[
+				"luxey",
+				"Classes/Utils/luxeysUtils.m"
+			],
+			[
+				"piced",
+				"Classes/Controllers/luxeysPicEditViewController.m"
+			],
+			[
+				"mypage",
+				"Classes/Controllers/luxeysMypageViewController.m"
+			],
+			[
+				"picedit",
+				"Classes/Controllers/luxeysPicEditViewController.m"
+			],
+			[
+				"gpustil",
+				"Vendor/GPUImage/framework/Source/GPUImageStillCamera.m"
+			],
+			[
+				"meta",
+				"Classes/Helpers/GPUImageStillCamera+captureWithMeta.m"
+			],
+			[
+				"mypag",
+				"Classes/Controllers/luxeysMypageViewController.m"
+			],
+			[
+				"picedi",
+				"Classes/Controllers/luxeysPicEditViewController.m"
+			],
+			[
+				"luxeyspiceditviewcontroller",
+				"Classes/Controllers/luxeysPicEditViewController.m"
+			],
+			[
+				"gpuimagefil",
+				"Vendor/GPUImage/framework/Source/GPUImageFilter.m"
+			],
+			[
+				"photoviewcontroller",
+				"Vendor/GPUImage/examples/SimplePhotoFilter/SimplePhotoFilter/PhotoViewController.m"
+			],
+			[
+				"came",
+				"Classes/Controllers/luxeysCameraViewController.m"
+			],
+			[
+				"ranking",
+				"Classes/Controllers/luxeysRankingViewController.h"
+			],
+			[
+				"ranki",
+				"Classes/Controllers/luxeysRankingViewController.m"
+			],
+			[
+				"welcome",
+				"Classes/Controllers/luxeysWelcomeViewController.m"
+			],
+			[
+				"fav",
+				"Classes/Controllers/luxeysFavViewController.m"
+			],
+			[
 				"gpuimagetonecurvefilter",
 				"Vendor/GPUImage/framework/Source/GPUImageToneCurveFilter.m"
 			],
@@ -969,16 +2810,8 @@
 				"Classes/Controllers/luxeysCameraViewController.m"
 			],
 			[
-				"came",
-				"Classes/Helpers/AVCameraManager.m"
-			],
-			[
 				"avca",
 				"Classes/Helpers/AVCameraManager.h"
-			],
-			[
-				"camera",
-				"Classes/Controllers/luxeysCameraViewController.m"
 			],
 			[
 				"celln",
@@ -1005,20 +2838,12 @@
 				"Classes/Models/Comment.m"
 			],
 			[
-				"mypage",
-				"Classes/Controllers/luxeysMypageViewController.m"
-			],
-			[
 				"templatepi",
 				"Classes/Controllers/Modules/luxeysTemplatePicTimeline.m"
 			],
 			[
 				"comment",
 				"Classes/Models/Comment.h"
-			],
-			[
-				"mypag",
-				"Classes/Controllers/luxeysMypageViewController.m"
 			],
 			[
 				"detail",
@@ -1031,10 +2856,6 @@
 			[
 				"piccom",
 				"Classes/Controllers/luxeysPicCommentViewController.m"
-			],
-			[
-				"ranking",
-				"Classes/Controllers/luxeysRankingViewController.m"
 			],
 			[
 				"cell",
@@ -1057,40 +2878,16 @@
 				"Classes/CustomControls/luxeysCollectionCellPic.m"
 			],
 			[
-				"fav",
-				"Classes/Controllers/luxeysFavViewController.m"
-			],
-			[
 				"main",
 				"Resources/NIBs/MainStoryboard.storyboard"
-			],
-			[
-				"tabb",
-				"Classes/Controllers/luxeysTabBarViewController.m"
-			],
-			[
-				"picedit",
-				"Classes/Controllers/luxeysPicEditViewController.m"
 			],
 			[
 				"rankin",
 				"Classes/Controllers/luxeysRankingViewController.m"
 			],
 			[
-				"picedi",
-				"Classes/Controllers/luxeysPicEditViewController.m"
-			],
-			[
 				"picd",
 				"Classes/Controllers/luxeysPicDetailViewController.m"
-			],
-			[
-				"setting",
-				"Classes/Controllers/luxeysSettingViewController.m"
-			],
-			[
-				"piced",
-				"Classes/Controllers/luxeysPicEditViewController.m"
 			],
 			[
 				"tabbar",
@@ -1105,10 +2902,6 @@
 				"Classes/Controllers/luxeysCameraViewController.m"
 			],
 			[
-				"cellno",
-				"Classes/Controllers/luxeysCellNotify.m"
-			],
-			[
 				"cellcomm",
 				"Classes/CustomControls/luxeysCellComment.m"
 			],
@@ -1119,10 +2912,6 @@
 			[
 				"user",
 				"Classes/Controllers/luxeysUserViewController.m"
-			],
-			[
-				"welcom",
-				"Classes/Controllers/luxeysWelcomeViewController.m"
 			],
 			[
 				"luxeyu",
@@ -1153,10 +2942,6 @@
 				"Classes/Controllers/luxeysUserCalendarViewController.m"
 			],
 			[
-				"welcome",
-				"Classes/Controllers/luxeysWelcomeViewController.m"
-			],
-			[
 				"wec",
 				"Classes/Controllers/luxeysWelcome2ViewController.m"
 			],
@@ -1175,10 +2960,6 @@
 			[
 				"rightside",
 				"Classes/Controllers/luxeysRightSideViewController.m"
-			],
-			[
-				"ranki",
-				"Classes/Controllers/luxeysRankingViewController.m"
 			],
 			[
 				"picinfo",
@@ -1241,10 +3022,6 @@
 				"Resources/luxeysSetting.json"
 			],
 			[
-				"tab",
-				"Classes/Controllers/luxeysTabBarViewController.m"
-			],
-			[
 				"picdeta",
 				"Classes/Controllers/luxeysPicDetailViewController.m"
 			],
@@ -1255,10 +3032,6 @@
 			[
 				"uservie",
 				"Classes/Controllers/luxeysUserViewController.m"
-			],
-			[
-				"right",
-				"Classes/Controllers/luxeysRightSideViewController.m"
 			],
 			[
 				"wecl",
@@ -1363,106 +3136,6 @@
 			[
 				"mypa",
 				"Classes/Controllers/luxeysMypageViewController.m"
-			],
-			[
-				"userpro",
-				"Classes/Controllers/Modules/luxeysUserProfileViewController.h"
-			],
-			[
-				"luxeylo",
-				"Classes/Controllers/luxeysLoginViewController.m"
-			],
-			[
-				"userp",
-				"Classes/Controllers/Modules/luxeysUserProfileViewController.m"
-			],
-			[
-				"luxey",
-				"Classes/AppDelegate/luxeysAppDelegate.m"
-			],
-			[
-				"loginv",
-				"Classes/Controllers/luxeysLoginViewController.m"
-			],
-			[
-				"loginvie",
-				"Classes/Controllers/luxeysLoginViewController.h"
-			],
-			[
-				"celpic",
-				"Classes/Controllers/luxeysTableViewCellPicture.m"
-			],
-			[
-				"luxeytable",
-				"Classes/Controllers/luxeysTableViewCellPicture.m"
-			],
-			[
-				"qbut",
-				"Vendor/QuickDialog/quickdialog/QButtonElement.m"
-			],
-			[
-				"qbutt",
-				"Vendor/QuickDialog/quickdialog/QButtonElement.m"
-			],
-			[
-				"qrad",
-				"Vendor/QuickDialog/quickdialog/QRadioElement.m"
-			],
-			[
-				"entryele",
-				"Vendor/QuickDialog/quickdialog/QEntryElement.m"
-			],
-			[
-				"qentrytableviewcell",
-				"Vendor/QuickDialog/quickdialog/QEntryTableViewCell.m"
-			],
-			[
-				"app",
-				"Classes/AppDelegate/luxeysAppDelegate.m"
-			],
-			[
-				"qlabelelement",
-				"Vendor/QuickDialog/quickdialog/QLabelElement.m"
-			],
-			[
-				"login",
-				"Vendor/QuickDialog/sample/LoginController.h"
-			],
-			[
-				"loginform",
-				"Vendor/QuickDialog/sample/Resources/loginform.json"
-			],
-			[
-				"sample",
-				"Vendor/QuickDialog/sample/SampleDataBuilder.m"
-			],
-			[
-				".pch",
-				"Latte/Latte-Prefix.pch"
-			],
-			[
-				"luxeyspicd",
-				"Classes/Controllers/luxeysPicDetailViewController.m"
-			],
-			[
-				"lux",
-				"Classes/CustomControls/luxeysButtonBack.m"
-			],
-			[
-				"lu",
-				"Classes/Utils/luxeysImageUtils.h"
-			],
-			[
-				"",
-				"Classes/Controllers/luxeysCameraViewController.m"
-			],
-			[
-				"user.p",
-				"model/user.py"
-			],
-			[
-				"mypage_stats",
-				"templates/pc/component/user/mypage_stats.html"
 			]
 		],
 		"width": 0.0

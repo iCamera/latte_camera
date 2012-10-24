@@ -28,9 +28,10 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonBack];
     
     //Logic
-    
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:HUD];
+    HUD.mode = MBProgressHUDModeIndeterminate;
+    [HUD show:YES];
     
     luxeysAppDelegate *app = (luxeysAppDelegate*)[[UIApplication sharedApplication] delegate];
     
@@ -66,17 +67,12 @@
                                               
                                               [self.quickDialogTableView reloadData];
 
-                                              dispatch_async(dispatch_get_main_queue(), ^{
-                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
-                                                 });
+                                              [HUD hide:YES];
                                               
                                           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                               NSLog(@"Something went wrong (Load setting)");
-                                              dispatch_async(dispatch_get_main_queue(), ^{
-                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
-                                                 });
+                                              [HUD hide:YES];
                                           }];
-    });
 }
 
 - (void)setQuickDialogTableView:(QuickDialogTableView *)aQuickDialogTableView {
@@ -112,14 +108,22 @@
 }
 
 - (void)handleLogout:(QButtonElement *) button {
+    [HUD show:YES];
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-    [app setToken:@""];
-    app.currentUser = nil;
-    [[NSNotificationCenter defaultCenter]
-     postNotificationName:@"LoggedOut"
-     object:self];
-    self.tabBarController.selectedIndex = 0;
-    [self.navigationController popViewControllerAnimated:YES];
+    [[LatteAPIClient sharedClient] postPath:@"api/user/logout"
+                                 parameters:[NSDictionary dictionaryWithObjectsAndKeys:
+                                             [app getToken], @"token", nil]
+                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                        [app setToken:@""];
+                                        app.currentUser = nil;
+                                        self.tabBarController.selectedIndex = 0;
+                                        [[NSNotificationCenter defaultCenter] postNotificationName:@"LoggedOut" object:self];
+                                        [self.navigationController popViewControllerAnimated:YES];
+                                        [HUD hide:YES];
+                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                        NSLog(@"Something went wrong (Logout)");
+                                        [HUD hide:YES];
+                                    }];
 }
 
 - (void)updateNow {

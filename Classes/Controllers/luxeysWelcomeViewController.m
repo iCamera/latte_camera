@@ -185,13 +185,13 @@
     // Init side bar
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
 
-    navigationBarPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:app.storyMain action:@selector(revealGesture:)];
+    navigationBarPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:app.revealController action:@selector(revealGesture:)];
     [self.navigationController.navigationBar addGestureRecognizer:navigationBarPanGestureRecognizer];
     
-    [self.buttonLeftMenu addTarget:app.storyMain action:@selector(revealLeft:) forControlEvents:UIControlEventTouchUpInside];
+    [self.buttonLeftMenu addTarget:app.revealController action:@selector(revealLeft:) forControlEvents:UIControlEventTouchUpInside];
     [self.buttonLeftMenu setHidden:NO];
     [self.buttonNavRight removeTarget:self action:@selector(loginPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.buttonNavRight addTarget:app.storyMain action:@selector(revealRight:) forControlEvents:UIControlEventTouchUpInside];
+    [self.buttonNavRight addTarget:app.revealController action:@selector(revealRight:) forControlEvents:UIControlEventTouchUpInside];
     
     
     // Style
@@ -205,7 +205,7 @@
     
     [self.navigationController.navigationBar removeGestureRecognizer:navigationBarPanGestureRecognizer];
     
-    [self.buttonNavRight removeTarget:app.storyMain action:@selector(revealRight:) forControlEvents:UIControlEventTouchUpInside];
+    [self.buttonNavRight removeTarget:app.revealController action:@selector(revealRight:) forControlEvents:UIControlEventTouchUpInside];
     [self.buttonNavRight addTarget:self action:@selector(loginPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     // Style

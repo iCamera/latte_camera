@@ -7,6 +7,7 @@
 
     BOOL canComment;
     BOOL canVote;
+    BOOL canEdit;
     NSNumber *commentCount;
     NSMutableArray *comments;
     NSDate *createdAt;
@@ -26,12 +27,15 @@
     NSString *urlSquare;
     NSNumber *voteCount;
     NSNumber *width;
+    NSNumber *status;
     NSDictionary *exif;
+    NSArray *tags;
     User *user;
 }
 
 @property (nonatomic, assign) BOOL canComment;
 @property (nonatomic, assign) BOOL canVote;
+@property (nonatomic, assign) BOOL canEdit;
 @property (nonatomic, copy) NSNumber *commentCount;
 @property (nonatomic, retain) NSMutableArray *comments;
 @property (nonatomic, copy) NSDate *createdAt;
@@ -51,7 +55,9 @@
 @property (nonatomic, copy) NSString *urlSquare;
 @property (nonatomic, copy) NSNumber *voteCount;
 @property (nonatomic, copy) NSNumber *width;
+@property (nonatomic, copy) NSNumber *status;
 @property (nonatomic, copy) NSDictionary *exif;
+@property (nonatomic, copy) NSArray *tags;
 @property (nonatomic, strong) User *user;
 
 + (Picture *)instanceFromDictionary:(NSDictionary *)aDictionary;

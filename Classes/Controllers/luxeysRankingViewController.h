@@ -25,6 +25,7 @@
     BOOL reloading;
     EGORefreshTableHeaderView *refreshHeaderView;
     UIPanGestureRecognizer *navigationBarPanGestureRecognizer;
+    MBProgressHUD *HUD;
 }
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonDaily;

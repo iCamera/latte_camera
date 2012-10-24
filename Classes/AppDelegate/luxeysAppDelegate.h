@@ -11,19 +11,18 @@
 #import "KeychainItemWrapper.h"
 #import "luxeysCameraViewController.h"
 #import "luxeysTabBarViewController.h"
-#import "User.h"
-
-@class luxeysNavViewController;
+#import "LXUIRevealController.h"
 
 @interface luxeysAppDelegate : UIResponder <UIApplicationDelegate, UINavigationControllerDelegate> {
     KeychainItemWrapper *tokenItem;
+    LXUIRevealController* revealController;
+    NSString *apns;
 }
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) UIViewController *storyMain;
 @property (strong, nonatomic) luxeysCameraViewController *storyCamera;
-@property (strong, nonatomic) luxeysNavViewController *viewMainNav;
 @property (strong, nonatomic) luxeysTabBarViewController *viewMainTab;
+@property (strong, nonatomic) LXUIRevealController *revealController;
 
 @property (nonatomic, retain) KeychainItemWrapper *tokenItem;
 
@@ -33,11 +32,13 @@
 
 // @property (strong, nonatomic) FBSession *fbsession;
 @property (strong, nonatomic) User *currentUser;
+@property (strong, nonatomic) NSString *apns;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 - (NSString*)getToken;
 - (void)logOut;
 - (void)setToken:(NSString*)token;
+- (void)updateUserAPNS;
 
 @end

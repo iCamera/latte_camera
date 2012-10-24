@@ -107,7 +107,7 @@
 
 - (void) tableView: (UITableView *) tableView didSelectRowAtIndexPath: (NSIndexPath *) indexPath {
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-    LXUIRevealController *viewMain = (LXUIRevealController*)app.storyMain;
+    LXUIRevealController *viewMain = (LXUIRevealController*)app.revealController;
 
     if (indexPath.row == 3) {
         

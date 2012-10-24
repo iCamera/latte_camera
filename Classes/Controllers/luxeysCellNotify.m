@@ -33,18 +33,29 @@
 
 - (void)setNotify:(NSDictionary *)notify {
     NSDictionary *target = [notify objectForKey:@"target"];
-    users = [notify objectForKey:@"users"];
     labelNotify.text = @"";
-    for (NSDictionary *user in users) {
-        labelNotify.text = [labelNotify.text stringByAppendingString:[user objectForKey:@"name"]];
+    NSMutableArray *users = [User mutableArrayFromDictionary:notify withKey:@"users"];
+    BOOL first = true;
+    for (User *user in users) {
+        if (first)
+            first = true;
+        else
+            labelNotify.text = [labelNotify.text stringByAppendingString:@"と"];
+            
+        if (user.name != nil) {
+            labelNotify.text = [labelNotify.text stringByAppendingString:user.name];
+            labelNotify.text = [labelNotify.text stringByAppendingString:@"さん"];
+        } else {
+            labelNotify.text = [labelNotify.text stringByAppendingString:@"ゲスト"];
+        }
     }
     
     switch ([[notify objectForKey:@"kind"] integerValue]) {
         case 1: // Comment
-            labelNotify.text = [labelNotify.text stringByAppendingString:@" comment"];
+            labelNotify.text = [labelNotify.text stringByAppendingString:@"が、あなたの写真にコメントしました。"];
             break;
         case 2: // Vote
-            labelNotify.text = [labelNotify.text stringByAppendingString:@" vote"];
+            labelNotify.text = [labelNotify.text stringByAppendingString:@"が、あなたの写真を「いいね！」と評価しました。"];
             break;
         case 10: // target update
             labelNotify.text = [labelNotify.text stringByAppendingString:@" target update"];
@@ -60,7 +71,8 @@
     frame.size.height = labelSize.height;
     labelNotify.frame = frame;
     if (target) {
-        [viewImage setImageWithURL:[NSURL URLWithString:[target objectForKey:@"url_square"]]];
+        Picture *pic = [Picture instanceFromDictionary:target];
+        [viewImage setImageWithURL:[NSURL URLWithString:pic.urlSquare]];
         // viewImage.layer.cornerRadius = 3;
         // viewImage.clipsToBounds = YES;
     }

@@ -98,7 +98,7 @@
         [cellRequest.buttonAdd addTarget:self action:@selector(addRequest:) forControlEvents:UIControlEventTouchUpInside];
         [cellRequest.buttonIgnore addTarget:self action:@selector(ingoreRequest:) forControlEvents:UIControlEventTouchUpInside];
         [cellRequest.buttonProfile addTarget:self action:@selector(showRequestUser:) forControlEvents:UIControlEventTouchUpInside];
-        [cellRequest.buttonProfile addTarget:app.storyMain action:@selector(revealRight:) forControlEvents:UIControlEventTouchUpInside];
+        [cellRequest.buttonProfile addTarget:app.revealController action:@selector(revealRight:) forControlEvents:UIControlEventTouchUpInside];
         
         return cellRequest;        
     }
@@ -203,7 +203,7 @@
         [nav pushViewController:viewPic animated:YES];
     }
     
-    [app.storyMain performSelector:@selector(revealRight:) withObject:self];
+    [app.revealController performSelector:@selector(revealRight:) withObject:self];
 
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

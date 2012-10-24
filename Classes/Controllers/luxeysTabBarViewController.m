@@ -229,15 +229,12 @@
     [self setTabBarHidden:TRUE];
 }
 
+- (BOOL)shouldAutorotate {
+    return false;
+}
 
-
-- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
-    if (item.tag == 5)
-    {
-        [[NSNotificationCenter defaultCenter]
-           postNotificationName:@"ShowTimeline"
-           object:self];
-    }
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 @end

@@ -63,9 +63,13 @@
 }
 
 - (IBAction)login:(id)sender {
+    HUD = [[MBProgressHUD alloc] initWithView:self.view.window];
+	[self.view.window addSubview:HUD];
+    [HUD show:YES];
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     [app.tokenItem setObject:self.textUser.text forKey:(id)CFBridgingRelease(kSecAttrAccount)];
     [app.tokenItem setObject:self.textPass.text forKey:(id)CFBridgingRelease(kSecValueData)];
+    
     
     [[LatteAPIClient sharedClient] postPath:@"api/user/login"
                                        parameters:[NSDictionary dictionaryWithObjectsAndKeys:
@@ -79,11 +83,19 @@
                                                                                         cancelButtonTitle:@"OK"
                                                                                         otherButtonTitles:nil
                                                                         ];
+                                                  [HUD hide:YES];
                                                   [alert show];
                                               } else {
                                                   [app setToken:[JSON objectForKey:@"token"]];
-                                                  app.currentUser = [JSON objectForKey:@"user"];
+                                                  app.currentUser = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
+                                                  if (app.apns != nil)
+                                                      [app updateUserAPNS];
+                                                  
                                                   [self.navigationController popViewControllerAnimated:YES];
+                                                  
+                                                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+                                                  HUD.mode = MBProgressHUDModeCustomView;
+                                                  [HUD hide:YES afterDelay:0.3];
                                                   
                                                   [[NSNotificationCenter defaultCenter]
                                                    postNotificationName:@"LoggedIn"

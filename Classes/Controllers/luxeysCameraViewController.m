@@ -7,7 +7,6 @@
 //
 
 #import "luxeysCameraViewController.h"
-#import <AssetsLibrary/AssetsLibrary.h>
 #import "luxeysAppDelegate.h"
 
 @interface luxeysCameraViewController ()
@@ -38,9 +37,17 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+    }
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
         isEditing = false;
         isCrop = true;
         isReady = false;
+        isFinishedProcessing = true;
     }
     return self;
 }
@@ -48,6 +55,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     [self setupCameraAspect];
     
 	// Do any additional setup after loading the view.
@@ -62,15 +70,25 @@
     scrollEffect.contentSize=CGSizeMake(500,60);
     
     camera = [[AVCameraManager alloc] initWithView:cameraView];
+    [camera setDelegate:self];
     
     imagePicker = [[UIImagePickerController alloc]init];
     [imagePicker.navigationBar setBackgroundImage:[UIImage imageNamed: @"bg_head.png"] forBarMetrics:UIBarMetricsDefault];
     imagePicker.delegate = (id)self;
+    
+    // GPS Info
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    [locationManager startUpdatingLocation];
+    [self performSelector:@selector(stopUpdatingLocation:) withObject:nil afterDelay:45];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     self.navigationController.navigationBarHidden = YES;
-    [self startCamera];
+    if (!isEditing) {
+        [self startCamera];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -81,10 +99,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    if (!isEditing) {
-        [camera pauseCamera];
-        [self stopCamera];
-    }
+    [self stopCamera];
     
     [super viewWillDisappear:animated];
 }
@@ -124,11 +139,17 @@
 }
 
 - (void)showStillImage {
-//    imageProcessed = [camera processImage:imageOrg];
-    [camera processImage:imageOrg];
+    [camera processImage];
 }
 
 - (IBAction)setEffect:(id)sender {
+    if (isEditing) {
+        if (isFinishedProcessing)
+            isFinishedProcessing = false;
+        else
+            return;
+    }
+
     UIButton* buttonEffect = (UIButton*)sender;
     currentEffect = buttonEffect.tag;
     [self applyCurrentEffect];
@@ -136,25 +157,16 @@
 
 
 - (void)updateTargetPoint {
-//    CGSize size = cameraView.frame.size;
-    CGPoint point = CGPointMake(imageAutoFocus.center.x/320.0, (imageAutoFocus.center.y+60.0)/480.0);
+    CGPoint point = CGPointMake(imageAutoFocus.center.x/cameraView.frame.size.width, imageAutoFocus.center.y/cameraView.frame.size.height);
     
     [camera setFocusPoint:point];
     [camera setMetteringPoint:point];
 }
 
 - (void)capturePhotoAsync {
-    [camera.videoCamera capturePhotoAsImageProcessedUpToFilter:(id)camera.pipeline.filters[0] withCompletionHandler:^(UIImage *processedImage, NSError *error) {
-        imageOrg = processedImage;
-        [self switchEditImage];
-        [self showStillImage];
-    }];
+    [self switchEditImage];
+    [camera captureNow];
 }
-
-- (void)saveToLibAsync {
-//    UIImageWriteToSavedPhotosAlbum(imageProcessed, nil, nil, nil);
-}
-
 
 - (IBAction)cameraTouch:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateRecognized) {
@@ -171,7 +183,7 @@
 
 - (IBAction)close:(id)sender {
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-    app.window.rootViewController = app.storyMain;
+    app.window.rootViewController = app.revealController;
 }
 
 - (IBAction)capture:(id)sender {
@@ -193,6 +205,7 @@
 }
 
 - (IBAction)changeFlash:(id)sender {
+    buttonFlash.selected = !buttonFlash.selected;
 }
 
 - (IBAction)changeCamera:(id)sender {
@@ -204,14 +217,41 @@
 }
 
 - (IBAction)touchSave:(id)sender {
-    [self saveToLibAsync];
-    [self performSegueWithIdentifier:@"Edit" sender:self];
+    [self saveImage];
 }
 
 - (IBAction)toggleCrop:(id)sender {
     isCrop = !isCrop;
     [self setupCameraAspect];
     [camera toggleCrop];
+}
+
+- (IBAction)toggleEffect:(id)sender {
+    scrollEffect.hidden = !scrollEffect.hidden;
+}
+
+- (void)saveImage {
+    void (^saveImage)(ALAsset *) = ^(ALAsset *asset) {
+        luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+        
+        if (app.currentUser != nil) {
+            ALAssetRepresentation *rep = [asset defaultRepresentation];
+            Byte *buffer = (Byte*)malloc(rep.size);
+            NSUInteger buffered = [rep getBytes:buffer fromOffset:0.0 length:rep.size error:nil];
+            NSData *uploadData = [NSData dataWithBytesNoCopy:buffer length:buffered freeWhenDone:YES];
+            [self performSegueWithIdentifier:@"Edit" sender:uploadData];
+        } else {
+            [self switchCamera];
+        }
+    };
+    
+    NSDictionary *location;
+    if (bestEffortAtLocation != nil) {
+        location = [luxeysUtils getGPSDictionaryForLocation:bestEffortAtLocation];
+        [imageMeta setObject:location forKey:(NSString *)kCGImagePropertyGPSDictionary];
+    }
+    
+    [camera saveImage:location onComplete:saveImage];
 }
 
 - (void)setupCameraAspect {
@@ -259,11 +299,16 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [imagePicker dismissViewControllerAnimated:NO completion:nil];
-    UIImage *imageTmp = [info valueForKey:UIImagePickerControllerOriginalImage];
-    imageOrg = [imageTmp fixOrientation];
-    
+    imageMeta = [NSMutableDictionary dictionaryWithDictionary:[info valueForKey:UIImagePickerControllerMediaMetadata]];
+    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    [NSThread detachNewThreadSelector:@selector(selectedPic:) toTarget:self withObject:[image fixOrientation]];
+}
+
+- (void)selectedPic:(UIImage*)image {
+    [camera processUIImage:image withMeta:imageMeta];
     [self switchEditImage];
-    [self applyCurrentEffect];
+    [self stopCamera];
+    [self showStillImage];
 }
 
 - (void)switchCamera {
@@ -278,11 +323,7 @@
     imageAutoFocus.hidden = NO;
     buttonPick.hidden = NO;
     
-    if (isReady) {
-        [camera resumeCamera];
-    } else {
-        [self startCamera];
-    }
+    [self startCamera];
 
 }
 
@@ -306,6 +347,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"Edit"]) {
         luxeysPicEditViewController *controllerPicEdit = segue.destinationViewController;
+        [controllerPicEdit setData:sender];
     }
 }
 
@@ -315,12 +357,10 @@
 
 
 - (IBAction)flipCamera:(id)sender {
-    NSLog(@"Toggle Camera");
     [camera toggleCamera];
 }
 
 - (IBAction)panTarget:(UIPanGestureRecognizer *)sender {
-    NSLog(@"Pan pan");
     CGPoint translation = [sender translationInView:cameraView];
     CGPoint center = CGPointMake(sender.view.center.x + translation.x,
                                          sender.view.center.y + translation.y);
@@ -334,11 +374,15 @@
     }
 }
 
+- (IBAction)setTimer:(id)sender {
+}
+
 - (void)handleTap:(UITapGestureRecognizer *)sender {
-    NSLog(@"Tapped");
+    
 }
 
 - (void)startCamera {
+    [camera resumeCamera];
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         [camera startCamera];
         isReady = true;
@@ -347,8 +391,34 @@
 
 - (void)stopCamera {
     isReady = false;
+    [camera pauseCamera];
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         [camera stopCamera];
     });
 }
+
+- (void)didProcessImage {
+    isFinishedProcessing = true;
+}
+
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+    NSTimeInterval locationAge = -[newLocation.timestamp timeIntervalSinceNow];
+    if (locationAge > 5.0) return;
+
+    if (newLocation.horizontalAccuracy < 0) return;
+
+    if (bestEffortAtLocation == nil || bestEffortAtLocation.horizontalAccuracy > newLocation.horizontalAccuracy) {
+        bestEffortAtLocation = newLocation;
+        if (newLocation.horizontalAccuracy <= locationManager.desiredAccuracy) {
+            [locationManager stopUpdatingLocation];
+        }
+    }
+}
+
+- (void)stopUpdatingLocation:(id)sender {
+    [locationManager stopUpdatingLocation];
+    locationManager.delegate = nil;
+}
+
 @end

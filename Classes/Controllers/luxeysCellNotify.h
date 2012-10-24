@@ -10,10 +10,7 @@
 #import "User.h"
 #import "Picture.h"
 
-@interface luxeysCellNotify : UITableViewCell {
-    Picture *pic;
-    NSArray *users;
-}
+@interface luxeysCellNotify : UITableViewCell
 @property (strong, nonatomic) IBOutlet UIImageView *viewImage;
 @property (strong, nonatomic) IBOutlet UILabel *labelNotify;
 

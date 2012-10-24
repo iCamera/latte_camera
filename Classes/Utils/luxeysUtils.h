@@ -7,11 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <ImageIO/ImageIO.h>
 
 @interface luxeysUtils : NSObject
 
 + (float)heightFromWidth:(float)newwidth width:(float)width height:(float)height;
 + (NSString *)timeDeltaFromNow:(NSDate *)aDate;
 + (NSDate *)dateFromJSON:(NSString *)aDate;
++ (NSDictionary *)getGPSDictionaryForLocation:(CLLocation *)location;
 
 @end

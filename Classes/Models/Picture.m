@@ -6,6 +6,7 @@
 
 @synthesize canComment;
 @synthesize canVote;
+@synthesize canEdit;
 @synthesize commentCount;
 @synthesize comments;
 @synthesize createdAt;
@@ -27,6 +28,8 @@
 @synthesize width;
 @synthesize exif;
 @synthesize user;
+@synthesize tags;
+@synthesize status;
 
 + (Picture *)instanceFromDictionary:(NSDictionary *)aDictionary {
 
@@ -68,6 +71,8 @@
         }
     } else if ([key isEqualToString:@"created_at"]) {
         self.createdAt = [luxeysUtils dateFromJSON:value];
+    } else if ([key isEqualToString:@"tags"]) {
+        self.tags = [NSArray arrayWithArray:value];
     }
     else {
         [super setValue:value forKey:key];
@@ -82,6 +87,8 @@
         [self setValue:value forKey:@"canComment"];
     } else if ([key isEqualToString:@"can_vote"]) {
         [self setValue:value forKey:@"canVote"];
+    } else if ([key isEqualToString:@"can_edit"]) {
+        [self setValue:value forKey:@"canEdit"];
     } else if ([key isEqualToString:@"comment_count"]) {
         [self setValue:value forKey:@"commentCount"];
     } else if ([key isEqualToString:@"created_at"]) {
@@ -106,6 +113,8 @@
         [self setValue:value forKey:@"voteCount"];
     } else if ([key isEqualToString:@"exif"]) {
         [self setValue:value forKey:@"exif"];
+    } else if ([key isEqualToString:@"status"]) {
+        [self setValue:value forKey:@"status"];
     } else {
         [super setValue:value forUndefinedKey:key];
     }
