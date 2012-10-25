@@ -34,6 +34,7 @@
     
     BOOL isFront;
     BOOL isCrop;
+
     id<AVCameraManagerDelegate> delegate;
 }
 
@@ -61,5 +62,6 @@
 - (void)captureNow;
 - (void)processUIImage:(UIImage*)image withMeta:(NSMutableDictionary*)aMeta;
 - (void)saveImage:(NSDictionary *)location onComplete:(void(^)(ALAsset *asset))block;
+- (void)setFlash:(BOOL)flash;
 
 @end

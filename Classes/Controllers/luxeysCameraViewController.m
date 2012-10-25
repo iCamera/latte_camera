@@ -139,7 +139,9 @@
 }
 
 - (void)showStillImage {
-    [camera processImage];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [camera processImage];
+    });
 }
 
 - (IBAction)setEffect:(id)sender {
@@ -206,6 +208,7 @@
 
 - (IBAction)changeFlash:(id)sender {
     buttonFlash.selected = !buttonFlash.selected;
+    [camera setFlash:buttonFlash.selected];
 }
 
 - (IBAction)changeCamera:(id)sender {

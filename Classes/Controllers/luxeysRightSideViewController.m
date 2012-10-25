@@ -81,9 +81,7 @@
         NSDictionary *notify = [notifies objectAtIndex:indexPath.row];
         [cellNotify setNotify:notify];
         return cellNotify;
-    } else {
-        luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-        
+    } else {        
         luxeysCellFriendRequest *cellRequest;
         User *user;
         if (indexPath.section == 0) {
@@ -97,8 +95,8 @@
         
         [cellRequest.buttonAdd addTarget:self action:@selector(addRequest:) forControlEvents:UIControlEventTouchUpInside];
         [cellRequest.buttonIgnore addTarget:self action:@selector(ingoreRequest:) forControlEvents:UIControlEventTouchUpInside];
-        [cellRequest.buttonProfile addTarget:self action:@selector(showRequestUser:) forControlEvents:UIControlEventTouchUpInside];
-        [cellRequest.buttonProfile addTarget:app.revealController action:@selector(revealRight:) forControlEvents:UIControlEventTouchUpInside];
+        cellRequest.buttonAdd.tag = [user.userId integerValue];
+        cellRequest.buttonIgnore.tag = -[user.userId integerValue];
         
         return cellRequest;        
     }
@@ -107,19 +105,10 @@
 - (void)reloadView {
     switch (tableMode) {
         case 0:
-            if (notifies == nil) {
-                [self reloadNotify];
-            } else {
-                [tableNotify reloadData];
-            }
+            [self reloadNotify];
             break;
         case 1:
-            if ((requests == nil) || (ignores == nil)) {
-                [self reloadRequest];
-            } else {
-                [tableNotify reloadData];
-            }
-
+            [self reloadRequest];
             break;
     }
 }
@@ -150,8 +139,10 @@
                                              requests = [User mutableArrayFromDictionary:JSON withKey:@"requests"];
                                              ignores = [User mutableArrayFromDictionary:JSON withKey:@"ignores"];
                                              [tableNotify reloadData];
+                                             [self doneLoadingTableViewData];
                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                              NSLog(@"Something went wrong (Notify)");
+                                             [self doneLoadingTableViewData];
                                          }];
 }
 
@@ -164,15 +155,57 @@
 
 - (IBAction)touchTab:(UISegmentedControl*)sender {
     tableMode = sender.selectedSegmentIndex;
-    [tableNotify reloadData];
+    
+    switch (tableMode) {
+        case 0:
+            if (notifies == nil) {
+                [self reloadNotify];
+            } else {
+                [tableNotify reloadData];
+            }
+            break;
+        case 1:
+            if ((requests == nil) || (ignores == nil)) {
+                [self reloadRequest];
+            } else {
+                [tableNotify reloadData];
+            }
+            
+            break;
+    }
 }
 
-- (void)addRequest:(id)sender {
+- (void)addRequest:(UIButton *)sender {
+    sender.enabled = false;
+    UIButton *buttonIgnore = (id)[tableNotify viewWithTag:-sender.tag];
+    if (buttonIgnore != nil)
+        buttonIgnore.enabled = false;
+    
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[[UIApplication sharedApplication] delegate];
+    
+    NSString *url = [NSString stringWithFormat:@"/api/user/friend/approve/%d", sender.tag];
+    [[LatteAPIClient sharedClient] postPath:url
+                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                    success: nil
+                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                        NSLog(@"Something went wrong (RightMenu - Approve)");
+                                    }];
     
 }
 
-- (void)ingoreRequest:(id)sender {
+- (void)ingoreRequest:(UIButton *)sender {
+    sender.enabled = false;
+    UIButton *buttonAdd = (id)[tableNotify viewWithTag:-sender.tag];
+    buttonAdd.enabled = false;
     
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[[UIApplication sharedApplication] delegate];
+    NSString *url = [NSString stringWithFormat:@"/api/user/friend/ignore/%d", -sender.tag];
+    [[LatteAPIClient sharedClient] postPath:url
+                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                    success: nil
+                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                        NSLog(@"Something went wrong (RightMenu - ignore)");
+                                    }];
 }
 
 - (void)showRequestUser:(UIButton*)sender {
@@ -190,22 +223,51 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    
     if (tableMode == 0) {
         NSDictionary *notify = [notifies objectAtIndex:indexPath.row];
         
-        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                                 bundle:nil];
         luxeysPicDetailViewController *viewPic = [mainStoryboard instantiateViewControllerWithIdentifier:@"Picture"];
         Picture *pic = [Picture instanceFromDictionary:[notify objectForKey:@"target"]];
         [viewPic setPictureID:[pic.pictureId integerValue]];
         app.viewMainTab.selectedIndex = 4; // Switch to mypage
         UINavigationController *nav = (UINavigationController *)app.viewMainTab.selectedViewController;
         [nav pushViewController:viewPic animated:YES];
+    } else {
+        luxeysUserViewController *viewUser = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserProfile"];
+        if (indexPath.section == 0) {
+            User *request = requests[indexPath.row];
+            [viewUser setUserID:[request.userId integerValue]];
+        } else {
+            User *ignore = ignores[indexPath.row];
+            [viewUser setUserID:[ignore.userId integerValue]];
+        }
+        app.viewMainTab.selectedIndex = 4; // Switch to mypage
+        UINavigationController *nav = (UINavigationController *)app.viewMainTab.selectedViewController;
+        [nav pushViewController:viewUser animated:YES];
     }
     
     [app.revealController performSelector:@selector(revealRight:) withObject:self];
 
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if (tableMode == 1) {
+        switch (section) {
+            case 0:
+                return @"New coming request";
+                break;
+            case 1:
+                return @"Ignored";
+                break;
+            default:
+                break;
+        }
+    }
+    return nil;
 }
 
 - (void)reloadTableViewDataSource{
@@ -222,15 +284,12 @@
 }
 
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
-	
 	[self reloadTableViewDataSource];
-	[self reloadNotify];
+	[self reloadView];
 }
 
 - (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
-	
 	return reloading; // should return if data source model is reloading
-	
 }
 
 - (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{

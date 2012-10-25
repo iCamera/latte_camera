@@ -142,6 +142,10 @@
 		88A49B8115B8FD5700CEA262 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A49B7C15B8FD5700CEA262 /* CoreVideo.framework */; };
 		88A49B8215B8FD5700CEA262 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A49B7D15B8FD5700CEA262 /* OpenGLES.framework */; };
 		88A49B8315B8FD5700CEA262 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A49B7E15B8FD5700CEA262 /* QuartzCore.framework */; };
+		88ACB29B1637F85B00469576 /* icon_flash_30.png in Resources */ = {isa = PBXBuildFile; fileRef = 88ACB2971637F85B00469576 /* icon_flash_30.png */; };
+		88ACB29C1637F85B00469576 /* icon_flash_30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88ACB2981637F85B00469576 /* icon_flash_30@2x.png */; };
+		88ACB29D1637F85B00469576 /* icon_rank2.png in Resources */ = {isa = PBXBuildFile; fileRef = 88ACB2991637F85B00469576 /* icon_rank2.png */; };
+		88ACB29E1637F85B00469576 /* icon_rank2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88ACB29A1637F85B00469576 /* icon_rank2@2x.png */; };
 		88B08D4415D369EC003CB0D3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B08D4315D369EC003CB0D3 /* Security.framework */; };
 		88B47B3415DE522F00FD9C72 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B47B2015DE522F00FD9C72 /* AFHTTPClient.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		88B47B3515DE522F00FD9C72 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B47B2215DE522F00FD9C72 /* AFHTTPRequestOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -636,6 +640,10 @@
 		88A49B7C15B8FD5700CEA262 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		88A49B7D15B8FD5700CEA262 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		88A49B7E15B8FD5700CEA262 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		88ACB2971637F85B00469576 /* icon_flash_30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_flash_30.png; sourceTree = "<group>"; };
+		88ACB2981637F85B00469576 /* icon_flash_30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_flash_30@2x.png"; sourceTree = "<group>"; };
+		88ACB2991637F85B00469576 /* icon_rank2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_rank2.png; sourceTree = "<group>"; };
+		88ACB29A1637F85B00469576 /* icon_rank2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_rank2@2x.png"; sourceTree = "<group>"; };
 		88B08D4315D369EC003CB0D3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		88B47B1F15DE522F00FD9C72 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		88B47B2015DE522F00FD9C72 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
@@ -1176,6 +1184,10 @@
 		8897383D15E49C87002F4717 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				88ACB2971637F85B00469576 /* icon_flash_30.png */,
+				88ACB2981637F85B00469576 /* icon_flash_30@2x.png */,
+				88ACB2991637F85B00469576 /* icon_rank2.png */,
+				88ACB29A1637F85B00469576 /* icon_rank2@2x.png */,
 				886436321636675F00C7FFE3 /* 37x-Checkmark.png */,
 				886436331636675F00C7FFE3 /* 37x-Checkmark@2x.png */,
 				88DC21A91636422E00866985 /* icon_flash_off.png */,
@@ -2308,6 +2320,10 @@
 				88DC21AC1636422E00866985 /* icon_flash_off@2x.png in Resources */,
 				886436341636675F00C7FFE3 /* 37x-Checkmark.png in Resources */,
 				886436351636675F00C7FFE3 /* 37x-Checkmark@2x.png in Resources */,
+				88ACB29B1637F85B00469576 /* icon_flash_30.png in Resources */,
+				88ACB29C1637F85B00469576 /* icon_flash_30@2x.png in Resources */,
+				88ACB29D1637F85B00469576 /* icon_rank2.png in Resources */,
+				88ACB29E1637F85B00469576 /* icon_rank2@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

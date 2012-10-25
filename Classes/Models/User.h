@@ -26,7 +26,12 @@
     NSNumber *pictureStatus;
     NSString *profilePicture;
     NSNumber *voteCount;
-
+    
+    //Classmethod
+    BOOL isFollowing;
+    BOOL isFriend;
+    NSNumber *requestToMe;
+    NSNumber *requestToUser;
 }
 
 @property (nonatomic, copy) NSString *age;
@@ -52,6 +57,11 @@
 @property (nonatomic, copy) NSNumber *pictureStatus;
 @property (nonatomic, copy) NSString *profilePicture;
 @property (nonatomic, copy) NSNumber *voteCount;
+
+@property (nonatomic, assign) BOOL isFollowing;
+@property (nonatomic, assign) BOOL isFriend;
+@property (nonatomic, copy) NSNumber *requestToMe;
+@property (nonatomic, copy) NSNumber *requestToUser;
 
 + (User *)instanceFromDictionary:(NSDictionary *)aDictionary;
 - (void)setAttributesFromDictionary:(NSDictionary *)aDictionary;

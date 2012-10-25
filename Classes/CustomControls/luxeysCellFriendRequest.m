@@ -12,7 +12,7 @@
 
 @synthesize userName;
 @synthesize userIntro;
-@synthesize buttonProfile;
+@synthesize imageUser;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -33,12 +33,11 @@
 - (void)setUser:(User *)user {
     userName.text = user.name;
     userIntro.text = user.introduction;
-    buttonProfile.tag = [user.userId integerValue];
     
-    buttonProfile.layer.cornerRadius = 3;
-    buttonProfile.clipsToBounds = YES;
+//    imageUser.layer.cornerRadius = 3;
+//    imageUser.clipsToBounds = YES;
     
-    [buttonProfile loadBackground:user.profilePicture];
+    [imageUser setImageWithURL:[NSURL URLWithString:user.profilePicture]];
     
     self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg_menu.png"]];
     [self setSelectedBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg_menu_on.png"]]];

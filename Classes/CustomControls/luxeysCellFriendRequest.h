@@ -8,14 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "User.h"
-#import "UIButton+AsyncImage.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface luxeysCellFriendRequest : UITableViewCell
 @property (strong, nonatomic) IBOutlet UILabel *userName;
 @property (strong, nonatomic) IBOutlet UILabel *userIntro;
 @property (strong, nonatomic) IBOutlet UIButton *buttonIgnore;
 @property (strong, nonatomic) IBOutlet UIButton *buttonAdd;
-@property (strong, nonatomic) IBOutlet UIButton *buttonProfile;
+@property (strong, nonatomic) IBOutlet UIImageView *imageUser;
 
 - (void)setUser:(User *)user;
 

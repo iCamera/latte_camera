@@ -26,6 +26,11 @@
 @synthesize profilePicture;
 @synthesize voteCount;
 
+@synthesize isFollowing;
+@synthesize isFriend;
+@synthesize requestToMe;
+@synthesize requestToUser;
+
 + (User *)instanceFromDictionary:(NSDictionary *)aDictionary {
 
     User *instance = [[User alloc] init];
@@ -84,7 +89,17 @@
         [self setValue:value forKey:@"profilePicture"];
     } else if ([key isEqualToString:@"vote_count"]) {
         [self setValue:value forKey:@"voteCount"];
-    } else {
+    } else if ([key isEqualToString:@"is_following"]) {
+        [self setValue:value forKey:@"isFollowing"];
+    } else if ([key isEqualToString:@"is_friend"]) {
+        [self setValue:value forKey:@"isFriend"];
+    } else if ([key isEqualToString:@"request_to_me"]) {
+        [self setValue:value forKey:@"requestToMe"];
+    } else if ([key isEqualToString:@"request_to_user"]) {
+        [self setValue:value forKey:@"requestToUser"];
+    }
+    
+    else {
         [super setValue:value forUndefinedKey:key];
     }
 

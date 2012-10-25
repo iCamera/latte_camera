@@ -17,6 +17,7 @@
 
     [photoOutput captureStillImageAsynchronouslyFromConnection:[[photoOutput connections] objectAtIndex:0] completionHandler:^(CMSampleBufferRef imageSampleBuffer, NSError *error) {
         UIImage *image = [UIImage imageWithCGImage:[self imageFromSampleBuffer:imageSampleBuffer]];
+        NSLog(@"Captured: %f x %f", image.size.width, image.size.height);
 
         CFDictionaryRef metadataDict = CMCopyDictionaryOfAttachments(NULL, imageSampleBuffer, kCMAttachmentMode_ShouldPropagate);
         NSMutableDictionary *imageMeta = [NSMutableDictionary dictionaryWithDictionary:(__bridge NSDictionary *)(metadataDict)];
@@ -37,7 +38,6 @@
         return;
     }
     
-    //        CFRetain(imageSampleBuffer);
     dispatch_async([GPUImageOpenGLESContext sharedOpenGLESQueue], ^{
         //Feature Detection Hook.
         if (weakSelf.delegate)
@@ -74,7 +74,43 @@
     CVPixelBufferUnlockBaseAddress(imageBuffer,0);
     /* CVBufferRelease(imageBuffer); */  // do not call this!
     
-    return newImage;
+    CGSize pixelSizeOfImage = CGSizeMake(width, height);
+    CGSize pixelSizeToUseForTexture = pixelSizeOfImage;
+    
+    BOOL shouldRedrawUsingCoreGraphics = NO;
+    
+    // For now, deal with images larger than the maximum texture size by resizing to be within that limit
+    CGSize scaledImageSizeToFitOnGPU = [GPUImageOpenGLESContext sizeThatFitsWithinATextureForSize:pixelSizeOfImage];
+    if (!CGSizeEqualToSize(scaledImageSizeToFitOnGPU, pixelSizeOfImage))
+    {
+        pixelSizeOfImage = scaledImageSizeToFitOnGPU;
+        pixelSizeToUseForTexture = pixelSizeOfImage;
+        shouldRedrawUsingCoreGraphics = YES;
+    }
+    
+    GLubyte *imageData = NULL;
+    
+    //    CFAbsoluteTime elapsedTime, startTime = CFAbsoluteTimeGetCurrent();
+    
+    if (shouldRedrawUsingCoreGraphics)
+    {
+        // For resized image, redraw
+        imageData = (GLubyte *) calloc(1, (int)pixelSizeToUseForTexture.width * (int)pixelSizeToUseForTexture.height * 4);
+        
+        CGColorSpaceRef genericRGBColorspace = CGColorSpaceCreateDeviceRGB();
+        CGContextRef imageContext = CGBitmapContextCreate(imageData, (int)pixelSizeToUseForTexture.width, (int)pixelSizeToUseForTexture.height, 8, (int)pixelSizeToUseForTexture.width * 4, genericRGBColorspace,  kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
+        //        CGContextSetBlendMode(imageContext, kCGBlendModeCopy); // From Technical Q&A QA1708: http://developer.apple.com/library/ios/#qa/qa1708/_index.html
+        CGContextDrawImage(imageContext, CGRectMake(0.0, 0.0, pixelSizeToUseForTexture.width, pixelSizeToUseForTexture.height), newImage);
+        CGImageRef imgRef = CGBitmapContextCreateImage(imageContext);
+        CGContextRelease(imageContext);
+        CGColorSpaceRelease(genericRGBColorspace);
+//        CVBufferRelease(imageBuffer);
+        return imgRef;
+    }
+    else
+    {
+        return newImage;
+    }
 }
 
 @end

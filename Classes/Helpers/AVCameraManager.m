@@ -24,6 +24,7 @@
         
         preview = aView;
         videoCamera = [[GPUImageStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionBack];
+        
         crop = [[GPUImageCropFilter alloc] init];
         
 //        [self toggleCrop];
@@ -71,6 +72,24 @@
     imageLib = nil;
     [self refreshFilter];
     [videoCamera resumeCameraCapture];
+}
+
+- (void)setFlash:(BOOL)flash {
+    AVCaptureDevice *device = videoCamera.inputCamera;
+    
+    NSError *error;
+    if ([device lockForConfiguration:&error]) {
+        if ([device isFlashAvailable]) {
+            if (flash)
+                [device setFlashMode:AVCaptureFlashModeOn];
+            else
+                [device setFlashMode:AVCaptureFlashModeOff];
+            [device unlockForConfiguration];
+            NSLog(@"Set flash");
+        }
+    } else {
+        NSLog(@"ERROR = %@", error);
+    }
 }
 
 - (void)setFocusPoint:(CGPoint)point {
@@ -149,7 +168,8 @@
 }
 
 - (void)processImage {
-    picture = [[GPUImagePicture alloc] initWithImage:imageLib];
+//    picture = [[GPUImagePicture alloc] initWithImage:imageLib];
+    picture = [[GPUImagePicture alloc] initWithCGImage:imageLib.CGImage];
     
     [picture addTarget:pipeline.filters[0]];
     [picture updateOrientation:deviceOrientation cameraPosition:videoCamera.cameraPosition];
@@ -170,7 +190,14 @@
 - (void)captureNow {
     deviceOrientation = [[UIDevice currentDevice] orientation];
     [videoCamera capturePhotoAsImageWithMeta:^(UIImage *processedImage, NSMutableDictionary *metadata, NSError *error) {
-        imageLib = [processedImage resizedImageWithContentMode:UIViewContentModeScaleAspectFit bounds:CGSizeMake(2048, 2048) interpolationQuality:kCGInterpolationHigh];
+//        picture = [[GPUImagePicture alloc] initWithImage:processedImage];
+//        if ((processedImage.size.width > 2048) || (processedImage.size.height > 2048)) {
+//            imageLib = [processedImage resizedImageWithContentMode:UIViewContentModeScaleAspectFit bounds:CGSizeMake(2048, 2048) interpolationQuality:kCGInterpolationHigh];
+//        } else {
+//            imageLib = processedImage;
+//        }
+        imageLib = processedImage;
+        
         imageMeta = metadata;
         
         [self processImage];

@@ -114,7 +114,12 @@
                                              destructiveButtonTitle:nil
                                                   otherButtonTitles:@"非公開", @"友達まで", @"会員まで", @"公開", nil];
         sheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
-        [sheet showInView:self.view];
+        if (self.tabBarController != nil) {
+            [sheet showFromTabBar:self.tabBarController.tabBar];
+            sheet.delegate = self;
+        }
+        else
+            [sheet showInView:self.view];
     }
 }
 
@@ -196,7 +201,6 @@
     [[LatteAPIClient sharedClient] postPath:url
                                  parameters: params
                                     success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                        picture.status = [NSNumber numberWithInteger:imageStatus];
                                         [HUD hide:YES];
                                         
                                         luxeysPicDetailViewController *parent = self.navigationController.viewControllers[self.navigationController.viewControllers.count-2];
@@ -210,6 +214,7 @@
 
 - (void)saveImage {
     HUD.mode = MBProgressHUDModeDeterminate;
+    [HUD show:YES];
     
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     

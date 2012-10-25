@@ -98,7 +98,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     [window makeKeyAndVisible];
     
     // Register for Push Notification
-    application.applicationIconBadgeNumber = 0;
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     
     // Check user auth async
@@ -106,6 +105,9 @@ void uncaughtExceptionHandler(NSException *exception) {
     if ([[self getToken] length] > 0) {
         [self checkTokenValidity];
     }
+    
+    // Clear notify but save badge
+    [self clearNotification];
     
     return YES;
 }
@@ -165,10 +167,19 @@ void uncaughtExceptionHandler(NSException *exception) {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
+
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     NSLog(@"Become active");
+    [self clearNotification];
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+}
+
+- (void)clearNotification {
+    int badgeCount = [UIApplication sharedApplication].applicationIconBadgeNumber;
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:badgeCount];
 }
 
 

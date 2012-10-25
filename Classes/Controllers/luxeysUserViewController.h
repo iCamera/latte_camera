@@ -28,7 +28,11 @@
 #define kTableCalendar 5
 #define kTableMap 6
 
-@interface luxeysUserViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, EGORefreshTableHeaderDelegate> {
+#define kUserRequestAwaiting 1
+#define kUserRequestAccepted 2
+#define kUserRequestHold 3
+
+@interface luxeysUserViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, EGORefreshTableHeaderDelegate, UIActionSheetDelegate> {
     NSMutableSet *showSet;
     NSDictionary *userDict;
     NSArray *showField;
@@ -44,23 +48,28 @@
     int userID;
     NSArray *allTab;
     EGORefreshTableHeaderView *refreshHeaderView;
+    MBProgressHUD *HUD;
     BOOL reloading;
 }
 
 @property (strong, nonatomic) IBOutlet UIImageView *imageUser;
 @property (strong, nonatomic) IBOutlet UIView *viewStats;
 @property (strong, nonatomic) IBOutlet UIView *viewContent;
+@property (strong, nonatomic) IBOutlet UITableView *tableProfile;
 @property (strong, nonatomic) IBOutlet UIButton *buttonProfile;
 @property (strong, nonatomic) IBOutlet UIButton *buttonCalendar;
 @property (strong, nonatomic) IBOutlet UIButton *buttonMap;
-@property (strong, nonatomic) IBOutlet UITableView *tableProfile;
 @property (strong, nonatomic) IBOutlet UIButton *buttonVoteCount;
 @property (strong, nonatomic) IBOutlet UIButton *buttonPhotoCount;
 @property (strong, nonatomic) IBOutlet UIButton *buttonFriendCount;
 @property (strong, nonatomic) IBOutlet UILabel *labelNickname;
+@property (strong, nonatomic) IBOutlet UIButton *buttonContact;
+@property (strong, nonatomic) IBOutlet luxeysButtonBrown30 *buttonFriend;
 
 - (IBAction)touchTab:(UIButton *)sender;
 - (IBAction)touchBack:(id)sender;
 - (void)setUserID:(int)aUserID;
+- (IBAction)touchContact:(id)sender;
+- (IBAction)touchFriend:(id)sender;
 
 @end
