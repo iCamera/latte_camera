@@ -24,7 +24,8 @@
 @synthesize tableProfile;
 @synthesize labelNickname;
 @synthesize buttonContact;
-@synthesize buttonFriend;
+@synthesize iconFollow;
+@synthesize iconFriend;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -117,30 +118,13 @@
                                        if (app.currentUser != nil) {
                                            if (![app.currentUser.userId isEqualToNumber:user.userId]) {
                                                buttonContact.hidden = false;
-                                               buttonContact.selected = user.isFollowing;
                                                
-                                               buttonFriend.hidden = false;
-                                               buttonFriend.enabled = true;
-                                               
-                                               if (user.isFriend) {
-                                                   buttonFriend.selected = true;
-                                                   [buttonFriend setTitle:@"友達です" forState:UIControlStateNormal];
-                                               } else {
-                                                   if (user.requestToMe != nil) {
-                                                       if ([user.requestToMe integerValue] != kUserRequestAccepted) {
-                                                           [buttonFriend setTitle:@"Approve" forState:UIControlStateNormal];
-                                                       }
-                                                   }
-                                                   if (user.requestToUser != nil) {
-                                                       if ([user.requestToMe integerValue] != kUserRequestAccepted) {
-                                                           [buttonFriend setTitle:@"友達申請中" forState:UIControlStateNormal];
-                                                           buttonFriend.enabled = false;
-                                                       }
-                                                   }
-                                                   if ((user.requestToMe == nil) && (user.requestToUser == nil)) {
-                                                       [buttonFriend setTitle:@"友達に追加" forState:UIControlStateNormal];
-                                                   }
+                                               if (user.isFriend || user.isFollowing) {
+                                                   [buttonContact setImage:[UIImage imageNamed:@"icon_setting.png"] forState:UIControlStateNormal];
                                                }
+                                               
+                                               iconFriend.hidden = !user.isFriend;
+                                               iconFollow.hidden = !user.isFollowing;
                                            }
                                        }
                                        [HUD hide:YES];
@@ -552,7 +536,51 @@
 }
 
 - (IBAction)touchContact:(id)sender {
-    [self toggleFollow];
+    
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"友達から外す"
+                                                       delegate:self
+                                              cancelButtonTitle:nil
+                                         destructiveButtonTitle:nil
+                                              otherButtonTitles:nil];
+    
+    if (user.isFriend) {
+        [sheet addButtonWithTitle:@"友達から外す"];
+    } else {
+        if (user.requestToMe != nil) {
+            if ([user.requestToMe integerValue] != kUserRequestAccepted) {
+                [sheet addButtonWithTitle:@"Approve"];
+            }
+        }
+        if (user.requestToUser != nil) {
+            if ([user.requestToMe integerValue] != kUserRequestAccepted) {
+                [sheet addButtonWithTitle:@"友達申請中"];
+            }
+        }
+        if ((user.requestToMe == nil) && (user.requestToUser == nil)) {
+            [sheet addButtonWithTitle:@"友達に追加"];
+        }
+    }
+    
+    if (user.isFollowing) {
+        [sheet addButtonWithTitle:@"お気に入りから外す"];
+    } else {
+        [sheet addButtonWithTitle:@"お気に入りに追加"];
+    }
+    [sheet addButtonWithTitle:@"キャンセル"];
+    
+    sheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+    sheet.delegate = self;
+    [sheet showFromTabBar:self.tabBarController.tabBar];
+}
+
+- (void)didPresentActionSheet:(UIActionSheet *)actionSheet {
+    if (!user.isFriend) {
+        if (user.requestToUser != nil) {
+            if ([user.requestToMe integerValue] != kUserRequestAccepted) {
+                [actionSheet setButton:0 toState:false];
+            }
+        }
+    }
 }
 
 - (void)sendFriendRequest {
@@ -586,24 +614,6 @@
                                             NSLog(@"Something went wrong (User - Send request)");
                                             [HUD hide:YES];
                                         }];
-    }
-}
-
-- (IBAction)touchFriend:(id)sender {
-    if (!user.isFriend) {
-        [self sendFriendRequest];
-        
-    } else {
-        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"友達から外す"
-                                                           delegate:self
-                                                  cancelButtonTitle:@"キャンセル"
-                                             destructiveButtonTitle:nil
-                                                  otherButtonTitles:@"本当に", nil];
-        sheet.tag = 2;
-        sheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
-        sheet.delegate = self;
-        [sheet showFromTabBar:self.tabBarController.tabBar];
-
     }
 }
 
@@ -650,7 +660,10 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     switch (buttonIndex) {
         case 0:
-            [self removeFriend];
+            [self sendFriendRequest];
+            break;
+        case 1:
+            [self toggleFollow];
             break;
         default:
             break;

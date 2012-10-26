@@ -11,9 +11,7 @@
 #import <ImageIO/ImageIO.h>
 #import "GPUImageStillCamera+captureWithMeta.h"
 #import "GPUImage.h"
-#import "GPUImagePicture+forceProcessImage.h"
 #import "FilterManager.h"
-#import "UIImage+Resize.h"
 
 @protocol AVCameraManagerDelegate <NSObject>
 - (void)didProcessImage;
@@ -24,16 +22,15 @@
     GPUImagePicture *picture;
     GPUImageView *preview;
     GPUImageFilterPipeline *pipeline;
-    GPUImageFilterGroup *lens;
-    GPUImageFilterGroup *effect;
-    GPUImageCropFilter *crop;
+//    GPUImageFilterGroup *lens;
+//    GPUImageFilterGroup *effect;
+//    GPUImageCropFilter *crop;
 
     NSMutableDictionary *imageMeta;
-    UIImage *imageLib;
-    UIDeviceOrientation deviceOrientation;
     
     BOOL isFront;
-    BOOL isCrop;
+//    BOOL isCrop;
+    BOOL isCapturing;
 
     id<AVCameraManagerDelegate> delegate;
 }
@@ -48,20 +45,20 @@
 - (void)toggleCrop;
 - (void)startCamera;
 - (void)stopCamera;
-- (void)pauseCamera;
-- (void)resumeCamera;
 
 - (void)setMetteringPoint:(CGPoint)point;
 - (void)setFocusPoint:(CGPoint)point;
-- (void)changeLens:(GPUImageFilterGroup *)aLens;
-- (void)changeEffect:(GPUImageFilterGroup *)aEffect;
+//- (void)changeLens:(GPUImageFilterGroup *)aLens;
+//- (void)changeEffect:(GPUImageFilterGroup *)aEffect;
 
 - (void)processImage;
 
 - (void)setDelegate:(id)aDelegate;
 - (void)captureNow;
 - (void)processUIImage:(UIImage*)image withMeta:(NSMutableDictionary*)aMeta;
-- (void)saveImage:(NSDictionary *)location onComplete:(void(^)(ALAsset *asset))block;
+- (void)saveImage:(NSDictionary *)location orientation:(UIImageOrientation)imageOrientation onComplete:(void(^)(ALAsset *asset))block;
 - (void)setFlash:(BOOL)flash;
-
+//- (void)removeAllTargets;
+//- (void)refreshFilter;
+- (void)initPipeWithLens:(GPUImageFilterGroup *)aLens withEffect:(GPUImageFilterGroup *)aEffect;
 @end

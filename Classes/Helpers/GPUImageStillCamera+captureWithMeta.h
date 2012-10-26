@@ -11,6 +11,5 @@
 @interface GPUImageStillCamera (captureWithMeta)
 
 - (void)capturePhotoAsImageWithMeta:(void (^)(UIImage *processedImage, NSMutableDictionary *metadata, NSError *error))block;
-- (void)processMyBuffer:(CMSampleBufferRef)imageSampleBuffer;
 
 @end

@@ -20,6 +20,7 @@
 #import "MBProgressHUD.h"
 #import "EGORefreshTableHeaderView.h"
 #import "luxeysButtonBrown30.h"
+#import "UIActionSheet+ButtonState.h"
 
 #define kTableProfile 1
 #define kTableFriends 2
@@ -64,12 +65,12 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonFriendCount;
 @property (strong, nonatomic) IBOutlet UILabel *labelNickname;
 @property (strong, nonatomic) IBOutlet UIButton *buttonContact;
-@property (strong, nonatomic) IBOutlet luxeysButtonBrown30 *buttonFriend;
+@property (strong, nonatomic) IBOutlet UIImageView *iconFriend;
+@property (strong, nonatomic) IBOutlet UIImageView *iconFollow;
 
 - (IBAction)touchTab:(UIButton *)sender;
 - (IBAction)touchBack:(id)sender;
 - (void)setUserID:(int)aUserID;
 - (IBAction)touchContact:(id)sender;
-- (IBAction)touchFriend:(id)sender;
 
 @end

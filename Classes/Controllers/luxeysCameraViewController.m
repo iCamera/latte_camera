@@ -82,13 +82,18 @@
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     [locationManager startUpdatingLocation];
     [self performSelector:@selector(stopUpdatingLocation:) withObject:nil afterDelay:45];
+    
+    currentEffect = 1;
+    currentLens = 0;
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [camera startCamera];
+        [self applyCurrentEffect];
+    });
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     self.navigationController.navigationBarHidden = YES;
-    if (!isEditing) {
-        [self startCamera];
-    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -99,8 +104,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [self stopCamera];
-    
+    [camera stopCamera];
     [super viewWillDisappear:animated];
 }
 
@@ -114,44 +118,76 @@
 }
 
 - (void)applyCurrentEffect {
+    GPUImageFilterGroup *effect;
+    GPUImageFilterGroup *lens;
     switch (currentEffect) {
         case 1:
-            [camera changeEffect:[FilterManager effect1]];
+            effect = [FilterManager effect1];
             break;
         case 2:
-            [camera changeEffect:[FilterManager effect2]];
+            effect = [FilterManager effect2];
             break;
         case 3:
-            [camera changeEffect:[FilterManager effect3]];
+            effect = [FilterManager effect3];
             break;
         case 4:
-            [camera changeEffect:[FilterManager effect4]];
+            effect = [FilterManager effect4];
             break;
         case 5:
-            [camera changeEffect:[FilterManager effect5]];
+            effect = [FilterManager effect5];
             break;
         default:
             break;
     }
+    
+    switch (currentLens) {
+        case 0:
+            lens = [FilterManager lensNormal];
+            break;
+        case 1:
+            lens = [FilterManager lensFish];
+            break;
+        case 2:
+            lens = [FilterManager lensTilt];
+            break;
+        default:
+            break;
+    }
+    
+    [camera initPipeWithLens:lens withEffect:effect];
+    
     if (isEditing) {
         [self showStillImage];
     }
 }
 
 - (void)showStillImage {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [camera processImage];
-    });
+    
+    GPUImageRotationMode imageViewRotationMode = kGPUImageNoRotation;
+    switch (imageOrientation) {
+        case UIImageOrientationLeft:
+            imageViewRotationMode = kGPUImageRotateLeft;
+            break;
+        case UIImageOrientationRight:
+            imageViewRotationMode = kGPUImageRotateRight;
+            break;
+        case UIImageOrientationDown:
+            imageViewRotationMode = kGPUImageRotate180;
+            break;
+        case UIImageOrientationUp:
+            imageViewRotationMode = kGPUImageNoRotation;
+            break;
+        default:
+            imageViewRotationMode = kGPUImageRotateLeft;
+    }
+    
+    // seems like atIndex is ignored by GPUImageView...
+    [cameraView setInputRotation:imageViewRotationMode atIndex:0];
+    
+    [camera processImage];
 }
 
 - (IBAction)setEffect:(id)sender {
-    if (isEditing) {
-        if (isFinishedProcessing)
-            isFinishedProcessing = false;
-        else
-            return;
-    }
-
     UIButton* buttonEffect = (UIButton*)sender;
     currentEffect = buttonEffect.tag;
     [self applyCurrentEffect];
@@ -166,8 +202,19 @@
 }
 
 - (void)capturePhotoAsync {
-    [self switchEditImage];
-    [camera captureNow];
+    [camera.videoCamera capturePhotoAsImageWithMeta:^(UIImage *processedImage, NSMutableDictionary *metadata, NSError *error) {
+        runOnMainQueueWithoutDeadlocking(^{
+            [camera stopCamera];
+            
+            imageOrientation = processedImage.imageOrientation;
+            [camera processUIImage:processedImage withMeta:metadata];
+//            [camera refreshFilter];
+            [self switchEditImage];
+            [self applyCurrentEffect];
+            
+        });
+    }];
+
 }
 
 - (IBAction)cameraTouch:(UITapGestureRecognizer *)sender {
@@ -180,6 +227,10 @@
 }
 
 - (IBAction)openImagePicker:(id)sender {
+    if (!isEditing) {
+        [camera stopCamera];
+    }
+    
     [self presentViewController:imagePicker animated:NO completion:nil];
 }
 
@@ -189,10 +240,8 @@
 }
 
 - (IBAction)capture:(id)sender {
-    if (isReady) {
-        buttonPick.hidden = true;
-        [self capturePhotoAsync];
-    }
+    buttonPick.hidden = true;
+    [self capturePhotoAsync];
 }
 
 - (IBAction)changeLens:(id)sender {
@@ -254,7 +303,7 @@
         [imageMeta setObject:location forKey:(NSString *)kCGImagePropertyGPSDictionary];
     }
     
-    [camera saveImage:location onComplete:saveImage];
+    [camera saveImage:location orientation:imageOrientation onComplete:saveImage];
 }
 
 - (void)setupCameraAspect {
@@ -281,41 +330,36 @@
     [cameraView addConstraint:cameraAspect];
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {    
-    switch (buttonIndex) {
-        case 0:
-            [camera changeLens:[FilterManager lensNormal]];
-            break;
-        case 1:
-            [camera changeLens:[FilterManager lensTilt]];
-            break;
-        case 2:
-            [camera changeLens:[FilterManager lensFish]];
-            break;
-            
-        default:
-            break;
-    }
-    
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    currentLens = buttonIndex;
     [self applyCurrentEffect];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    [imagePicker dismissViewControllerAnimated:NO completion:nil];
     imageMeta = [NSMutableDictionary dictionaryWithDictionary:[info valueForKey:UIImagePickerControllerMediaMetadata]];
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-    [NSThread detachNewThreadSelector:@selector(selectedPic:) toTarget:self withObject:[image fixOrientation]];
+    imageOrientation = image.imageOrientation;
+    
+    [camera processUIImage:image withMeta:imageMeta];
+//    [camera refreshFilter];
+    [imagePicker dismissViewControllerAnimated:NO completion:nil];
+    
+    [self switchEditImage];
+    [self applyCurrentEffect];
 }
 
-- (void)selectedPic:(UIImage*)image {
-    [camera processUIImage:image withMeta:imageMeta];
-    [self switchEditImage];
-    [self stopCamera];
-    [self showStillImage];
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:NO completion:nil];
+    [self switchCamera];
 }
 
 - (void)switchCamera {
     isEditing = NO;
+    
+    [camera startCamera];
+    [self applyCurrentEffect];
+    [cameraView setInputRotation:kGPUImageNoRotation atIndex:0];
+    
     buttonNo.hidden = YES;
     buttonYes.hidden = YES;
     buttonCapture.hidden = NO;
@@ -325,9 +369,6 @@
     buttonCrop.hidden = NO;
     imageAutoFocus.hidden = NO;
     buttonPick.hidden = NO;
-    
-    [self startCamera];
-
 }
 
 - (void)switchEditImage {
@@ -341,10 +382,6 @@
     buttonCrop.hidden = YES;
     imageAutoFocus.hidden = YES;
     viewTimer.hidden = YES;
-    
-    if (isReady) {
-        [camera pauseCamera];
-    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -384,21 +421,6 @@
     
 }
 
-- (void)startCamera {
-    [camera resumeCamera];
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [camera startCamera];
-        isReady = true;
-    });
-}
-
-- (void)stopCamera {
-    isReady = false;
-    [camera pauseCamera];
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [camera stopCamera];
-    });
-}
 
 - (void)didProcessImage {
     isFinishedProcessing = true;
