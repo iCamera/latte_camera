@@ -31,6 +31,7 @@
 @synthesize viewBottomBar;
 @synthesize imageAutoFocus;
 @synthesize buttonPick;
+@synthesize buttonScroll;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -48,6 +49,7 @@
         isCrop = true;
         isReady = false;
         isFinishedProcessing = true;
+        filter = [[FilterManager alloc] init];
     }
     return self;
 }
@@ -67,7 +69,7 @@
 	imageBottom.layer.shadowRadius = 2.5f;
 	imageBottom.layer.shadowPath = shadowPath.CGPath;
     
-    scrollEffect.contentSize=CGSizeMake(500,60);
+    
     
     camera = [[AVCameraManager alloc] initWithView:cameraView];
     [camera setDelegate:self];
@@ -83,13 +85,20 @@
     [locationManager startUpdatingLocation];
     [self performSelector:@selector(stopUpdatingLocation:) withObject:nil afterDelay:45];
     
-    currentEffect = 1;
+    currentEffect = 0;
     currentLens = 0;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [camera.videoCamera resumeCameraCapture];
         [camera startCamera];
         [self applyCurrentEffect];
     });
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [scrollEffect setContentSize:CGSizeMake(400.0, 70)];
+    
+    [super viewDidAppear:animated];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -104,6 +113,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [camera.videoCamera pauseCameraCapture];
     [camera stopCamera];
     [super viewWillDisappear:animated];
 }
@@ -118,46 +128,11 @@
 }
 
 - (void)applyCurrentEffect {
-    GPUImageFilterGroup *effect;
-    GPUImageFilterGroup *lens;
-    switch (currentEffect) {
-        case 1:
-            effect = [FilterManager effect1];
-            break;
-        case 2:
-            effect = [FilterManager effect2];
-            break;
-        case 3:
-            effect = [FilterManager effect3];
-            break;
-        case 4:
-            effect = [FilterManager effect4];
-            break;
-        case 5:
-            effect = [FilterManager effect5];
-            break;
-        default:
-            break;
-    }
-    
-    switch (currentLens) {
-        case 0:
-            lens = [FilterManager lensNormal];
-            break;
-        case 1:
-            lens = [FilterManager lensFish];
-            break;
-        case 2:
-            lens = [FilterManager lensTilt];
-            break;
-        default:
-            break;
-    }
-    
-    [camera initPipeWithLens:lens withEffect:effect];
-    
     if (isEditing) {
+        [filter changeFiltertoLens:currentLens andEffect:currentEffect input:camera.picture output:cameraView];
         [self showStillImage];
+    } else {
+        [filter changeFiltertoLens:currentLens andEffect:currentEffect input:camera.videoCamera output:cameraView];
     }
 }
 
@@ -202,16 +177,17 @@
 }
 
 - (void)capturePhotoAsync {
+    [camera.videoCamera pauseCameraCapture];
     [camera.videoCamera capturePhotoAsImageWithMeta:^(UIImage *processedImage, NSMutableDictionary *metadata, NSError *error) {
         runOnMainQueueWithoutDeadlocking(^{
             [camera stopCamera];
             
             imageOrientation = processedImage.imageOrientation;
+            imageMeta = metadata;
             [camera processUIImage:processedImage withMeta:metadata];
-//            [camera refreshFilter];
             [self switchEditImage];
-            [self applyCurrentEffect];
             
+            [self applyCurrentEffect];
         });
     }];
 
@@ -228,6 +204,7 @@
 
 - (IBAction)openImagePicker:(id)sender {
     if (!isEditing) {
+        [camera.videoCamera pauseCameraCapture];
         [camera stopCamera];
     }
     
@@ -280,6 +257,7 @@
 
 - (IBAction)toggleEffect:(id)sender {
     scrollEffect.hidden = !scrollEffect.hidden;
+    buttonScroll.selected = !scrollEffect.hidden;
 }
 
 - (void)saveImage {
@@ -303,7 +281,7 @@
         [imageMeta setObject:location forKey:(NSString *)kCGImagePropertyGPSDictionary];
     }
     
-    [camera saveImage:location orientation:imageOrientation onComplete:saveImage];
+    [filter saveImage:location orientation:imageOrientation withMeta:imageMeta onComplete:saveImage];
 }
 
 - (void)setupCameraAspect {
@@ -356,6 +334,7 @@
 - (void)switchCamera {
     isEditing = NO;
     
+    [camera.videoCamera resumeCameraCapture];
     [camera startCamera];
     [self applyCurrentEffect];
     [cameraView setInputRotation:kGPUImageNoRotation atIndex:0];

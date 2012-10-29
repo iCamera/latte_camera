@@ -30,6 +30,14 @@
 		884B5A81160FF24B0059102E /* UIButton+AsyncImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 884B5A80160FF24B0059102E /* UIButton+AsyncImage.m */; };
 		884B5A8D16106E6B0059102E /* luxeysTemplatePicTimeline.m in Sources */ = {isa = PBXBuildFile; fileRef = 884B5A8B16106E6B0059102E /* luxeysTemplatePicTimeline.m */; };
 		884B5A8E16106E6B0059102E /* luxeysTemplatePicTimeline.xib in Resources */ = {isa = PBXBuildFile; fileRef = 884B5A8C16106E6B0059102E /* luxeysTemplatePicTimeline.xib */; };
+		884FBB90163E24A3006C4359 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 884FBB8F163E24A3006C4359 /* SystemConfiguration.framework */; };
+		88500BFB163E109F0052F007 /* 02.acv in Resources */ = {isa = PBXBuildFile; fileRef = 88500BF4163E109F0052F007 /* 02.acv */; };
+		88500BFC163E109F0052F007 /* 06.acv in Resources */ = {isa = PBXBuildFile; fileRef = 88500BF5163E109F0052F007 /* 06.acv */; };
+		88500BFD163E109F0052F007 /* 17.acv in Resources */ = {isa = PBXBuildFile; fileRef = 88500BF6163E109F0052F007 /* 17.acv */; };
+		88500BFE163E109F0052F007 /* aqua.acv in Resources */ = {isa = PBXBuildFile; fileRef = 88500BF7163E109F0052F007 /* aqua.acv */; };
+		88500BFF163E109F0052F007 /* crossprocess.acv in Resources */ = {isa = PBXBuildFile; fileRef = 88500BF8163E109F0052F007 /* crossprocess.acv */; };
+		88500C00163E109F0052F007 /* purple-green.acv in Resources */ = {isa = PBXBuildFile; fileRef = 88500BF9163E109F0052F007 /* purple-green.acv */; };
+		88500C01163E109F0052F007 /* yellow-red.acv in Resources */ = {isa = PBXBuildFile; fileRef = 88500BFA163E109F0052F007 /* yellow-red.acv */; };
 		88503048161EBF410093927B /* luxeysCellPicCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = 88503047161EBF410093927B /* luxeysCellPicCalendar.m */; };
 		8850304B161EC0C70093927B /* luxeysUserCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8850304A161EC0C70093927B /* luxeysUserCalendarViewController.m */; };
 		885AB083163A5ED000217AB4 /* bt_hold_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 885AB075163A5ED000217AB4 /* bt_hold_on.png */; };
@@ -47,6 +55,8 @@
 		885AB08F163A5ED000217AB4 /* mark_friend.png in Resources */ = {isa = PBXBuildFile; fileRef = 885AB081163A5ED000217AB4 /* mark_friend.png */; };
 		885AB090163A5ED000217AB4 /* mark_friend@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 885AB082163A5ED000217AB4 /* mark_friend@2x.png */; };
 		885AB093163A675B00217AB4 /* UIActionSheet+ButtonState.m in Sources */ = {isa = PBXBuildFile; fileRef = 885AB092163A675B00217AB4 /* UIActionSheet+ButtonState.m */; };
+		885AB096163AB75800217AB4 /* loading_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 885AB094163AB75800217AB4 /* loading_arrow.png */; };
+		885AB097163AB75800217AB4 /* loading_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 885AB095163AB75800217AB4 /* loading_arrow@2x.png */; };
 		8864139916158E2F00181E52 /* icon_comment2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8864139316158E2F00181E52 /* icon_comment2.png */; };
 		8864139A16158E2F00181E52 /* icon_comment2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8864139416158E2F00181E52 /* icon_comment2@2x.png */; };
 		8864139B16158E2F00181E52 /* icon_comment3.png in Resources */ = {isa = PBXBuildFile; fileRef = 8864139516158E2F00181E52 /* icon_comment3.png */; };
@@ -517,6 +527,14 @@
 		884B5A8A16106E6B0059102E /* luxeysTemplatePicTimeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysTemplatePicTimeline.h; path = Classes/Controllers/Modules/luxeysTemplatePicTimeline.h; sourceTree = "<group>"; };
 		884B5A8B16106E6B0059102E /* luxeysTemplatePicTimeline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysTemplatePicTimeline.m; path = Classes/Controllers/Modules/luxeysTemplatePicTimeline.m; sourceTree = "<group>"; };
 		884B5A8C16106E6B0059102E /* luxeysTemplatePicTimeline.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = luxeysTemplatePicTimeline.xib; path = Classes/Controllers/Modules/luxeysTemplatePicTimeline.xib; sourceTree = "<group>"; };
+		884FBB8F163E24A3006C4359 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		88500BF4163E109F0052F007 /* 02.acv */ = {isa = PBXFileReference; lastKnownFileType = file; name = 02.acv; path = Resources/Effect/02.acv; sourceTree = "<group>"; };
+		88500BF5163E109F0052F007 /* 06.acv */ = {isa = PBXFileReference; lastKnownFileType = file; name = 06.acv; path = Resources/Effect/06.acv; sourceTree = "<group>"; };
+		88500BF6163E109F0052F007 /* 17.acv */ = {isa = PBXFileReference; lastKnownFileType = file; name = 17.acv; path = Resources/Effect/17.acv; sourceTree = "<group>"; };
+		88500BF7163E109F0052F007 /* aqua.acv */ = {isa = PBXFileReference; lastKnownFileType = file; name = aqua.acv; path = Resources/Effect/aqua.acv; sourceTree = "<group>"; };
+		88500BF8163E109F0052F007 /* crossprocess.acv */ = {isa = PBXFileReference; lastKnownFileType = file; name = crossprocess.acv; path = Resources/Effect/crossprocess.acv; sourceTree = "<group>"; };
+		88500BF9163E109F0052F007 /* purple-green.acv */ = {isa = PBXFileReference; lastKnownFileType = file; name = "purple-green.acv"; path = "Resources/Effect/purple-green.acv"; sourceTree = "<group>"; };
+		88500BFA163E109F0052F007 /* yellow-red.acv */ = {isa = PBXFileReference; lastKnownFileType = file; name = "yellow-red.acv"; path = "Resources/Effect/yellow-red.acv"; sourceTree = "<group>"; };
 		88503046161EBF410093927B /* luxeysCellPicCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysCellPicCalendar.h; path = Classes/CustomControls/luxeysCellPicCalendar.h; sourceTree = SOURCE_ROOT; };
 		88503047161EBF410093927B /* luxeysCellPicCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysCellPicCalendar.m; path = Classes/CustomControls/luxeysCellPicCalendar.m; sourceTree = SOURCE_ROOT; };
 		88503049161EC0C70093927B /* luxeysUserCalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysUserCalendarViewController.h; path = Classes/Controllers/luxeysUserCalendarViewController.h; sourceTree = "<group>"; };
@@ -537,6 +555,8 @@
 		885AB082163A5ED000217AB4 /* mark_friend@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mark_friend@2x.png"; sourceTree = "<group>"; };
 		885AB091163A675B00217AB4 /* UIActionSheet+ButtonState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIActionSheet+ButtonState.h"; path = "Classes/Helpers/UIActionSheet+ButtonState.h"; sourceTree = SOURCE_ROOT; };
 		885AB092163A675B00217AB4 /* UIActionSheet+ButtonState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIActionSheet+ButtonState.m"; path = "Classes/Helpers/UIActionSheet+ButtonState.m"; sourceTree = SOURCE_ROOT; };
+		885AB094163AB75800217AB4 /* loading_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading_arrow.png; sourceTree = "<group>"; };
+		885AB095163AB75800217AB4 /* loading_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading_arrow@2x.png"; sourceTree = "<group>"; };
 		8864139316158E2F00181E52 /* icon_comment2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_comment2.png; sourceTree = "<group>"; };
 		8864139416158E2F00181E52 /* icon_comment2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_comment2@2x.png"; sourceTree = "<group>"; };
 		8864139516158E2F00181E52 /* icon_comment3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_comment3.png; sourceTree = "<group>"; };
@@ -1071,6 +1091,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				884FBB90163E24A3006C4359 /* SystemConfiguration.framework in Frameworks */,
 				88FE2818162FEBB700C6E5CD /* ImageIO.framework in Frameworks */,
 				887E40D11626CE380060623C /* Accounts.framework in Frameworks */,
 				887E40D21626CE380060623C /* AdSupport.framework in Frameworks */,
@@ -1119,6 +1140,13 @@
 		8836FCC8162D12040099D1B6 /* Effect */ = {
 			isa = PBXGroup;
 			children = (
+				88500BF4163E109F0052F007 /* 02.acv */,
+				88500BF5163E109F0052F007 /* 06.acv */,
+				88500BF6163E109F0052F007 /* 17.acv */,
+				88500BF7163E109F0052F007 /* aqua.acv */,
+				88500BF8163E109F0052F007 /* crossprocess.acv */,
+				88500BF9163E109F0052F007 /* purple-green.acv */,
+				88500BFA163E109F0052F007 /* yellow-red.acv */,
 				889447A7162D4A7800B31616 /* grain.jpg */,
 				8836FCC9162D12400099D1B6 /* blend1.png */,
 			);
@@ -1199,6 +1227,8 @@
 		8897383D15E49C87002F4717 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				885AB094163AB75800217AB4 /* loading_arrow.png */,
+				885AB095163AB75800217AB4 /* loading_arrow@2x.png */,
 				885AB075163A5ED000217AB4 /* bt_hold_on.png */,
 				885AB076163A5ED000217AB4 /* bt_hold_on@2x.png */,
 				885AB077163A5ED000217AB4 /* bt_hold.png */,
@@ -1679,6 +1709,7 @@
 		88D9863815B8F97700858AD6 = {
 			isa = PBXGroup;
 			children = (
+				884FBB8F163E24A3006C4359 /* SystemConfiguration.framework */,
 				88FE2817162FEBB700C6E5CD /* ImageIO.framework */,
 				887E40CE1626CE300060623C /* Accounts.framework */,
 				887E40CF1626CE330060623C /* AdSupport.framework */,
@@ -2355,6 +2386,15 @@
 				885AB08E163A5ED000217AB4 /* mark_follow@2x.png in Resources */,
 				885AB08F163A5ED000217AB4 /* mark_friend.png in Resources */,
 				885AB090163A5ED000217AB4 /* mark_friend@2x.png in Resources */,
+				885AB096163AB75800217AB4 /* loading_arrow.png in Resources */,
+				885AB097163AB75800217AB4 /* loading_arrow@2x.png in Resources */,
+				88500BFB163E109F0052F007 /* 02.acv in Resources */,
+				88500BFC163E109F0052F007 /* 06.acv in Resources */,
+				88500BFD163E109F0052F007 /* 17.acv in Resources */,
+				88500BFE163E109F0052F007 /* aqua.acv in Resources */,
+				88500BFF163E109F0052F007 /* crossprocess.acv in Resources */,
+				88500C00163E109F0052F007 /* purple-green.acv in Resources */,
+				88500C01163E109F0052F007 /* yellow-red.acv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

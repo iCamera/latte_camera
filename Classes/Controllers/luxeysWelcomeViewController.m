@@ -40,6 +40,16 @@
                                                      name:@"LoggedOut"
                                                    object:nil];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(receiveLoggedIn:)
+                                                     name:@"NoConnection"
+                                                   object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(receiveLoggedOut:)
+                                                     name:@"ConnectedInternet"
+                                                   object:nil];
+        
         loadEnded = false;
         pagephoto = 1;
         indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];

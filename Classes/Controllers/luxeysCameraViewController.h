@@ -31,6 +31,7 @@ typedef enum {
 
 @interface luxeysCameraViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, AVCameraManagerDelegate, CLLocationManagerDelegate> {
     AVCameraManager *camera;
+    FilterManager *filter;
     UIActionSheet *sheet;
     UIImagePickerController *imagePicker;
     NSMutableDictionary *imageMeta;
@@ -76,6 +77,7 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIPanGestureRecognizer *gesturePan;
 @property (strong, nonatomic) IBOutlet UIButton *buttonCrop;
 @property (strong, nonatomic) IBOutlet UIButton *buttonPick;
+@property (strong, nonatomic) IBOutlet UIButton *buttonScroll;
 - (IBAction)touchNo:(id)sender;
 - (IBAction)flipCamera:(id)sender;
 - (IBAction)panTarget:(UIPanGestureRecognizer *)sender;

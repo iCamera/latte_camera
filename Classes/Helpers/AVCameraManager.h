@@ -20,16 +20,8 @@
 @interface AVCameraManager : NSObject {
     GPUImageStillCamera *videoCamera;
     GPUImagePicture *picture;
-    GPUImageView *preview;
-    GPUImageFilterPipeline *pipeline;
-//    GPUImageFilterGroup *lens;
-//    GPUImageFilterGroup *effect;
-//    GPUImageCropFilter *crop;
-
-    NSMutableDictionary *imageMeta;
     
     BOOL isFront;
-//    BOOL isCrop;
     BOOL isCapturing;
 
     id<AVCameraManagerDelegate> delegate;
@@ -54,11 +46,7 @@
 - (void)processImage;
 
 - (void)setDelegate:(id)aDelegate;
-- (void)captureNow;
 - (void)processUIImage:(UIImage*)image withMeta:(NSMutableDictionary*)aMeta;
-- (void)saveImage:(NSDictionary *)location orientation:(UIImageOrientation)imageOrientation onComplete:(void(^)(ALAsset *asset))block;
 - (void)setFlash:(BOOL)flash;
-//- (void)removeAllTargets;
-//- (void)refreshFilter;
-- (void)initPipeWithLens:(GPUImageFilterGroup *)aLens withEffect:(GPUImageFilterGroup *)aEffect;
+
 @end

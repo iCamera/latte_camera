@@ -127,7 +127,6 @@
                                                                         bundle: nil] instantiateInitialViewController];
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    app.storyCamera = viewCapture;
     app.window.rootViewController = viewCapture;
 /*    [UIView transitionWithView:app.window duration:0.5 options: UIViewAnimationOptionTransitionFlipFromLeft animations:^{
         
@@ -227,14 +226,6 @@
 - (void)hideTab:(NSNotification *) notification
 {
     [self setTabBarHidden:TRUE];
-}
-
-- (BOOL)shouldAutorotate {
-    return false;
-}
-
-- (NSUInteger)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
 }
 
 @end

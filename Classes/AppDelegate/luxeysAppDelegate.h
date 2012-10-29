@@ -20,7 +20,6 @@
 }
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) luxeysCameraViewController *storyCamera;
 @property (strong, nonatomic) luxeysTabBarViewController *viewMainTab;
 @property (strong, nonatomic) LXUIRevealController *revealController;
 

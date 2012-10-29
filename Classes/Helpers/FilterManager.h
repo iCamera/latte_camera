@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "GPUImage.h"
 #import "GPUImageOutput.h"
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <ImageIO/ImageIO.h>
+
 
 @interface FilterManager : NSObject {
     NSMutableArray *filters;
@@ -17,15 +20,30 @@
      1: lens
      2: filter
      */
+    GPUImageBrightnessFilter *brightness;
+    GPUImagePinchDistortionFilter *distord;
+    GPUImageTiltShiftFilter *tiltShift;
+    GPUImageSharpenFilter *sharpen;
+    GPUImageVignetteFilter *vignette;
+    GPUImageToneCurveFilter *tonecurve;
+    GPUImageRGBFilter *rgb;
+    GPUImageExposureFilter *exposure;
+    GPUImageCropFilter *crop;
+    
+    GPUImageOverlayBlendFilter *grain;
+    
+    GPUImageContrastFilter *contrast;
+    GPUImageGrayscaleFilter *mono;
+    GPUImageMonochromeFilter *sepia;
+    GPUImageGaussianSelectiveBlurFilter *blur;
+    
+    GPUImageOutput<GPUImageInput> *lensIn;
+    GPUImageOutput<GPUImageInput> *lensOut;
+    GPUImageOutput<GPUImageInput> *effectIn;
+    GPUImageOutput<GPUImageInput> *effectOut;
 }
 
-+ (GPUImageFilterGroup *)lensNormal;
-+ (GPUImageFilterGroup *)lensTilt;
-+ (GPUImageFilterGroup *)lensFish;
-+ (GPUImageFilterGroup *)effect1;
-+ (GPUImageFilterGroup *)effect2;
-+ (GPUImageFilterGroup *)effect3;
-+ (GPUImageFilterGroup *)effect4;
-+ (GPUImageFilterGroup *)effect5;
-
+- (void)changeFiltertoLens:(NSInteger)aLens andEffect:(NSInteger)aEffect input:(GPUImageOutput *)aInput output:(GPUImageView *)aOutput;
+- (void)saveImage:(NSDictionary *)location orientation:(UIImageOrientation)imageOrientation withMeta:(NSMutableDictionary *)imageMeta onComplete:(void(^)(ALAsset *asset))block;
+    
 @end

@@ -19,7 +19,6 @@
 @synthesize apns;
 @synthesize window;
 @synthesize tokenItem;
-@synthesize storyCamera;
 @synthesize viewMainTab;
 @synthesize revealController;
 
@@ -94,7 +93,9 @@ void uncaughtExceptionHandler(NSException *exception) {
                                                              leftViewController:nil
                                                             rightViewController:rightViewController];
     
-    window.rootViewController = revealController;
+    luxeysCameraViewController *viewCapture = [[UIStoryboard storyboardWithName:@"CameraStoryboard"
+                                                                         bundle: nil] instantiateInitialViewController];    
+    window.rootViewController = viewCapture;
     [window makeKeyAndVisible];
     
     // Register for Push Notification

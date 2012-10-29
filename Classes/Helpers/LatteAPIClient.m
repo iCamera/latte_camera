@@ -19,6 +19,22 @@ static NSString * const kLatteAPIBaseURLString = @"http://dev.latte.la:8080/";
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedClient = [[LatteAPIClient alloc] initWithBaseURL:[NSURL URLWithString:kLatteAPIBaseURLString]];
+        [_sharedClient setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+            switch (status) {
+                case AFNetworkReachabilityStatusNotReachable:
+                    [[NSNotificationCenter defaultCenter]
+                     postNotificationName:@"NoConnection"
+                     object:_sharedClient];
+                    
+                    break;
+                default:
+                    [[NSNotificationCenter defaultCenter]
+                     postNotificationName:@"ConnectedInternet"
+                     object:_sharedClient];
+                    
+                    break;
+            }
+        }];
     });
     
     return _sharedClient;
