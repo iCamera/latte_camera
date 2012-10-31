@@ -117,6 +117,9 @@
                                         [app setToken:@""];
                                         app.currentUser = nil;
                                         self.tabBarController.selectedIndex = 0;
+                                        if (FBSession.activeSession.isOpen) {
+                                            [FBSession.activeSession closeAndClearTokenInformation];
+                                        }
                                         [[NSNotificationCenter defaultCenter] postNotificationName:@"LoggedOut" object:self];
                                         [self.navigationController popViewControllerAnimated:YES];
                                         [HUD hide:YES];

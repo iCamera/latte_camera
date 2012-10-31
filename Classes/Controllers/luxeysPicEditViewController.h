@@ -32,7 +32,9 @@
 @property (strong, nonatomic) IBOutlet UISwitch *switchGPS;
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *gestureTap;
 @property (strong, nonatomic) IBOutlet UILabel *labelStatus;
-@property (strong, nonatomic) Picture *picture;
+@property (strong, nonatomic) IBOutlet UIView *viewDelete;
+
+@property (strong, atomic) Picture *picture;
 
 - (IBAction)touchPost:(id)sender;
 - (IBAction)touchBack:(id)sender;

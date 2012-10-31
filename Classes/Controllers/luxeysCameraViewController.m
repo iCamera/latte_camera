@@ -19,7 +19,6 @@
 @synthesize cameraView;
 @synthesize viewTimer;
 @synthesize imageBottom;
-@synthesize sheet;
 @synthesize buttonCapture;
 @synthesize buttonYes;
 @synthesize buttonNo;
@@ -32,6 +31,7 @@
 @synthesize imageAutoFocus;
 @synthesize buttonPick;
 @synthesize buttonScroll;
+@synthesize delegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -49,7 +49,6 @@
         isCrop = true;
         isReady = false;
         isFinishedProcessing = true;
-        filter = [[FilterManager alloc] init];
     }
     return self;
 }
@@ -59,6 +58,9 @@
     [super viewDidLoad];
     
     [self setupCameraAspect];
+    
+    filter = [[FilterManager alloc] init];
+    timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countDown:) userInfo:nil repeats:YES];
     
 	// Do any additional setup after loading the view.
     UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:imageBottom.bounds];
@@ -71,12 +73,21 @@
     
     
     
-    camera = [[AVCameraManager alloc] initWithView:cameraView];
-    [camera setDelegate:self];
+    videoCamera = [[GPUImageStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionBack];
+    [videoCamera setOutputImageOrientation:UIInterfaceOrientationPortrait];
+    imageOrientation = UIImageOrientationUp;
     
     imagePicker = [[UIImagePickerController alloc]init];
     [imagePicker.navigationBar setBackgroundImage:[UIImage imageNamed: @"bg_head.png"] forBarMetrics:UIBarMetricsDefault];
     imagePicker.delegate = (id)self;
+    
+    CGRect screen = [[UIScreen mainScreen] bounds];
+    
+    if (screen.size.height == 480) {
+        CGRect frame = cameraView.frame;
+        frame.origin.y = 0;
+        cameraView.frame = frame;
+    }
     
     // GPS Info
     locationManager = [[CLLocationManager alloc] init];
@@ -87,10 +98,10 @@
     
     currentEffect = 0;
     currentLens = 0;
+    currentTimer = kTimerNone;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [camera.videoCamera resumeCameraCapture];
-        [camera startCamera];
+        [videoCamera startCameraCapture];
         [self applyCurrentEffect];
     });
 }
@@ -113,8 +124,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [camera.videoCamera pauseCameraCapture];
-    [camera stopCamera];
+    [videoCamera stopCameraCapture];
     [super viewWillDisappear:animated];
 }
 
@@ -124,15 +134,19 @@
     [self setImageAutoFocus:nil];
     [self setImageBottom:nil];
     [self setViewTimer:nil];
+    
+    videoCamera = nil;
+    filter = nil;
+    
     [super viewDidUnload];
 }
 
 - (void)applyCurrentEffect {
     if (isEditing) {
-        [filter changeFiltertoLens:currentLens andEffect:currentEffect input:camera.picture output:cameraView];
+        [filter changeFiltertoLens:currentLens andEffect:currentEffect input:picture output:cameraView isPicture:true];
         [self showStillImage];
     } else {
-        [filter changeFiltertoLens:currentLens andEffect:currentEffect input:camera.videoCamera output:cameraView];
+        [filter changeFiltertoLens:currentLens andEffect:currentEffect input:videoCamera output:cameraView isPicture:false];
     }
 }
 
@@ -159,7 +173,7 @@
     // seems like atIndex is ignored by GPUImageView...
     [cameraView setInputRotation:imageViewRotationMode atIndex:0];
     
-    [camera processImage];
+    [picture processImage];
 }
 
 - (IBAction)setEffect:(id)sender {
@@ -172,25 +186,22 @@
 - (void)updateTargetPoint {
     CGPoint point = CGPointMake(imageAutoFocus.center.x/cameraView.frame.size.width, imageAutoFocus.center.y/cameraView.frame.size.height);
     
-    [camera setFocusPoint:point];
-    [camera setMetteringPoint:point];
+    [self setFocusPoint:point];
+    [self setMetteringPoint:point];
 }
 
 - (void)capturePhotoAsync {
-    [camera.videoCamera pauseCameraCapture];
-    [camera.videoCamera capturePhotoAsImageWithMeta:^(UIImage *processedImage, NSMutableDictionary *metadata, NSError *error) {
-        runOnMainQueueWithoutDeadlocking(^{
-            [camera stopCamera];
-            
-            imageOrientation = processedImage.imageOrientation;
-            imageMeta = metadata;
-            [camera processUIImage:processedImage withMeta:metadata];
-            [self switchEditImage];
-            
-            [self applyCurrentEffect];
-        });
+    [videoCamera capturePhotoAsImageProcessedUpToFilterWithMeta:[filter getCrop] withCompletionHandler:^(UIImage *processedImage, NSMutableDictionary *meta, NSError *error) {
+        [videoCamera stopCameraCapture];
+        
+        imageMeta = meta;
+        imageOrientation = processedImage.imageOrientation;
+        picture = [[GPUImagePicture alloc] initWithImage:processedImage];
+        
+        [self switchEditImage];
+        [self applyCurrentEffect];
+        
     }];
-
 }
 
 - (IBAction)cameraTouch:(UITapGestureRecognizer *)sender {
@@ -204,16 +215,15 @@
 
 - (IBAction)openImagePicker:(id)sender {
     if (!isEditing) {
-        [camera.videoCamera pauseCameraCapture];
-        [camera stopCamera];
+        [videoCamera stopCameraCapture];
+        [filter clearTargetWithCamera:videoCamera andPicture:picture];
     }
     
     [self presentViewController:imagePicker animated:NO completion:nil];
 }
 
 - (IBAction)close:(id)sender {
-    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-    app.window.rootViewController = app.revealController;
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (IBAction)capture:(id)sender {
@@ -226,7 +236,7 @@
                                         delegate:self
                                cancelButtonTitle:@"キャンセル"
                           destructiveButtonTitle:nil
-                               otherButtonTitles:@"Nomal", @"Tilt Shift", @"Fish Eye", nil];
+                               otherButtonTitles:@"普通", @"チルトシフト", @"魚眼レンズ", nil];
     [sheet setTag:0];
     sheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
     [sheet showInView:self.view];
@@ -234,7 +244,7 @@
 
 - (IBAction)changeFlash:(id)sender {
     buttonFlash.selected = !buttonFlash.selected;
-    [camera setFlash:buttonFlash.selected];
+    [self setFlash:buttonFlash.selected];
 }
 
 - (IBAction)changeCamera:(id)sender {
@@ -252,7 +262,7 @@
 - (IBAction)toggleCrop:(id)sender {
     isCrop = !isCrop;
     [self setupCameraAspect];
-    [camera toggleCrop];
+//    [self toggleCrop];
 }
 
 - (IBAction)toggleEffect:(id)sender {
@@ -261,6 +271,12 @@
 }
 
 - (void)saveImage {
+    NSDictionary *location;
+    if (bestEffortAtLocation != nil) {
+        location = [luxeysUtils getGPSDictionaryForLocation:bestEffortAtLocation];
+        [imageMeta setObject:location forKey:(NSString *)kCGImagePropertyGPSDictionary];
+    }
+    
     void (^saveImage)(ALAsset *) = ^(ALAsset *asset) {
         luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
         
@@ -275,12 +291,7 @@
         }
     };
     
-    NSDictionary *location;
-    if (bestEffortAtLocation != nil) {
-        location = [luxeysUtils getGPSDictionaryForLocation:bestEffortAtLocation];
-        [imageMeta setObject:location forKey:(NSString *)kCGImagePropertyGPSDictionary];
-    }
-    
+    [picture processImage];
     [filter saveImage:location orientation:imageOrientation withMeta:imageMeta onComplete:saveImage];
 }
 
@@ -309,7 +320,11 @@
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 3)
+        return;
+    
     currentLens = buttonIndex;
+
     [self applyCurrentEffect];
 }
 
@@ -318,8 +333,7 @@
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
     imageOrientation = image.imageOrientation;
     
-    [camera processUIImage:image withMeta:imageMeta];
-//    [camera refreshFilter];
+    picture = [[GPUImagePicture alloc] initWithImage:image];
     [imagePicker dismissViewControllerAnimated:NO completion:nil];
     
     [self switchEditImage];
@@ -334,8 +348,9 @@
 - (void)switchCamera {
     isEditing = NO;
     
-    [camera.videoCamera resumeCameraCapture];
-    [camera startCamera];
+    picture = nil;
+    [videoCamera startCameraCapture];
+    imageOrientation = UIImageOrientationUp;
     [self applyCurrentEffect];
     [cameraView setInputRotation:kGPUImageNoRotation atIndex:0];
     
@@ -376,7 +391,7 @@
 
 
 - (IBAction)flipCamera:(id)sender {
-    [camera toggleCamera];
+    [videoCamera rotateCamera];
 }
 
 - (IBAction)panTarget:(UIPanGestureRecognizer *)sender {
@@ -393,7 +408,34 @@
     }
 }
 
-- (IBAction)setTimer:(id)sender {
+- (IBAction)setTimer:(UIButton *)sender {
+    switch (sender.tag) {
+        case 0:
+            timerCount = 0;
+            currentTimer = kTimerNone;
+            break;
+        case 1:
+            currentTimer = kTimer5s;
+            timerCount = 5;
+            break;
+        case 2:
+            timerCount = 10;
+            currentTimer = kTimer10s;
+            break;
+        case 3:
+            currentTimer = kTimerContinuous;
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)countDown:(id)sender {
+    if (timerCount == 0) {
+        [timer invalidate];
+        [self capturePhotoAsync];
+    }
+    timerCount--;
 }
 
 - (void)handleTap:(UITapGestureRecognizer *)sender {
@@ -423,6 +465,71 @@
 - (void)stopUpdatingLocation:(id)sender {
     [locationManager stopUpdatingLocation];
     locationManager.delegate = nil;
+}
+
+- (void)setFlash:(BOOL)flash {
+    AVCaptureDevice *device = videoCamera.inputCamera;
+    
+    NSError *error;
+    if ([device lockForConfiguration:&error]) {
+        if ([device isFlashAvailable]) {
+            if (flash)
+                [device setFlashMode:AVCaptureFlashModeOn];
+            else
+                [device setFlashMode:AVCaptureFlashModeOff];
+            [device unlockForConfiguration];
+            NSLog(@"Set flash");
+        }
+    } else {
+        NSLog(@"ERROR = %@", error);
+    }
+}
+
+- (void)setFocusPoint:(CGPoint)point {
+    AVCaptureDevice *device = videoCamera.inputCamera;
+    
+    CGPoint pointOfInterest;
+    
+    pointOfInterest = CGPointMake(point.y, 1.0 - point.x);
+    
+    NSLog(@"Focus at %f %f", pointOfInterest.x, pointOfInterest.y);
+    
+    NSError *error;
+    if ([device lockForConfiguration:&error]) {
+        if ([device isFocusPointOfInterestSupported] && [device isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
+            [device setFocusPointOfInterest:pointOfInterest];
+            [device setFocusMode:AVCaptureFocusModeAutoFocus];
+            [device unlockForConfiguration];
+            NSLog(@"FOCUS OK");
+        }
+    } else {
+        NSLog(@"ERROR = %@", error);
+    }
+}
+
+
+- (void)setMetteringPoint:(CGPoint)point {
+    AVCaptureDevice *device = videoCamera.inputCamera;
+    
+    CGPoint pointOfInterest;
+    //    if (isCrop)
+    //        pointOfInterest = CGPointMake(point.y + 0.125, 1.0 - point.x);
+    //    else
+    pointOfInterest = CGPointMake(point.y, 1.0 - point.x);
+    NSLog(@"Mettering at %f %f", pointOfInterest.x, pointOfInterest.y);
+    
+    NSError *error;
+    if ([device lockForConfiguration:&error]) {;
+        if([device isExposurePointOfInterestSupported] && [device isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure])
+        {
+            [device setExposurePointOfInterest:pointOfInterest];
+            [device setExposureMode:AVCaptureExposureModeContinuousAutoExposure];
+            NSLog(@"Mettering OK");
+        }
+        [device unlockForConfiguration];
+    } else {
+        NSLog(@"ERROR = %@", error);
+    }
 }
 
 @end

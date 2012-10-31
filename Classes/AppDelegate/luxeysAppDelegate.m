@@ -10,7 +10,7 @@
 #import "luxeysSideMenuViewController.h"
 #import "luxeysRightSideViewController.h"
 #import <Security/Security.h>
-#import "luxeysTabBarViewController.h"
+#import "LXUIRevealController.h"
 #import "LatteAPIClient.h"
 
 @implementation luxeysAppDelegate
@@ -25,17 +25,15 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
-// @synthesize fbsession = _fbsession;
 
-// Facebook
-// - (BOOL)application:(UIApplication *)application
-//             openURL:(NSURL *)url
-//   sourceApplication:(NSString *)sourceApplication
-//          annotation:(id)annotation {
-//     // attempt to extract a token from the url
-//     return [self.fbsession handleOpenURL:url];
-// }
-// FBSample logic
+
+- (BOOL)application:(UIApplication *)application
+             openURL:(NSURL *)url
+   sourceApplication:(NSString *)sourceApplication
+          annotation:(id)annotation {
+     // attempt to extract a token from the url
+     return [FBSession.activeSession handleOpenURL:url];
+}
 
 void uncaughtExceptionHandler(NSException *exception) {
     NSLog(@"CRASH: %@", exception);
@@ -50,7 +48,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)applicationWillTerminate:(UIApplication *)application {
     [self saveContext];
     // FBSample logic
-    // [self.fbsession close];
+    [FBSession.activeSession close];
 }
 
 - (void)setToken:(NSString *)token{
@@ -93,9 +91,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                                                              leftViewController:nil
                                                             rightViewController:rightViewController];
     
-    luxeysCameraViewController *viewCapture = [[UIStoryboard storyboardWithName:@"CameraStoryboard"
-                                                                         bundle: nil] instantiateInitialViewController];    
-    window.rootViewController = viewCapture;
+    window.rootViewController = revealController;
     [window makeKeyAndVisible];
     
     // Register for Push Notification
@@ -172,6 +168,8 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     NSLog(@"Become active");
+    [FBSession.activeSession handleDidBecomeActive];
+    
     [self clearNotification];
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }

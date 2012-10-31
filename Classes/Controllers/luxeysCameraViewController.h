@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "GPUImage.h"
-#import "AVCameraManager.h"
 #import "FilterManager.h"
 #import "luxeysNavBar.h"
 #import "luxeysPicEditViewController.h"
@@ -29,20 +28,34 @@ typedef enum {
     kEffect5
 } EffectType;
 
-@interface luxeysCameraViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, AVCameraManagerDelegate, CLLocationManagerDelegate> {
-    AVCameraManager *camera;
+@class luxeysCameraViewController;
+
+@protocol LXImagePickerDelegate <NSObject>
+@optional
+- (void)imagePickerController:(luxeysCameraViewController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info;
+- (void)imagePickerControllerDidCancel:(luxeysCameraViewController *)picker;
+@end
+
+@interface luxeysCameraViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate> {
+    GPUImageStillCamera *videoCamera;
+    GPUImagePicture *picture;
     FilterManager *filter;
     UIActionSheet *sheet;
     UIImagePickerController *imagePicker;
     NSMutableDictionary *imageMeta;
+    NSTimer *timer;
+    NSInteger timerCount;
 
     BOOL isEditing;
     BOOL isCrop;
     BOOL isReady;
     BOOL isFinishedProcessing;
+    
+    id <LXImagePickerDelegate> delegate;
 
     NSInteger currentEffect;
     NSInteger currentLens;
+    NSInteger currentTimer;
     NSLayoutConstraint *cameraAspect;
     NSInteger timerMode;
     CLLocationManager *locationManager;
@@ -51,21 +64,8 @@ typedef enum {
 }
 @property (strong, nonatomic) IBOutlet UIView *viewBottomBar;
 @property (strong, nonatomic) IBOutlet UIImageView *imageBottom;
-@property (strong, nonatomic) UIActionSheet *sheet;
 @property (strong, nonatomic) IBOutlet GPUImageView *cameraView;
 @property (strong, nonatomic) IBOutlet UIView *viewTimer;
-- (IBAction)setEffect:(id)sender;
-- (IBAction)cameraTouch:(UITapGestureRecognizer *)sender;
-- (IBAction)openImagePicker:(id)sender;
-- (IBAction)close:(id)sender;
-- (IBAction)capture:(id)sender;
-- (IBAction)changeLens:(id)sender;
-- (IBAction)changeFlash:(id)sender;
-- (IBAction)changeCamera:(id)sender;
-- (IBAction)touchTimer:(id)sender;
-- (IBAction)touchSave:(id)sender;
-- (IBAction)toggleCrop:(id)sender;
-- (IBAction)toggleEffect:(id)sender;
 @property (strong, nonatomic) IBOutlet UIImageView *imageAutoFocus;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollEffect;
 @property (strong, nonatomic) IBOutlet UIButton *buttonCapture;
@@ -78,6 +78,21 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIButton *buttonCrop;
 @property (strong, nonatomic) IBOutlet UIButton *buttonPick;
 @property (strong, nonatomic) IBOutlet UIButton *buttonScroll;
+
+@property(strong, atomic) id <LXImagePickerDelegate> delegate;
+
+- (IBAction)setEffect:(id)sender;
+- (IBAction)cameraTouch:(UITapGestureRecognizer *)sender;
+- (IBAction)openImagePicker:(id)sender;
+- (IBAction)close:(id)sender;
+- (IBAction)capture:(id)sender;
+- (IBAction)changeLens:(id)sender;
+- (IBAction)changeFlash:(id)sender;
+- (IBAction)changeCamera:(id)sender;
+- (IBAction)touchTimer:(id)sender;
+- (IBAction)touchSave:(id)sender;
+- (IBAction)toggleCrop:(id)sender;
+- (IBAction)toggleEffect:(id)sender;
 - (IBAction)touchNo:(id)sender;
 - (IBAction)flipCamera:(id)sender;
 - (IBAction)panTarget:(UIPanGestureRecognizer *)sender;

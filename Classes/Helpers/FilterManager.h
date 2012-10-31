@@ -29,6 +29,7 @@
     GPUImageRGBFilter *rgb;
     GPUImageExposureFilter *exposure;
     GPUImageCropFilter *crop;
+    GPUImageCropFilter *crop2;
     
     GPUImageOverlayBlendFilter *grain;
     
@@ -41,9 +42,12 @@
     GPUImageOutput<GPUImageInput> *lensOut;
     GPUImageOutput<GPUImageInput> *effectIn;
     GPUImageOutput<GPUImageInput> *effectOut;
+    GPUImageOutput<GPUImageInput> *lastFilter;
 }
 
-- (void)changeFiltertoLens:(NSInteger)aLens andEffect:(NSInteger)aEffect input:(GPUImageOutput *)aInput output:(GPUImageView *)aOutput;
+- (void)changeFiltertoLens:(NSInteger)aLens andEffect:(NSInteger)aEffect input:(GPUImageOutput *)aInput output:(GPUImageView *)aOutput isPicture:(BOOL)isPicture;
 - (void)saveImage:(NSDictionary *)location orientation:(UIImageOrientation)imageOrientation withMeta:(NSMutableDictionary *)imageMeta onComplete:(void(^)(ALAsset *asset))block;
-    
+- (GPUImageCropFilter*) getCrop;
+- (void)clearTargetWithCamera:(GPUImageStillCamera *)camera andPicture:(GPUImagePicture *)picture;
+
 @end

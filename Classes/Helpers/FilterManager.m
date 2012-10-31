@@ -24,6 +24,7 @@ static GPUImagePicture *texture;
         exposure = [[GPUImageExposureFilter alloc] init];
         rgb = [[GPUImageRGBFilter alloc] init];
         crop = [[GPUImageCropFilter alloc] init];
+        crop2 = [[GPUImageCropFilter alloc] init];
         contrast = [[GPUImageContrastFilter alloc] init];
         mono = [[GPUImageGrayscaleFilter alloc] init];
         sepia = [[GPUImageMonochromeFilter alloc]init];
@@ -35,9 +36,9 @@ static GPUImagePicture *texture;
     return self;
 }
 
-- (void)changeFiltertoLens:(NSInteger)aLens andEffect:(NSInteger)aEffect input:(GPUImageOutput *)aInput output:(GPUImageView *)aOutput {
+- (void)changeFiltertoLens:(NSInteger)aLens andEffect:(NSInteger)aEffect input:(GPUImageOutput *)aInput output:(GPUImageView *)aOutput isPicture:(BOOL)isPicture {
     [aInput removeAllTargets];
-    [self clearTarget];
+    [self clearTargetWithCamera:nil andPicture:nil];
     
     switch (aLens) {
         case 0:
@@ -53,46 +54,95 @@ static GPUImagePicture *texture;
     
     switch (aEffect) {
         case 0:
-            [self tmpEffect1];
+            [self effect0];
             break;
         case 1:
-            [self tmpEffect2];
+            [self tmpEffect1];
             break;
         case 2:
-            [self tmpEffect3];
+            [self tmpEffect2];
             break;
         case 3:
-            [self tmpEffect4];
+            [self tmpEffect3];
             break;
         case 4:
-            [self tmpEffect5];
+            [self tmpEffect4];
             break;
         case 5:
+            [self tmpEffect5];
+            break;
+        case 6:
             [self tmpEffect6];
+            break;
+        case 7:
+            [self tmpEffect2];
+            break;
+        case 8:
+            [self tmpEffect3];
+            break;
+        case 9:
+            [self tmpEffect4];
+            break;
+        case 10:
+            [self tmpEffect5];
             break;
     }
     
+    
     if (lensIn == nil && effectIn == nil) {
-        [aInput addTarget:aOutput];
+        if (isPicture) {
+            [aInput addTarget:aOutput];
+        } else {
+            [aInput addTarget:crop];
+            [crop addTarget:aOutput];
+            
+            lastFilter = crop;
+        }
     } else if (lensIn == nil) {
-        [aInput addTarget:effectIn];
-        [effectOut addTarget:aOutput];
+        if (isPicture) {
+            [aInput addTarget:effectIn];
+            [effectOut addTarget:aOutput];
+        } else {
+            [aInput addTarget:crop];
+            [crop addTarget:effectIn];
+            [effectOut addTarget:aOutput];
+        }
+        lastFilter = effectOut;
     } else if (effectIn == nil) {
-        [aInput addTarget:lensIn];
-        [lensOut addTarget:aOutput];
+        if (isPicture) {
+            [aInput addTarget:lensIn];
+            [lensOut addTarget:aOutput];
+        } else {
+            [aInput addTarget:crop];
+            [crop addTarget:lensIn];
+            [lensOut addTarget:aOutput];
+        }
+        lastFilter = lensOut;
     }
     else {
-        [aInput addTarget:effectIn];
-        [effectOut addTarget:lensIn];
-        [lensOut addTarget:aOutput];
+        if (isPicture) {
+            [aInput addTarget:effectIn];
+            [effectOut addTarget:lensIn];
+            [lensOut addTarget:aOutput];
+        } else {
+            [aInput addTarget:crop];
+            [crop addTarget:effectIn];
+            [effectOut addTarget:lensIn];
+            [lensOut addTarget:aOutput];
+        }
+        lastFilter = lensOut;
     }
 //    [effectOut addTarget:aOutput];
-    [effectOut prepareForImageCapture];
+    if (isPicture) {
+        [lensOut prepareForImageCapture];
+    }
 }
 
 - (GPUImageFilterGroup *)lensNormal {
-    lensIn = nil;
-    lensOut = nil;
+    [crop2 setCropRegion: CGRectMake(0, 0, 1, 1)];
+    
+    lensIn = crop2;
+    lensOut = crop2;
     return nil;
     // GPUImageSharpenFilter *sharpen = [[GPUImageSharpenFilter alloc] init];
     // sharpen.sharpness = 0.5f;
@@ -100,7 +150,7 @@ static GPUImagePicture *texture;
 }
 
 - (GPUImageFilterGroup *)lensTilt {
-    tiltShift.blurSize = 5;
+    tiltShift.blurSize = 2;
     
     [distord setScale:0.1f];
     [distord addTarget: tiltShift];
@@ -111,14 +161,14 @@ static GPUImagePicture *texture;
 }
 
 - (GPUImageFilterGroup *)lensFish {
-    [crop setCropRegion: CGRectMake(0.05, 0.05, 0.9, 0.9)];
+    [crop2 setCropRegion: CGRectMake(0.05, 0.05, 0.9, 0.9)];
     [distord setScale:-0.2f];
     [distord setRadius:0.75f];
     
-    [distord addTarget: crop];
+    [distord addTarget: crop2];
     
     lensIn = distord;
-    lensOut = crop;
+    lensOut = crop2;
     return nil;
 }
 
@@ -338,7 +388,14 @@ static GPUImagePicture *texture;
     effectOut = tonecurve;
 }
 
-- (void)clearTarget {
+- (void)clearTargetWithCamera:(GPUImageStillCamera *)camera andPicture:(GPUImagePicture *)picture {
+    if (camera != nil) {
+        [camera removeAllTargets];
+    }
+    if (picture != nil) {
+        [picture removeAllTargets];
+    }
+    
     [brightness removeAllTargets];
     [distord removeAllTargets];
     [tiltShift removeAllTargets];
@@ -348,6 +405,7 @@ static GPUImagePicture *texture;
     [rgb removeAllTargets];
     [exposure removeAllTargets];
     [crop removeAllTargets];
+    [crop2 removeAllTargets];
     [contrast removeAllTargets];
     [mono removeAllTargets];
     [sepia removeAllTargets];
@@ -367,6 +425,10 @@ static GPUImagePicture *texture;
 //    sepia = [[GPUImageMonochromeFilter alloc]init];
 //    blur = [[GPUImageGaussianSelectiveBlurFilter alloc] init];
 //    grain = [[GPUImageOverlayBlendFilter alloc] init];
+}
+
+- (GPUImageCropFilter*) getCrop {
+    return crop;
 }
 
 - (NSArray *)curveWithPoint:(float[16][3])points atIndex:(int)idx {
@@ -394,8 +456,10 @@ static GPUImagePicture *texture;
     // Add App Info
     [imageMeta setObject:@"Latte" forKey:(NSString *)kCGImagePropertyTIFFSoftware];
     
-//    [picture processImage];
-    UIImage *imageTmp = [effectOut imageFromCurrentlyProcessedOutputWithOrientation:imageOrientation];
+    if (lastFilter == nil) {
+        lastFilter = [[GPUImageBrightnessFilter alloc] init];
+    }
+    UIImage *imageTmp = [lastFilter imageFromCurrentlyProcessedOutputWithOrientation:imageOrientation];
     
     NSData *imageData = UIImageJPEGRepresentation(imageTmp, 0.9);
     [library writeImageDataToSavedPhotosAlbum:imageData metadata:imageMeta completionBlock:^(NSURL *assetURL, NSError *error) {

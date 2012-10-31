@@ -7,12 +7,7 @@
 //
 
 #import "luxeysTabBarViewController.h"
-#import "luxeysSideMenuViewController.h"
 #import "luxeysAppDelegate.h"
-#import "luxeysLoginViewController.h"
-#import "luxeysCameraViewController.h"
-
-#define kAnimationDuration .3
 
 @interface luxeysTabBarViewController ()
 
@@ -53,6 +48,12 @@
                                                  name:@"TabbarHide"
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(newPicture:)
+                                                 name:@"UploadedNewPicture"
+                                               object:nil];
+    
+    isFirst = true;
     return self;
 }
 
@@ -119,18 +120,46 @@
                                                 nil]
                                       forState:UIControlStateNormal];
     }
+    
+    //Load camera first
 }
 
 
 - (void)cameraView:(id)sender {
-    luxeysCameraViewController *viewCapture = [[UIStoryboard storyboardWithName:@"CameraStoryboard"
+    /*luxeysCameraViewController *viewCapture = [[UIStoryboard storyboardWithName:@"CameraStoryboard"
                                                                         bundle: nil] instantiateInitialViewController];
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     app.window.rootViewController = viewCapture;
-/*    [UIView transitionWithView:app.window duration:0.5 options: UIViewAnimationOptionTransitionFlipFromLeft animations:^{
-        
-    } completion:nil];*/
+    */
+    [self pickPhoto];
+}
+
+- (void)pickPhoto {
+    luxeysCameraViewController *viewCapture = [[UIStoryboard storyboardWithName:@"CameraStoryboard"
+                                                                         bundle: nil] instantiateInitialViewController];
+
+    viewCapture.delegate = self;
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:NO];
+    [self presentViewController:viewCapture animated:NO completion:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    
+    [super viewWillAppear:animated];
+}
+
+
+- (void)viewDidAppear:(BOOL)animated {
+    if (isFirst) {
+        isFirst = false;
+        [self pickPhoto];
+    }
+    
+    [super viewDidAppear:animated];
 }
 
 
@@ -212,12 +241,6 @@
     
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [[UIApplication sharedApplication] setStatusBarHidden:NO];
-    
-    [super viewWillAppear:animated];
-}
-
 - (void)showTab:(NSNotification *) notification
 {
     [self setTabBarHidden:FALSE];
@@ -227,5 +250,11 @@
 {
     [self setTabBarHidden:TRUE];
 }
+
+- (void)newPicture:(NSNotification *) notification
+{
+    self.selectedIndex = 4;
+}
+
 
 @end

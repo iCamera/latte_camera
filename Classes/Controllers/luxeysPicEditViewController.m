@@ -24,6 +24,7 @@
 @synthesize labelStatus;
 @synthesize picture;
 @synthesize buttonDelete;
+@synthesize viewDelete;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -62,7 +63,8 @@
         textDesc.text = picture.descriptionText;
         textTitle.text = picture.title;
         imageStatus = [picture.status integerValue];
-//        buttonDelete.hidden = false;
+        buttonDelete.hidden = false;
+//        viewDelete.hidden = false;
         [self setStatusLabel];
     } else {
         luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
@@ -114,6 +116,7 @@
                                              destructiveButtonTitle:nil
                                                   otherButtonTitles:@"非公開", @"友達まで", @"会員まで", @"公開", nil];
         sheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+        sheet.tag = 0;
         if (self.tabBarController != nil) {
             [sheet showFromTabBar:self.tabBarController.tabBar];
             sheet.delegate = self;
@@ -124,23 +127,48 @@
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    switch (buttonIndex) {
-        case 0:
-            imageStatus = 0;
-            break;
-        case 1:
-            imageStatus = 10;
-            break;
-        case 2:
-            imageStatus = 30;
-            break;
-        case 3:
-            imageStatus = 40;
-            break;
-        default:
-            break;
+    if (actionSheet.tag == 0) {
+        switch (buttonIndex) {
+            case 0:
+                imageStatus = 0;
+                break;
+            case 1:
+                imageStatus = 10;
+                break;
+            case 2:
+                imageStatus = 30;
+                break;
+            case 3:
+                imageStatus = 40;
+                break;
+            default:
+                break;
+        }
+        [self setStatusLabel];
+    } else {
+        if (buttonIndex == 0) { // Remove Pic
+            HUD.mode = MBProgressHUDModeIndeterminate;
+            [HUD show:YES];
+            luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+            
+            NSString *url = [NSString stringWithFormat:@"api/picture/%d/delete", [picture.pictureId integerValue]];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    [app getToken], @"token", nil];
+            
+            [[LatteAPIClient sharedClient] postPath:url
+                                         parameters: params
+                                            success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                                [HUD hide:YES];
+                                                
+                                                UIViewController *parent = self.navigationController.viewControllers[self.navigationController.viewControllers.count-3];
+                                                [parent performSelector:@selector(reloadView)];
+                                                [self.navigationController popToViewController:parent animated:YES];
+                                            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                [HUD hide:YES];
+                                                NSLog(@"Something went wrong (Login)");
+                                            }];
+        }
     }
-    [self setStatusLabel];
 }
 
 - (IBAction)touchPost:(id)sender {
@@ -170,7 +198,14 @@
 }
 
 - (IBAction)touchDelete:(id)sender {
-    
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                       delegate:self
+                                              cancelButtonTitle:@"キャンセル"
+                                         destructiveButtonTitle:@"この写真を削除する"
+                                              otherButtonTitles:nil];
+    sheet.tag = 1;
+    sheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+    [sheet showFromTabBar:self.tabBarController.tabBar];
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification
@@ -205,7 +240,10 @@
                                         
                                         luxeysPicDetailViewController *parent = self.navigationController.viewControllers[self.navigationController.viewControllers.count-2];
                                         [parent reloadView];
+                                        
                                         [self.navigationController popViewControllerAnimated:YES];
+                                        
+                                        
                                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                         [HUD hide:YES];
                                         NSLog(@"Something went wrong (Login)");
@@ -242,9 +280,13 @@
     void (^successUpload)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
         HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
         HUD.mode = MBProgressHUDModeCustomView;
-        [HUD hide:YES afterDelay:2];
+        [HUD hide:YES afterDelay:1];
         
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:@"UploadedNewPicture"
+         object:self];
+        
+        [self.navigationController dismissViewControllerAnimated:NO completion:nil];
     };
     
     void (^failUpload)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {

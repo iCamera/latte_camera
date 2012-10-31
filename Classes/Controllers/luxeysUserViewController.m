@@ -95,7 +95,7 @@
 - (void)reloadProfile {
     luxeysAppDelegate* app = (luxeysAppDelegate*)[[UIApplication sharedApplication] delegate];
     NSString* strURL = [NSString stringWithFormat:@"api/user/%d", userID];
-    [HUD show:YES];
+
     [[LatteAPIClient sharedClient] getPath:strURL
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -139,7 +139,6 @@
 - (void)reloadFriends {
     luxeysAppDelegate* app = (luxeysAppDelegate*)[[UIApplication sharedApplication] delegate];
     
-    [HUD show:YES];
     NSString* urlFriends = [NSString stringWithFormat:@"api/user/%d/friend", userID];
     [[LatteAPIClient sharedClient] getPath:urlFriends
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
@@ -161,7 +160,7 @@
     luxeysAppDelegate* app = (luxeysAppDelegate*)[[UIApplication sharedApplication] delegate];
     NSString* urlPhotos = [NSString stringWithFormat:@"api/picture/user/%d", userID];
     
-    [HUD show:YES];
+
     [[LatteAPIClient sharedClient] getPath:urlPhotos
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -180,7 +179,7 @@
 - (void)reloadInterest {
     luxeysAppDelegate* app = (luxeysAppDelegate*)[[UIApplication sharedApplication] delegate];
     NSString* urlPhotos = [NSString stringWithFormat:@"api/picture/user/interesting/%d", userID];
-    [HUD show:YES];
+
     [[LatteAPIClient sharedClient] getPath:urlPhotos
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -205,7 +204,7 @@
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"yyyyMM"];
     NSString* urlPhotos = [NSString stringWithFormat:@"api/picture/album/by_month/%@/%d", [dateFormat stringFromDate:currentMonth], userID];
-    [HUD show:YES];
+
     [[LatteAPIClient sharedClient] getPath:urlPhotos
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -297,23 +296,26 @@
             break;
         case 4:
             tableMode = kTableVotes;
-            if (interests == nil)
+            if (interests == nil) {
+                [HUD show:YES];
                 [self reloadInterest];
-            else
+            } else
                 [tableProfile reloadData];
             break;
         case 5:
             tableMode = kTablePicList;
-            if (photos == nil)
+            if (photos == nil) {
+                [HUD show:YES];
                 [self reloadPicList];
-            else
+            } else
                 [tableProfile reloadData];
             break;
         case 6:
             tableMode = kTableFriends;
-            if (friends == nil)
+            if (friends == nil) {
+                [HUD show:YES];
                 [self reloadFriends];
-            else
+            } else
                 [tableProfile reloadData];
             break;
     }

@@ -45,9 +45,9 @@
 @interface luxeysMypageViewController : UITableViewController <EGORefreshTableHeaderDelegate, MBProgressHUDDelegate> {
     int tableMode;
     int timelineMode;
-    int lastFeedID;
     NSArray *allTab;
     BOOL reloading;
+    BOOL loadEnded;
     NSMutableArray *feeds;
     NSMutableArray *pictures;
     NSMutableArray *votes;

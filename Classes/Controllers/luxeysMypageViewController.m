@@ -26,6 +26,7 @@
 @synthesize viewStats;
 @synthesize buttonNavRight;
 @synthesize labelNickname;
+@synthesize loadIndicator;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -41,10 +42,11 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showTimeline:)
-                                                 name:@"ShowTimeline"
+                                                 name:@"UploadedNewPicture"
                                                object:nil];
     tableMode = kTableTimeline;
     timelineMode = kListAll;
+    loadEnded = false;
     toggleSection = [[NSMutableDictionary alloc] init];
     return self;
 }
@@ -121,13 +123,10 @@
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        feeds = [Feed mutableArrayFromDictionary:JSON
                                                                         withKey:@"feeds"];
-                                       Feed *lastFeed = feeds.lastObject;
-                                       lastFeedID = [lastFeed.feedID integerValue];
                                        
                                        [self.tableView reloadData];
                                        [self doneLoadingTableViewData];
-                                       
-                                       
+                                                                              
                                        [HUD hide:YES];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        NSLog(@"Something went wrong (Timeline)");
@@ -159,7 +158,6 @@
 }
 
 - (void)reloadPicList {
-    [HUD show:YES];
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
@@ -169,6 +167,7 @@
                                            pictures = [Picture mutableArrayFromDictionary:JSON
                                                                                   withKey:@"pictures"];
                                            
+                                           loadEnded = true;
                                            
                                            [self.tableView reloadData];
                                            [self doneLoadingTableViewData];
@@ -183,7 +182,6 @@
 }
 
 - (void)reloadFriends {
-    [HUD show:YES];
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     
     [[LatteAPIClient sharedClient] getPath:@"api/user/me/friend"
@@ -191,7 +189,7 @@
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        friends = [User mutableArrayFromDictionary:JSON
                                                                           withKey:@"friends"];
-                                       
+                                       loadEnded = true;
                                        [HUD hide:YES];
                                        [self doneLoadingTableViewData];
                                        [self.tableView reloadData];
@@ -205,7 +203,6 @@
 }
 
 - (void)reloadFollowings {
-    [HUD show:YES];
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     
     [[LatteAPIClient sharedClient] getPath:@"api/user/me/following"
@@ -213,7 +210,7 @@
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        followings = [User mutableArrayFromDictionary:JSON
                                                                              withKey:@"following"];
-                                       
+                                       loadEnded = true;
                                        [self doneLoadingTableViewData];
                                        [HUD hide:YES];
                                        [self.tableView reloadData];
@@ -225,7 +222,6 @@
 }
 
 - (void)reloadVoted {
-    [HUD show:YES];
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     
     [[LatteAPIClient sharedClient] getPath:@"api/picture/user/interesting/me"
@@ -233,7 +229,7 @@
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        votes = [Picture mutableArrayFromDictionary:JSON
                                                                            withKey:@"pictures"];
-                                       
+                                       loadEnded = true;
                                        [self.tableView reloadData];
                                        [self doneLoadingTableViewData];
                                        
@@ -247,6 +243,7 @@
 
 
 - (void)reloadView {
+    loadEnded = false;
     [self reloadProfile];
     
     switch (tableMode) {
@@ -267,6 +264,43 @@
             break;
         default:
             break;
+    }
+}
+
+- (void)loadMore {
+    [loadIndicator startAnimating];
+    
+    if (tableMode == kTableTimeline) {
+        Feed *feed = feeds.lastObject;
+        
+        luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+        [[LatteAPIClient sharedClient] getPath:@"api/user/me/timeline"
+                                    parameters: [NSDictionary dictionaryWithObjectsAndKeys:
+                                                 [app getToken], @"token",
+                                                 [NSNumber numberWithInteger:timelineMode], @"listtype",
+                                                 feed.feedID, @"last_id",
+                                                 nil]
+                                       success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                           NSMutableArray *newFeed = [Feed mutableArrayFromDictionary:JSON
+                                                                                              withKey:@"feeds"];
+
+                                           [feeds addObjectsFromArray:newFeed];
+                                           if (newFeed.count == 0) {
+                                               loadEnded = true;
+                                           }
+                                           else {
+                                               [self.tableView reloadData];
+                                           }
+                                           
+                                           [loadIndicator stopAnimating];
+                                           [self doneLoadingTableViewData];
+                                           
+                                           [HUD hide:YES];
+                                       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                           NSLog(@"Something went wrong (Timeline)");
+                                           
+                                           [HUD hide:YES];
+                                       }];
     }
 }
 
@@ -494,6 +528,7 @@
 }
 
 - (IBAction)touchTab:(UIButton *)sender {
+    loadEnded = false;
     for (UIButton *button in allTab) {
         button.enabled = YES;
     }
@@ -501,30 +536,34 @@
     switch (sender.tag) {
         case 1:
             tableMode = kTableVoted;
-            if (votes == nil)
+            if (votes == nil){
+                [HUD show:YES];
                 [self reloadVoted];
-            else
+            }else
                 [self.tableView reloadData];
             break;
         case 2:
             tableMode = kTablePicList;
-            if (pictures == nil)
+            if (pictures == nil) {
+                [HUD show:YES];
                 [self reloadPicList];
-            else
+            } else
                 [self.tableView reloadData];
             break;
         case 3:
             tableMode = kTableFriends;
-            if (friends == nil)
+            if (friends == nil) {
+                [HUD show:YES];
                 [self reloadFriends];
-            else
+            } else
                 [self.tableView reloadData];
             break;
         case 4:
             tableMode = kTableFollowings;
-            if (followings == nil)
+            if (followings == nil) {
+                [HUD show:YES];
                 [self reloadFollowings];
-            else
+            } else
                 [self.tableView reloadData];
             break;
         case 5:
@@ -551,10 +590,13 @@
 
 
 - (void)showTimeline:(NSNotification *) notification {
+    [self.tableView setContentOffset:CGPointZero animated:YES];
+    
     for (UIButton *button in allTab) {
         button.enabled = YES;
     }
     buttonTimelineAll.enabled = NO;
+    timelineMode = -1;
     
     [self switchTimeline:kListAll];
 }
@@ -688,6 +730,24 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     [refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+    
+    //Load more
+    if (loadEnded)
+        return;
+    
+    CGPoint offset = scrollView.contentOffset;
+    CGRect bounds = scrollView.bounds;
+    CGSize size = scrollView.contentSize;
+    UIEdgeInsets inset = scrollView.contentInset;
+    float y = offset.y + bounds.size.height - inset.bottom;
+    float h = size.height;
+    
+    float reload_distance = -100;
+    if(y > h + reload_distance) {
+        if (!loadIndicator.isAnimating) {
+            [self loadMore];
+        }
+    }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{

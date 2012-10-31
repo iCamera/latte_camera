@@ -7,13 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <FacebookSDK/FacebookSDK.h>
 #import "User.h"
 #import "MBProgressHUD.h"
 
 @class KeychainItemWrapper;
 
-@interface luxeysLoginViewController : UIViewController {
+@interface luxeysLoginViewController : UIViewController<FBLoginViewDelegate> {
     MBProgressHUD *HUD;
+    BOOL isPreload;
+    BOOL isPreload2;
 }
 
 @property (strong, nonatomic) IBOutlet UITextField *textPass;

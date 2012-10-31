@@ -86,13 +86,14 @@
     refreshHeaderView.delegate = self;
     [collectionView.scrollView addSubview:refreshHeaderView];
     
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self reloadView];
-    
+
     [self.buttonNavRight addTarget:self action:@selector(loginPressed:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)reloadView {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         [[LatteAPIClient sharedClient] getPath:@"api/picture/latests"
                                           parameters:nil

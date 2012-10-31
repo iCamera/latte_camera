@@ -258,10 +258,10 @@
     if (tableMode == 1) {
         switch (section) {
             case 0:
-                return @"New coming request";
+                return @"友達申請";
                 break;
             case 1:
-                return @"Ignored";
+                return @"保存";
                 break;
             default:
                 break;
