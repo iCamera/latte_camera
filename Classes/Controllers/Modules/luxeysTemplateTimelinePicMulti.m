@@ -44,7 +44,7 @@
     // Do any additional setup after loading the view from its nib.
     labelUser.text = feed.user.name;
     labelDate.text = [luxeysUtils timeDeltaFromNow:feed.updatedAt];
-    buttonUser.tag = section;
+    buttonUser.tag = [feed.user.userId integerValue];
     
     [buttonUser loadBackground:feed.user.profilePicture];
     [buttonUser addTarget:sender action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
@@ -59,15 +59,8 @@
     }
     scrollImage.contentSize = size;
     
-    buttonUser.layer.borderColor = [[UIColor whiteColor] CGColor];
-    buttonUser.layer.borderWidth = 2;
-    UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:buttonUser.bounds];
-    buttonUser.layer.masksToBounds = NO;
-    buttonUser.layer.shadowColor = [UIColor blackColor].CGColor;
-    buttonUser.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-    buttonUser.layer.shadowOpacity = 0.5f;
-    buttonUser.layer.shadowRadius = 1.5f;
-    buttonUser.layer.shadowPath = shadowPathPic.CGPath;
+    buttonUser.layer.cornerRadius = 3;
+    buttonUser.clipsToBounds = YES;
     
     if (section != 0) {
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 1)];

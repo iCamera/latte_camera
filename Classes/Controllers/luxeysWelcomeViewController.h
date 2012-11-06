@@ -7,30 +7,28 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SSCollectionView.h"
 #import "luxeysButtonBrown30.h"
 #import "luxeysLoginViewController.h"
 #import "Picture.h"
 #import "MBProgressHUD.h"
 #import "LatteAPIClient.h"
-#import "SCImageCollectionViewItem.h"
 #import "luxeysPicDetailViewController.h"
 #import "luxeysAppDelegate.h"
 #import "EGORefreshTableHeaderView.h"
 
-@interface luxeysWelcomeViewController : UIViewController<SSCollectionViewDataSource, SSCollectionViewDelegate, UIScrollViewDelegate, EGORefreshTableHeaderDelegate> {
-    NSMutableArray *_items;
+@interface luxeysWelcomeViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,EGORefreshTableHeaderDelegate> {
+    NSMutableArray *items;
     UIActivityIndicatorView *indicator;
     int pagephoto;
     BOOL loadEnded;
     BOOL reloading;
-    SSCollectionView *collectionView;
     EGORefreshTableHeaderView *refreshHeaderView;
     UIPanGestureRecognizer *navigationBarPanGestureRecognizer;
 }
 
 @property (strong, nonatomic) IBOutlet luxeysButtonBrown30 *buttonLeftMenu;
 @property (strong, nonatomic) IBOutlet luxeysButtonBrown30 *buttonNavRight;
+@property (strong, nonatomic) IBOutlet UITableView *tablePic;
 
 - (IBAction)loginPressed:(id)sender;
 

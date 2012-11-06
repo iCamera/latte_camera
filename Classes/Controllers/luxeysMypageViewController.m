@@ -22,11 +22,16 @@
 @synthesize buttonTimelineFriend;
 @synthesize buttonTimelineMe;
 
-@synthesize imageProfilePic;
+@synthesize buttonProfilePic;
 @synthesize viewStats;
-@synthesize buttonNavRight;
+@synthesize buttonNavLeft;
 @synthesize labelNickname;
 @synthesize loadIndicator;
+
+@synthesize labelTitleFav;
+@synthesize labelTitlePicCount;
+@synthesize labelTitleFriends;
+@synthesize labelTitleVote;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -56,16 +61,16 @@
 {
     [super viewDidLoad];
     
-    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:imageProfilePic.bounds];
-    imageProfilePic.layer.masksToBounds = NO;
-    imageProfilePic.layer.shadowColor = [UIColor blackColor].CGColor;
-    imageProfilePic.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
-    imageProfilePic.layer.shadowOpacity = 1.0f;
-    imageProfilePic.layer.shadowRadius = 1.0f;
-    imageProfilePic.layer.shadowPath = shadowPath.CGPath;
+    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:buttonProfilePic.bounds];
+    buttonProfilePic.layer.masksToBounds = NO;
+    buttonProfilePic.layer.shadowColor = [UIColor blackColor].CGColor;
+    buttonProfilePic.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
+    buttonProfilePic.layer.shadowOpacity = 1.0f;
+    buttonProfilePic.layer.shadowRadius = 1.0f;
+    buttonProfilePic.layer.shadowPath = shadowPath.CGPath;
     
-    imageProfilePic.layer.cornerRadius = 5;
-    imageProfilePic.clipsToBounds = YES;
+    buttonProfilePic.layer.cornerRadius = 5;
+    buttonProfilePic.clipsToBounds = YES;
     
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
@@ -89,7 +94,7 @@
     //Init sidebar
     UIPanGestureRecognizer *navigationBarPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:app.revealController action:@selector(revealGesture:)];
     [self.navigationController.navigationBar addGestureRecognizer:navigationBarPanGestureRecognizer];
-    [buttonNavRight addTarget:app.revealController action:@selector(revealRight:) forControlEvents:UIControlEventTouchUpInside];
+    [buttonNavLeft addTarget:app.revealController action:@selector(revealLeft:) forControlEvents:UIControlEventTouchUpInside];
     
     
     allTab = [NSArray arrayWithObjects:
@@ -103,7 +108,8 @@
               buttonTimelineMe,
               nil];
     
-    HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    HUD = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:HUD];
 	HUD.mode = MBProgressHUDModeText;
 	HUD.labelText = @"Loading...";
 	HUD.margin = 10.f;
@@ -144,7 +150,7 @@
                                        User *user = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
                                        app.currentUser = user;
                                        
-                                       [imageProfilePic setImageWithURL:[NSURL URLWithString:user.profilePicture]];
+                                       [buttonProfilePic loadBackground:user.profilePicture];
                                        
                                        labelNickname.text = user.name;
                                        [buttonFriendCount setTitle:[user.countFriends stringValue] forState:UIControlStateNormal];
@@ -268,9 +274,8 @@
 }
 
 - (void)loadMore {
-    [loadIndicator startAnimating];
-    
     if (tableMode == kTableTimeline) {
+        [loadIndicator startAnimating];
         Feed *feed = feeds.lastObject;
         
         luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
@@ -394,7 +399,7 @@
             return 245;
         }
     } else
-        return 1;
+        return 0;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -493,22 +498,11 @@
         cellUser.buttonUser.tag = [user.userId integerValue];
         [cellUser.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
         cellUser.backgroundView = [[UIView alloc] initWithFrame:cellUser.bounds];
-        
+        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 50, 320, 1)];
+        line.backgroundColor = [UIColor colorWithRed:188.0/255.0 green:184.0/255.0 blue:169.0/255.0 alpha:1];
+        [cellUser addSubview:line];
         return cellUser;
     }
-}
-
-
-- (void)viewDidUnload
-{
-    [self setImageProfilePic:nil];
-    [self setViewStats:nil];
-    [self setButtonNavRight:nil];
-    [self setButtonVoteCount:nil];
-    [self setButtonPicCount:nil];
-    [self setButtonFriendCount:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -532,9 +526,16 @@
     for (UIButton *button in allTab) {
         button.enabled = YES;
     }
+    labelTitleFav.highlighted = NO;
+    labelTitlePicCount.highlighted = NO;
+    labelTitleFriends.highlighted = NO;
+    labelTitleVote.highlighted = NO;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
     sender.enabled = NO;
     switch (sender.tag) {
         case 1:
+            labelTitleVote.highlighted = YES;
             tableMode = kTableVoted;
             if (votes == nil){
                 [HUD show:YES];
@@ -543,6 +544,7 @@
                 [self.tableView reloadData];
             break;
         case 2:
+            labelTitlePicCount.highlighted = YES;
             tableMode = kTablePicList;
             if (pictures == nil) {
                 [HUD show:YES];
@@ -551,6 +553,8 @@
                 [self.tableView reloadData];
             break;
         case 3:
+            self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+            labelTitleFriends.highlighted = YES;
             tableMode = kTableFriends;
             if (friends == nil) {
                 [HUD show:YES];
@@ -559,6 +563,8 @@
                 [self.tableView reloadData];
             break;
         case 4:
+            self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+            labelTitleFav.highlighted = YES;
             tableMode = kTableFollowings;
             if (followings == nil) {
                 [HUD show:YES];
@@ -588,6 +594,129 @@
     [self.navigationController pushViewController:viewSetting animated:YES];
 }
 
+- (IBAction)touchSetProfilePic:(id)sender {
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"プロフィール"
+                                                       delegate:self
+                                              cancelButtonTitle:@"キャンセル"
+                                         destructiveButtonTitle:@"削除する"
+                                              otherButtonTitles:@"写真を選択する", @"自分のプロフィール", nil];
+    [sheet showFromTabBar:self.tabBarController.tabBar];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
+        case 0:
+            [self deleteProfilePic];
+            break;
+        case 1:
+            [self pickPhoto];
+            break;
+        case 2: {
+            luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+            UIButton *tmp = [[UIButton alloc] init];
+            tmp.tag = [app.currentUser.userId integerValue];
+            [self showUser:tmp];
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+- (void)didPresentActionSheet:(UIActionSheet *)actionSheet {
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+    if (app.currentUser.profilePicture == nil) {
+        [actionSheet setButton:0 toState:false];
+    }
+}
+
+
+- (void)deleteProfilePic {
+    [HUD show:YES];
+    
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+    
+    [[LatteAPIClient sharedClient] postPath:@"api/user/me/profile_picture_delete"
+                                 parameters:[NSDictionary dictionaryWithObjectsAndKeys:
+                                             [app getToken], @"token", nil]
+                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                        [buttonProfilePic setBackgroundImage:[UIImage imageNamed:@"user.gif"] forState:UIControlStateNormal];
+                                        [HUD hide:YES];
+                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                        NSLog(@"Something went wrong (Delete profile pic)");
+                                        [HUD hide:YES];
+                                    }];
+
+}
+
+- (void)pickPhoto {
+    UINavigationController *storyCapture = [[UIStoryboard storyboardWithName:@"CameraStoryboard"
+                                                                         bundle: nil] instantiateInitialViewController];
+    luxeysCameraViewController *viewCapture = storyCapture.viewControllers[0];
+    viewCapture.delegate = self;
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:NO];
+    [self presentViewController:storyCapture animated:NO completion:nil];
+}
+
+- (void)imagePickerController:(luxeysCameraViewController *)picker didFinishPickingMediaWithData:(NSData *)data {
+    MBProgressHUD *progessHUD = [[MBProgressHUD alloc] initWithView:picker.view];
+    [picker.view addSubview:progessHUD];
+    
+    progessHUD.mode = MBProgressHUDModeDeterminate;
+    [progessHUD show:YES];
+    
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+    
+    void (^createForm)(id<AFMultipartFormData>) = ^(id<AFMultipartFormData> formData) {
+        [formData appendPartWithFileData:data
+                                    name:@"file"
+                                fileName:@"latte.jpg"
+                                mimeType:@"image/jpeg"];
+    };
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [app getToken], @"token", nil];
+    
+    NSURLRequest *request = [[LatteAPIClient sharedClient] multipartFormRequestWithMethod:@"POST"
+                                                                                     path:@"api/user/me/profile_picture"
+                                                                               parameters:params
+                                                                constructingBodyWithBlock:createForm];
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    
+    void (^successUpload)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        progessHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+        progessHUD.mode = MBProgressHUDModeCustomView;
+        [progessHUD hide:YES afterDelay:1];
+        
+        [picker dismissViewControllerAnimated:NO completion:nil];
+        [self reloadProfile];
+    };
+    
+    void (^failUpload)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
+        if([operation.response statusCode] != 200){
+            NSLog(@"Upload Failed");
+            return;
+        }
+        NSLog(@"error: %@", [operation error]);
+        progessHUD.mode = MBProgressHUDModeText;
+        progessHUD.labelText = @"Error";
+        progessHUD.margin = 10.f;
+        progessHUD.yOffset = 150.f;
+        progessHUD.removeFromSuperViewOnHide = YES;
+        
+        [progessHUD hide:YES afterDelay:2];
+    };
+    
+    [operation setCompletionBlockWithSuccess: successUpload failure: failUpload];
+    
+    [operation setUploadProgressBlock:^(NSInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+        progessHUD.progress = (float)totalBytesWritten/(float)totalBytesExpectedToWrite;
+    }];
+    
+    
+    [operation start];
+}
 
 - (void)showTimeline:(NSNotification *) notification {
     [self.tableView setContentOffset:CGPointZero animated:YES];
@@ -619,7 +748,13 @@
     } else if ([segue.identifier isEqualToString:@"UserProfile"]) {
         luxeysUserViewController *viewUser = segue.destinationViewController;
         [viewUser setUserID:button.tag];
+    } else if ([segue.identifier isEqualToString:@"PictureMap"]) {
+        Feed *feed = [self feedFromPicID:button.tag];
+        Picture *pic = feed.targets[0];
+        luxeysPicMapViewController *viewMap = segue.destinationViewController;
+        [viewMap setPointWithLongitude:[pic.longitude floatValue] andLatitude:[pic.latitude floatValue]];
     }
+    
 }
 
 - (void)showInfo:(UIButton*)sender {
@@ -637,6 +772,11 @@
 - (void)showUser:(UIButton*)sender {
     [self performSegueWithIdentifier:@"UserProfile" sender:sender];
 }
+
+- (void)showMap:(UIButton*)sender {
+    [self performSegueWithIdentifier:@"PictureMap" sender:sender];
+}
+
 
 - (void)submitLike:(UIButton*)sender {
     sender.enabled = FALSE;
@@ -787,4 +927,11 @@
 
 
 
+- (void)viewDidUnload {
+    [self setLabelTitleVote:nil];
+    [self setLabelTitlePicCount:nil];
+    [self setLabelTitleFriends:nil];
+    [self setLabelTitleFav:nil];
+    [super viewDidUnload];
+}
 @end

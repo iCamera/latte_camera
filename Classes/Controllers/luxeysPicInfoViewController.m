@@ -81,6 +81,17 @@
     
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    if ([self.navigationController.viewControllers[self.navigationController.viewControllers.count-1] isKindOfClass:[luxeysPicDetailViewController class]]) {
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:@"TabbarHide"
+         object:self];
+    }
+    
+    [super viewWillDisappear:animated];
+}
+
 - (void)viewDidUnload
 {
     [self setLabelTitle:nil];

@@ -32,6 +32,8 @@
 @synthesize buttonPick;
 @synthesize buttonScroll;
 @synthesize delegate;
+@synthesize buttonSetNoTimer;
+@synthesize buttonSetTimer5s;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -60,7 +62,6 @@
     [self setupCameraAspect];
     
     filter = [[FilterManager alloc] init];
-    timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countDown:) userInfo:nil repeats:YES];
     
 	// Do any additional setup after loading the view.
     UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:imageBottom.bounds];
@@ -100,15 +101,25 @@
     currentLens = 0;
     currentTimer = kTimerNone;
     
+    scrollEffect.backgroundColor = [UIColor colorWithRed:53.0/255.0 green:48.0/255.0 blue:29.0/255.0 alpha:0.6];
+    for (int i=0; i < 10; i++) {
+        UIButton *buttonEffect = [[UIButton alloc] initWithFrame:CGRectMake(10+60*i, 10, 50, 50)];
+        [buttonEffect setImage:[UIImage imageNamed:[NSString stringWithFormat:@"sample%d.jpg", i]] forState:UIControlStateNormal];
+        [buttonEffect addTarget:self action:@selector(setEffect:) forControlEvents:UIControlEventTouchUpInside];
+        buttonEffect.layer.cornerRadius = 5;
+        buttonEffect.clipsToBounds = YES;
+        buttonEffect.tag = i;
+        [scrollEffect addSubview:buttonEffect];
+    }
+    scrollEffect.contentSize = CGSizeMake(10*60+10, 70);
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [videoCamera startCameraCapture];
         [self applyCurrentEffect];
     });
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [scrollEffect setContentSize:CGSizeMake(400.0, 70)];
-    
+- (void)viewDidAppear:(BOOL)animated {    
     [super viewDidAppear:animated];
 }
 
@@ -124,6 +135,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [videoCamera pauseCameraCapture];
     [videoCamera stopCameraCapture];
     [super viewWillDisappear:animated];
 }
@@ -138,6 +150,8 @@
     videoCamera = nil;
     filter = nil;
     
+    [self setButtonSetNoTimer:nil];
+    [self setButtonSetTimer5s:nil];
     [super viewDidUnload];
 }
 
@@ -192,15 +206,20 @@
 
 - (void)capturePhotoAsync {
     [videoCamera capturePhotoAsImageProcessedUpToFilterWithMeta:[filter getCrop] withCompletionHandler:^(UIImage *processedImage, NSMutableDictionary *meta, NSError *error) {
-        [videoCamera stopCameraCapture];
-        
-        imageMeta = meta;
-        imageOrientation = processedImage.imageOrientation;
-        picture = [[GPUImagePicture alloc] initWithImage:processedImage];
-        
-        [self switchEditImage];
-        [self applyCurrentEffect];
-        
+                                runOnMainQueueWithoutDeadlocking(^{
+                                    @autoreleasepool {
+                                        [locationManager stopUpdatingLocation];
+                                        [videoCamera stopCameraCapture];
+                                        
+                                        imageMeta = meta;
+                                        
+                                        picture = [[GPUImagePicture alloc] initWithImage:processedImage];
+                                        imageOrientation = processedImage.imageOrientation;
+                                        
+                                        [self switchEditImage];
+                                        [self applyCurrentEffect];
+                                    }
+                                });
     }];
 }
 
@@ -215,6 +234,8 @@
 
 - (IBAction)openImagePicker:(id)sender {
     if (!isEditing) {
+        [locationManager stopUpdatingLocation];
+        [videoCamera pauseCameraCapture];
         [videoCamera stopCameraCapture];
         [filter clearTargetWithCamera:videoCamera andPicture:picture];
     }
@@ -228,7 +249,11 @@
 
 - (IBAction)capture:(id)sender {
     buttonPick.hidden = true;
-    [self capturePhotoAsync];
+    if (currentTimer == kTimerNone) {
+        [self capturePhotoAsync];
+    } else {
+        timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countDown:) userInfo:nil repeats:YES];
+    }
 }
 
 - (IBAction)changeLens:(id)sender {
@@ -285,7 +310,9 @@
             Byte *buffer = (Byte*)malloc(rep.size);
             NSUInteger buffered = [rep getBytes:buffer fromOffset:0.0 length:rep.size error:nil];
             NSData *uploadData = [NSData dataWithBytesNoCopy:buffer length:buffered freeWhenDone:YES];
-            [self performSegueWithIdentifier:@"Edit" sender:uploadData];
+            
+            [delegate imagePickerController:self didFinishPickingMediaWithData:uploadData];
+            
         } else {
             [self switchCamera];
         }
@@ -296,7 +323,6 @@
 }
 
 - (void)setupCameraAspect {
-    [cameraView removeConstraint:cameraAspect];
     if (isCrop) {
         cameraAspect = [NSLayoutConstraint constraintWithItem:cameraView
                                                     attribute:NSLayoutAttributeHeight
@@ -314,9 +340,6 @@
                                                    multiplier:4.0/3.0
                                                      constant:0.0];
     }
-    
-    cameraAspect.priority = 400;
-    [cameraView addConstraint:cameraAspect];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -329,15 +352,33 @@
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    imageMeta = [NSMutableDictionary dictionaryWithDictionary:[info valueForKey:UIImagePickerControllerMediaMetadata]];
-    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-    imageOrientation = image.imageOrientation;
+    [locationManager stopUpdatingLocation];
     
-    picture = [[GPUImagePicture alloc] initWithImage:image];
-    [imagePicker dismissViewControllerAnimated:NO completion:nil];
+    ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset)
+    {
+        ALAssetRepresentation *rep = [myasset defaultRepresentation];
+        bestEffortAtLocation = nil;
+        imageMeta = [NSMutableDictionary dictionaryWithDictionary:myasset.defaultRepresentation.metadata];
+        picture = [[GPUImagePicture alloc] initWithCGImage:rep.fullResolutionImage];
+        UIImage *tmp = [info objectForKey:UIImagePickerControllerOriginalImage];
+        imageOrientation = tmp.imageOrientation;
+        
+        [imagePicker dismissViewControllerAnimated:NO completion:nil];
+        
+        [self switchEditImage];
+        [self applyCurrentEffect];
+    };
     
-    [self switchEditImage];
-    [self applyCurrentEffect];
+    //
+    ALAssetsLibraryAccessFailureBlock failureblock  = ^(NSError *myerror)
+    {
+        NSLog(@"booya, cant get image - %@",[myerror localizedDescription]);
+    };
+    
+    ALAssetsLibrary* assetslibrary = [[ALAssetsLibrary alloc] init];
+    [assetslibrary assetForURL:[info objectForKey:UIImagePickerControllerReferenceURL]
+                   resultBlock:resultblock
+                  failureBlock:failureblock];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
@@ -349,6 +390,8 @@
     isEditing = NO;
     
     picture = nil;
+    [locationManager startUpdatingLocation];
+    [videoCamera resumeCameraCapture];
     [videoCamera startCameraCapture];
     imageOrientation = UIImageOrientationUp;
     [self applyCurrentEffect];
@@ -409,6 +452,14 @@
 }
 
 - (IBAction)setTimer:(UIButton *)sender {
+    buttonSetNoTimer.enabled = true;
+    buttonSetTimer5s.enabled = true;
+    buttonSetNoTimer.alpha = 0.4;
+    buttonSetTimer5s.alpha = 0.4;
+    
+    sender.enabled = false;
+    sender.alpha = 0.9;
+    
     switch (sender.tag) {
         case 0:
             timerCount = 0;
@@ -432,8 +483,40 @@
 
 - (void)countDown:(id)sender {
     if (timerCount == 0) {
+        switch (currentTimer) {
+            case kTimerNone:
+                timerCount = 0;
+                break;
+            case kTimer5s:
+                timerCount = 5;
+                break;
+            case kTimer10s:
+                timerCount = 10;
+                break;
+            case kTimerContinuous:
+                currentTimer = kTimerContinuous;
+                break;
+            default:
+                break;
+        }
+        
         [timer invalidate];
         [self capturePhotoAsync];
+    } else {
+        MBProgressHUD *count = [[MBProgressHUD alloc] initWithView:self.view];
+        [self.view addSubview:count];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+        label.text = [NSString stringWithFormat:@"%d", timerCount];
+        label.textColor = [UIColor whiteColor];
+        label.backgroundColor = [UIColor clearColor];
+        label.font = [UIFont systemFontOfSize:100];
+        label.textAlignment = NSTextAlignmentCenter;
+        count.customView = label;
+        count.mode = MBProgressHUDModeCustomView;
+        
+        [count show:YES];
+        [count hide:YES afterDelay:0.5];
+        count.removeFromSuperViewOnHide = YES;
     }
     timerCount--;
 }

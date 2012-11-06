@@ -34,7 +34,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *labelStatus;
 @property (strong, nonatomic) IBOutlet UIView *viewDelete;
 
-@property (strong, atomic) Picture *picture;
+@property (strong, nonatomic) Picture *picture;
 
 - (IBAction)touchPost:(id)sender;
 - (IBAction)touchBack:(id)sender;

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2843" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="7Ax-bg-UPf">
     <dependencies>
+        <deployment version="1280" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1929"/>
     </dependencies>
     <scenes>
@@ -109,7 +110,7 @@
                                 <rect key="frame" x="10" y="43" width="202" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" alpha="0.90000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="FAW-3Q-pUC">
+                                    <button opaque="NO" alpha="0.90000000000000002" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="FAW-3Q-pUC">
                                         <rect key="frame" x="0.0" y="0.0" width="77" height="38"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" image="bt_timer_none.png">
@@ -123,7 +124,7 @@
                                             <action selector="setTimer:" destination="qh6-II-akr" eventType="touchUpInside" id="jFp-qp-Fo1"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" alpha="0.90000000000000002" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="knD-Ia-9GF">
+                                    <button opaque="NO" alpha="0.5" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="knD-Ia-9GF">
                                         <rect key="frame" x="78" y="8" width="34" height="30"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" image="bt_timer_5s.png">
@@ -137,7 +138,7 @@
                                             <action selector="setTimer:" destination="qh6-II-akr" eventType="touchUpInside" id="Vbd-CN-Ap5"/>
                                         </connections>
                                     </button>
-                                    <button hidden="YES" opaque="NO" alpha="0.90000000000000002" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="0cl-2n-tsT">
+                                    <button hidden="YES" opaque="NO" alpha="0.90000000000000002" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="0cl-2n-tsT">
                                         <rect key="frame" x="110" y="8" width="41" height="30"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" image="bt_timer_5s.png">
@@ -151,7 +152,7 @@
                                             <action selector="setTimer:" destination="qh6-II-akr" eventType="touchUpInside" id="2md-mq-bmj"/>
                                         </connections>
                                     </button>
-                                    <button hidden="YES" opaque="NO" alpha="0.90000000000000002" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="5au-Nm-lLH">
+                                    <button hidden="YES" opaque="NO" alpha="0.90000000000000002" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="5au-Nm-lLH">
                                         <rect key="frame" x="148" y="8" width="54" height="30"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" image="bt_timer_3ren.png">
@@ -167,95 +168,9 @@
                                     </button>
                                 </subviews>
                             </view>
-                            <scrollView hidden="YES" autoresizesSubviews="NO" alpha="0.80000000000000004" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="jLe-DC-2gl" userLabel="Scroll Filter">
+                            <scrollView hidden="YES" autoresizesSubviews="NO" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="jLe-DC-2gl" userLabel="Scroll Filter">
                                 <rect key="frame" x="0.0" y="448" width="320" height="70"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <subviews>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2W9-Ir-H8f">
-                                        <rect key="frame" x="70" y="10" width="50" height="50"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="setEffect:" destination="qh6-II-akr" eventType="touchUpInside" id="3Am-Pf-iPZ"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="V9x-Ee-FqU">
-                                        <rect key="frame" x="10" y="10" width="50" height="50"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="setEffect:" destination="qh6-II-akr" eventType="touchUpInside" id="9VQ-Sb-swO"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="yrH-Zy-KjH">
-                                        <rect key="frame" x="128" y="10" width="50" height="50"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="setEffect:" destination="qh6-II-akr" eventType="touchUpInside" id="SNC-4f-4fZ"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="LvS-2a-fEV">
-                                        <rect key="frame" x="188" y="10" width="50" height="50"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="setEffect:" destination="qh6-II-akr" eventType="touchUpInside" id="UHt-Rr-xPY"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bfj-Rb-Sjb">
-                                        <rect key="frame" x="248" y="10" width="50" height="50"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="setEffect:" destination="qh6-II-akr" eventType="touchUpInside" id="fi8-6o-xCn"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="nff-sg-1Bf">
-                                        <rect key="frame" x="308" y="10" width="50" height="50"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="setEffect:" destination="qh6-II-akr" eventType="touchUpInside" id="l2c-DW-sn1"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
                                 <color key="backgroundColor" red="0.21176472306251526" green="0.18823531270027161" blue="0.11372549831867218" alpha="1" colorSpace="deviceRGB"/>
                             </scrollView>
                             <view contentMode="scaleToFill" id="nh0-56-tN6" userLabel="Bottom Bar">
@@ -353,6 +268,8 @@
                         <outlet property="buttonNo" destination="oax-IO-3dq" id="gg2-uK-TzF"/>
                         <outlet property="buttonPick" destination="Eqj-v5-rGc" id="Q3R-Cv-D28"/>
                         <outlet property="buttonScroll" destination="s9L-PE-T3P" id="Fn7-kf-KpZ"/>
+                        <outlet property="buttonSetNoTimer" destination="FAW-3Q-pUC" id="nsk-84-9w5"/>
+                        <outlet property="buttonSetTimer5s" destination="knD-Ia-9GF" id="8rm-iz-KDU"/>
                         <outlet property="buttonTimer" destination="lJT-gv-QDE" id="VPF-UR-fHu"/>
                         <outlet property="buttonYes" destination="BbV-HY-tyG" id="iEe-GG-YtQ"/>
                         <outlet property="cameraView" destination="haP-3S-Ims" id="tDu-Cg-2at"/>
@@ -732,6 +649,8 @@
                 <relationship kind="outlet" name="buttonNo" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonPick" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonScroll" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonSetNoTimer" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonSetTimer5s" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonTimer" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonYes" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="cameraView" candidateClass="GPUImageView"/>

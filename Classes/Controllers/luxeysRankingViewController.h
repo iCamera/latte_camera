@@ -33,7 +33,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonMonthly;
 @property (strong, nonatomic) IBOutlet UIView *viewTab;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadIndicator;
-@property (strong, nonatomic) IBOutlet luxeysButtonBrown30 *buttonNavRight;
+@property (strong, nonatomic) IBOutlet luxeysButtonBrown30 *buttonNavLeft;
 
 - (IBAction)touchTab:(UIButton*)sender;
 

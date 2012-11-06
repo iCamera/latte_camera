@@ -32,7 +32,7 @@ typedef enum {
 
 @protocol LXImagePickerDelegate <NSObject>
 @optional
-- (void)imagePickerController:(luxeysCameraViewController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info;
+- (void)imagePickerController:(luxeysCameraViewController *)picker didFinishPickingMediaWithData:(NSData *)data;
 - (void)imagePickerControllerDidCancel:(luxeysCameraViewController *)picker;
 @end
 
@@ -51,7 +51,7 @@ typedef enum {
     BOOL isReady;
     BOOL isFinishedProcessing;
     
-    id <LXImagePickerDelegate> delegate;
+    id <LXImagePickerDelegate> __unsafe_unretained delegate;
 
     NSInteger currentEffect;
     NSInteger currentLens;
@@ -78,8 +78,10 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIButton *buttonCrop;
 @property (strong, nonatomic) IBOutlet UIButton *buttonPick;
 @property (strong, nonatomic) IBOutlet UIButton *buttonScroll;
+@property (strong, nonatomic) IBOutlet UIButton *buttonSetNoTimer;
+@property (strong, nonatomic) IBOutlet UIButton *buttonSetTimer5s;
 
-@property(strong, atomic) id <LXImagePickerDelegate> delegate;
+@property (unsafe_unretained) id <LXImagePickerDelegate> delegate;
 
 - (IBAction)setEffect:(id)sender;
 - (IBAction)cameraTouch:(UITapGestureRecognizer *)sender;

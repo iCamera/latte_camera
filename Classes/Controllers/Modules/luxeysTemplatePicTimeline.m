@@ -13,7 +13,7 @@
 
 @implementation luxeysTemplatePicTimeline
 
-@synthesize imagePic;
+@synthesize buttonPic;
 @synthesize labelTitle;
 @synthesize labelAccess;
 @synthesize labelLike;
@@ -70,7 +70,7 @@
     [buttonUser loadBackground:user.profilePicture];
     labelAuthor.text = user.name;
     
-    [imagePic setImageWithURL:[NSURL URLWithString:pic.urlMedium]];
+    [buttonPic loadBackground:pic.urlMedium];
     
     float newheight = [luxeysUtils heightFromWidth:300
                                                   width:[pic.width floatValue]
@@ -79,7 +79,7 @@
     labelLike.text = [pic.voteCount stringValue];
     labelComment.text = [pic.commentCount stringValue];
     labelDate.text = [luxeysUtils timeDeltaFromNow:pic.createdAt];
-    imagePic.frame = CGRectMake(imagePic.frame.origin.x, imagePic.frame.origin.y, 300, newheight);
+    buttonPic.frame = CGRectMake(buttonPic.frame.origin.x, buttonPic.frame.origin.y, 300, newheight);
     viewStats.autoresizingMask = UIViewAutoresizingNone;
     viewStats.frame = CGRectMake(0, newheight + 60, viewStats.frame.size.width, viewStats.frame.size.height);
     
@@ -97,12 +97,15 @@
 
     labelAccess.tag = -[pic.pictureId integerValue];
     buttonLike.tag = [pic.pictureId integerValue];
+    buttonMap.tag = [pic.pictureId integerValue];
     buttonInfo.tag = [pic.pictureId integerValue];
+    buttonPic.tag = [pic.pictureId integerValue];
     buttonComment.tag = [pic.pictureId integerValue];
     buttonUser.tag = [user.userId integerValue];
     buttonShowComment.tag = section;
     
     [buttonUser addTarget:sender action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
+    [buttonPic addTarget:sender action:@selector(showPicWithID:) forControlEvents:UIControlEventTouchUpInside];
     [buttonInfo addTarget:sender action:@selector(showInfo:) forControlEvents:UIControlEventTouchUpInside];
     [buttonComment addTarget:sender action:@selector(showComment:) forControlEvents:UIControlEventTouchUpInside];
     [buttonLike addTarget:sender action:@selector(submitLike:) forControlEvents:UIControlEventTouchUpInside];
@@ -123,15 +126,15 @@
 //    buttonUser.layer.shadowPath = shadowPath.CGPath;
     
     
-    imagePic.layer.borderColor = [[UIColor whiteColor] CGColor];
-    imagePic.layer.borderWidth = 5;
-    UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:imagePic.bounds];
-    imagePic.layer.masksToBounds = NO;
-    imagePic.layer.shadowColor = [UIColor blackColor].CGColor;
-    imagePic.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-    imagePic.layer.shadowOpacity = 0.5f;
-    imagePic.layer.shadowRadius = 1.5f;
-    imagePic.layer.shadowPath = shadowPathPic.CGPath;
+    buttonPic.layer.borderColor = [[UIColor whiteColor] CGColor];
+    buttonPic.layer.borderWidth = 3;
+    UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:buttonPic.bounds];
+    buttonPic.layer.masksToBounds = NO;
+    buttonPic.layer.shadowColor = [UIColor blackColor].CGColor;
+    buttonPic.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+    buttonPic.layer.shadowOpacity = 0.5f;
+    buttonPic.layer.shadowRadius = 1.5f;
+    buttonPic.layer.shadowPath = shadowPathPic.CGPath;
     
     if (section != 0) {
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 1)];

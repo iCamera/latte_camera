@@ -18,7 +18,7 @@
 @synthesize buttonMonthly;
 @synthesize viewTab;
 @synthesize loadIndicator;
-@synthesize buttonNavRight;
+@synthesize buttonNavLeft;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -72,7 +72,10 @@
     
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
 
-    [buttonNavRight addTarget:app.revealController action:@selector(revealRight:) forControlEvents:UIControlEventTouchUpInside];
+    navigationBarPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:app.revealController action:@selector(revealGesture:)];
+    [self.navigationController.navigationBar addGestureRecognizer:navigationBarPanGestureRecognizer];
+    navigationBarPanGestureRecognizer.enabled = false;
+    [buttonNavLeft addTarget:app.revealController action:@selector(revealLeft:) forControlEvents:UIControlEventTouchUpInside];
 
     [self loadRanking];
 }
@@ -119,33 +122,33 @@
     [loadIndicator startAnimating];
     [self.tableView beginUpdates];
     [[LatteAPIClient sharedClient] getPath:url
-                                      parameters: nil
-                                         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                             int rowCountPrev = [self.tableView numberOfRowsInSection:0];
-                                             NSArray *newPics = [JSON objectForKey:@"pics"];
-                                             for (NSDictionary *pic in newPics) {
-                                                 [pics addObject:[Picture instanceFromDictionary:pic]];
-                                             }
-                                             
-                                             if (newPics.count == 0)
-                                                 loadEnded = true;
-                                             else {
-                                                 int newRows = newPics.count / 4 + (newPics.count%4>0?1:0);
-                                                 NSMutableArray *paths = [[NSMutableArray alloc] init];
-                                                 for (int i = 0; i < newRows ; i++) {
-                                                     [paths addObject:[NSIndexPath indexPathForRow:i+rowCountPrev inSection:0]];
-                                                 }
-                                                 [self.tableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationAutomatic];
-                                             }
-
-                                             [self.tableView endUpdates];
-                                             [loadIndicator stopAnimating];
-                                         }
-                                         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                             NSLog(@"Something went wrong (Ranking)");
-                                             [loadIndicator stopAnimating];
-                                             [self.tableView endUpdates];
-                                         }
+                                parameters:nil
+                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       int rowCountPrev = [self.tableView numberOfRowsInSection:0];
+                                       NSArray *newPics = [JSON objectForKey:@"pics"];
+                                       for (NSDictionary *pic in newPics) {
+                                           [pics addObject:[Picture instanceFromDictionary:pic]];
+                                       }
+                                       
+                                       if (newPics.count == 0)
+                                           loadEnded = true;
+                                       else {
+                                           int newRows = newPics.count / 4 + (newPics.count%4>0?1:0);
+                                           NSMutableArray *paths = [[NSMutableArray alloc] init];
+                                           for (int i = 0; i < newRows ; i++) {
+                                               [paths addObject:[NSIndexPath indexPathForRow:i+rowCountPrev inSection:0]];
+                                           }
+                                           [self.tableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationAutomatic];
+                                       }
+                                       
+                                       [self.tableView endUpdates];
+                                       [loadIndicator stopAnimating];
+                                   }
+                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       NSLog(@"Something went wrong (Ranking)");
+                                       [loadIndicator stopAnimating];
+                                       [self.tableView endUpdates];
+                                   }
      ];
 }
 
@@ -346,17 +349,14 @@
 }
 
 - (void)receiveLoggedIn:(NSNotification *) notification {
-    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-    navigationBarPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:app.revealController action:@selector(revealGesture:)];
-    [self.navigationController.navigationBar addGestureRecognizer:navigationBarPanGestureRecognizer];
-
-    buttonNavRight.hidden = false;
+    navigationBarPanGestureRecognizer.enabled = true;
+    buttonNavLeft.hidden = false;
 }
 
 - (void)receiveLoggedOut:(NSNotification *) notification {
-    [self.navigationController.navigationBar removeGestureRecognizer:navigationBarPanGestureRecognizer];
+    navigationBarPanGestureRecognizer.enabled = false;
 
-    buttonNavRight.hidden = true;
+    buttonNavLeft.hidden = true;
 }
 
 - (void)reloadTableViewDataSource{
@@ -389,5 +389,6 @@
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
     [refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
 }
+
 
 @end

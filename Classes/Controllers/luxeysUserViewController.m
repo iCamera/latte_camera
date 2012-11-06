@@ -20,12 +20,15 @@
 @synthesize viewContent;
 @synthesize buttonProfile;
 @synthesize buttonCalendar;
-@synthesize buttonMap;
+//@synthesize buttonMap;
 @synthesize tableProfile;
 @synthesize labelNickname;
 @synthesize buttonContact;
 @synthesize iconFollow;
 @synthesize iconFriend;
+@synthesize labelTitleFriend;
+@synthesize labelTitlePicCount;
+@synthesize lableTitleVote;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -76,7 +79,7 @@
     
     allTab = [NSArray arrayWithObjects:
               buttonCalendar,
-              buttonMap,
+//              buttonMap,
               buttonProfile,
               buttonFriendCount,
               buttonPhotoCount,
@@ -237,19 +240,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)viewDidUnload {
-    [self setImageUser:nil];
-    [self setViewStats:nil];
-    [self setViewContent:nil];
-    [self setButtonProfile:nil];
-    [self setButtonCalendar:nil];
-    [self setButtonMap:nil];
-    [self setTableProfile:nil];
-    [self setButtonVoteCount:nil];
-    [self setButtonPhotoCount:nil];
-    [self setButtonFriendCount:nil];
-    [super viewDidUnload];
-}
 
 - (void)reloadView {
     switch (tableMode) {
@@ -277,6 +267,9 @@
     for (UIButton *button in allTab) {
         button.enabled = YES;
     }
+    labelTitleFriend.highlighted = NO;
+    labelTitlePicCount.highlighted = NO;
+    lableTitleVote.highlighted = NO;
 
     sender.enabled = NO;
     switch (sender.tag) {
@@ -295,6 +288,7 @@
             tableMode = kTableMap;
             break;
         case 4:
+            lableTitleVote.highlighted = YES;
             tableMode = kTableVotes;
             if (interests == nil) {
                 [HUD show:YES];
@@ -303,6 +297,7 @@
                 [tableProfile reloadData];
             break;
         case 5:
+            labelTitlePicCount.highlighted = YES;
             tableMode = kTablePicList;
             if (photos == nil) {
                 [HUD show:YES];
@@ -311,6 +306,7 @@
                 [tableProfile reloadData];
             break;
         case 6:
+            labelTitleFriend.highlighted = YES;
             tableMode = kTableFriends;
             if (friends == nil) {
                 [HUD show:YES];
@@ -426,6 +422,9 @@
         [cellFriend setUser:friend];
         [cellFriend.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
         cellFriend.buttonUser.tag = [friend.userId integerValue];
+        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 50, 320, 1)];
+        line.backgroundColor = [UIColor colorWithRed:188.0/255.0 green:184.0/255.0 blue:169.0/255.0 alpha:1];
+        [cellFriend addSubview:line];
         
         return cellFriend;
     } else if (tableMode == kTableCalendar) {
@@ -435,7 +434,7 @@
             NSInteger row = i/5;
             NSInteger col = i%5;
             
-            NSString *key = [NSString stringWithFormat:@"%2d", i];
+            NSString *key = [NSString stringWithFormat:@"%2d", i+1];
             Picture *pic = [currentMonthPics objectForKey:key];
             [cell addSubview:[self viewForCalendarPic:pic atRow:row atColumn:col cellIndex:i]];
         }
@@ -526,10 +525,6 @@
     if ([segue.identifier isEqualToString:@"PictureDetail"]) {
         luxeysPicDetailViewController* viewPicDetail = segue.destinationViewController;
         [viewPicDetail setPictureID:sender.tag];
-    }
-    if ([segue.identifier isEqualToString:@"Calendar"]) {
-        luxeysUserCalendarViewController* viewCalendar = segue.destinationViewController;
-        [viewCalendar setUserID:userID];
     }
 }
 
@@ -719,16 +714,26 @@
         UIView *view = [[UIView alloc] init];
         view.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.8];
         
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 3, 100, 30)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, 100, 30)];
         label.textAlignment = NSTextAlignmentCenter;
         
-        luxeysButtonBrown30 *prev = [[luxeysButtonBrown30 alloc] initWithFrame:CGRectMake(5, 5, 60, 30)];
-        luxeysButtonBrown30 *next = [[luxeysButtonBrown30 alloc] initWithFrame:CGRectMake(255, 5, 60, 30)];
+        UIImageView *imagePrev = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow_left2.png"]];
+        imagePrev.frame = CGRectMake(5, 16, 5, 8);
+        UIImageView *imageNext = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow_right2.png"]];
+        imageNext.frame = CGRectMake(310, 16, 5, 8);
+        
+        UIButton *prev = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 60, 30)];
+        UIButton *next = [[UIButton alloc] initWithFrame:CGRectMake(255, 5, 60, 30)];
         [prev addTarget:self action:@selector(prevMonth:) forControlEvents:UIControlEventTouchUpInside];
         [next addTarget:self action:@selector(nextMonth:) forControlEvents:UIControlEventTouchUpInside];
         [prev setTitle:@"Prev" forState:UIControlStateNormal];
         [next setTitle:@"Next" forState:UIControlStateNormal];
-        label.center = CGPointMake(160, 15);
+        prev.titleLabel.font = [UIFont fontWithName:@"Baskerville-SemiBold" size:16];
+        next.titleLabel.font = [UIFont fontWithName:@"Baskerville-SemiBold" size:16];
+        [prev setTitleColor:[UIColor colorWithRed:101.0/255.0	green:90.0/255.0 blue:56.0/255.0 alpha:1] forState:UIControlStateNormal];
+        [next setTitleColor:[UIColor colorWithRed:101.0/255.0	green:90.0/255.0 blue:56.0/255.0 alpha:1] forState:UIControlStateNormal];
+        
+        label.center = CGPointMake(160, 20);
         
         
         NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
@@ -736,10 +741,18 @@
         label.text = [dateFormat stringFromDate:currentMonth];
         label.textColor = [UIColor colorWithRed:101.0/255.0	green:90.0/255.0 blue:56.0/255.0 alpha:1];
         label.backgroundColor = [UIColor clearColor];
-        [label setFont:[UIFont fontWithName:@"Baskerville-SemiBold" size:16]];
+        [label setFont:[UIFont fontWithName:@"Baskerville-SemiBold" size:20]];
         [view addSubview:prev];
         [view addSubview:next];
         [view addSubview:label];
+        [view addSubview:imagePrev];
+        [view addSubview:imageNext];
+        return view;
+    } else if (tableMode == kTableProfile) {
+        UIView *view = [[UIView alloc] init];
+        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(10, 9, 300, 1)];
+        line.backgroundColor = [UIColor lightGrayColor];
+        [view addSubview:line];
         return view;
     }
     return nil;
@@ -764,9 +777,28 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (tableMode == kTableCalendar) {
         return 40;
-    }
+    } else  if (tableMode == kTableProfile)
+        return 10;
     return 0;
 }
 
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    if ([self.navigationController.viewControllers[self.navigationController.viewControllers.count-1] isKindOfClass:[luxeysPicDetailViewController class]]) {
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:@"TabbarHide"
+         object:self];
+    }
+    
+    [super viewWillDisappear:animated];
+}
+
+
+- (void)viewDidUnload {
+    [self setLableTitleVote:nil];
+    [self setLabelTitlePicCount:nil];
+    [self setLabelTitleFriend:nil];
+    [super viewDidUnload];
+}
 @end

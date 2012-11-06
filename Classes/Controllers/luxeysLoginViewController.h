@@ -27,5 +27,6 @@
 - (IBAction)singleTap:(id)sender;
 - (IBAction)goBack:(id)sender;
 - (IBAction)login:(id)sender;
+- (IBAction)touchForgot:(id)sender;
 
 @end

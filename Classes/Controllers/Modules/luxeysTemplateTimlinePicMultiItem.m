@@ -43,7 +43,7 @@
     [buttonImage loadBackground:pic.urlSquare];
     
     buttonImage.layer.borderColor = [[UIColor whiteColor] CGColor];
-    buttonImage.layer.borderWidth = 5;
+    buttonImage.layer.borderWidth = 3;
     UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:buttonImage.bounds];
     buttonImage.layer.masksToBounds = NO;
     buttonImage.layer.shadowColor = [UIColor blackColor].CGColor;

@@ -31,6 +31,7 @@
  */
 
 #import "LXUIRevealController.h"
+#import "luxeysAppDelegate.h"
 
 @interface LXUIRevealController()
 
@@ -234,7 +235,9 @@
 }
 
 - (void)_revealLeftAnimationWithDuration:(NSTimeInterval)duration
-{	
+{	// Trigger remove badge
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    
 	[UIView animateWithDuration:duration delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionAllowUserInteraction animations:^
 	{
 		self.frontView.frame = CGRectMake(self.rearViewRevealWidth, 0.0f, self.frontView.frame.size.width, self.frontView.frame.size.height);
@@ -518,6 +521,11 @@
                 offset = 0;
         }
         
+        if (self.rightViewController == nil) {
+            if ([recognizer translationInView:self.view].x < 0)
+                offset = 0;
+        }
+        
         self.frontView.frame = CGRectMake(offset, 0.0f, self.frontView.frame.size.width, self.frontView.frame.size.height);
 	}
 	else if (FrontViewPositionRight == self.currentFrontViewPosition)
@@ -556,6 +564,9 @@
 			[self _concealLeftAnimationWithDuration:self.toggleAnimationDuration resigningCompletelyFromRearViewPresentationMode:NO];
 		}
         else if (([recognizer velocityInView:self.view].x < 0.0f) && (self.currentFrontViewPosition == FrontViewPositionCenter)) {
+            if (self.rightViewController == nil) {
+                return;
+            }
             [self _revealRightAnimationWithDuration:self.toggleAnimationDuration];
         } else if (([recognizer velocityInView:self.view].x > 0.0f) && (self.currentFrontViewPosition == FrontViewPositionLeft))
 		{
@@ -904,8 +915,10 @@
     if (self.leftViewController != nil) {
         [self _addLeftViewControllerToHierarchy:self.leftViewController];
     }
+    if (self.rightViewController != nil) {
+        [self _addRightViewControllerToHierarchy:self.rightViewController];
+    }
     
-    [self _addRightViewControllerToHierarchy:self.rightViewController];
 	[self _addFrontViewControllerToHierarchy:self.frontViewController];
     
     self.showingRight = TRUE;

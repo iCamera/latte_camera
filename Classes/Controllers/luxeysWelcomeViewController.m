@@ -15,6 +15,7 @@
 
 @synthesize buttonLeftMenu;
 @synthesize buttonNavRight;
+@synthesize tablePic;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -66,43 +67,35 @@
 {
     [super viewDidLoad];
     
-    collectionView = [[SSCollectionView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height-44)];
+    tablePic.frame = CGRectMake(0, 0, 320, self.view.frame.size.height-44);
     
-    collectionView.dataSource = self;
-    collectionView.delegate = self;
-    collectionView.extremitiesStyle = SSCollectionViewExtremitiesStyleScrolling;
-    collectionView.rowSpacing = 5;
-    collectionView.minimumColumnSpacing = 0;
-    collectionView.scrollView.delegate = self;
-    
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, 50, 0.0);
-    
-    collectionView.scrollView.contentInset = contentInsets;
-    collectionView.scrollView.scrollIndicatorInsets = contentInsets;
-    
-    [self.view addSubview:collectionView];
-
-    refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - collectionView.bounds.size.height, self.view.frame.size.width, collectionView.bounds.size.height)];
+    refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - tablePic.bounds.size.height, self.view.frame.size.width, tablePic.bounds.size.height)];
     refreshHeaderView.delegate = self;
-    [collectionView.scrollView addSubview:refreshHeaderView];
+    [tablePic addSubview:refreshHeaderView];
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self reloadView];
 
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+    navigationBarPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:app.revealController action:@selector(revealGesture:)];
+    [self.navigationController.navigationBar addGestureRecognizer:navigationBarPanGestureRecognizer];
+    navigationBarPanGestureRecognizer.enabled = false;
+
+    [self.buttonLeftMenu addTarget:app.revealController action:@selector(revealLeft:) forControlEvents:UIControlEventTouchUpInside];
     [self.buttonNavRight addTarget:self action:@selector(loginPressed:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)reloadView {
-    
+    loadEnded = false;
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         [[LatteAPIClient sharedClient] getPath:@"api/picture/latests"
                                           parameters:nil
                                              success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                 _items = [[NSMutableArray alloc] init];
+                                                 items = [[NSMutableArray alloc] init];
                                                  for (NSDictionary *pic in [JSON objectForKey:@"pics"]) {
-                                                     [_items addObject:[Picture instanceFromDictionary:pic]];
+                                                     [items addObject:[Picture instanceFromDictionary:pic]];
                                                  }
-                                                 [collectionView reloadData];
+                                                 [tablePic reloadData];
                                                  
                                                  dispatch_async(dispatch_get_main_queue(), ^{
                                                      [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -125,67 +118,69 @@
 
 #pragma mark - SSCollectionViewDataSource
 
-- (NSUInteger)numberOfSectionsInCollectionView:(SSCollectionView *)aCollectionView {
-	return 1;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return items.count/3 + (items.count%3>0?1:0);
 }
 
-
-- (NSUInteger)collectionView:(SSCollectionView *)aCollectionView numberOfItemsInSection:(NSUInteger)section {
-	return [_items count];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [[UITableViewCell alloc] init];
+    for (int i=0; i < 3; i++) {
+        NSInteger idx = indexPath.row*3 + i;
+        if (idx < items.count) {
+            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(10 + 100*i + 2, 2,96, 96)];
+            Picture *pic = items[idx];
+            
+            button.layer.borderColor = [[UIColor whiteColor] CGColor];
+            button.layer.borderWidth = 3;
+            UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:button.bounds];
+            button.layer.masksToBounds = NO;
+            button.layer.shadowColor = [UIColor blackColor].CGColor;
+            button.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+            button.layer.shadowOpacity = 0.5f;
+            button.layer.shadowRadius = 1.5f;
+            button.layer.shadowPath = shadowPathPic.CGPath;
+            button.tag = [pic.pictureId integerValue];
+            [button addTarget:self action:@selector(showPic:) forControlEvents:UIControlEventTouchUpInside];
+            
+            [button loadBackground:pic.urlSquare];
+            [cell addSubview:button];
+        }
+    }
+    return cell;
 }
-
-
-- (SSCollectionViewItem *)collectionView:(SSCollectionView *)aCollectionView itemForIndexPath:(NSIndexPath *)indexPath {
-	static NSString *const itemIdentifier = @"itemIdentifier";
-	
-	SCImageCollectionViewItem *item = (SCImageCollectionViewItem *)[aCollectionView dequeueReusableItemWithIdentifier:itemIdentifier];
-	if (item == nil) {
-		item = [[SCImageCollectionViewItem alloc] initWithReuseIdentifier:itemIdentifier];
-	}
-	
-    
-    Picture *pic = [_items objectAtIndex:indexPath.row];
-    
-	item.imageURL = [NSURL URLWithString:pic.urlSquare];
-	
-	return item;
-}
-
 
 
 #pragma mark - SSCollectionViewDelegate
 
-- (CGSize)collectionView:(SSCollectionView *)aCollectionView itemSizeForSection:(NSUInteger)section {
-	return CGSizeMake(100.0f, 100.0f);
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 100;
 }
 
-
-- (void)collectionView:(SSCollectionView *)aCollectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    Picture *pic = [_items objectAtIndex:indexPath.row];
-    [self performSegueWithIdentifier:@"PictureDetail" sender:pic];
+- (void)showPic:(UIButton*)sender {
+    [self performSegueWithIdentifier:@"PictureDetail" sender:sender];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(Picture *)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UIButton *)sender {
     if ([segue.identifier isEqualToString:@"PictureDetail"]) {
         luxeysPicDetailViewController* viewPicDetail = segue.destinationViewController;
-        [viewPicDetail setPictureID:[sender.pictureId integerValue]];
+        [viewPicDetail setPictureID:sender.tag];
     }
 }
 
-- (CGFloat)collectionView:(SSCollectionView *)aCollectionView heightForHeaderInSection:(NSUInteger)section {
-	return 5.0f;
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSUInteger)section {
+	return 10.0f;
 }
 
-- (UIView *)collectionView:(SSCollectionView *)aCollectionView viewForHeaderInSection:(NSUInteger)section {
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSUInteger)section {
     return [[UIView alloc] init];
 }
 
-- (CGFloat)collectionView:(SSCollectionView *)aCollectionView heightForFooterInSection:(NSUInteger)section {
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSUInteger)section {
 	return 40.0f;
 }
 
 
-- (UIView *)collectionView:(SSCollectionView *)aCollectionView viewForFooterInSection:(NSUInteger)section {
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     UIView *view = [[UIView alloc] init];
     [view addSubview:indicator];
     return view;
@@ -193,36 +188,17 @@
 
 
 - (void)receiveLoggedIn:(NSNotification *) notification {
-    // Init side bar
-    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-
-    navigationBarPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:app.revealController action:@selector(revealGesture:)];
-    [self.navigationController.navigationBar addGestureRecognizer:navigationBarPanGestureRecognizer];
+    navigationBarPanGestureRecognizer.enabled = true;
     
-    [self.buttonLeftMenu addTarget:app.revealController action:@selector(revealLeft:) forControlEvents:UIControlEventTouchUpInside];
-    [self.buttonLeftMenu setHidden:NO];
-    [self.buttonNavRight removeTarget:self action:@selector(loginPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.buttonNavRight addTarget:app.revealController action:@selector(revealRight:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    // Style
-    UIImage* imageNotify = [UIImage imageNamed:@"icon_info.png"];
-    [self.buttonNavRight setImage:imageNotify forState:UIControlStateNormal];
-    [self.buttonNavRight setImage:imageNotify forState:UIControlStateHighlighted];
+    buttonLeftMenu.hidden = false;
+    buttonNavRight.hidden = true;
 }
 
 - (void)receiveLoggedOut:(NSNotification *) notification {
-    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+    navigationBarPanGestureRecognizer.enabled = false;
     
-    [self.navigationController.navigationBar removeGestureRecognizer:navigationBarPanGestureRecognizer];
-    
-    [self.buttonNavRight removeTarget:app.revealController action:@selector(revealRight:) forControlEvents:UIControlEventTouchUpInside];
-    [self.buttonNavRight addTarget:self action:@selector(loginPressed:) forControlEvents:UIControlEventTouchUpInside];
-    
-    // Style
-    UIImage* imageNotify = [UIImage imageNamed:@"icon_login.png"];
-    [self.buttonNavRight setImage:imageNotify forState:UIControlStateNormal];
-    [self.buttonNavRight setImage:imageNotify forState:UIControlStateHighlighted];
+    buttonLeftMenu.hidden = true;
+    buttonNavRight.hidden = false;
 }
 
 - (void)loginPressed:(id)sender {
@@ -257,9 +233,9 @@
                                                      
                                                      if (pics.count > 0) {
                                                          for (NSDictionary *pic in pics) {
-                                                             [_items addObject:[Picture instanceFromDictionary:pic]];
+                                                             [items addObject:[Picture instanceFromDictionary:pic]];
                                                          }
-                                                         [collectionView reloadData];
+                                                         [tablePic reloadData];
                                                      } else {
                                                          loadEnded = true;
                                                      }
@@ -280,7 +256,7 @@
 
 - (void)doneLoadingTableViewData{
     reloading = NO;
-    [refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:collectionView.scrollView];
+    [refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:tablePic];
 }
 
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
@@ -315,6 +291,7 @@
 - (void)viewDidUnload {
     [self setButtonLeftMenu:nil];
     [self setButtonNavRight:nil];
+    [self setTablePic:nil];
     [super viewDidUnload];
 }
 @end

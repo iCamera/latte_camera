@@ -22,7 +22,7 @@
     NSInteger section;
 }
 
-@property (strong, nonatomic) IBOutlet UIImageView *imagePic;
+@property (strong, nonatomic) IBOutlet UIButton *buttonPic;
 @property (strong, nonatomic) IBOutlet UILabel *labelTitle;
 @property (strong, nonatomic) IBOutlet UILabel *labelAccess;
 @property (strong, nonatomic) IBOutlet UILabel *labelComment;

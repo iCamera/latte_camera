@@ -11,6 +11,7 @@
 #import "GPUImageOutput.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <ImageIO/ImageIO.h>
+#import "GPUImageOutput+saveProcessedImageToLibrary.h"
 
 
 @interface FilterManager : NSObject {
@@ -31,7 +32,7 @@
     GPUImageCropFilter *crop;
     GPUImageCropFilter *crop2;
     
-    GPUImageOverlayBlendFilter *grain;
+//    GPUImageOverlayBlendFilter *grain;
     
     GPUImageContrastFilter *contrast;
     GPUImageGrayscaleFilter *mono;

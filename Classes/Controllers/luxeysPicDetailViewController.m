@@ -122,18 +122,22 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [[NSNotificationCenter defaultCenter]
-     postNotificationName:@"TabbarHide"
-     object:self];
+    if (![self.navigationController.viewControllers[self.navigationController.viewControllers.count-2] isKindOfClass:[luxeysPicDetailViewController class]]) {
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:@"TabbarHide"
+         object:self];
+    }
     
     [super viewWillAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [[NSNotificationCenter defaultCenter]
-     postNotificationName:@"TabbarShow"
-     object:self];
+    if (![self.navigationController.viewControllers[self.navigationController.viewControllers.count-1] isKindOfClass:[luxeysPicDetailViewController class]]) {
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:@"TabbarShow"
+         object:self];
+    }
     
     [super viewWillDisappear:animated];
 }
@@ -283,10 +287,6 @@
                                    self.view.frame.size.height-viewTextbox.frame.size.height,
                                    viewTextbox.frame.size.width,
                                    viewTextbox.frame.size.height);
-    
-//    CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-//    CGPoint scrollPoint = CGPointMake(0.0, tablePic.contentOffset.y - keyboardSize.height);
-//    [tablePic setContentOffset:scrollPoint];
         
     [UIView commitAnimations];
 }

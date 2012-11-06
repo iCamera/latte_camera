@@ -57,14 +57,16 @@
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];
-    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
     if (picture != nil) {
         [imagePic setImageWithURL:[NSURL URLWithString:picture.urlSquare]];
         textDesc.text = picture.descriptionText;
         textTitle.text = picture.title;
         imageStatus = [picture.status integerValue];
         buttonDelete.hidden = false;
-//        viewDelete.hidden = false;
+        //        viewDelete.hidden = false;
         [self setStatusLabel];
     } else {
         luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
@@ -73,6 +75,10 @@
         imageStatus = [app.currentUser.pictureStatus integerValue];
         [self setStatusLabel];
     }
+    
+    self.navigationController.navigationBarHidden = NO;
+    
+    [super viewWillAppear:animated];
 }
 
 - (void)setStatusLabel {
@@ -98,11 +104,6 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    self.navigationController.navigationBarHidden = NO;
-    [super viewWillAppear:animated];
 }
 
 

@@ -16,6 +16,8 @@
 
 @implementation luxeysLoginViewController
 
+static FBLoginView *loginview;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -38,17 +40,27 @@
     isPreload = true;
     isPreload2 = true;
     
-    FBLoginView *loginview = [[FBLoginView alloc] init];
-    
-    loginview.frame = CGRectOffset(loginview.frame, 5, 5);
-    loginview.delegate = self;
-    
+    if (loginview == nil) {
+        loginview = [[FBLoginView alloc] init];
+        loginview.center = CGPointMake(160, 300);
+        loginview.delegate = self;
+    }
+
     [self.view addSubview:loginview];
+    
+    HUD = [[MBProgressHUD alloc] initWithView:self.view];
+	[self.view addSubview:HUD];
     
     [loginview sizeToFit];    
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    loginview.delegate = self;
+    [super viewWillAppear:animated];
+}
+
 - (void)viewDidDisappear:(BOOL)animated {
+    [loginview setDelegate:nil];
     //[self.navigationController setNavigationBarHidden:false];
 }
 
@@ -61,11 +73,7 @@
 - (IBAction)registerClick:(id)sender {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/user/register"]];
 }
-- (void)viewDidUnload {
-    [self setTextUser:nil];
-    [self setTextPass:nil];
-    [super viewDidUnload];
-}
+
 - (IBAction)singleTap:(id)sender {
     [self.textUser resignFirstResponder];
     [self.textPass resignFirstResponder];
@@ -76,8 +84,6 @@
 }
 
 - (IBAction)login:(id)sender {
-    HUD = [[MBProgressHUD alloc] initWithView:self.view.window];
-	[self.view.window addSubview:HUD];
     [HUD show:YES];
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     [app.tokenItem setObject:self.textUser.text forKey:(id)CFBridgingRelease(kSecAttrAccount)];
@@ -95,6 +101,10 @@
                                     }];
 }
 
+- (IBAction)touchForgot:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/user/reset_password"]];
+}
+
 - (void)processLogin:(NSDictionary *)JSON {
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     
@@ -108,6 +118,7 @@
         [HUD hide:YES];
         [alert show];
     } else {
+        [loginview setDelegate:nil];
         [app setToken:[JSON objectForKey:@"token"]];
         app.currentUser = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
         if (app.apns != nil)
@@ -122,7 +133,15 @@
         [[NSNotificationCenter defaultCenter]
          postNotificationName:@"LoggedIn"
          object:self];
+        
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:@"UploadedNewPicture"
+         object:self];
     }
+}
+
+- (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
+    [HUD show:YES];
 }
 
 - (void)loginViewFetchedUserInfo:(FBLoginView *)loginView

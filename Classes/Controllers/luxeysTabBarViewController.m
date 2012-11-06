@@ -74,7 +74,7 @@
     UILabel *labelCamera = [[UILabel alloc] init];
     labelCamera.frame = CGRectMake(0.0, 0.0, 60, 11);
     labelCamera.font = [UIFont boldSystemFontOfSize:10];
-    labelCamera.text = @"写真を撮る";
+    labelCamera.text = @"写真を追加";
     labelCamera.backgroundColor = [UIColor clearColor];
     labelCamera.textColor = [UIColor whiteColor];
     labelCamera.shadowOffset = CGSizeMake(0, 1);
@@ -126,22 +126,21 @@
 
 
 - (void)cameraView:(id)sender {
-    /*luxeysCameraViewController *viewCapture = [[UIStoryboard storyboardWithName:@"CameraStoryboard"
-                                                                        bundle: nil] instantiateInitialViewController];
-    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-    [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    app.window.rootViewController = viewCapture;
-    */
     [self pickPhoto];
 }
 
 - (void)pickPhoto {
-    luxeysCameraViewController *viewCapture = [[UIStoryboard storyboardWithName:@"CameraStoryboard"
+    UINavigationController *storyCapture = [[UIStoryboard storyboardWithName:@"CameraStoryboard"
                                                                          bundle: nil] instantiateInitialViewController];
-
+    luxeysCameraViewController *viewCapture = storyCapture.viewControllers[0];
     viewCapture.delegate = self;
+    
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:NO];
-    [self presentViewController:viewCapture animated:NO completion:nil];
+    [self presentViewController:storyCapture animated:NO completion:nil];
+}
+
+- (void)imagePickerController:(luxeysCameraViewController *)picker didFinishPickingMediaWithData:(NSData *)data {
+    [picker performSegueWithIdentifier:@"Edit" sender:data];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

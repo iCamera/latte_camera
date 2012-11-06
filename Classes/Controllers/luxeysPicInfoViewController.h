@@ -11,6 +11,7 @@
 #import "LatteAPIClient.h"
 #import "UIImageView+AFNetworking.h"
 #import "luxeysAppDelegate.h"
+#import "luxeysPicDetailViewController.h"
 #import "Picture.h"
 
 @interface luxeysPicInfoViewController : UITableViewController {

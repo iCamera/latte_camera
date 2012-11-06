@@ -270,6 +270,32 @@
     return nil;
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (tableMode == 1) {
+        UIView *view = [[UIView alloc] init];
+
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 260, 30)];
+        label.text = [self tableView:tableView titleForHeaderInSection:section];
+        label.font = [UIFont systemFontOfSize:15];
+        label.shadowOffset = CGSizeMake(0, 1);
+        label.textColor = [UIColor whiteColor];
+        label.shadowColor = [UIColor blackColor];
+        label.backgroundColor = [UIColor clearColor];
+        view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bt_menu_title.png"]];
+        [view addSubview:label];
+        return view;
+    }
+    else
+        return nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (tableMode == 1)
+        return 30;
+    else
+        return 0;
+}
+
 - (void)reloadTableViewDataSource{
 	//  should be calling your tableviews data source model to reload
 	//  put here just for demo

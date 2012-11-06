@@ -10,7 +10,7 @@
 
 @implementation FilterManager
 
-static GPUImagePicture *texture;
+//static GPUImagePicture *texture;
 
 - (id)init {
     self = [super init];
@@ -30,8 +30,8 @@ static GPUImagePicture *texture;
         sepia = [[GPUImageMonochromeFilter alloc]init];
         blur = [[GPUImageGaussianSelectiveBlurFilter alloc] init];
         
-        grain = [[GPUImageOverlayBlendFilter alloc] init];
-
+//        grain = [[GPUImageOverlayBlendFilter alloc] init];
+        
     }
     return self;
 }
@@ -63,10 +63,10 @@ static GPUImagePicture *texture;
             [self tmpEffect2];
             break;
         case 3:
-            [self tmpEffect3];
+            [self effect5];
             break;
         case 4:
-            [self tmpEffect4];
+            [self effect4];
             break;
         case 5:
             [self tmpEffect5];
@@ -75,16 +75,13 @@ static GPUImagePicture *texture;
             [self tmpEffect6];
             break;
         case 7:
-            [self tmpEffect2];
+            [self effect3];
             break;
         case 8:
-            [self tmpEffect3];
+            [self effect1];
             break;
         case 9:
-            [self tmpEffect4];
-            break;
-        case 10:
-            [self tmpEffect5];
+            [self effect2];
             break;
     }
     
@@ -132,9 +129,9 @@ static GPUImagePicture *texture;
         }
         lastFilter = lensOut;
     }
-//    [effectOut addTarget:aOutput];
+    //    [effectOut addTarget:aOutput];
     if (isPicture) {
-        [lensOut prepareForImageCapture];
+//        [lensOut prepareForImageCapture];
     }
 }
 
@@ -180,7 +177,7 @@ static GPUImagePicture *texture;
 
 - (GPUImageFilterGroup *)effect1 {
     exposure = [[GPUImageExposureFilter alloc] init]; //hack
-
+    
     exposure.exposure = 0.1;
     vignette.vignetteStart = 0.55;
     vignette.vignetteEnd = 0.90;
@@ -203,9 +200,9 @@ static GPUImagePicture *texture;
                                      [NSValue valueWithCGPoint:CGPointMake(121.0f/255.0f, 118.0f/255.0f)],
                                      [NSValue valueWithCGPoint:CGPointMake(1.0, 1.0)],
                                      nil]];
-
     
-  
+    
+    
     
     [exposure addTarget:vignette];
     [vignette addTarget:tonecurve];
@@ -239,7 +236,7 @@ static GPUImagePicture *texture;
         {206,233,212},
         {222,241,220},
         {238,248,229}
-     };
+    };
     
     [tonecurve setRedControlPoints:[self curveWithPoint:curve atIndex:0]];
     [tonecurve setGreenControlPoints:[self curveWithPoint:curve atIndex:1]];
@@ -254,13 +251,13 @@ static GPUImagePicture *texture;
 }
 
 - (GPUImageFilterGroup *)effect3 {
-    UIImage *image = [UIImage imageNamed:@"grain.jpg"];
-    texture = [[GPUImagePicture alloc] initWithImage:image smoothlyScaleOutput:YES];
+//    UIImage *image = [UIImage imageNamed:@"grain.jpg"];
+//    texture = [[GPUImagePicture alloc] initWithImage:image smoothlyScaleOutput:YES];
     
     rgb.red = 1.36;
     rgb.green = 1.36;
     rgb.blue = 1.28;
-
+    
     exposure.exposure = 0.2;
     vignette.vignetteStart = 0.4;
     vignette.vignetteEnd = 1.0;
@@ -268,23 +265,23 @@ static GPUImagePicture *texture;
     brightness.brightness = -0.05;
     
     [rgb addTarget:exposure];
-    [exposure addTarget:vignette];
-    [vignette addTarget:grain];
+    [exposure addTarget:mono];
+//    [vignette addTarget:grain];
     
-    [texture processImage];
-    [texture addTarget:grain];
-    [grain addTarget:mono];
+//    [texture processImage];
+//    [texture addTarget:grain];
+//    [grain addTarget:mono];
     
     [mono addTarget:contrast];
     [contrast addTarget:brightness];
-
+    
     effectIn = rgb;
     effectOut = brightness;
     return nil;
 }
 
 
-- (GPUImageFilterGroup *)effect4 {    
+- (GPUImageFilterGroup *)effect4 {
     vignette.vignetteStart = 0.5;
     vignette.vignetteEnd = 0.90;
     contrast.contrast = 1.85;
@@ -304,8 +301,8 @@ static GPUImagePicture *texture;
 }
 
 - (GPUImageFilterGroup *)effect5 {
-    UIImage *image = [UIImage imageNamed:@"grain.jpg"];
-    texture = [[GPUImagePicture alloc] initWithImage:image smoothlyScaleOutput:YES];
+//    UIImage *image = [UIImage imageNamed:@"grain.jpg"];
+//    texture = [[GPUImagePicture alloc] initWithImage:image smoothlyScaleOutput:YES];
     
     vignette.vignetteStart = 0.5;
     vignette.vignetteEnd = 1.1;
@@ -335,10 +332,10 @@ static GPUImagePicture *texture;
     [tonecurve setBlueControlPoints:[self curveWithPoint:curve atIndex:2]];
     
     [vignette addTarget:contrast];
-    [contrast addTarget:grain];
-    [texture addTarget:grain];
-    [texture processImage];
-    [grain addTarget:tonecurve];
+    [contrast addTarget:tonecurve];
+//    [texture addTarget:grain];
+//    [texture processImage];
+//    [grain addTarget:tonecurve];
     
     effectIn = vignette;
     effectOut = tonecurve;
@@ -347,45 +344,75 @@ static GPUImagePicture *texture;
 }
 
 - (void)tmpEffect1 {
-    tonecurve = [[GPUImageToneCurveFilter alloc] initWithACV:@"crossprocess"];
+    tonecurve = [[GPUImageToneCurveFilter alloc] initWithACV:@"effect1"];
     effectIn = tonecurve;
     effectOut = tonecurve;
 }
 
 - (void)tmpEffect2 {
-    tonecurve = [[GPUImageToneCurveFilter alloc] initWithACV:@"02"];
+    tonecurve = [[GPUImageToneCurveFilter alloc] initWithACV:@"effect2"];
     effectIn = tonecurve;
     effectOut = tonecurve;
 }
 
 - (void)tmpEffect3 {
-    tonecurve = [[GPUImageToneCurveFilter alloc] initWithACV:@"17"];
+    tonecurve = [[GPUImageToneCurveFilter alloc] initWithACV:@"effect3"];
     effectIn = tonecurve;
     effectOut = tonecurve;
 }
 
 - (void)tmpEffect4 {
-    tonecurve = [[GPUImageToneCurveFilter alloc] initWithACV:@"aqua"];
+    tonecurve = [[GPUImageToneCurveFilter alloc] initWithACV:@"effect4"];
     effectIn = tonecurve;
     effectOut = tonecurve;
 }
 
 - (void)tmpEffect5 {
-    tonecurve = [[GPUImageToneCurveFilter alloc] initWithACV:@"yellow-red"];
+    tonecurve = [[GPUImageToneCurveFilter alloc] initWithACV:@"effect5"];
     effectIn = tonecurve;
     effectOut = tonecurve;
 }
 
 - (void)tmpEffect6 {
-    tonecurve = [[GPUImageToneCurveFilter alloc] initWithACV:@"06"];
+    tonecurve = [[GPUImageToneCurveFilter alloc] initWithACV:@"effect6"];
     effectIn = tonecurve;
     effectOut = tonecurve;
 }
 
 - (void)tmpEffect7 {
-    tonecurve = [[GPUImageToneCurveFilter alloc] initWithACV:@"purple-green"];
+    tonecurve = [[GPUImageToneCurveFilter alloc] initWithACV:@"effect7"];
     effectIn = tonecurve;
     effectOut = tonecurve;
+}
+
+- (GPUImageFilterGroup *)curve1 {
+    float curve[16][3] = {
+        {12.0, 0.0, 0.0},
+        {24.0, 9.0, 4.0},
+        {37.0, 24.0, 10.0},
+        {50.0, 40.0, 21.0},
+        {64.0, 55.0, 40.0},
+        {78.0, 73.0, 62.0},
+        {93.0, 89.0, 83.0},
+        {108.0, 107.0, 104.0},
+        {125.0, 125.0, 126.0},
+        {139.0, 142.0, 149.0},
+        {154.0, 160.0, 170.0},
+        {169.0, 177.0, 190.0},
+        {183.0, 193.0, 211.0},
+        {198.0, 209.0, 231.0},
+        {211.0, 224.0, 244.0},
+        {224.0, 240.0, 250.0}
+    };
+    
+    [tonecurve setRedControlPoints:[self curveWithPoint:curve atIndex:0]];
+    [tonecurve setGreenControlPoints:[self curveWithPoint:curve atIndex:1]];
+    [tonecurve setBlueControlPoints:[self curveWithPoint:curve atIndex:2]];
+        
+    effectIn = tonecurve;
+    effectOut = tonecurve;
+    
+    return nil;
 }
 
 - (void)clearTargetWithCamera:(GPUImageStillCamera *)camera andPicture:(GPUImagePicture *)picture {
@@ -410,20 +437,21 @@ static GPUImagePicture *texture;
     [mono removeAllTargets];
     [sepia removeAllTargets];
     [blur removeAllTargets];
-    [grain removeAllTargets];
-//    brightness = [[GPUImageBrightnessFilter alloc] init];
-//    distord = [[GPUImagePinchDistortionFilter alloc]init];
-//    tiltShift = [[GPUImageTiltShiftFilter alloc]init];
-//    sharpen = [[GPUImageSharpenFilter alloc] init];
-//    vignette = [[GPUImageVignetteFilter alloc] init];
-//    tonecurve = [[GPUImageToneCurveFilter alloc] init];
-//    exposure = [[GPUImageExposureFilter alloc] init];
-//    rgb = [[GPUImageRGBFilter alloc] init];
-//    crop = [[GPUImageCropFilter alloc] init];
-//    contrast = [[GPUImageContrastFilter alloc] init];
-//    mono = [[GPUImageGrayscaleFilter alloc] init];
-//    sepia = [[GPUImageMonochromeFilter alloc]init];
-//    blur = [[GPUImageGaussianSelectiveBlurFilter alloc] init];
+    
+//    [grain removeAllTargets];
+    //    brightness = [[GPUImageBrightnessFilter alloc] init];
+    //    distord = [[GPUImagePinchDistortionFilter alloc]init];
+    //    tiltShift = [[GPUImageTiltShiftFilter alloc]init];
+    //    sharpen = [[GPUImageSharpenFilter alloc] init];
+    //    vignette = [[GPUImageVignetteFilter alloc] init];
+    //    tonecurve = [[GPUImageToneCurveFilter alloc] init];
+    //    exposure = [[GPUImageExposureFilter alloc] init];
+    //    rgb = [[GPUImageRGBFilter alloc] init];
+    //    crop = [[GPUImageCropFilter alloc] init];
+    //    contrast = [[GPUImageContrastFilter alloc] init];
+    //    mono = [[GPUImageGrayscaleFilter alloc] init];
+    //    sepia = [[GPUImageMonochromeFilter alloc]init];
+    //    blur = [[GPUImageGaussianSelectiveBlurFilter alloc] init];
 //    grain = [[GPUImageOverlayBlendFilter alloc] init];
 }
 
@@ -440,13 +468,18 @@ static GPUImagePicture *texture;
 }
 
 - (void)saveImage:(NSDictionary *)location orientation:(UIImageOrientation)imageOrientation withMeta:(NSMutableDictionary *)imageMeta onComplete:(void(^)(ALAsset *asset))block {
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    
     if (imageMeta == nil) {
         imageMeta = [[NSMutableDictionary alloc] init];
     }
     
-    [imageMeta removeObjectForKey:(NSString *)kCGImagePropertyOrientation];
-    [imageMeta removeObjectForKey:(NSString *)kCGImagePropertyTIFFOrientation];
+//    [imageMeta removeObjectForKey:(NSString *)kCGImagePropertyOrientation];
+//    [imageMeta removeObjectForKey:(NSString *)kCGImagePropertyTIFFOrientation];
+    
+    NSNumber *orientation = [NSNumber numberWithInteger:[self metadataOrientationForUIImageOrientation:imageOrientation]];
+    
+    [imageMeta setObject:orientation forKey:(NSString *)kCGImagePropertyTIFFOrientation];
+    [imageMeta setObject:orientation forKey:(NSString *)kCGImagePropertyOrientation];
     
     // Add GPS
     if (location != nil) {
@@ -459,14 +492,30 @@ static GPUImagePicture *texture;
     if (lastFilter == nil) {
         lastFilter = [[GPUImageBrightnessFilter alloc] init];
     }
-    UIImage *imageTmp = [lastFilter imageFromCurrentlyProcessedOutputWithOrientation:imageOrientation];
     
-    NSData *imageData = UIImageJPEGRepresentation(imageTmp, 0.9);
-    [library writeImageDataToSavedPhotosAlbum:imageData metadata:imageMeta completionBlock:^(NSURL *assetURL, NSError *error) {
+    [lastFilter saveImageFromCurrentlyProcessedOutputWithMeta:imageMeta andOrientation:imageOrientation onComplete:^(NSURL *assetURL, NSError *error) {
+        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
         [library assetForURL:assetURL
                  resultBlock:block
                 failureBlock:nil];
     }];
+
+}
+
+- (int) metadataOrientationForUIImageOrientation:(UIImageOrientation)orientation
+{
+	switch (orientation) {
+		case UIImageOrientationUp: // the picture was taken with the home button is placed right
+			return 1;
+		case UIImageOrientationRight: // bottom (portrait)
+			return 6;
+		case UIImageOrientationDown: // left
+			return 3;
+		case UIImageOrientationLeft: // top
+			return 8;
+		default:
+			return 1;
+	}
 }
 
 @end

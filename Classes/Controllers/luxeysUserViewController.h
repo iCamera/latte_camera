@@ -13,7 +13,6 @@
 #import "luxeysAppDelegate.h"
 #import "luxeysCellProfile.h"
 #import "luxeysPicDetailViewController.h"
-#import "luxeysUserCalendarViewController.h"
 #import "luxeysCellFriend.h"
 #import "User.h"
 #import "Picture.h"
@@ -59,7 +58,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableProfile;
 @property (strong, nonatomic) IBOutlet UIButton *buttonProfile;
 @property (strong, nonatomic) IBOutlet UIButton *buttonCalendar;
-@property (strong, nonatomic) IBOutlet UIButton *buttonMap;
+//@property (strong, nonatomic) IBOutlet UIButton *buttonMap;
 @property (strong, nonatomic) IBOutlet UIButton *buttonVoteCount;
 @property (strong, nonatomic) IBOutlet UIButton *buttonPhotoCount;
 @property (strong, nonatomic) IBOutlet UIButton *buttonFriendCount;
@@ -67,6 +66,9 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonContact;
 @property (strong, nonatomic) IBOutlet UIImageView *iconFriend;
 @property (strong, nonatomic) IBOutlet UIImageView *iconFollow;
+@property (strong, nonatomic) IBOutlet UILabel *lableTitleVote;
+@property (strong, nonatomic) IBOutlet UILabel *labelTitlePicCount;
+@property (strong, nonatomic) IBOutlet UILabel *labelTitleFriend;
 
 - (IBAction)touchTab:(UIButton *)sender;
 - (IBAction)touchBack:(id)sender;

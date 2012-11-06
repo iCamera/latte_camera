@@ -1,8 +1,8 @@
 //
-//  luxeysFavViewController.h
+//  luxeysFav2ViewController.h
 //  Latte
 //
-//  Created by Xuan Dung Bui on 2012/10/11.
+//  Created by Xuan Dung Bui on 2012/11/01.
 //  Copyright (c) 2012年 LUXEYS. All rights reserved.
 //
 
@@ -16,11 +16,12 @@
 #import "EGORefreshTableHeaderView.h"
 #import "luxeysPicDetailViewController.h"
 
-@interface luxeysFavViewController : UICollectionViewController<EGORefreshTableHeaderDelegate> {
+@interface luxeysFav2ViewController : UITableViewController<EGORefreshTableHeaderDelegate> {
     NSMutableArray *pics;
     BOOL reloading;
     EGORefreshTableHeaderView *refreshHeaderView;
 }
+
 @property (strong, nonatomic) IBOutlet luxeysButtonBrown30 *buttonNavRight;
 
 @end
