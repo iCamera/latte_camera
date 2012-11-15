@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LatteAPIClient.h"
+#import "AFNetworking.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface UIButton (AsyncImage)
 - (void)loadBackground:(NSString*)url;
+- (void)loadBackground:(NSString *)url placeholderImage:(NSString *)placeHolder;
+
 @end

@@ -69,7 +69,7 @@
 - (void)reloadView {
     luxeysAppDelegate* app = (luxeysAppDelegate*)[[UIApplication sharedApplication] delegate];
     if (app.currentUser != nil) {
-        textComment.enabled = TRUE;
+        textComment.enabled = true;
     }
     
     
@@ -144,10 +144,10 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        float newheight = [luxeysUtils heightFromWidth:300
+        float newheight = [luxeysUtils heightFromWidth:308
                                                       width:[pic.width floatValue]
                                                      height:[pic.height floatValue]];
-        return newheight + 100;
+        return newheight + 94;
     } else {
         Comment *comment = [comments objectAtIndex:indexPath.row-1];
         NSString *strComment = comment.descriptionText;
@@ -175,7 +175,10 @@
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        cellPicInfo = [tableView dequeueReusableCellWithIdentifier:@"Picture"];
+        cellPicInfo = [tableView dequeueReusableCellWithIdentifier:@"Picture" forIndexPath:indexPath];
+        if (cellPicInfo == nil) {
+            cellPicInfo = [[luxeysTableViewCellPicture alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Picture"];
+        }
         
         [cellPicInfo setPicture:pic user:user];
         
@@ -183,14 +186,13 @@
         [cellPicInfo.buttonLike addTarget:self action:@selector(touchLike:) forControlEvents:UIControlEventTouchUpInside];
         
         cellPicInfo.buttonUser.tag = [user.userId longValue];
-        
         [cellPicInfo.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
         [cellPicInfo.buttonInfo addTarget:self action:@selector(showInfo:) forControlEvents:UIControlEventTouchUpInside];
         [cellPicInfo.buttonMap addTarget:self action:@selector(showMap:) forControlEvents:UIControlEventTouchUpInside];
                 
         return cellPicInfo;
     } else {
-        luxeysTableViewCellComment* cellComment = [tableView dequeueReusableCellWithIdentifier:@"Comment"];
+        luxeysTableViewCellComment* cellComment = [tableView dequeueReusableCellWithIdentifier:@"Comment" forIndexPath:indexPath];
 
         if (nil == cellComment) {
             cellComment = (luxeysTableViewCellComment*)[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
@@ -200,9 +202,10 @@
         Comment *comment = [comments objectAtIndex:indexPath.row-1];
         [cellComment setComment:comment];
         
-        cellComment.buttonUser.tag = [comment.user.userId longValue];
-        [cellComment.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
-        
+        if (!comment.user.isUnregister) {
+            cellComment.buttonUser.tag = [comment.user.userId longValue];
+            [cellComment.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
+        }
         
         return cellComment;
     }

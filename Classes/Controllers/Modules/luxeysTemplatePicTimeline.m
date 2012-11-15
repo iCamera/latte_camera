@@ -65,23 +65,24 @@
                                          success:nil
                                          failure:nil];
     // Do any additional setup after loading the view from its nib.
-    labelTitle.text = pic.title;
+    if (pic.title.length > 0)
+        labelTitle.text = pic.title;
     
     [buttonUser loadBackground:user.profilePicture];
     labelAuthor.text = user.name;
     
     [buttonPic loadBackground:pic.urlMedium];
     
-    float newheight = [luxeysUtils heightFromWidth:300
+    float newheight = [luxeysUtils heightFromWidth:308
                                                   width:[pic.width floatValue]
                                                  height:[pic.height floatValue]];
     labelAccess.text = [pic.pageviews stringValue];
     labelLike.text = [pic.voteCount stringValue];
     labelComment.text = [pic.commentCount stringValue];
     labelDate.text = [luxeysUtils timeDeltaFromNow:pic.createdAt];
-    buttonPic.frame = CGRectMake(buttonPic.frame.origin.x, buttonPic.frame.origin.y, 300, newheight);
+    buttonPic.frame = CGRectMake(buttonPic.frame.origin.x, buttonPic.frame.origin.y, 308, newheight);
     viewStats.autoresizingMask = UIViewAutoresizingNone;
-    viewStats.frame = CGRectMake(0, newheight + 60, viewStats.frame.size.width, viewStats.frame.size.height);
+    viewStats.frame = CGRectMake(0, newheight + 56, viewStats.frame.size.width, viewStats.frame.size.height);
     
     if (pic.canVote)
         if (!pic.isVoted)
@@ -124,7 +125,6 @@
 //    buttonUser.layer.shadowOpacity = 0.5f;
 //    buttonUser.layer.shadowRadius = 1.5f;
 //    buttonUser.layer.shadowPath = shadowPath.CGPath;
-    
     
     buttonPic.layer.borderColor = [[UIColor whiteColor] CGColor];
     buttonPic.layer.borderWidth = 3;

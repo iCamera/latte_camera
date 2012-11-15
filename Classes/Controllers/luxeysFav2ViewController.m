@@ -29,6 +29,7 @@
 {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     // Do any additional setup after loading the view.
     refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
     refreshHeaderView.delegate = self;
@@ -97,12 +98,20 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [[UITableViewCell alloc] init];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FavRow" forIndexPath:indexPath];
+
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"FavRow"];
+    }
+    
+    for (UIView *subview in cell.subviews) {
+        [subview removeFromSuperview];
+    }
     
     for (int i = 0; i < 4; i++) {
         NSInteger idx = indexPath.row * 4 + i;
         if (idx < pics.count) {
-            UIButton *buttonPic = [[UIButton alloc] initWithFrame:CGRectMake(15 + i * 75, 5, 65, 65)];
+            UIButton *buttonPic = [[UIButton alloc] initWithFrame:CGRectMake(6 + i * 78, 0, 74, 74)];
             Picture *pic = pics[idx];
             buttonPic.tag = [pic.pictureId integerValue];
             
@@ -126,7 +135,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 75;
+    return 78;
 }
 
 - (void)showPic:(UIButton *)button {
@@ -189,10 +198,10 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 10;
+    return 6;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 10;
+    return 6;
 }
 @end

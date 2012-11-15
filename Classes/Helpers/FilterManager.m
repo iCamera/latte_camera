@@ -12,6 +12,7 @@
 
 //static GPUImagePicture *texture;
 
+
 - (id)init {
     self = [super init];
     if (self != nil) {
@@ -29,6 +30,9 @@
         mono = [[GPUImageGrayscaleFilter alloc] init];
         sepia = [[GPUImageMonochromeFilter alloc]init];
         blur = [[GPUImageGaussianSelectiveBlurFilter alloc] init];
+        filter = [[LXFilter alloc] init];
+        lxblur = [[LXFilterBlur alloc] init];
+        filterMono = [[LXFilterMono alloc] init];
         
 //        grain = [[GPUImageOverlayBlendFilter alloc] init];
         
@@ -57,30 +61,51 @@
             [self effect0];
             break;
         case 1:
-            [self tmpEffect1];
+            [self myEffect1];
             break;
         case 2:
-            [self tmpEffect2];
+            [self myEffect2];
             break;
         case 3:
-            [self effect5];
+            [self myEffect3];
             break;
         case 4:
-            [self effect4];
+            [self myEffect4];
             break;
         case 5:
-            [self tmpEffect5];
+            [self myEffect5];
             break;
         case 6:
-            [self tmpEffect6];
+            [self myEffect6];
             break;
         case 7:
-            [self effect3];
+            [self myEffect7];
             break;
         case 8:
-            [self effect1];
+            [self tmpEffect1];
             break;
         case 9:
+            [self tmpEffect2];
+            break;
+        case 10:
+            [self effect5];
+            break;
+        case 11:
+            [self effect4];
+            break;
+        case 12:
+            [self tmpEffect5];
+            break;
+        case 13:
+            [self tmpEffect7];
+            break;
+        case 14:
+            [self effect3];
+            break;
+        case 15:
+            [self effect1];
+            break;
+        case 16:
             [self effect2];
             break;
     }
@@ -437,6 +462,8 @@
     [mono removeAllTargets];
     [sepia removeAllTargets];
     [blur removeAllTargets];
+    [filter removeAllTargets];
+    [filterMono removeAllTargets];
     
 //    [grain removeAllTargets];
     //    brightness = [[GPUImageBrightnessFilter alloc] init];
@@ -487,6 +514,8 @@
     }
     
     // Add App Info
+    [imageMeta setObject:@"Apple" forKey:(NSString*)kCGImagePropertyTIFFMake];
+    [imageMeta setObject:[[UIDevice currentDevice] model] forKey:(NSString *)kCGImagePropertyTIFFModel];
     [imageMeta setObject:@"Latte" forKey:(NSString *)kCGImagePropertyTIFFSoftware];
     
     if (lastFilter == nil) {
@@ -501,6 +530,165 @@
     }];
 
 }
+
+- (void)myEffect1 {
+    [filter setRedCurve:[NSArray arrayWithObjects:
+                       [NSValue valueWithCGPoint:CGPointMake(0, 5)],
+                       [NSValue valueWithCGPoint:CGPointMake(127, 133)],
+                       [NSValue valueWithCGPoint:CGPointMake(255, 255)], nil]
+           greenCurve:[NSArray arrayWithObjects:
+                       [NSValue valueWithCGPoint:CGPointMake(0, 70)],
+                       [NSValue valueWithCGPoint:CGPointMake(127, 133)],
+                       [NSValue valueWithCGPoint:CGPointMake(255, 255)], nil]
+            blueCurve:[NSArray arrayWithObjects:
+                       [NSValue valueWithCGPoint:CGPointMake(0, 62)],
+                       [NSValue valueWithCGPoint:CGPointMake(127, 133)],
+                       [NSValue valueWithCGPoint:CGPointMake(255, 255)], nil]];
+    filter.gradient = 0.22;
+    filter.overlay = 0.58;
+    filter.saturation = 2.0;
+    filter.brightness = 0.0;
+    
+    effectIn = filter;
+    effectOut = filter;
+}
+
+- (void)myEffect2 {
+    [filter setRedCurve:[NSArray arrayWithObjects:
+                         [NSValue valueWithCGPoint:CGPointMake(0, 89)],
+                         [NSValue valueWithCGPoint:CGPointMake(127, 120)],
+                         [NSValue valueWithCGPoint:CGPointMake(255, 255)], nil]
+             greenCurve:[NSArray arrayWithObjects:
+                         [NSValue valueWithCGPoint:CGPointMake(0, 0)],
+                         [NSValue valueWithCGPoint:CGPointMake(127, 78)],
+                         [NSValue valueWithCGPoint:CGPointMake(255, 255)], nil]
+              blueCurve:[NSArray arrayWithObjects:
+                         [NSValue valueWithCGPoint:CGPointMake(0, 90)],
+                         [NSValue valueWithCGPoint:CGPointMake(127, 112)],
+                         [NSValue valueWithCGPoint:CGPointMake(255, 255)], nil]];
+    filter.gradient = 0.43;
+    filter.overlay = 0.72;
+    filter.saturation = 2.0;
+    filter.brightness = 0.0;
+    
+    effectIn = filter;
+    effectOut = filter;
+}
+
+- (void)myEffect3 {
+    [filter setRedCurve:[NSArray arrayWithObjects:
+                         [NSValue valueWithCGPoint:CGPointMake(0, 73)],
+                         [NSValue valueWithCGPoint:CGPointMake(127, 184)],
+                         [NSValue valueWithCGPoint:CGPointMake(255, 255)], nil]
+             greenCurve:[NSArray arrayWithObjects:
+                         [NSValue valueWithCGPoint:CGPointMake(0, 69)],
+                         [NSValue valueWithCGPoint:CGPointMake(127, 186)],
+                         [NSValue valueWithCGPoint:CGPointMake(255, 255)], nil]
+              blueCurve:[NSArray arrayWithObjects:
+                         [NSValue valueWithCGPoint:CGPointMake(0, 51)],
+                         [NSValue valueWithCGPoint:CGPointMake(127, 142)],
+                         [NSValue valueWithCGPoint:CGPointMake(255, 255)], nil]];
+    filter.gradient = 0.48;
+    filter.overlay = 0.61;
+    filter.saturation = 2.0;
+    filter.brightness = -0.05;
+    
+    effectIn = filter;
+    effectOut = filter;
+}
+
+- (void)myEffect4 {
+    [filter setRedCurve:[NSArray arrayWithObjects:
+                         [NSValue valueWithCGPoint:CGPointMake(0, 10)],
+                         [NSValue valueWithCGPoint:CGPointMake(127, 99)],
+                         [NSValue valueWithCGPoint:CGPointMake(255, 255)], nil]
+             greenCurve:[NSArray arrayWithObjects:
+                         [NSValue valueWithCGPoint:CGPointMake(0, 33)],
+                         [NSValue valueWithCGPoint:CGPointMake(127, 129)],
+                         [NSValue valueWithCGPoint:CGPointMake(255, 255)], nil]
+              blueCurve:[NSArray arrayWithObjects:
+                         [NSValue valueWithCGPoint:CGPointMake(0, 21)],
+                         [NSValue valueWithCGPoint:CGPointMake(127, 119)],
+                         [NSValue valueWithCGPoint:CGPointMake(255, 255)], nil]];
+    filter.gradient = 0.43;
+    filter.overlay = 0.72;
+    filter.saturation = 2.0;
+    filter.brightness = 0.0;
+    
+    effectIn = filter;
+    effectOut = filter;
+}
+
+- (void)myEffect5 {
+    [filter setRedCurve:[NSArray arrayWithObjects:
+                         [NSValue valueWithCGPoint:CGPointMake(0, 38)],
+                         [NSValue valueWithCGPoint:CGPointMake(127, 133)],
+                         [NSValue valueWithCGPoint:CGPointMake(255, 255)], nil]
+             greenCurve:[NSArray arrayWithObjects:
+                         [NSValue valueWithCGPoint:CGPointMake(0, 52)],
+                         [NSValue valueWithCGPoint:CGPointMake(127, 133)],
+                         [NSValue valueWithCGPoint:CGPointMake(255, 255)], nil]
+              blueCurve:[NSArray arrayWithObjects:
+                         [NSValue valueWithCGPoint:CGPointMake(0, 124)],
+                         [NSValue valueWithCGPoint:CGPointMake(127, 133)],
+                         [NSValue valueWithCGPoint:CGPointMake(255, 255)], nil]];
+    filter.gradient = 0.43;
+    filter.overlay = 0.72;
+    filter.saturation = 2.0;
+    filter.brightness = 0.0;
+    
+    effectIn = filter;
+    effectOut = filter;
+}
+
+
+- (void)myEffect6 {
+    [filter setRedCurve:[NSArray arrayWithObjects:
+                         [NSValue valueWithCGPoint:CGPointMake(0, 36)],
+                         [NSValue valueWithCGPoint:CGPointMake(102, 132)],
+                         [NSValue valueWithCGPoint:CGPointMake(255, 255)], nil]
+             greenCurve:[NSArray arrayWithObjects:
+                         [NSValue valueWithCGPoint:CGPointMake(0, 44)],
+                         [NSValue valueWithCGPoint:CGPointMake(102, 106)],
+                         [NSValue valueWithCGPoint:CGPointMake(255, 255)], nil]
+              blueCurve:[NSArray arrayWithObjects:
+                         [NSValue valueWithCGPoint:CGPointMake(0, 107)],
+                         [NSValue valueWithCGPoint:CGPointMake(102, 106)],
+                         [NSValue valueWithCGPoint:CGPointMake(255, 255)], nil]];
+    filter.gradient = 0.95;
+    filter.overlay = 0.75;
+    filter.saturation = 1.5;
+    filter.brightness = 0.0;
+    
+    effectIn = filter;
+    effectOut = filter;
+
+}
+
+
+- (void)myEffect7 {
+    [filter setRedCurve:[NSArray arrayWithObjects:
+                         [NSValue valueWithCGPoint:CGPointMake(0, 117)],
+                         [NSValue valueWithCGPoint:CGPointMake(140, 133)],
+                         [NSValue valueWithCGPoint:CGPointMake(255, 255)], nil]
+             greenCurve:[NSArray arrayWithObjects:
+                         [NSValue valueWithCGPoint:CGPointMake(0, 66)],
+                         [NSValue valueWithCGPoint:CGPointMake(140, 133)],
+                         [NSValue valueWithCGPoint:CGPointMake(255, 255)], nil]
+              blueCurve:[NSArray arrayWithObjects:
+                         [NSValue valueWithCGPoint:CGPointMake(0, 34)],
+                         [NSValue valueWithCGPoint:CGPointMake(140, 133)],
+                         [NSValue valueWithCGPoint:CGPointMake(255, 255)], nil]];
+    filter.gradient = 0.95;
+    filter.overlay = 0.70;
+    filter.saturation = 1.5;
+    filter.brightness = 0.0;
+    
+    effectIn = filter;
+    effectOut = filter;
+
+}
+
 
 - (int) metadataOrientationForUIImageOrientation:(UIImageOrientation)orientation
 {

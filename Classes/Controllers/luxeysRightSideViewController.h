@@ -17,11 +17,14 @@
 #import "EGORefreshTableHeaderView.h"
 #import "User.h"
 #import "Picture.h"
+#import "FacebookSDK.h"
 
 @interface luxeysRightSideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, EGORefreshTableHeaderDelegate> {
     NSMutableArray *notifies;
     NSMutableArray *requests;
     NSMutableArray *ignores;
+    NSMutableArray *fbfriends;
+    
     int tableMode;
     int page;
     int limit;

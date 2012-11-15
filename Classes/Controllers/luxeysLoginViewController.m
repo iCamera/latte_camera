@@ -16,7 +16,6 @@
 
 @implementation luxeysLoginViewController
 
-static FBLoginView *loginview;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -40,27 +39,43 @@ static FBLoginView *loginview;
     isPreload = true;
     isPreload2 = true;
     
-    if (loginview == nil) {
-        loginview = [[FBLoginView alloc] init];
-        loginview.center = CGPointMake(160, 300);
-        loginview.delegate = self;
-    }
-
-    [self.view addSubview:loginview];
+    
     
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
 	[self.view addSubview:HUD];
     
-    [loginview sizeToFit];    
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(sessionStateChanged:)
+     name:FBSessionStateChangedNotification
+     object:nil];
+    
+    // Check the session for a cached token to show the proper authenticated
+    // UI. However, since this is not user intitiated, do not show the login UX.
+    [app openSessionWithAllowLoginUI:NO];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    loginview.delegate = self;
-    [super viewWillAppear:animated];
+- (void)sessionStateChanged:(NSNotification*)notification {
+    if (FBSession.activeSession.isOpen) {
+        NSLog(@"Open fb");
+        [[LatteAPIClient sharedClient] postPath:@"api/user/login_facebook"
+                                     parameters:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                 FBSession.activeSession.accessToken, @"facebook_token", nil]
+                                        success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                            [self processLogin:JSON];
+                                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                            NSLog(@"Something went wrong (Facebook): %@", error.description);
+                                        }];
+//        [self.authButton setTitle:@"Logout" forState:UIControlStateNormal];
+    } else {
+        NSLog(@"Unopen fb");
+//        [self.authButton setTitle:@"Login" forState:UIControlStateNormal];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-    [loginview setDelegate:nil];
+//    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+//    [app.fbLogin setDelegate:nil];
     //[self.navigationController setNavigationBarHidden:false];
 }
 
@@ -68,6 +83,7 @@ static FBLoginView *loginview;
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (IBAction)registerClick:(id)sender {
@@ -89,7 +105,6 @@ static FBLoginView *loginview;
     [app.tokenItem setObject:self.textUser.text forKey:(id)CFBridgingRelease(kSecAttrAccount)];
     [app.tokenItem setObject:self.textPass.text forKey:(id)CFBridgingRelease(kSecValueData)];
     
-    
     [[LatteAPIClient sharedClient] postPath:@"api/user/login"
                                  parameters:[NSDictionary dictionaryWithObjectsAndKeys:
                                              self.textUser.text, @"mail",
@@ -105,6 +120,12 @@ static FBLoginView *loginview;
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/user/reset_password"]];
 }
 
+- (IBAction)touchFacebook:(id)sender {
+    [HUD show:YES];
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+    [app openSessionWithAllowLoginUI:YES];
+}
+
 - (void)processLogin:(NSDictionary *)JSON {
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     
@@ -118,7 +139,6 @@ static FBLoginView *loginview;
         [HUD hide:YES];
         [alert show];
     } else {
-        [loginview setDelegate:nil];
         [app setToken:[JSON objectForKey:@"token"]];
         app.currentUser = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
         if (app.apns != nil)
@@ -138,22 +158,6 @@ static FBLoginView *loginview;
          postNotificationName:@"UploadedNewPicture"
          object:self];
     }
-}
-
-- (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
-    [HUD show:YES];
-}
-
-- (void)loginViewFetchedUserInfo:(FBLoginView *)loginView
-                            user:(id<FBGraphUser>)user {
-    [[LatteAPIClient sharedClient] postPath:@"api/user/login_facebook"
-                                 parameters:[NSDictionary dictionaryWithObjectsAndKeys:
-                                             FBSession.activeSession.accessToken, @"facebook_token", nil]
-                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                        [self processLogin:JSON];
-                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        NSLog(@"Something went wrong (Facebook)");
-                                    }];
 }
 
 

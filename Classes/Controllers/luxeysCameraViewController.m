@@ -102,16 +102,22 @@
     currentTimer = kTimerNone;
     
     scrollEffect.backgroundColor = [UIColor colorWithRed:53.0/255.0 green:48.0/255.0 blue:29.0/255.0 alpha:0.6];
-    for (int i=0; i < 10; i++) {
+    for (int i=0; i < 16; i++) {
         UIButton *buttonEffect = [[UIButton alloc] initWithFrame:CGRectMake(10+60*i, 10, 50, 50)];
-        [buttonEffect setImage:[UIImage imageNamed:[NSString stringWithFormat:@"sample%d.jpg", i]] forState:UIControlStateNormal];
+        UIImage *preview = [UIImage imageNamed:[NSString stringWithFormat:@"sample%d.jpg", i]];
+        if (preview != nil) {
+            [buttonEffect setImage:preview forState:UIControlStateNormal];
+        } else {
+            [buttonEffect setBackgroundColor:[UIColor grayColor]];
+        }
+        
         [buttonEffect addTarget:self action:@selector(setEffect:) forControlEvents:UIControlEventTouchUpInside];
         buttonEffect.layer.cornerRadius = 5;
         buttonEffect.clipsToBounds = YES;
         buttonEffect.tag = i;
         [scrollEffect addSubview:buttonEffect];
     }
-    scrollEffect.contentSize = CGSizeMake(10*60+10, 70);
+    scrollEffect.contentSize = CGSizeMake(16*60+10, 70);
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [videoCamera startCameraCapture];

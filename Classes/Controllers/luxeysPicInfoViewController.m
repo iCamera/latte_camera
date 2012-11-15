@@ -72,7 +72,9 @@
                                                  [sections addObject:exif];
                                                  keyExif = [exif allKeys];
                                              }
-                                             labelTitle.text = pic.title;
+                                             
+                                             if (pic.title.length > 0)
+                                                 labelTitle.text = pic.title;
                                              
                                              [self.tableView reloadData];
                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

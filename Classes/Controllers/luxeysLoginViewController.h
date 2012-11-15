@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <FacebookSDK/FacebookSDK.h>
 #import "User.h"
 #import "MBProgressHUD.h"
+#import "FacebookSDK.h"
 
 @class KeychainItemWrapper;
 
-@interface luxeysLoginViewController : UIViewController<FBLoginViewDelegate> {
+@interface luxeysLoginViewController : UIViewController {
     MBProgressHUD *HUD;
     BOOL isPreload;
     BOOL isPreload2;
@@ -28,5 +28,6 @@
 - (IBAction)goBack:(id)sender;
 - (IBAction)login:(id)sender;
 - (IBAction)touchForgot:(id)sender;
+- (IBAction)touchFacebook:(id)sender;
 
 @end

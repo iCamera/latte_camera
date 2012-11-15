@@ -25,6 +25,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *labelUser;
 @property (strong, nonatomic) IBOutlet UILabel *labelDate;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollImage;
+@property (strong, nonatomic) IBOutlet UILabel *labelTitle;
 
 - (id)initWithFeed:(Feed *)aFeed section:(NSInteger)aSection sender:(id)aSender;
 

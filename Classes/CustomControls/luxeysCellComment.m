@@ -32,9 +32,14 @@
 }
 
 - (void)setComment:(Comment *)comment {
-    [buttonUser loadBackground:comment.user.profilePicture];
+    
     textComment.text = comment.descriptionText;
-    labelAuthor.text = comment.user.name;
+    if (comment.user.isUnregister) {
+        labelAuthor.text = @"ゲスト";
+    } else {
+        [buttonUser loadBackground:comment.user.profilePicture];
+        labelAuthor.text = comment.user.name;
+    }
     labelDate.text = [luxeysUtils timeDeltaFromNow:comment.createdAt];
     
     CGSize labelSize = [textComment.text sizeWithFont:[UIFont systemFontOfSize:11]

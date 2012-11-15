@@ -27,6 +27,8 @@
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
 
+NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSessionStateChangedNotification";
+
 - (BOOL)application:(UIApplication *)application
              openURL:(NSURL *)url
    sourceApplication:(NSString *)sourceApplication
@@ -49,6 +51,10 @@ void uncaughtExceptionHandler(NSException *exception) {
     [self saveContext];
     // FBSample logic
     [FBSession.activeSession close];
+}
+
+- (void) closeSession {
+    [FBSession.activeSession closeAndClearTokenInformation];
 }
 
 - (void)setToken:(NSString *)token{
@@ -103,6 +109,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         [self checkTokenValidity];
     }
     
+    
     // Clear notify but save badge
     [self clearNotification];
     
@@ -117,6 +124,62 @@ void uncaughtExceptionHandler(NSException *exception) {
                                             nil]
                                     success:nil
                                     failure:nil];
+}
+
+/*
+ * Callback for session changes.
+ */
+- (void)sessionStateChanged:(FBSession *)session
+                      state:(FBSessionState) state
+                      error:(NSError *)error
+{
+    switch (state) {
+        case FBSessionStateOpen:
+            if (!error) {
+                // We have a valid session
+                NSLog(@"User session found");
+            }
+            break;
+        case FBSessionStateClosed:
+        case FBSessionStateClosedLoginFailed:
+            [FBSession.activeSession closeAndClearTokenInformation];
+            break;
+        default:
+            break;
+    }
+    
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:FBSessionStateChangedNotification
+     object:session];
+    
+    if (error) {
+        UIAlertView *alertView = [[UIAlertView alloc]
+                                  initWithTitle:@"Error"
+                                  message:error.localizedDescription
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+        [alertView show];
+    }
+}
+
+/*
+ * Opens a Facebook session and optionally shows the login UX.
+ */
+- (BOOL)openSessionWithAllowLoginUI:(BOOL)allowLoginUI {
+    NSArray *permissions = [[NSArray alloc] initWithObjects:
+                            @"email",
+                            @"user_photos",
+                            nil];
+    return [FBSession openActiveSessionWithReadPermissions:permissions
+                                              allowLoginUI:allowLoginUI
+                                         completionHandler:^(FBSession *session,
+                                                             FBSessionState state,
+                                                             NSError *error) {
+                                             [self sessionStateChanged:session
+                                                                 state:state
+                                                                 error:error];
+                                         }];
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {

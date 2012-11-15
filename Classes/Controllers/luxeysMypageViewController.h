@@ -50,6 +50,7 @@
     NSArray *allTab;
     BOOL reloading;
     BOOL loadEnded;
+    BOOL isEmpty;
     NSMutableArray *feeds;
     NSMutableArray *pictures;
     NSMutableArray *votes;

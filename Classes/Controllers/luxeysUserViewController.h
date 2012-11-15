@@ -50,6 +50,7 @@
     EGORefreshTableHeaderView *refreshHeaderView;
     MBProgressHUD *HUD;
     BOOL reloading;
+    BOOL isEmpty;
 }
 
 @property (strong, nonatomic) IBOutlet UIImageView *imageUser;

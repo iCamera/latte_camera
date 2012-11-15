@@ -17,6 +17,7 @@
 @synthesize labelUser;
 @synthesize labelDate;
 @synthesize scrollImage;
+@synthesize labelTitle;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -44,18 +45,19 @@
     // Do any additional setup after loading the view from its nib.
     labelUser.text = feed.user.name;
     labelDate.text = [luxeysUtils timeDeltaFromNow:feed.updatedAt];
+    labelTitle.text = [NSString stringWithFormat:@"写真を%d枚追加しました", feed.targets.count];
     buttonUser.tag = [feed.user.userId integerValue];
     
     [buttonUser loadBackground:feed.user.profilePicture];
     [buttonUser addTarget:sender action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
     
-    CGSize size = CGSizeMake(10, 190);
+    CGSize size = CGSizeMake(6, 190);
     for (Picture *pic in feed.targets) {
         luxeysTemplateTimlinePicMultiItem *viewPic = [[luxeysTemplateTimlinePicMultiItem alloc] initWithPic:pic parent:sender];
         viewPic.view.frame = CGRectMake(size.width, 2, 190, 190);
         [scrollImage addSubview:viewPic.view];
         
-        size.width += 200;
+        size.width += 193;
     }
     scrollImage.contentSize = size;
     
@@ -75,4 +77,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewDidUnload {
+    [self setLabelTitle:nil];
+    [super viewDidUnload];
+}
 @end

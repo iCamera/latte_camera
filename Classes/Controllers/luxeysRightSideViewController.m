@@ -47,6 +47,12 @@
     refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - tableNotify.bounds.size.height, tableNotify.frame.size.width, tableNotify.bounds.size.height)];
     refreshHeaderView.delegate = self;
     [tableNotify addSubview:refreshHeaderView];
+    
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(sessionStateChanged:)
+     name:FBSessionStateChangedNotification
+     object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -59,18 +65,32 @@
     if (tableMode == 0) {
         return 1;
     }
-    else
-        return 2;
+    else {
+        if (FBSession.activeSession.isOpen) {
+            return 3;
+        } else {
+            return 2;
+        }
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableMode == 0) {
       return notifies.count;
     } else {
-        if (section == 0) {
-            return requests.count;
-        } else {
-            return ignores.count;
+        switch (section) {
+            case 0:
+                return requests.count;
+                break;
+            case 1:
+                return ignores.count;
+                break;
+            case 2:
+                return fbfriends.count;
+                break;
+            default:
+                return 0;
+                break;
         }
     }
 }
@@ -90,6 +110,9 @@
         } else if (indexPath.section == 1) {
             cellRequest = [tableView dequeueReusableCellWithIdentifier:@"Ignore"];
             user = [ignores objectAtIndex:indexPath.row];
+        } else {
+            cellRequest = [tableView dequeueReusableCellWithIdentifier:@"Ignore"];
+            user = [fbfriends objectAtIndex:indexPath.row];
         }
         [cellRequest setUser:user];
         
@@ -109,6 +132,9 @@
             break;
         case 1:
             [self reloadRequest];
+            if (FBSession.activeSession.isOpen) {
+                [self loadFacebokFriend];
+            }
             break;
     }
 }
@@ -145,6 +171,49 @@
                                              [self doneLoadingTableViewData];
                                          }];
 }
+
+- (void)loadFacebokFriend {
+    FBSession *fbsession = FBSession.activeSession;
+    
+    FBRequest *fbrequest = [[FBRequest alloc]initWithSession:fbsession
+                                                   graphPath:@"me/friends"
+                                                  parameters:[NSDictionary dictionaryWithObject:@"id,name,installed" forKey:@"fields"]
+                                                  HTTPMethod:@"GET"];
+    [fbrequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        NSMutableArray *tmp = [[NSMutableArray alloc]init];
+        for (NSDictionary* friend in [(NSDictionary*)result objectForKey:@"data"]) {
+            if ([friend objectForKey:@"installed"] != nil) {
+                [tmp addObject:[friend objectForKey:@"id"]];
+            }
+        }
+        
+        if (tmp.count > 0) {
+            luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+            [[LatteAPIClient sharedClient] getPath:@"api/user/friends/facebook_unadded_friend"
+                                        parameters: [NSDictionary dictionaryWithObjectsAndKeys:
+                                                     [app getToken], @"token",
+                                                     [tmp componentsJoinedByString:@","], @"fbids",
+                                                     nil]
+                                           success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                               fbfriends = [User mutableArrayFromDictionary:JSON withKey:@"users"];
+                                               //[tableNotify reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
+                                               [tableNotify reloadData];
+                                           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                               NSLog(@"Something went wrong (FB Friends)");
+                                           }];
+        }
+        
+    }];
+}
+
+- (void)sessionStateChanged:(NSNotification*)notification {
+    if (FBSession.activeSession.isOpen) {
+        [self loadFacebokFriend];
+    } else {
+        fbfriends = nil;
+    }
+}
+
 
 - (void)receiveLoggedIn:(NSNotification *) notification {
     requests = nil;
@@ -183,14 +252,13 @@
     
     luxeysAppDelegate* app = (luxeysAppDelegate*)[[UIApplication sharedApplication] delegate];
     
-    NSString *url = [NSString stringWithFormat:@"/api/user/friend/approve/%d", sender.tag];
+    NSString *url = [NSString stringWithFormat:@"/api/user/friend/request/%d", sender.tag];
     [[LatteAPIClient sharedClient] postPath:url
                                  parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                     success: nil
                                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        NSLog(@"Something went wrong (RightMenu - Approve)");
+                                        NSLog(@"Something went wrong (RightMenu - Approve/Request)");
                                     }];
-    
 }
 
 - (void)ingoreRequest:(UIButton *)sender {
@@ -237,13 +305,27 @@
         [nav pushViewController:viewPic animated:YES];
     } else {
         luxeysUserViewController *viewUser = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserProfile"];
-        if (indexPath.section == 0) {
-            User *request = requests[indexPath.row];
-            [viewUser setUserID:[request.userId integerValue]];
-        } else {
-            User *ignore = ignores[indexPath.row];
-            [viewUser setUserID:[ignore.userId integerValue]];
+        switch (indexPath.section) {
+            case 0: {
+                User *request = requests[indexPath.row];
+                [viewUser setUserID:[request.userId integerValue]];
+            }
+                break;
+            case 1: {
+                User *ignore = ignores[indexPath.row];
+                [viewUser setUserID:[ignore.userId integerValue]];
+            }
+                break;
+            case 2: {
+                User *fbfriend = fbfriends[indexPath.row];
+                [viewUser setUserID:[fbfriend.userId integerValue]];
+            }
+                break;
+                
+            default:
+                break;
         }
+        
         app.viewMainTab.selectedIndex = 4; // Switch to mypage
         UINavigationController *nav = (UINavigationController *)app.viewMainTab.selectedViewController;
         [nav pushViewController:viewUser animated:YES];
@@ -262,6 +344,9 @@
                 break;
             case 1:
                 return @"保存";
+                break;
+            case 2:
+                return @"Facebookの知り合い";
                 break;
             default:
                 break;
@@ -306,7 +391,6 @@
 	//  model should call this when its done loading
 	reloading = NO;
 	[refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableNotify];
-	
 }
 
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
@@ -319,21 +403,15 @@
 }
 
 - (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
-	
 	return [NSDate date]; // should return date data source was last changed
-	
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-	
 	[refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
-    
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-	
 	[refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
-	
 }
 
 

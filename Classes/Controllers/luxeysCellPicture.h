@@ -12,7 +12,7 @@
 #import "UIButton+AsyncImage.h"
 #import "User.h"
 #import "Picture.h"
-#import "UIImageView+AFNetworking.h"
+#import "UIImageView+loadProgress.h"
 #import "luxeysUtils.h"
 
 @interface luxeysTableViewCellPicture : UITableViewCell {

@@ -17,5 +17,9 @@
 @property (strong, nonatomic) IBOutlet UIView *badgeRank8;
 @property (strong, nonatomic) IBOutlet UIView *badgeRank7;
 @property (strong, nonatomic) IBOutlet UIView *badgeRank6;
+@property (strong, nonatomic) IBOutlet UILabel *label1st;
+@property (strong, nonatomic) IBOutlet UILabel *label2nd;
+@property (strong, nonatomic) IBOutlet UILabel *label3rd;
+@property (strong, nonatomic) IBOutlet UILabel *label4th;
 
 @end

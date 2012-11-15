@@ -117,11 +117,22 @@
         [tab.tabBarItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                 [UIColor whiteColor], UITextAttributeTextColor,
                                                 CGSizeMake(0, 1), UITextAttributeTextShadowOffset,
+                                                [UIColor blackColor], UITextAttributeTextShadowColor,
                                                 nil]
                                       forState:UIControlStateNormal];
+//        [tab.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"bt_info.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"bt_add.png"]];
     }
+    self.tabBar.selectionIndicatorImage = [UIImage imageNamed:@"bg_bottom_on.png"];
+    self.tabBar.backgroundImage = [UIImage imageNamed: @"bg_bottom.png"];
     
-    //Load camera first
+        // add the drop shadow
+        UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:self.tabBar.bounds];
+        self.tabBar.layer.masksToBounds = NO;
+        self.tabBar.layer.shadowColor = [UIColor blackColor].CGColor;
+        self.tabBar.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+        self.tabBar.layer.shadowOpacity = 0.8f;
+        self.tabBar.layer.shadowRadius = 2.5f;
+        self.tabBar.layer.shadowPath = shadowPath.CGPath;
 }
 
 
@@ -254,6 +265,5 @@
 {
     self.selectedIndex = 4;
 }
-
 
 @end

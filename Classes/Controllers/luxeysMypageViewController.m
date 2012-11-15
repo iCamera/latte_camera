@@ -53,6 +53,7 @@
     timelineMode = kListAll;
     loadEnded = false;
     toggleSection = [[NSMutableDictionary alloc] init];
+    isEmpty = false;
     return self;
 }
 
@@ -129,7 +130,7 @@
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        feeds = [Feed mutableArrayFromDictionary:JSON
                                                                         withKey:@"feeds"];
-                                       
+                                       isEmpty = feeds.count == 0;
                                        [self.tableView reloadData];
                                        [self doneLoadingTableViewData];
                                                                               
@@ -174,7 +175,7 @@
                                                                                   withKey:@"pictures"];
                                            
                                            loadEnded = true;
-                                           
+                                           isEmpty = pictures.count == 0;
                                            [self.tableView reloadData];
                                            [self doneLoadingTableViewData];
                                            
@@ -197,6 +198,7 @@
                                                                           withKey:@"friends"];
                                        loadEnded = true;
                                        [HUD hide:YES];
+                                       isEmpty = friends.count == 0;
                                        [self doneLoadingTableViewData];
                                        [self.tableView reloadData];
                                        
@@ -216,6 +218,7 @@
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        followings = [User mutableArrayFromDictionary:JSON
                                                                              withKey:@"following"];
+                                       isEmpty = followings.count == 0;
                                        loadEnded = true;
                                        [self doneLoadingTableViewData];
                                        [HUD hide:YES];
@@ -235,6 +238,7 @@
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        votes = [Picture mutableArrayFromDictionary:JSON
                                                                            withKey:@"pictures"];
+                                       isEmpty = votes.count == 0;
                                        loadEnded = true;
                                        [self.tableView reloadData];
                                        [self doneLoadingTableViewData];
@@ -310,6 +314,8 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if (isEmpty)
+        return 1;
     if (tableMode == kTableTimeline) {
         return feeds.count;
     } else
@@ -317,9 +323,11 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (isEmpty)
+        return 0;
+    
     if (tableMode == kTableTimeline) {
         Feed *feed = [feeds objectAtIndex:section];
-        
         if (feed.targets.count == 1) {
             Picture *pic = [feed.targets objectAtIndex:0];
             NSInteger commentCount = [pic.commentCount integerValue];
@@ -329,8 +337,10 @@
                 return commentCount>3?3:commentCount;
             else
                 return commentCount;
-        } else
+            
+        } else {
             return 0;
+        }
         
     }
     else if (tableMode == kTablePicList) {
@@ -383,6 +393,9 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (isEmpty)
+        return 200;
+    
     if (tableMode == kTableTimeline) {
         Feed *feed = [feeds objectAtIndex:section];
         if (feed.targets.count == 1) {
@@ -403,6 +416,15 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (isEmpty) {
+        UIView *emptyView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 200)];
+        UIImageView *emptyImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nopict.png"]];
+        //    UILabel *label = [[UILabel alloc] initWithFrame:(CGRect)]
+        emptyImage.center = emptyView.center;
+        [emptyView addSubview:emptyImage];
+        return emptyView;
+    }
+    
     if (tableMode == kTableTimeline) {
         Feed *feed = [feeds objectAtIndex:section];
         
@@ -430,8 +452,10 @@
         Comment *comment = [pic.comments objectAtIndex:indexPath.row];
         [cellComment setComment:comment];
         
-        cellComment.buttonUser.tag = [comment.user.userId integerValue];
-        [cellComment.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
+        if (!comment.user.isUnregister) {
+            cellComment.buttonUser.tag = [comment.user.userId integerValue];
+            [cellComment.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
+        }
         
         cellComment.backgroundView = [[UIView alloc] init];
         cellComment.backgroundView.backgroundColor = [UIColor colorWithRed:0.91f green:0.90f blue:0.88 alpha:1];
@@ -461,7 +485,7 @@
             }
             
             
-            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(10+(i*77), 10, 67, 67)];
+            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(6+(i*77), 6, 71, 71)];
             [button loadBackground:pic.urlSquare];
             button.layer.borderColor = [[UIColor whiteColor] CGColor];
             button.layer.borderWidth = 3;

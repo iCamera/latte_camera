@@ -37,7 +37,7 @@
 //    imageUser.layer.cornerRadius = 3;
 //    imageUser.clipsToBounds = YES;
     
-    [imageUser setImageWithURL:[NSURL URLWithString:user.profilePicture]];
+    [imageUser setImageWithURL:[NSURL URLWithString:user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
     
     self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg_menu.png"]];
     [self setSelectedBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg_menu_on.png"]]];

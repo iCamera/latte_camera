@@ -54,14 +54,15 @@
                                          success:nil
                                          failure:nil];
     // Do any additional setup after loading the view from its nib.
-    labelTitle.text = pic.title;
+    if (pic.title.length > 0)
+        labelTitle.text = pic.title;
     
     [buttonUser loadBackground:user.profilePicture];
     labelAuthor.text = user.name;
     
-    [imagePic setImageWithURL:[NSURL URLWithString:pic.urlMedium]];
+    [imagePic loadProgess:pic.urlMedium];
     
-    float newheight = [luxeysUtils heightFromWidth:300
+    float newheight = [luxeysUtils heightFromWidth:308
                                                   width:[pic.width floatValue]
                                                  height:[pic.height floatValue]];
     
@@ -69,7 +70,7 @@
     labelAccess.text = [pic.pageviews stringValue];
     labelLike.text = [pic.voteCount stringValue];
     labelComment.text = [pic.commentCount stringValue];
-    imagePic.frame = CGRectMake(imagePic.frame.origin.x, imagePic.frame.origin.y, 300, newheight);
+    imagePic.frame = CGRectMake(imagePic.frame.origin.x, imagePic.frame.origin.y, 308, newheight);
     viewStats.autoresizingMask = UIViewAutoresizingNone;
     viewStats.frame = CGRectMake(0, newheight + 70, viewStats.frame.size.width, viewStats.frame.size.height);
 
@@ -90,13 +91,8 @@
     //[buttonUser addTarget:self.parentViewController action:@selector(touchUser:) forControlEvents:UIControlEventTouchUpInside];
     
     // Style
-    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:buttonUser.bounds];
-    buttonUser.layer.masksToBounds = NO;
-    buttonUser.layer.shadowColor = [UIColor blackColor].CGColor;
-    buttonUser.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
-    buttonUser.layer.shadowOpacity = 1.0f;
-    buttonUser.layer.shadowRadius = 1.0f;
-    buttonUser.layer.shadowPath = shadowPath.CGPath;
+    buttonUser.clipsToBounds = YES;
+    buttonUser.layer.cornerRadius = 3;
     
     UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:imagePic.bounds];
     imagePic.layer.masksToBounds = NO;

@@ -11,14 +11,12 @@
 		"sublimeclang_options":
 		[
 			"-I/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/llvm-gcc-4.2/lib/gcc/i686-apple-darwin11/4.2.1/include/",
-			"-I/Users/dungbx/Documents/FacebookSDK/FacebookSDK.framework/",
-			"-isysroot",
-			"/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk/",
-			"-D__IPHONE_OS_VERSION_MIN_REQUIRED=60000",
-			"-Wno-format",
 			"-I/Users/dungbx/Desktop/Luxeys/Latte/**",
+			"-I/Users/dungbx/Desktop/Luxeys/Latte/Vendor/**",
 			"-include/Users/dungbx/Desktop/Luxeys/Latte/Latte/Latte-Prefix.pch",
-			"-I/Users/dungbx/Desktop/Luxeys/GPUImage/**"
+			"-isysroot", "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk/",
+			"-D__IPHONE_OS_VERSION_MIN_REQUIRED=50100",
+			"-Wno-format"
 		]
 	}
 }

@@ -52,20 +52,12 @@
 {
     [super viewDidLoad];
   // Do any additional setup after loading the view.
-    self.viewTab.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
 
     refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
     refreshHeaderView.delegate = self;
     [self.tableView addSubview:refreshHeaderView];
-    
-    CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = CGRectMake(0, 70, 320, 10);
-    gradient.colors = [NSArray arrayWithObjects:
-                       (id)[[UIColor clearColor] CGColor],
-                       (id)[[[UIColor blackColor] colorWithAlphaComponent:0.2f] CGColor],
-                       nil];
-    [viewTab.layer insertSublayer:gradient atIndex:0];
-    
+        
     loadEnded = FALSE;
     ranktype = @"daily";
     rankpage = 1;
@@ -74,7 +66,10 @@
 
     navigationBarPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:app.revealController action:@selector(revealGesture:)];
     [self.navigationController.navigationBar addGestureRecognizer:navigationBarPanGestureRecognizer];
-    navigationBarPanGestureRecognizer.enabled = false;
+    if (app.currentUser)
+        navigationBarPanGestureRecognizer.enabled = true;
+    else
+        navigationBarPanGestureRecognizer.enabled = false;
     [buttonNavLeft addTarget:app.revealController action:@selector(revealLeft:) forControlEvents:UIControlEventTouchUpInside];
 
     [self loadRanking];
@@ -211,14 +206,7 @@
     return 1;
 }
 
-- (void)initButton:(UIButton*)button index:(NSInteger)index {
-    Picture *pic = [pics objectAtIndex:index];
-    if (index == 0)
-        [button loadBackground:pic.urlMedium];
-    else
-        [button loadBackground:pic.urlSquare];
-
-
+- (void)initButton:(UIButton*)button {
     button.layer.borderColor = [[UIColor whiteColor] CGColor];
     button.layer.borderWidth = 3;
     UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:button.bounds];
@@ -229,14 +217,12 @@
     button.layer.shadowRadius = 1.5f;
     button.layer.shadowPath = shadowPathPic.CGPath;
     
-    button.tag = [pic.pictureId integerValue];
-    
     [button addTarget:self action:@selector(didSelectPic:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        luxeysCellRankLv1 *cellLv1 = [tableView dequeueReusableCellWithIdentifier:@"First"];
+        luxeysCellRankLv1 *cellLv1 = [tableView dequeueReusableCellWithIdentifier:@"First" forIndexPath:indexPath];
         if (nil == cellLv1) {
             cellLv1 = [[luxeysCellRankLv1 alloc] initWithStyle:UITableViewCellStyleDefault
                                                reuseIdentifier:@"First"];
@@ -244,60 +230,95 @@
         CGRect frame = cellLv1.buttonPic1.frame;
         frame.size.height = [self tableView:self.tableView heightForRowAtIndexPath:indexPath] - 10;
         cellLv1.buttonPic1.frame = frame;
-        [self initButton:cellLv1.buttonPic1 index:0];
+        [self initButton:cellLv1.buttonPic1];
+
+        Picture *pic = [pics objectAtIndex:0];
+        [cellLv1.buttonPic1 loadBackground:pic.urlMedium];
+        cellLv1.buttonPic1.tag = [pic.pictureId integerValue];
+        
         return cellLv1;
     } else if (indexPath.row == 1) {
-        luxeysCellRankLv2 *cellLv2 = [tableView dequeueReusableCellWithIdentifier:@"Second"];
+        luxeysCellRankLv2 *cellLv2 = [tableView dequeueReusableCellWithIdentifier:@"Second" forIndexPath:indexPath];
         if (nil == cellLv2) {
             cellLv2 = [[luxeysCellRankLv2 alloc] initWithStyle:UITableViewCellStyleDefault
                                                                      reuseIdentifier:@"Second"];
         }
-            
-            [self initButton:cellLv2.buttonPic2 index:1];
-            
-            
-            if (pics.count > 2) {
-                [self initButton:cellLv2.buttonPic3 index:2];
-            }
-            
-            if (pics.count > 3) {
-                [self initButton:cellLv2.buttonPic4 index:3];
-            }
+        
+        [self initButton:cellLv2.buttonPic2];
+        [self initButton:cellLv2.buttonPic3];
+        [self initButton:cellLv2.buttonPic4];
+        
+        if (pics.count > 1) {
+            Picture *pic = [pics objectAtIndex:1];
+            [cellLv2.buttonPic2 loadBackground:pic.urlSquare];
+            cellLv2.buttonPic2.tag = [pic.pictureId integerValue];
+        }
+        
+        if (pics.count > 2) {
+            Picture *pic = [pics objectAtIndex:2];
+            [cellLv2.buttonPic3 loadBackground:pic.urlSquare];
+            cellLv2.buttonPic3.tag = [pic.pictureId integerValue];
+        }
+        
+        if (pics.count > 3) {
+            Picture *pic = [pics objectAtIndex:3];
+            [cellLv2.buttonPic4 loadBackground:pic.urlSquare];
+            cellLv2.buttonPic4.tag = [pic.pictureId integerValue];
+        }
         
         return cellLv2;
     } else {
-        luxeysCellRankLv3 *cellLv3 = [tableView dequeueReusableCellWithIdentifier:@"Third"];
+        luxeysCellRankLv3 *cellLv3 = [tableView dequeueReusableCellWithIdentifier:@"Third" forIndexPath:indexPath];
         if (nil == cellLv3) {
             cellLv3 = [[luxeysCellRankLv3 alloc] initWithStyle:UITableViewCellStyleDefault
                                                                      reuseIdentifier:@"Third"];
         }
         
+        [self initButton:cellLv3.buttonPic1];
+        [self initButton:cellLv3.buttonPic2];
+        [self initButton:cellLv3.buttonPic3];
+        [self initButton:cellLv3.buttonPic4];
         
-        [self initButton:cellLv3.buttonPic1 index:(indexPath.row-2)*4+4];
+        NSInteger baseIdx = (indexPath.row-2)*4+4;
         
-        if (pics.count > (indexPath.row-2)*4+5) {
-            [self initButton:cellLv3.buttonPic2 index:(indexPath.row-2)*4+5];
+        if (pics.count > baseIdx) {
+            Picture *pic = [pics objectAtIndex:baseIdx];
+            cellLv3.label1st.text = [NSString stringWithFormat:@"%d", baseIdx];
+            [cellLv3.buttonPic1 loadBackground:pic.urlSquare];
+            cellLv3.buttonPic1.tag = [pic.pictureId integerValue];
         }
         
-        if (pics.count > (indexPath.row-2)*4+6) {
-            [self initButton:cellLv3.buttonPic3 index:(indexPath.row-2)*4+6];
+        if (pics.count > baseIdx+1) {
+            Picture *pic = [pics objectAtIndex:baseIdx+1];
+            cellLv3.badgeRank6.hidden = false;
+            cellLv3.label2nd.text = [NSString stringWithFormat:@"%d", baseIdx+1];
+            [cellLv3.buttonPic2 loadBackground:pic.urlSquare];
+            cellLv3.buttonPic2.tag = [pic.pictureId integerValue];
+            
+        } else
+             cellLv3.badgeRank6.hidden = true;
+        
+        if (pics.count > baseIdx+2) {
+            Picture *pic = [pics objectAtIndex:baseIdx+2];
+            cellLv3.badgeRank7.hidden = false;
+            cellLv3.label3rd.text = [NSString stringWithFormat:@"%d", baseIdx+2];
+            [cellLv3.buttonPic3 loadBackground:pic.urlSquare];
+            cellLv3.buttonPic3.tag = [pic.pictureId integerValue];
+        } else {
+            cellLv3.badgeRank7.hidden = true;
         }
         
-        
-        if (pics.count > (indexPath.row-2)*4+7) {
-            [self initButton:cellLv3.buttonPic4 index:(indexPath.row-2)*4+7];
-        }
-        
-        /*if (indexPath.row == 2) {
-            cellLv3.badgeRank8.hidden = pics.count < 8;
-            cellLv3.badgeRank7.hidden = pics.count < 7;
-            cellLv3.badgeRank6.hidden = pics.count < 6;
-            cellLv3.badgeRank5.hidden = pics.count < 5;
-        }*/
-        
+        if (pics.count > baseIdx+3) {
+            Picture *pic = [pics objectAtIndex:baseIdx+3];
+            cellLv3.badgeRank8.hidden = false;
+            cellLv3.label4th.text = [NSString stringWithFormat:@"%d", baseIdx+3];
+            [cellLv3.buttonPic4 loadBackground:pic.urlSquare];
+            cellLv3.buttonPic4.tag = [pic.pictureId integerValue];
+        } else
+            cellLv3.badgeRank8.hidden = true;
+                
         return cellLv3;
     }
-
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -307,7 +328,7 @@
         float newheight = [luxeysUtils heightFromWidth:300
                                                       width:[pic.width floatValue]
                                                      height:[pic.height floatValue]];
-        return newheight + 10;
+        return newheight + 6;
     }
     else if (indexPath.row == 1)
         return 105;

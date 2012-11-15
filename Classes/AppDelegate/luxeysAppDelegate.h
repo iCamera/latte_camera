@@ -10,6 +10,7 @@
 #import "KeychainItemWrapper.h"
 #import "luxeysTabBarViewController.h"
 #import "LXUIRevealController.h"
+#import "FacebookSDK.h"
 
 @class User;
 
@@ -31,11 +32,16 @@
 @property (strong, nonatomic) User *currentUser;
 @property (strong, nonatomic) NSString *apns;
 
+extern NSString *const FBSessionStateChangedNotification;
+
+- (BOOL)openSessionWithAllowLoginUI:(BOOL)allowLoginUI;
+
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 - (NSString*)getToken;
 - (void)logOut;
 - (void)setToken:(NSString*)token;
 - (void)updateUserAPNS;
+- (void)closeSession;
 
 @end

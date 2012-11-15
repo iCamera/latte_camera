@@ -126,7 +126,6 @@
 - (void)capturePhotoAsImageProcessedUpToFilterWithMeta:(GPUImageOutput<GPUImageInput> *)finalFilterInChain withCompletionHandler:(void (^)(UIImage *processedImage, NSMutableDictionary *imageMeta, NSError *error))block;
 {
     dispatch_semaphore_wait(frameRenderingSemaphore, DISPATCH_TIME_FOREVER);
-    
     [photoOutput captureStillImageAsynchronouslyFromConnection:[[photoOutput connections] objectAtIndex:0] completionHandler:^(CMSampleBufferRef imageSampleBuffer, NSError *error) {
         
         if(imageSampleBuffer == NULL){

@@ -45,6 +45,7 @@
     
     tableMode = kTableProfile;
     currentMonth = [NSDate date];
+    isEmpty = false;
     
     return self;
 }
@@ -59,13 +60,8 @@
     [self.navigationController.view addSubview:HUD];
     HUD.mode = MBProgressHUDModeIndeterminate;
     
-    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:imageUser.bounds];
-    imageUser.layer.masksToBounds = NO;
-    imageUser.layer.shadowColor = [UIColor blackColor].CGColor;
-    imageUser.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
-    imageUser.layer.shadowOpacity = 1.0f;
-    imageUser.layer.shadowRadius = 1.0f;
-    imageUser.layer.shadowPath = shadowPath.CGPath;
+    imageUser.clipsToBounds = YES;
+    imageUser.layer.cornerRadius = 5;
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = CGRectMake(0, 120, 320, 10);
@@ -328,6 +324,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (isEmpty)
+        return 0;
     if (tableMode == kTableProfile) {
         return [showField count];
     } else if (tableMode == kTablePicList) {
@@ -710,6 +708,15 @@
 
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (isEmpty) {
+        UIView *emptyView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 200)];
+        UIImageView *emptyImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nopict.png"]];
+        //    UILabel *label = [[UILabel alloc] initWithFrame:(CGRect)]
+        emptyImage.center = emptyView.center;
+        [emptyView addSubview:emptyImage];
+        return emptyView;
+    }
+
     if (tableMode == kTableCalendar) {
         UIView *view = [[UIView alloc] init];
         view.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.8];
@@ -750,7 +757,7 @@
         return view;
     } else if (tableMode == kTableProfile) {
         UIView *view = [[UIView alloc] init];
-        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(10, 9, 300, 1)];
+        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(6, 9, 308, 1)];
         line.backgroundColor = [UIColor lightGrayColor];
         [view addSubview:line];
         return view;
@@ -775,10 +782,13 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (isEmpty)
+        return 200;
+
     if (tableMode == kTableCalendar) {
         return 40;
     } else  if (tableMode == kTableProfile)
-        return 10;
+        return 6;
     return 0;
 }
 

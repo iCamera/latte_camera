@@ -12,7 +12,9 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <ImageIO/ImageIO.h>
 #import "GPUImageOutput+saveProcessedImageToLibrary.h"
-
+#import "LXFilter.h"
+#import "LXFilterBlur.h"
+#import "LXFilterMono.h"
 
 @interface FilterManager : NSObject {
     NSMutableArray *filters;
@@ -31,6 +33,10 @@
     GPUImageExposureFilter *exposure;
     GPUImageCropFilter *crop;
     GPUImageCropFilter *crop2;
+    LXFilter *filter;
+    LXFilterMono *filterMono;
+    
+    LXFilterBlur *lxblur;
     
 //    GPUImageOverlayBlendFilter *grain;
     
