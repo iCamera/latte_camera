@@ -147,14 +147,14 @@
         float newheight = [luxeysUtils heightFromWidth:308
                                                       width:[pic.width floatValue]
                                                      height:[pic.height floatValue]];
-        return newheight + 94;
+        return newheight + 80;
     } else {
         Comment *comment = [comments objectAtIndex:indexPath.row-1];
         NSString *strComment = comment.descriptionText;
         CGSize labelSize = [strComment sizeWithFont:[UIFont systemFontOfSize:11]
                                   constrainedToSize:CGSizeMake(255.0f, MAXFLOAT)
                                       lineBreakMode:NSLineBreakByWordWrapping];
-        return MAX(labelSize.height + 33, 50);
+        return MAX(labelSize.height + 25, 42);
     }
 }
 

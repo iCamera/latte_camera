@@ -30,6 +30,8 @@
 #import "Picture.h"
 #import "MBProgressHUD.h"
 #import "UIActionSheet+ButtonState.h"
+#import "luxeysCellWelcomeSingle.h"
+#import "luxeysCellWelcomeMulti.h"
 
 #define kTableTimeline 1
 #define kTableFriends 2

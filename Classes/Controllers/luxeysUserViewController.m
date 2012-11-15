@@ -395,7 +395,7 @@
                 pic = [interests objectAtIndex:index];
             }
             
-            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(10+(i*77), 10, 67, 67)];
+            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(6+(i*77), 6, 67, 67)];
             [button loadBackground:pic.urlSquare];
             button.tag = [pic.pictureId longValue];
             [button addTarget:self action:@selector(showPhoto:) forControlEvents:UIControlEventTouchUpInside];
@@ -500,7 +500,7 @@
     if (tableMode == kTableProfile) {
         return 30;
     } else if (tableMode == kTableFriends) {
-        return 50;
+        return 42;
     } else if ((tableMode == kTablePicList) || (tableMode == kTableVotes)) {
         return 78;
     } else if (tableMode == kTableCalendar) {

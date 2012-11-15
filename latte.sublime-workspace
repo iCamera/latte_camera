@@ -520,125 +520,18 @@
 	"buffers":
 	[
 		{
-			"file": "Vendor/GPUImage/framework/Source/GPUImageContrastFilter.m",
-			"settings":
-			{
-				"buffer_size": 1003,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Vendor/GPUImage/framework/Source/GPUImageBrightnessFilter.m",
-			"settings":
-			{
-				"buffer_size": 1025,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Vendor/GPUImage/framework/Source/GPUImageHueFilter.m",
-			"settings":
-			{
-				"buffer_size": 2193,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Vendor/GPUImage/framework/Source/GPUImageSaturationFilter.m",
-			"settings":
-			{
-				"buffer_size": 1302,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Vendor/GPUImage/framework/Source/GPUImageSaturationFilter.h",
-			"settings":
-			{
-				"buffer_size": 326,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Vendor/GPUImage/framework/Source/GPUImageGaussianBlurFilter.m",
-			"settings":
-			{
-				"buffer_size": 3857,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "varying vec4 normal, light_dir, eye_vec;\n  uniform vec4 camera_pos;\n  void main()\n {\n  vec4 ambient, diffuse, specular;\n float NdotL, RdotV;\n\n vec4 N = normalize(normal);\n vec4 L = normalize(light_dir);\n NdotL = dot(N, L);\n //RdotV = max(dot(R, V), 0.0);\n gl_FragColor = gl_FrontMaterial.ambient * gl_LightSource[0].ambient;\n\n if(NdotL > 0.0)\n {\n ambient = gl_FrontMaterial.ambient * gl_LightSource[0].ambient;\n diffuse = gl_FrontMaterial.diffuse * gl_LightSource[0].diffuse;\n specular = gl_FrontMaterial.specular * gl_LightSource[0].specular;\n vec4 E = normalize(eye_vec);\n vec4 R = reflect(-L, N);\n\n gl_FragColor +=  (NdotL * diffuse) +\n specular * pow(max(dot(R, E), 0.0), gl_FrontMaterial.shininess);\n }\n }\n\n\n\n  varying vec4 normal;\n  varying vec4 light_dir;\n  varying vec4 eye_vec;\n  varying vec4 lookat;\n const float PI =  3.14159265;\n  void main()\n {\n 	vec4 ambient;\n 	vec4 diffuse;\n 	vec4 specular;\n 	float NdotL, RdotV;\n  	normal = vec4(gl_NormalMatrix * gl_Normal, 0.0);\n 	vec4 vVertex = gl_ModelViewMatrix * gl_Vertex;\n 	light_dir = gl_LightSource[0].position - vVertex;\n 	eye_vec = -vVertex;\n\n 	vec4 temp_pos = ftransform();\n\n 	float dist = length(eye_vec);\n 	lookat = eye_vec - temp_pos;\n 	vec4 dir = temp_pos - eye_vec;\n 	vec4 center = normalize(-eye_vec);\n 	vec4 proj = dot(temp_pos, normalize(-lookat)) * normalize(-lookat);\n\n 	vec4 c = temp_pos - proj;\n\n 	float magnitude = .01;//1-acos(dot(normalize(-eye_vec), normalize(temp_pos)));\n \n 	c = length(c) * magnitude * normalize(c);\n\n 	vec4 dir2 = normalize(c-lookat);\n\n 	dir2 = (dir2 * dist);\n\n 	gl_Position.xyz = dir2.xyz;\n 	gl_Position.w = ftransform().w;\n\n }",
-			"settings":
-			{
-				"buffer_size": 1627,
-				"line_ending": "Unix",
-				"name": "varying vec4 normal, light_dir, eye_vec;"
-			}
-		},
-		{
-			"file": "Vendor/GPUImage/framework/Source/GPUImageFilter.m",
-			"settings":
-			{
-				"buffer_size": 30245,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "Searching 483 files for \"inputImageTexture2\"\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageAdaptiveThresholdFilter.m:\n   11   \n   12   uniform sampler2D inputImageTexture;\n   13:  uniform sampler2D inputImageTexture2; \n   14   \n   15   void main()\n   16   {\n   17       highp float blurredInput = texture2D(inputImageTexture, textureCoordinate).r;\n   18:      highp float localLuminance = texture2D(inputImageTexture2, textureCoordinate2).r;\n   19       highp float thresholdResult = step(blurredInput - 0.05, localLuminance);\n   20       \n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageAddBlendFilter.m:\n    7  \n    8   uniform sampler2D inputImageTexture;\n    9:  uniform sampler2D inputImageTexture2;\n   10   \n   11   void main()\n   12   {\n   13  	 lowp vec4 base = texture2D(inputImageTexture, textureCoordinate);\n   14: 	 lowp vec4 overlay = texture2D(inputImageTexture2, textureCoordinate2);\n   15  	 \n   16     mediump float r;\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageAlphaBlendFilter.m:\n    7  \n    8   uniform sampler2D inputImageTexture;\n    9:  uniform sampler2D inputImageTexture2;\n   10   \n   11   uniform lowp float mixturePercent;\n   ..\n   14   {\n   15  	 lowp vec4 textureColor = texture2D(inputImageTexture, textureCoordinate);\n   16: 	 lowp vec4 textureColor2 = texture2D(inputImageTexture2, textureCoordinate2);\n   17  	 \n   18  	 gl_FragColor = vec4(mix(textureColor.rgb, textureColor2.rgb, textureColor2.a * mixturePercent), textureColor.a);\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageChromaKeyBlendFilter.m:\n   14   uniform vec3 colorToReplace;\n   15   uniform sampler2D inputImageTexture;\n   16:  uniform sampler2D inputImageTexture2;\n   17   \n   18   void main()\n   19   {\n   20       vec4 textureColor = texture2D(inputImageTexture, textureCoordinate);\n   21:      vec4 textureColor2 = texture2D(inputImageTexture2, textureCoordinate2);\n   22       \n   23       float maskY = 0.2989 * colorToReplace.r + 0.5866 * colorToReplace.g + 0.1145 * colorToReplace.b;\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageChromaKeyFilter.m:\n   13   uniform vec3 colorToReplace;\n   14   uniform sampler2D inputImageTexture;\n   15:  uniform sampler2D inputImageTexture2;\n   16   \n   17   void main()\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageColorBurnBlendFilter.m:\n    7  \n    8   uniform sampler2D inputImageTexture;\n    9:  uniform sampler2D inputImageTexture2;\n   10   \n   11   void main()\n   12   {\n   13      mediump vec4 textureColor = texture2D(inputImageTexture, textureCoordinate);\n   14:     mediump vec4 textureColor2 = texture2D(inputImageTexture2, textureCoordinate2);\n   15      mediump vec4 whiteColor = vec4(1.0);\n   16      gl_FragColor = whiteColor - (whiteColor - textureColor) / textureColor2;\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageColorDodgeBlendFilter.m:\n   10   \n   11   uniform sampler2D inputImageTexture;\n   12:  uniform sampler2D inputImageTexture2;\n   13   \n   14   void main()\n   15   {\n   16       vec4 base = texture2D(inputImageTexture, textureCoordinate);\n   17:      vec4 overlay = texture2D(inputImageTexture2, textureCoordinate2);\n   18       \n   19       vec3 baseOverlayAlphaProduct = vec3(overlay.a * base.a);\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageDarkenBlendFilter.m:\n    7  \n    8   uniform sampler2D inputImageTexture;\n    9:  uniform sampler2D inputImageTexture2;\n   10   \n   11   void main()\n   12   {\n   13      lowp vec4 base = texture2D(inputImageTexture, textureCoordinate);\n   14:     lowp vec4 overlayer = texture2D(inputImageTexture2, textureCoordinate2);\n   15      \n   16      gl_FragColor = vec4(min(overlayer.rgb * base.a, base.rgb * overlayer.a) + overlayer.rgb * (1.0 - base.a) + base.rgb * (1.0 - overlayer.a), 1.0);\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageDifferenceBlendFilter.m:\n    7  \n    8   uniform sampler2D inputImageTexture;\n    9:  uniform sampler2D inputImageTexture2;\n   10   \n   11   void main()\n   12   {\n   13       mediump vec4 textureColor = texture2D(inputImageTexture, textureCoordinate);\n   14:      mediump vec4 textureColor2 = texture2D(inputImageTexture2, textureCoordinate2);\n   15       gl_FragColor = vec4(abs(textureColor2.rgb - textureColor.rgb), textureColor.a);\n   16   }\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageDissolveBlendFilter.m:\n    7  \n    8   uniform sampler2D inputImageTexture;\n    9:  uniform sampler2D inputImageTexture2;\n   10   uniform lowp float mixturePercent;\n   11   \n   ..\n   13   {\n   14      lowp vec4 textureColor = texture2D(inputImageTexture, textureCoordinate);\n   15:     lowp vec4 textureColor2 = texture2D(inputImageTexture2, textureCoordinate2);\n   16      \n   17      gl_FragColor = mix(textureColor, textureColor2, mixturePercent);\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageDivideBlendFilter.m:\n    7  \n    8   uniform sampler2D inputImageTexture;\n    9:  uniform sampler2D inputImageTexture2;\n   10   \n   11   void main()\n   12   {\n   13  	 mediump vec4 base = texture2D(inputImageTexture, textureCoordinate);\n   14: 	 mediump vec4 overlay = texture2D(inputImageTexture2, textureCoordinate2);\n   15     \n   16     mediump float ra;\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageExclusionBlendFilter.m:\n    7  \n    8   uniform sampler2D inputImageTexture;\n    9:  uniform sampler2D inputImageTexture2;\n   10   \n   11   void main()\n   12   {\n   13       mediump vec4 base = texture2D(inputImageTexture, textureCoordinate);\n   14:      mediump vec4 overlay = texture2D(inputImageTexture2, textureCoordinate2);\n   15       \n   16       //     Dca = (Sca.Da + Dca.Sa - 2.Sca.Dca) + Sca.(1 - Da) + Dca.(1 - Sa)\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageGaussianSelectiveBlurFilter.m:\n    9   \n   10   uniform sampler2D inputImageTexture;\n   11:  uniform sampler2D inputImageTexture2; \n   12   \n   13   uniform lowp float excludeCircleRadius;\n   ..\n   19   {\n   20       lowp vec4 sharpImageColor = texture2D(inputImageTexture, textureCoordinate);\n   21:      lowp vec4 blurredImageColor = texture2D(inputImageTexture2, textureCoordinate2);\n   22       \n   23       highp vec2 textureCoordinateToUse = vec2(textureCoordinate2.x, (textureCoordinate2.y * aspectRatio + 0.5 - 0.5 * aspectRatio));\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageHardLightBlendFilter.m:\n    7  \n    8   uniform sampler2D inputImageTexture;\n    9:  uniform sampler2D inputImageTexture2;\n   10  \n   11   const highp vec3 W = vec3(0.2125, 0.7154, 0.0721);\n   ..\n   14   {\n   15       mediump vec4 base = texture2D(inputImageTexture, textureCoordinate);\n   16:      mediump vec4 overlay = texture2D(inputImageTexture2, textureCoordinate2);\n   17  \n   18       highp float ra;\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageLightenBlendFilter.m:\n    7  \n    8   uniform sampler2D inputImageTexture;\n    9:  uniform sampler2D inputImageTexture2;\n   10   \n   11   void main()\n   12   {\n   13      lowp vec4 textureColor = texture2D(inputImageTexture, textureCoordinate);\n   14:     lowp vec4 textureColor2 = texture2D(inputImageTexture2, textureCoordinate2);\n   15      \n   16      gl_FragColor = max(textureColor, textureColor2);\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageLookupFilter.m:\n    7   \n    8   uniform sampler2D inputImageTexture;\n    9:  uniform sampler2D inputImageTexture2; // lookup texture\n   10   \n   11   void main()\n   ..\n   31       texPos2.y = (quad2.y * 0.125) + 0.5/512.0 + ((0.125 - 1.0/512.0) * textureColor.g);\n   32       \n   33:      lowp vec4 newColor1 = texture2D(inputImageTexture2, texPos1);\n   34:      lowp vec4 newColor2 = texture2D(inputImageTexture2, texPos2);\n   35       \n   36       lowp vec4 newColor = mix(newColor1, newColor2, fract(blueColor));\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageLuminosity.m:\n  104          secondFilterTextureCoordinateAttribute = [secondFilterProgram attributeIndex:@\"inputTextureCoordinate\"];\n  105          secondFilterInputTextureUniform = [secondFilterProgram uniformIndex:@\"inputImageTexture\"]; // This does assume a name of \"inputImageTexture\" for the fragment shader\n  106:         secondFilterInputTextureUniform2 = [secondFilterProgram uniformIndex:@\"inputImageTexture2\"]; // This does assume a name of \"inputImageTexture2\" for second input texture in the fragment shader\n  107          \n  108          secondFilterTexelWidthUniform = [secondFilterProgram uniformIndex:@\"texelWidth\"];\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageMaskFilter.m:\n    7   \n    8   uniform sampler2D inputImageTexture;\n    9:  uniform sampler2D inputImageTexture2;\n   10   \n   11   void main()\n   12   {\n   13  	 lowp vec4 textureColor = texture2D(inputImageTexture, textureCoordinate);\n   14: 	 lowp vec4 textureColor2 = texture2D(inputImageTexture2, textureCoordinate2);\n   15  	 \n   16  	 //Averages mask's the RGB values, and scales that value by the mask's alpha\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageMosaicFilter.m:\n   13   \n   14   uniform sampler2D inputImageTexture;\n   15:  uniform sampler2D inputImageTexture2;\n   16   \n   17   uniform vec2 inputTileSize;\n   ..\n   27       vec4 lumcoeff = vec4(0.299,0.587,0.114,0.0);\n   28       \n   29:      vec4 inputColor = texture2D(inputImageTexture2, xy);\n   30       float lum = dot(inputColor,lumcoeff);\n   31       lum = 1.0 - lum;\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageMotionDetector.m:\n    7   \n    8   uniform sampler2D inputImageTexture;\n    9:  uniform sampler2D inputImageTexture2;\n   10   \n   11   uniform highp float intensity;\n   ..\n   14   {\n   15       lowp vec3 currentImageColor = texture2D(inputImageTexture, textureCoordinate).rgb;\n   16:      lowp vec3 lowPassImageColor = texture2D(inputImageTexture2, textureCoordinate2).rgb;\n   17       \n   18       mediump float colorDistance = distance(currentImageColor, lowPassImageColor); // * 0.57735\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageMultiplyBlendFilter.m:\n    7  \n    8   uniform sampler2D inputImageTexture;\n    9:  uniform sampler2D inputImageTexture2;\n   10   \n   11   void main()\n   12   {\n   13       lowp vec4 base = texture2D(inputImageTexture, textureCoordinate);\n   14:      lowp vec4 overlayer = texture2D(inputImageTexture2, textureCoordinate2);\n   15            \n   16       gl_FragColor = overlayer * base + overlayer * (1.0 - base.a) + base * (1.0 - overlayer.a);\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageNormalBlendFilter.m:\n   22   \n   23   uniform sampler2D inputImageTexture;\n   24:  uniform sampler2D inputImageTexture2;\n   25   \n   26   void main()\n   27   {\n   28       lowp vec4 c2 = texture2D(inputImageTexture, textureCoordinate);\n   29: 	 lowp vec4 c1 = texture2D(inputImageTexture2, textureCoordinate2);\n   30       \n   31       lowp vec4 outputColor;\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageOverlayBlendFilter.m:\n    7  \n    8   uniform sampler2D inputImageTexture;\n    9:  uniform sampler2D inputImageTexture2;\n   10   \n   11   void main()\n   12   {\n   13       mediump vec4 base = texture2D(inputImageTexture, textureCoordinate);\n   14:      mediump vec4 overlay = texture2D(inputImageTexture2, textureCoordinate2);\n   15       \n   16       mediump float ra;\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageScreenBlendFilter.m:\n    7  \n    8   uniform sampler2D inputImageTexture;\n    9:  uniform sampler2D inputImageTexture2;\n   10   \n   11   void main()\n   12   {\n   13       mediump vec4 textureColor = texture2D(inputImageTexture, textureCoordinate);\n   14:      mediump vec4 textureColor2 = texture2D(inputImageTexture2, textureCoordinate2);\n   15       mediump vec4 whiteColor = vec4(1.0);\n   16       gl_FragColor = whiteColor - ((whiteColor - textureColor2) * (whiteColor - textureColor));\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageSoftLightBlendFilter.m:\n    7  \n    8   uniform sampler2D inputImageTexture;\n    9:  uniform sampler2D inputImageTexture2;\n   10   \n   11   void main()\n   12   {\n   13       mediump vec4 base = texture2D(inputImageTexture, textureCoordinate);\n   14:      mediump vec4 overlay = texture2D(inputImageTexture2, textureCoordinate2);\n   15       \n   16       gl_FragColor = base * (overlay.a * (base / base.a) + (2.0 * overlay * (1.0 - (base / base.a)))) + overlay * (1.0 - base.a) + base * (1.0 - overlay.a);\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageSourceOverBlendFilter.m:\n    7   \n    8   uniform sampler2D inputImageTexture;\n    9:  uniform sampler2D inputImageTexture2;\n   10   \n   11   void main()\n   12   {\n   13     lowp vec4 textureColor = texture2D(inputImageTexture, textureCoordinate);\n   14:    lowp vec4 textureColor2 = texture2D(inputImageTexture2, textureCoordinate);\n   15     \n   16     gl_FragColor = mix(textureColor, textureColor2, textureColor2.a);\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageSubtractBlendFilter.m:\n    7  \n    8   uniform sampler2D inputImageTexture;\n    9:  uniform sampler2D inputImageTexture2;\n   10   \n   11   void main()\n   12   {\n   13  	 lowp vec4 textureColor = texture2D(inputImageTexture, textureCoordinate);\n   14: 	 lowp vec4 textureColor2 = texture2D(inputImageTexture2, textureCoordinate2);\n   15  	 \n   16  	 gl_FragColor = vec4(textureColor.rgb - textureColor2.rgb, textureColor.a);\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageTiltShiftFilter.m:\n   10   \n   11   uniform sampler2D inputImageTexture;\n   12:  uniform sampler2D inputImageTexture2; \n   13   \n   14   uniform highp float topFocusLevel;\n   ..\n   19   {\n   20       lowp vec4 sharpImageColor = texture2D(inputImageTexture, textureCoordinate);\n   21:      lowp vec4 blurredImageColor = texture2D(inputImageTexture2, textureCoordinate2);\n   22       \n   23       lowp float blurIntensity = 1.0 - smoothstep(topFocusLevel - focusFallOffRate, topFocusLevel, textureCoordinate2.y);\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageTwoInputFilter.m:\n   59          filterSecondTextureCoordinateAttribute = [filterProgram attributeIndex:@\"inputTextureCoordinate2\"];\n   60          \n   61:         filterInputTextureUniform2 = [filterProgram uniformIndex:@\"inputImageTexture2\"]; // This does assume a name of \"inputImageTexture2\" for second input texture in the fragment shader\n   62          glEnableVertexAttribArray(filterSecondTextureCoordinateAttribute);\n   63      });\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageTwoPassFilter.m:\n   38          secondFilterTextureCoordinateAttribute = [secondFilterProgram attributeIndex:@\"inputTextureCoordinate\"];\n   39          secondFilterInputTextureUniform = [secondFilterProgram uniformIndex:@\"inputImageTexture\"]; // This does assume a name of \"inputImageTexture\" for the fragment shader\n   40:         secondFilterInputTextureUniform2 = [secondFilterProgram uniformIndex:@\"inputImageTexture2\"]; // This does assume a name of \"inputImageTexture2\" for second input texture in the fragment shader\n   41          \n   42          [GPUImageOpenGLESContext setActiveShaderProgram:secondFilterProgram];\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageUnsharpMaskFilter.m:\n   10   \n   11   uniform sampler2D inputImageTexture;\n   12:  uniform sampler2D inputImageTexture2; \n   13   \n   14   uniform highp float intensity;\n   ..\n   17   {\n   18       lowp vec4 sharpImageColor = texture2D(inputImageTexture, textureCoordinate);\n   19:      lowp vec3 blurredImageColor = texture2D(inputImageTexture2, textureCoordinate2).rgb;\n   20       \n   21       gl_FragColor = vec4(sharpImageColor.rgb * intensity + blurredImageColor * (1.0 - intensity), sharpImageColor.a);\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageVoroniConsumerFilter.m:\n    7   \n    8   uniform sampler2D inputImageTexture;\n    9:  uniform sampler2D inputImageTexture2;\n   10   uniform vec2 size;\n   11   varying vec2 textureCoordinate;\n   ..\n   22  \n   23   void main(void) {\n   24:      vec4 colorLoc = texture2D(inputImageTexture2, textureCoordinate);\n   25       vec4 color = texture2D(inputImageTexture, getCoordFromColor(colorLoc));\n   26       gl_FragColor = color;	\n\n64 matches across 32 files\n",
-			"settings":
-			{
-				"buffer_size": 16840,
-				"line_ending": "Unix",
-				"name": "Find Results",
-				"scratch": true
-			}
-		},
-		{
-			"file": "Resources/Effect/blur.fsh",
-			"settings":
-			{
-				"buffer_size": 9351,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Vendor/GPUImage/framework/Source/GPUImageMonochromeFilter.m",
-			"settings":
-			{
-				"buffer_size": 2414,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Vendor/GPUImage/framework/Source/GPUImageMonochromeFilter.h",
-			"settings":
-			{
-				"buffer_size": 343,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Vendor/GPUImage/framework/Source/GPUImageSharpenFilter.m",
-			"settings":
-			{
-				"buffer_size": 3761,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Vendor/GPUImage/framework/Source/GPUImageSharpenFilter.h",
-			"settings":
-			{
-				"buffer_size": 297,
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "Classes/Helpers/LXFilter.m",
 			"settings":
 			{
-				"buffer_size": 10758,
+				"buffer_size": 14017,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Classes/Controllers/luxeysMypageViewController.m",
+			"settings":
+			{
+				"buffer_size": 39496,
 				"line_ending": "Unix"
 			}
 		}
@@ -683,6 +576,24 @@
 	},
 	"file_history":
 	[
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageMonochromeFilter.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageMonochromeFilter.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Resources/Effect/blur.fsh",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageGaussianBlurFilter.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageSaturationFilter.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageSaturationFilter.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageHueFilter.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageContrastFilter.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageBrightnessFilter.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageFilter.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageFilter.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageOutput.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImagePicture.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageView.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageSharpenFilter.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageSharpenFilter.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageView.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageOutput.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/LXFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/LXFilterMono.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImagePinchDistortionFilter.m",
@@ -692,27 +603,19 @@
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/FilterShowcase/FilterShowcase/ShowcaseFilterViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/FilterShowcase/FilterShowcase/CustomFilter.fsh",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageChromaKeyFilter.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImagePicture.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysMypageViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysUserViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageMonochromeFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageAlphaBlendFilter.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageFilter.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageToneCurveFilter.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageToneCurveFilter.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageHueFilter.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageSaturationFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/FilterManager.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageVignetteFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageGaussianSelectiveBlurFilter.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageBoxBlurFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageTextureInput.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageOutput.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageOpacityFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageSepiaFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageOverlayBlendFilter.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageContrastFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageHazeFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageGrayscaleFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageColorMatrixFilter.m",
@@ -727,14 +630,11 @@
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Utils/luxeysUtils.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/Modules/luxeysTemplatePicTimeline.m",
 		"/Users/dungbx/Library/Application Support/Sublime Text 2/Packages/SublimeClang/SublimeClang.sublime-settings",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageOutput.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCellNotify.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/GPUImageStillCamera+captureWithMeta.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCameraViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCameraViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageStillCamera.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageView.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageView.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImagePicture.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageStillCamera.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/EGOTableViewPullRefresh/Demo/TableViewPull/Classes/View/RefreshTableHeaderView/EGORefreshTableHeaderView.m",
@@ -752,7 +652,6 @@
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageFilterGroup.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageFilterPipeline.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicEditViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageGaussianBlurFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageOpenGLESContext.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysUserViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageRawDataInput.m",
@@ -804,13 +703,7 @@
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysUserCalendarViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Models/LuxeysPicture.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCellPicture.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysUserCalendarViewController.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysWelcome2ViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysWelcome2ViewController.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellFriend.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellComment.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysSettingViewController.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicInfoViewController.m"
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysUserCalendarViewController.h"
 	],
 	"find":
 	{
@@ -876,6 +769,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"createDisplayFramebuffer",
 			"camera_pos",
 			"	",
 			"noise",
@@ -1002,8 +896,7 @@
 			"CVOpenGLESTextureCacheCreateTextureFromImage",
 			"CVOpenGLESTextureCacheCreate",
 			"supportsFastTextureUpload",
-			"glReadPixels",
-			"do not call this"
+			"glReadPixels"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1033,1875 +926,18 @@
 			[
 				{
 					"buffer": 0,
-					"file": "Vendor/GPUImage/framework/Source/GPUImageContrastFilter.m",
-					"settings":
-					{
-						"buffer_size": 1003,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								326,
-								419
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E111",
-								"E221",
-								"E261",
-								"W293",
-								"E501",
-								"E401"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 179.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "Vendor/GPUImage/framework/Source/GPUImageBrightnessFilter.m",
-					"settings":
-					{
-						"buffer_size": 1025,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								388,
-								388
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E111",
-								"E221",
-								"E261",
-								"W293",
-								"E501",
-								"E401"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "Vendor/GPUImage/framework/Source/GPUImageHueFilter.m",
-					"settings":
-					{
-						"buffer_size": 2193,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1333,
-								1333
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E111",
-								"E221",
-								"E261",
-								"W293",
-								"E501",
-								"E401"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "Vendor/GPUImage/framework/Source/GPUImageSaturationFilter.m",
-					"settings":
-					{
-						"buffer_size": 1302,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								619,
-								619
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E111",
-								"E221",
-								"E261",
-								"W293",
-								"E501",
-								"E401"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 18.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "Vendor/GPUImage/framework/Source/GPUImageSaturationFilter.h",
-					"settings":
-					{
-						"buffer_size": 326,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								130,
-								154
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E111",
-								"E221",
-								"E261",
-								"W293",
-								"E501",
-								"E401"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Objective-C/Objective-C.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "Vendor/GPUImage/framework/Source/GPUImageGaussianBlurFilter.m",
-					"settings":
-					{
-						"buffer_size": 3857,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								704,
-								704
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E111",
-								"E221",
-								"E261",
-								"W293",
-								"E501",
-								"E401"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"settings":
-					{
-						"buffer_size": 1627,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								712,
-								712
-							]
-						],
-						"settings":
-						{
-							"auto_name": "varying vec4 normal, light_dir, eye_vec;",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "Vendor/GPUImage/framework/Source/GPUImageFilter.m",
-					"settings":
-					{
-						"buffer_size": 30245,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								335,
-								236
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E111",
-								"E221",
-								"E261",
-								"W293",
-								"E501",
-								"E401"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"settings":
-					{
-						"buffer_size": 16840,
-						"regions":
-						{
-							"match":
-							{
-								"flags": 112,
-								"regions":
-								[
-									[
-										229,
-										247
-									],
-									[
-										430,
-										448
-									],
-									[
-										745,
-										763
-									],
-									[
-										918,
-										936
-									],
-									[
-										1172,
-										1190
-									],
-									[
-										1388,
-										1406
-									],
-									[
-										1770,
-										1788
-									],
-									[
-										1953,
-										1971
-									],
-									[
-										2320,
-										2338
-									],
-									[
-										2549,
-										2567
-									],
-									[
-										2746,
-										2764
-									],
-									[
-										3101,
-										3119
-									],
-									[
-										3270,
-										3288
-									],
-									[
-										3570,
-										3588
-									],
-									[
-										3749,
-										3767
-									],
-									[
-										4139,
-										4157
-									],
-									[
-										4338,
-										4356
-									],
-									[
-										4660,
-										4678
-									],
-									[
-										4880,
-										4898
-									],
-									[
-										5186,
-										5204
-									],
-									[
-										5365,
-										5383
-									],
-									[
-										5625,
-										5643
-									],
-									[
-										5810,
-										5828
-									],
-									[
-										6137,
-										6155
-									],
-									[
-										6372,
-										6390
-									],
-									[
-										6746,
-										6764
-									],
-									[
-										6975,
-										6993
-									],
-									[
-										7230,
-										7248
-									],
-									[
-										7421,
-										7439
-									],
-									[
-										7707,
-										7725
-									],
-									[
-										7933,
-										7951
-									],
-									[
-										8007,
-										8025
-									],
-									[
-										8605,
-										8623
-									],
-									[
-										8658,
-										8676
-									],
-									[
-										9010,
-										9028
-									],
-									[
-										9197,
-										9215
-									],
-									[
-										9506,
-										9524
-									],
-									[
-										9687,
-										9705
-									],
-									[
-										9966,
-										9984
-									],
-									[
-										10197,
-										10215
-									],
-									[
-										10537,
-										10555
-									],
-									[
-										10718,
-										10736
-									],
-									[
-										11058,
-										11076
-									],
-									[
-										11227,
-										11245
-									],
-									[
-										11494,
-										11512
-									],
-									[
-										11679,
-										11697
-									],
-									[
-										11940,
-										11958
-									],
-									[
-										12139,
-										12157
-									],
-									[
-										12511,
-										12529
-									],
-									[
-										12696,
-										12714
-									],
-									[
-										13095,
-										13113
-									],
-									[
-										13284,
-										13302
-									],
-									[
-										13590,
-										13608
-									],
-									[
-										13777,
-										13795
-									],
-									[
-										14088,
-										14106
-									],
-									[
-										14318,
-										14336
-									],
-									[
-										14800,
-										14818
-									],
-									[
-										14853,
-										14871
-									],
-									[
-										15498,
-										15516
-									],
-									[
-										15551,
-										15569
-									],
-									[
-										15898,
-										15916
-									],
-									[
-										16124,
-										16142
-									],
-									[
-										16488,
-										16506
-									],
-									[
-										16653,
-										16671
-									]
-								],
-								"scope": ""
-							}
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"detect_indentation": false,
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"output_tag": 1,
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E111",
-								"E221",
-								"E261",
-								"W293",
-								"E501",
-								"E401"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"result_base_dir": "",
-							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
-							"result_line_regex": "^ +([0-9]+):",
-							"scroll_past_end": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 4783.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "Resources/Effect/blur.fsh",
-					"settings":
-					{
-						"buffer_size": 9351,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								9165,
-								9165
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E111",
-								"E221",
-								"E261",
-								"W293",
-								"E501",
-								"E401"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/OpenGL Shading Language (GLSL)/GLSL.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 4243.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "Vendor/GPUImage/framework/Source/GPUImageMonochromeFilter.m",
-					"settings":
-					{
-						"buffer_size": 2414,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1824,
-								1824
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E111",
-								"E221",
-								"E261",
-								"W293",
-								"E501",
-								"E401"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Objective-C/Objective-C.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 343.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "Vendor/GPUImage/framework/Source/GPUImageMonochromeFilter.h",
-					"settings":
-					{
-						"buffer_size": 343,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								343,
-								343
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E111",
-								"E221",
-								"E261",
-								"W293",
-								"E501",
-								"E401"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Objective-C/Objective-C.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 12,
-					"file": "Vendor/GPUImage/framework/Source/GPUImageSharpenFilter.m",
-					"settings":
-					{
-						"buffer_size": 3761,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								556,
-								564
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E111",
-								"E221",
-								"E261",
-								"W293",
-								"E501",
-								"E401"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 13,
-					"file": "Vendor/GPUImage/framework/Source/GPUImageSharpenFilter.h",
-					"settings":
-					{
-						"buffer_size": 297,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E111",
-								"E221",
-								"E261",
-								"W293",
-								"E501",
-								"E401"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Objective-C/Objective-C.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 14,
 					"file": "Classes/Helpers/LXFilter.m",
 					"settings":
 					{
-						"buffer_size": 10758,
+						"buffer_size": 14017,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1567,
-								1567
+								0,
+								0
 							]
 						],
 						"settings":
@@ -3004,7 +1040,128 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1010.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Classes/Controllers/luxeysMypageViewController.m",
+					"settings":
+					{
+						"buffer_size": 39496,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								19329,
+								19329
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 6017.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -3062,6 +1219,34 @@
 		"selected_items":
 		[
 			[
+				"mypage",
+				"Classes/Controllers/luxeysMypageViewController.m"
+			],
+			[
+				"gpuimagesh",
+				"Vendor/GPUImage/framework/Source/GPUImageSharpenFilter.m"
+			],
+			[
+				"gpuimagevi",
+				"Vendor/GPUImage/framework/Source/GPUImageView.m"
+			],
+			[
+				"gpuimagepi",
+				"Vendor/GPUImage/framework/Source/GPUImagePicture.m"
+			],
+			[
+				"gpuimageou",
+				"Vendor/GPUImage/framework/Source/GPUImageOutput.m"
+			],
+			[
+				"gpuimagefi",
+				"Vendor/GPUImage/framework/Source/GPUImageFilter.m"
+			],
+			[
+				"gpuimagef",
+				"Vendor/GPUImage/framework/Source/GPUImageOutput.m"
+			],
+			[
 				"brightn",
 				"Vendor/GPUImage/framework/Source/GPUImageBrightnessFilter.m"
 			],
@@ -3080,10 +1265,6 @@
 			[
 				"til",
 				"Vendor/GPUImage/framework/Source/GPUImageTiltShiftFilter.m"
-			],
-			[
-				"gpuimagefi",
-				"Vendor/GPUImage/framework/Source/GPUImageFilter.m"
 			],
 			[
 				"pinch",
@@ -3162,10 +1343,6 @@
 				"Vendor/GPUImage/framework/Source/GPUImageTextureInput.m"
 			],
 			[
-				"gpuimageou",
-				"Vendor/GPUImage/framework/Source/GPUImageOutput.m"
-			],
-			[
 				"tonecu",
 				"Vendor/GPUImage/framework/Source/GPUImageToneCurveFilter.m"
 			],
@@ -3212,14 +1389,6 @@
 			[
 				"opaci",
 				"Vendor/GPUImage/framework/Source/GPUImageOpacityFilter.m"
-			],
-			[
-				"gpuimagepi",
-				"Vendor/GPUImage/framework/Source/GPUImagePicture.m"
-			],
-			[
-				"mypage",
-				"Classes/Controllers/luxeysMypageViewController.m"
 			],
 			[
 				"userview",
@@ -3306,10 +1475,6 @@
 				"Vendor/GPUImage/framework/Source/GPUImageStillCamera.m"
 			],
 			[
-				"gpuimagevi",
-				"Vendor/GPUImage/framework/Source/GPUImageView.m"
-			],
-			[
 				"gpuimagepip",
 				"Vendor/GPUImage/framework/Source/GPUImageFilterPipeline.h"
 			],
@@ -3356,10 +1521,6 @@
 			[
 				"gpuimagep",
 				"Vendor/GPUImage/framework/Source/GPUImagePicture.h"
-			],
-			[
-				"gpuimagef",
-				"Vendor/GPUImage/framework/Source/GPUImageFilter.m"
 			],
 			[
 				"still",
@@ -3568,10 +1729,6 @@
 			[
 				"camere",
 				"Classes/Controllers/luxeysCameraViewController.m"
-			],
-			[
-				"cellcomm",
-				"Classes/CustomControls/luxeysCellComment.m"
 			]
 		],
 		"width": 0.0
@@ -3587,7 +1744,7 @@
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
-	"side_bar_visible": true,
+	"side_bar_visible": false,
 	"side_bar_width": 262.0,
 	"status_bar_visible": true
 }

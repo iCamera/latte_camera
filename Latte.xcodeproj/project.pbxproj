@@ -129,6 +129,7 @@
 		8887546E161AF90500DD033E /* ModelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8887546D161AF90500DD033E /* ModelObject.m */; };
 		88919BEE1653567300E36C79 /* LXFilterMono.m in Sources */ = {isa = PBXBuildFile; fileRef = 88919BED1653567300E36C79 /* LXFilterMono.m */; };
 		88919BF116536D8500E36C79 /* LXFilterFish.m in Sources */ = {isa = PBXBuildFile; fileRef = 88919BF016536D8500E36C79 /* LXFilterFish.m */; };
+		88919BF81654E3AE00E36C79 /* LXSubLayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88919BF71654E3AE00E36C79 /* LXSubLayerView.m */; };
 		889447A8162D4A7800B31616 /* grain.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 889447A7162D4A7800B31616 /* grain.jpg */; };
 		8897374E15E491F4002F4717 /* luxeysMypageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8897374D15E491F4002F4717 /* luxeysMypageViewController.m */; };
 		8897375815E499D9002F4717 /* CameraStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8897375515E499D9002F4717 /* CameraStoryboard.storyboard */; };
@@ -699,6 +700,8 @@
 		88919BED1653567300E36C79 /* LXFilterMono.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LXFilterMono.m; path = Classes/Helpers/LXFilterMono.m; sourceTree = "<group>"; };
 		88919BEF16536D8400E36C79 /* LXFilterFish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LXFilterFish.h; path = Classes/Helpers/LXFilterFish.h; sourceTree = "<group>"; };
 		88919BF016536D8500E36C79 /* LXFilterFish.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LXFilterFish.m; path = Classes/Helpers/LXFilterFish.m; sourceTree = "<group>"; };
+		88919BF61654E3AD00E36C79 /* LXSubLayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LXSubLayerView.h; path = Classes/CustomControls/LXSubLayerView.h; sourceTree = SOURCE_ROOT; };
+		88919BF71654E3AE00E36C79 /* LXSubLayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LXSubLayerView.m; path = Classes/CustomControls/LXSubLayerView.m; sourceTree = SOURCE_ROOT; };
 		889447A7162D4A7800B31616 /* grain.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = grain.jpg; path = Resources/Effect/grain.jpg; sourceTree = "<group>"; };
 		8897374C15E491F3002F4717 /* luxeysMypageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysMypageViewController.h; path = Classes/Controllers/luxeysMypageViewController.h; sourceTree = "<group>"; };
 		8897374D15E491F4002F4717 /* luxeysMypageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysMypageViewController.m; path = Classes/Controllers/luxeysMypageViewController.m; sourceTree = "<group>"; };
@@ -1350,6 +1353,8 @@
 				88C4DF721649F66800DB5ABA /* luxeysTabBarItem.m */,
 				88CFA833164CF0440000B219 /* UIImageView+loadProgress.h */,
 				88CFA834164CF0440000B219 /* UIImageView+loadProgress.m */,
+				88919BF61654E3AD00E36C79 /* LXSubLayerView.h */,
+				88919BF71654E3AE00E36C79 /* LXSubLayerView.m */,
 			);
 			name = CustomControls;
 			path = Latte;
@@ -2745,6 +2750,7 @@
 				8843A06A165230BE00FCDD33 /* LXFilterBlur.m in Sources */,
 				88919BEE1653567300E36C79 /* LXFilterMono.m in Sources */,
 				88919BF116536D8500E36C79 /* LXFilterFish.m in Sources */,
+				88919BF81654E3AE00E36C79 /* LXSubLayerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

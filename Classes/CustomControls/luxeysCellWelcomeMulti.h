@@ -8,10 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
-@interface luxeysCellWelcomeMulti : UITableViewCell
+#import "Feed.h"
+#import "Picture.h"
+#import "UIButton+AsyncImage.h"
+
+@interface luxeysCellWelcomeMulti : UITableViewCell {
+    UIViewController *viewController;
+}
 @property (strong, nonatomic) IBOutlet UIButton *buttonUser;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollPic;
 @property (strong, nonatomic) IBOutlet UILabel *labelTitle;
 @property (strong, nonatomic) IBOutlet UILabel *labelUserDate;
+
+@property (strong, nonatomic) Feed *feed;
+@property (strong, nonatomic) UIViewController *viewController;
 
 @end

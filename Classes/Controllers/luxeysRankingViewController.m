@@ -128,7 +128,7 @@
                                        if (newPics.count == 0)
                                            loadEnded = true;
                                        else {
-                                           int newRows = newPics.count / 4 + (newPics.count%4>0?1:0);
+                                           int newRows = newPics.count / 3 + (newPics.count%3>0?1:0);
                                            NSMutableArray *paths = [[NSMutableArray alloc] init];
                                            for (int i = 0; i < newRows ; i++) {
                                                [paths addObject:[NSIndexPath indexPathForRow:i+rowCountPrev inSection:0]];
@@ -189,12 +189,10 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger count = pics.count;
-    if (count > 4) {
-        NSInteger ret = (count - 4) / 4 + 2 + ((count-4)%4>0?1:0);
+    if (count > 1) {
+        NSInteger ret = (count - 1) / 3 + ((count-1)%3>0?1:0);
         return ret;
     }
-    else if (count > 1)
-        return 2;
     else if (count == 1)
         return 1;
     else
@@ -227,9 +225,9 @@
             cellLv1 = [[luxeysCellRankLv1 alloc] initWithStyle:UITableViewCellStyleDefault
                                                reuseIdentifier:@"First"];
         }
-        CGRect frame = cellLv1.buttonPic1.frame;
-        frame.size.height = [self tableView:self.tableView heightForRowAtIndexPath:indexPath] - 10;
-        cellLv1.buttonPic1.frame = frame;
+        // CGRect frame = cellLv1.buttonPic1.frame;
+        // frame.size.height = [self tableView:self.tableView heightForRowAtIndexPath:indexPath];
+        // cellLv1.buttonPic1.frame = frame;
         [self initButton:cellLv1.buttonPic1];
 
         Picture *pic = [pics objectAtIndex:0];
@@ -237,7 +235,7 @@
         cellLv1.buttonPic1.tag = [pic.pictureId integerValue];
         
         return cellLv1;
-    } else if (indexPath.row == 1) {
+    } else {
         luxeysCellRankLv2 *cellLv2 = [tableView dequeueReusableCellWithIdentifier:@"Second" forIndexPath:indexPath];
         if (nil == cellLv2) {
             cellLv2 = [[luxeysCellRankLv2 alloc] initWithStyle:UITableViewCellStyleDefault
@@ -247,77 +245,28 @@
         [self initButton:cellLv2.buttonPic2];
         [self initButton:cellLv2.buttonPic3];
         [self initButton:cellLv2.buttonPic4];
+
+        NSInteger baseIdx = (indexPath.row-1)*3+1;
         
-        if (pics.count > 1) {
-            Picture *pic = [pics objectAtIndex:1];
+        if (pics.count >= baseIdx + 2) {
+            Picture *pic = [pics objectAtIndex:baseIdx];
             [cellLv2.buttonPic2 loadBackground:pic.urlSquare];
             cellLv2.buttonPic2.tag = [pic.pictureId integerValue];
         }
         
-        if (pics.count > 2) {
-            Picture *pic = [pics objectAtIndex:2];
+        if (pics.count > baseIdx  + 3) {
+            Picture *pic = [pics objectAtIndex:baseIdx + 1];
             [cellLv2.buttonPic3 loadBackground:pic.urlSquare];
             cellLv2.buttonPic3.tag = [pic.pictureId integerValue];
         }
         
-        if (pics.count > 3) {
-            Picture *pic = [pics objectAtIndex:3];
+        if (pics.count > baseIdx  + 4) {
+            Picture *pic = [pics objectAtIndex:baseIdx + 2];
             [cellLv2.buttonPic4 loadBackground:pic.urlSquare];
             cellLv2.buttonPic4.tag = [pic.pictureId integerValue];
         }
         
         return cellLv2;
-    } else {
-        luxeysCellRankLv3 *cellLv3 = [tableView dequeueReusableCellWithIdentifier:@"Third" forIndexPath:indexPath];
-        if (nil == cellLv3) {
-            cellLv3 = [[luxeysCellRankLv3 alloc] initWithStyle:UITableViewCellStyleDefault
-                                                                     reuseIdentifier:@"Third"];
-        }
-        
-        [self initButton:cellLv3.buttonPic1];
-        [self initButton:cellLv3.buttonPic2];
-        [self initButton:cellLv3.buttonPic3];
-        [self initButton:cellLv3.buttonPic4];
-        
-        NSInteger baseIdx = (indexPath.row-2)*4+4;
-        
-        if (pics.count > baseIdx) {
-            Picture *pic = [pics objectAtIndex:baseIdx];
-            cellLv3.label1st.text = [NSString stringWithFormat:@"%d", baseIdx];
-            [cellLv3.buttonPic1 loadBackground:pic.urlSquare];
-            cellLv3.buttonPic1.tag = [pic.pictureId integerValue];
-        }
-        
-        if (pics.count > baseIdx+1) {
-            Picture *pic = [pics objectAtIndex:baseIdx+1];
-            cellLv3.badgeRank6.hidden = false;
-            cellLv3.label2nd.text = [NSString stringWithFormat:@"%d", baseIdx+1];
-            [cellLv3.buttonPic2 loadBackground:pic.urlSquare];
-            cellLv3.buttonPic2.tag = [pic.pictureId integerValue];
-            
-        } else
-             cellLv3.badgeRank6.hidden = true;
-        
-        if (pics.count > baseIdx+2) {
-            Picture *pic = [pics objectAtIndex:baseIdx+2];
-            cellLv3.badgeRank7.hidden = false;
-            cellLv3.label3rd.text = [NSString stringWithFormat:@"%d", baseIdx+2];
-            [cellLv3.buttonPic3 loadBackground:pic.urlSquare];
-            cellLv3.buttonPic3.tag = [pic.pictureId integerValue];
-        } else {
-            cellLv3.badgeRank7.hidden = true;
-        }
-        
-        if (pics.count > baseIdx+3) {
-            Picture *pic = [pics objectAtIndex:baseIdx+3];
-            cellLv3.badgeRank8.hidden = false;
-            cellLv3.label4th.text = [NSString stringWithFormat:@"%d", baseIdx+3];
-            [cellLv3.buttonPic4 loadBackground:pic.urlSquare];
-            cellLv3.buttonPic4.tag = [pic.pictureId integerValue];
-        } else
-            cellLv3.badgeRank8.hidden = true;
-                
-        return cellLv3;
     }
 }
 
@@ -325,15 +274,13 @@
     if (indexPath.row == 0) {
         Picture *pic = [pics objectAtIndex:0];
         
-        float newheight = [luxeysUtils heightFromWidth:300
+        float newheight = [luxeysUtils heightFromWidth:308
                                                       width:[pic.width floatValue]
                                                      height:[pic.height floatValue]];
         return newheight + 6;
     }
-    else if (indexPath.row == 1)
+    else if (indexPath.row > 1)
         return 105;
-    else
-        return 80;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

@@ -314,12 +314,7 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (isEmpty)
-        return 1;
-    if (tableMode == kTableTimeline) {
-        return feeds.count;
-    } else
-        return 1;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -327,6 +322,8 @@
         return 0;
     
     if (tableMode == kTableTimeline) {
+        return feeds.count;
+
         Feed *feed = [feeds objectAtIndex:section];
         if (feed.targets.count == 1) {
             Picture *pic = [feed.targets objectAtIndex:0];
@@ -361,14 +358,35 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableMode == kTableTimeline)
     {
-        Feed *feed = [feeds objectAtIndex:indexPath.section];
-        Picture *pic = [feed.targets objectAtIndex:0];
-        Comment *comment = [pic.comments objectAtIndex:indexPath.row];
-        
-        CGSize labelSize = [comment.descriptionText sizeWithFont:[UIFont systemFontOfSize:11]
-                                               constrainedToSize:CGSizeMake(255.0f, MAXFLOAT)
-                                                   lineBreakMode:NSLineBreakByWordWrapping];
-        return labelSize.height + 25;
+        Feed *feed = feeds[indexPath.row];
+        if (feed.targets.count > 1) {
+            return 202+42;
+        } else if (feed.targets.count == 1) {
+            Picture *pic = feed.targets[0];
+            CGFloat feedHeight = [luxeysUtils heightFromWidth:308 width:[pic.width floatValue] height:[pic.height floatValue]] + 55;
+            
+            if (pic.comments.count > 0) {
+                feedHeight += 6;
+                
+                for (NSInteger i = 0; i < pic.comments.count; i++) {
+                    if ([toggleSection objectForKey:[NSString stringWithFormat:@"%d", indexPath.row]] == nil)
+                        if (i > 3)
+                            break;
+                    
+                    Comment* comment = pic.comments[i];
+                    CGSize commentSize = [comment.descriptionText sizeWithFont:[UIFont systemFontOfSize:11]
+                                                             constrainedToSize:CGSizeMake(255.0f, MAXFLOAT)
+                                                                 lineBreakMode:NSLineBreakByWordWrapping];
+                    feedHeight += MAX(commentSize.height+55, 35);
+                }
+            }
+            
+            if (pic.comments.count > 3)
+                feedHeight += 25;
+            
+            return feedHeight;
+        } else
+            return 1;
     } else if ((tableMode == kTableVoted) || (tableMode == kTablePicList)) {
         return 78;
     }
@@ -396,23 +414,7 @@
     if (isEmpty)
         return 200;
     
-    if (tableMode == kTableTimeline) {
-        Feed *feed = [feeds objectAtIndex:section];
-        if (feed.targets.count == 1) {
-            Picture *pic = [feed.targets objectAtIndex:0];
-            float newheight = [luxeysUtils heightFromWidth:300
-                                                     width:[pic.width floatValue]
-                                                    height:[pic.height floatValue]];
-            if ([pic.commentCount integerValue] > 3)
-                return newheight + 115;
-            else
-                return newheight + 90;
-        }
-        else {
-            return 245;
-        }
-    } else
-        return 0;
+    return 0;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -425,46 +427,34 @@
         return emptyView;
     }
     
-    if (tableMode == kTableTimeline) {
-        Feed *feed = [feeds objectAtIndex:section];
-        
-        if (feed.targets.count == 1) {
-            Picture *pic = [feed.targets objectAtIndex:0];
-            luxeysTemplatePicTimeline *viewPic = [[luxeysTemplatePicTimeline alloc] initWithPic:pic user:feed.user section:section sender:self];
-            return viewPic.view;
-        }
-        else {
-            luxeysTemplateTimelinePicMulti *viewMultiPic = [[luxeysTemplateTimelinePicMulti alloc] initWithFeed:feed section:section sender:self];
-            return viewMultiPic.view;
-        }
-    }
-    else
-        return nil;
+    return nil;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableMode == kTableTimeline)
     {
-        Feed *feed = [feeds objectAtIndex:indexPath.section];
-        Picture *pic = [feed.targets objectAtIndex:0];
-        luxeysTableViewCellComment* cellComment = [tableView dequeueReusableCellWithIdentifier:@"Comment"];
-        
-        Comment *comment = [pic.comments objectAtIndex:indexPath.row];
-        [cellComment setComment:comment];
-        
-        if (!comment.user.isUnregister) {
-            cellComment.buttonUser.tag = [comment.user.userId integerValue];
-            [cellComment.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
+        Feed *feed = [feeds objectAtIndex:indexPath.row];
+        if (feed.targets.count == 1)
+        {
+            luxeysCellWelcomeSingle *cell = [tableView dequeueReusableCellWithIdentifier:@"Single" forIndexPath:indexPath];
+            if (cell == nil) {
+                cell = [[luxeysCellWelcomeSingle alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Single"];
+            }
+            
+            cell.viewController = self;
+            cell.feed = feed;
+            
+            return cell;
+        } else {
+            luxeysCellWelcomeMulti *cell = [tableView dequeueReusableCellWithIdentifier:@"Multi" forIndexPath:indexPath];
+            if (cell == nil) {
+                cell = [[luxeysCellWelcomeMulti alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Multi"];
+            }
+            
+            cell.viewController = self;
+            cell.feed = feed;
+            return cell;
         }
-        
-        cellComment.backgroundView = [[UIView alloc] init];
-        cellComment.backgroundView.backgroundColor = [UIColor colorWithRed:0.91f green:0.90f blue:0.88 alpha:1];
-        // cellComment.backgroundView.layer.cornerRadius = 5;
-        // cellComment.backgroundView.layer.masksToBounds = YES;
-        cellComment.backgroundView.layer.borderWidth = 0.5f;
-        cellComment.backgroundView.layer.borderColor = [[UIColor whiteColor] CGColor];
-        
-        return cellComment;
     }
     else if ((tableMode == kTableVoted) || (tableMode == kTablePicList)) {
         UITableViewCell *cellPic = [[UITableViewCell alloc] init];
@@ -485,7 +475,8 @@
             }
             
             
-            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(6+(i*77), 6, 71, 71)];
+            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(6+(i*78), 6, 72, 72)];
+
             [button loadBackground:pic.urlSquare];
             button.layer.borderColor = [[UIColor whiteColor] CGColor];
             button.layer.borderWidth = 3;
@@ -833,7 +824,7 @@
                                     }];
 }
 
-- (void)showPicWithID:(UIButton*)sender {
+- (void)showPic:(UIButton*)sender {
     [self performSegueWithIdentifier:@"PictureDetail" sender:sender];
 }
 

@@ -181,37 +181,10 @@
                 cell = [[luxeysCellWelcomeSingle alloc] initWithStyle:UITableViewCellStyleDefault
                                                    reuseIdentifier:@"Single"];
             }
-            Picture *pic = feed.targets[0];
-            CGRect frame = cell.buttonPic.frame;
-            frame.size.height = [luxeysUtils heightFromWidth:300 width:[pic.width floatValue] height:[pic.height floatValue]];
-            cell.buttonPic.frame = frame;
-            cell.buttonPic.layer.borderColor = [[UIColor whiteColor] CGColor];
-            cell.buttonPic.layer.borderWidth = 3;
-            UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:cell.buttonPic.bounds];
-            cell.buttonPic.layer.masksToBounds = NO;
-            cell.buttonPic.layer.shadowColor = [UIColor blackColor].CGColor;
-            cell.buttonPic.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-            cell.buttonPic.layer.shadowOpacity = 0.5f;
-            cell.buttonPic.layer.shadowRadius = 1.5f;
-            cell.buttonPic.layer.shadowPath = shadowPathPic.CGPath;
-            [cell.buttonPic loadBackground:pic.urlMedium];
-            cell.buttonPic.tag = [pic.pictureId integerValue];
             
-            cell.buttonUser.clipsToBounds = YES;
-            cell.buttonUser.layer.cornerRadius = 3;
-            cell.buttonUser.tag = [feed.user.userId integerValue];
-            [cell.buttonUser loadBackground:feed.user.profilePicture placeholderImage:@"user.gif"];
-            if (pic.title.length > 0)
-                cell.labelTitle.text = pic.title;
-            else
-                cell.labelTitle.text = @"タイトルなし";
-            cell.labelUser.text = [NSString stringWithFormat:@"photo by %@ | %@", feed.user.name, [luxeysUtils timeDeltaFromNow:feed.updatedAt]];
-            
-            cell.clipsToBounds = NO;
-            
-            [cell.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
-            [cell.buttonPic addTarget:self action:@selector(showPic:) forControlEvents:UIControlEventTouchUpInside];
-            
+            cell.viewController = self;
+            cell.feed = feed;
+
             return cell;
         } else {
             luxeysCellWelcomeMulti *cell = [tableView dequeueReusableCellWithIdentifier:@"Multi" forIndexPath:indexPath];
@@ -219,44 +192,9 @@
                 cell = [[luxeysCellWelcomeMulti alloc] initWithStyle:UITableViewCellStyleDefault
                                                       reuseIdentifier:@"Multi"];
             }
-            [cell.buttonUser loadBackground:feed.user.profilePicture placeholderImage:@"user.gif"];
             
-            for(UIView *subview in [cell.scrollPic subviews]) {
-                [subview removeFromSuperview];
-            }
-            
-            CGSize size = CGSizeMake(6, 120);
-            for (Picture *pic in feed.targets) {
-                UIButton *buttonPic = [[UIButton alloc] initWithFrame:CGRectMake(size.width, 2, 120, 120)];
-                buttonPic.layer.borderColor = [[UIColor whiteColor] CGColor];
-                buttonPic.layer.borderWidth = 3;
-                UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:buttonPic.bounds];
-                buttonPic.layer.masksToBounds = NO;
-                buttonPic.layer.shadowColor = [UIColor blackColor].CGColor;
-                buttonPic.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-                buttonPic.layer.shadowOpacity = 0.5f;
-                buttonPic.layer.shadowRadius = 1.5f;
-                buttonPic.layer.shadowPath = shadowPathPic.CGPath;
-                
-                [buttonPic loadBackground:pic.urlSquare];
-                buttonPic.tag = [pic.pictureId integerValue];
-                
-                [buttonPic addTarget:self action:@selector(showPic:) forControlEvents:UIControlEventTouchUpInside];
-                
-                [cell.scrollPic addSubview:buttonPic];
-                size.width += 126;
-            }
-            cell.scrollPic.contentSize = size;
-            cell.scrollPic.clipsToBounds = NO;
-            cell.buttonUser.clipsToBounds = YES;
-            cell.buttonUser.layer.cornerRadius = 3;
-            cell.buttonUser.tag = [feed.user.userId integerValue];
-            
-            cell.labelTitle.text = [NSString stringWithFormat:@"写真を%d枚追加しました", feed.targets.count];
-            cell.labelUserDate.text = [NSString stringWithFormat:@"photo by %@ | %@", feed.user.name, [luxeysUtils timeDeltaFromNow:feed.updatedAt]];
-            
-            [cell.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
-            [cell addSubview:cell.scrollPic];
+            cell.viewController = self;
+            cell.feed = feed;
             
             return cell;
         }
@@ -275,7 +213,7 @@
             NSInteger idx = indexPath.row*3 + i;
             if (idx < feeds.count) {
                 
-                UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(6 + 102*i, (indexPath.row==0?6:0),99, 99)];
+                UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(6 + 104*i, (indexPath.row==0?6:3),98, 98)];
                 Feed *feed = feeds[idx];
                 
                 if (feed.targets.count > 0) {
@@ -298,6 +236,7 @@
                 }
             }
         }
+        cell.clipsToBounds = false;
         return cell;
     }
 }
@@ -307,15 +246,15 @@
     if (tableMode == kTableTimeline) {
         Feed *feed = feeds[indexPath.row];
         if (feed.targets.count > 1) {
-            return 180;
+            return 239;
         } else if (feed.targets.count == 1) {
             Picture *pic = feed.targets[0];
             CGFloat picHeight = [luxeysUtils heightFromWidth:300 width:[pic.width floatValue] height:[pic.height floatValue]];
-            return picHeight + 55;
+            return picHeight + 45;
         } else
             return 1;
     } else
-        return 105 + (indexPath.row==0?6:0);
+        return 104 + (indexPath.row==0?6:0);
 }
 
 - (void)showPic:(UIButton*)sender {
