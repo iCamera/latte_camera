@@ -10,8 +10,8 @@
 
 @implementation luxeysUtils
 
-+ (float)heightFromWidth:(float)newwidth width:(float)width height:(float)height {
-    return newwidth*height/width;
++ (NSInteger)heightFromWidth:(CGFloat)newwidth width:(CGFloat)width height:(CGFloat)height {
+    return (NSInteger)(newwidth*height/width);
 }
 
 + (NSString *)timeDeltaFromNow:(NSDate*)aDate {

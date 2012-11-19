@@ -211,21 +211,32 @@
 }
 
 - (void)capturePhotoAsync {
-    [videoCamera capturePhotoAsImageProcessedUpToFilterWithMeta:[filter getCrop] withCompletionHandler:^(UIImage *processedImage, NSMutableDictionary *meta, NSError *error) {
-                                runOnMainQueueWithoutDeadlocking(^{
-                                    @autoreleasepool {
-                                        [locationManager stopUpdatingLocation];
-                                        [videoCamera stopCameraCapture];
-                                        
-                                        imageMeta = meta;
-                                        
-                                        picture = [[GPUImagePicture alloc] initWithImage:processedImage];
-                                        imageOrientation = processedImage.imageOrientation;
-                                        
-                                        [self switchEditImage];
-                                        [self applyCurrentEffect];
-                                    }
-                                });
+    /*[videoCamera capturePhotoAsImageProcessedUpToFilter:[filter getCrop] withCompletionHandler:^(UIImage *processedImage, NSError *error) {
+        [locationManager stopUpdatingLocation];
+        [videoCamera stopCameraCapture];
+        
+        imageMeta = [NSMutableDictionary dictionaryWithDictionary:videoCamera.currentCaptureMetadata];
+        
+        picture = [[GPUImagePicture alloc] initWithImage:processedImage];
+        imageOrientation = processedImage.imageOrientation;
+        
+        [self switchEditImage];
+        [self applyCurrentEffect];
+    }];*/
+    
+
+    [videoCamera capturePhotoAsImageProcessedUpToFilterWithMeta:[filter getCrop]
+                                          withCompletionHandler:^(UIImage *processedImage, NSMutableDictionary *meta, NSError *error) {
+                                              [locationManager stopUpdatingLocation];
+                                              [videoCamera stopCameraCapture];
+                                              
+                                              imageMeta = meta;
+                                              
+                                              picture = [[GPUImagePicture alloc] initWithImage:processedImage];
+                                              imageOrientation = processedImage.imageOrientation;
+                                              
+                                              [self switchEditImage];
+                                              [self applyCurrentEffect];
     }];
 }
 

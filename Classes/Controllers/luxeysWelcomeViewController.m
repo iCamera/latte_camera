@@ -110,6 +110,7 @@
 
 - (void)reloadView {
     loadEnded = false;
+    pagephoto = 1;
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         [[LatteAPIClient sharedClient] getPath:@"api/user/everyone/timeline"
                                           parameters:nil
@@ -149,8 +150,16 @@
                                        NSMutableArray *newFeeds = [Feed mutableArrayFromDictionary:JSON withKey:@"feeds"];
                                        
                                        if (newFeeds.count > 0) {
+                                           NSInteger oldRow = [self tableView:tablePic numberOfRowsInSection:0];
+                                           [tablePic beginUpdates];
                                            [feeds addObjectsFromArray:newFeeds];
-                                           [tablePic reloadData];
+                                           NSInteger newRow = [self tableView:tablePic numberOfRowsInSection:0];
+                                           for (NSInteger i = oldRow; i < newRow; i++) {
+                                               [tablePic insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]]
+                                                               withRowAnimation:UITableViewRowAnimationAutomatic];
+                                           }
+
+                                           [tablePic endUpdates];
                                        } else {
                                            loadEnded = true;
                                        }
@@ -193,6 +202,7 @@
                                                       reuseIdentifier:@"Multi"];
             }
             
+            cell.showControl = false;
             cell.viewController = self;
             cell.feed = feed;
             
@@ -249,12 +259,12 @@
             return 239;
         } else if (feed.targets.count == 1) {
             Picture *pic = feed.targets[0];
-            CGFloat picHeight = [luxeysUtils heightFromWidth:300 width:[pic.width floatValue] height:[pic.height floatValue]];
+            CGFloat picHeight = [luxeysUtils heightFromWidth:308 width:[pic.width floatValue] height:[pic.height floatValue]];
             return picHeight + 45;
         } else
             return 1;
     } else
-        return 104 + (indexPath.row==0?6:0);
+        return 104 + (indexPath.row==0?3:0);
 }
 
 - (void)showPic:(UIButton*)sender {

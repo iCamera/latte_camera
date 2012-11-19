@@ -44,7 +44,6 @@
 		88390E2A15F5C53D00CDCA3B /* luxeysRankingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88390E2915F5C53D00CDCA3B /* luxeysRankingViewController.m */; };
 		88390E2D15F5CC9D00CDCA3B /* luxeysCellRankLv1.m in Sources */ = {isa = PBXBuildFile; fileRef = 88390E2C15F5CC9D00CDCA3B /* luxeysCellRankLv1.m */; };
 		88390E3015F5CCB300CDCA3B /* luxeysCellRankLv2.m in Sources */ = {isa = PBXBuildFile; fileRef = 88390E2F15F5CCB300CDCA3B /* luxeysCellRankLv2.m */; };
-		88390E3315F5CCD000CDCA3B /* luxeysCellRankLv3.m in Sources */ = {isa = PBXBuildFile; fileRef = 88390E3215F5CCD000CDCA3B /* luxeysCellRankLv3.m */; };
 		884208A1161ECEB10082755C /* luxeysHeaderCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = 884208A0161ECEB10082755C /* luxeysHeaderCalendar.m */; };
 		8843A0621650FF3100FCDD33 /* LXFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8843A0611650FF3100FCDD33 /* LXFilter.m */; };
 		8843A06A165230BE00FCDD33 /* LXFilterBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 8843A069165230BE00FCDD33 /* LXFilterBlur.m */; };
@@ -394,8 +393,6 @@
 		88CF20F215E796D30063A15E /* icon_login.png in Resources */ = {isa = PBXBuildFile; fileRef = 88CF20F015E796D30063A15E /* icon_login.png */; };
 		88CF20F315E796D30063A15E /* icon_login@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88CF20F115E796D30063A15E /* icon_login@2x.png */; };
 		88CF232215EB0687008B1937 /* luxeysCellProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CF232115EB0687008B1937 /* luxeysCellProfile.m */; };
-		88CFA4E31612A974000F3493 /* luxeysTemplateTimelinePicMulti.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CFA4E11612A974000F3493 /* luxeysTemplateTimelinePicMulti.m */; };
-		88CFA4E41612A974000F3493 /* luxeysTemplateTimelinePicMulti.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88CFA4E21612A974000F3493 /* luxeysTemplateTimelinePicMulti.xib */; };
 		88CFA4EB1612D212000F3493 /* luxeysPicCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CFA4EA1612D212000F3493 /* luxeysPicCommentViewController.m */; };
 		88CFA82F164CD3F10000B219 /* nopict.png in Resources */ = {isa = PBXBuildFile; fileRef = 88CFA82B164CD3F10000B219 /* nopict.png */; };
 		88CFA830164CD3F10000B219 /* nopict@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88CFA82C164CD3F10000B219 /* nopict@2x.png */; };
@@ -595,8 +592,6 @@
 		88390E2C15F5CC9D00CDCA3B /* luxeysCellRankLv1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysCellRankLv1.m; path = Classes/CustomControls/luxeysCellRankLv1.m; sourceTree = SOURCE_ROOT; };
 		88390E2E15F5CCB300CDCA3B /* luxeysCellRankLv2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysCellRankLv2.h; path = Classes/CustomControls/luxeysCellRankLv2.h; sourceTree = SOURCE_ROOT; };
 		88390E2F15F5CCB300CDCA3B /* luxeysCellRankLv2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysCellRankLv2.m; path = Classes/CustomControls/luxeysCellRankLv2.m; sourceTree = SOURCE_ROOT; };
-		88390E3115F5CCD000CDCA3B /* luxeysCellRankLv3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysCellRankLv3.h; path = Classes/CustomControls/luxeysCellRankLv3.h; sourceTree = SOURCE_ROOT; };
-		88390E3215F5CCD000CDCA3B /* luxeysCellRankLv3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysCellRankLv3.m; path = Classes/CustomControls/luxeysCellRankLv3.m; sourceTree = SOURCE_ROOT; };
 		8842089F161ECEB10082755C /* luxeysHeaderCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysHeaderCalendar.h; path = Classes/CustomControls/luxeysHeaderCalendar.h; sourceTree = SOURCE_ROOT; };
 		884208A0161ECEB10082755C /* luxeysHeaderCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysHeaderCalendar.m; path = Classes/CustomControls/luxeysHeaderCalendar.m; sourceTree = SOURCE_ROOT; };
 		8843A0601650FF3100FCDD33 /* LXFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LXFilter.h; path = Classes/Helpers/LXFilter.h; sourceTree = "<group>"; };
@@ -1001,9 +996,6 @@
 		88CF20F115E796D30063A15E /* icon_login@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_login@2x.png"; sourceTree = "<group>"; };
 		88CF232015EB0687008B1937 /* luxeysCellProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysCellProfile.h; path = Classes/CustomControls/luxeysCellProfile.h; sourceTree = SOURCE_ROOT; };
 		88CF232115EB0687008B1937 /* luxeysCellProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysCellProfile.m; path = Classes/CustomControls/luxeysCellProfile.m; sourceTree = SOURCE_ROOT; };
-		88CFA4E01612A974000F3493 /* luxeysTemplateTimelinePicMulti.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysTemplateTimelinePicMulti.h; path = Classes/Controllers/Modules/luxeysTemplateTimelinePicMulti.h; sourceTree = "<group>"; };
-		88CFA4E11612A974000F3493 /* luxeysTemplateTimelinePicMulti.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysTemplateTimelinePicMulti.m; path = Classes/Controllers/Modules/luxeysTemplateTimelinePicMulti.m; sourceTree = "<group>"; };
-		88CFA4E21612A974000F3493 /* luxeysTemplateTimelinePicMulti.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = luxeysTemplateTimelinePicMulti.xib; path = Classes/Controllers/Modules/luxeysTemplateTimelinePicMulti.xib; sourceTree = "<group>"; };
 		88CFA4E91612D212000F3493 /* luxeysPicCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysPicCommentViewController.h; path = Classes/Controllers/luxeysPicCommentViewController.h; sourceTree = "<group>"; };
 		88CFA4EA1612D212000F3493 /* luxeysPicCommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysPicCommentViewController.m; path = Classes/Controllers/luxeysPicCommentViewController.m; sourceTree = "<group>"; };
 		88CFA82B164CD3F10000B219 /* nopict.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nopict.png; sourceTree = "<group>"; };
@@ -1327,8 +1319,6 @@
 				88390E2C15F5CC9D00CDCA3B /* luxeysCellRankLv1.m */,
 				88390E2E15F5CCB300CDCA3B /* luxeysCellRankLv2.h */,
 				88390E2F15F5CCB300CDCA3B /* luxeysCellRankLv2.m */,
-				88390E3115F5CCD000CDCA3B /* luxeysCellRankLv3.h */,
-				88390E3215F5CCD000CDCA3B /* luxeysCellRankLv3.m */,
 				88FCBBBF1648EA2F009F655F /* luxeysCellWelcomeMulti.h */,
 				88FCBBC01648EA2F009F655F /* luxeysCellWelcomeMulti.m */,
 				88FCBBBC1648EA04009F655F /* luxeysCellWelcomeSingle.h */,
@@ -1858,9 +1848,6 @@
 				884B5A8A16106E6B0059102E /* luxeysTemplatePicTimeline.h */,
 				884B5A8B16106E6B0059102E /* luxeysTemplatePicTimeline.m */,
 				884B5A8C16106E6B0059102E /* luxeysTemplatePicTimeline.xib */,
-				88CFA4E01612A974000F3493 /* luxeysTemplateTimelinePicMulti.h */,
-				88CFA4E11612A974000F3493 /* luxeysTemplateTimelinePicMulti.m */,
-				88CFA4E21612A974000F3493 /* luxeysTemplateTimelinePicMulti.xib */,
 				8864139F161593C700181E52 /* luxeysTemplateTimlinePicMultiItem.h */,
 				886413A0161593C700181E52 /* luxeysTemplateTimlinePicMultiItem.m */,
 				886413A1161593C700181E52 /* luxeysTemplateTimlinePicMultiItem.xib */,
@@ -2476,7 +2463,6 @@
 				88E312EC15EC6811005AA68A /* bt_map@2x.png in Resources */,
 				884B5A7E160FF10A0059102E /* user.gif in Resources */,
 				884B5A8E16106E6B0059102E /* luxeysTemplatePicTimeline.xib in Resources */,
-				88CFA4E41612A974000F3493 /* luxeysTemplateTimelinePicMulti.xib in Resources */,
 				88A1A02A1613487A00DF1FD0 /* Default-568h@2x.png in Resources */,
 				88A1A043161350C200DF1FD0 /* bg_back_on.png in Resources */,
 				88A1A044161350C200DF1FD0 /* bg_back_on@2x.png in Resources */,
@@ -2709,14 +2695,12 @@
 				88390E2A15F5C53D00CDCA3B /* luxeysRankingViewController.m in Sources */,
 				88390E2D15F5CC9D00CDCA3B /* luxeysCellRankLv1.m in Sources */,
 				88390E3015F5CCB300CDCA3B /* luxeysCellRankLv2.m in Sources */,
-				88390E3315F5CCD000CDCA3B /* luxeysCellRankLv3.m in Sources */,
 				8809818E15F8532F00B81A4F /* luxeysCellFriend.m in Sources */,
 				88CEB33315F99259001E848C /* luxeysPicInfoViewController.m in Sources */,
 				8874B9291609C9980052A7CA /* luxeysCell4Pics.m in Sources */,
 				88137DC7160AF31500E99665 /* luxeysCellFriendRequest.m in Sources */,
 				884B5A81160FF24B0059102E /* UIButton+AsyncImage.m in Sources */,
 				884B5A8D16106E6B0059102E /* luxeysTemplatePicTimeline.m in Sources */,
-				88CFA4E31612A974000F3493 /* luxeysTemplateTimelinePicMulti.m in Sources */,
 				88CFA4EB1612D212000F3493 /* luxeysPicCommentViewController.m in Sources */,
 				886413A2161593C700181E52 /* luxeysTemplateTimlinePicMultiItem.m in Sources */,
 				8805439F161964030091A40F /* luxeysCellNotify.m in Sources */,
@@ -2805,7 +2789,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "";
 				"INFOPLIST_FILE[sdk=*]" = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D0E503FA-B692-4FB6-9C92-886A176DF032";
 				SDKROOT = iphoneos;
@@ -2830,7 +2814,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D0E503FA-B692-4FB6-9C92-886A176DF032";

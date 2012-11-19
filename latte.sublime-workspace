@@ -4,6 +4,86 @@
 		"selected_items":
 		[
 			[
+				"end",
+				"endedPhoto	BOOL"
+			],
+			[
+				"page",
+				"pageInterest	int"
+			],
+			[
+				"ended",
+				"endedVoted	BOOL"
+			],
+			[
+				"kTableV",
+				"kTableVoted	macro"
+			],
+			[
+				"en",
+				"endedVote	BOOL"
+			],
+			[
+				"kTa",
+				"kTableVoted	macro"
+			],
+			[
+				"kTable",
+				"kTableFriends	macro"
+			],
+			[
+				"number",
+				"numberWithInt:(int)	NSNumber *"
+			],
+			[
+				"NSNu",
+				"NSNumber	class"
+			],
+			[
+				"diction",
+				"dictionaryWithObjectsAndKeys:(id), ..., nil	id"
+			],
+			[
+				"dic",
+				"dictionaryWithObject:(id) forKey:(id<NSCopying>)	id"
+			],
+			[
+				"d",
+				"description	NSString *"
+			],
+			[
+				"tableView",
+				"tableView:(UITableView *) heightForRowAtIndexPath:(NSIndexPath *)	CGFloat"
+			],
+			[
+				"lab",
+				"labelSize	CGSize"
+			],
+			[
+				"textCo",
+				"textComment	UILabel *"
+			],
+			[
+				"bac",
+				"backgroundColor	UIColor *"
+			],
+			[
+				"but",
+				"buttonExpand	UIButton *"
+			],
+			[
+				"r",
+				"row	NSInteger"
+			],
+			[
+				"ini",
+				"initWithStyle:(UITableViewCellStyle) reuseIdentifier:(NSString *)	id"
+			],
+			[
+				"luxeysCellC",
+				"luxeysTableViewCellComment	class"
+			],
+			[
 				"te",
 				"textureCoordinate"
 			],
@@ -14,10 +94,6 @@
 			[
 				"i",
 				"isFollowing	BOOL"
-			],
-			[
-				"but",
-				"buttonContact	UIButton *"
 			],
 			[
 				"ta",
@@ -92,14 +168,6 @@
 				"masksToBounds	BOOL"
 			],
 			[
-				"bac",
-				"backgroundView	UIView *"
-			],
-			[
-				"lab",
-				"labelCamera	UILabel *"
-			],
-			[
 				"view",
 				"viewCamera	UIView *"
 			],
@@ -160,10 +228,6 @@
 				"introduction	NSString *"
 			],
 			[
-				"kTable",
-				"kTablePicList	macro"
-			],
-			[
 				"kTabl",
 				"kTableFriends	macro"
 			],
@@ -174,10 +238,6 @@
 			[
 				"kt",
 				"kTablePicList	macro"
-			],
-			[
-				"kTa",
-				"kTableProfile	macro"
 			],
 			[
 				"mu",
@@ -222,10 +282,6 @@
 			[
 				"CGRectMa",
 				"CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)	CGRect"
-			],
-			[
-				"ini",
-				"initWithFrame:(CGRect)	id"
 			],
 			[
 				"UITable",
@@ -458,72 +514,32 @@
 			[
 				"ge",
 				"get_user"
-			],
-			[
-				"Picture",
-				"PictureTop"
-			],
-			[
-				"p",
-				"pic_id  (variable)"
-			],
-			[
-				"clas",
-				"classmethod"
-			],
-			[
-				"is",
-				"is_get"
-			],
-			[
-				"wid",
-				"width:   (property)"
-			],
-			[
-				"fa",
-				"facebook_check_perm  (function)"
-			],
-			[
-				"ol",
-				"old_pics_ids"
-			],
-			[
-				"re",
-				"result"
-			],
-			[
-				"face",
-				"facebook_album"
-			],
-			[
-				"al",
-				"album_params"
-			],
-			[
-				"fac",
-				"facebook_create_album  (function)"
-			],
-			[
-				"me",
-				"message"
-			],
-			[
-				"put",
-				"put_object"
-			],
-			[
-				"if",
-				"if	If"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "Classes/Helpers/LXFilter.m",
+			"file": "Classes/Controllers/Modules/luxeysTemplatePicTimeline.m",
 			"settings":
 			{
-				"buffer_size": 14017,
+				"buffer_size": 5930,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Classes/Controllers/luxeysUserViewController.m",
+			"settings":
+			{
+				"buffer_size": 35792,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Classes/Controllers/luxeysUserViewController.h",
+			"settings":
+			{
+				"buffer_size": 2696,
 				"line_ending": "Unix"
 			}
 		},
@@ -531,7 +547,7 @@
 			"file": "Classes/Controllers/luxeysMypageViewController.m",
 			"settings":
 			{
-				"buffer_size": 39496,
+				"buffer_size": 43576,
 				"line_ending": "Unix"
 			}
 		}
@@ -576,6 +592,36 @@
 	},
 	"file_history":
 	[
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/FilterManager.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysRankingViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysWelcomeViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysMypageViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysMypageViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCameraViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageStillCamera.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/GPUImageStillCamera+captureWithMeta.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageStillCamera.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicDetailViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellWelcomeSingle.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellWelcomeSingle.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicCommentViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicCommentViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysUserViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysRankingViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/LXSubLayerView.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellComment.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/Modules/luxeysTemplateTimlinePicMultiItem.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/Modules/luxeysTemplateTimelinePicMulti.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysWelcomeViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/LXFilter.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellWelcomeMulti.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellWelcomeMulti.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysNavBar.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicDetailViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCellPicture.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/Modules/luxeysTemplatePicTimeline.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/Modules/luxeysTemplatePicTimeline.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/latte.sublime-project",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageMonochromeFilter.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageMonochromeFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Resources/Effect/blur.fsh",
@@ -594,7 +640,6 @@
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageSharpenFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageView.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageOutput.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/LXFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/LXFilterMono.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImagePinchDistortionFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageTiltShiftFilter.m",
@@ -603,12 +648,9 @@
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/FilterShowcase/FilterShowcase/ShowcaseFilterViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/FilterShowcase/FilterShowcase/CustomFilter.fsh",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageChromaKeyFilter.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysMypageViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysUserViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageAlphaBlendFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageToneCurveFilter.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageToneCurveFilter.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/FilterManager.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageVignetteFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageGaussianSelectiveBlurFilter.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageBoxBlurFilter.m",
@@ -623,26 +665,19 @@
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysLoginViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/AppDelegate/luxeysAppDelegate.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/AppDelegate/luxeysAppDelegate.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/latte.sublime-project",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Latte/Latte-Prefix.pch",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/AFNetworking/Example/AppDelegate.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Utils/luxeysUtils.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Utils/luxeysUtils.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/Modules/luxeysTemplatePicTimeline.m",
 		"/Users/dungbx/Library/Application Support/Sublime Text 2/Packages/SublimeClang/SublimeClang.sublime-settings",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCellNotify.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/GPUImageStillCamera+captureWithMeta.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCameraViewController.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCameraViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageStillCamera.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImagePicture.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageStillCamera.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/EGOTableViewPullRefresh/Demo/TableViewPull/Classes/View/RefreshTableHeaderView/EGORefreshTableHeaderView.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/EGOTableViewPullRefresh/Demo/TableViewPull/Classes/View/RefreshTableHeaderView/EGORefreshTableHeaderView.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageFilterGroup.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageFilterPipeline.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageRawDataInput.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysWelcomeViewController.m",
 		"/Users/dungbx/Deskop/DLCImagePickerController/Classes/PhotoViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageVideoCamera.m",
 		"/Users/dungbx/Deskop/DLCImagePickerController/Classes/DLCImagePickerController.h",
@@ -659,15 +694,11 @@
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysRightSideViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysTabBarViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/GPUImageStillCamera+captureWithMeta.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysMypageViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysSettingViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCellNotify.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysRankingViewController.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysRankingViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/SimplePhotoFilter/SimplePhotoFilter/PhotoViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/SimplePhotoFilter/SimplePhotoFilter/PhotoViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysFavViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysWelcomeViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/FilterShowcase/FilterShowcase/ShowcaseFilterViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Models/Comment.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Models/Comment.m",
@@ -677,33 +708,18 @@
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageUnsharpMaskFilter.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageUnsharpMaskFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/Modules/luxeysTemplateTimelinePicMulti.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/Modules/luxeysTemplateTimelinePicMulti.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Models/Picture.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Models/Picture.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Models/Feed.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Models/Feed.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicCommentViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/AVCameraManager.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/Modules/luxeysTemplateTimlinePicMultiItem.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellFriend.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellFriendRequest.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellComment.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicDetailViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCollectionCellPic.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCollectionCellPic.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysFavViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellRankLv1.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Resources/NIBs/MainStoryboard.storyboard",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCellPicture.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysTabBarViewController.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicDetailViewController.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysImagePickerViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysNavBar.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/AFNetworking/Example/Classes/Models/User.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysUserCalendarViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Models/LuxeysPicture.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCellPicture.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysUserCalendarViewController.h"
+		"/Users/dungbx/Desktop/Luxeys/Latte/Resources/NIBs/MainStoryboard.storyboard"
 	],
 	"find":
 	{
@@ -711,7 +727,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 93.0,
 		"where_history":
 		[
 			"*.m",
@@ -769,6 +785,21 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"perfor",
+			"タイトル",
+			"contenti",
+			"block",
+			"capturePhotoProcessedUpToFilter",
+			"meta",
+			"capture",
+			"reloadData",
+			"viewSta",
+			"stat",
+			"viewStat",
+			"heightForRowAtIndexPath",
+			"buttonExpand",
+			"line",
+			"showPicwithId",
 			"createDisplayFramebuffer",
 			"camera_pos",
 			"	",
@@ -881,22 +912,7 @@
 			"imagePicker",
 			"picker",
 			"setUpCamera",
-			"retake",
-			"prepareStaticFilter",
-			"prepareFilter",
-			"prepareStaticFilter",
-			"staticPicture",
-			"runOnMainQueueWithoutDeadlocking",
-			"takeP",
-			"_runBenchmark",
-			"processVideoSampleBuffer",
-			"programForVertexShaderString",
-			"initWithVertexShaderFromString",
-			"dispatch_",
-			"CVOpenGLESTextureCacheCreateTextureFromImage",
-			"CVOpenGLESTextureCacheCreate",
-			"supportsFastTextureUpload",
-			"glReadPixels"
+			"retake"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -926,10 +942,373 @@
 			[
 				{
 					"buffer": 0,
-					"file": "Classes/Helpers/LXFilter.m",
+					"file": "Classes/Controllers/Modules/luxeysTemplatePicTimeline.m",
 					"settings":
 					{
-						"buffer_size": 14017,
+						"buffer_size": 5930,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2913,
+								2913
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 620.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Classes/Controllers/luxeysUserViewController.m",
+					"settings":
+					{
+						"buffer_size": 35792,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1225,
+								1225
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 214.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "Classes/Controllers/luxeysUserViewController.h",
+					"settings":
+					{
+						"buffer_size": 2696,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1391,
+								1391
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 275.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "Classes/Controllers/luxeysMypageViewController.m",
+					"settings":
+					{
+						"buffer_size": 43576,
 						"regions":
 						{
 						},
@@ -1044,127 +1423,6 @@
 						"zoom_level": 1.0
 					},
 					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "Classes/Controllers/luxeysMypageViewController.m",
-					"settings":
-					{
-						"buffer_size": 39496,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								19329,
-								19329
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E111",
-								"E221",
-								"E261",
-								"W293",
-								"E501",
-								"E401"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 6017.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
 				}
 			]
 		}
@@ -1221,6 +1479,134 @@
 			[
 				"mypage",
 				"Classes/Controllers/luxeysMypageViewController.m"
+			],
+			[
+				"userview",
+				"Classes/Controllers/luxeysUserViewController.m"
+			],
+			[
+				"welcom",
+				"Classes/Controllers/luxeysWelcomeViewController.m"
+			],
+			[
+				"ranking",
+				"Classes/Controllers/luxeysRankingViewController.m"
+			],
+			[
+				"welcomesin",
+				"Classes/CustomControls/luxeysCellWelcomeSingle.h"
+			],
+			[
+				"piccom",
+				"Classes/Controllers/luxeysPicCommentViewController.m"
+			],
+			[
+				"detail",
+				"Classes/Controllers/luxeysPicDetailViewController.m"
+			],
+			[
+				"camer",
+				"Classes/Controllers/luxeysCameraViewController.m"
+			],
+			[
+				"filter",
+				"Classes/Helpers/FilterManager.m"
+			],
+			[
+				"gpuimagest",
+				"Classes/Helpers/GPUImageStillCamera+captureWithMeta.m"
+			],
+			[
+				"gpuimagestil",
+				"Vendor/GPUImage/framework/Source/GPUImageStillCamera.m"
+			],
+			[
+				"luxeystemplatetimlinepicmultiitem",
+				"Classes/Controllers/Modules/luxeysTemplateTimlinePicMultiItem.m"
+			],
+			[
+				"timeline",
+				"Classes/Controllers/Modules/luxeysTemplateTimelinePicMulti.m"
+			],
+			[
+				"cellcom",
+				"Classes/CustomControls/luxeysCellComment.m"
+			],
+			[
+				"welcomes",
+				"Classes/CustomControls/luxeysCellWelcomeSingle.m"
+			],
+			[
+				"ranki",
+				"Classes/Controllers/luxeysRankingViewController.m"
+			],
+			[
+				"welcome",
+				"Classes/Controllers/luxeysWelcomeViewController.m"
+			],
+			[
+				"mypag",
+				"Classes/Controllers/luxeysMypageViewController.m"
+			],
+			[
+				"lxsu",
+				"Classes/CustomControls/LXSubLayerView.m"
+			],
+			[
+				"welcomesi",
+				"Classes/CustomControls/luxeysCellWelcomeSingle.m"
+			],
+			[
+				"cellwelcom",
+				"Classes/CustomControls/luxeysCellWelcomeMulti.m"
+			],
+			[
+				"welcomemu",
+				"Classes/CustomControls/luxeysCellWelcomeMulti.m"
+			],
+			[
+				"welcomem",
+				"Classes/CustomControls/luxeysCellWelcomeMulti.h"
+			],
+			[
+				"lxv",
+				"Classes/CustomControls/LXSubLayerView.m"
+			],
+			[
+				"nav",
+				"Classes/CustomControls/luxeysNavBar.m"
+			],
+			[
+				"welcomg",
+				"Classes/CustomControls/luxeysCellWelcomeSingle.m"
+			],
+			[
+				"welco",
+				"Classes/Controllers/luxeysWelcomeViewController.m"
+			],
+			[
+				"picdetail",
+				"Classes/Controllers/luxeysPicDetailViewController.m"
+			],
+			[
+				"cellpic",
+				"Classes/Controllers/luxeysCellPicture.m"
+			],
+			[
+				"cellsin",
+				"Classes/CustomControls/luxeysCellWelcomeSingle.m"
+			],
+			[
+				"cellmu",
+				"Classes/CustomControls/luxeysCellWelcomeMulti.m"
+			],
+			[
+				"cellsing",
+				"Classes/CustomControls/luxeysCellWelcomeSingle.m"
+			],
+			[
+				"wel",
+				"Classes/Controllers/luxeysWelcomeViewController.m"
 			],
 			[
 				"gpuimagesh",
@@ -1391,10 +1777,6 @@
 				"Vendor/GPUImage/framework/Source/GPUImageOpacityFilter.m"
 			],
 			[
-				"userview",
-				"Classes/Controllers/luxeysUserViewController.m"
-			],
-			[
 				"luxeyslo",
 				"Classes/Controllers/luxeysLoginViewController.m"
 			],
@@ -1427,24 +1809,12 @@
 				"Vendor/GPUImage/framework/Source/GPUImageOutput.m"
 			],
 			[
-				"timeline",
-				"Classes/Controllers/Modules/luxeysTemplatePicTimeline.m"
-			],
-			[
 				"gpuimagesti",
-				"Vendor/GPUImage/framework/Source/GPUImageStillCamera.m"
-			],
-			[
-				"gpuimagestil",
 				"Vendor/GPUImage/framework/Source/GPUImageStillCamera.m"
 			],
 			[
 				"gpuimagepic",
 				"Vendor/GPUImage/framework/Source/GPUImagePicture.m"
-			],
-			[
-				"filter",
-				"Classes/Helpers/FilterManager.m"
 			],
 			[
 				"gpuimageoutput",
@@ -1463,16 +1833,8 @@
 				"Vendor/GPUImage/framework/Source/GPUImagePicture.m"
 			],
 			[
-				"welcome",
-				"Classes/Controllers/luxeysWelcomeViewController.m"
-			],
-			[
 				"gpuimagev",
 				"Vendor/GPUImage/framework/Source/GPUImageView.h"
-			],
-			[
-				"gpuimagest",
-				"Vendor/GPUImage/framework/Source/GPUImageStillCamera.m"
 			],
 			[
 				"gpuimagepip",
@@ -1543,10 +1905,6 @@
 				"Classes/Controllers/luxeysCellNotify.m"
 			],
 			[
-				"welcom",
-				"Classes/Controllers/luxeysWelcomeViewController.m"
-			],
-			[
 				"tab",
 				"Classes/Controllers/luxeysTabBarViewController.m"
 			],
@@ -1595,10 +1953,6 @@
 				"Classes/Helpers/GPUImageStillCamera+captureWithMeta.m"
 			],
 			[
-				"mypag",
-				"Classes/Controllers/luxeysMypageViewController.m"
-			],
-			[
 				"picedi",
 				"Classes/Controllers/luxeysPicEditViewController.m"
 			],
@@ -1615,14 +1969,6 @@
 				"Classes/Controllers/luxeysCameraViewController.m"
 			],
 			[
-				"ranking",
-				"Classes/Controllers/luxeysRankingViewController.h"
-			],
-			[
-				"ranki",
-				"Classes/Controllers/luxeysRankingViewController.m"
-			],
-			[
 				"fav",
 				"Classes/Controllers/luxeysFavViewController.m"
 			],
@@ -1635,100 +1981,12 @@
 				"Vendor/GPUImage/framework/Source/GPUImageUnsharpMaskFilter.m"
 			],
 			[
-				"camer",
-				"Classes/Controllers/luxeysCameraViewController.m"
-			],
-			[
 				"avca",
 				"Classes/Helpers/AVCameraManager.h"
 			],
 			[
 				"celln",
 				"Classes/Controllers/luxeysCellNotify.m"
-			],
-			[
-				"picmul",
-				"Classes/Controllers/Modules/luxeysTemplateTimelinePicMulti.m"
-			],
-			[
-				"pictu",
-				"Classes/Models/Picture.h"
-			],
-			[
-				"feed",
-				"Classes/Models/Feed.h"
-			],
-			[
-				"cellcom",
-				"Classes/CustomControls/luxeysCellComment.m"
-			],
-			[
-				"commen",
-				"Classes/Models/Comment.m"
-			],
-			[
-				"templatepi",
-				"Classes/Controllers/Modules/luxeysTemplatePicTimeline.m"
-			],
-			[
-				"comment",
-				"Classes/Models/Comment.h"
-			],
-			[
-				"detail",
-				"Classes/Controllers/luxeysPicDetailViewController.m"
-			],
-			[
-				"picde",
-				"Classes/Controllers/luxeysPicDetailViewController.m"
-			],
-			[
-				"piccom",
-				"Classes/Controllers/luxeysPicCommentViewController.m"
-			],
-			[
-				"cell",
-				"Classes/CustomControls/luxeysCellRankLv1.m"
-			],
-			[
-				"collectionc",
-				"Classes/CustomControls/luxeysCollectionCellPic.m"
-			],
-			[
-				"story",
-				"Resources/NIBs/MainStoryboard.storyboard"
-			],
-			[
-				"cellpi",
-				"Classes/Controllers/luxeysCellPicture.m"
-			],
-			[
-				"collection",
-				"Classes/CustomControls/luxeysCollectionCellPic.m"
-			],
-			[
-				"main",
-				"Resources/NIBs/MainStoryboard.storyboard"
-			],
-			[
-				"rankin",
-				"Classes/Controllers/luxeysRankingViewController.m"
-			],
-			[
-				"picd",
-				"Classes/Controllers/luxeysPicDetailViewController.m"
-			],
-			[
-				"tabbar",
-				"Classes/Controllers/luxeysTabBarViewController.m"
-			],
-			[
-				"gpuimagefilterpipeline",
-				"Vendor/GPUImage/framework/Source/GPUImageFilterPipeline.m"
-			],
-			[
-				"camere",
-				"Classes/Controllers/luxeysCameraViewController.m"
 			]
 		],
 		"width": 0.0

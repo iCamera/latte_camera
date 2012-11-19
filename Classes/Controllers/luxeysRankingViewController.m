@@ -128,7 +128,7 @@
                                        if (newPics.count == 0)
                                            loadEnded = true;
                                        else {
-                                           int newRows = newPics.count / 3 + (newPics.count%3>0?1:0);
+                                           int newRows = [self tableView:self.tableView numberOfRowsInSection:0] - rowCountPrev;
                                            NSMutableArray *paths = [[NSMutableArray alloc] init];
                                            for (int i = 0; i < newRows ; i++) {
                                                [paths addObject:[NSIndexPath indexPathForRow:i+rowCountPrev inSection:0]];
@@ -225,12 +225,15 @@
             cellLv1 = [[luxeysCellRankLv1 alloc] initWithStyle:UITableViewCellStyleDefault
                                                reuseIdentifier:@"First"];
         }
-        // CGRect frame = cellLv1.buttonPic1.frame;
-        // frame.size.height = [self tableView:self.tableView heightForRowAtIndexPath:indexPath];
-        // cellLv1.buttonPic1.frame = frame;
-        [self initButton:cellLv1.buttonPic1];
-
         Picture *pic = [pics objectAtIndex:0];
+
+        CGRect frame = cellLv1.buttonPic1.frame;
+        frame.size.height = [luxeysUtils heightFromWidth:308
+                                                      width:[pic.width floatValue]
+                                                     height:[pic.height floatValue]];
+        cellLv1.buttonPic1.frame = frame;
+        [self initButton:cellLv1.buttonPic1];
+        
         [cellLv1.buttonPic1 loadBackground:pic.urlMedium];
         cellLv1.buttonPic1.tag = [pic.pictureId integerValue];
         
@@ -240,6 +243,7 @@
         if (nil == cellLv2) {
             cellLv2 = [[luxeysCellRankLv2 alloc] initWithStyle:UITableViewCellStyleDefault
                                                                      reuseIdentifier:@"Second"];
+            NSLog(@"New row");
         }
         
         [self initButton:cellLv2.buttonPic2];
@@ -252,18 +256,29 @@
             Picture *pic = [pics objectAtIndex:baseIdx];
             [cellLv2.buttonPic2 loadBackground:pic.urlSquare];
             cellLv2.buttonPic2.tag = [pic.pictureId integerValue];
+            cellLv2.label1st.text = [NSString stringWithFormat:@"%d", baseIdx+1];
+            if (baseIdx == 1)
+                [cellLv2.imageBg1 setImage:[UIImage imageNamed:@"bg_rank2.png"]];
+            else
+                [cellLv2.imageBg1 setImage:[UIImage imageNamed:@"bg_rank3-9.png"]];
         }
         
         if (pics.count > baseIdx  + 3) {
             Picture *pic = [pics objectAtIndex:baseIdx + 1];
             [cellLv2.buttonPic3 loadBackground:pic.urlSquare];
             cellLv2.buttonPic3.tag = [pic.pictureId integerValue];
+            cellLv2.label2nd.text = [NSString stringWithFormat:@"%d", baseIdx+2];
+            if (baseIdx == 2)
+                [cellLv2.imageBg2 setImage:[UIImage imageNamed:@"bg_rank3.png"]];
+            else
+                [cellLv2.imageBg2 setImage:[UIImage imageNamed:@"bg_rank3-9.png"]];
         }
         
         if (pics.count > baseIdx  + 4) {
             Picture *pic = [pics objectAtIndex:baseIdx + 2];
             [cellLv2.buttonPic4 loadBackground:pic.urlSquare];
             cellLv2.buttonPic4.tag = [pic.pictureId integerValue];
+            cellLv2.label3rd.text = [NSString stringWithFormat:@"%d", baseIdx+3];
         }
         
         return cellLv2;
@@ -279,7 +294,7 @@
                                                      height:[pic.height floatValue]];
         return newheight + 6;
     }
-    else if (indexPath.row > 1)
+    else 
         return 105;
 }
 

@@ -40,7 +40,7 @@
 	// Do any additional setup after loading the view.
     viewHeader.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = CGRectMake(0, 40, 320, 10);
+    gradient.frame = CGRectMake(0, 32, 320, 10);
     gradient.colors = [NSArray arrayWithObjects:
                        (id)[[UIColor clearColor] CGColor],
                        (id)[[[UIColor blackColor] colorWithAlphaComponent:0.2f] CGColor],
@@ -77,7 +77,11 @@
     [viewImage setImageWithURL:[NSURL URLWithString:pic.urlSquare]];
     
     labelAuthor.text = user.name;
-    labelTitle.text = pic.title;
+
+    if (pic.title.length > 0)
+        labelTitle.text = pic.title;
+    else
+        labelTitle.text = @"タイトルなし";
 
     UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
     textComment.leftView = paddingView;
@@ -212,8 +216,11 @@
     }
     Comment *comment = [[[pic.comments reverseObjectEnumerator] allObjects] objectAtIndex:indexPath.row];
     [cellComment setComment:comment];
-    // cellComment.buttonUser.tag = indexPath.row;
-    // [cellComment.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
+
+    if (!comment.user.isUnregister) {
+        cellComment.buttonUser.tag = [comment.user.userId integerValue];
+        [cellComment.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
+    }
     
     return cellComment;
 }
@@ -231,7 +238,7 @@
     CGSize labelSize = [comment.descriptionText sizeWithFont:[UIFont systemFontOfSize:11]
                               constrainedToSize:CGSizeMake(255.0f, MAXFLOAT)
                                   lineBreakMode:NSLineBreakByWordWrapping];
-    return MAX(labelSize.height + 33, 50);
+    return MAX(labelSize.height + 25, 42);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -250,6 +257,17 @@
      object:self];
     
     [super viewWillDisappear:animated];
+}
+
+- (void)showUser:(UIButton*)sender {
+    [self performSegueWithIdentifier:@"UserProfile" sender:sender];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UIButton *)button {
+    if ([segue.identifier isEqualToString:@"UserProfile"]) {
+        luxeysUserViewController *viewUser = segue.destinationViewController;
+        [viewUser setUserID:button.tag];
+    }
 }
 
 @end

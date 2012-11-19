@@ -13,11 +13,12 @@
 @interface luxeysTemplateTimlinePicMultiItem : UIViewController {
     Picture *pic;
     id parent;
+    BOOL showButton;
 }
 @property (strong, nonatomic) IBOutlet UIButton *buttonComment;
 @property (strong, nonatomic) IBOutlet UIButton *buttonImage;
 @property (strong, nonatomic) IBOutlet UIButton *buttonVote;
 
-- (id)initWithPic:(Picture *)aPic parent:(id)aParent;
+- (id)initWithPic:(Picture *)aPic parent:(id)aParent showButton:(BOOL)button;
 
 @end

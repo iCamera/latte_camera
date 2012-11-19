@@ -29,6 +29,7 @@
 @synthesize labelTitleFriend;
 @synthesize labelTitlePicCount;
 @synthesize lableTitleVote;
+@synthesize loadIndicator;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -46,6 +47,12 @@
     tableMode = kTableProfile;
     currentMonth = [NSDate date];
     isEmpty = false;
+    pagePhoto = 0;
+    pageInterest = 0;
+    endedInterest = false;
+    endedPhoto = false;
+    photos = [[NSMutableArray alloc] init];
+    interests = [[NSMutableArray alloc] init];
     
     return self;
 }
@@ -64,7 +71,7 @@
     imageUser.layer.cornerRadius = 5;
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = CGRectMake(0, 120, 320, 10);
+    gradient.frame = CGRectMake(0, 108, 320, 10);
     gradient.colors = [NSArray arrayWithObjects:
                        (id)[[UIColor clearColor] CGColor],
                        (id)[[[UIColor blackColor] colorWithAlphaComponent:0.2f] CGColor],
@@ -86,6 +93,11 @@
     refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - tableProfile.bounds.size.height, self.view.frame.size.width, tableProfile.bounds.size.height)];
     refreshHeaderView.delegate = self;
     [tableProfile addSubview:refreshHeaderView];
+    
+    // Frame
+    CGRect frameTable = self.view.bounds;
+    frameTable.size.height -= 94;
+    tableProfile.frame = frameTable;
 
     // Data
     [self reloadProfile];
@@ -156,43 +168,120 @@
 }
 
 - (void)reloadPicList {
+    pagePhoto = 0;
+    endedPhoto = false;
+
+    [photos removeAllObjects];
+    [tableProfile reloadData];
+
+    [self loadMorePiclist];
+}
+
+- (void)loadMorePiclist {
+    [loadIndicator startAnimating];
     luxeysAppDelegate* app = (luxeysAppDelegate*)[[UIApplication sharedApplication] delegate];
+
+    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
+        [app getToken], @"token",
+        [NSNumber numberWithInt:pagePhoto + 1], @"page",
+        [NSNumber numberWithInt:40], @"limit",
+        nil];
+
     NSString* urlPhotos = [NSString stringWithFormat:@"api/picture/user/%d", userID];
     
 
     [[LatteAPIClient sharedClient] getPath:urlPhotos
-                                parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                parameters: param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       photos = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
-                                       [tableProfile reloadData];
+                                       NSArray *newPics = [Picture mutableArrayFromDictionary:JSON
+                                                                              withKey:@"pictures"];
+
+                                       endedPhoto = newPics.count == 0;
+                                       NSInteger oldRow = [self tableView:tableProfile numberOfRowsInSection:0];
+                                       [tableProfile beginUpdates];
                                        
+                                       
+                                       [photos addObjectsFromArray:newPics];
+                                       isEmpty = photos.count == 0;
+                                       NSInteger newRow = [self tableView:tableProfile numberOfRowsInSection:0];
+                                       for (NSInteger i = oldRow; i < newRow; i++) {
+                                           [tableProfile insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]]
+                                                                 withRowAnimation:UITableViewRowAnimationAutomatic];
+                                       }
+                                       
+                                       [tableProfile endUpdates];
                                        [self doneLoadingTableViewData];
-                                       [HUD hide:YES];
                                        
+                                       [HUD hide:YES];
+                                       [loadIndicator stopAnimating];
+                                       
+                                       pagePhoto += 1;
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       NSLog(@"Something went wrong (User - Photolist)");
+                                       [loadIndicator stopAnimating];
+                                       NSLog(@"Something went wrong (Photolist)");
+                                       [self doneLoadingTableViewData];
                                        [HUD hide:YES];
                                    }];
 }
 
 - (void)reloadInterest {
+    pageInterest = 0;
+    endedInterest = false;
+
+    [interests removeAllObjects];
+    [tableProfile reloadData];
+
+    [self loadMoreInterest];
+}
+
+
+- (void)loadMoreInterest {
+    [loadIndicator startAnimating];
     luxeysAppDelegate* app = (luxeysAppDelegate*)[[UIApplication sharedApplication] delegate];
+
+    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
+        [app getToken], @"token",
+        [NSNumber numberWithInt:pagePhoto + 1], @"page",
+        [NSNumber numberWithInt:40], @"limit",
+        nil];
+
     NSString* urlPhotos = [NSString stringWithFormat:@"api/picture/user/interesting/%d", userID];
 
-    [[LatteAPIClient sharedClient] getPath:urlPhotos
-                                parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+    [[LatteAPIClient sharedClient] getPath: urlPhotos
+                                parameters: param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       interests = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
-                                       [tableProfile reloadData];
+                                       NSArray *newPics = [Picture mutableArrayFromDictionary:JSON
+                                                                              withKey:@"pictures"];
+
+                                       endedInterest = newPics.count == 0;
+                                       NSInteger oldRow = [self tableView:tableProfile numberOfRowsInSection:0];
+                                       [tableProfile beginUpdates];
                                        
+                                       
+                                       [interests addObjectsFromArray:newPics];
+                                       isEmpty = interests.count == 0;
+                                       NSInteger newRow = [self tableView:tableProfile numberOfRowsInSection:0];
+                                       for (NSInteger i = oldRow; i < newRow; i++) {
+                                           [tableProfile insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]]
+                                                                 withRowAnimation:UITableViewRowAnimationAutomatic];
+                                       }
+                                       
+                                       [tableProfile endUpdates];
                                        [self doneLoadingTableViewData];
+                                       
                                        [HUD hide:YES];
+                                       [loadIndicator stopAnimating];
+                                       
+                                       pageInterest += 1;
                                        
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       [loadIndicator stopAnimating];
                                        NSLog(@"Something went wrong (User - Interesting)");
+                                       [self doneLoadingTableViewData];
                                        [HUD hide:YES];
                                    }];
 }
+
 
 - (void)reloadMap {
     
@@ -286,7 +375,7 @@
         case 4:
             lableTitleVote.highlighted = YES;
             tableMode = kTableVotes;
-            if (interests == nil) {
+            if (interests.count == 0) {
                 [HUD show:YES];
                 [self reloadInterest];
             } else
@@ -295,7 +384,7 @@
         case 5:
             labelTitlePicCount.highlighted = YES;
             tableMode = kTablePicList;
-            if (photos == nil) {
+            if (photos.count == 0) {
                 [HUD show:YES];
                 [self reloadPicList];
             } else
@@ -346,7 +435,10 @@
     if (tableMode == kTableProfile)
     {
         static NSString *CellIdentifier = @"Profile";
-        luxeysCellProfile *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        luxeysCellProfile *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        if (cell == nil) {
+            cell = [[luxeysCellProfile alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        }
         
         NSString* strKey = [showField objectAtIndex:indexPath.row];
         if ([strKey isEqualToString:@"gender"]) {
@@ -370,7 +462,14 @@
         }
         
         if ([strKey isEqualToString:@"gender"]) {
-            cell.labelDetail.text = [[userDict objectForKey:strKey] stringValue];
+            switch ([[userDict objectForKey:strKey] integerValue]) {
+                case 1:
+                    cell.labelDetail.text = @"男性";
+                    break;
+                case 2:
+                    cell.labelDetail.text = @"女性";
+                    break;
+            }
         } else {
             cell.labelDetail.text = [userDict objectForKey:strKey];
         }
@@ -395,7 +494,7 @@
                 pic = [interests objectAtIndex:index];
             }
             
-            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(6+(i*77), 6, 67, 67)];
+            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(6+(i*77), 6, 71, 71)];
             [button loadBackground:pic.urlSquare];
             button.tag = [pic.pictureId longValue];
             [button addTarget:self action:@selector(showPhoto:) forControlEvents:UIControlEventTouchUpInside];
@@ -420,7 +519,7 @@
         [cellFriend setUser:friend];
         [cellFriend.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
         cellFriend.buttonUser.tag = [friend.userId integerValue];
-        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 50, 320, 1)];
+        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 41, 320, 1)];
         line.backgroundColor = [UIColor colorWithRed:188.0/255.0 green:184.0/255.0 blue:169.0/255.0 alpha:1];
         [cellFriend addSubview:line];
         
@@ -700,6 +799,54 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     [refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+    
+    //Load more
+    switch (tableMode) {
+        case kTableProfile:
+            return;
+            break;
+        case kTableFriends:
+            return;
+            break;
+        case kTableCalendar:
+            return;
+            break;
+        case kTableMap:
+            return;
+            break;
+        case kTablePicList:
+            if (endedPhoto)
+                return;
+            break;
+        case kTableVotes:
+            if (endedInterest)
+                return;
+            break;
+    }
+    
+    CGPoint offset = scrollView.contentOffset;
+    CGRect bounds = scrollView.bounds;
+    CGSize size = scrollView.contentSize;
+    UIEdgeInsets inset = scrollView.contentInset;
+    float y = offset.y + bounds.size.height - inset.bottom;
+    float h = size.height;
+    
+    float reload_distance = -100;
+    if(y > h + reload_distance) {
+        if (!loadIndicator.isAnimating) {
+            switch (tableMode) {
+                case kTablePicList:
+                    [self loadMorePiclist];
+                    break;
+                case kTableVotes:
+                    [self loadMoreInterest];
+                    break;
+                default:
+                    break;
+            }
+            
+        }
+    }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
@@ -757,7 +904,7 @@
         return view;
     } else if (tableMode == kTableProfile) {
         UIView *view = [[UIView alloc] init];
-        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(6, 9, 308, 1)];
+        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(6, 5, 308, 1)];
         line.backgroundColor = [UIColor lightGrayColor];
         [view addSubview:line];
         return view;

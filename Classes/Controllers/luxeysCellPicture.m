@@ -57,10 +57,8 @@
     if (pic.title.length > 0)
         labelTitle.text = pic.title;
     
-    [buttonUser loadBackground:user.profilePicture];
+    [buttonUser loadBackground:user.profilePicture placeholderImage:@"user.gif"];
     labelAuthor.text = user.name;
-    
-    [imagePic loadProgess:pic.urlMedium];
     
     float newheight = [luxeysUtils heightFromWidth:308
                                                   width:[pic.width floatValue]
@@ -101,5 +99,7 @@
     imagePic.layer.shadowOpacity = 1.0f;
     imagePic.layer.shadowRadius = 2.0f;
     imagePic.layer.shadowPath = shadowPathPic.CGPath;
+    
+    [imagePic loadProgess:pic.urlMedium];
 }
 @end

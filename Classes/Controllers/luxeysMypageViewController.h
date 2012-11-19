@@ -20,7 +20,6 @@
 #import "luxeysPicInfoViewController.h"
 #import "luxeysUserViewController.h"
 #import "luxeysTemplatePicTimeline.h"
-#import "luxeysTemplateTimelinePicMulti.h"
 #import "luxeysPicCommentViewController.h"
 #import "luxeysPicMapViewController.h"
 #import "luxeysButtonBrown30.h"
@@ -51,8 +50,13 @@
     int timelineMode;
     NSArray *allTab;
     BOOL reloading;
-    BOOL loadEnded;
+    BOOL endedTimeline;
+    BOOL endedPic;
+    BOOL endedVoted;
+
     BOOL isEmpty;
+    int pagePic;
+    int pageVote;
     NSMutableArray *feeds;
     NSMutableArray *pictures;
     NSMutableArray *votes;

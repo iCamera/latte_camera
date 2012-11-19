@@ -51,6 +51,12 @@
     MBProgressHUD *HUD;
     BOOL reloading;
     BOOL isEmpty;
+
+    BOOL endedInterest;
+    BOOL endedPhoto;
+
+    int pagePhoto;
+    int pageInterest;
 }
 
 @property (strong, nonatomic) IBOutlet UIImageView *imageUser;
@@ -70,6 +76,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *lableTitleVote;
 @property (strong, nonatomic) IBOutlet UILabel *labelTitlePicCount;
 @property (strong, nonatomic) IBOutlet UILabel *labelTitleFriend;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadIndicator;
 
 - (IBAction)touchTab:(UIButton *)sender;
 - (IBAction)touchBack:(id)sender;

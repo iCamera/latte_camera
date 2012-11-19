@@ -18,8 +18,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *labelAuthor;
 @property (strong, nonatomic) IBOutlet UIButton *buttonUser;
 @property (strong, nonatomic) IBOutlet UILabel *labelDate;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintCommentHeight;
+@property (strong, nonatomic) IBOutlet UIView *viewBack;
 
-- (void)setComment:(Comment *)comment;
+@property (strong, nonatomic) Comment *comment;
 
 @end

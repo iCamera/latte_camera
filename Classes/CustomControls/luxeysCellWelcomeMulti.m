@@ -15,6 +15,7 @@
 @synthesize labelTitle;
 @synthesize labelUserDate;
 @synthesize viewController;
+@synthesize showControl;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -41,23 +42,10 @@
     
     CGSize size = CGSizeMake(6, 202);
     for (Picture *pic in feed.targets) {
-        UIButton *buttonPic = [[UIButton alloc] initWithFrame:CGRectMake(size.width, 6, 190, 190)];
-        buttonPic.layer.borderColor = [[UIColor whiteColor] CGColor];
-        buttonPic.layer.borderWidth = 3;
-        UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:buttonPic.bounds];
-        buttonPic.layer.masksToBounds = NO;
-        buttonPic.layer.shadowColor = [UIColor blackColor].CGColor;
-        buttonPic.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-        buttonPic.layer.shadowOpacity = 0.5f;
-        buttonPic.layer.shadowRadius = 1.5f;
-        buttonPic.layer.shadowPath = shadowPathPic.CGPath;
+        luxeysTemplateTimlinePicMultiItem *viewPic = [[luxeysTemplateTimlinePicMultiItem alloc] initWithPic:pic parent:viewController showButton:showControl];
+        viewPic.view.frame = CGRectMake(size.width, 6, 190, 190);
+        [scrollPic addSubview:viewPic.view];
         
-        [buttonPic loadBackground:pic.urlSquare];
-        buttonPic.tag = [pic.pictureId integerValue];
-        
-        [buttonPic addTarget:viewController action:@selector(showPic:) forControlEvents:UIControlEventTouchUpInside];
-        
-        [scrollPic addSubview:buttonPic];
         size.width += 196;
     }
     scrollPic.contentSize = size;

@@ -33,7 +33,7 @@
     
     viewHeader.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = CGRectMake(0, 40, 320, 10);
+    gradient.frame = CGRectMake(0, 32, 320, 10);
     gradient.colors = [NSArray arrayWithObjects:
                        (id)[[UIColor clearColor] CGColor],
                        (id)[[[UIColor blackColor] colorWithAlphaComponent:0.2f] CGColor],

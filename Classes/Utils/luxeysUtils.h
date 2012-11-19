@@ -11,7 +11,7 @@
 
 @interface luxeysUtils : NSObject
 
-+ (float)heightFromWidth:(float)newwidth width:(float)width height:(float)height;
++ (NSInteger)heightFromWidth:(CGFloat)newwidth width:(CGFloat)width height:(CGFloat)height;
 + (NSString *)timeDeltaFromNow:(NSDate *)aDate;
 + (NSDate *)dateFromJSON:(NSString *)aDate;
 + (NSDictionary *)getGPSDictionaryForLocation:(CLLocation *)location;

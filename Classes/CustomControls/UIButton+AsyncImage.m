@@ -18,6 +18,7 @@
     if (placeHolder != nil) {
         [self setBackgroundImage:[UIImage imageNamed:placeHolder] forState:UIControlStateNormal];
     } else {
+        [self setBackgroundImage:nil forState:UIControlStateNormal];
         [self setBackgroundColor:[UIColor grayColor]];
     }
     

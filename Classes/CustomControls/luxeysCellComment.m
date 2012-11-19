@@ -13,7 +13,7 @@
 @synthesize labelAuthor;
 @synthesize labelDate;
 @synthesize buttonUser;
-@synthesize constraintCommentHeight;
+@synthesize viewBack;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -37,7 +37,7 @@
     if (comment.user.isUnregister) {
         labelAuthor.text = @"ゲスト";
     } else {
-        [buttonUser loadBackground:comment.user.profilePicture];
+        [buttonUser loadBackground:comment.user.profilePicture placeholderImage:@"user.gif"];
         labelAuthor.text = comment.user.name;
     }
     labelDate.text = [luxeysUtils timeDeltaFromNow:comment.createdAt];
@@ -45,11 +45,12 @@
     CGSize labelSize = [textComment.text sizeWithFont:[UIFont systemFontOfSize:11]
                               constrainedToSize:CGSizeMake(255.0f, MAXFLOAT)
                                   lineBreakMode:NSLineBreakByWordWrapping];
+    CGRect frame = textComment.frame;
+    frame.size = labelSize;
+    textComment.frame = frame;
     
-    constraintCommentHeight.constant = labelSize.height;
-    
-    // buttonUser.layer.cornerRadius = 3;
-    // buttonUser.clipsToBounds = YES;
+//    buttonUser.layer.cornerRadius = 3;
+//    buttonUser.clipsToBounds = YES;
 }
 
 @end

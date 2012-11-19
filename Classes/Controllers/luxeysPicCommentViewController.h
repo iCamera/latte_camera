@@ -16,6 +16,7 @@
 #import "Comment.h"
 #import "User.h"
 #import "Feed.h"
+#import "luxeysUserViewController.h"
 
 @interface luxeysPicCommentViewController : UIViewController<UITableViewDataSource, UITableViewDelegate> {
     Picture *pic;

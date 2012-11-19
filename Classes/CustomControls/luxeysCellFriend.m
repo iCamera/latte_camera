@@ -30,7 +30,7 @@
 }
 
 - (void)setUser:(User *)user {
-    [buttonUser loadBackground:user.profilePicture];
+    [buttonUser loadBackground:user.profilePicture placeholderImage:@"user.gif"];
     buttonUser.layer.cornerRadius = 3;
     buttonUser.clipsToBounds = YES;
     labelIntro.text = user.introduction;

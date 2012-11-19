@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "luxeysCellRankLv1.h"
 #import "luxeysCellRankLv2.h"
-#import "luxeysCellRankLv3.h"
 #import "UIButton+AsyncImage.h"
 #import "luxeysUtils.h"
 #import "LatteAPIClient.h"

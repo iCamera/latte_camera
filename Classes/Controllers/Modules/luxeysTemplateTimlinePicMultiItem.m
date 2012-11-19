@@ -27,12 +27,13 @@
     return self;
 }
 
-- (id)initWithPic:(Picture *)aPic parent:(id)aParent
+- (id)initWithPic:(Picture *)aPic parent:(id)aParent showButton:(BOOL)button
 {
     self = [super init];
     if (self) {
         pic = aPic;
         parent = aParent;
+        showButton = button;
     }
     return self;
 }
@@ -68,9 +69,12 @@
     buttonVote.tag = [pic.pictureId integerValue];
     
     
-    [buttonImage addTarget:parent action:@selector(showPicWithID:) forControlEvents:UIControlEventTouchUpInside];
+    [buttonImage addTarget:parent action:@selector(showPic:) forControlEvents:UIControlEventTouchUpInside];
     [buttonComment addTarget:parent action:@selector(showComment:) forControlEvents:UIControlEventTouchUpInside];
     [buttonVote addTarget:parent action:@selector(submitLike:) forControlEvents:UIControlEventTouchUpInside];
+    
+    buttonComment.hidden = !showButton;
+    buttonVote.hidden = !showButton;
 
     // Do any additional setup after loading the view from its nib.
 }

@@ -10,8 +10,8 @@
 #import "AFJSONRequestOperation.h"
 
 //static NSString * const kLatteAPIBaseURLString = @"http://192.168.1.13:5000/";
-static NSString * const kLatteAPIBaseURLString = @"http://dev.latte.la:8080/";
-//static NSString * const kLatteAPIBaseURLString = @"http://latte.la/";
+//static NSString * const kLatteAPIBaseURLString = @"http://dev.latte.la:8080/";
+static NSString * const kLatteAPIBaseURLString = @"http://latte.la/";
 
 @implementation LatteAPIClient
 

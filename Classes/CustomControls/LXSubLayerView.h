@@ -10,6 +10,10 @@
 
 @interface LXSubLayerView : UIView {
     UIColor* backgroundColor;
+    BOOL drawTriangle;
 }
+
+@property (assign, nonatomic) BOOL drawTriangle;
+
 
 @end
