@@ -4,16 +4,75 @@
 
 @implementation LXFilterBlur
 
+@synthesize focus;
+@synthesize maxblur;
+@synthesize focalDepth;
+@synthesize autofocus;
+@synthesize dbsize;
 
 - (id)init;
 {
+    NSString *fragmentShaderPathname = [[NSBundle mainBundle] pathForResource:@"blur" ofType:@"fsh"];
+    NSString *fragmentShaderString = [NSString stringWithContentsOfFile:fragmentShaderPathname encoding:NSUTF8StringEncoding error:nil];
     
-    if (!(self = [super initWithFragmentShaderFromFile:@"blur"]))
+    if (!(self = [super initWithFragmentShaderFromString:fragmentShaderString]))
     {
 		return nil;
     }
     
+    focusUniform = [filterProgram uniformIndex:@"focus"];
+    
+    widthUniform = [filterProgram uniformIndex:@"width"];
+    heightUniform = [filterProgram uniformIndex:@"height"];
+    
+    maxblurUniform = [filterProgram uniformIndex:@"maxblur"];
+    focalDepthUniform = [filterProgram uniformIndex:@"focalDepth"];
+
+    autofocusUniform = [filterProgram uniformIndex:@"autofocus"];
+    dbsizeUniform = [filterProgram uniformIndex:@"dbsize"];
+
+    depthblurUniform = [filterProgram uniformIndex:@"depthblur"];
+    
+//    [self setAutofocus:true];
+//    [self setFocus:CGPointMake(0.5, 0.5)];
+//    [self setMaxblur:0.5];
+//    [self setDbsize:1.25];
+    
     return self;
+}
+
+- (void)setFocus:(CGPoint)aFocus {
+    focus = aFocus;
+    [self setPoint:focus forUniform:focusUniform program:filterProgram];
+}
+
+- (void)setMaxblur:(CGFloat)aMaxblur {
+    maxblur = aMaxblur;
+    [self setFloat:maxblur forUniform:maxblurUniform program:filterProgram];
+}
+
+- (void)setFocalDepth:(CGFloat)aFocalDepth {
+    focalDepth = aFocalDepth;
+    [self setFloat:focalDepth forUniform:focalDepthUniform program:filterProgram];
+}
+
+- (void)setAutofocus:(BOOL)aAutofocus {
+    autofocus = aAutofocus;
+    [self setInteger:autofocus forUniform:autofocusUniform program:filterProgram];
+}
+
+- (void)setDbsize:(CGFloat)aDbsize {
+    dbsize = aDbsize;
+    if (aDbsize == 0.0)
+        [self setInteger:0 forUniform:depthblurUniform program:filterProgram];
+    else
+        [self setInteger:1 forUniform:depthblurUniform program:filterProgram];
+    [self setFloat:dbsize forUniform:dbsizeUniform program:filterProgram];
+}
+
+- (void)setFrameSize:(CGSize)frameSize {
+    [self setFloat:frameSize.width forUniform:widthUniform program:filterProgram];
+    [self setFloat:frameSize.height forUniform:heightUniform program:filterProgram];
 }
 
 /*

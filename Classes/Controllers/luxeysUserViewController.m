@@ -241,7 +241,7 @@
 
     NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
         [app getToken], @"token",
-        [NSNumber numberWithInt:pagePhoto + 1], @"page",
+        [NSNumber numberWithInt:pageInterest + 1], @"page",
         [NSNumber numberWithInt:40], @"limit",
         nil];
 

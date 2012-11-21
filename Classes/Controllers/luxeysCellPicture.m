@@ -69,8 +69,6 @@
     labelLike.text = [pic.voteCount stringValue];
     labelComment.text = [pic.commentCount stringValue];
     imagePic.frame = CGRectMake(imagePic.frame.origin.x, imagePic.frame.origin.y, 308, newheight);
-    viewStats.autoresizingMask = UIViewAutoresizingNone;
-    viewStats.frame = CGRectMake(0, newheight + 48, viewStats.frame.size.width, viewStats.frame.size.height);
 
     if (pic.canVote)
         if (!pic.isVoted)

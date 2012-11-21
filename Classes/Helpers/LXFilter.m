@@ -85,8 +85,9 @@ NSString *const kLXFragment = SHADER_STRING
      base = vec4((textureColor * centerMultiplier - (leftTextureColor * edgeMultiplier + rightTextureColor * edgeMultiplier + topTextureColor * edgeMultiplier + bottomTextureColor * edgeMultiplier)), texture2D(inputImageTexture, bottomTextureCoordinate).w);
      
      // Vignette
-     lowp float d = distance(textureCoordinate, vec2(0.5,0.5));
-     base *= smoothstep(0.9, 0.45, d);
+     float dist = distance(textureCoordinate, vec2(0.5,0.5));
+     dist = smoothstep(0.9, 0.45, dist);
+     base.rgb *= clamp(dist,0.0,1.0);
      
      // Gradient Map
      base = vec4(mix(base.rgb, texture2D(gradientMapTexture, vec2(luminance, 0.0)).rgb, gradient), base.a);

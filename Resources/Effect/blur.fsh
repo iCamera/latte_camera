@@ -45,17 +45,20 @@
 
 precision highp float;
 
-varying vec2 textureCoordinate;
-uniform sampler2D inputImageTexture;
+varying highp vec2 textureCoordinate;
+varying highp vec2 textureCoordinate2;
 
-mediump float width = 640.0; //texture width
-mediump float height = 480.0; //texture height
+uniform sampler2D inputImageTexture;
+uniform sampler2D inputImageTexture2;
+
+uniform mediump float width; //texture width
+uniform mediump float height; //texture height
 
 lowp vec2 texel = vec2(1.0/width,1.0/height);
 
 //uniform variables from external script
 
-mediump float focalDepth= 0.5;  //focal distance value in meters, but you may use autofocus option below
+uniform mediump float focalDepth;  //focal distance value in meters, but you may use autofocus option below
 mediump float focalLength = 3.0; //focal length in mm
 mediump float fstop = 2.8; //f-stop value
 bool showFocus = false; //show debug focus point and focal range (red = focal point, green = focal range)
@@ -70,8 +73,8 @@ mediump float zfar = 100.0; //camera clipping end
 //------------------------------------------
 //user variables
 
-int samples = 3; //samples on the first ring
-int rings = 3; //ring count
+int samples = 5; //samples on the first ring
+int rings = 2; //ring count
 
 bool manualdof = false; //manual dof calculation
 mediump float ndofstart = 1.0; //near dof blur start
@@ -86,12 +89,12 @@ lowp float vignout = 1.3; //vignetting outer border
 lowp float vignin = 0.0; //vignetting inner border
 mediump float vignfade = 22.0; //f-stops till vignete fades
 
-bool autofocus = false; //use autofocus in shader? disable if you use external focalDepth value
-vec2 focus = vec2(0.5,0.5); // autofocus point on screen (0.0,0.0 - left lower corner, 1.0,1.0 - upper right)
-float maxblur = 3.0; //clamp value of max blur (0.0 = no blur,1.0 default)
+uniform bool autofocus; //use autofocus in shader? disable if you use external focalDepth value
+uniform vec2 focus; // autofocus point on screen (0.0,0.0 - left lower corner, 1.0,1.0 - upper right)
+uniform float maxblur; //clamp value of max blur (0.0 = no blur,1.0 default)
 
 float threshold = 0.5; //highlight threshold;
-float gain = 2.0; //highlight gain;
+float gain = 5.0; //highlight gain;
 
 float bias = 0.5; //bokeh edge bias
 float fringe = 0.7; //bokeh chromatic aberration/fringing
@@ -99,8 +102,8 @@ float fringe = 0.7; //bokeh chromatic aberration/fringing
 bool noise = false; //use noise instead of pattern for sample dithering
 lowp float namount = 0.0001; //dither amount
 
-bool depthblur = true; //blur the depth buffer?
-lowp float dbsize = 1.25; //depthblursize
+uniform bool depthblur; //blur the depth buffer?
+uniform mediump float dbsize; //depthblursize
 
 /*
  next part is experimental
@@ -176,7 +179,7 @@ float bdepth(vec2 coords) //blurring depth
 	
 	for( int i=0; i<9; i++ )
 	{
-		float tmp = 1.0-coords.y;
+		float tmp = texture2D(inputImageTexture2, coords + offset[i]).a;
 		d += tmp * kernel[i];
 	}
 	
@@ -239,11 +242,11 @@ void main()
 {
 	//scene depth calculation
 	
-	float depth = linearize(textureCoordinate.x);
+	float depth = linearize(texture2D(inputImageTexture2, textureCoordinate2).a);
 	
 	if (depthblur)
 	{
-		depth = linearize(bdepth(textureCoordinate.xy));
+		depth = linearize(bdepth(textureCoordinate2));
 	}
 	
 	//focal plane calculation
@@ -252,7 +255,7 @@ void main()
 	
 	if (autofocus)
 	{
-		fDepth = linearize(focus.x);
+		fDepth = linearize(texture2D(inputImageTexture2,focus).a);
 	}
 	
 	//dof blur factor calculation

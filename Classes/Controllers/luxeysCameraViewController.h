@@ -14,11 +14,22 @@
 #import "luxeysPicEditViewController.h"
 #import "GPUImageStillCamera+captureWithMeta.h"
 #import "luxeysUtils.h"
+#import "LXDrawView.h"
+#import "UIImage+Resize.h"
+#import "UIImage+fixOrientation.h"
 
 #define kTimerNone       0
 #define kTimer5s         1
 #define kTimer10s        2
 #define kTimerContinuous 3
+
+#define kTouchZoom 0
+#define kTouchFocus 1
+#define kTouchBrushSmall 2
+#define kTouchBrushMedium 3
+#define kTouchBrushLarge 4
+#define kTouchBrushSubject 5
+#define kTouchBrushEraser 6
 
 typedef enum {
     kEffect1,
@@ -36,9 +47,11 @@ typedef enum {
 - (void)imagePickerControllerDidCancel:(luxeysCameraViewController *)picker;
 @end
 
-@interface luxeysCameraViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate> {
+@interface luxeysCameraViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, UIScrollViewDelegate, UIAccelerometerDelegate> {
     GPUImageStillCamera *videoCamera;
+    
     GPUImagePicture *picture;
+    GPUImagePicture *previewFilter;
     FilterManager *filter;
     UIActionSheet *sheet;
     UIImagePickerController *imagePicker;
@@ -51,6 +64,8 @@ typedef enum {
     BOOL isReady;
     BOOL isFinishedProcessing;
     
+    int focusTabMode;
+    
     id <LXImagePickerDelegate> __unsafe_unretained delegate;
 
     NSInteger currentEffect;
@@ -60,7 +75,8 @@ typedef enum {
     NSInteger timerMode;
     CLLocationManager *locationManager;
     CLLocation *bestEffortAtLocation;
-    UIImageOrientation imageOrientation;
+    UIImageOrientation imageOrientaion;
+    UIInterfaceOrientation orientationLast;
 }
 @property (strong, nonatomic) IBOutlet UIView *viewBottomBar;
 @property (strong, nonatomic) IBOutlet UIImageView *imageBottom;
@@ -80,6 +96,23 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIButton *buttonScroll;
 @property (strong, nonatomic) IBOutlet UIButton *buttonSetNoTimer;
 @property (strong, nonatomic) IBOutlet UIButton *buttonSetTimer5s;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollCamera;
+@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapFocus;
+@property (strong, nonatomic) IBOutlet UIView *viewFocusControl;
+@property (strong, nonatomic) IBOutlet UIButton *buttonToggleFocus;
+@property (strong, nonatomic) IBOutlet UIView *viewCameraWraper;
+@property (strong, nonatomic) IBOutlet LXDrawView *viewDraw;
+@property (strong, nonatomic) IBOutlet UIButton *buttonChangeLens;
+@property (strong, nonatomic) IBOutlet UIView *viewMask;
+@property (strong, nonatomic) IBOutlet UIView *viewBlur;
+@property (strong, nonatomic) IBOutlet UIView *viewFocal;
+@property (strong, nonatomic) IBOutlet UIImageView *imageBackgroundMask;
+
+
+@property (strong, nonatomic) IBOutlet UIButton *buttonMove;
+@property (strong, nonatomic) IBOutlet UIButton *buttonPaintMask;
+@property (strong, nonatomic) IBOutlet UIButton *buttonFocal;
+@property (strong, nonatomic) IBOutlet UIButton *buttonBackground;
 
 @property (unsafe_unretained) id <LXImagePickerDelegate> delegate;
 
@@ -94,10 +127,14 @@ typedef enum {
 - (IBAction)touchTimer:(id)sender;
 - (IBAction)touchSave:(id)sender;
 - (IBAction)toggleCrop:(id)sender;
-- (IBAction)toggleEffect:(id)sender;
+- (IBAction)toggleEffect:(UIButton*)sender;
 - (IBAction)touchNo:(id)sender;
 - (IBAction)flipCamera:(id)sender;
 - (IBAction)panTarget:(UIPanGestureRecognizer *)sender;
 - (IBAction)setTimer:(id)sender;
+- (IBAction)touchFocusTab:(UIButton*)sender;
+- (IBAction)setMask:(UIButton*)sender;
+- (IBAction)changeBlur:(UISlider*)sender;
+- (IBAction)changeFocalDepth:(UISlider *)sender;
 
 @end

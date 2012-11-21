@@ -147,7 +147,7 @@
         float newheight = [luxeysUtils heightFromWidth:308
                                                       width:[pic.width floatValue]
                                                      height:[pic.height floatValue]];
-        return newheight + 80;
+        return newheight + 92;
     } else {
         Comment *comment = [comments objectAtIndex:indexPath.row-1];
         NSString *strComment = comment.descriptionText;

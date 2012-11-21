@@ -4,8 +4,20 @@
 		"selected_items":
 		[
 			[
+				"scro",
+				"scrollEffect	UIScrollView *"
+			],
+			[
+				"dept",
+				"depthblurUniform	GLint"
+			],
+			[
+				"db",
+				"dbsizeUniform	GLint"
+			],
+			[
 				"end",
-				"endedPhoto	BOOL"
+				"endedInterest	BOOL"
 			],
 			[
 				"page",
@@ -98,10 +110,6 @@
 			[
 				"ta",
 				"tabBarController	UITabBarController *"
-			],
-			[
-				"scro",
-				"scrollEffect	UIScrollView *"
 			],
 			[
 				"size",
@@ -506,48 +514,99 @@
 			[
 				"update",
 				"update_properties"
-			],
-			[
-				"picture",
-				"picture_status"
-			],
-			[
-				"ge",
-				"get_user"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "Classes/Controllers/Modules/luxeysTemplatePicTimeline.m",
+			"file": "Vendor/GPUImage/framework/Source/GPUImagePicture.m",
 			"settings":
 			{
-				"buffer_size": 5930,
+				"buffer_size": 7365,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Classes/Controllers/luxeysUserViewController.m",
+			"file": "Vendor/GPUImage/framework/Source/GPUImageTwoInputFilter.m",
 			"settings":
 			{
-				"buffer_size": 35792,
+				"buffer_size": 7094,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Classes/Controllers/luxeysUserViewController.h",
+			"file": "Vendor/GPUImage/framework/Source/GPUImageTwoInputFilter.h",
 			"settings":
 			{
-				"buffer_size": 2696,
+				"buffer_size": 691,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Classes/Controllers/luxeysMypageViewController.m",
+			"contents": "/*\n DoF with bokeh GLSL shader v2.4\n by Martins Upitis (martinsh) (devlog-martinsh.blogspot.com)\n \n ----------------------\n The shader is Blender Game Engine ready, but it should be quite simple to adapt for your engine.\n \n This work is licensed under a Creative Commons Attribution 3.0 Unported License.\n So you are free to share, modify and adapt it for your needs, and even use it for commercial use.\n I would also love to hear about a project you are using it.\n \n Have fun,\n Martins\n ----------------------\n \n changelog:\n \n 2.4:\n - physically accurate DoF simulation calculated from \"focalDepth\" ,\"focalLength\", \"f-stop\" and \"CoC\" parameters.\n - option for artist controlled DoF simulation calculated only from \"focalDepth\" and individual controls for near and far blur\n - added \"circe of confusion\" (CoC) parameter in mm to accurately simulate DoF with different camera sensor or film sizes\n - cleaned up the code\n - some optimization\n \n 2.3:\n - new and physically little more accurate DoF\n - two extra input variables - focal length and aperture iris diameter\n - added a debug visualization of focus point and focal range\n \n 2.1:\n - added an option for pentagonal bokeh shape\n - minor fixes\n \n 2.0:\n - variable sample count to increase quality/performance\n - option to blur depth buffer to reduce hard edges\n - option to dither the samples with noise or pattern\n - bokeh chromatic aberration/fringing\n - bokeh bias to bring out bokeh edges\n - image thresholding to bring out highlights when image is out of focus\n \n */\n\n#define PI  3.14159265\n\nprecision highp float;\n\nvarying highp vec2 textureCoordinate;\nvarying highp vec2 textureCoordinate2;\n\nuniform sampler2D inputImageTexture;\nuniform sampler2D inputImageTexture2;\n\nmediump float width = 640.0; //texture width\nmediump float height = 480.0; //texture height\n\nlowp vec2 texel = vec2(1.0/width,1.0/height);\n\n//uniform variables from external script\n\nuniform mediump float focalDepth;  //focal distance value in meters, but you may use autofocus option below\nmediump float focalLength = 3.0; //focal length in mm\nmediump float fstop = 2.8; //f-stop value\nbool showFocus = false; //show debug focus point and focal range (red = focal point, green = focal range)\n\n/*\n make sure that these two values are the same for your camera, otherwise distances will be wrong.\n */\n\nmediump float znear = 0.1; //camera clipping start\nmediump float zfar = 100.0; //camera clipping end\n\n//------------------------------------------\n//user variables\n\nint samples = 3; //samples on the first ring\nint rings = 4; //ring count\n\nbool manualdof = false; //manual dof calculation\nmediump float ndofstart = 1.0; //near dof blur start\nmediump float ndofdist = 2.0; //near dof blur falloff distance\nmediump float fdofstart = 1.0; //far dof blur start\nmediump float fdofdist = 3.0; //far dof blur falloff distance\n\nmediump float CoC = 0.03;//circle of confusion size in mm (35mm film = 0.03mm)\n\nbool vignetting = false; //use optical lens vignetting?\nlowp float vignout = 1.3; //vignetting outer border\nlowp float vignin = 0.0; //vignetting inner border\nmediump float vignfade = 22.0; //f-stops till vignete fades\n\nuniform bool autofocus; //use autofocus in shader? disable if you use external focalDepth value\nuniform vec2 focus; // autofocus point on screen (0.0,0.0 - left lower corner, 1.0,1.0 - upper right)\nuniform float maxblur; //clamp value of max blur (0.0 = no blur,1.0 default)\n\nfloat threshold = 0.5; //highlight threshold;\nfloat gain = 5.0; //highlight gain;\n\nfloat bias = 0.5; //bokeh edge bias\nfloat fringe = 0.7; //bokeh chromatic aberration/fringing\n\nbool noise = false; //use noise instead of pattern for sample dithering\nlowp float namount = 0.0001; //dither amount\n\nuniform bool depthblur; //blur the depth buffer?\nuniform lowp float dbsize; //depthblursize\n\n/*\n next part is experimental\n not looking good with small sample and ring count\n looks okay starting from samples = 4, rings = 4\n */\n\nbool pentagon = false; //use pentagon as bokeh shape?\nmediump float feather = 0.4; //pentagon shape feather\n\n//------------------------------------------\n\n\nfloat penta(vec2 coords) //pentagonal shape\n{\n	float scale = float(rings) - 1.3;\n	vec4  HS0 = vec4( 1.0,         0.0,         0.0,  1.0);\n	vec4  HS1 = vec4( 0.309016994, 0.951056516, 0.0,  1.0);\n	vec4  HS2 = vec4(-0.809016994, 0.587785252, 0.0,  1.0);\n	vec4  HS3 = vec4(-0.809016994,-0.587785252, 0.0,  1.0);\n	vec4  HS4 = vec4( 0.309016994,-0.951056516, 0.0,  1.0);\n	vec4  HS5 = vec4( 0.0        ,0.0         , 1.0,  1.0);\n	\n	vec4  one = vec4( 1.0 );\n	\n	vec4 P = vec4((coords),vec2(scale, scale));\n	\n	vec4 dist = vec4(0.0);\n	float inorout = -4.0;\n	\n	dist.x = dot( P, HS0 );\n	dist.y = dot( P, HS1 );\n	dist.z = dot( P, HS2 );\n	dist.w = dot( P, HS3 );\n	\n	dist = smoothstep( -feather, feather, dist );\n	\n	inorout += dot( dist, one );\n	\n	dist.x = dot( P, HS4 );\n	dist.y = HS5.w - abs( P.z );\n	\n	dist = smoothstep( -feather, feather, dist );\n	inorout += dist.x;\n	\n	return clamp( inorout, 0.0, 1.0 );\n}\n\nfloat bdepth(vec2 coords) //blurring depth\n{\n	float d = 0.0;\n	float kernel[9];\n	vec2 offset[9];\n	\n	vec2 wh = vec2(texel.x, texel.y) * dbsize;\n	\n	offset[0] = vec2(-wh.x,-wh.y);\n	offset[1] = vec2( 0.0, -wh.y);\n	offset[2] = vec2( wh.x -wh.y);\n	\n	offset[3] = vec2(-wh.x,  0.0);\n	offset[4] = vec2( 0.0,   0.0);\n	offset[5] = vec2( wh.x,  0.0);\n	\n	offset[6] = vec2(-wh.x, wh.y);\n	offset[7] = vec2( 0.0,  wh.y);\n	offset[8] = vec2( wh.x, wh.y);\n	\n	kernel[0] = 1.0/16.0;   kernel[1] = 2.0/16.0;   kernel[2] = 1.0/16.0;\n	kernel[3] = 2.0/16.0;   kernel[4] = 4.0/16.0;   kernel[5] = 2.0/16.0;\n	kernel[6] = 1.0/16.0;   kernel[7] = 2.0/16.0;   kernel[8] = 1.0/16.0;\n	\n	\n	for( int i=0; i<9; i++ )\n	{\n		float tmp = texture2D(inputImageTexture2, coords + offset[i]).r;\n		d += tmp * kernel[i];\n	}\n	\n	return d;\n}\n\n\nvec3 color(vec2 coords,float blur) //processing the sample\n{\n	vec3 col = vec3(0.0);\n	\n	col.r = texture2D(inputImageTexture,coords + vec2(0.0,1.0)*texel*fringe*blur).r;\n	col.g = texture2D(inputImageTexture,coords + vec2(-0.866,-0.5)*texel*fringe*blur).g;\n	col.b = texture2D(inputImageTexture,coords + vec2(0.866,-0.5)*texel*fringe*blur).b;\n	\n	vec3 lumcoeff = vec3(0.299,0.587,0.114);\n	float lum = dot(col.rgb, lumcoeff);\n	float thresh = max((lum-threshold)*gain, 0.0);\n	return col+mix(vec3(0.0),col,thresh*blur);\n}\n\nvec2 rand(vec2 coord) //generating noise/pattern texture for dithering\n{\n	float noiseX = ((fract(1.0-coord.s*(width/2.0))*0.25)+(fract(coord.t*(height/2.0))*0.75))*2.0-1.0;\n	float noiseY = ((fract(1.0-coord.s*(width/2.0))*0.75)+(fract(coord.t*(height/2.0))*0.25))*2.0-1.0;\n	\n	if (noise)\n	{\n		noiseX = clamp(fract(sin(dot(coord ,vec2(12.9898,78.233))) * 43758.5453),0.0,1.0)*2.0-1.0;\n		noiseY = clamp(fract(sin(dot(coord ,vec2(12.9898,78.233)*2.0)) * 43758.5453),0.0,1.0)*2.0-1.0;\n	}\n	return vec2(noiseX,noiseY);\n}\n\nvec3 debugFocus(vec3 col, float blur, float depth)\n{\n	float edge = 0.002*depth; //distance based edge smoothing\n	float m = clamp(smoothstep(0.0,edge,blur),0.0,1.0);\n	float e = clamp(smoothstep(1.0-edge,1.0,blur),0.0,1.0);\n	\n	col = mix(col,vec3(1.0,0.5,0.0),(1.0-m)*0.6);\n	col = mix(col,vec3(0.0,0.5,1.0),((1.0-e)-(1.0-m))*0.2);\n    \n	return col;\n}\n\nfloat linearize(float depth)\n{\n	return -zfar * znear / (depth * (zfar - znear) - zfar);\n}\n\nfloat vignette()\n{\n	float dist = distance(textureCoordinate.xy, vec2(0.5,0.5));\n	dist = smoothstep(vignout+(fstop/vignfade), vignin+(fstop/vignfade), dist);\n	return clamp(dist,0.0,1.0);\n}\n\nvoid main()\n{\n	//scene depth calculation\n	\n	float depth = linearize(texture2D(inputImageTexture2, textureCoordinate2).x);\n	\n	if (depthblur)\n	{\n		depth = linearize(bdepth(textureCoordinate2));\n	}\n	\n	//focal plane calculation\n	\n	float fDepth = focalDepth;\n	\n	if (autofocus)\n	{\n		fDepth = linearize(texture2D(inputImageTexture2,focus).x);\n	}\n	\n	//dof blur factor calculation\n	\n	float blur = 0.0;\n	\n	if (manualdof)\n	{\n		float a = depth-fDepth; //focal plane\n		float b = (a-fdofstart)/fdofdist; //far DoF\n		float c = (-a-ndofstart)/ndofdist; //near Dof\n		blur = (a>0.0)?b:c;\n	}\n	\n	else\n	{\n		float f = focalLength; //focal length in mm\n		float d = fDepth*1000.0; //focal plane in mm\n		float o = depth*1000.0; //depth in mm\n		\n		float a = (o*f)/(o-f);\n		float b = (d*f)/(d-f);\n		float c = (d-f)/(d*fstop*CoC);\n		\n		blur = abs(a-b)*c;\n	}\n	\n	blur = clamp(blur,0.0,1.0);\n	\n	// calculation of pattern for ditering\n	\n	vec2 noise = rand(textureCoordinate.xy)*namount*blur;\n	\n	// getting blur x and y step factor\n	\n	float w = (1.0/width)*blur*maxblur+noise.x;\n	float h = (1.0/height)*blur*maxblur+noise.y;\n	\n	// calculation of final color\n	\n	mediump vec3 col = vec3(0.0);\n	\n	if(blur < 0.05) //some optimization thingy\n	{\n		col = texture2D(inputImageTexture, textureCoordinate).rgb;\n	}\n	\n	else\n	{\n		col = texture2D(inputImageTexture, textureCoordinate).rgb;\n		float s = 1.0;\n		int ringsamples;\n		\n		for (int i = 1; i <= rings; i += 1)\n		{\n			ringsamples = i * samples;\n			\n			for (int j = 0 ; j < ringsamples ; j += 1)\n			{\n				float step = PI*2.0 / float(ringsamples);\n				float pw = (cos(float(j)*step)*float(i));\n				float ph = (sin(float(j)*step)*float(i));\n				float p = 1.0;\n				if (pentagon)\n				{\n					p = penta(vec2(pw,ph));\n				}\n				col += color(textureCoordinate.xy + vec2(pw*w,ph*h),blur)*mix(1.0,(float(i))/(float(rings)),bias)*p;\n				s += 1.0*mix(1.0,(float(i))/(float(rings)),bias)*p;\n			}\n		}\n		col /= s; //divide by sample count\n	}\n	\n	if (showFocus)\n	{\n		col = debugFocus(col, blur, depth);\n	}\n	\n	if (vignetting)\n	{\n		col *= vignette();\n	}\n	\n\n	gl_FragColor = vec4(col, 1.0);\n}\n",
+			"file": "Resources/Effect/blur.fsh",
+			"file_size": 9533,
+			"file_write_time": 1353404042000000,
 			"settings":
 			{
-				"buffer_size": 43576,
+				"buffer_size": 9533,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Classes/Helpers/LXFilterBlur.m",
+			"settings":
+			{
+				"buffer_size": 3247,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Classes/Helpers/LXFilterBlur.h",
+			"settings":
+			{
+				"buffer_size": 887,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Vendor/GPUImage/framework/Source/GPUImageGaussianBlurFilter.m",
+			"settings":
+			{
+				"buffer_size": 3857,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Classes/Controllers/luxeysWelcomeViewController.m",
+			"settings":
+			{
+				"buffer_size": 16437,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Classes/CustomControls/LXDrawView.m",
+			"settings":
+			{
+				"buffer_size": 4778,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "UIImage+Resize.m",
+			"settings":
+			{
+				"buffer_size": 8768,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Classes/Controllers/luxeysCameraViewController.m",
+			"settings":
+			{
+				"buffer_size": 30855,
 				"line_ending": "Unix"
 			}
 		}
@@ -592,21 +651,39 @@
 	},
 	"file_history":
 	[
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageFilter.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageFilter.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCameraViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/FilterShowcase/FilterShowcase/ShowcaseFilterViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageMultiplyBlendFilter.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageMultiplyBlendFilter.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/FilterManager.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageBrightnessFilter.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageBrightnessFilter.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/LXFilterBlur.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysUserViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysUserViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/Modules/luxeysTemplatePicTimeline.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Resources/Effect/blur.fsh",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageChromaKeyFilter.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysMypageViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCameraViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageOutput.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageOutput.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageView.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageView.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicDetailViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCellPicture.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysRankingViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysWelcomeViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysMypageViewController.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysMypageViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCameraViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageStillCamera.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/GPUImageStillCamera+captureWithMeta.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageStillCamera.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicDetailViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellWelcomeSingle.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellWelcomeSingle.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicCommentViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicCommentViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysUserViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysRankingViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/LXSubLayerView.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellComment.m",
@@ -618,34 +695,22 @@
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellWelcomeMulti.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysNavBar.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicDetailViewController.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCellPicture.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/Modules/luxeysTemplatePicTimeline.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/Modules/luxeysTemplatePicTimeline.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/latte.sublime-project",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageMonochromeFilter.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageMonochromeFilter.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Resources/Effect/blur.fsh",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageGaussianBlurFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageSaturationFilter.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageSaturationFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageHueFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageContrastFilter.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageBrightnessFilter.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageFilter.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageFilter.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageOutput.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImagePicture.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageView.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageSharpenFilter.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageSharpenFilter.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageView.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageOutput.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/LXFilterMono.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImagePinchDistortionFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageTiltShiftFilter.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageChromaKeyFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageGaussianSelectiveBlurFilter.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/FilterShowcase/FilterShowcase/ShowcaseFilterViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/FilterShowcase/FilterShowcase/CustomFilter.fsh",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageChromaKeyFilter.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageAlphaBlendFilter.m",
@@ -671,7 +736,6 @@
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Utils/luxeysUtils.h",
 		"/Users/dungbx/Library/Application Support/Sublime Text 2/Packages/SublimeClang/SublimeClang.sublime-settings",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCellNotify.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCameraViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImagePicture.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/EGOTableViewPullRefresh/Demo/TableViewPull/Classes/View/RefreshTableHeaderView/EGORefreshTableHeaderView.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/EGOTableViewPullRefresh/Demo/TableViewPull/Classes/View/RefreshTableHeaderView/EGORefreshTableHeaderView.h",
@@ -688,7 +752,6 @@
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageFilterPipeline.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicEditViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageOpenGLESContext.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysUserViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageRawDataInput.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/UIImage+fixOrientation.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysRightSideViewController.m",
@@ -715,11 +778,7 @@
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/AVCameraManager.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellFriend.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellFriendRequest.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCollectionCellPic.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCollectionCellPic.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysFavViewController.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCellRankLv1.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Resources/NIBs/MainStoryboard.storyboard"
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/luxeysCollectionCellPic.h"
 	],
 	"find":
 	{
@@ -730,6 +789,8 @@
 		"height": 93.0,
 		"where_history":
 		[
+			"*.m",
+			"*.h",
 			"*.m",
 			"*.h",
 			"*.m",
@@ -785,6 +846,41 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"CGColorSpaceRef",
+			"fDepth",
+			"focalDepth",
+			"fstop",
+			"animation",
+			"anima",
+			"noise",
+			"firstFrameCheckDisabled",
+			"textureCoordinate",
+			"setFloatArray",
+			"autof",
+			"uniform bool",
+			"inputTextureSize",
+			"currentFilterSize",
+			"size",
+			"texel",
+			"feather",
+			"depthblur",
+			"bias",
+			"texel",
+			"imageOrientation",
+			"orient",
+			"dbsize",
+			"needsSecondImage",
+			"GPUImageMultiplyBlendFilter",
+			"bdepth",
+			"focalDepth",
+			"focus",
+			"dep",
+			"imageVertices",
+			"presentFramebuffer",
+			"imageVertices",
+			"recalculateViewGeometry",
+			"endProcessing",
+			"cameraView",
 			"perfor",
 			"タイトル",
 			"contenti",
@@ -877,42 +973,7 @@
 			"upto",
 			"processI",
 			"process",
-			"didFinishPickingMediaWithInfo",
-			"takePho",
-			"takePhoto",
-			"photoCaptureButton",
-			"addTa",
-			"capture",
-			"write",
-			"kGPUImageRotateLeft",
-			"cameraPosition",
-			"posi",
-			"imageFromCurrentlyProcessedOutput",
-			"capture",
-			"UIDeviceOrientationPortrait",
-			"inputRotation",
-			"prepareStaticFilter",
-			"didCan",
-			"retake",
-			"prepareFilter",
-			"capture",
-			"retake",
-			"setInputRotation",
-			"prepareLiveFilter",
-			"imageFromCurrentlyProcessedOutput",
-			"removeAllTargets",
-			"didFin",
-			"imageView",
-			"didFi",
-			"setUpCamera",
-			"UIInterfaceOrientationPortrait",
-			"orien",
-			"staticPictureOriginalOrientation",
-			"didFi",
-			"imagePicker",
-			"picker",
-			"setUpCamera",
-			"retake"
+			"didFinishPickingMediaWithInfo"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -937,378 +998,15 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 10,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "Classes/Controllers/Modules/luxeysTemplatePicTimeline.m",
+					"file": "Vendor/GPUImage/framework/Source/GPUImagePicture.m",
 					"settings":
 					{
-						"buffer_size": 5930,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2913,
-								2913
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E111",
-								"E221",
-								"E261",
-								"W293",
-								"E501",
-								"E401"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 620.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "Classes/Controllers/luxeysUserViewController.m",
-					"settings":
-					{
-						"buffer_size": 35792,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1225,
-								1225
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E111",
-								"E221",
-								"E261",
-								"W293",
-								"E501",
-								"E401"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 214.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "Classes/Controllers/luxeysUserViewController.h",
-					"settings":
-					{
-						"buffer_size": 2696,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1391,
-								1391
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E111",
-								"E221",
-								"E261",
-								"W293",
-								"E501",
-								"E401"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 275.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "Classes/Controllers/luxeysMypageViewController.m",
-					"settings":
-					{
-						"buffer_size": 43576,
+						"buffer_size": 7365,
 						"regions":
 						{
 						},
@@ -1415,11 +1113,1218 @@
 							},
 							"sublimelinter_wrap_find": true,
 							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
-							"tab_size": 2,
+							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Vendor/GPUImage/framework/Source/GPUImageTwoInputFilter.m",
+					"settings":
+					{
+						"buffer_size": 7094,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6178,
+								6178
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3099.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "Vendor/GPUImage/framework/Source/GPUImageTwoInputFilter.h",
+					"settings":
+					{
+						"buffer_size": 691,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Objective-C/Objective-C.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "Resources/Effect/blur.fsh",
+					"settings":
+					{
+						"buffer_size": 9533,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7708,
+								7708
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/OpenGL Shading Language (GLSL)/GLSL.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3390.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "Classes/Helpers/LXFilterBlur.m",
+					"settings":
+					{
+						"buffer_size": 3247,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1185,
+								1185
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "Classes/Helpers/LXFilterBlur.h",
+					"settings":
+					{
+						"buffer_size": 887,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								492,
+								492
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "Vendor/GPUImage/framework/Source/GPUImageGaussianBlurFilter.m",
+					"settings":
+					{
+						"buffer_size": 3857,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1893,
+								1893
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 37.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "Classes/Controllers/luxeysWelcomeViewController.m",
+					"settings":
+					{
+						"buffer_size": 16437,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								14128,
+								14279
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 4734.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "Classes/CustomControls/LXDrawView.m",
+					"settings":
+					{
+						"buffer_size": 4778,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3701,
+								3701
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1192.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "UIImage+Resize.m",
+					"settings":
+					{
+						"buffer_size": 8768,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4278,
+								4278
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 752.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "Classes/Controllers/luxeysCameraViewController.m",
+					"settings":
+					{
+						"buffer_size": 30855,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3188,
+								3188
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 13263.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1477,6 +2382,106 @@
 		"selected_items":
 		[
 			[
+				"camera",
+				"Classes/Controllers/luxeysCameraViewController.m"
+			],
+			[
+				"resize",
+				"UIImage+Resize.m"
+			],
+			[
+				"lxd",
+				"Classes/CustomControls/LXDrawView.m"
+			],
+			[
+				"welcome",
+				"Classes/Controllers/luxeysWelcomeViewController.m"
+			],
+			[
+				"gau",
+				"Vendor/GPUImage/framework/Source/GPUImageGaussianBlurFilter.m"
+			],
+			[
+				"two",
+				"Vendor/GPUImage/framework/Source/GPUImageTwoInputFilter.m"
+			],
+			[
+				"lxfilterb",
+				"Classes/Helpers/LXFilterBlur.m"
+			],
+			[
+				"gpufilter",
+				"Vendor/GPUImage/framework/Source/GPUImageFilter.m"
+			],
+			[
+				"gpuimagepic",
+				"Vendor/GPUImage/framework/Source/GPUImagePicture.m"
+			],
+			[
+				"blur",
+				"Resources/Effect/blur.fsh"
+			],
+			[
+				"filterm",
+				"Classes/Helpers/FilterManager.m"
+			],
+			[
+				"gpuimagetwoinputfilter",
+				"Vendor/GPUImage/framework/Source/GPUImageTwoInputFilter.m"
+			],
+			[
+				"gpuimagemultiplyblendfilter",
+				"Vendor/GPUImage/framework/Source/GPUImageMultiplyBlendFilter.m"
+			],
+			[
+				"gpuimagepi",
+				"Vendor/GPUImage/framework/Source/GPUImagePicture.m"
+			],
+			[
+				"bright",
+				"Vendor/GPUImage/framework/Source/GPUImageBrightnessFilter.m"
+			],
+			[
+				"chro",
+				"Vendor/GPUImage/framework/Source/GPUImageChromaKeyFilter.m"
+			],
+			[
+				"gpuimagefi",
+				"Vendor/GPUImage/framework/Source/GPUImageFilter.m"
+			],
+			[
+				"lxfilter",
+				"Classes/Helpers/LXFilterBlur.m"
+			],
+			[
+				"cellpic",
+				"Classes/Controllers/luxeysCellPicture.m"
+			],
+			[
+				"picdet",
+				"Classes/Controllers/luxeysPicDetailViewController.m"
+			],
+			[
+				"camer",
+				"Classes/Controllers/luxeysCameraViewController.m"
+			],
+			[
+				"",
+				"Vendor/GPUImage/framework/Source/GPUImageView.h"
+			],
+			[
+				"gpuimageou",
+				"Vendor/GPUImage/framework/Source/GPUImageOutput.h"
+			],
+			[
+				"gpufilt",
+				"Vendor/GPUImage/framework/Source/GPUImageFilter.m"
+			],
+			[
+				"gpuimagevie",
+				"Vendor/GPUImage/framework/Source/GPUImageView.m"
+			],
+			[
 				"mypage",
 				"Classes/Controllers/luxeysMypageViewController.m"
 			],
@@ -1503,10 +2508,6 @@
 			[
 				"detail",
 				"Classes/Controllers/luxeysPicDetailViewController.m"
-			],
-			[
-				"camer",
-				"Classes/Controllers/luxeysCameraViewController.m"
 			],
 			[
 				"filter",
@@ -1539,10 +2540,6 @@
 			[
 				"ranki",
 				"Classes/Controllers/luxeysRankingViewController.m"
-			],
-			[
-				"welcome",
-				"Classes/Controllers/luxeysWelcomeViewController.m"
 			],
 			[
 				"mypag",
@@ -1589,10 +2586,6 @@
 				"Classes/Controllers/luxeysPicDetailViewController.m"
 			],
 			[
-				"cellpic",
-				"Classes/Controllers/luxeysCellPicture.m"
-			],
-			[
 				"cellsin",
 				"Classes/CustomControls/luxeysCellWelcomeSingle.m"
 			],
@@ -1615,18 +2608,6 @@
 			[
 				"gpuimagevi",
 				"Vendor/GPUImage/framework/Source/GPUImageView.m"
-			],
-			[
-				"gpuimagepi",
-				"Vendor/GPUImage/framework/Source/GPUImagePicture.m"
-			],
-			[
-				"gpuimageou",
-				"Vendor/GPUImage/framework/Source/GPUImageOutput.m"
-			],
-			[
-				"gpuimagefi",
-				"Vendor/GPUImage/framework/Source/GPUImageFilter.m"
 			],
 			[
 				"gpuimagef",
@@ -1657,10 +2638,6 @@
 				"Vendor/GPUImage/framework/Source/GPUImagePinchDistortionFilter.m"
 			],
 			[
-				"blur",
-				"Vendor/GPUImage/framework/Source/GPUImageGaussianBlurFilter.m"
-			],
-			[
 				"sharp",
 				"Vendor/GPUImage/framework/Source/GPUImageSharpenFilter.m"
 			],
@@ -1683,10 +2660,6 @@
 			[
 				"chroma",
 				"Vendor/GPUImage/framework/Source/GPUImageChromaKeyFilter.m"
-			],
-			[
-				"gau",
-				"Vendor/GPUImage/framework/Source/GPUImageGaussianBlurFilter.m"
 			],
 			[
 				"satu",
@@ -1813,10 +2786,6 @@
 				"Vendor/GPUImage/framework/Source/GPUImageStillCamera.m"
 			],
 			[
-				"gpuimagepic",
-				"Vendor/GPUImage/framework/Source/GPUImagePicture.m"
-			],
-			[
 				"gpuimageoutput",
 				"Vendor/GPUImage/framework/Source/GPUImageOutput.h"
 			],
@@ -1917,76 +2886,12 @@
 				"Vendor/GPUImage/framework/Source/GPUImageStillCamera.m"
 			],
 			[
-				"camera",
-				"Classes/Controllers/luxeysCameraViewController.m"
-			],
-			[
 				"setting",
 				"Classes/Controllers/luxeysSettingViewController.m"
 			],
 			[
 				"camerav",
 				"Classes/Controllers/luxeysCameraViewController.m"
-			],
-			[
-				"tabb",
-				"Classes/Controllers/luxeysTabBarViewController.m"
-			],
-			[
-				"luxeysu",
-				"Classes/Utils/luxeysUtils.m"
-			],
-			[
-				"luxey",
-				"Classes/Utils/luxeysUtils.m"
-			],
-			[
-				"piced",
-				"Classes/Controllers/luxeysPicEditViewController.m"
-			],
-			[
-				"gpustil",
-				"Vendor/GPUImage/framework/Source/GPUImageStillCamera.m"
-			],
-			[
-				"meta",
-				"Classes/Helpers/GPUImageStillCamera+captureWithMeta.m"
-			],
-			[
-				"picedi",
-				"Classes/Controllers/luxeysPicEditViewController.m"
-			],
-			[
-				"luxeyspiceditviewcontroller",
-				"Classes/Controllers/luxeysPicEditViewController.m"
-			],
-			[
-				"photoviewcontroller",
-				"Vendor/GPUImage/examples/SimplePhotoFilter/SimplePhotoFilter/PhotoViewController.m"
-			],
-			[
-				"came",
-				"Classes/Controllers/luxeysCameraViewController.m"
-			],
-			[
-				"fav",
-				"Classes/Controllers/luxeysFavViewController.m"
-			],
-			[
-				"gpuimagetonecurvefilter",
-				"Vendor/GPUImage/framework/Source/GPUImageToneCurveFilter.m"
-			],
-			[
-				"gpuimageunsharpmaskfilter",
-				"Vendor/GPUImage/framework/Source/GPUImageUnsharpMaskFilter.m"
-			],
-			[
-				"avca",
-				"Classes/Helpers/AVCameraManager.h"
-			],
-			[
-				"celln",
-				"Classes/Controllers/luxeysCellNotify.m"
 			]
 		],
 		"width": 0.0

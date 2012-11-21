@@ -260,7 +260,7 @@
         } else if (feed.targets.count == 1) {
             Picture *pic = feed.targets[0];
             CGFloat picHeight = [luxeysUtils heightFromWidth:308 width:[pic.width floatValue] height:[pic.height floatValue]];
-            return picHeight + 45;
+            return picHeight + 49;
         } else
             return 1;
     } else

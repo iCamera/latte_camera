@@ -50,10 +50,30 @@
     GPUImageOutput<GPUImageInput> *effectIn;
     GPUImageOutput<GPUImageInput> *effectOut;
     GPUImageOutput<GPUImageInput> *lastFilter;
+    
+    GPUImagePicture *picDOF;
+
+    CGFloat focalDepth;
+    CGFloat maxblur;
+    CGFloat dbsize;
+    CGPoint focus;
+    BOOL autofocus;
+    
+    CGSize frameSize;
 }
+
+@property (strong, nonatomic) UIImage* dof;
+@property (readwrite, nonatomic) CGPoint focus;
+@property (readwrite, nonatomic) CGFloat maxblur;
+@property (readwrite, nonatomic) CGFloat dbsize;
+@property (readwrite, nonatomic) CGFloat focalDepth;
+@property (readwrite, nonatomic) BOOL autofocus;
+
+@property (readwrite, nonatomic) CGSize frameSize;
 
 - (void)changeFiltertoLens:(NSInteger)aLens andEffect:(NSInteger)aEffect input:(GPUImageOutput *)aInput output:(GPUImageView *)aOutput isPicture:(BOOL)isPicture;
 - (void)saveImage:(NSDictionary *)location orientation:(UIImageOrientation)imageOrientation withMeta:(NSMutableDictionary *)imageMeta onComplete:(void(^)(ALAsset *asset))block;
+- (void)saveUIImage:(UIImage *)picture withLocation:(NSDictionary *)location withMeta:(NSMutableDictionary *)imageMeta onComplete:(void(^)(ALAsset *asset))block;
 - (GPUImageCropFilter*) getCrop;
 - (void)clearTargetWithCamera:(GPUImageStillCamera *)camera andPicture:(GPUImagePicture *)picture;
 

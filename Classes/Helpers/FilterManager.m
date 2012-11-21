@@ -12,6 +12,13 @@
 
 //static GPUImagePicture *texture;
 
+@synthesize focus;
+@synthesize maxblur;
+@synthesize focalDepth;
+@synthesize autofocus;
+@synthesize dbsize;
+
+@synthesize frameSize;
 
 - (id)init {
     self = [super init];
@@ -34,6 +41,11 @@
         lxblur = [[LXFilterBlur alloc] init];
         filterMono = [[LXFilterMono alloc] init];
         
+        autofocus = true;
+        focus = CGPointMake(0.5, 0.5);
+        maxblur = 5.0;
+        dbsize = 5.0;
+        focalDepth = 1.0;
 //        grain = [[GPUImageOverlayBlendFilter alloc] init];
         
     }
@@ -49,7 +61,7 @@
             [self lensNormal];
             break;
         case 1:
-            [self lensTilt];
+            [self lensReal];
             break;
         case 2:
             [self lensFish];
@@ -160,18 +172,44 @@
     }
 }
 
-- (GPUImageFilterGroup *)lensNormal {
-    [crop2 setCropRegion: CGRectMake(0, 0, 1, 1)];
-    
-    lensIn = crop2;
-    lensOut = crop2;
-    return nil;
-    // GPUImageSharpenFilter *sharpen = [[GPUImageSharpenFilter alloc] init];
-    // sharpen.sharpness = 0.5f;
-    // return (id)sharpen;
+- (void)lensNormal {
+    lensIn = nil;
+    lensOut = nil;
 }
 
-- (GPUImageFilterGroup *)lensTilt {
+- (void)lensReal {
+    if ((picDOF != nil) || !autofocus) {
+        
+        lxblur.focus = focus;
+        lxblur.maxblur = maxblur;
+        lxblur.focalDepth = focalDepth;
+        lxblur.autofocus = autofocus;
+        lxblur.dbsize = dbsize;
+        
+        lxblur.frameSize = frameSize;
+        
+        if (picDOF != nil) {
+            [picDOF addTarget:lxblur atTextureLocation:1];
+            [picDOF processImage];
+        } else  {
+            [lxblur disableSecondFrameCheck];
+        }
+        lensIn = lxblur;
+        lensOut = lxblur;
+    } else {
+        lensIn = nil;
+        lensOut = nil;
+    }
+}
+
+- (void)setDof:(UIImage *)dof {
+    if (dof != nil)
+        picDOF = [[GPUImagePicture alloc] initWithImage:dof];
+    else
+        picDOF = nil;
+}
+
+- (void)lensTilt {
     tiltShift.blurSize = 2;
     
     [distord setScale:0.1f];
@@ -179,10 +217,9 @@
     
     lensIn = distord;
     lensOut = tiltShift;
-    return nil;
 }
 
-- (GPUImageFilterGroup *)lensFish {
+- (void)lensFish {
     [crop2 setCropRegion: CGRectMake(0.05, 0.05, 0.9, 0.9)];
     [distord setScale:-0.2f];
     [distord setRadius:0.75f];
@@ -191,7 +228,6 @@
     
     lensIn = distord;
     lensOut = crop2;
-    return nil;
 }
 
 - (void)effect0 {
@@ -465,6 +501,10 @@
     [filter removeAllTargets];
     [filterMono removeAllTargets];
     
+    [picDOF removeAllTargets];
+    lxblur = [[LXFilterBlur alloc] init];
+//    [lxblur prepareForImageCapture];
+    
 //    [grain removeAllTargets];
     //    brightness = [[GPUImageBrightnessFilter alloc] init];
     //    distord = [[GPUImagePinchDistortionFilter alloc]init];
@@ -493,6 +533,7 @@
     }
     return array;
 }
+
 
 - (void)saveImage:(NSDictionary *)location orientation:(UIImageOrientation)imageOrientation withMeta:(NSMutableDictionary *)imageMeta onComplete:(void(^)(ALAsset *asset))block {
     
@@ -528,7 +569,42 @@
                  resultBlock:block
                 failureBlock:nil];
     }];
+}
 
+- (void)saveUIImage:(UIImage *)picture withLocation:(NSDictionary *)location withMeta:(NSMutableDictionary *)imageMeta onComplete:(void(^)(ALAsset *asset))block {
+    if (imageMeta == nil) {
+        imageMeta = [[NSMutableDictionary alloc] init];
+    }
+    
+    //    [imageMeta removeObjectForKey:(NSString *)kCGImagePropertyOrientation];
+    //    [imageMeta removeObjectForKey:(NSString *)kCGImagePropertyTIFFOrientation];
+    
+    NSNumber *orientation = [NSNumber numberWithInteger:[self metadataOrientationForUIImageOrientation:picture.imageOrientation]];
+    
+    [imageMeta setObject:orientation forKey:(NSString *)kCGImagePropertyTIFFOrientation];
+    [imageMeta setObject:orientation forKey:(NSString *)kCGImagePropertyOrientation];
+    
+    // Add GPS
+    if (location != nil) {
+        [imageMeta setObject:location forKey:(NSString *)kCGImagePropertyGPSDictionary];
+    }
+    
+    // Add App Info
+    [imageMeta setObject:@"Apple" forKey:(NSString*)kCGImagePropertyTIFFMake];
+    [imageMeta setObject:[[UIDevice currentDevice] model] forKey:(NSString *)kCGImagePropertyTIFFModel];
+    [imageMeta setObject:@"Latte" forKey:(NSString *)kCGImagePropertyTIFFSoftware];
+    
+    if (lastFilter == nil) {
+        lastFilter = [[GPUImageBrightnessFilter alloc] init];
+    }
+    
+    [lastFilter saveImageByFilteringImage:picture withMeta:imageMeta onComplete:^(NSURL *assetURL, NSError *error) {
+        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+        [library assetForURL:assetURL
+                 resultBlock:block
+                failureBlock:nil];
+    }];
+    
 }
 
 - (void)myEffect1 {

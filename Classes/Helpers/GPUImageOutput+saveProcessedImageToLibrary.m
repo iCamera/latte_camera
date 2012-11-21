@@ -23,4 +23,20 @@
 //        block(assetURL, error);
 //    }];
 }
+
+- (void)saveImageByFilteringImage:(UIImage *)image withMeta:(NSDictionary *)metaData onComplete:(void(^)(NSURL *assetURL, NSError *error))block {
+    CGImageRef cgImageFromBytes = [self newCGImageByFilteringImage:image];
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+        
+    [library writeImageToSavedPhotosAlbum:cgImageFromBytes metadata:metaData completionBlock:^(NSURL *assetURL, NSError *error) {
+        CGImageRelease(cgImageFromBytes);
+        block(assetURL, error);
+    }];
+    
+//    [library writeImageToSavedPhotosAlbum:cgImageFromBytes orientation:imageOrientation completionBlock:^(NSURL *assetURL, NSError *error) {
+//        CGImageRelease(cgImageFromBytes);
+//        block(assetURL, error);
+//    }];
+}
+
 @end
