@@ -53,22 +53,26 @@
     
     GPUImagePicture *picDOF;
 
-    CGFloat focalDepth;
-    CGFloat maxblur;
+    CGFloat gain;
     CGFloat dbsize;
+    CGFloat threshold;
     CGPoint focus;
     BOOL autofocus;
-    
+    CGFloat focalDepth;
+
+    BOOL isDOF;
     CGSize frameSize;
 }
 
 @property (strong, nonatomic) UIImage* dof;
 @property (readwrite, nonatomic) CGPoint focus;
 @property (readwrite, nonatomic) CGFloat maxblur;
-@property (readwrite, nonatomic) CGFloat dbsize;
+@property (readwrite, nonatomic) CGFloat threshold;
+@property (readwrite, nonatomic) CGFloat gain;
 @property (readwrite, nonatomic) CGFloat focalDepth;
 @property (readwrite, nonatomic) BOOL autofocus;
 
+@property (readwrite, nonatomic) BOOL isDOF;
 @property (readwrite, nonatomic) CGSize frameSize;
 
 - (void)changeFiltertoLens:(NSInteger)aLens andEffect:(NSInteger)aEffect input:(GPUImageOutput *)aInput output:(GPUImageView *)aOutput isPicture:(BOOL)isPicture;

@@ -13,14 +13,11 @@
 @end
 @implementation LXDrawView
 
-@synthesize lastPoint;
-@synthesize prePreviousPoint;
-@synthesize previousPoint;
 @synthesize drawImageView;
 @synthesize lineWidth;
 @synthesize currentColor;
-@synthesize isEraser;
 @synthesize isEmpty;
+@synthesize delegate;
 
 /*
  // Only override drawRect: if you perform custom drawing.
@@ -33,68 +30,40 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];
+    aPath = [[UIBezierPath alloc] init];
     
-    self.previousPoint = [touch locationInView:self];
+    [aPath moveToPoint:[touch locationInView:self]];
+    isEmpty = YES;
 }
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    if (isEmpty)
+    {
+        drawImageView.image = nil;
+        isEmpty = NO;
+    }
+    
     UITouch *touch = [touches anyObject];
     
-    self.prePreviousPoint = self.previousPoint;
-    self.previousPoint = [touch previousLocationInView:self];
     CGPoint currentPoint = [touch locationInView:self];
     
-    // calculate mid point
-    CGPoint mid1 = [self calculateMidPointForPoint:self.previousPoint andPoint:self.prePreviousPoint];
-    CGPoint mid2 = [self calculateMidPointForPoint:currentPoint andPoint:self.previousPoint];
     
     UIGraphicsBeginImageContextWithOptions(self.drawImageView.frame.size, NO, 0);
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     [[self currentColor] setStroke];
     
-    CGContextSetAllowsAntialiasing(UIGraphicsGetCurrentContext(), true);
-    CGContextSetShouldAntialias(UIGraphicsGetCurrentContext(), true);
+    [aPath addLineToPoint:currentPoint];
+    aPath.lineWidth = self.lineWidth;
+    aPath.lineCapStyle = kCGLineCapRound;
+    [aPath stroke];
+
+    [drawImageView.image drawInRect:drawImageView.frame];
     
-    [self.drawImageView.image drawInRect:CGRectMake(0, 0, self.drawImageView.frame.size.width, self.drawImageView.frame.size.height)];
-    
-    CGContextMoveToPoint(context, mid1.x, mid1.y);
-    // Use QuadCurve is the key
-    CGContextAddQuadCurveToPoint(context, self.previousPoint.x, self.previousPoint.y, mid2.x, mid2.y);
-    
-    CGContextSetLineCap(context, kCGLineCapRound);
-    
-    CGFloat xDist = (previousPoint.x - currentPoint.x); //[2]
-    CGFloat yDist = (previousPoint.y - currentPoint.y); //[3]
-    CGFloat distance = sqrt((xDist * xDist) + (yDist * yDist)); //[4]
-    
-    distance = distance / 10;
-    
-    if (distance > 10) {
-        distance = 10.0;
-    }
-    
-    distance = distance / 10;
-    distance = distance * 3;
-    
-//    if (4.0 - distance > self.lineWidth) {
-//        lineWidth = lineWidth + 0.3;
-//    } else {
-//        lineWidth = lineWidth - 0.3;
-//    }
-    
-    CGContextSetLineWidth(context, self.lineWidth);
-    if (isEraser) {
-        CGContextSetBlendMode(context, kCGBlendModeClear);
-        CGContextSetStrokeColorWithColor(context, [[UIColor clearColor] CGColor]);
-    } else {
-        CGContextSetBlendMode(context, kCGBlendModeNormal);
-    }
-    //    CGContextSetRGBStrokeColor(context, 0.0, 0.0, 0.0, 1.0);
     CGContextStrokePath(context);
     
-    self.drawImageView.image = UIGraphicsGetImageFromCurrentImageContext();
+    drawImageView.image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 }
 
@@ -103,42 +72,56 @@
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    
     UITouch *touch = [touches anyObject];
-    CGPoint currentPoint = [touch locationInView:self];
-    
-//    [self setLineWidth:1.0];
-    
-    if ([touch tapCount] == 1) {
-        UIGraphicsBeginImageContextWithOptions(self.drawImageView.frame.size, NO, 0);
-        CGContextRef context = UIGraphicsGetCurrentContext();
-        
-        [[self currentColor] setStroke];
-        
-        CGContextSetAllowsAntialiasing(context, NO);
-        CGContextSetShouldAntialias(context, NO);
-        
-        [self.drawImageView.image drawInRect:CGRectMake(0, 0, self.drawImageView.frame.size.width, self.drawImageView.frame.size.height)];
-        
-        CGContextMoveToPoint(context, currentPoint.x, currentPoint.y);
-        CGContextAddLineToPoint(context, currentPoint.x, currentPoint.y);
-        
-        CGContextSetLineCap(context, kCGLineCapRound);
-        
-        CGContextSetLineWidth(context, lineWidth);
-        if (isEraser) {
-            CGContextSetBlendMode(context, kCGBlendModeClear);
-            CGContextSetStrokeColorWithColor(context, [[UIColor clearColor] CGColor]);
-        }
-        
-        CGContextStrokePath(context);
-        
-        self.drawImageView.image = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-    }
-    
-    isEmpty = NO;
+    //NSLog(@"Tap count %d", touch.tapCount);
+    if (touch.tapCount == 0)
+        [self redraw];
 }
+
+- (void)redraw {
+    UIGraphicsBeginImageContextWithOptions(drawImageView.frame.size, NO, 0);
+    
+    CGContextRef currentContext = UIGraphicsGetCurrentContext();
+    
+    CGGradientRef glossGradient;
+    CGColorSpaceRef rgbColorspace;
+    size_t num_locations = 2;
+    CGFloat locations[2] = { 1.0, 0.0 };
+    CGFloat components[8] = { 1.0, 0.0, 0.0, 1.0,  // Start color
+        1.0, 0.0, 0.0, 1.0 }; // End color
+    
+    rgbColorspace = CGColorSpaceCreateDeviceRGB();
+    glossGradient = CGGradientCreateWithColorComponents(rgbColorspace, components, locations, num_locations);
+    
+    CGRect currentBounds = self.bounds;
+    CGPoint topCenter = CGPointMake(0, 0.0f);
+    CGPoint bottomCenter = CGPointMake(currentBounds.size.width, currentBounds.size.height);
+    CGContextDrawLinearGradient(currentContext, glossGradient, topCenter, bottomCenter, 0);
+    
+    CGContextSetBlendMode(currentContext, kCGBlendModeClear);
+    CGContextSetStrokeColorWithColor(currentContext, [[UIColor clearColor] CGColor]);
+    
+    [aPath fill];
+    
+    UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    
+    GPUImageFastBlurFilter *blur = [[GPUImageFastBlurFilter alloc] init];
+    blur.blurSize = lineWidth/2.0;
+    blur.blurPasses = 4;
+    
+    mask = [UIImage imageWithCGImage:[blur newCGImageByFilteringImage:viewImage]];
+
+    drawImageView.image = mask;
+    [delegate newMask:mask];
+}
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+    drawImageView.image = mask;
+}
+
+
 
 /*
  // Only override drawRect: if you perform custom drawing.

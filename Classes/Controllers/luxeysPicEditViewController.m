@@ -70,8 +70,9 @@
         [self setStatusLabel];
     } else {
         luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-        
-        [imagePic setImage:[UIImage imageWithData:imageData]];
+
+        // Disable for now, cost too much memory
+//        [imagePic setImage:[UIImage imageWithData:imageData]];
         imageStatus = [app.currentUser.pictureStatus integerValue];
         [self setStatusLabel];
     }

@@ -16,9 +16,11 @@
 @synthesize maxblur;
 @synthesize focalDepth;
 @synthesize autofocus;
-@synthesize dbsize;
+@synthesize gain;
+@synthesize threshold;
 
 @synthesize frameSize;
+@synthesize isDOF;
 
 - (id)init {
     self = [super init];
@@ -41,11 +43,12 @@
         lxblur = [[LXFilterBlur alloc] init];
         filterMono = [[LXFilterMono alloc] init];
         
-        autofocus = true;
         focus = CGPointMake(0.5, 0.5);
         maxblur = 5.0;
-        dbsize = 5.0;
+        threshold = 0.5;
+        autofocus = false;
         focalDepth = 1.0;
+        gain = 3.0;
 //        grain = [[GPUImageOverlayBlendFilter alloc] init];
         
     }
@@ -61,7 +64,7 @@
             [self lensNormal];
             break;
         case 1:
-            [self lensReal];
+            [self lensTilt];
             break;
         case 2:
             [self lensFish];
@@ -109,7 +112,7 @@
             [self tmpEffect5];
             break;
         case 13:
-            [self tmpEffect7];
+            [self tmpEffect6];
             break;
         case 14:
             [self effect3];
@@ -173,33 +176,41 @@
 }
 
 - (void)lensNormal {
-    lensIn = nil;
-    lensOut = nil;
-}
-
-- (void)lensReal {
-    if ((picDOF != nil) || !autofocus) {
-        
-        lxblur.focus = focus;
-        lxblur.maxblur = maxblur;
-        lxblur.focalDepth = focalDepth;
-        lxblur.autofocus = autofocus;
-        lxblur.dbsize = dbsize;
-        
-        lxblur.frameSize = frameSize;
-        
-        if (picDOF != nil) {
-            [picDOF addTarget:lxblur atTextureLocation:1];
-            [picDOF processImage];
-        } else  {
-            [lxblur disableSecondFrameCheck];
-        }
+    if ([self dofReady] && isDOF)
+    {
+        [self setUpRealLens];
         lensIn = lxblur;
         lensOut = lxblur;
     } else {
         lensIn = nil;
         lensOut = nil;
     }
+}
+
+- (void)setUpRealLens {
+    lxblur.focus = focus;
+    lxblur.autofocus = autofocus;
+    lxblur.focalDepth = focalDepth;
+    lxblur.maxblur = maxblur;
+    lxblur.gain = gain;
+    lxblur.threshold = threshold;
+    lxblur.frameSize = frameSize;
+    
+    if (picDOF != nil) {
+        [picDOF addTarget:lxblur atTextureLocation:1];
+        [picDOF processImage];
+    } else  {
+        [lxblur disableSecondFrameCheck];
+    }
+}
+
+- (void)setFocus:(CGPoint)aFocus {
+    focus = aFocus;
+    autofocus = true;
+}
+
+- (BOOL)dofReady {
+    return picDOF != nil;
 }
 
 - (void)setDof:(UIImage *)dof {
@@ -210,13 +221,19 @@
 }
 
 - (void)lensTilt {
-    tiltShift.blurSize = 2;
-    
     [distord setScale:0.1f];
     [distord addTarget: tiltShift];
-    
-    lensIn = distord;
-    lensOut = tiltShift;
+
+    if ([self dofReady] && isDOF)
+    {
+        [self setUpRealLens];
+        [lxblur addTarget: distord];
+        lensIn = lxblur;
+        lensOut = distord;
+    } else {
+        lensIn = distord;
+        lensOut = distord;
+    }
 }
 
 - (void)lensFish {
@@ -226,8 +243,16 @@
     
     [distord addTarget: crop2];
     
-    lensIn = distord;
-    lensOut = crop2;
+    if ([self dofReady] && isDOF)
+    {
+        [self setUpRealLens];
+        [lxblur addTarget: distord];
+        lensIn = lxblur;
+        lensOut = crop2;
+    } else {
+        lensIn = distord;
+        lensOut = crop2;
+    }
 }
 
 - (void)effect0 {

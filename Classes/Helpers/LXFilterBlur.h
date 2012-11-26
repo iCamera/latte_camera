@@ -16,8 +16,8 @@
     GLint focalDepthUniform;
     GLint autofocusUniform;
     GLint focusUniform;
-    GLint dbsizeUniform;
-    GLint depthblurUniform;
+    GLint gainUniform;
+    GLint thresholdUniform;
     
     GLuint depthTexture;
     GLubyte *depthMapByteArray;
@@ -25,15 +25,17 @@
     CGPoint focus;
     CGFloat maxblur;
     CGFloat focalDepth;
-    CGFloat dbsize;
+    CGFloat gain;
     BOOL autofocus;
+    CGFloat threshold;
 }
 
 @property(readwrite, nonatomic) CGPoint focus;
 @property(readwrite, nonatomic) CGFloat maxblur;
 @property(readwrite, nonatomic) CGFloat focalDepth;
-@property(readwrite, nonatomic) CGFloat dbsize;
+@property(readwrite, nonatomic) CGFloat gain;
 @property(readwrite, nonatomic) BOOL autofocus;
+@property(readwrite, nonatomic) CGFloat threshold;
 
 @property(readwrite, nonatomic) CGSize frameSize;
 

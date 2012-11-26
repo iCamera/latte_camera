@@ -23,13 +23,15 @@
 #define kTimer10s        2
 #define kTimerContinuous 3
 
-#define kTouchZoom 0
-#define kTouchFocus 1
-#define kTouchBrushSmall 2
-#define kTouchBrushMedium 3
-#define kTouchBrushLarge 4
-#define kTouchBrushSubject 5
-#define kTouchBrushEraser 6
+#define kBokehModeFull 1
+#define kBokehModeDisable 0
+
+#define kBokehTabMask 1
+#define kBokehTabBlur 2
+
+#define kMaskBackgroundNone 6
+#define kMaskBackgroundRound 7
+#define kMaskBackgroundNatual 8
 
 typedef enum {
     kEffect1,
@@ -47,7 +49,7 @@ typedef enum {
 - (void)imagePickerControllerDidCancel:(luxeysCameraViewController *)picker;
 @end
 
-@interface luxeysCameraViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, UIScrollViewDelegate, UIAccelerometerDelegate> {
+@interface luxeysCameraViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, UIScrollViewDelegate, UIAccelerometerDelegate, LXDrawViewDelegate> {
     GPUImageStillCamera *videoCamera;
     
     GPUImagePicture *picture;
@@ -64,7 +66,8 @@ typedef enum {
     BOOL isReady;
     BOOL isFinishedProcessing;
     
-    int focusTabMode;
+    int bokehMode;
+    int currentFocusTab;
     
     id <LXImagePickerDelegate> __unsafe_unretained delegate;
 
@@ -75,7 +78,7 @@ typedef enum {
     NSInteger timerMode;
     CLLocationManager *locationManager;
     CLLocation *bestEffortAtLocation;
-    UIImageOrientation imageOrientaion;
+    UIImageOrientation imageOrientation;
     UIInterfaceOrientation orientationLast;
 }
 @property (strong, nonatomic) IBOutlet UIView *viewBottomBar;
@@ -106,13 +109,15 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIView *viewMask;
 @property (strong, nonatomic) IBOutlet UIView *viewBlur;
 @property (strong, nonatomic) IBOutlet UIView *viewFocal;
-@property (strong, nonatomic) IBOutlet UIImageView *imageBackgroundMask;
 
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonMove;
 @property (strong, nonatomic) IBOutlet UIButton *buttonPaintMask;
 @property (strong, nonatomic) IBOutlet UIButton *buttonFocal;
 @property (strong, nonatomic) IBOutlet UIButton *buttonBackground;
+@property (strong, nonatomic) IBOutlet UIButton *buttonBackgroundRound;
+@property (strong, nonatomic) IBOutlet UIButton *buttonBackgroundNatual;
+@property (strong, nonatomic) IBOutlet UIButton *buttonBackgroundNone;
 
 @property (unsafe_unretained) id <LXImagePickerDelegate> delegate;
 
@@ -135,6 +140,7 @@ typedef enum {
 - (IBAction)touchFocusTab:(UIButton*)sender;
 - (IBAction)setMask:(UIButton*)sender;
 - (IBAction)changeBlur:(UISlider*)sender;
-- (IBAction)changeFocalDepth:(UISlider *)sender;
+- (IBAction)changeHighlight:(UISlider*)sender;
+- (IBAction)changePen:(UISlider *)sender;
 
 @end

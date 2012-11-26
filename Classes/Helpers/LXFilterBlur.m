@@ -8,7 +8,8 @@
 @synthesize maxblur;
 @synthesize focalDepth;
 @synthesize autofocus;
-@synthesize dbsize;
+@synthesize gain;
+@synthesize threshold;
 
 - (id)init;
 {
@@ -29,14 +30,14 @@
     focalDepthUniform = [filterProgram uniformIndex:@"focalDepth"];
 
     autofocusUniform = [filterProgram uniformIndex:@"autofocus"];
-    dbsizeUniform = [filterProgram uniformIndex:@"dbsize"];
+    gainUniform = [filterProgram uniformIndex:@"gain"];
 
-    depthblurUniform = [filterProgram uniformIndex:@"depthblur"];
+    thresholdUniform = [filterProgram uniformIndex:@"threshold"];
     
 //    [self setAutofocus:true];
 //    [self setFocus:CGPointMake(0.5, 0.5)];
 //    [self setMaxblur:0.5];
-//    [self setDbsize:1.25];
+//    [self setgain:1.25];
     
     return self;
 }
@@ -60,14 +61,14 @@
     autofocus = aAutofocus;
     [self setInteger:autofocus forUniform:autofocusUniform program:filterProgram];
 }
+- (void)setThreshold:(CGFloat)aThreshold {
+    threshold = aThreshold;
+    [self setFloat:threshold forUniform:thresholdUniform program:filterProgram];
+}
 
-- (void)setDbsize:(CGFloat)aDbsize {
-    dbsize = aDbsize;
-    if (aDbsize == 0.0)
-        [self setInteger:0 forUniform:depthblurUniform program:filterProgram];
-    else
-        [self setInteger:1 forUniform:depthblurUniform program:filterProgram];
-    [self setFloat:dbsize forUniform:dbsizeUniform program:filterProgram];
+- (void)setGain:(CGFloat)aGain {
+    gain = aGain;
+    [self setFloat:gain forUniform:gainUniform program:filterProgram];
 }
 
 - (void)setFrameSize:(CGSize)frameSize {

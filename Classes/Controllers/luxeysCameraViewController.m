@@ -50,7 +50,10 @@
 @synthesize buttonFocal;
 @synthesize buttonMove;
 @synthesize buttonPaintMask;
-@synthesize imageBackgroundMask;
+
+@synthesize buttonBackgroundRound;
+@synthesize buttonBackgroundNatual;
+@synthesize buttonBackgroundNone;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -69,9 +72,6 @@
         isReady = false;
         isFinishedProcessing = true;
         
-        [viewDraw setPreviousPoint:CGPointZero];
-        [viewDraw setPrePreviousPoint:CGPointZero];
-        [viewDraw setLineWidth:1.0];
         viewDraw.isEmpty = YES;
     }
     return self;
@@ -81,7 +81,7 @@
 {
     [super viewDidLoad];
     
-    
+    viewDraw.delegate = self;
     [self setupCameraAspect];
     
     filter = [[FilterManager alloc] init];
@@ -95,7 +95,8 @@
 	imageBottom.layer.shadowRadius = 2.5f;
 	imageBottom.layer.shadowPath = shadowPath.CGPath;
     
-    
+    scrollCamera.maximumZoomScale=6.0;
+    scrollCamera.minimumZoomScale=0.5;
     
     videoCamera = [[GPUImageStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionBack];
     [videoCamera setOutputImageOrientation:UIInterfaceOrientationPortrait];
@@ -112,7 +113,11 @@
         scrollCamera.frame = frame;
         buttonScroll.selected = false;
         scrollEffect.hidden = true;
+        viewCameraWraper.frame = CGRectMake(14, 0, 292, 390);
     }
+    else
+        viewCameraWraper.frame = CGRectMake(3.5, 0, 313.5, 418);
+
     [self resizeCameraViewWithAnimation:NO];
     
     // GPS Info
@@ -127,11 +132,11 @@
     currentTimer = kTimerNone;
     
     for (int i=0; i < 16; i++) {
-        UILabel *labelEffect = [[UILabel alloc] initWithFrame:CGRectMake(14+60*i, 14, 20, 10)];
+        UILabel *labelEffect = [[UILabel alloc] initWithFrame:CGRectMake(9+55*i, 9, 20, 10)];
         labelEffect.backgroundColor = [UIColor clearColor];
         labelEffect.textColor = [UIColor whiteColor];
         labelEffect.font = [UIFont systemFontOfSize:9];
-        UIButton *buttonEffect = [[UIButton alloc] initWithFrame:CGRectMake(10+60*i, 10, 50, 50)];
+        UIButton *buttonEffect = [[UIButton alloc] initWithFrame:CGRectMake(5+55*i, 5, 50, 50)];
         UIImage *preview = [UIImage imageNamed:[NSString stringWithFormat:@"sample%d.jpg", i]];
         if (preview != nil) {
             [buttonEffect setImage:preview forState:UIControlStateNormal];
@@ -147,7 +152,7 @@
         [scrollEffect addSubview:buttonEffect];
         [scrollEffect addSubview:labelEffect];
     }
-    scrollEffect.contentSize = CGSizeMake(16*60+10, 70);
+    scrollEffect.contentSize = CGSizeMake(16*55+10, 60);
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [videoCamera startCameraCapture];
@@ -214,40 +219,49 @@
     [self setButtonPaintMask:nil];
     [self setButtonFocal:nil];
     [self setButtonBackground:nil];
-    [self setImageBackgroundMask:nil];
+    [self setButtonBackgroundRound:nil];
+    [self setButtonBackgroundNatual:nil];
+    [self setButtonBackgroundNone:nil];
     [super viewDidUnload];
 }
 
-- (UIImage*)dofMask {
-    UIImage *bottomImage = imageBackgroundMask.image;
-    UIImage *image = viewDraw.drawImageView.image;
+- (void)showStillImage {
     
-    CGSize newSize = bottomImage.size;
-    UIGraphicsBeginImageContextWithOptions(bottomImage.size, NO, 0);
+    GPUImageRotationMode imageViewRotationMode = kGPUImageNoRotation;
+    switch (imageOrientation) {
+        case UIImageOrientationLeft:
+            imageViewRotationMode = kGPUImageRotateLeft;
+            break;
+        case UIImageOrientationRight:
+            imageViewRotationMode = kGPUImageRotateRight;
+            break;
+        case UIImageOrientationDown:
+            imageViewRotationMode = kGPUImageRotate180;
+            break;
+        case UIImageOrientationUp:
+            imageViewRotationMode = kGPUImageNoRotation;
+            break;
+        default:
+            imageViewRotationMode = kGPUImageRotateLeft;
+    }
     
-    // Use existing opacity as is
-    [bottomImage drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
-    // Apply supplied opacity
-    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height) blendMode:kCGBlendModeNormal alpha:1.0];
+    // seems like atIndex is ignored by GPUImageView...
+    [cameraView setInputRotation:imageViewRotationMode atIndex:0];
     
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    
-    UIGraphicsEndImageContext();
-    
-    return newImage;
+    [picture processImage];
 }
+
 
 - (void)applyCurrentEffect {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         if (isEditing) {
-            if (!viewDraw.isEmpty) {
-                filter.dof = [self dofMask];
-            }
-            else
-                filter.dof = nil;
-            [filter changeFiltertoLens:currentLens andEffect:currentEffect input:previewFilter output:cameraView isPicture:true];
-            [previewFilter processImage];
+            filter.isDOF = (bokehMode == kBokehModeFull) && (!viewDraw.isEmpty);
+
+            [filter changeFiltertoLens:currentLens andEffect:currentEffect input:picture output:cameraView isPicture:true];
+            [self showStillImage];
+//            [previewFilter processImage];
         } else {
+            filter.isDOF = false;
             [filter changeFiltertoLens:currentLens andEffect:currentEffect input:videoCamera output:cameraView isPicture:false];
         }
     });
@@ -265,13 +279,40 @@
     CGPoint point = CGPointMake(imageAutoFocus.center.x/cameraView.frame.size.width, imageAutoFocus.center.y/cameraView.frame.size.height);
     
     if (isEditing) {
-        filter.autofocus = true;
-        filter.focus = point;
+        switch (imageOrientation) {
+            case UIImageOrientationUp:
+                filter.focus = point;
+                break;
+            case UIImageOrientationLeft:
+                filter.focus = CGPointMake(1.0-point.y, point.x);
+                break;
+            case UIImageOrientationRight:
+                filter.focus = CGPointMake(point.y, 1.0-point.x);
+                break;
+            case UIImageOrientationDown:
+                filter.focus = CGPointMake(1.0-point.x, 1.0-point.y);
+                break;
+            default:
+                filter.focus = point;
+                break;
+        }
+        
         [self applyCurrentEffect];
     } else {
         [self setFocusPoint:point];
         [self setMetteringPoint:point];
-    }    
+
+        [UIView animateWithDuration:0.3
+                          delay:1.5
+                        options:UIViewAnimationOptionShowHideTransitionViews
+                     animations:^{
+                         imageAutoFocus.alpha = 0;
+                     } completion:^(BOOL finished) {
+                         if (finished) {
+                             imageAutoFocus.hidden = true;
+                         }
+                     }];
+    }
 }
 
 - (void)capturePhotoAsync {
@@ -281,19 +322,35 @@
                                               [videoCamera stopCameraCapture];
                                               
                                               imageMeta = meta;
-                                              
-                                              NSInteger height = [luxeysUtils heightFromWidth:320.0 width:processedImage.size.width height:processedImage.size.height];
+
+                                              CGFloat scale = [[UIScreen mainScreen] scale];
+                                              CGFloat width = 320.0*scale;
+
+                                              NSInteger height = [luxeysUtils heightFromWidth:width width:processedImage.size.width height:processedImage.size.height];
                                               
                                               picture = [[GPUImagePicture alloc] initWithImage:processedImage];
-                                              imageOrientaion = processedImage.imageOrientation;
+                                              imageOrientation = processedImage.imageOrientation;
                                               filter.frameSize = processedImage.size;
                                               
-                                              CGFloat scale = [[UIScreen mainScreen] scale];
+                                              
                                               CGSize size;
-                                              if (processedImage.imageOrientation == UIImageOrientationLeft || processedImage.imageOrientation == UIImageOrientationRight)
-                                                  size = CGSizeMake(height*scale, 320.0*scale);
-                                              else
-                                                  size = CGSizeMake(320.0*scale, height*scale);
+                                              CGRect screen = [[UIScreen mainScreen] bounds];
+                                              
+                                              if (imageOrientation == UIImageOrientationLeft || imageOrientation == UIImageOrientationRight) {
+                                                  size = CGSizeMake(height*2.0, width*2.0);
+                                                  viewCameraWraper.frame = CGRectMake(14, 0, 320, 240);
+                                              }
+                                              else {
+                                                  size = CGSizeMake(width, height);
+                                                  if (screen.size.height == 480)
+                                                      viewCameraWraper.frame = CGRectMake(14, 0, 292, 390);
+                                                  else
+                                                      viewCameraWraper.frame = CGRectMake(3.5, 0, 313.5, 418);
+                                              }
+                                              
+                                              
+                                              [self resizeCameraViewWithAnimation:NO];
+
                                               
                                               UIImage *previewPic = [processedImage
                                                                      resizedImage: size
@@ -304,6 +361,7 @@
                                                                                  smoothlyScaleOutput:YES];
                                               
                                               
+                                              [self applyCurrentEffect];
                                               [self switchEditImage];
     }];
 }
@@ -311,7 +369,12 @@
 - (IBAction)cameraTouch:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateRecognized) {
         CGPoint location = [sender locationInView:self.cameraView];
-        
+
+        imageAutoFocus.hidden = false;
+        [UIView animateWithDuration:0.1 animations:^{
+            imageAutoFocus.alpha = 1;
+        }];
+
         imageAutoFocus.center = location;
         
         [self updateTargetPoint];
@@ -347,7 +410,7 @@
                                         delegate:self
                                cancelButtonTitle:@"キャンセル"
                           destructiveButtonTitle:nil
-                               otherButtonTitles:@"普通", @"ぼけ", @"魚眼レンズ", nil];
+                               otherButtonTitles:@"普通", @"ワイド", @"魚眼レンズ", nil];
     [sheet setTag:0];
     sheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
     [sheet showInView:self.view];
@@ -379,9 +442,18 @@
 - (IBAction)toggleEffect:(UIButton*)sender {
     switch (sender.tag) {
         case 1:
-            viewFocusControl.hidden = true;
             scrollEffect.hidden = !scrollEffect.hidden;
             buttonScroll.selected = !scrollEffect.hidden;
+            if (scrollEffect.hidden) {
+                viewFocusControl.hidden = !(bokehMode != kBokehModeDisable);
+                if (!viewFocusControl.hidden) {
+                    [self setFocusTab:currentFocusTab];
+                }
+            }
+            else {
+                viewFocusControl.hidden = true;
+                viewDraw.hidden = true;
+            }
             break;
         case 2:
             [self showLensEffect];
@@ -393,6 +465,7 @@
 }
 
 - (void)resizeCameraViewWithAnimation:(BOOL)animation {
+    [scrollCamera setZoomScale:1.0];
     CGRect screen = [[UIScreen mainScreen] bounds];
 
     
@@ -402,8 +475,28 @@
     if (screen.size.height > 480) {
         if (scrollEffect.hidden && viewFocusControl.hidden)
             frame.size.height = 568 - 40 - 50;
-         else
-            frame.size.height = 408;
+        else if (!scrollEffect.hidden)
+            frame.size.height = 418;
+        else {
+            switch (bokehMode) {
+                case kBokehModeDisable:
+                    frame.size.height = 568 - 40 - 50;
+                    break;
+                case kBokehModeFull:
+                    frame.size.height = 568 - 40 - 50 - 90;
+                    break;
+            }
+        }
+    } else {
+        if (scrollEffect.hidden)
+            switch (bokehMode) {
+                case kBokehModeDisable:
+                    frame.size.height = 480 - 40 - 50;
+                    break;
+                case kBokehModeFull:
+                    frame.size.height = 480 - 40 - 50 - 90;
+                    break;
+            }
     }
 
     CGFloat horizontalRatio = frame.size.width / frame2.size.width;
@@ -415,18 +508,46 @@
     frame2.origin.x = (frame.size.width - frame2.size.width)/2;
     frame2.origin.y = (frame.size.height - frame2.size.height)/2;
     
-    [UIView animateWithDuration:animation?0.3:0 animations:^{
-        if (screen.size.height > 480) {
-            scrollCamera.frame = frame;
-        }
-        viewCameraWraper.frame = frame2;
-    }];
+    // [UIView animateWithDuration:animation?0.3:0 animations:^{
+        
+    //     // viewCameraWraper.frame = frame2;
+    // }];
+    scrollCamera.frame = frame;
+    [scrollCamera setZoomScale:ratio];
+    [self scrollViewDidZoom:scrollCamera];
 }
 
 - (void)showLensEffect {
+    if (!viewFocusControl.hidden) {
+        switch (bokehMode) {
+            case kBokehModeDisable:
+                bokehMode = kBokehModeFull;
+                break;
+            case kBokehModeFull:
+                bokehMode = kBokehModeDisable;
+                break;
+        }
+        [self applyCurrentEffect];
+    } else {
+        if (bokehMode == kBokehModeDisable)
+            bokehMode = kBokehModeFull;
+    }
+
+    switch (bokehMode) {
+        case kBokehModeFull:
+            viewDraw.hidden = false;
+            buttonToggleFocus.selected = true;
+            viewFocusControl.hidden = false;
+            [self setFocusTab:currentFocusTab];
+            break;
+        case kBokehModeDisable:
+            viewDraw.hidden = true;
+            buttonToggleFocus.selected = false;
+            viewFocusControl.hidden = true;
+            break;
+    }
+
     scrollEffect.hidden = true;
-    viewFocusControl.hidden = !viewFocusControl.hidden;
-    buttonToggleFocus.selected = !viewFocusControl.hidden;
     buttonScroll.selected = false;
 }
 
@@ -456,7 +577,7 @@
     //[filter saveUIImage:picture withLocation:location withMeta:imageMeta onComplete:saveImage];
     [filter changeFiltertoLens:currentLens andEffect:currentEffect input:picture output:cameraView isPicture:YES];
     [picture processImage];
-    [filter saveImage:location orientation:imageOrientaion withMeta:imageMeta onComplete:saveImage];
+    [filter saveImage:location orientation:imageOrientation withMeta:imageMeta onComplete:saveImage];
 }
 
 - (void)setupCameraAspect {
@@ -483,18 +604,6 @@
     if (buttonIndex == 3) { // Cancel
         return;
     }
-    // Change lens
-    buttonToggleFocus.hidden = YES;
-    viewFocusControl.hidden = YES;
-    switch (buttonIndex) {
-        case 1:
-            buttonToggleFocus.hidden = NO;
-            [self showLensEffect];
-            break;
-        case 3:
-            return;
-            break;
-    }
 
     currentLens = buttonIndex;
     [self applyCurrentEffect];
@@ -511,17 +620,45 @@
         
         UIImage *tmp = [info objectForKey:UIImagePickerControllerOriginalImage];
         picture = [[GPUImagePicture alloc] initWithCGImage:rep.fullResolutionImage];
-        imageOrientaion = tmp.imageOrientation;
-        filter.frameSize = CGSizeMake(tmp.size.width*tmp.scale, tmp.size.height*tmp.scale);
+        imageOrientation = tmp.imageOrientation;
         
         [imagePicker dismissViewControllerAnimated:NO completion:nil];
         
-        [scrollCamera setZoomScale:1.0];
+        CGFloat scale = [[UIScreen mainScreen] scale];
+        
         NSInteger height = [luxeysUtils heightFromWidth:320.0 width:tmp.size.width height:tmp.size.height];
-        viewCameraWraper.frame = CGRectMake(0.0, (scrollCamera.frame.size.height-height)/2, 320.0, height);
+        
+        CGRect frame = scrollCamera.frame;
+        
+        CGFloat horizontalRatio = frame.size.width / 320.0;
+        CGFloat verticalRatio = frame.size.height / height;
+        CGFloat ratio;
+        ratio = MIN(horizontalRatio, verticalRatio);
+        
+        CGRect frame2;
+        frame2.size = CGSizeMake(320.0*ratio, height*ratio);
+        frame2.origin.x = (frame.size.width - frame2.size.width)/2;
+        frame2.origin.y = (frame.size.height - frame2.size.height)/2;
+        
+        viewCameraWraper.frame = frame2;
         [self resizeCameraViewWithAnimation:NO];
         
-        UIImage *previewPic  = [UIImage imageWithCGImage:rep.fullScreenImage];
+        //
+        CGSize size;
+        
+        if (imageOrientation == UIImageOrientationLeft || imageOrientation == UIImageOrientationRight) {
+            size = CGSizeMake(height*scale*2.0, 320.0*scale*2.0);
+            filter.frameSize = CGSizeMake(tmp.size.height*tmp.scale, tmp.size.width*tmp.scale);
+        }
+        else {
+            size = CGSizeMake(320.0*scale*2.0, height*scale*2.0);
+            filter.frameSize = CGSizeMake(tmp.size.width*tmp.scale, tmp.size.height*tmp.scale);
+        }
+        
+        UIImage *previewPic = [tmp
+                               resizedImage: size
+                               interpolationQuality:kCGInterpolationHigh];
+        
         previewFilter = [[GPUImagePicture alloc] initWithImage:previewPic];
 
         [self switchEditImage];
@@ -550,20 +687,25 @@
 - (void)switchCamera {
     isEditing = NO;
     
-    // Clear memory
+    // Clear memory/blur mode
     picture = nil;
     previewFilter = nil;
     
     // Set to normal lens
     currentLens = 0;
     viewDraw.hidden = true;
-    imageBackgroundMask.hidden = true;
     
     // Zoom to normal size
     [scrollCamera setZoomScale:1.0];
-    viewCameraWraper.frame = CGRectMake(0, 0, 320, 425);
+    
+    CGRect screen = [[UIScreen mainScreen] bounds];
+    if (screen.size.height == 480)
+        viewCameraWraper.frame = CGRectMake(14, 0, 292, 390);
+    else
+        viewCameraWraper.frame = CGRectMake(3.5, 0, 313.5, 418);
     scrollCamera.scrollEnabled = NO;
-
+    
+    bokehMode = kBokehModeDisable;
     [self resizeCameraViewWithAnimation:NO];
     
     [locationManager startUpdatingLocation];
@@ -583,11 +725,15 @@
     imageAutoFocus.hidden = NO;
     buttonPick.hidden = NO;
     tapFocus.enabled = true;
-    buttonToggleFocus.hidden = YES;
     buttonChangeLens.hidden = YES;
     viewFocusControl.hidden = true;
     scrollEffect.hidden = false;
     buttonScroll.selected = YES;
+    buttonPick.hidden = NO;
+    buttonToggleFocus.hidden = YES;
+    gesturePan.enabled = true;
+    
+    
 }
 
 - (void)switchEditImage {
@@ -604,20 +750,26 @@
     buttonFlip.hidden = YES;
     buttonCrop.hidden = YES;
     buttonChangeLens.hidden = NO;
+    buttonPick.hidden = YES;
+    buttonToggleFocus.hidden = NO;
 
     imageAutoFocus.hidden = YES;
     viewTimer.hidden = YES;
     tapFocus.enabled = false;
-    buttonToggleFocus.hidden = YES;
-    
-    scrollCamera.maximumZoomScale=6.0;
+    gesturePan.enabled = true;
     
     // Clear depth mask
     [viewDraw.drawImageView setImage:nil];
     viewDraw.currentColor = [UIColor redColor];
     viewDraw.isEmpty = YES;
-    
-    [self setFocusTab:kTouchZoom];
+
+    // Default Brush
+    [self setUIMask:kMaskBackgroundNone];
+    viewDraw.lineWidth = 10.0;
+
+    currentFocusTab = kBokehTabMask;
+    bokehMode = kBokehModeDisable;
+    buttonToggleFocus.selected = false;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -681,37 +833,33 @@
 }
 
 - (IBAction)touchFocusTab:(UIButton*)sender {
+    currentFocusTab = sender.tag;
     [self setFocusTab:sender.tag];
-    sender.enabled = false;
 }
 
 - (IBAction)setMask:(UIButton*)sender {
-    switch (sender.tag) {
-        case 1:
-            viewDraw.lineWidth = 5.0;
-            break;
-        case 2:
-            viewDraw.lineWidth = 15.0;
-            break;
-        case 3:
-            viewDraw.lineWidth = 23.0;
-            break;
-        case 4:
-            viewDraw.isEraser = false;
-            break;
-        case 5:
-            viewDraw.isEraser = true;
-            break;
-        case 6: // Background none
-            [imageBackgroundMask setImage:nil];
-            break;
-        case 7: // Background Round
-            [imageBackgroundMask setImage:[self imageRadialGradient]];
-            break;
-        case 8: // Background Gradient
-            [imageBackgroundMask setImage:[self imageLinearGradient]];
-            break;
+    [self setUIMask:sender.tag];
+}
 
+- (void)setUIMask:(NSInteger)tag {
+    switch (tag) {
+        case kMaskBackgroundNone: // Background none
+            buttonBackgroundNone.enabled = false;
+            buttonBackgroundRound.enabled = true;
+            buttonBackgroundNatual.enabled = true;
+
+            break;
+        case kMaskBackgroundRound: // Background Round
+            buttonBackgroundNone.enabled = true;
+            buttonBackgroundRound.enabled = false;
+            buttonBackgroundNatual.enabled = true;
+
+            break;
+        case kMaskBackgroundNatual: // Background Gradient
+            buttonBackgroundNone.enabled = true;
+            buttonBackgroundRound.enabled = true;
+            buttonBackgroundNatual.enabled = false;
+            break;
             
         default:
             break;
@@ -719,7 +867,7 @@
 }
 
 - (UIImage*)imageRadialGradient {
-    UIGraphicsBeginImageContextWithOptions(imageBackgroundMask.frame.size, NO, 0);
+    UIGraphicsBeginImageContextWithOptions(cameraView.frame.size, NO, 0);
     CGContextRef currentContext = UIGraphicsGetCurrentContext();
     
     CGGradientRef glossGradient;
@@ -732,10 +880,9 @@
     rgbColorspace = CGColorSpaceCreateDeviceRGB();
     glossGradient = CGGradientCreateWithColorComponents(rgbColorspace, components, locations, num_locations);
     
-    CGRect currentBounds = imageBackgroundMask.bounds;
-    CGPoint topCenter = CGPointMake(CGRectGetMidX(currentBounds), 0.0f);
+    CGRect currentBounds = cameraView.bounds;
     CGPoint midCenter = CGPointMake(CGRectGetMidX(currentBounds), CGRectGetMidY(currentBounds));
-    CGContextDrawRadialGradient(currentContext, glossGradient, midCenter, 0, midCenter, imageBackgroundMask.frame.size.width, kCGGradientDrawsBeforeStartLocation);
+    CGContextDrawRadialGradient(currentContext, glossGradient, midCenter, 0, midCenter, cameraView.frame.size.width, kCGGradientDrawsBeforeStartLocation);
     
     CGGradientRelease(glossGradient);
     CGColorSpaceRelease(rgbColorspace);
@@ -750,7 +897,7 @@
 }
 
 - (UIImage*)imageLinearGradient {
-    UIGraphicsBeginImageContextWithOptions(imageBackgroundMask.frame.size, NO, 0);
+    UIGraphicsBeginImageContextWithOptions(cameraView.frame.size, NO, 0);
     CGContextRef currentContext = UIGraphicsGetCurrentContext();
     
     CGGradientRef glossGradient;
@@ -763,7 +910,7 @@
     rgbColorspace = CGColorSpaceCreateDeviceRGB();
     glossGradient = CGGradientCreateWithColorComponents(rgbColorspace, components, locations, num_locations);
     
-    CGRect currentBounds = imageBackgroundMask.bounds;
+    CGRect currentBounds = cameraView.bounds;
     CGPoint topCenter = CGPointMake(CGRectGetMidX(currentBounds), 0.0f);
     CGPoint bottomCenter = CGPointMake(CGRectGetMidX(currentBounds), currentBounds.size.height);
     CGContextDrawLinearGradient(currentContext, glossGradient, topCenter, bottomCenter, 0);
@@ -785,9 +932,17 @@
     [self applyCurrentEffect];
 }
 
-- (IBAction)changeFocalDepth:(UISlider *)sender {
-    filter.autofocus = false;
-    filter.focalDepth = sender.value;
+- (IBAction)changeHighlight:(UISlider*)sender {
+    filter.gain = sender.value;
+    [self applyCurrentEffect];
+}
+
+- (IBAction)changePen:(UISlider *)sender {
+    viewDraw.lineWidth = sender.value;
+    [viewDraw redraw];
+}
+
+- (IBAction)changeFeather:(UISlider *)sender {
     [self applyCurrentEffect];
 }
 
@@ -797,7 +952,6 @@
     
     imageAutoFocus.hidden = true;
     viewDraw.hidden = true;
-    imageBackgroundMask.hidden = true;
     viewBlur.hidden = true;
     viewMask.hidden = true;
     viewFocal.hidden = true;
@@ -808,35 +962,27 @@
     buttonBackground.enabled = true;
     
     switch (mode) {
-        case 0: // Move mode
-            scrollCamera.scrollEnabled = true;
-            
-            // Change to preview
-            currentLens = 1;
-            break;
-        case 1:  // Focus
-            [scrollCamera setZoomScale:1.0 animated:YES];
-            imageAutoFocus.hidden = false;
-            tapFocus.enabled = true;
-            viewFocal.hidden = false;
-            
-            // Change to preview
-            currentLens = 1;
-            break;
-        case 2:  // Mask mode
+        case kBokehTabMask:
             currentLens = 0; // Normal lens
             viewDraw.hidden = false;
-            imageBackgroundMask.hidden = false;
             viewMask.hidden = false;
+            buttonPaintMask.enabled = false;
+            tapFocus.enabled = false;
+            imageAutoFocus.hidden = true;
+            [self resizeCameraViewWithAnimation:NO];
+            scrollCamera.scrollEnabled = false;
             break;
-        case 3: // Background mode
+        case kBokehTabBlur: // Blur mode
+            scrollCamera.scrollEnabled = true;
             viewBlur.hidden = false;
-            
+            buttonBackground.enabled = false;
+            imageAutoFocus.hidden = false;
+            tapFocus.enabled = true;
+            imageAutoFocus.hidden = false;
+            scrollCamera.scrollEnabled = true;
             // Change to preview
-            currentLens = 1;
             break;
     }
-    [self applyCurrentEffect];
 }
 
 - (IBAction)focusControl:(id)sender {
@@ -978,7 +1124,12 @@
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
-    return viewCameraWraper;
+    if (isEditing) {
+        if (!viewFocusControl.hidden && currentFocusTab == kBokehTabMask)
+           return nil;
+        return viewCameraWraper;
+    }
+    return nil;
 }
 
 - (CGRect)zoomRectForScrollView:(UIScrollView *)scrollView withScale:(float)scale withCenter:(CGPoint)center {
@@ -1067,4 +1218,9 @@
 }
 #pragma mark -
 
+- (void)newMask:(UIImage *)mask {
+    filter.dof = [mask rotateOrientation:imageOrientation];
+    
+    [self applyCurrentEffect];
+}
 @end

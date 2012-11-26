@@ -7,20 +7,28 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GPUImage.h"
 
+@protocol LXDrawViewDelegate <NSObject>
+
+- (void)newMask:(UIImage*)mask;
+
+@end
 @interface LXDrawView : UIView {
-    BOOL isEraser;
     BOOL isEmpty;
+    UIBezierPath *aPath;
+    id<LXDrawViewDelegate>  __unsafe_unretained delegate;
+    UIImage *mask;
 }
+
+@property (unsafe_unretained) id <LXDrawViewDelegate> delegate;
 
 @property (nonatomic,retain) IBOutlet UIImageView *drawImageView;
 @property (nonatomic,retain) UIColor *currentColor;
 
-@property (nonatomic) CGPoint lastPoint;
-@property (nonatomic) CGPoint prePreviousPoint;
-@property (nonatomic) CGPoint previousPoint;
-@property (nonatomic) CGFloat lineWidth;
-@property (nonatomic) BOOL isEraser;
 @property (assign, nonatomic) BOOL isEmpty;
+@property (nonatomic) CGFloat lineWidth;
+
+- (void)redraw;
 
 @end

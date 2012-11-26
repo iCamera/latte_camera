@@ -128,18 +128,23 @@
     luxeysCellProfile *cell = [tableView dequeueReusableCellWithIdentifier:@"Profile"];
     if (indexPath.section == 0)
     {        
-        cell.labelDetail.text = [picDict objectForKey:[keyBasic objectAtIndex:indexPath.row]];
+        
         if ([[keyBasic objectAtIndex:indexPath.row] isEqualToString:@"taken_at"]) {
             cell.labelField.text = @"撮影月日";
+            cell.labelDetail.text = [picDict objectForKey:[keyBasic objectAtIndex:indexPath.row]];
         }
         if ([[keyBasic objectAtIndex:indexPath.row] isEqualToString:@"created_at"]) {
             cell.labelField.text = @"追加月日";
+            cell.labelDetail.text = [picDict objectForKey:[keyBasic objectAtIndex:indexPath.row]];
         }
         if ([[keyBasic objectAtIndex:indexPath.row] isEqualToString:@"tags"]) {
             cell.labelField.text = @"タグ";
+            NSArray *tags = [picDict objectForKey:[keyBasic objectAtIndex:indexPath.row]];
+            cell.labelDetail.text = [tags componentsJoinedByString:@", "];
         }
         if ([[keyBasic objectAtIndex:indexPath.row] isEqualToString:@"taken_at"]) {
             cell.labelField.text = @"撮影月日";
+            cell.labelDetail.text = [picDict objectForKey:[keyBasic objectAtIndex:indexPath.row]];
         }
     }
     if (indexPath.section == 1) {

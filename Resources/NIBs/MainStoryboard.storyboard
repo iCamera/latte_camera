@@ -1380,15 +1380,16 @@
                                     <action selector="touchForgot:" destination="mAm-aD-jCP" eventType="touchUpInside" id="auM-fn-XCM"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="yru-mV-vvg">
-                                <rect key="frame" x="124" y="283" width="73" height="44"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="yru-mV-vvg">
+                                <rect key="frame" x="85.5" y="283" width="150" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Facebook">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="contentEdgeInsets" minX="43" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" title="ログイン" backgroundImage="bt_facebook2.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <state key="highlighted">
+                                <state key="highlighted" backgroundImage="bt_facebook2_on.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -1467,32 +1468,13 @@
                                         <action selector="touchReg:" destination="uLo-di-fGC" eventType="touchUpInside" id="V90-pP-PEo"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="pYe-31-Qv2">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="pYe-31-Qv2">
                                     <rect key="frame" x="33" y="10" width="255" height="29"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <state key="normal">
-                                        <attributedString key="attributedTitle">
-                                            <fragment content="登録前に">
-                                                <attributes>
-                                                    <font key="NSFont" size="13" name="HiraKakuProN-W3"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment content="利用契約">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.0" green="0.25098039215686274" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" size="13" name="HiraKakuProN-W3"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment content="をご確認ください">
-                                                <attributes>
-                                                    <font key="NSFont" size="13" name="HiraKakuProN-W3"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
+                                    <fontDescription key="fontDescription" name="HiraKakuProN-W3" family="Hiragino Kaku Gothic ProN" pointSize="13"/>
+                                    <state key="normal" title="登録前に利用契約をご確認ください">
+                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <connections>
                                         <action selector="touchPolicy:" destination="uLo-di-fGC" eventType="touchUpInside" id="yFu-cQ-3yi"/>
@@ -2516,7 +2498,7 @@
                                             <color key="textColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" id="aVu-dI-tR8">
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="5" id="aVu-dI-tR8">
                                             <rect key="frame" x="83" y="5" width="39" height="19"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -3017,6 +2999,8 @@
         <image name="br_usermenu_right_on.png" width="100" height="35"/>
         <image name="bt_comment.png" width="75" height="25"/>
         <image name="bt_comment_on.png" width="75" height="25"/>
+        <image name="bt_facebook2.png" width="150" height="40"/>
+        <image name="bt_facebook2_on.png" width="150" height="40"/>
         <image name="bt_hold.png" width="23" height="23"/>
         <image name="bt_hold_on.png" width="23" height="23"/>
         <image name="bt_iine.png" width="75" height="25"/>
@@ -3074,10 +3058,10 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="ZIs-3a-Tm6"/>
         <segue reference="b5W-W7-HGr"/>
         <segue reference="UF9-un-0WO"/>
-        <segue reference="4NK-LT-yMU"/>
+        <segue reference="AY3-aD-SVq"/>
         <segue reference="X1N-Wl-dCB"/>
+        <segue reference="ZIs-3a-Tm6"/>
     </inferredMetricsTieBreakers>
 </document>
