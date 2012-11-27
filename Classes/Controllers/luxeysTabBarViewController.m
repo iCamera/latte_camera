@@ -150,8 +150,8 @@
     [self presentViewController:storyCapture animated:NO completion:nil];
 }
 
-- (void)imagePickerController:(luxeysCameraViewController *)picker didFinishPickingMediaWithData:(NSData *)data {
-    [picker performSegueWithIdentifier:@"Edit" sender:data];
+- (void)imagePickerController:(luxeysCameraViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info {
+    [picker performSegueWithIdentifier:@"Edit" sender:info];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

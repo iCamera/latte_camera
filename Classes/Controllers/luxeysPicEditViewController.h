@@ -18,6 +18,7 @@
     
     NSData *imageData;
     NSInteger imageStatus;
+    UIImage *preview;
     Picture *picture;
 }
 
@@ -35,6 +36,7 @@
 @property (strong, nonatomic) IBOutlet UIView *viewDelete;
 
 @property (strong, nonatomic) Picture *picture;
+@property (strong, nonatomic) UIImage *preview;
 
 - (IBAction)touchPost:(id)sender;
 - (IBAction)touchBack:(id)sender;

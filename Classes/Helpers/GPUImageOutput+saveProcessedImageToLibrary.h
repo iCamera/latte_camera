@@ -6,11 +6,11 @@
 //  Copyright (c) 2012年 LUXEYS. All rights reserved.
 //
 
-#import "GPUImageOutput.h"
+#import "GPUImageFilter.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
-@interface GPUImageOutput (saveProcessedImageToLibrary)
-- (void)saveImageFromCurrentlyProcessedOutputWithMeta:(NSDictionary *)metaData andOrientation:(UIImageOrientation)imageOrientation onComplete:(void(^)(NSURL *assetURL, NSError *error))block;
+@interface GPUImageFilter (saveProcessedImageToLibrary)
+- (void)saveImageFromCurrentlyProcessedOutputWithMeta:(NSDictionary *)metaData andOrientation:(UIImageOrientation)imageOrientation onComplete:(void(^)(NSURL *assetURL, NSError *error, UIImage *preview))block;
 - (void)saveImageByFilteringImage:(UIImage *)image withMeta:(NSDictionary *)metaData onComplete:(void(^)(NSURL *assetURL, NSError *error))block;
 
 @end

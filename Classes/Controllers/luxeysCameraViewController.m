@@ -51,6 +51,9 @@
 @synthesize buttonMove;
 @synthesize buttonPaintMask;
 
+@synthesize imageMaskCircle;
+@synthesize imageMaskRect;
+
 @synthesize buttonBackgroundRound;
 @synthesize buttonBackgroundNatual;
 @synthesize buttonBackgroundNone;
@@ -81,7 +84,9 @@
 {
     [super viewDidLoad];
     
+    isSaved = true;
     viewDraw.delegate = self;
+    viewDraw.lineWidth = 10.0;
     [self setupCameraAspect];
     
     filter = [[FilterManager alloc] init];
@@ -222,6 +227,8 @@
     [self setButtonBackgroundRound:nil];
     [self setButtonBackgroundNatual:nil];
     [self setButtonBackgroundNone:nil];
+    [self setImageMaskRect:nil];
+    [self setImageMaskCircle:nil];
     [super viewDidUnload];
 }
 
@@ -248,23 +255,21 @@
     // seems like atIndex is ignored by GPUImageView...
     [cameraView setInputRotation:imageViewRotationMode atIndex:0];
     
-    [picture processImage];
+    [previewFilter processImage];
 }
 
 
 - (void)applyCurrentEffect {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         if (isEditing) {
             filter.isDOF = (bokehMode == kBokehModeFull) && (!viewDraw.isEmpty);
 
-            [filter changeFiltertoLens:currentLens andEffect:currentEffect input:picture output:cameraView isPicture:true];
+            [filter changeFiltertoLens:currentLens andEffect:currentEffect input:previewFilter output:cameraView isPicture:true];
             [self showStillImage];
 //            [previewFilter processImage];
         } else {
             filter.isDOF = false;
             [filter changeFiltertoLens:currentLens andEffect:currentEffect input:videoCamera output:cameraView isPicture:false];
         }
-    });
 }
 
 
@@ -337,15 +342,21 @@
                                               CGRect screen = [[UIScreen mainScreen] bounds];
                                               
                                               if (imageOrientation == UIImageOrientationLeft || imageOrientation == UIImageOrientationRight) {
-                                                  size = CGSizeMake(height*2.0, width*2.0);
+                                                  if (screen.size.height == 480)
+                                                      size = CGSizeMake(height/2.0, width/2.0);
+                                                  else
+                                                      size = CGSizeMake(height*2.0, width*2.0);
                                                   viewCameraWraper.frame = CGRectMake(14, 0, 320, 240);
                                               }
                                               else {
-                                                  size = CGSizeMake(width, height);
-                                                  if (screen.size.height == 480)
+                                                  if (screen.size.height == 480) {
                                                       viewCameraWraper.frame = CGRectMake(14, 0, 292, 390);
-                                                  else
+                                                      size = CGSizeMake(width/2.0, height/2.0);
+                                                  }
+                                                  else {
                                                       viewCameraWraper.frame = CGRectMake(3.5, 0, 313.5, 418);
+                                                      size = CGSizeMake(width*2.0, height*2.0);
+                                                  }
                                               }
                                               
                                               
@@ -361,8 +372,8 @@
                                                                                  smoothlyScaleOutput:YES];
                                               
                                               
-                                              [self applyCurrentEffect];
                                               [self switchEditImage];
+                                              [self applyCurrentEffect];
     }];
 }
 
@@ -393,7 +404,16 @@
 }
 
 - (IBAction)close:(id)sender {
-    [self dismissViewControllerAnimated:NO completion:nil];
+    if (!isSaved) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
+                                                        message:@"You have not saved this photo, are you sure?"
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:@"OK", nil];
+        alert.tag = 2;
+        [alert show];
+    } else
+        [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (IBAction)capture:(id)sender {
@@ -465,7 +485,7 @@
 }
 
 - (void)resizeCameraViewWithAnimation:(BOOL)animation {
-    [scrollCamera setZoomScale:1.0];
+    [scrollCamera setZoomScale:1.0 animated:NO];
     CGRect screen = [[UIScreen mainScreen] bounds];
 
     
@@ -558,7 +578,8 @@
         [imageMeta setObject:location forKey:(NSString *)kCGImagePropertyGPSDictionary];
     }
     
-    void (^saveImage)(ALAsset *) = ^(ALAsset *asset) {
+    void (^saveImage)(ALAsset *, UIImage *) = ^(ALAsset *asset, UIImage *preview) {
+        isSaved = true;
         luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
         
         if (app.currentUser != nil) {
@@ -567,15 +588,19 @@
             NSUInteger buffered = [rep getBytes:buffer fromOffset:0.0 length:rep.size error:nil];
             NSData *uploadData = [NSData dataWithBytesNoCopy:buffer length:buffered freeWhenDone:YES];
             
-            [delegate imagePickerController:self didFinishPickingMediaWithData:uploadData];
+            NSDictionary *info = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                  uploadData, @"data",
+                                  preview, @"preview",
+                                  nil];
+            
+            [delegate imagePickerController:self didFinishPickingMediaWithData:info];
             
         } else {
             [self switchCamera];
         }
     };
     
-    //[filter saveUIImage:picture withLocation:location withMeta:imageMeta onComplete:saveImage];
-    [filter changeFiltertoLens:currentLens andEffect:currentEffect input:picture output:cameraView isPicture:YES];
+    [filter changeFiltertoLens:currentLens andEffect:currentEffect input:picture output:nil isPicture:YES];
     [picture processImage];
     [filter saveImage:location orientation:imageOrientation withMeta:imageMeta onComplete:saveImage];
 }
@@ -645,13 +670,22 @@
         
         //
         CGSize size;
+                    CGRect screen = [[UIScreen mainScreen] bounds];
         
         if (imageOrientation == UIImageOrientationLeft || imageOrientation == UIImageOrientationRight) {
-            size = CGSizeMake(height*scale*2.0, 320.0*scale*2.0);
+
+            
+            if (screen.size.height == 480)
+                size = CGSizeMake(height, 320.0);
+            else
+                size = CGSizeMake(height*scale*2.0, 320.0*scale*2.0);
             filter.frameSize = CGSizeMake(tmp.size.height*tmp.scale, tmp.size.width*tmp.scale);
         }
         else {
-            size = CGSizeMake(320.0*scale*2.0, height*scale*2.0);
+            if (screen.size.height == 480)
+                size = CGSizeMake(320.0, height);
+            else
+                size = CGSizeMake(320.0*scale*2.0, height*scale*2.0);
             filter.frameSize = CGSizeMake(tmp.size.width*tmp.scale, tmp.size.height*tmp.scale);
         }
         
@@ -685,8 +719,7 @@
 }
 
 - (void)switchCamera {
-    isEditing = NO;
-    
+    isSaved = true;
     // Clear memory/blur mode
     picture = nil;
     previewFilter = nil;
@@ -694,16 +727,17 @@
     // Set to normal lens
     currentLens = 0;
     viewDraw.hidden = true;
+    viewDraw.isEmpty = true;
     
     // Zoom to normal size
-    [scrollCamera setZoomScale:1.0];
+    [scrollCamera setZoomScale:1.0 animated:NO];
     
     CGRect screen = [[UIScreen mainScreen] bounds];
     if (screen.size.height == 480)
         viewCameraWraper.frame = CGRectMake(14, 0, 292, 390);
     else
         viewCameraWraper.frame = CGRectMake(3.5, 0, 313.5, 418);
-    scrollCamera.scrollEnabled = NO;
+    scrollCamera.contentSize = viewCameraWraper.frame.size;
     
     bokehMode = kBokehModeDisable;
     [self resizeCameraViewWithAnimation:NO];
@@ -712,8 +746,8 @@
     [videoCamera resumeCameraCapture];
     [videoCamera startCameraCapture];
 
-    [self applyCurrentEffect];
-//    [cameraView setInputRotation:kGPUImageNoRotation atIndex:0];
+    
+    // [cameraView setInputRotation:kGPUImageNoRotation atIndex:0];
     
     buttonNo.hidden = YES;
     buttonYes.hidden = YES;
@@ -732,8 +766,9 @@
     buttonPick.hidden = NO;
     buttonToggleFocus.hidden = YES;
     gesturePan.enabled = true;
-    
-    
+    scrollCamera.scrollEnabled = NO;
+    isEditing = NO;
+    [self applyCurrentEffect];
 }
 
 - (void)switchEditImage {
@@ -757,6 +792,7 @@
     viewTimer.hidden = YES;
     tapFocus.enabled = false;
     gesturePan.enabled = true;
+    isSaved = FALSE;
     
     // Clear depth mask
     [viewDraw.drawImageView setImage:nil];
@@ -765,22 +801,46 @@
 
     // Default Brush
     [self setUIMask:kMaskBackgroundNone];
-    viewDraw.lineWidth = 10.0;
 
     currentFocusTab = kBokehTabMask;
     bokehMode = kBokehModeDisable;
     buttonToggleFocus.selected = false;
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(NSDictionary *)info {
     if ([segue.identifier isEqualToString:@"Edit"]) {
         luxeysPicEditViewController *controllerPicEdit = segue.destinationViewController;
-        [controllerPicEdit setData:sender];
+        [controllerPicEdit setData:[info objectForKey:@"data"]];
+        [controllerPicEdit setPreview:[info objectForKey:@"preview"]];
     }
 }
 
 - (IBAction)touchNo:(id)sender {
-    [self switchCamera];
+    if (!isSaved) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
+                                                        message:@"You have not saved this photo, are you sure?"
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:@"OK", nil];
+        alert.tag = 1;
+        [alert show];
+    } else
+        [self switchCamera];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (alertView.tag) {
+        case 1: //Touch No
+            if (buttonIndex == 1)
+                [self switchCamera];
+            break;
+        case 2:
+            if (buttonIndex == 1)
+                [self dismissViewControllerAnimated:NO completion:nil];
+            break;
+        default:
+            break;
+    }
 }
 
 
@@ -847,18 +907,19 @@
             buttonBackgroundNone.enabled = false;
             buttonBackgroundRound.enabled = true;
             buttonBackgroundNatual.enabled = true;
-
+            viewDraw.backgroundType = kBackgroundNone;
             break;
         case kMaskBackgroundRound: // Background Round
             buttonBackgroundNone.enabled = true;
             buttonBackgroundRound.enabled = false;
             buttonBackgroundNatual.enabled = true;
-
+            viewDraw.backgroundType = kBackgroundRadial;
             break;
         case kMaskBackgroundNatual: // Background Gradient
             buttonBackgroundNone.enabled = true;
             buttonBackgroundRound.enabled = true;
             buttonBackgroundNatual.enabled = false;
+            viewDraw.backgroundType = kBackgroundNatual;
             break;
             
         default:
@@ -942,12 +1003,26 @@
     [viewDraw redraw];
 }
 
-- (IBAction)changeFeather:(UISlider *)sender {
-    [self applyCurrentEffect];
+- (IBAction)pinchMask:(UIPinchGestureRecognizer *)sender {
+    imageMaskRect.transform = CGAffineTransformScale(imageMaskRect.transform, sender.scale, sender.scale);
+    sender.scale = 1;
+    NSLog(@"Pinched");
+}
+
+- (IBAction)rotateMask:(UIRotationGestureRecognizer *)sender {
+    imageMaskRect.transform = CGAffineTransformRotate(imageMaskRect.transform, sender.rotation);
+    sender.rotation = 0;
+    NSLog(@"Rotate");
+}
+
+- (IBAction)panMask:(UIPanGestureRecognizer *)sender {
+    CGPoint translation = [sender translationInView:viewDraw];
+    imageMaskRect.center = CGPointMake(imageMaskRect.center.x,
+                                         imageMaskRect.center.y + translation.y);
+    [sender setTranslation:CGPointMake(0, 0) inView:viewDraw];
 }
 
 - (void)setFocusTab:(int)mode {
-    scrollCamera.scrollEnabled = false;
     tapFocus.enabled = false;
     
     imageAutoFocus.hidden = true;
@@ -1082,15 +1157,12 @@
     
     pointOfInterest = CGPointMake(point.y, 1.0 - point.x);
     
-    NSLog(@"Focus at %f %f", pointOfInterest.x, pointOfInterest.y);
-    
     NSError *error;
     if ([device lockForConfiguration:&error]) {
         if ([device isFocusPointOfInterestSupported] && [device isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
             [device setFocusPointOfInterest:pointOfInterest];
             [device setFocusMode:AVCaptureFocusModeAutoFocus];
             [device unlockForConfiguration];
-            NSLog(@"FOCUS OK");
         }
     } else {
         NSLog(@"ERROR = %@", error);
@@ -1124,12 +1196,10 @@
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
-    if (isEditing) {
-        if (!viewFocusControl.hidden && currentFocusTab == kBokehTabMask)
-           return nil;
+    if (scrollView.scrollEnabled)
         return viewCameraWraper;
-    }
-    return nil;
+    else
+        return nil;
 }
 
 - (CGRect)zoomRectForScrollView:(UIScrollView *)scrollView withScale:(float)scale withCenter:(CGPoint)center {
@@ -1222,5 +1292,9 @@
     filter.dof = [mask rotateOrientation:imageOrientation];
     
     [self applyCurrentEffect];
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return YES;
 }
 @end

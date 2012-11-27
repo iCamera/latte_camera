@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <ImageIO/ImageIO.h>
 
+
 @interface luxeysUtils : NSObject
 
 + (NSInteger)heightFromWidth:(CGFloat)newwidth width:(CGFloat)width height:(CGFloat)height;

@@ -45,11 +45,11 @@ typedef enum {
 
 @protocol LXImagePickerDelegate <NSObject>
 @optional
-- (void)imagePickerController:(luxeysCameraViewController *)picker didFinishPickingMediaWithData:(NSData *)data;
+- (void)imagePickerController:(luxeysCameraViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info;
 - (void)imagePickerControllerDidCancel:(luxeysCameraViewController *)picker;
 @end
 
-@interface luxeysCameraViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, UIScrollViewDelegate, UIAccelerometerDelegate, LXDrawViewDelegate> {
+@interface luxeysCameraViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, UIScrollViewDelegate, UIAccelerometerDelegate, LXDrawViewDelegate, UIAlertViewDelegate> {
     GPUImageStillCamera *videoCamera;
     
     GPUImagePicture *picture;
@@ -65,6 +65,7 @@ typedef enum {
     BOOL isCrop;
     BOOL isReady;
     BOOL isFinishedProcessing;
+    BOOL isSaved;
     
     int bokehMode;
     int currentFocusTab;
@@ -109,6 +110,8 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIView *viewMask;
 @property (strong, nonatomic) IBOutlet UIView *viewBlur;
 @property (strong, nonatomic) IBOutlet UIView *viewFocal;
+@property (strong, nonatomic) IBOutlet UIImageView *imageMaskRect;
+@property (strong, nonatomic) IBOutlet UIImageView *imageMaskCircle;
 
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonMove;
@@ -142,5 +145,8 @@ typedef enum {
 - (IBAction)changeBlur:(UISlider*)sender;
 - (IBAction)changeHighlight:(UISlider*)sender;
 - (IBAction)changePen:(UISlider *)sender;
+- (IBAction)pinchMask:(UIPinchGestureRecognizer *)sender;
+- (IBAction)rotateMask:(UIRotationGestureRecognizer *)sender;
+- (IBAction)panMask:(UIPanGestureRecognizer *)sender;
 
 @end

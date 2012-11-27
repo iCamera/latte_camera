@@ -18,6 +18,7 @@
 @synthesize currentColor;
 @synthesize isEmpty;
 @synthesize delegate;
+@synthesize backgroundType;
 
 /*
  // Only override drawRect: if you perform custom drawing.
@@ -83,20 +84,53 @@
     
     CGContextRef currentContext = UIGraphicsGetCurrentContext();
     
-    CGGradientRef glossGradient;
-    CGColorSpaceRef rgbColorspace;
-    size_t num_locations = 2;
-    CGFloat locations[2] = { 1.0, 0.0 };
-    CGFloat components[8] = { 1.0, 0.0, 0.0, 1.0,  // Start color
-        1.0, 0.0, 0.0, 1.0 }; // End color
+    switch (backgroundType) {
+        case kBackgroundNatual: {
+            CGGradientRef glossGradient;
+            CGColorSpaceRef rgbColorspace;
+            size_t num_locations = 2;
+            CGFloat locations[2] = { 1.0, 0.0 };
+            CGFloat components[8] = { 1.0, 0.0, 0.0, 0.0,  // Start color
+                1.0, 0.0, 0.0, 1.0 }; // End color
+            
+            rgbColorspace = CGColorSpaceCreateDeviceRGB();
+            glossGradient = CGGradientCreateWithColorComponents(rgbColorspace, components, locations, num_locations);
+            CGColorSpaceRelease(rgbColorspace);
+            
+            CGRect currentBounds = self.bounds;
+            CGPoint topCenter = CGPointMake(CGRectGetMidX(currentBounds), 0.0f);
+            CGPoint bottomCenter = CGPointMake(CGRectGetMidX(currentBounds), currentBounds.size.height);
+            CGContextDrawLinearGradient(currentContext, glossGradient, topCenter, bottomCenter, 0);
+            CGGradientRelease(glossGradient);
+            break;
+        }
+        case kBackgroundRadial: {
+            CGGradientRef glossGradient;
+            CGColorSpaceRef rgbColorspace;
+            size_t num_locations = 2;
+            CGFloat locations[2] = { 1.0, 0.0 };
+            CGFloat components[8] = { 1.0, 0.0, 0.0, 1.0,  // Start color
+                1.0, 0.0, 0.0, 0.0 }; // End color
+            
+            rgbColorspace = CGColorSpaceCreateDeviceRGB();
+            glossGradient = CGGradientCreateWithColorComponents(rgbColorspace, components, locations, num_locations);
+            CGColorSpaceRelease(rgbColorspace);
+            
+            CGPoint gradCenter= CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
+            float gradRadius = MIN(self.bounds.size.width , self.bounds.size.height) ;
+            
+            CGContextDrawRadialGradient(currentContext, glossGradient, gradCenter, 0.0, gradCenter, gradRadius, kCGGradientDrawsAfterEndLocation);
+            CGGradientRelease(glossGradient);
+            
+            break;
+        }
+        default: {
+            [[UIColor redColor] setFill];
+            CGContextFillRect(currentContext, self.bounds);
+            break;
+        }
     
-    rgbColorspace = CGColorSpaceCreateDeviceRGB();
-    glossGradient = CGGradientCreateWithColorComponents(rgbColorspace, components, locations, num_locations);
-    
-    CGRect currentBounds = self.bounds;
-    CGPoint topCenter = CGPointMake(0, 0.0f);
-    CGPoint bottomCenter = CGPointMake(currentBounds.size.width, currentBounds.size.height);
-    CGContextDrawLinearGradient(currentContext, glossGradient, topCenter, bottomCenter, 0);
+    }
     
     CGContextSetBlendMode(currentContext, kCGBlendModeClear);
     CGContextSetStrokeColorWithColor(currentContext, [[UIColor clearColor] CGColor]);
@@ -121,7 +155,20 @@
     drawImageView.image = mask;
 }
 
+- (void)setBackgroundType:(NSInteger)aBackgroundType {
+    if (backgroundType != aBackgroundType) {
+        backgroundType = aBackgroundType;
+        [self redraw];
+    }
+}
 
+- (void)setIsEmpty:(BOOL)aIsEmpty {
+    isEmpty = aIsEmpty;
+    if (isEmpty) {
+        mask = nil;
+        drawImageView.image = nil;
+    }
+}
 
 /*
  // Only override drawRect: if you perform custom drawing.

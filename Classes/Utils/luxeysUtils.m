@@ -7,6 +7,8 @@
 //
 
 #import "luxeysUtils.h"
+#import <Foundation/Foundation.h>
+
 
 @implementation luxeysUtils
 

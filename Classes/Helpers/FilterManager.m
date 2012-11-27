@@ -48,7 +48,7 @@
         threshold = 0.5;
         autofocus = false;
         focalDepth = 1.0;
-        gain = 3.0;
+        gain = 1.0;
 //        grain = [[GPUImageOverlayBlendFilter alloc] init];
         
     }
@@ -127,32 +127,35 @@
     
     
     if (lensIn == nil && effectIn == nil) {
-        if (isPicture) {
-            [aInput addTarget:aOutput];
-        } else {
-            [aInput addTarget:crop];
-            [crop addTarget:aOutput];
-            
-            lastFilter = crop;
-        }
+        [aInput addTarget:crop];
+        [crop addTarget:aOutput];
+        lastFilter = crop;
     } else if (lensIn == nil) {
         if (isPicture) {
             [aInput addTarget:effectIn];
-            [effectOut addTarget:aOutput];
+            if (aOutput != nil) {
+                [effectOut addTarget:aOutput];
+            }
         } else {
             [aInput addTarget:crop];
             [crop addTarget:effectIn];
-            [effectOut addTarget:aOutput];
+            if (aOutput != nil) {
+                [effectOut addTarget:aOutput];
+            }
         }
         lastFilter = effectOut;
     } else if (effectIn == nil) {
         if (isPicture) {
             [aInput addTarget:lensIn];
-            [lensOut addTarget:aOutput];
+            if (aOutput != nil) {
+                [lensOut addTarget:aOutput];
+            }
         } else {
             [aInput addTarget:crop];
             [crop addTarget:lensIn];
-            [lensOut addTarget:aOutput];
+            if (aOutput != nil) {
+                [lensOut addTarget:aOutput];
+            }
         }
         lastFilter = lensOut;
     }
@@ -160,18 +163,18 @@
         if (isPicture) {
             [aInput addTarget:effectIn];
             [effectOut addTarget:lensIn];
-            [lensOut addTarget:aOutput];
+            if (aOutput != nil) {
+                [lensOut addTarget:aOutput];
+            }
         } else {
             [aInput addTarget:crop];
             [crop addTarget:effectIn];
             [effectOut addTarget:lensIn];
-            [lensOut addTarget:aOutput];
+            if (aOutput != nil) {
+                [lensOut addTarget:aOutput];
+            }
         }
         lastFilter = lensOut;
-    }
-    //    [effectOut addTarget:aOutput];
-    if (isPicture) {
-//        [lensOut prepareForImageCapture];
     }
 }
 
@@ -560,7 +563,7 @@
 }
 
 
-- (void)saveImage:(NSDictionary *)location orientation:(UIImageOrientation)imageOrientation withMeta:(NSMutableDictionary *)imageMeta onComplete:(void(^)(ALAsset *asset))block {
+- (void)saveImage:(NSDictionary *)location orientation:(UIImageOrientation)imageOrientation withMeta:(NSMutableDictionary *)imageMeta onComplete:(void(^)(ALAsset *asset, UIImage *preview))block {
     
     if (imageMeta == nil) {
         imageMeta = [[NSMutableDictionary alloc] init];
@@ -584,14 +587,14 @@
     [imageMeta setObject:[[UIDevice currentDevice] model] forKey:(NSString *)kCGImagePropertyTIFFModel];
     [imageMeta setObject:@"Latte" forKey:(NSString *)kCGImagePropertyTIFFSoftware];
     
-    if (lastFilter == nil) {
-        lastFilter = [[GPUImageBrightnessFilter alloc] init];
-    }
-    
-    [lastFilter saveImageFromCurrentlyProcessedOutputWithMeta:imageMeta andOrientation:imageOrientation onComplete:^(NSURL *assetURL, NSError *error) {
+    [lastFilter saveImageFromCurrentlyProcessedOutputWithMeta:imageMeta
+                                               andOrientation:imageOrientation
+                                                   onComplete:^(NSURL *assetURL, NSError *error, UIImage *preview) {
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
         [library assetForURL:assetURL
-                 resultBlock:block
+                 resultBlock:^(ALAsset *asset) {
+                     block(asset, preview);
+                 }
                 failureBlock:nil];
     }];
 }
@@ -600,9 +603,6 @@
     if (imageMeta == nil) {
         imageMeta = [[NSMutableDictionary alloc] init];
     }
-    
-    //    [imageMeta removeObjectForKey:(NSString *)kCGImagePropertyOrientation];
-    //    [imageMeta removeObjectForKey:(NSString *)kCGImagePropertyTIFFOrientation];
     
     NSNumber *orientation = [NSNumber numberWithInteger:[self metadataOrientationForUIImageOrientation:picture.imageOrientation]];
     

@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"UIImage",
+				"UIImageOrientationUp	enum UIImageOrientation"
+			],
+			[
+				"imageO",
+				"imageOrientaion	UIImageOrientation"
+			],
+			[
+				"scrol",
+				"scrollCamera	UIScrollView *"
+			],
+			[
+				"kBo",
+				"kBokehTabBlur	macro"
+			],
+			[
 				"foc",
 				"focalDepth	CGFloat"
 			],
@@ -14,10 +30,6 @@
 			[
 				"gain",
 				"gainUniform	GLint"
-			],
-			[
-				"kBo",
-				"kBokehModeDisable	macro"
 			],
 			[
 				"dis",
@@ -502,18 +514,6 @@
 			[
 				"table",
 				"tableView:(UITableView *) viewForHeaderInSection:(NSInteger)	UIView *"
-			],
-			[
-				"v",
-				"view	UIView *"
-			],
-			[
-				"inser",
-				"insertItemsAtIndexPaths:(NSArray *) withItemAnimation:(SSCollectionViewItemAnimation)	void"
-			],
-			[
-				"CGMake",
-				"CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)	CGRect"
 			]
 		]
 	},
@@ -560,38 +560,46 @@
 	},
 	"file_history":
 	[
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageGaussianBlurFilter.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/GPUImageOutput+saveProcessedImageToLibrary.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/LXFilterBlur.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageGaussianBlurFilter.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/FilterManager.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/GPUImageStillCamera+captureWithMeta.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/FilterManager.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/LXDrawView.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/LXDrawView.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCameraViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageOutput.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/LXFilterBlur.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/UIImage+Resize.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/UIImage+fixOrientation.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/UIImage+fixOrientation.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Resources/Effect/blur.fsh",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageFastBlurFilter.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/LXFilterBlur.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/FilterManager.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageRawDataOutput.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageRawDataOutput.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageBuffer.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/LXFilter.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/GPUImageStillCamera+captureWithMeta.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageFilter.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/GPUImageOutput+saveProcessedImageToLibrary.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCameraViewController.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCameraViewController.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/LXDrawView.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImagePicture.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/FilterManager.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageBuffer.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageParallelCoordinateLineTransformFilter.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageParallelCoordinateLineTransformFilter.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/LXDrawView.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/UIImage+Resize.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageGaussianBlurFilter.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageGaussianBlurFilter.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageFastBlurFilter.h",
 		"/Users/dungbx/Desktop/Test/Test/Test/LXSelectView.h",
 		"/Users/dungbx/Desktop/Test/Test/Test/LXSelectView.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/UIImage+Resize.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageFilter.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/LXFilterBlur.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicInfoViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/UIImage+fixOrientation.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/UIImage+Resize.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysWelcomeViewController.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageColorPackingFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageFilter.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageTwoInputFilter.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageOutput.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/GPUImageOutput+saveProcessedImageToLibrary.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageVignetteFilter.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/LXFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageOutput.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageTwoInputFilter.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImagePicture.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageCannyEdgeDetectionFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageCannyEdgeDetectionFilter.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageBoxBlurFilter.m",
@@ -679,15 +687,7 @@
 		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicEditViewController.h",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageFilterGroup.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageFilterPipeline.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicEditViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageOpenGLESContext.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageRawDataInput.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysRightSideViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysTabBarViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Helpers/GPUImageStillCamera+captureWithMeta.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysSettingViewController.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysCellNotify.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/SimplePhotoFilter/SimplePhotoFilter/PhotoViewController.h"
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/Controllers/luxeysPicEditViewController.m"
 	],
 	"find":
 	{
@@ -695,9 +695,10 @@
 	},
 	"find_in_files":
 	{
-		"height": 93.0,
+		"height": 0.0,
 		"where_history":
 		[
+			"*.h",
 			"*.m",
 			"*.h",
 			"*.m",
@@ -755,6 +756,49 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"imageFromCurrentlyProcessedOutputWithOrientation",
+			"scrollCamera.scrollEnabled",
+			"Clicked",
+			"LXImagePickerDelegate",
+			"delegate",
+			"didFi",
+			"save",
+			"applyCurrentEffect",
+			"target",
+			"preventRendering",
+			"glFinish",
+			"depth",
+			"pentagon",
+			"CoC",
+			"depthblur",
+			"namount",
+			"noise",
+			"fdofdist",
+			"ndofstart",
+			"frameSize",
+			"applyCurrentEffect",
+			"imageOrientaion",
+			"M_PI_2",
+			"filter.dof",
+			"didFini",
+			"picDOF",
+			"orien",
+			"threshold",
+			"dbsize",
+			"Dbsize",
+			"dbsize",
+			"Dbsize",
+			"dbsize",
+			"threshold",
+			"gain",
+			"setFocusTa",
+			"setFocus",
+			"applyC",
+			"setFocusTab",
+			"delay",
+			"scrollCamera.f",
+			"viewFocusControl.fram",
+			"setFocusTa",
 			"CGColorSpaceCreateDeviceRGB",
 			"RGB",
 			"focus",
@@ -839,50 +883,7 @@
 			"noise",
 			"firstFrameCheckDisabled",
 			"textureCoordinate",
-			"setFloatArray",
-			"autof",
-			"uniform bool",
-			"inputTextureSize",
-			"currentFilterSize",
-			"size",
-			"texel",
-			"feather",
-			"depthblur",
-			"bias",
-			"texel",
-			"imageOrientation",
-			"orient",
-			"dbsize",
-			"needsSecondImage",
-			"GPUImageMultiplyBlendFilter",
-			"bdepth",
-			"focalDepth",
-			"focus",
-			"dep",
-			"imageVertices",
-			"presentFramebuffer",
-			"imageVertices",
-			"recalculateViewGeometry",
-			"endProcessing",
-			"cameraView",
-			"perfor",
-			"タイトル",
-			"contenti",
-			"block",
-			"capturePhotoProcessedUpToFilter",
-			"meta",
-			"capture",
-			"reloadData",
-			"viewSta",
-			"stat",
-			"viewStat",
-			"heightForRowAtIndexPath",
-			"buttonExpand",
-			"line",
-			"showPicwithId",
-			"createDisplayFramebuffer",
-			"camera_pos",
-			"	"
+			"setFloatArray"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -962,6 +963,82 @@
 		"selected_items":
 		[
 			[
+				"gpuimageou",
+				"Vendor/GPUImage/framework/Source/GPUImageOutput.m"
+			],
+			[
+				"gpuimagepi",
+				"Vendor/GPUImage/framework/Source/GPUImagePicture.m"
+			],
+			[
+				"lx",
+				"Classes/CustomControls/LXDrawView.m"
+			],
+			[
+				"fil",
+				"Classes/Helpers/FilterManager.m"
+			],
+			[
+				"gpuimageout",
+				"Classes/Helpers/GPUImageOutput+saveProcessedImageToLibrary.m"
+			],
+			[
+				"gpuimagepic",
+				"Vendor/GPUImage/framework/Source/GPUImagePicture.m"
+			],
+			[
+				"camera",
+				"Classes/Controllers/luxeysCameraViewController.m"
+			],
+			[
+				"gpuimagefi",
+				"Vendor/GPUImage/framework/Source/GPUImageFilter.m"
+			],
+			[
+				"filter",
+				"Classes/Helpers/FilterManager.m"
+			],
+			[
+				"gpuimagesti",
+				"Classes/Helpers/GPUImageStillCamera+captureWithMeta.m"
+			],
+			[
+				"blur",
+				"Resources/Effect/blur.fsh"
+			],
+			[
+				"fixor",
+				"Classes/Helpers/UIImage+fixOrientation.m"
+			],
+			[
+				"uiimage+",
+				"Classes/Helpers/UIImage+Resize.m"
+			],
+			[
+				"filterm",
+				"Classes/Helpers/FilterManager.m"
+			],
+			[
+				"lxd",
+				"Classes/CustomControls/LXDrawView.m"
+			],
+			[
+				"lxfil",
+				"Classes/Helpers/LXFilterBlur.m"
+			],
+			[
+				"filterma",
+				"Classes/Helpers/FilterManager.m"
+			],
+			[
+				"cam",
+				"Classes/Controllers/luxeysCameraViewController.m"
+			],
+			[
+				"lxv",
+				"Classes/CustomControls/LXDrawView.m"
+			],
+			[
 				"blu",
 				"Resources/Effect/blur.fsh"
 			],
@@ -970,20 +1047,8 @@
 				"Classes/Controllers/luxeysCameraViewController.m"
 			],
 			[
-				"lxd",
-				"Classes/CustomControls/LXDrawView.m"
-			],
-			[
-				"blur",
-				"Resources/Effect/blur.fsh"
-			],
-			[
 				"lxdr",
 				"Classes/CustomControls/LXDrawView.m"
-			],
-			[
-				"camera",
-				"Classes/Controllers/luxeysCameraViewController.m"
 			],
 			[
 				"lxfi",
@@ -998,10 +1063,6 @@
 				"Classes/Helpers/LXFilterBlur.m"
 			],
 			[
-				"cam",
-				"Classes/Controllers/luxeysCameraViewController.m"
-			],
-			[
 				"camer",
 				"Classes/Controllers/luxeysCameraViewController.m"
 			],
@@ -1014,24 +1075,12 @@
 				"Vendor/GPUImage/framework/Source/GPUImageGaussianBlurFilter.m"
 			],
 			[
-				"fil",
-				"Classes/Helpers/FilterManager.m"
-			],
-			[
-				"lx",
-				"Classes/CustomControls/LXDrawView.m"
-			],
-			[
 				"resize",
 				"Classes/Helpers/UIImage+Resize.m"
 			],
 			[
 				"gpuimagefilt",
 				"Vendor/GPUImage/framework/Source/GPUImageFilter.m"
-			],
-			[
-				"filter",
-				"Classes/Helpers/FilterManager.m"
 			],
 			[
 				"lxfilterb",
@@ -1046,16 +1095,8 @@
 				"Classes/Controllers/luxeysPicInfoViewController.m"
 			],
 			[
-				"lxfil",
-				"Classes/Helpers/LXFilterBlur.m"
-			],
-			[
 				"gpuimagevig",
 				"Vendor/GPUImage/framework/Source/GPUImageVignetteFilter.m"
-			],
-			[
-				"gpuimageou",
-				"Vendor/GPUImage/framework/Source/GPUImageOutput.m"
 			],
 			[
 				"gpuimageoutput+",
@@ -1070,16 +1111,8 @@
 				"Vendor/GPUImage/framework/Source/GPUImageTwoInputFilter.m"
 			],
 			[
-				"filterm",
-				"Classes/Helpers/FilterManager.m"
-			],
-			[
 				"twi",
 				"Vendor/GPUImage/framework/Source/GPUImageTwoInputFilter.m"
-			],
-			[
-				"filterma",
-				"Classes/Helpers/FilterManager.m"
 			],
 			[
 				"gpuimagetwoinputfilter",
@@ -1098,16 +1131,8 @@
 				"Classes/Controllers/luxeysCameraViewController.m"
 			],
 			[
-				"gpuimagesti",
-				"Classes/Helpers/GPUImageStillCamera+captureWithMeta.m"
-			],
-			[
 				"fixo",
 				"Classes/Helpers/UIImage+fixOrientation.m"
-			],
-			[
-				"gpuimagepic",
-				"Vendor/GPUImage/framework/Source/GPUImagePicture.m"
 			],
 			[
 				"welcome",
@@ -1130,20 +1155,12 @@
 				"Vendor/GPUImage/framework/Source/GPUImageMultiplyBlendFilter.m"
 			],
 			[
-				"gpuimagepi",
-				"Vendor/GPUImage/framework/Source/GPUImagePicture.m"
-			],
-			[
 				"bright",
 				"Vendor/GPUImage/framework/Source/GPUImageBrightnessFilter.m"
 			],
 			[
 				"chro",
 				"Vendor/GPUImage/framework/Source/GPUImageChromaKeyFilter.m"
-			],
-			[
-				"gpuimagefi",
-				"Vendor/GPUImage/framework/Source/GPUImageFilter.m"
 			],
 			[
 				"lxfilter",
@@ -1248,10 +1265,6 @@
 			[
 				"welcomem",
 				"Classes/CustomControls/luxeysCellWelcomeMulti.h"
-			],
-			[
-				"lxv",
-				"Classes/CustomControls/LXSubLayerView.m"
 			],
 			[
 				"nav",
@@ -1442,10 +1455,6 @@
 				"Classes/Utils/luxeysUtils.m"
 			],
 			[
-				"gpuimageout",
-				"Vendor/GPUImage/framework/Source/GPUImageOutput.m"
-			],
-			[
 				"gpuimageoutput",
 				"Vendor/GPUImage/framework/Source/GPUImageOutput.h"
 			],
@@ -1464,14 +1473,6 @@
 			[
 				"gpuimagev",
 				"Vendor/GPUImage/framework/Source/GPUImageView.h"
-			],
-			[
-				"gpuimagepip",
-				"Vendor/GPUImage/framework/Source/GPUImageFilterPipeline.h"
-			],
-			[
-				"gpuimagegrou",
-				"Vendor/GPUImage/framework/Source/GPUImageFilterGroup.h"
 			]
 		],
 		"width": 0.0

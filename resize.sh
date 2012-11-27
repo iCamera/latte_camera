@@ -4,9 +4,9 @@
 echo "Downsampling retina images..."
 
 dir=$(pwd)/Resources
-find "$dir" -name "*@2x.png" | while read image; do
+find "$dir" -name "*@2x.jpg" | while read image; do
 
-    outfile=$(dirname "$image")/$(basename "$image" @2x.png).png
+    outfile=$(dirname "$image")/$(basename "$image" @2x.jpg).jpg
 
     if [ "$image" -nt "$outfile" ]; then
         basename "$outfile"

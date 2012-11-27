@@ -25,6 +25,7 @@
 @synthesize picture;
 @synthesize buttonDelete;
 @synthesize viewDelete;
+@synthesize preview;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -72,7 +73,7 @@
         luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
 
         // Disable for now, cost too much memory
-//        [imagePic setImage:[UIImage imageWithData:imageData]];
+        [imagePic setImage:preview];
         imageStatus = [app.currentUser.pictureStatus integerValue];
         [self setStatusLabel];
     }
@@ -319,7 +320,6 @@
 - (void)setData:(NSData *)aData {
     imageData = aData;
 }
-
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;

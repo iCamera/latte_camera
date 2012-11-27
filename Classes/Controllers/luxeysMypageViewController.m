@@ -732,7 +732,7 @@
     [self presentViewController:storyCapture animated:NO completion:nil];
 }
 
-- (void)imagePickerController:(luxeysCameraViewController *)picker didFinishPickingMediaWithData:(NSData *)data {
+- (void)imagePickerController:(luxeysCameraViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info {
     MBProgressHUD *progessHUD = [[MBProgressHUD alloc] initWithView:picker.view];
     [picker.view addSubview:progessHUD];
     
@@ -742,7 +742,7 @@
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     
     void (^createForm)(id<AFMultipartFormData>) = ^(id<AFMultipartFormData> formData) {
-        [formData appendPartWithFileData:data
+        [formData appendPartWithFileData:[info objectForKey:@"data"]
                                     name:@"file"
                                 fileName:@"latte.jpg"
                                 mimeType:@"image/jpeg"];

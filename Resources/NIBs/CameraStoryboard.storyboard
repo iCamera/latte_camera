@@ -13,7 +13,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView autoresizesSubviews="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="Qce-Gb-9i0" userLabel="Camera Scroll">
+                            <scrollView autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="Qce-Gb-9i0" userLabel="Camera Scroll">
                                 <rect key="frame" x="0.0" y="40" width="320" height="418"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -30,18 +30,32 @@
                                                     <outletCollection property="gestureRecognizers" destination="ipA-Dw-6pR" appends="YES" id="Umj-lK-gGk"/>
                                                 </connections>
                                             </view>
-                                            <view hidden="YES" alpha="0.80000000000000004" contentMode="scaleToFill" id="DPj-cw-b77" userLabel="Subject Mask" customClass="LXDrawView">
+                                            <view hidden="YES" multipleTouchEnabled="YES" alpha="0.80000000000000004" contentMode="scaleToFill" id="DPj-cw-b77" userLabel="Subject Mask" customClass="LXDrawView">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="425"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="htJ-DV-G2l">
-                                                        <rect key="frame" x="0.0" y="0.0" width="320" height="427"/>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="htJ-DV-G2l" userLabel="Hand Draw">
+                                                        <rect key="frame" x="0.0" y="0.0" width="320" height="425"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    </imageView>
+                                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" id="2nc-H3-bdS" userLabel="Image Rect">
+                                                        <rect key="frame" x="0.0" y="0.0" width="320" height="425"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <color key="backgroundColor" red="0.80000001192092896" green="1" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </imageView>
+                                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" id="04f-Lh-QKO" userLabel="Image Circle">
+                                                        <rect key="frame" x="0.0" y="0.0" width="320" height="425"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <color key="backgroundColor" red="0.40000000596046448" green="0.80000001192092896" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     </imageView>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <gestureRecognizers/>
                                                 <connections>
                                                     <outlet property="drawImageView" destination="htJ-DV-G2l" id="bTZ-f6-Qqx"/>
+                                                    <outletCollection property="gestureRecognizers" destination="AzF-RY-mfU" appends="YES" id="qi1-N2-XI2"/>
+                                                    <outletCollection property="gestureRecognizers" destination="JK8-0M-ctP" appends="YES" id="zr9-e5-vNZ"/>
+                                                    <outletCollection property="gestureRecognizers" destination="Sng-IC-Idc" appends="YES" id="2o4-9p-quX"/>
                                                 </connections>
                                             </view>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="target.png" id="26o-rW-3Bd">
@@ -55,6 +69,7 @@
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <gestureRecognizers/>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -289,7 +304,7 @@
                                                     <action selector="changeBlur:" destination="qh6-II-akr" eventType="valueChanged" id="iUA-98-bMf"/>
                                                 </connections>
                                             </slider>
-                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="3" minValue="0.0" maxValue="10" continuous="NO" id="Kkg-Re-9z6" userLabel="Gain Slider">
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="5" continuous="NO" id="Kkg-Re-9z6" userLabel="Gain Slider">
                                                 <rect key="frame" x="85" y="50" width="185" height="23"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <connections>
@@ -520,6 +535,8 @@
                         <outlet property="cameraView" destination="haP-3S-Ims" id="tDu-Cg-2at"/>
                         <outlet property="gesturePan" destination="c3i-e3-Pqi" id="I1W-YM-oeR"/>
                         <outlet property="imageAutoFocus" destination="26o-rW-3Bd" id="G85-1O-SLY"/>
+                        <outlet property="imageMaskCircle" destination="04f-Lh-QKO" id="mAl-5z-ytJ"/>
+                        <outlet property="imageMaskRect" destination="2nc-H3-bdS" id="7h1-WO-bfN"/>
                         <outlet property="scrollCamera" destination="Qce-Gb-9i0" id="B4K-5K-lJF"/>
                         <outlet property="scrollEffect" destination="jLe-DC-2gl" id="8Fo-Cx-NWw"/>
                         <outlet property="tapFocus" destination="ipA-Dw-6pR" id="yG3-Dg-kre"/>
@@ -546,6 +563,24 @@
                     </connections>
                 </tapGestureRecognizer>
                 <tapGestureRecognizer enabled="NO" id="3jx-Cg-khe"/>
+                <pinchGestureRecognizer id="AzF-RY-mfU">
+                    <connections>
+                        <action selector="pinchMask:" destination="qh6-II-akr" id="GiJ-gd-FHl"/>
+                        <outlet property="delegate" destination="qh6-II-akr" id="Amb-xz-aPW"/>
+                    </connections>
+                </pinchGestureRecognizer>
+                <rotationGestureRecognizer id="JK8-0M-ctP">
+                    <connections>
+                        <action selector="rotateMask:" destination="qh6-II-akr" id="psF-0P-qOp"/>
+                        <outlet property="delegate" destination="qh6-II-akr" id="sep-cQ-78H"/>
+                    </connections>
+                </rotationGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="2" id="Sng-IC-Idc">
+                    <connections>
+                        <action selector="panMask:" destination="qh6-II-akr" id="MEK-Ua-7c2"/>
+                        <outlet property="delegate" destination="qh6-II-akr" id="IhJ-GL-Er8"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-165" y="-560"/>
         </scene>
@@ -905,7 +940,10 @@
                 <relationship kind="action" name="close:"/>
                 <relationship kind="action" name="flipCamera:"/>
                 <relationship kind="action" name="openImagePicker:"/>
+                <relationship kind="action" name="panMask:" candidateClass="UIPanGestureRecognizer"/>
                 <relationship kind="action" name="panTarget:" candidateClass="UIPanGestureRecognizer"/>
+                <relationship kind="action" name="pinchMask:" candidateClass="UIPinchGestureRecognizer"/>
+                <relationship kind="action" name="rotateMask:" candidateClass="UIRotationGestureRecognizer"/>
                 <relationship kind="action" name="setEffect:"/>
                 <relationship kind="action" name="setMask:" candidateClass="UIButton"/>
                 <relationship kind="action" name="setTimer:"/>
@@ -939,6 +977,8 @@
                 <relationship kind="outlet" name="gesturePan" candidateClass="UIPanGestureRecognizer"/>
                 <relationship kind="outlet" name="imageAutoFocus" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="imageBottom" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="imageMaskCircle" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="imageMaskRect" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="scrollCamera" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="scrollEffect" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="tapFocus" candidateClass="UITapGestureRecognizer"/>
