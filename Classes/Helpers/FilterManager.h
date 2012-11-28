@@ -31,7 +31,7 @@
     GPUImageToneCurveFilter *tonecurve;
     GPUImageRGBFilter *rgb;
     GPUImageExposureFilter *exposure;
-    GPUImageCropFilter *crop;
+    GPUImageBrightnessFilter *dummy;
     GPUImageCropFilter *crop2;
     LXFilter *filter;
     LXFilterMono *filterMono;
@@ -78,7 +78,7 @@
 - (void)changeFiltertoLens:(NSInteger)aLens andEffect:(NSInteger)aEffect input:(GPUImageOutput *)aInput output:(GPUImageView *)aOutput isPicture:(BOOL)isPicture;
 - (void)saveImage:(NSDictionary *)location orientation:(UIImageOrientation)imageOrientation withMeta:(NSMutableDictionary *)imageMeta onComplete:(void(^)(ALAsset *asset, UIImage *preview))block;
 - (void)saveUIImage:(UIImage *)picture withLocation:(NSDictionary *)location withMeta:(NSMutableDictionary *)imageMeta onComplete:(void(^)(ALAsset *asset))block;
-- (GPUImageCropFilter*) getCrop;
+- (GPUImageBrightnessFilter*) getDummy;
 - (void)clearTargetWithCamera:(GPUImageStillCamera *)camera andPicture:(GPUImagePicture *)picture;
 
 @end

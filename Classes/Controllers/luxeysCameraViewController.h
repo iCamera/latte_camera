@@ -17,21 +17,21 @@
 #import "LXDrawView.h"
 #import "UIImage+Resize.h"
 #import "UIImage+fixOrientation.h"
+#import "MBProgressHUD.h"
 
 #define kTimerNone       0
 #define kTimer5s         1
 #define kTimer10s        2
 #define kTimerContinuous 3
 
-#define kBokehModeFull 1
-#define kBokehModeDisable 0
+#define kTabPreview 0
+#define kTabEffect 1
+#define kTabBokeh 2
 
-#define kBokehTabMask 1
-#define kBokehTabBlur 2
-
-#define kMaskBackgroundNone 6
-#define kMaskBackgroundRound 7
-#define kMaskBackgroundNatual 8
+#define kMaskBlurNone 5
+#define kMaskBlurWeak 6
+#define kMaskBlurNormal 7
+#define kMaskBlurStrong 8
 
 typedef enum {
     kEffect1,
@@ -62,13 +62,7 @@ typedef enum {
     NSInteger timerCount;
 
     BOOL isEditing;
-    BOOL isCrop;
-    BOOL isReady;
-    BOOL isFinishedProcessing;
     BOOL isSaved;
-    
-    int bokehMode;
-    int currentFocusTab;
     
     id <LXImagePickerDelegate> __unsafe_unretained delegate;
 
@@ -81,6 +75,11 @@ typedef enum {
     CLLocation *bestEffortAtLocation;
     UIImageOrientation imageOrientation;
     UIInterfaceOrientation orientationLast;
+    MBProgressHUD *HUD;
+    
+    NSData *savedData;
+    UIImage *savedPreview;
+    NSInteger currentTab;
 }
 @property (strong, nonatomic) IBOutlet UIView *viewBottomBar;
 @property (strong, nonatomic) IBOutlet UIImageView *imageBottom;
@@ -107,20 +106,15 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIView *viewCameraWraper;
 @property (strong, nonatomic) IBOutlet LXDrawView *viewDraw;
 @property (strong, nonatomic) IBOutlet UIButton *buttonChangeLens;
-@property (strong, nonatomic) IBOutlet UIView *viewMask;
-@property (strong, nonatomic) IBOutlet UIView *viewBlur;
-@property (strong, nonatomic) IBOutlet UIView *viewFocal;
-@property (strong, nonatomic) IBOutlet UIImageView *imageMaskRect;
-@property (strong, nonatomic) IBOutlet UIImageView *imageMaskCircle;
 
-
-@property (strong, nonatomic) IBOutlet UIButton *buttonMove;
-@property (strong, nonatomic) IBOutlet UIButton *buttonPaintMask;
-@property (strong, nonatomic) IBOutlet UIButton *buttonFocal;
-@property (strong, nonatomic) IBOutlet UIButton *buttonBackground;
-@property (strong, nonatomic) IBOutlet UIButton *buttonBackgroundRound;
 @property (strong, nonatomic) IBOutlet UIButton *buttonBackgroundNatual;
-@property (strong, nonatomic) IBOutlet UIButton *buttonBackgroundNone;
+@property (strong, nonatomic) IBOutlet UIButton *buttonBlurWeak;
+@property (strong, nonatomic) IBOutlet UIButton *buttonBlurNormal;
+@property (strong, nonatomic) IBOutlet UIButton *buttonBlurStrong;
+@property (strong, nonatomic) IBOutlet UIButton *buttonBlurNone;
+@property (strong, nonatomic) IBOutlet UIView *viewHelp;
+@property (strong, nonatomic) IBOutlet UIView *viewPopupHelp;
+
 
 @property (unsafe_unretained) id <LXImagePickerDelegate> delegate;
 
@@ -131,22 +125,17 @@ typedef enum {
 - (IBAction)capture:(id)sender;
 - (IBAction)changeLens:(id)sender;
 - (IBAction)changeFlash:(id)sender;
-- (IBAction)changeCamera:(id)sender;
 - (IBAction)touchTimer:(id)sender;
 - (IBAction)touchSave:(id)sender;
-- (IBAction)toggleCrop:(id)sender;
 - (IBAction)toggleEffect:(UIButton*)sender;
 - (IBAction)touchNo:(id)sender;
 - (IBAction)flipCamera:(id)sender;
 - (IBAction)panTarget:(UIPanGestureRecognizer *)sender;
 - (IBAction)setTimer:(id)sender;
-- (IBAction)touchFocusTab:(UIButton*)sender;
 - (IBAction)setMask:(UIButton*)sender;
-- (IBAction)changeBlur:(UISlider*)sender;
-- (IBAction)changeHighlight:(UISlider*)sender;
+- (IBAction)toggleMaskNatual:(UIButton*)sender;
+- (IBAction)touchCloseHelp:(id)sender;
+- (IBAction)touchOpenHelp:(id)sender;
+- (IBAction)toggleGain:(UIButton*)sender;
 - (IBAction)changePen:(UISlider *)sender;
-- (IBAction)pinchMask:(UIPinchGestureRecognizer *)sender;
-- (IBAction)rotateMask:(UIRotationGestureRecognizer *)sender;
-- (IBAction)panMask:(UIPanGestureRecognizer *)sender;
-
 @end

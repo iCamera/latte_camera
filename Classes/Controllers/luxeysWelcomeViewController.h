@@ -24,7 +24,6 @@
 #define kTableGrid 2
 
 @interface luxeysWelcomeViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,EGORefreshTableHeaderDelegate> {
-    UIActivityIndicatorView *indicator;
     NSMutableArray *feeds;
     int pagephoto;
     BOOL loadEnded;
@@ -42,6 +41,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *tablePic;
 @property (strong, nonatomic) IBOutlet UIView *viewBack;
 @property (strong, nonatomic) IBOutlet UIView *viewLogin;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicator;
 
 - (IBAction)loginPressed:(id)sender;
 - (IBAction)touchTab:(UIButton*)sender;

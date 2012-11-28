@@ -21,6 +21,7 @@
 @synthesize buttonTimeline;
 @synthesize viewBack;
 @synthesize viewLogin;
+@synthesize indicator;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -59,9 +60,6 @@
         loadEnded = false;
         pagephoto = 1;
         tableMode = kTableGrid;
-        indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        indicator.hidesWhenStopped = true;
-        [indicator setCenter:CGPointMake(160, 20)];
     }
     
     return self;
@@ -287,7 +285,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSUInteger)section {
-	return 40.0f;
+    return 40.0f;
 }
 
 
@@ -427,6 +425,7 @@
     [self setViewHeader:nil];
     [self setViewBack:nil];
     [self setViewLogin:nil];
+    [self setIndicator:nil];
     [super viewDidUnload];
 }
 @end

@@ -1,46 +1,3 @@
-/*
- DoF with bokeh GLSL shader v2.4
- by Martins Upitis (martinsh) (devlog-martinsh.blogspot.com)
- 
- ----------------------
- The shader is Blender Game Engine ready, but it should be quite simple to adapt for your engine.
- 
- This work is licensed under a Creative Commons Attribution 3.0 Unported License.
- So you are free to share, modify and adapt it for your needs, and even use it for commercial use.
- I would also love to hear about a project you are using it.
- 
- Have fun,
- Martins
- ----------------------
- 
- changelog:
- 
- 2.4:
- - physically accurate DoF simulation calculated from "focalDepth" ,"focalLength", "f-stop" and "CoC" parameters.
- - option for artist controlled DoF simulation calculated only from "focalDepth" and individual controls for near and far blur
- - added "circe of confusion" (CoC) parameter in mm to accurately simulate DoF with different camera sensor or film sizes
- - cleaned up the code
- - some optimization
- 
- 2.3:
- - new and physically little more accurate DoF
- - two extra input variables - focal length and aperture iris diameter
- - added a debug visualization of focus point and focal range
- 
- 2.1:
- - added an option for pentagonal bokeh shape
- - minor fixes
- 
- 2.0:
- - variable sample count to increase quality/performance
- - option to blur depth buffer to reduce hard edges
- - option to dither the samples with noise or pattern
- - bokeh chromatic aberration/fringing
- - bokeh bias to bring out bokeh edges
- - image thresholding to bring out highlights when image is out of focus
- 
- */
-
 #define PI  3.14159265
 
 precision highp float;
@@ -53,17 +10,12 @@ uniform sampler2D inputImageTexture2;
 
 uniform mediump float width; //texture width
 uniform mediump float height; //texture height
+uniform mediump float focalDepth;  //focal distance value in meters, but you may use autofocus option below
 
 lowp vec2 texel = vec2(1.0/width,1.0/height);
 
-//uniform variables from external script
-
-uniform mediump float focalDepth;  //focal distance value in meters, but you may use autofocus option below
 mediump float focalLength = 3.0; //focal length in mm
 mediump float fstop = 2.8; //f-stop value
-/*
- make sure that these two values are the same for your camera, otherwise distances will be wrong.
- */
 
 mediump float znear = 0.1; //camera clipping start
 mediump float zfar = 100.0; //camera clipping end
@@ -72,35 +24,22 @@ mediump float zfar = 100.0; //camera clipping end
 //user variables
 
 int samples = 4; //samples on the first ring
-int rings = 2; //ring count
+int rings = 3; //ring count
 
 
 mediump float CoC = 0.03;//circle of confusion size in mm (35mm film = 0.03mm)
-
-lowp float vignout = 1.3; //vignetting outer border
-lowp float vignin = 0.0; //vignetting inner border
-mediump float vignfade = 22.0; //f-stops till vignete fades
 
 uniform bool autofocus; //use autofocus in shader? disable if you use external focalDepth value
 uniform vec2 focus; // autofocus point on screen (0.0,0.0 - left lower corner, 1.0,1.0 - upper right)
 uniform float maxblur; //clamp value of max blur (0.0 = no blur,1.0 default)
 
-float threshold = 0.5; //highlight threshold;
 uniform float gain; //highlight gain;
+float threshold = 0.5; //highlight threshold;
 
 float bias = 0.5; //bokeh edge bias
 float fringe = 0.7; //bokeh chromatic aberration/fringing
 
 lowp float namount = 0.0001; //dither amount
-
-/*
- next part is experimental
- not looking good with small sample and ring count
- looks okay starting from samples = 4, rings = 4
- */
-
-//------------------------------------------
-
 
 vec3 color(vec2 coords,float blur) //processing the sample
 {
@@ -174,13 +113,13 @@ void main()
 	
 	mediump vec3 col = vec3(0.0);
 	
-	//if(blur < 0.05) //some optimization thingy
-	//{
-	//	col = texture2D(inputImageTexture, textureCoordinate).rgb;
-	//}
+	if(blur < 0.05) //some optimization thingy
+	{
+		col = texture2D(inputImageTexture, textureCoordinate).rgb;
+	}
 	
-	//else
-	//{
+	else
+	{
 		col = texture2D(inputImageTexture, textureCoordinate).rgb;
 		float s = 1.0;
 		int ringsamples;
@@ -201,7 +140,7 @@ void main()
 			}
 		}
 		col /= s; //divide by sample count
-	//}
+	}
 	
 	gl_FragColor = vec4(col, 1.0);
 }

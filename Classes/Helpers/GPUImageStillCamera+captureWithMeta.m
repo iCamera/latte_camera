@@ -142,7 +142,30 @@
         CVImageBufferRef cameraFrame = CMSampleBufferGetImageBuffer(imageSampleBuffer);
         
         CGSize sizeOfPhoto = CGSizeMake(CVPixelBufferGetWidth(cameraFrame), CVPixelBufferGetHeight(cameraFrame));
-        CGSize scaledImageSizeToFitOnGPU = [GPUImageOpenGLESContext sizeThatFitsWithinATextureForSize:sizeOfPhoto];
+
+        // Bui, scale down for stupid device. Resize if it's not iphone 5
+        CGFloat maxTextureSize;
+        if ([[UIScreen mainScreen] bounds].size.height != 568) {
+            maxTextureSize = 1280.0;
+        } else {
+            maxTextureSize = 2048.0;
+        }
+        CGSize adjustedSize;
+        
+        if (sizeOfPhoto.width > sizeOfPhoto.height)
+        {
+            adjustedSize.width = (CGFloat)maxTextureSize;
+            adjustedSize.height = ((CGFloat)maxTextureSize / sizeOfPhoto.width) * sizeOfPhoto.height;
+        }
+        else
+        {
+            adjustedSize.height = (CGFloat)maxTextureSize;
+            adjustedSize.width = ((CGFloat)maxTextureSize / sizeOfPhoto.height) * sizeOfPhoto.width;
+        }
+
+        CGSize scaledImageSizeToFitOnGPU = adjustedSize;
+        // END BUI
+
         if (!CGSizeEqualToSize(sizeOfPhoto, scaledImageSizeToFitOnGPU))
         {
             CMSampleBufferRef sampleBuffer;

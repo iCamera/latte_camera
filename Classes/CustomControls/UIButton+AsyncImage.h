@@ -11,7 +11,7 @@
 #import "AFNetworking.h"
 #import "UIImageView+AFNetworking.h"
 
-@interface UIButton (AsyncImage)
+@interface UIButton (AsyncImage) 
 - (void)loadBackground:(NSString*)url;
 - (void)loadBackground:(NSString *)url placeholderImage:(NSString *)placeHolder;
 

@@ -13,7 +13,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="Qce-Gb-9i0" userLabel="Camera Scroll">
+                            <scrollView autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" minimumZoomScale="0.5" maximumZoomScale="6" id="Qce-Gb-9i0" userLabel="Camera Scroll">
                                 <rect key="frame" x="0.0" y="40" width="320" height="418"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -38,24 +38,11 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="320" height="425"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     </imageView>
-                                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" id="2nc-H3-bdS" userLabel="Image Rect">
-                                                        <rect key="frame" x="0.0" y="0.0" width="320" height="425"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                        <color key="backgroundColor" red="0.80000001192092896" green="1" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
-                                                    </imageView>
-                                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" id="04f-Lh-QKO" userLabel="Image Circle">
-                                                        <rect key="frame" x="0.0" y="0.0" width="320" height="425"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                        <color key="backgroundColor" red="0.40000000596046448" green="0.80000001192092896" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    </imageView>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <gestureRecognizers/>
                                                 <connections>
                                                     <outlet property="drawImageView" destination="htJ-DV-G2l" id="bTZ-f6-Qqx"/>
-                                                    <outletCollection property="gestureRecognizers" destination="AzF-RY-mfU" appends="YES" id="qi1-N2-XI2"/>
-                                                    <outletCollection property="gestureRecognizers" destination="JK8-0M-ctP" appends="YES" id="zr9-e5-vNZ"/>
-                                                    <outletCollection property="gestureRecognizers" destination="Sng-IC-Idc" appends="YES" id="2o4-9p-quX"/>
                                                 </connections>
                                             </view>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="target.png" id="26o-rW-3Bd">
@@ -216,149 +203,38 @@
                                 </subviews>
                             </view>
                             <scrollView autoresizesSubviews="NO" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="jLe-DC-2gl" userLabel="Scroll Filter">
-                                <rect key="frame" x="0.0" y="458" width="320" height="60"/>
+                                <rect key="frame" x="0.0" y="446" width="320" height="72"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" red="0.21176472306251526" green="0.18823531270027161" blue="0.11372549831867218" alpha="0.59999999999999998" colorSpace="deviceRGB"/>
                             </scrollView>
-                            <view hidden="YES" contentMode="scaleToFill" id="8wd-Ty-FDh" userLabel="Focus Control">
-                                <rect key="frame" x="0.0" y="397" width="320" height="120"/>
+                            <view contentMode="scaleToFill" id="8wd-Ty-FDh" userLabel="Focus Control">
+                                <rect key="frame" x="0.0" y="518" width="320" height="110"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" id="8N3-0e-cbV">
-                                        <rect key="frame" x="0.0" y="30" width="320" height="90"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="120"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.2196078431372549" green="0.19215686274509802" blue="0.11372549019607843" alpha="0.90000000000000002" colorSpace="deviceRGB"/>
-                                    </view>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="crU-nU-cEF">
-                                        <rect key="frame" x="107" y="0.0" width="100" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <size key="titleShadowOffset" width="0.0" height="1"/>
-                                        <state key="normal" title="Mask" backgroundImage="tab_off.png">
-                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                        </state>
-                                        <state key="disabled" backgroundImage="tab.png">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                        </state>
-                                        <state key="selected" backgroundImage="tab.png">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                        </state>
-                                        <state key="highlighted" backgroundImage="tab.png">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="touchFocusTab:" destination="qh6-II-akr" eventType="touchUpInside" id="JQh-zj-zyx"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="bVd-oa-3a8">
-                                        <rect key="frame" x="215" y="0.0" width="100" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <size key="titleShadowOffset" width="0.0" height="1"/>
-                                        <state key="normal" title="ぼかし" backgroundImage="tab_off.png">
-                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                        </state>
-                                        <state key="disabled" backgroundImage="tab.png">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                        </state>
-                                        <state key="selected" backgroundImage="tab.png">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                        </state>
-                                        <state key="highlighted" backgroundImage="tab.png">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="touchFocusTab:" destination="qh6-II-akr" eventType="touchUpInside" id="peA-3S-HnB"/>
-                                        </connections>
-                                    </button>
-                                    <view hidden="YES" contentMode="scaleToFill" id="89b-9s-Klp" userLabel="Blur Control">
-                                        <rect key="frame" x="0.0" y="30" width="320" height="90"/>
-                                        <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                         <subviews>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="ぼかし" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LWp-jx-JOJ">
-                                                <rect key="frame" x="10" y="16" width="68" height="21"/>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="ぼかし" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LWp-jx-JOJ">
+                                                <rect key="frame" x="10" y="38" width="52" height="16"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="光" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="M0a-bM-q7F">
-                                                <rect key="frame" x="10" y="51" width="73" height="21"/>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="集点サイズ" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Hvq-Gz-avI">
+                                                <rect key="frame" x="10" y="13" width="52" height="16"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="0.0" maxValue="30" continuous="NO" id="LV5-uE-oST" userLabel="Max Blur Slider">
-                                                <rect key="frame" x="85" y="15" width="185" height="23"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <connections>
-                                                    <action selector="changeBlur:" destination="qh6-II-akr" eventType="valueChanged" id="iUA-98-bMf"/>
-                                                </connections>
-                                            </slider>
-                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="5" continuous="NO" id="Kkg-Re-9z6" userLabel="Gain Slider">
-                                                <rect key="frame" x="85" y="50" width="185" height="23"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <connections>
-                                                    <action selector="changeHighlight:" destination="qh6-II-akr" eventType="valueChanged" id="AHY-pR-Xbh"/>
-                                                </connections>
-                                            </slider>
-                                        </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    </view>
-                                    <view contentMode="scaleToFill" id="2oK-wz-vqF" userLabel="Mask Control">
-                                        <rect key="frame" x="0.0" y="30" width="320" height="90"/>
-                                        <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
-                                        <subviews>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Feather" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Hvq-Gz-avI">
-                                                <rect key="frame" x="10" y="17" width="68" height="21"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="パターン" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="X5M-GV-vg4">
-                                                <rect key="frame" x="10" y="52" width="73" height="21"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <button opaque="NO" tag="6" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="vl0-9F-ipJ">
-                                                <rect key="frame" x="86" y="50" width="75" height="25"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <size key="titleShadowOffset" width="0.0" height="1"/>
-                                                <state key="normal" title="なし" backgroundImage="select3_1.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <state key="disabled" backgroundImage="select3_1_on.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <state key="highlighted" backgroundImage="select3_1_on.png">
-                                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="setMask:" destination="qh6-II-akr" eventType="touchUpInside" id="bTL-tW-myV"/>
-                                                </connections>
-                                            </button>
                                             <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="Mmh-yc-MjF">
-                                                <rect key="frame" x="161" y="50" width="75" height="25"/>
+                                                <rect key="frame" x="193" y="75" width="60" height="25"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <size key="titleShadowOffset" width="0.0" height="1"/>
-                                                <state key="normal" title="円" backgroundImage="select3_2.png">
+                                                <state key="normal" title="光" image="select_off.png">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                 </state>
@@ -366,44 +242,156 @@
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                 </state>
-                                                <state key="highlighted" backgroundImage="select3_2_on.png">
+                                                <state key="selected" image="select_on.png"/>
+                                                <state key="highlighted">
                                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="setMask:" destination="qh6-II-akr" eventType="touchUpInside" id="59W-nn-h3P"/>
+                                                    <action selector="toggleGain:" destination="qh6-II-akr" eventType="touchUpInside" id="Nmt-tZ-7m8"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="NG0-Pu-mCz">
-                                                <rect key="frame" x="236" y="50" width="75" height="25"/>
+                                                <rect key="frame" x="90" y="75" width="60" height="25"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <size key="titleShadowOffset" width="0.0" height="1"/>
-                                                <state key="normal" title="ナチュラル" backgroundImage="select3_3.png">
+                                                <state key="normal" image="select_off.png">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                 </state>
-                                                <state key="disabled" backgroundImage="select3_3_on.png">
+                                                <state key="disabled">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                 </state>
-                                                <state key="highlighted" backgroundImage="select3_3_on.png">
+                                                <state key="selected" image="select_on.png">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                                </state>
+                                                <state key="highlighted">
                                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="setMask:" destination="qh6-II-akr" eventType="touchUpInside" id="3MN-Ir-vcO"/>
+                                                    <action selector="toggleMaskNatual:" destination="qh6-II-akr" eventType="touchUpInside" id="x7A-Qk-1rC"/>
                                                 </connections>
                                             </button>
-                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="5" maxValue="30" continuous="NO" id="vBQ-ch-PWY" userLabel="Brush Slider">
-                                                <rect key="frame" x="84" y="15" width="185" height="23"/>
+                                            <button opaque="NO" tag="5" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="OxC-cF-p8k">
+                                                <rect key="frame" x="70" y="40" width="60" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <size key="titleShadowOffset" width="0.0" height="1"/>
+                                                <state key="normal" title="なし" backgroundImage="select42_1.png">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                                </state>
+                                                <state key="disabled" backgroundImage="select42_1_on.png">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                                </state>
+                                                <state key="highlighted" backgroundImage="select3_1_on.png">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="setMask:" destination="qh6-II-akr" eventType="touchUpInside" id="oDp-Nn-xhM"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="vAj-D0-9Cb">
+                                                <rect key="frame" x="130" y="40" width="60" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <size key="titleShadowOffset" width="0.0" height="1"/>
+                                                <state key="normal" title="弱" backgroundImage="select42_2.png">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                                </state>
+                                                <state key="disabled" backgroundImage="select42_2_on.png">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                                </state>
+                                                <state key="highlighted" backgroundImage="select42_2_on.png">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="setMask:" destination="qh6-II-akr" eventType="touchUpInside" id="2fl-1d-6kn"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="Xtf-zn-zlo">
+                                                <rect key="frame" x="190" y="40" width="60" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <size key="titleShadowOffset" width="0.0" height="1"/>
+                                                <state key="normal" title="中" backgroundImage="select42_2.png">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                                </state>
+                                                <state key="disabled" backgroundImage="select42_2_on.png">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                                </state>
+                                                <state key="highlighted" backgroundImage="select42_2_on.png">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="setMask:" destination="qh6-II-akr" eventType="touchUpInside" id="qdR-pJ-bHC"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="xWo-3O-a9Q">
+                                                <rect key="frame" x="250" y="40" width="60" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <size key="titleShadowOffset" width="0.0" height="1"/>
+                                                <state key="normal" title="強" backgroundImage="select42_3.png">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                                </state>
+                                                <state key="disabled" backgroundImage="select42_3_on.png">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                                </state>
+                                                <state key="highlighted" backgroundImage="select42_3_on.png">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="setMask:" destination="qh6-II-akr" eventType="touchUpInside" id="ZXs-ll-Dkn"/>
+                                                </connections>
+                                            </button>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="5" maxValue="45" continuous="NO" id="vBQ-ch-PWY" userLabel="Brush Slider">
+                                                <rect key="frame" x="70" y="10" width="240" height="23"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <connections>
                                                     <action selector="changePen:" destination="qh6-II-akr" eventType="valueChanged" id="7H1-wP-Wt0"/>
                                                 </connections>
                                             </slider>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="lLz-eD-qkl" userLabel="Button Help">
+                                                <rect key="frame" x="280" y="70" width="35" height="35"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" image="icon_help.png">
+                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="highlighted">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="touchOpenHelp:" destination="qh6-II-akr" eventType="touchUpInside" id="ppx-II-QPO"/>
+                                                </connections>
+                                            </button>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="icon_gradation.png" id="Zbq-XR-AKa">
+                                                <rect key="frame" x="73" y="82" width="12" height="12"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="icon_light.png" id="JFQ-4U-2cL">
+                                                <rect key="frame" x="175" y="82" width="12" height="12"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
                                         </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="0.2196078431372549" green="0.19215686274509802" blue="0.11372549019607843" alpha="0.90000000000000002" colorSpace="deviceRGB"/>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -507,24 +495,77 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
+                            <view hidden="YES" alpha="0.0" contentMode="scaleToFill" id="ODF-BR-uxL" userLabel="Help">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" id="LLA-Xr-Yq3">
+                                        <rect key="frame" x="10" y="50" width="300" height="270"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LoJ-Hh-v8L">
+                                                <rect key="frame" x="10" y="30" width="253" height="35"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <string key="text">ぼかしたくない場所を指で囲い
+下のパネルぼかし具合を調節しましょう</string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="ぼかし" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="f78-ko-gHH">
+                                                <rect key="frame" x="27" y="5" width="93" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="sample.png" id="IzX-W2-KYs">
+                                                <rect key="frame" x="10" y="70" width="280" height="190"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="icon_boke2.png" id="aH1-fg-aQ3">
+                                                <rect key="frame" x="10" y="10" width="10" height="15"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="jhU-M9-6wx">
+                                                <rect key="frame" x="260" y="0.0" width="40" height="40"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" image="icon_close.png">
+                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="highlighted">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="touchCloseHelp:" destination="qh6-II-akr" eventType="touchUpInside" id="ryB-au-c5D"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                     </view>
                     <navigationItem key="navigationItem" id="Kkm-7g-bfd"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
-                        <outlet property="buttonBackground" destination="bVd-oa-3a8" id="qgT-Ur-6ta"/>
                         <outlet property="buttonBackgroundNatual" destination="NG0-Pu-mCz" id="Pol-lR-FnE"/>
-                        <outlet property="buttonBackgroundNone" destination="vl0-9F-ipJ" id="ryp-KL-A7e"/>
-                        <outlet property="buttonBackgroundRound" destination="Mmh-yc-MjF" id="BVU-xk-lCU"/>
+                        <outlet property="buttonBlurNone" destination="OxC-cF-p8k" id="R9l-43-RMw"/>
+                        <outlet property="buttonBlurNormal" destination="Xtf-zn-zlo" id="ZYv-5L-gst"/>
+                        <outlet property="buttonBlurStrong" destination="xWo-3O-a9Q" id="WBd-8G-CQZ"/>
+                        <outlet property="buttonBlurWeak" destination="vAj-D0-9Cb" id="mcA-OF-Dcc"/>
                         <outlet property="buttonCapture" destination="iVm-t6-rbo" id="7Rl-mC-lwn"/>
                         <outlet property="buttonChangeLens" destination="R3y-EG-Ypj" id="bSt-WS-0Wb"/>
                         <outlet property="buttonFlash" destination="cfx-WU-lLV" id="Zss-j3-tfF"/>
                         <outlet property="buttonFlip" destination="APY-Bj-pCl" id="IGT-aV-kjZ"/>
                         <outlet property="buttonNo" destination="oax-IO-3dq" id="gg2-uK-TzF"/>
-                        <outlet property="buttonPaintMask" destination="crU-nU-cEF" id="3Zd-tx-SzN"/>
                         <outlet property="buttonPick" destination="Eqj-v5-rGc" id="Q3R-Cv-D28"/>
                         <outlet property="buttonScroll" destination="s9L-PE-T3P" id="Fn7-kf-KpZ"/>
                         <outlet property="buttonSetNoTimer" destination="FAW-3Q-pUC" id="nsk-84-9w5"/>
@@ -535,17 +576,15 @@
                         <outlet property="cameraView" destination="haP-3S-Ims" id="tDu-Cg-2at"/>
                         <outlet property="gesturePan" destination="c3i-e3-Pqi" id="I1W-YM-oeR"/>
                         <outlet property="imageAutoFocus" destination="26o-rW-3Bd" id="G85-1O-SLY"/>
-                        <outlet property="imageMaskCircle" destination="04f-Lh-QKO" id="mAl-5z-ytJ"/>
-                        <outlet property="imageMaskRect" destination="2nc-H3-bdS" id="7h1-WO-bfN"/>
                         <outlet property="scrollCamera" destination="Qce-Gb-9i0" id="B4K-5K-lJF"/>
                         <outlet property="scrollEffect" destination="jLe-DC-2gl" id="8Fo-Cx-NWw"/>
                         <outlet property="tapFocus" destination="ipA-Dw-6pR" id="yG3-Dg-kre"/>
-                        <outlet property="viewBlur" destination="89b-9s-Klp" id="V6O-wz-KCm"/>
                         <outlet property="viewBottomBar" destination="nh0-56-tN6" id="oaw-cH-O1B"/>
                         <outlet property="viewCameraWraper" destination="ZDS-Mr-neF" id="XdO-Rw-FG5"/>
                         <outlet property="viewDraw" destination="DPj-cw-b77" id="aht-9Z-Wi8"/>
                         <outlet property="viewFocusControl" destination="8wd-Ty-FDh" id="mdx-WK-2Z4"/>
-                        <outlet property="viewMask" destination="2oK-wz-vqF" id="Aj3-5X-5OV"/>
+                        <outlet property="viewHelp" destination="ODF-BR-uxL" id="Fr7-Mo-hMe"/>
+                        <outlet property="viewPopupHelp" destination="LLA-Xr-Yq3" id="Az3-JT-3iA"/>
                         <outlet property="viewTimer" destination="Vcd-4B-c7j" id="hMj-ub-BVS"/>
                         <segue destination="o0c-Qv-efo" kind="push" identifier="Edit" id="h20-K5-JX1"/>
                     </connections>
@@ -563,24 +602,6 @@
                     </connections>
                 </tapGestureRecognizer>
                 <tapGestureRecognizer enabled="NO" id="3jx-Cg-khe"/>
-                <pinchGestureRecognizer id="AzF-RY-mfU">
-                    <connections>
-                        <action selector="pinchMask:" destination="qh6-II-akr" id="GiJ-gd-FHl"/>
-                        <outlet property="delegate" destination="qh6-II-akr" id="Amb-xz-aPW"/>
-                    </connections>
-                </pinchGestureRecognizer>
-                <rotationGestureRecognizer id="JK8-0M-ctP">
-                    <connections>
-                        <action selector="rotateMask:" destination="qh6-II-akr" id="psF-0P-qOp"/>
-                        <outlet property="delegate" destination="qh6-II-akr" id="sep-cQ-78H"/>
-                    </connections>
-                </rotationGestureRecognizer>
-                <panGestureRecognizer minimumNumberOfTouches="2" id="Sng-IC-Idc">
-                    <connections>
-                        <action selector="panMask:" destination="qh6-II-akr" id="MEK-Ua-7c2"/>
-                        <outlet property="delegate" destination="qh6-II-akr" id="IhJ-GL-Er8"/>
-                    </connections>
-                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-165" y="-560"/>
         </scene>
@@ -891,26 +912,34 @@
         <image name="bt_timer_none.png" width="77" height="38"/>
         <image name="checkbox_off.png" width="15" height="15"/>
         <image name="checkbox_on.png" width="15" height="15"/>
-        <image name="icon_boke.png" width="20" height="20"/>
+        <image name="icon_boke.png" width="13" height="20"/>
+        <image name="icon_boke2.png" width="10" height="15"/>
         <image name="icon_camera2.png" width="30" height="25"/>
         <image name="icon_change_camera.png" width="32" height="15"/>
+        <image name="icon_close.png" width="20" height="20"/>
         <image name="icon_escape2.png" width="15" height="15"/>
         <image name="icon_filter.png" width="20" height="20"/>
         <image name="icon_flash.png" width="12" height="15"/>
         <image name="icon_flash_30.png" width="12" height="15"/>
+        <image name="icon_gradation.png" width="12" height="12"/>
+        <image name="icon_help.png" width="21" height="21"/>
         <image name="icon_lens.png" width="15" height="15"/>
+        <image name="icon_light.png" width="12" height="12"/>
         <image name="icon_no.png" width="15" height="15"/>
         <image name="icon_ok.png" width="15" height="14"/>
         <image name="icon_photo_select.png" width="22" height="22"/>
         <image name="icon_time2.png" width="14" height="15"/>
-        <image name="select3_1.png" width="75" height="25"/>
+        <image name="sample.png" width="280" height="190"/>
         <image name="select3_1_on.png" width="75" height="25"/>
-        <image name="select3_2.png" width="75" height="25"/>
         <image name="select3_2_on.png" width="75" height="25"/>
-        <image name="select3_3.png" width="75" height="25"/>
-        <image name="select3_3_on.png" width="75" height="25"/>
-        <image name="tab.png" width="100" height="30"/>
-        <image name="tab_off.png" width="100" height="30"/>
+        <image name="select42_1.png" width="60" height="25"/>
+        <image name="select42_1_on.png" width="60" height="25"/>
+        <image name="select42_2.png" width="60" height="25"/>
+        <image name="select42_2_on.png" width="60" height="25"/>
+        <image name="select42_3.png" width="60" height="25"/>
+        <image name="select42_3_on.png" width="60" height="25"/>
+        <image name="select_off.png" width="60" height="25"/>
+        <image name="select_on.png" width="60" height="25"/>
         <image name="target.png" width="70" height="70"/>
     </resources>
     <classes>
@@ -931,41 +960,35 @@
             <relationships>
                 <relationship kind="action" name="cameraTouch:" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="action" name="capture:"/>
-                <relationship kind="action" name="changeBlur:" candidateClass="UISlider"/>
-                <relationship kind="action" name="changeCamera:"/>
                 <relationship kind="action" name="changeFlash:"/>
-                <relationship kind="action" name="changeHighlight:" candidateClass="UISlider"/>
                 <relationship kind="action" name="changeLens:"/>
                 <relationship kind="action" name="changePen:" candidateClass="UISlider"/>
                 <relationship kind="action" name="close:"/>
                 <relationship kind="action" name="flipCamera:"/>
                 <relationship kind="action" name="openImagePicker:"/>
-                <relationship kind="action" name="panMask:" candidateClass="UIPanGestureRecognizer"/>
                 <relationship kind="action" name="panTarget:" candidateClass="UIPanGestureRecognizer"/>
-                <relationship kind="action" name="pinchMask:" candidateClass="UIPinchGestureRecognizer"/>
-                <relationship kind="action" name="rotateMask:" candidateClass="UIRotationGestureRecognizer"/>
                 <relationship kind="action" name="setEffect:"/>
                 <relationship kind="action" name="setMask:" candidateClass="UIButton"/>
                 <relationship kind="action" name="setTimer:"/>
-                <relationship kind="action" name="toggleCrop:"/>
                 <relationship kind="action" name="toggleEffect:" candidateClass="UIButton"/>
-                <relationship kind="action" name="touchFocusTab:" candidateClass="UIButton"/>
+                <relationship kind="action" name="toggleGain:" candidateClass="UIButton"/>
+                <relationship kind="action" name="toggleMaskNatual:" candidateClass="UIButton"/>
+                <relationship kind="action" name="touchCloseHelp:"/>
                 <relationship kind="action" name="touchNo:"/>
+                <relationship kind="action" name="touchOpenHelp:"/>
                 <relationship kind="action" name="touchSave:"/>
                 <relationship kind="action" name="touchTimer:"/>
-                <relationship kind="outlet" name="buttonBackground" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonBackgroundNatual" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonBackgroundNone" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonBackgroundRound" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonBlurNone" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonBlurNormal" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonBlurStrong" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonBlurWeak" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonCapture" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonChangeLens" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonCrop" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonFlash" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonFlip" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonFocal" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonMove" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonNo" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonPaintMask" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonPick" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonScroll" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonSetNoTimer" candidateClass="UIButton"/>
@@ -977,18 +1000,15 @@
                 <relationship kind="outlet" name="gesturePan" candidateClass="UIPanGestureRecognizer"/>
                 <relationship kind="outlet" name="imageAutoFocus" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="imageBottom" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="imageMaskCircle" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="imageMaskRect" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="scrollCamera" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="scrollEffect" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="tapFocus" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="outlet" name="viewBlur" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewBottomBar" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewCameraWraper" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewDraw" candidateClass="LXDrawView"/>
-                <relationship kind="outlet" name="viewFocal" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewFocusControl" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewMask" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewHelp" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewPopupHelp" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewTimer" candidateClass="UIView"/>
             </relationships>
         </class>

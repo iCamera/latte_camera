@@ -419,7 +419,7 @@
     {
         Feed *feed = feeds[indexPath.row];
         if (feed.targets.count > 1) {
-            return 202.0 + 42.0 + 6.0;
+            return 202.0 + 42.0 + 12.0;
         } else if (feed.targets.count == 1) {
             Picture *pic = feed.targets[0];
             CGFloat feedHeight = [luxeysUtils heightFromWidth:308.0 width:[pic.width floatValue] height:[pic.height floatValue]] + 85.0 + 6.0 + 6.0;

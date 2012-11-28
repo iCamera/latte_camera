@@ -33,7 +33,7 @@
         tonecurve = [[GPUImageToneCurveFilter alloc] init];
         exposure = [[GPUImageExposureFilter alloc] init];
         rgb = [[GPUImageRGBFilter alloc] init];
-        crop = [[GPUImageCropFilter alloc] init];
+        dummy = [[GPUImageBrightnessFilter alloc] init];
         crop2 = [[GPUImageCropFilter alloc] init];
         contrast = [[GPUImageContrastFilter alloc] init];
         mono = [[GPUImageGrayscaleFilter alloc] init];
@@ -57,6 +57,7 @@
 
 - (void)changeFiltertoLens:(NSInteger)aLens andEffect:(NSInteger)aEffect input:(GPUImageOutput *)aInput output:(GPUImageView *)aOutput isPicture:(BOOL)isPicture {
     [aInput removeAllTargets];
+    [dummy setInputRotation:kGPUImageNoRotation atIndex:0];
     [self clearTargetWithCamera:nil andPicture:nil];
     
     switch (aLens) {
@@ -127,9 +128,11 @@
     
     
     if (lensIn == nil && effectIn == nil) {
-        [aInput addTarget:crop];
-        [crop addTarget:aOutput];
-        lastFilter = crop;
+        [aInput addTarget:dummy];
+        if (aOutput != nil) {
+            [dummy addTarget:aOutput];
+        }
+        lastFilter = dummy;
     } else if (lensIn == nil) {
         if (isPicture) {
             [aInput addTarget:effectIn];
@@ -137,8 +140,8 @@
                 [effectOut addTarget:aOutput];
             }
         } else {
-            [aInput addTarget:crop];
-            [crop addTarget:effectIn];
+            [aInput addTarget:dummy];
+            [dummy addTarget:effectIn];
             if (aOutput != nil) {
                 [effectOut addTarget:aOutput];
             }
@@ -151,8 +154,8 @@
                 [lensOut addTarget:aOutput];
             }
         } else {
-            [aInput addTarget:crop];
-            [crop addTarget:lensIn];
+            [aInput addTarget:dummy];
+            [dummy addTarget:lensIn];
             if (aOutput != nil) {
                 [lensOut addTarget:aOutput];
             }
@@ -167,8 +170,8 @@
                 [lensOut addTarget:aOutput];
             }
         } else {
-            [aInput addTarget:crop];
-            [crop addTarget:effectIn];
+            [aInput addTarget:dummy];
+            [dummy addTarget:effectIn];
             [effectOut addTarget:lensIn];
             if (aOutput != nil) {
                 [lensOut addTarget:aOutput];
@@ -520,7 +523,7 @@
     [tonecurve removeAllTargets];
     [rgb removeAllTargets];
     [exposure removeAllTargets];
-    [crop removeAllTargets];
+    [dummy removeAllTargets];
     [crop2 removeAllTargets];
     [contrast removeAllTargets];
     [mono removeAllTargets];
@@ -528,7 +531,6 @@
     [blur removeAllTargets];
     [filter removeAllTargets];
     [filterMono removeAllTargets];
-    
     [picDOF removeAllTargets];
     lxblur = [[LXFilterBlur alloc] init];
 //    [lxblur prepareForImageCapture];
@@ -550,8 +552,8 @@
 //    grain = [[GPUImageOverlayBlendFilter alloc] init];
 }
 
-- (GPUImageCropFilter*) getCrop {
-    return crop;
+- (GPUImageBrightnessFilter*) getDummy {
+    return dummy;
 }
 
 - (NSArray *)curveWithPoint:(float[16][3])points atIndex:(int)idx {

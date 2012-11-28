@@ -10,6 +10,7 @@
 
 @implementation UIImageView (loadProgress)
 - (void)loadProgess:(NSString *)url {
+    
     UIProgressView *progess = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
     progess.progressTintColor = [UIColor whiteColor];
     progess.trackTintColor = [UIColor darkGrayColor];
@@ -20,7 +21,7 @@
     
     progess.frame = frame;
     progess.progress = 0;
-    
+    [self addSubview:progess];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]
                                              cachePolicy:NSURLRequestUseProtocolCachePolicy

@@ -48,6 +48,7 @@
         
         size.width += 196;
     }
+    scrollPic.contentOffset = CGPointZero;
     scrollPic.contentSize = size;
     scrollPic.clipsToBounds = NO;
     buttonUser.clipsToBounds = YES;

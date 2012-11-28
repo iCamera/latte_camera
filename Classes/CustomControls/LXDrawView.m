@@ -35,6 +35,9 @@
     
     [aPath moveToPoint:[touch locationInView:self]];
     isEmpty = YES;
+    [UIView animateWithDuration:0.0 animations:^{
+        drawImageView.alpha = 1.0;
+    }];
 }
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -80,6 +83,12 @@
 }
 
 - (void)redraw {
+    CFAbsoluteTime startTime = CFAbsoluteTimeGetCurrent();
+    NSLog(@"Start");
+    
+    CFAbsoluteTime currentFrameTime = (CFAbsoluteTimeGetCurrent() - startTime);
+    NSLog(@"Current frame time : %f ms", 1000.0 * currentFrameTime);
+    
     UIGraphicsBeginImageContextWithOptions(drawImageView.frame.size, NO, 0);
     
     CGContextRef currentContext = UIGraphicsGetCurrentContext();
@@ -104,26 +113,6 @@
             CGGradientRelease(glossGradient);
             break;
         }
-        case kBackgroundRadial: {
-            CGGradientRef glossGradient;
-            CGColorSpaceRef rgbColorspace;
-            size_t num_locations = 2;
-            CGFloat locations[2] = { 1.0, 0.0 };
-            CGFloat components[8] = { 1.0, 0.0, 0.0, 1.0,  // Start color
-                1.0, 0.0, 0.0, 0.0 }; // End color
-            
-            rgbColorspace = CGColorSpaceCreateDeviceRGB();
-            glossGradient = CGGradientCreateWithColorComponents(rgbColorspace, components, locations, num_locations);
-            CGColorSpaceRelease(rgbColorspace);
-            
-            CGPoint gradCenter= CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
-            float gradRadius = MIN(self.bounds.size.width , self.bounds.size.height) ;
-            
-            CGContextDrawRadialGradient(currentContext, glossGradient, gradCenter, 0.0, gradCenter, gradRadius, kCGGradientDrawsAfterEndLocation);
-            CGGradientRelease(glossGradient);
-            
-            break;
-        }
         default: {
             [[UIColor redColor] setFill];
             CGContextFillRect(currentContext, self.bounds);
@@ -140,15 +129,38 @@
     UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
+    currentFrameTime = (CFAbsoluteTimeGetCurrent() - startTime);
+    NSLog(@"Current frame time : %f ms", 1000.0 * currentFrameTime);
+
     
-    GPUImageFastBlurFilter *blur = [[GPUImageFastBlurFilter alloc] init];
+    
+    GPUImageBoxBlurFilter *blur = [[GPUImageBoxBlurFilter alloc] init];
+    [blur prepareForImageCapture];
     blur.blurSize = lineWidth/2.0;
-    blur.blurPasses = 4;
     
     mask = [UIImage imageWithCGImage:[blur newCGImageByFilteringImage:viewImage]];
 
     drawImageView.image = mask;
+    
+    currentFrameTime = (CFAbsoluteTimeGetCurrent() - startTime);
+    NSLog(@"Current frame time : %f ms", 1000.0 * currentFrameTime);
     [delegate newMask:mask];
+    currentFrameTime = (CFAbsoluteTimeGetCurrent() - startTime);
+    NSLog(@"Current frame time : %f ms", 1000.0 * currentFrameTime);
+    
+    [UIView animateWithDuration:0.5
+                          delay:1.0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         drawImageView.alpha = 0.0;
+                     }
+                     completion:^(BOOL finished) {
+                         drawImageView.image = nil;
+                         drawImageView.alpha = 1.0;
+                     }];
+    currentFrameTime = (CFAbsoluteTimeGetCurrent() - startTime);
+    NSLog(@"Current frame time : %f ms", 1000.0 * currentFrameTime);
+    NSLog(@"End redraw");
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {

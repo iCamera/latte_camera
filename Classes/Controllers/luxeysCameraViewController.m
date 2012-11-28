@@ -43,20 +43,13 @@
 @synthesize buttonChangeLens;
 @synthesize viewCameraWraper;
 @synthesize viewDraw;
-@synthesize viewBlur;
-@synthesize viewMask;
-@synthesize viewFocal;
-@synthesize buttonBackground;
-@synthesize buttonFocal;
-@synthesize buttonMove;
-@synthesize buttonPaintMask;
-
-@synthesize imageMaskCircle;
-@synthesize imageMaskRect;
-
-@synthesize buttonBackgroundRound;
 @synthesize buttonBackgroundNatual;
-@synthesize buttonBackgroundNone;
+@synthesize buttonBlurNone;
+@synthesize buttonBlurNormal;
+@synthesize buttonBlurStrong;
+@synthesize buttonBlurWeak;
+@synthesize viewHelp;
+@synthesize viewPopupHelp;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -71,9 +64,6 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         isEditing = false;
-        isCrop = true;
-        isReady = false;
-        isFinishedProcessing = true;
         
         viewDraw.isEmpty = YES;
     }
@@ -83,13 +73,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    viewPopupHelp.layer.cornerRadius = 10.0;
+    viewPopupHelp.layer.borderWidth = 1.0;
+    viewPopupHelp.layer.borderColor = [[UIColor colorWithWhite:1.0 alpha:0.25] CGColor];
     
     isSaved = true;
     viewDraw.delegate = self;
     viewDraw.lineWidth = 10.0;
-    [self setupCameraAspect];
+    currentTab = kTabEffect;
     
     filter = [[FilterManager alloc] init];
+    HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:HUD];
+    HUD.mode = MBProgressHUDModeIndeterminate;
     
 	// Do any additional setup after loading the view.
     UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:imageBottom.bounds];
@@ -100,28 +96,12 @@
 	imageBottom.layer.shadowRadius = 2.5f;
 	imageBottom.layer.shadowPath = shadowPath.CGPath;
     
-    scrollCamera.maximumZoomScale=6.0;
-    scrollCamera.minimumZoomScale=0.5;
-    
     videoCamera = [[GPUImageStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionBack];
     [videoCamera setOutputImageOrientation:UIInterfaceOrientationPortrait];
     
     imagePicker = [[UIImagePickerController alloc]init];
     [imagePicker.navigationBar setBackgroundImage:[UIImage imageNamed: @"bg_head.png"] forBarMetrics:UIBarMetricsDefault];
     imagePicker.delegate = (id)self;
-    
-    CGRect screen = [[UIScreen mainScreen] bounds];
-
-    if (screen.size.height == 480) { // Tranditional iPhone
-        CGRect frame = scrollCamera.frame;
-        frame.size.height = 390.0;
-        scrollCamera.frame = frame;
-        buttonScroll.selected = false;
-        scrollEffect.hidden = true;
-        viewCameraWraper.frame = CGRectMake(14, 0, 292, 390);
-    }
-    else
-        viewCameraWraper.frame = CGRectMake(3.5, 0, 313.5, 418);
 
     [self resizeCameraViewWithAnimation:NO];
     
@@ -137,11 +117,13 @@
     currentTimer = kTimerNone;
     
     for (int i=0; i < 16; i++) {
-        UILabel *labelEffect = [[UILabel alloc] initWithFrame:CGRectMake(9+55*i, 9, 20, 10)];
+        UILabel *labelEffect = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 10)];
         labelEffect.backgroundColor = [UIColor clearColor];
         labelEffect.textColor = [UIColor whiteColor];
         labelEffect.font = [UIFont systemFontOfSize:9];
         UIButton *buttonEffect = [[UIButton alloc] initWithFrame:CGRectMake(5+55*i, 5, 50, 50)];
+        labelEffect.center = CGPointMake(buttonEffect.center.x, 63);
+        labelEffect.textAlignment = NSTextAlignmentCenter;
         UIImage *preview = [UIImage imageNamed:[NSString stringWithFormat:@"sample%d.jpg", i]];
         if (preview != nil) {
             [buttonEffect setImage:preview forState:UIControlStateNormal];
@@ -153,7 +135,58 @@
         buttonEffect.layer.cornerRadius = 5;
         buttonEffect.clipsToBounds = YES;
         buttonEffect.tag = i;
-        labelEffect.text = [NSString stringWithFormat:@"%d", i+1];
+        switch (i) {
+            case 1:
+                labelEffect.text = @"Classic";
+                break;
+            case 2:
+                labelEffect.text = @"Gummy";
+                break;
+            case 3:
+                labelEffect.text = @"Maccha";
+                break;
+            case 4:
+                labelEffect.text = @"Forest";
+                break;
+            case 5:
+                labelEffect.text = @"Electrocute";
+                break;
+            case 6:
+                labelEffect.text = @"Glory";
+                break;
+            case 7:
+                labelEffect.text = @"Big time";
+                break;
+            case 8:
+                labelEffect.text = @"Cozy";
+                break;
+            case 9:
+                labelEffect.text = @"Haze";
+                break;
+            case 10:
+                labelEffect.text = @"Autumn";
+                break;
+            case 11:
+                labelEffect.text = @"Dreamy";
+                break;
+            case 12:
+                labelEffect.text = @"Purple";
+                break;
+            case 13:
+                labelEffect.text = @"Dorian";
+                break;
+            case 14:
+                labelEffect.text = @"Stingray";
+                break;
+            case 15:
+                labelEffect.text = @"Aussie";
+                break;
+
+            default:
+                labelEffect.text = @"Original";
+                break;
+        }
+
         [scrollEffect addSubview:buttonEffect];
         [scrollEffect addSubview:labelEffect];
     }
@@ -163,17 +196,15 @@
         [videoCamera startCameraCapture];
         [self applyCurrentEffect];
     });
-    
-//    [self.view addSubview:[[LXDrawView alloc] initWithFrame:self.view.bounds]];
 }
 
 - (void)viewDidAppear:(BOOL)animated {    
     [super viewDidAppear:animated];
     
-    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-    UIAccelerometer* a = [UIAccelerometer sharedAccelerometer];
-    a.updateInterval = 1 / kAccelerometerFrequency;
-    a.delegate = self;
+    // [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    // UIAccelerometer* a = [UIAccelerometer sharedAccelerometer];
+    // a.updateInterval = 1 / kAccelerometerFrequency;
+    // a.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -183,6 +214,12 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+    
+    if (isEditing) {
+        isSaved = false;
+        savedData = nil;
+        savedPreview = nil;
+    }
     // Dispose of any resources that can be recreated.
 }
 
@@ -217,18 +254,13 @@
     [self setViewCameraWraper:nil];
     [self setViewDraw:nil];
     [self setButtonChangeLens:nil];
-    [self setViewMask:nil];
-    [self setViewBlur:nil];
-    [self setViewFocal:nil];
-    [self setButtonMove:nil];
-    [self setButtonPaintMask:nil];
-    [self setButtonFocal:nil];
-    [self setButtonBackground:nil];
-    [self setButtonBackgroundRound:nil];
     [self setButtonBackgroundNatual:nil];
-    [self setButtonBackgroundNone:nil];
-    [self setImageMaskRect:nil];
-    [self setImageMaskCircle:nil];
+    [self setButtonBlurWeak:nil];
+    [self setButtonBlurNormal:nil];
+    [self setButtonBlurStrong:nil];
+    [self setButtonBlurNone:nil];
+    [self setViewHelp:nil];
+    [self setViewPopupHelp:nil];
     [super viewDidUnload];
 }
 
@@ -260,16 +292,44 @@
 
 
 - (void)applyCurrentEffect {
-        if (isEditing) {
-            filter.isDOF = (bokehMode == kBokehModeFull) && (!viewDraw.isEmpty);
 
+        if (isEditing) {
+            isSaved = false;
+            savedData = nil;
+            savedPreview = nil;
+            
+            CFAbsoluteTime startTime = CFAbsoluteTimeGetCurrent();
+            NSLog(@"Start apply");
+            
+            CFAbsoluteTime currentFrameTime = (CFAbsoluteTimeGetCurrent() - startTime);
+            NSLog(@"apply : %f ms", 1000.0 * currentFrameTime);
+
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [HUD show:YES];
+            });
+            
+            filter.isDOF = (buttonBlurNone.enabled) && (!viewDraw.isEmpty);
+            currentFrameTime = (CFAbsoluteTimeGetCurrent() - startTime);
+            NSLog(@"apply : %f ms", 1000.0 * currentFrameTime);
             [filter changeFiltertoLens:currentLens andEffect:currentEffect input:previewFilter output:cameraView isPicture:true];
+            currentFrameTime = (CFAbsoluteTimeGetCurrent() - startTime);
+            NSLog(@"apply: %f ms", 1000.0 * currentFrameTime);
             [self showStillImage];
-//            [previewFilter processImage];
+            currentFrameTime = (CFAbsoluteTimeGetCurrent() - startTime);
+            NSLog(@"apply : %f ms", 1000.0 * currentFrameTime);
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [HUD hide:YES];
+            });
+            currentFrameTime = (CFAbsoluteTimeGetCurrent() - startTime);
+            NSLog(@"apply : %f ms", 1000.0 * currentFrameTime);
+            NSLog(@"End apply");
+            
         } else {
             filter.isDOF = false;
             [filter changeFiltertoLens:currentLens andEffect:currentEffect input:videoCamera output:cameraView isPicture:false];
         }
+//    });
 }
 
 
@@ -307,21 +367,21 @@
         [self setFocusPoint:point];
         [self setMetteringPoint:point];
 
+//        imageAutoFocus.hidden = false;
+        imageAutoFocus.alpha = 1.0;
         [UIView animateWithDuration:0.3
-                          delay:1.5
-                        options:UIViewAnimationOptionShowHideTransitionViews
+                          delay:1.0
+                        options:UIViewAnimationCurveEaseInOut
                      animations:^{
-                         imageAutoFocus.alpha = 0;
+                         imageAutoFocus.alpha = 0.0;
                      } completion:^(BOOL finished) {
-                         if (finished) {
-                             imageAutoFocus.hidden = true;
-                         }
+                         //imageAutoFocus.hidden = true;
                      }];
     }
 }
 
 - (void)capturePhotoAsync {
-    [videoCamera capturePhotoAsImageProcessedUpToFilterWithMeta:[filter getCrop]
+    [videoCamera capturePhotoAsImageProcessedUpToFilterWithMeta:[filter getDummy]
                                           withCompletionHandler:^(UIImage *processedImage, NSMutableDictionary *meta, NSError *error) {
                                               [locationManager stopUpdatingLocation];
                                               [videoCamera stopCameraCapture];
@@ -345,7 +405,7 @@
                                                   if (screen.size.height == 480)
                                                       size = CGSizeMake(height/2.0, width/2.0);
                                                   else
-                                                      size = CGSizeMake(height*2.0, width*2.0);
+                                                      size = CGSizeMake(height, width);
                                                   viewCameraWraper.frame = CGRectMake(14, 0, 320, 240);
                                               }
                                               else {
@@ -355,7 +415,7 @@
                                                   }
                                                   else {
                                                       viewCameraWraper.frame = CGRectMake(3.5, 0, 313.5, 418);
-                                                      size = CGSizeMake(width*2.0, height*2.0);
+                                                      size = CGSizeMake(width, height);
                                                   }
                                               }
                                               
@@ -366,7 +426,7 @@
                                               UIImage *previewPic = [processedImage
                                                                      resizedImage: size
                                                                      interpolationQuality:kCGInterpolationHigh];
-                                              previewPic = [previewPic fixOrientation];
+//                                              previewPic = [previewPic fixOrientation];
                                               
                                               previewFilter = [[GPUImagePicture alloc] initWithImage:previewPic
                                                                                  smoothlyScaleOutput:YES];
@@ -441,9 +501,6 @@
     [self setFlash:buttonFlash.selected];
 }
 
-- (IBAction)changeCamera:(id)sender {
-}
-
 - (IBAction)touchTimer:(id)sender {
     // wait for time before begin
     [viewTimer setHidden:!viewTimer.isHidden];
@@ -453,70 +510,97 @@
     [self saveImage];
 }
 
-- (IBAction)toggleCrop:(id)sender {
-    isCrop = !isCrop;
-    [self setupCameraAspect];
-//    [self toggleCrop];
-}
-
 - (IBAction)toggleEffect:(UIButton*)sender {
     switch (sender.tag) {
         case 1:
-            scrollEffect.hidden = !scrollEffect.hidden;
-            buttonScroll.selected = !scrollEffect.hidden;
-            if (scrollEffect.hidden) {
-                viewFocusControl.hidden = !(bokehMode != kBokehModeDisable);
-                if (!viewFocusControl.hidden) {
-                    [self setFocusTab:currentFocusTab];
-                }
-            }
-            else {
-                viewFocusControl.hidden = true;
-                viewDraw.hidden = true;
-            }
+            if (currentTab == kTabEffect)
+                currentTab = kTabPreview;
+            else
+                currentTab = kTabEffect;
             break;
         case 2:
-            [self showLensEffect];
+            if (currentTab == kTabBokeh)
+                currentTab = kTabPreview;
+            else
+                currentTab = kTabBokeh;
             break;
         default:
+            currentTab = kTabPreview;
             break;
     }
+
+    switch (currentTab) {
+        case kTabEffect:
+            buttonScroll.selected = true;
+            buttonToggleFocus.selected = false;
+            break;
+        case kTabPreview:
+            buttonScroll.selected = false;
+            buttonToggleFocus.selected = false;
+            break;
+        case kTabBokeh:
+            buttonScroll.selected = false;
+            break;
+    }
+    
+    scrollCamera.scrollEnabled = true;
     [self resizeCameraViewWithAnimation:YES];
+    
+    viewDraw.hidden = currentTab != kTabBokeh;
+    scrollCamera.scrollEnabled = (currentTab != kTabBokeh) && isEditing;
 }
 
 - (void)resizeCameraViewWithAnimation:(BOOL)animation {
-    [scrollCamera setZoomScale:1.0 animated:NO];
+    scrollCamera.zoomScale = 1.0;
     CGRect screen = [[UIScreen mainScreen] bounds];
 
-    
     CGRect frame = scrollCamera.frame;
     CGRect frame2 = viewCameraWraper.frame;
+    CGRect frameEffect = scrollEffect.frame;
+    CGRect frameBokeh = viewFocusControl.frame;
     
     if (screen.size.height > 480) {
-        if (scrollEffect.hidden && viewFocusControl.hidden)
-            frame.size.height = 568 - 40 - 50;
-        else if (!scrollEffect.hidden)
-            frame.size.height = 418;
-        else {
-            switch (bokehMode) {
-                case kBokehModeDisable:
-                    frame.size.height = 568 - 40 - 50;
-                    break;
-                case kBokehModeFull:
-                    frame.size.height = 568 - 40 - 50 - 90;
-                    break;
-            }
-        }
+        switch (currentTab) {
+            case kTabBokeh:
+                frame.size.height = 568 - 40 - 50 - 110;
+                frameEffect.origin.y = 568 - 50;
+                frameBokeh.origin.y = 568 - 50 - 110;
+                break;
+            case kTabEffect:
+                frame.size.height = 568 - 40 - 50 - 72;
+                frameEffect.origin.y = 568 - 50 - 72;
+                frameBokeh.origin.y = 568 - 50;
+                break;
+            case kTabPreview:
+                frame.size.height = 568 - 40 - 50;
+                frameEffect.origin.y = 568 - 50;
+                frameBokeh.origin.y = 568 - 50;
+                break;
+                
+            default:
+                break;
+        }            
     } else {
-        if (scrollEffect.hidden)
-            switch (bokehMode) {
-                case kBokehModeDisable:
-                    frame.size.height = 480 - 40 - 50;
-                    break;
-                case kBokehModeFull:
-                    frame.size.height = 480 - 40 - 50 - 90;
-                    break;
-            }
+        switch (currentTab) {
+            case kTabBokeh:
+                frame.size.height = 480 - 40 - 50 - 110;
+                frameEffect.origin.y = 480 - 50;
+                frameBokeh.origin.y = 480 - 50 - 110;
+                break;
+            case kTabEffect:
+                frame.size.height = 480 - 40 - 50;
+                frameEffect.origin.y = 480 - 50 - 72;
+                frameBokeh.origin.y = 480 - 50;
+                break;
+            case kTabPreview:
+                frame.size.height = 480 - 40 - 50;
+                frameEffect.origin.y = 480 - 50;
+                frameBokeh.origin.y = 480 - 50;
+                break;
+                
+            default:
+                break;
+        }
     }
 
     CGFloat horizontalRatio = frame.size.width / frame2.size.width;
@@ -528,50 +612,43 @@
     frame2.origin.x = (frame.size.width - frame2.size.width)/2;
     frame2.origin.y = (frame.size.height - frame2.size.height)/2;
     
-    // [UIView animateWithDuration:animation?0.3:0 animations:^{
-        
-    //     // viewCameraWraper.frame = frame2;
-    // }];
-    scrollCamera.frame = frame;
-    [scrollCamera setZoomScale:ratio];
+    if (animation) {
+        [UIView animateWithDuration:animation?0.3:0 animations:^{
+            scrollCamera.frame = frame;
+            viewFocusControl.frame = frameBokeh;
+            scrollEffect.frame = frameEffect;
+            scrollCamera.zoomScale = ratio;
+        }];
+    } else {
+        scrollCamera.frame = frame;
+        viewFocusControl.frame = frameBokeh;
+        scrollEffect.frame = frameEffect;
+        scrollCamera.zoomScale = ratio;
+    }
+    
     [self scrollViewDidZoom:scrollCamera];
 }
 
-- (void)showLensEffect {
-    if (!viewFocusControl.hidden) {
-        switch (bokehMode) {
-            case kBokehModeDisable:
-                bokehMode = kBokehModeFull;
-                break;
-            case kBokehModeFull:
-                bokehMode = kBokehModeDisable;
-                break;
-        }
-        [self applyCurrentEffect];
+- (void)processSavedData {
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+    if (app.currentUser != nil) {
+        NSDictionary *info = [[NSDictionary alloc] initWithObjectsAndKeys:
+                              savedData, @"data",
+                              savedPreview, @"preview",
+                              nil];
+        [delegate imagePickerController:self didFinishPickingMediaWithData:info];
+        
     } else {
-        if (bokehMode == kBokehModeDisable)
-            bokehMode = kBokehModeFull;
+        [self switchCamera];
     }
-
-    switch (bokehMode) {
-        case kBokehModeFull:
-            viewDraw.hidden = false;
-            buttonToggleFocus.selected = true;
-            viewFocusControl.hidden = false;
-            [self setFocusTab:currentFocusTab];
-            break;
-        case kBokehModeDisable:
-            viewDraw.hidden = true;
-            buttonToggleFocus.selected = false;
-            viewFocusControl.hidden = true;
-            break;
-    }
-
-    scrollEffect.hidden = true;
-    buttonScroll.selected = false;
 }
 
 - (void)saveImage {
+    if (isSaved) {
+        [self processSavedData];
+        return;
+    }
+    
     NSDictionary *location;
     if (bestEffortAtLocation != nil) {
         location = [luxeysUtils getGPSDictionaryForLocation:bestEffortAtLocation];
@@ -579,50 +656,21 @@
     }
     
     void (^saveImage)(ALAsset *, UIImage *) = ^(ALAsset *asset, UIImage *preview) {
+        ALAssetRepresentation *rep = [asset defaultRepresentation];
+        Byte *buffer = (Byte*)malloc(rep.size);
+        NSUInteger buffered = [rep getBytes:buffer fromOffset:0.0 length:rep.size error:nil];
+        savedData = [NSData dataWithBytesNoCopy:buffer length:buffered freeWhenDone:YES];
+        savedPreview = preview;
         isSaved = true;
-        luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
         
-        if (app.currentUser != nil) {
-            ALAssetRepresentation *rep = [asset defaultRepresentation];
-            Byte *buffer = (Byte*)malloc(rep.size);
-            NSUInteger buffered = [rep getBytes:buffer fromOffset:0.0 length:rep.size error:nil];
-            NSData *uploadData = [NSData dataWithBytesNoCopy:buffer length:buffered freeWhenDone:YES];
-            
-            NSDictionary *info = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                  uploadData, @"data",
-                                  preview, @"preview",
-                                  nil];
-            
-            [delegate imagePickerController:self didFinishPickingMediaWithData:info];
-            
-        } else {
-            [self switchCamera];
-        }
+        [self processSavedData];
+        [HUD hide:YES];
     };
     
+    [HUD show:YES];
     [filter changeFiltertoLens:currentLens andEffect:currentEffect input:picture output:nil isPicture:YES];
     [picture processImage];
     [filter saveImage:location orientation:imageOrientation withMeta:imageMeta onComplete:saveImage];
-}
-
-- (void)setupCameraAspect {
-    if (isCrop) {
-        cameraAspect = [NSLayoutConstraint constraintWithItem:cameraView
-                                                    attribute:NSLayoutAttributeHeight
-                                                    relatedBy:NSLayoutRelationEqual
-                                                       toItem:cameraView
-                                                    attribute:NSLayoutAttributeWidth
-                                                   multiplier:1.0
-                                                     constant:0.0];
-    } else {
-        cameraAspect = [NSLayoutConstraint constraintWithItem:cameraView
-                                                    attribute:NSLayoutAttributeHeight
-                                                    relatedBy:NSLayoutRelationEqual
-                                                       toItem:cameraView
-                                                    attribute:NSLayoutAttributeWidth
-                                                   multiplier:4.0/3.0
-                                                     constant:0.0];
-    }
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -678,14 +726,14 @@
             if (screen.size.height == 480)
                 size = CGSizeMake(height, 320.0);
             else
-                size = CGSizeMake(height*scale*2.0, 320.0*scale*2.0);
+                size = CGSizeMake(height*scale, 320.0*scale);
             filter.frameSize = CGSizeMake(tmp.size.height*tmp.scale, tmp.size.width*tmp.scale);
         }
         else {
             if (screen.size.height == 480)
                 size = CGSizeMake(320.0, height);
             else
-                size = CGSizeMake(320.0*scale*2.0, height*scale*2.0);
+                size = CGSizeMake(320.0*scale, height*scale);
             filter.frameSize = CGSizeMake(tmp.size.width*tmp.scale, tmp.size.height*tmp.scale);
         }
         
@@ -720,33 +768,31 @@
 
 - (void)switchCamera {
     isSaved = true;
+    savedData = nil;
+    savedPreview = nil;
     // Clear memory/blur mode
     picture = nil;
     previewFilter = nil;
     
     // Set to normal lens
     currentLens = 0;
+    currentTab = kTabEffect;
     viewDraw.hidden = true;
     viewDraw.isEmpty = true;
     
     // Zoom to normal size
-    [scrollCamera setZoomScale:1.0 animated:NO];
+    scrollCamera.zoomScale = 1.0;
     
-    CGRect screen = [[UIScreen mainScreen] bounds];
-    if (screen.size.height == 480)
-        viewCameraWraper.frame = CGRectMake(14, 0, 292, 390);
-    else
-        viewCameraWraper.frame = CGRectMake(3.5, 0, 313.5, 418);
+    viewCameraWraper.frame = CGRectMake(0, 0, 320, 425);
     scrollCamera.contentSize = viewCameraWraper.frame.size;
     
-    bokehMode = kBokehModeDisable;
-    [self resizeCameraViewWithAnimation:NO];
+    buttonBlurNone.enabled = false;
+    [self resizeCameraViewWithAnimation:YES];
     
     [locationManager startUpdatingLocation];
     [videoCamera resumeCameraCapture];
     [videoCamera startCameraCapture];
 
-    
     // [cameraView setInputRotation:kGPUImageNoRotation atIndex:0];
     
     buttonNo.hidden = YES;
@@ -760,7 +806,7 @@
     buttonPick.hidden = NO;
     tapFocus.enabled = true;
     buttonChangeLens.hidden = YES;
-    viewFocusControl.hidden = true;
+    
     scrollEffect.hidden = false;
     buttonScroll.selected = YES;
     buttonPick.hidden = NO;
@@ -800,10 +846,8 @@
     viewDraw.isEmpty = YES;
 
     // Default Brush
-    [self setUIMask:kMaskBackgroundNone];
+    [self setUIMask:kMaskBlurNone];
 
-    currentFocusTab = kBokehTabMask;
-    bokehMode = kBokehModeDisable;
     buttonToggleFocus.selected = false;
 }
 
@@ -892,100 +936,71 @@
     }
 }
 
-- (IBAction)touchFocusTab:(UIButton*)sender {
-    currentFocusTab = sender.tag;
-    [self setFocusTab:sender.tag];
-}
 
 - (IBAction)setMask:(UIButton*)sender {
     [self setUIMask:sender.tag];
+    [self applyCurrentEffect];
 }
 
-- (void)setUIMask:(NSInteger)tag {
-    switch (tag) {
-        case kMaskBackgroundNone: // Background none
-            buttonBackgroundNone.enabled = false;
-            buttonBackgroundRound.enabled = true;
-            buttonBackgroundNatual.enabled = true;
-            viewDraw.backgroundType = kBackgroundNone;
-            break;
-        case kMaskBackgroundRound: // Background Round
-            buttonBackgroundNone.enabled = true;
-            buttonBackgroundRound.enabled = false;
-            buttonBackgroundNatual.enabled = true;
-            viewDraw.backgroundType = kBackgroundRadial;
-            break;
-        case kMaskBackgroundNatual: // Background Gradient
-            buttonBackgroundNone.enabled = true;
-            buttonBackgroundRound.enabled = true;
-            buttonBackgroundNatual.enabled = false;
-            viewDraw.backgroundType = kBackgroundNatual;
-            break;
-            
-        default:
-            break;
+- (IBAction)toggleMaskNatual:(UIButton*)sender {
+    sender.selected = !sender.selected;
+    if (sender.selected) {
+        viewDraw.backgroundType = kBackgroundNatual;
+    } else {
+        viewDraw.backgroundType = kBackgroundNone;
     }
 }
 
-- (UIImage*)imageRadialGradient {
-    UIGraphicsBeginImageContextWithOptions(cameraView.frame.size, NO, 0);
-    CGContextRef currentContext = UIGraphicsGetCurrentContext();
-    
-    CGGradientRef glossGradient;
-    CGColorSpaceRef rgbColorspace;
-    size_t num_locations = 2;
-    CGFloat locations[2] = { 0.0, 1.0 };
-    CGFloat components[8] = { 1.0, 0.0, 0.0, 0.9,  // Start color
-        1.0, 0.0, 0.0, 0.0 }; // End color
-    
-    rgbColorspace = CGColorSpaceCreateDeviceRGB();
-    glossGradient = CGGradientCreateWithColorComponents(rgbColorspace, components, locations, num_locations);
-    
-    CGRect currentBounds = cameraView.bounds;
-    CGPoint midCenter = CGPointMake(CGRectGetMidX(currentBounds), CGRectGetMidY(currentBounds));
-    CGContextDrawRadialGradient(currentContext, glossGradient, midCenter, 0, midCenter, cameraView.frame.size.width, kCGGradientDrawsBeforeStartLocation);
-    
-    CGGradientRelease(glossGradient);
-    CGColorSpaceRelease(rgbColorspace);
-    
-    // make image out of bitmap context
-	UIImage *retImage = UIGraphicsGetImageFromCurrentImageContext();
-    
-	// free the context
-	UIGraphicsEndImageContext();
-    
-	return retImage;
+- (IBAction)touchCloseHelp:(id)sender {
+    [UIView animateWithDuration:0.3 animations:^{
+        viewHelp.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        viewHelp.hidden = true;
+    }];
+
 }
 
-- (UIImage*)imageLinearGradient {
-    UIGraphicsBeginImageContextWithOptions(cameraView.frame.size, NO, 0);
-    CGContextRef currentContext = UIGraphicsGetCurrentContext();
+- (IBAction)touchOpenHelp:(id)sender {
+    viewHelp.hidden = false;
+    [UIView animateWithDuration:0.3 animations:^{
+        viewHelp.alpha = 1.0;
+    }];
+}
+
+- (IBAction)toggleGain:(UIButton*)sender {
+    sender.selected = !sender.selected;
+    if (sender.selected)
+        filter.gain = 5.0;
+    else
+        filter.gain = 1.0;
+    [self applyCurrentEffect];
+}
+
+- (void)setUIMask:(NSInteger)tag {
+    buttonBlurStrong.enabled = true;
+    buttonBlurWeak.enabled = true;
+    buttonBlurNormal.enabled = true;
+    buttonBlurNone.enabled = true;
     
-    CGGradientRef glossGradient;
-    CGColorSpaceRef rgbColorspace;
-    size_t num_locations = 2;
-    CGFloat locations[2] = { 0.0, 1.0 };
-    CGFloat components[8] = { 1.0, 0.0, 0.0, 0.0,  // Start color
-        1.0, 0.0, 0.0, 0.9 }; // End color
-    
-    rgbColorspace = CGColorSpaceCreateDeviceRGB();
-    glossGradient = CGGradientCreateWithColorComponents(rgbColorspace, components, locations, num_locations);
-    
-    CGRect currentBounds = cameraView.bounds;
-    CGPoint topCenter = CGPointMake(CGRectGetMidX(currentBounds), 0.0f);
-    CGPoint bottomCenter = CGPointMake(CGRectGetMidX(currentBounds), currentBounds.size.height);
-    CGContextDrawLinearGradient(currentContext, glossGradient, topCenter, bottomCenter, 0);
-    
-    CGGradientRelease(glossGradient);
-    CGColorSpaceRelease(rgbColorspace);
-    
-    // make image out of bitmap context
-	UIImage *retImage = UIGraphicsGetImageFromCurrentImageContext();
-    
-	// free the context
-	UIGraphicsEndImageContext();
-    
-	return retImage;
+    switch (tag) {
+        case kMaskBlurNone:
+            buttonBlurNone.enabled = false;
+            break;
+        case kMaskBlurWeak:
+            filter.maxblur = 5.0;
+            buttonBlurWeak.enabled = false;
+            break;
+        case kMaskBlurNormal:
+            buttonBlurNormal.enabled = false;
+            filter.maxblur = 7.0;
+            break;
+        case kMaskBlurStrong:
+            filter.maxblur = 15.0;
+            buttonBlurStrong.enabled = false;
+            break;
+        default:
+            break;
+    }
 }
 
 - (IBAction)changeBlur:(UISlider*)sender {
@@ -1001,66 +1016,6 @@
 - (IBAction)changePen:(UISlider *)sender {
     viewDraw.lineWidth = sender.value;
     [viewDraw redraw];
-}
-
-- (IBAction)pinchMask:(UIPinchGestureRecognizer *)sender {
-    imageMaskRect.transform = CGAffineTransformScale(imageMaskRect.transform, sender.scale, sender.scale);
-    sender.scale = 1;
-    NSLog(@"Pinched");
-}
-
-- (IBAction)rotateMask:(UIRotationGestureRecognizer *)sender {
-    imageMaskRect.transform = CGAffineTransformRotate(imageMaskRect.transform, sender.rotation);
-    sender.rotation = 0;
-    NSLog(@"Rotate");
-}
-
-- (IBAction)panMask:(UIPanGestureRecognizer *)sender {
-    CGPoint translation = [sender translationInView:viewDraw];
-    imageMaskRect.center = CGPointMake(imageMaskRect.center.x,
-                                         imageMaskRect.center.y + translation.y);
-    [sender setTranslation:CGPointMake(0, 0) inView:viewDraw];
-}
-
-- (void)setFocusTab:(int)mode {
-    tapFocus.enabled = false;
-    
-    imageAutoFocus.hidden = true;
-    viewDraw.hidden = true;
-    viewBlur.hidden = true;
-    viewMask.hidden = true;
-    viewFocal.hidden = true;
-    
-    buttonMove.enabled = true;
-    buttonPaintMask.enabled = true;
-    buttonFocal.enabled = true;
-    buttonBackground.enabled = true;
-    
-    switch (mode) {
-        case kBokehTabMask:
-            currentLens = 0; // Normal lens
-            viewDraw.hidden = false;
-            viewMask.hidden = false;
-            buttonPaintMask.enabled = false;
-            tapFocus.enabled = false;
-            imageAutoFocus.hidden = true;
-            [self resizeCameraViewWithAnimation:NO];
-            scrollCamera.scrollEnabled = false;
-            break;
-        case kBokehTabBlur: // Blur mode
-            scrollCamera.scrollEnabled = true;
-            viewBlur.hidden = false;
-            buttonBackground.enabled = false;
-            imageAutoFocus.hidden = false;
-            tapFocus.enabled = true;
-            imageAutoFocus.hidden = false;
-            scrollCamera.scrollEnabled = true;
-            // Change to preview
-            break;
-    }
-}
-
-- (IBAction)focusControl:(id)sender {
 }
 
 - (void)countDown:(id)sender {
@@ -1102,16 +1057,6 @@
     }
     timerCount--;
 }
-
-- (void)handleTap:(UITapGestureRecognizer *)sender {
-    
-}
-
-
-- (void)didProcessImage {
-    isFinishedProcessing = true;
-}
-
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
     NSTimeInterval locationAge = -[newLocation.timestamp timeIntervalSinceNow];
@@ -1174,11 +1119,7 @@
     AVCaptureDevice *device = videoCamera.inputCamera;
     
     CGPoint pointOfInterest;
-    //    if (isCrop)
-    //        pointOfInterest = CGPointMake(point.y + 0.125, 1.0 - point.x);
-    //    else
     pointOfInterest = CGPointMake(point.y, 1.0 - point.x);
-    NSLog(@"Mettering at %f %f", pointOfInterest.x, pointOfInterest.y);
     
     NSError *error;
     if ([device lockForConfiguration:&error]) {;
@@ -1186,7 +1127,6 @@
         {
             [device setExposurePointOfInterest:pointOfInterest];
             [device setExposureMode:AVCaptureExposureModeContinuousAutoExposure];
-            NSLog(@"Mettering OK");
         }
         [device unlockForConfiguration];
     } else {
@@ -1202,25 +1142,6 @@
         return nil;
 }
 
-- (CGRect)zoomRectForScrollView:(UIScrollView *)scrollView withScale:(float)scale withCenter:(CGPoint)center {
-    
-    CGRect zoomRect;
-    
-    // The zoom rect is in the content view's coordinates.
-    // At a zoom scale of 1.0, it would be the size of the
-    // imageScrollView's bounds.
-    // As the zoom scale decreases, so more content is visible,
-    // the size of the rect grows.
-    zoomRect.size.height = scrollView.frame.size.height / scale;
-    zoomRect.size.width  = scrollView.frame.size.width  / scale;
-    
-    // choose an origin so as to get the right center.
-    zoomRect.origin.x = center.x - (zoomRect.size.width  / 2.0);
-    zoomRect.origin.y = center.y - (zoomRect.size.height / 2.0);
-    
-    return zoomRect;
-}
-
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView
 {
     UIView *subView = [scrollView.subviews objectAtIndex:0];
@@ -1231,16 +1152,9 @@
     CGFloat offsetY = (scrollView.bounds.size.height > scrollView.contentSize.height)?
     (scrollView.bounds.size.height - scrollView.contentSize.height) * 0.5 : 0.0;
     
-    subView.center = CGPointMake(scrollView.contentSize.width * 0.5 + offsetX,
-                                 scrollView.contentSize.height * 0.5 + offsetY);
-}
 
-- (void)resizeZoomFactor {
-    CGFloat horizontalRatio = scrollCamera.frame.size.width / scrollCamera.contentSize.width;
-    CGFloat verticalRatio = scrollCamera.frame.size.height / scrollCamera.contentSize.height;
-    CGFloat ratio;
-    ratio = MIN(horizontalRatio, verticalRatio);
-    [scrollCamera setZoomScale:ratio animated:YES];
+        subView.center = CGPointMake(scrollView.contentSize.width * 0.5 + offsetX,
+                                     scrollView.contentSize.height * 0.5 + offsetY);
 }
 
 #ifdef DEBUG

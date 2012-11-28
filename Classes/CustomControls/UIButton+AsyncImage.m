@@ -15,26 +15,31 @@
 }
 
 - (void)loadBackground:(NSString *)url placeholderImage:(NSString *)placeHolder {
-    if (placeHolder != nil) {
-        [self setBackgroundImage:[UIImage imageNamed:placeHolder] forState:UIControlStateNormal];
-    } else {
-        [self setBackgroundImage:nil forState:UIControlStateNormal];
-        [self setBackgroundColor:[UIColor grayColor]];
+    for (UIView* subview in self.subviews) {
+        [subview removeFromSuperview];
     }
     
-    UIProgressView *progess = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
-    progess.progressTintColor = [UIColor whiteColor];
-    progess.trackTintColor = [UIColor darkGrayColor];
-    CGRect frame = self.frame;
-    frame.origin.x = 10;
-    frame.origin.y = frame.size.height/2-3;
-    frame.size.width -= 20;
+    UIImageView *image = [[UIImageView alloc] initWithFrame:self.bounds];
+    image.userInteractionEnabled = NO;
+    image.exclusiveTouch = NO;
     
-    progess.frame = frame;
-    progess.progress = 0;
+    UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    activity.hidesWhenStopped = true;
 
+    CGRect frame = self.frame;
+    [activity setCenter:CGPointMake(frame.size.width/2,frame.size.height/2)];
+    [activity setContentMode:UIViewContentModeCenter];
+    [activity startAnimating];
+
+    if (placeHolder != nil) {
+        [image setImage:[UIImage imageNamed:placeHolder]];
+    } else {
+        [image setBackgroundColor:[UIColor grayColor]];
+    }
+    [self addSubview:image];
+    
     if (placeHolder == nil) {
-        [self addSubview: progess];
+        [self addSubview: activity];
     }
 
     
@@ -45,18 +50,25 @@
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     
     void (^successDownload)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self setBackgroundImage:[UIImage imageWithData:responseObject] forState:UIControlStateNormal];
-        [progess removeFromSuperview];
+        UIImage *loadedImage = [UIImage imageWithData:responseObject];
+        [image setImage:loadedImage];
+        image.alpha = 0.0;
+        [UIView animateWithDuration:0.3
+                         animations:^{
+                             image.alpha = 1.0;
+                             activity.alpha = 0.0;
+                         } completion:^(BOOL finished) {
+                         }];
     };
+
     
     void (^failDownload)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
-        [progess removeFromSuperview];
+        [activity removeFromSuperview];
     };
     
     [operation setCompletionBlockWithSuccess: successDownload failure: failDownload];
     
     [operation setDownloadProgressBlock:^(NSInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
-        progess.progress = (float)totalBytesRead/(float)totalBytesExpectedToRead;
     }];
     
     
