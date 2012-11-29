@@ -1166,6 +1166,9 @@
 
 - (void)newMask:(UIImage *)mask {
     filter.dof = mask;
+    if (!buttonBlurNone.enabled) {
+        [self setMask:buttonBlurNormal];
+    }
     [self applyCurrentEffect];
 }
 
