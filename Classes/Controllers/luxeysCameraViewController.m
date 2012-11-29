@@ -102,8 +102,6 @@
     imagePicker = [[UIImagePickerController alloc]init];
     [imagePicker.navigationBar setBackgroundImage:[UIImage imageNamed: @"bg_head.png"] forBarMetrics:UIBarMetricsDefault];
     imagePicker.delegate = (id)self;
-
-    [self resizeCameraViewWithAnimation:NO];
     
     // GPS Info
     locationManager = [[CLLocationManager alloc] init];
@@ -191,6 +189,8 @@
         [scrollEffect addSubview:labelEffect];
     }
     scrollEffect.contentSize = CGSizeMake(16*55+10, 60);
+    
+    [self resizeCameraViewWithAnimation:NO];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [videoCamera startCameraCapture];
@@ -298,33 +298,9 @@
             savedData = nil;
             savedPreview = nil;
             
-            CFAbsoluteTime startTime = CFAbsoluteTimeGetCurrent();
-            NSLog(@"Start apply");
-            
-            CFAbsoluteTime currentFrameTime = (CFAbsoluteTimeGetCurrent() - startTime);
-            NSLog(@"apply : %f ms", 1000.0 * currentFrameTime);
-
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [HUD show:YES];
-            });
-            
             filter.isDOF = (buttonBlurNone.enabled) && (!viewDraw.isEmpty);
-            currentFrameTime = (CFAbsoluteTimeGetCurrent() - startTime);
-            NSLog(@"apply : %f ms", 1000.0 * currentFrameTime);
-            [filter changeFiltertoLens:currentLens andEffect:currentEffect input:previewFilter output:cameraView isPicture:true];
-            currentFrameTime = (CFAbsoluteTimeGetCurrent() - startTime);
-            NSLog(@"apply: %f ms", 1000.0 * currentFrameTime);
+            [filter changeFiltertoLens:currentLens andEffect:currentEffect input:previewFilter output:cameraView isPicture:YES];
             [self showStillImage];
-            currentFrameTime = (CFAbsoluteTimeGetCurrent() - startTime);
-            NSLog(@"apply : %f ms", 1000.0 * currentFrameTime);
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [HUD hide:YES];
-            });
-            currentFrameTime = (CFAbsoluteTimeGetCurrent() - startTime);
-            NSLog(@"apply : %f ms", 1000.0 * currentFrameTime);
-            NSLog(@"End apply");
-            
         } else {
             filter.isDOF = false;
             [filter changeFiltertoLens:currentLens andEffect:currentEffect input:videoCamera output:cameraView isPicture:false];
@@ -343,33 +319,12 @@
 - (void)updateTargetPoint {
     CGPoint point = CGPointMake(imageAutoFocus.center.x/cameraView.frame.size.width, imageAutoFocus.center.y/cameraView.frame.size.height);
     
-    if (isEditing) {
-        switch (imageOrientation) {
-            case UIImageOrientationUp:
-                filter.focus = point;
-                break;
-            case UIImageOrientationLeft:
-                filter.focus = CGPointMake(1.0-point.y, point.x);
-                break;
-            case UIImageOrientationRight:
-                filter.focus = CGPointMake(point.y, 1.0-point.x);
-                break;
-            case UIImageOrientationDown:
-                filter.focus = CGPointMake(1.0-point.x, 1.0-point.y);
-                break;
-            default:
-                filter.focus = point;
-                break;
-        }
-        
-        [self applyCurrentEffect];
-    } else {
-        [self setFocusPoint:point];
-        [self setMetteringPoint:point];
-
-//        imageAutoFocus.hidden = false;
-        imageAutoFocus.alpha = 1.0;
-        [UIView animateWithDuration:0.3
+    
+    [self setFocusPoint:point];
+    [self setMetteringPoint:point];
+    //        imageAutoFocus.hidden = false;
+    imageAutoFocus.alpha = 1.0;
+    [UIView animateWithDuration:0.3
                           delay:1.0
                         options:UIViewAnimationCurveEaseInOut
                      animations:^{
@@ -377,7 +332,6 @@
                      } completion:^(BOOL finished) {
                          //imageAutoFocus.hidden = true;
                      }];
-    }
 }
 
 - (void)capturePhotoAsync {
@@ -389,33 +343,34 @@
                                               imageMeta = meta;
 
                                               CGFloat scale = [[UIScreen mainScreen] scale];
-                                              CGFloat width = 320.0*scale;
+                                              CGFloat width = 320.0;
 
                                               NSInteger height = [luxeysUtils heightFromWidth:width width:processedImage.size.width height:processedImage.size.height];
                                               
-                                              picture = [[GPUImagePicture alloc] initWithImage:processedImage];
+
                                               imageOrientation = processedImage.imageOrientation;
                                               filter.frameSize = processedImage.size;
-                                              
+                                              filter.dofOrientation = imageOrientation;
+                                              picture = [[GPUImagePicture alloc] initWithImage:processedImage];
                                               
                                               CGSize size;
                                               CGRect screen = [[UIScreen mainScreen] bounds];
                                               
                                               if (imageOrientation == UIImageOrientationLeft || imageOrientation == UIImageOrientationRight) {
                                                   if (screen.size.height == 480)
-                                                      size = CGSizeMake(height/2.0, width/2.0);
+                                                      size = CGSizeMake(height*scale, width*scale);
                                                   else
-                                                      size = CGSizeMake(height, width);
+                                                      size = CGSizeMake(height*scale, width*scale);
                                                   viewCameraWraper.frame = CGRectMake(14, 0, 320, 240);
                                               }
                                               else {
                                                   if (screen.size.height == 480) {
                                                       viewCameraWraper.frame = CGRectMake(14, 0, 292, 390);
-                                                      size = CGSizeMake(width/2.0, height/2.0);
+                                                      size = CGSizeMake(width*scale, height*scale);
                                                   }
                                                   else {
                                                       viewCameraWraper.frame = CGRectMake(3.5, 0, 313.5, 418);
-                                                      size = CGSizeMake(width, height);
+                                                      size = CGSizeMake(width*scale, height*scale);
                                                   }
                                               }
                                               
@@ -426,11 +381,8 @@
                                               UIImage *previewPic = [processedImage
                                                                      resizedImage: size
                                                                      interpolationQuality:kCGInterpolationHigh];
-//                                              previewPic = [previewPic fixOrientation];
                                               
-                                              previewFilter = [[GPUImagePicture alloc] initWithImage:previewPic
-                                                                                 smoothlyScaleOutput:YES];
-                                              
+                                              previewFilter = [[GPUImagePicture alloc] initWithImage:previewPic];
                                               
                                               [self switchEditImage];
                                               [self applyCurrentEffect];
@@ -465,11 +417,11 @@
 
 - (IBAction)close:(id)sender {
     if (!isSaved) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
-                                                        message:@"You have not saved this photo, are you sure?"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"写真が保存されていません"
+                                                        message:@"カメラを閉じますか？"
                                                        delegate:self
-                                              cancelButtonTitle:@"Cancel"
-                                              otherButtonTitles:@"OK", nil];
+                                              cancelButtonTitle:@"キャンセル"
+                                              otherButtonTitles:@"はい", nil];
         alert.tag = 2;
         [alert show];
     } else
@@ -540,6 +492,15 @@
             break;
         case kTabBokeh:
             buttonScroll.selected = false;
+            buttonToggleFocus.selected = true;
+            
+            // Firsttime
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            if (![defaults objectForKey:@"firstRunBokeh"]) {
+                [defaults setObject:[NSDate date] forKey:@"firstRunBokeh"];
+                [self touchOpenHelp:nil];
+            }
+
             break;
     }
     
@@ -548,6 +509,8 @@
     
     viewDraw.hidden = currentTab != kTabBokeh;
     scrollCamera.scrollEnabled = (currentTab != kTabBokeh) && isEditing;
+        
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)resizeCameraViewWithAnimation:(BOOL)animation {
@@ -614,18 +577,16 @@
     
     if (animation) {
         [UIView animateWithDuration:animation?0.3:0 animations:^{
-            scrollCamera.frame = frame;
             viewFocusControl.frame = frameBokeh;
             scrollEffect.frame = frameEffect;
-            scrollCamera.zoomScale = ratio;
         }];
     } else {
-        scrollCamera.frame = frame;
         viewFocusControl.frame = frameBokeh;
         scrollEffect.frame = frameEffect;
-        scrollCamera.zoomScale = ratio;
+        
     }
-    
+    scrollCamera.frame = frame;
+    scrollCamera.zoomScale = ratio;
     [self scrollViewDidZoom:scrollCamera];
 }
 
@@ -694,6 +655,7 @@
         UIImage *tmp = [info objectForKey:UIImagePickerControllerOriginalImage];
         picture = [[GPUImagePicture alloc] initWithCGImage:rep.fullResolutionImage];
         imageOrientation = tmp.imageOrientation;
+        filter.dofOrientation = imageOrientation;
         
         [imagePicker dismissViewControllerAnimated:NO completion:nil];
         
@@ -861,11 +823,11 @@
 
 - (IBAction)touchNo:(id)sender {
     if (!isSaved) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
-                                                        message:@"You have not saved this photo, are you sure?"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"写真が保存されていません"
+                                                        message:@"カメラを閉じますか？"
                                                        delegate:self
-                                              cancelButtonTitle:@"Cancel"
-                                              otherButtonTitles:@"OK", nil];
+                                              cancelButtonTitle:@"キャンセル"
+                                              otherButtonTitles:@"はい", nil];
         alert.tag = 1;
         [alert show];
     } else
@@ -1203,8 +1165,7 @@
 #pragma mark -
 
 - (void)newMask:(UIImage *)mask {
-    filter.dof = [mask rotateOrientation:imageOrientation];
-    
+    filter.dof = mask;
     [self applyCurrentEffect];
 }
 

@@ -62,6 +62,7 @@
 
     BOOL isDOF;
     CGSize frameSize;
+    UIImageOrientation dofOrientation;
 }
 
 @property (strong, nonatomic) UIImage* dof;
@@ -74,10 +75,11 @@
 
 @property (readwrite, nonatomic) BOOL isDOF;
 @property (readwrite, nonatomic) CGSize frameSize;
+@property (readwrite, nonatomic) UIImageOrientation dofOrientation;
 
 - (void)changeFiltertoLens:(NSInteger)aLens andEffect:(NSInteger)aEffect input:(GPUImageOutput *)aInput output:(GPUImageView *)aOutput isPicture:(BOOL)isPicture;
 - (void)saveImage:(NSDictionary *)location orientation:(UIImageOrientation)imageOrientation withMeta:(NSMutableDictionary *)imageMeta onComplete:(void(^)(ALAsset *asset, UIImage *preview))block;
-- (void)saveUIImage:(UIImage *)picture withLocation:(NSDictionary *)location withMeta:(NSMutableDictionary *)imageMeta onComplete:(void(^)(ALAsset *asset))block;
+- (UIImage *)processImageWithOrientation:(UIImageOrientation)imageOrientation;
 - (GPUImageBrightnessFilter*) getDummy;
 - (void)clearTargetWithCamera:(GPUImageStillCamera *)camera andPicture:(GPUImagePicture *)picture;
 

@@ -83,12 +83,6 @@
 }
 
 - (void)redraw {
-    CFAbsoluteTime startTime = CFAbsoluteTimeGetCurrent();
-    NSLog(@"Start");
-    
-    CFAbsoluteTime currentFrameTime = (CFAbsoluteTimeGetCurrent() - startTime);
-    NSLog(@"Current frame time : %f ms", 1000.0 * currentFrameTime);
-    
     UIGraphicsBeginImageContextWithOptions(drawImageView.frame.size, NO, 0);
     
     CGContextRef currentContext = UIGraphicsGetCurrentContext();
@@ -129,24 +123,17 @@
     UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
-    currentFrameTime = (CFAbsoluteTimeGetCurrent() - startTime);
-    NSLog(@"Current frame time : %f ms", 1000.0 * currentFrameTime);
-
     
-    
-    GPUImageBoxBlurFilter *blur = [[GPUImageBoxBlurFilter alloc] init];
+    GPUImageFastBlurFilter *blur = [[GPUImageFastBlurFilter alloc] init];
     [blur prepareForImageCapture];
     blur.blurSize = lineWidth/2.0;
+    blur.blurPasses = 4;
     
     mask = [UIImage imageWithCGImage:[blur newCGImageByFilteringImage:viewImage]];
 
     drawImageView.image = mask;
     
-    currentFrameTime = (CFAbsoluteTimeGetCurrent() - startTime);
-    NSLog(@"Current frame time : %f ms", 1000.0 * currentFrameTime);
     [delegate newMask:mask];
-    currentFrameTime = (CFAbsoluteTimeGetCurrent() - startTime);
-    NSLog(@"Current frame time : %f ms", 1000.0 * currentFrameTime);
     
     [UIView animateWithDuration:0.5
                           delay:1.0
@@ -158,9 +145,6 @@
                          drawImageView.image = nil;
                          drawImageView.alpha = 1.0;
                      }];
-    currentFrameTime = (CFAbsoluteTimeGetCurrent() - startTime);
-    NSLog(@"Current frame time : %f ms", 1000.0 * currentFrameTime);
-    NSLog(@"End redraw");
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {

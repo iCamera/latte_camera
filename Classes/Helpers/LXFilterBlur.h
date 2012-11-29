@@ -18,6 +18,8 @@
     GLint focusUniform;
     GLint gainUniform;
     GLint thresholdUniform;
+    GLint ringsUniform;
+    GLint samplesUniform;
     
     GLuint depthTexture;
     GLubyte *depthMapByteArray;

@@ -71,9 +71,9 @@
                                      parameters:params
                                         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                             [HUD hide:YES];
-                                            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@""
-                                                                                            message:@"Please check mail and login." delegate:nil
-                                                                                  cancelButtonTitle:@"OK"
+                                            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"登録確認メールを送信しました。"
+                                                                                            message:@"メールに記載されたURLをクリックして、手続きを行ってください。" delegate:nil
+                                                                                  cancelButtonTitle:@"閉じる"
                                                                                   otherButtonTitles:nil];
                                             [alert show];
                                             [self.navigationController popViewControllerAnimated:YES];
@@ -93,20 +93,20 @@
 - (BOOL)validateInput {
     NSString *error;
     if (textMail.text.length == 0) {
-        error = @"You can't leave the email empty!";
+        error = @"メールアドレスを入力してください";
     } else if (![self NSStringIsValidEmail:textMail.text]) {
-        error = @"Email is not correct format!";
+        error = @"メールアドレスを正しく入力してください";
     } else if (textPassword.text.length == 0) {
-        error = @"You can't leave the password empty!";
+        error = @"パスワードを入力してください";
     } else  if (textName.text.length == 0) {
-        error = @"You can't leave the name empty!";
+        error = @"ニックネームを入力してください";
     }
     
     if (error != nil) {
         UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"エラー"
                                                              message:error
                                                             delegate:nil
-                                                   cancelButtonTitle:@"OK"
+                                                   cancelButtonTitle:@"閉じる"
                                                    otherButtonTitles:nil];
         [errorAlert show];
         return false;

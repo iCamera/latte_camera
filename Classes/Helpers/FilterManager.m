@@ -21,6 +21,7 @@
 
 @synthesize frameSize;
 @synthesize isDOF;
+@synthesize dofOrientation;
 
 - (id)init {
     self = [super init];
@@ -47,8 +48,9 @@
         maxblur = 5.0;
         threshold = 0.5;
         autofocus = false;
-        focalDepth = 1.0;
+        focalDepth = 0.1;
         gain = 1.0;
+        dofOrientation = UIImageOrientationUp;
 //        grain = [[GPUImageOverlayBlendFilter alloc] init];
         
     }
@@ -57,7 +59,9 @@
 
 - (void)changeFiltertoLens:(NSInteger)aLens andEffect:(NSInteger)aEffect input:(GPUImageOutput *)aInput output:(GPUImageView *)aOutput isPicture:(BOOL)isPicture {
     [aInput removeAllTargets];
+    
     [dummy setInputRotation:kGPUImageNoRotation atIndex:0];
+    
     [self clearTargetWithCamera:nil andPicture:nil];
     
     switch (aLens) {
@@ -205,6 +209,27 @@
     if (picDOF != nil) {
         [picDOF addTarget:lxblur atTextureLocation:1];
         [picDOF processImage];
+        
+        GPUImageRotationMode imageViewRotationMode = kGPUImageNoRotation;
+        switch (dofOrientation) {
+            case UIImageOrientationLeft:
+                imageViewRotationMode = kGPUImageRotateRight;
+                break;
+            case UIImageOrientationRight:
+                imageViewRotationMode = kGPUImageRotateLeft;
+                break;
+            case UIImageOrientationDown:
+                imageViewRotationMode = kGPUImageRotate180;
+                break;
+            case UIImageOrientationUp:
+                imageViewRotationMode = kGPUImageNoRotation;
+                break;
+            default:
+                imageViewRotationMode = kGPUImageRotateLeft;
+        }
+
+        [lxblur setInputRotation:imageViewRotationMode atIndex:1];
+        
     } else  {
         [lxblur disableSecondFrameCheck];
     }
@@ -601,37 +626,8 @@
     }];
 }
 
-- (void)saveUIImage:(UIImage *)picture withLocation:(NSDictionary *)location withMeta:(NSMutableDictionary *)imageMeta onComplete:(void(^)(ALAsset *asset))block {
-    if (imageMeta == nil) {
-        imageMeta = [[NSMutableDictionary alloc] init];
-    }
-    
-    NSNumber *orientation = [NSNumber numberWithInteger:[self metadataOrientationForUIImageOrientation:picture.imageOrientation]];
-    
-    [imageMeta setObject:orientation forKey:(NSString *)kCGImagePropertyTIFFOrientation];
-    [imageMeta setObject:orientation forKey:(NSString *)kCGImagePropertyOrientation];
-    
-    // Add GPS
-    if (location != nil) {
-        [imageMeta setObject:location forKey:(NSString *)kCGImagePropertyGPSDictionary];
-    }
-    
-    // Add App Info
-    [imageMeta setObject:@"Apple" forKey:(NSString*)kCGImagePropertyTIFFMake];
-    [imageMeta setObject:[[UIDevice currentDevice] model] forKey:(NSString *)kCGImagePropertyTIFFModel];
-    [imageMeta setObject:@"Latte" forKey:(NSString *)kCGImagePropertyTIFFSoftware];
-    
-    if (lastFilter == nil) {
-        lastFilter = [[GPUImageBrightnessFilter alloc] init];
-    }
-    
-    [lastFilter saveImageByFilteringImage:picture withMeta:imageMeta onComplete:^(NSURL *assetURL, NSError *error) {
-        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-        [library assetForURL:assetURL
-                 resultBlock:block
-                failureBlock:nil];
-    }];
-    
+- (UIImage *)processImageWithOrientation:(UIImageOrientation)imageOrientation {
+    return [lastFilter imageFromCurrentlyProcessedOutputWithOrientation:imageOrientation];
 }
 
 - (void)myEffect1 {

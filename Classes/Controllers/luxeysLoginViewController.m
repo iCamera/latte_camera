@@ -130,10 +130,10 @@
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     
     if ([JSON objectForKey:@"token"] == 0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                        message:@"Email / Password is not correct"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"エラー"
+                                                        message:@"ログイン出来ませんでした。メールアドレスとパスワードを確認して下さい。"
                                                        delegate:nil
-                                              cancelButtonTitle:@"OK"
+                                              cancelButtonTitle:@"閉じる"
                                               otherButtonTitles:nil
                               ];
         [HUD hide:YES];

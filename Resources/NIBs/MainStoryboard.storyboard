@@ -1812,7 +1812,7 @@
                                     <outlet property="delegate" destination="hGM-oV-eEH" id="94x-qx-5l4"/>
                                 </connections>
                             </tableView>
-                            <view hidden="YES" contentMode="scaleToFill" id="0Jd-Jw-FGQ">
+                            <view contentMode="scaleToFill" id="0Jd-Jw-FGQ">
                                 <rect key="frame" x="60" y="34" width="250" height="125"/>
                                 <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                 <subviews>
@@ -1859,12 +1859,12 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="S9d-d5-mPb">
                                         <rect key="frame" x="130" y="85" width="110" height="30"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
-                                        <state key="normal" title="ログイン" backgroundImage="bg_bt_off.jpg">
+                                        <state key="normal" title="ログイン" backgroundImage="bt_help.png">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="highlighted" backgroundImage="bt_help_on.png">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="touchLogin:" destination="hGM-oV-eEH" eventType="touchUpInside" id="Cdx-lt-e3L"/>
@@ -1874,9 +1874,12 @@
                                         <rect key="frame" x="10" y="85" width="110" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
-                                        <state key="normal" title="会員登録（無料）" backgroundImage="bg_bt_off.jpg">
+                                        <state key="normal" title="会員登録（無料）" backgroundImage="bt_help.png">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted" backgroundImage="bt_help_on.png">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="touchReg:" destination="hGM-oV-eEH" eventType="touchUpInside" id="BRj-kb-S5L"/>
@@ -2994,7 +2997,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="bg_bt_off.jpg" width="200" height="30"/>
         <image name="bg_comment.png" width="320" height="45"/>
         <image name="bg_comment2.png" width="255" height="30"/>
         <image name="bg_input_back.png" width="320" height="170"/>
@@ -3018,6 +3020,8 @@
         <image name="bt_comment_on.png" width="75" height="25"/>
         <image name="bt_facebook2.png" width="150" height="40"/>
         <image name="bt_facebook2_on.png" width="150" height="40"/>
+        <image name="bt_help.png" width="110" height="30"/>
+        <image name="bt_help_on.png" width="110" height="30"/>
         <image name="bt_hold.png" width="23" height="23"/>
         <image name="bt_hold_on.png" width="23" height="23"/>
         <image name="bt_iine.png" width="75" height="25"/>
@@ -3069,319 +3073,6 @@
         <image name="menu_timeline_off.png" width="155" height="43"/>
         <image name="user.gif" width="100" height="100"/>
     </resources>
-    <classes>
-        <class className="LXSubLayerView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXSubLayerView.h"/>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="luxeysButtonBack" superclassName="UIButton">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysButtonBack.h"/>
-        </class>
-        <class className="luxeysButtonBrown30" superclassName="UIButton">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysButtonBrown30.h"/>
-        </class>
-        <class className="luxeysButtonNormal" superclassName="UIButton">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysButtonNormal.h"/>
-        </class>
-        <class className="luxeysButtonOrange" superclassName="UIButton">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysButtonOrange.h"/>
-        </class>
-        <class className="luxeysCellFriend" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysCellFriend.h"/>
-            <relationships>
-                <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="labelIntro" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelName" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="luxeysCellFriendRequest" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysCellFriendRequest.h"/>
-            <relationships>
-                <relationship kind="outlet" name="buttonAdd" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonIgnore" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="imageUser" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="userIntro" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="userName" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="luxeysCellNotify" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysCellNotify.h"/>
-            <relationships>
-                <relationship kind="outlet" name="labelNotify" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="viewImage" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="luxeysCellProfile" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysCellProfile.h"/>
-            <relationships>
-                <relationship kind="outlet" name="labelDetail" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelField" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="luxeysCellRankLv1" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysCellRankLv1.h"/>
-            <relationships>
-                <relationship kind="outlet" name="buttonPic1" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="luxeysCellRankLv2" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysCellRankLv2.h"/>
-            <relationships>
-                <relationship kind="outlet" name="buttonPic2" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonPic3" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonPic4" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="imageBg1" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="imageBg2" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="label1st" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="label2nd" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="label3rd" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="luxeysCellWelcomeMulti" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysCellWelcomeMulti.h"/>
-            <relationships>
-                <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="labelTitle" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelUserDate" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="scrollPic" candidateClass="UIScrollView"/>
-            </relationships>
-        </class>
-        <class className="luxeysCellWelcomeSingle" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysCellWelcomeSingle.h"/>
-            <relationships>
-                <relationship kind="outlet" name="buttonComment" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonExpand" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonInfo" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonLike" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonMap" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonPic" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="labelAccess" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelComment" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelLike" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelTitle" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelUser" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="tableComment" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="viewBackground" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewController" candidateClass="UIViewController"/>
-                <relationship kind="outlet" name="viewPic" candidateClass="LXSubLayerView"/>
-                <relationship kind="outlet" name="viewStat" candidateClass="LXSubLayerView"/>
-            </relationships>
-        </class>
-        <class className="luxeysFav2ViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysFav2ViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="buttonNavRight" candidateClass="luxeysButtonBrown30"/>
-            </relationships>
-        </class>
-        <class className="luxeysImageViewShadow" superclassName="UIImageView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysImageViewShadow.h"/>
-        </class>
-        <class className="luxeysLoginViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysLoginViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="goBack:"/>
-                <relationship kind="action" name="login:"/>
-                <relationship kind="action" name="registerClick:"/>
-                <relationship kind="action" name="singleTap:"/>
-                <relationship kind="action" name="touchFacebook:"/>
-                <relationship kind="action" name="touchForgot:"/>
-                <relationship kind="outlet" name="tapView" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="outlet" name="textPass" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="textUser" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="luxeysMypageViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysMypageViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="touchSetProfilePic:"/>
-                <relationship kind="action" name="touchSetting:"/>
-                <relationship kind="action" name="touchTab:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonFollowCount" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonFriendCount" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonNavLeft" candidateClass="luxeysButtonBrown30"/>
-                <relationship kind="outlet" name="buttonPicCount" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonProfilePic" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonTimelineAll" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonTimelineFollow" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonTimelineFriend" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonTimelineMe" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonVoteCount" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="labelNickname" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelTitleFav" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelTitleFriends" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelTitlePicCount" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelTitleVote" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="loadIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="viewStats" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="luxeysNavBar" superclassName="UINavigationBar">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysNavBar.h"/>
-        </class>
-        <class className="luxeysPicCommentViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysPicCommentViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="changeText:"/>
-                <relationship kind="action" name="tapBackground:"/>
-                <relationship kind="action" name="touchClose:"/>
-                <relationship kind="action" name="touchSubmit:"/>
-                <relationship kind="outlet" name="buttonSubmit" candidateClass="luxeysButtonBrown30"/>
-                <relationship kind="outlet" name="gestureTap" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="outlet" name="labelAuthor" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelTitle" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="tableComment" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="textComment" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="viewComment" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewHeader" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewImage" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="luxeysPicDetailViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysPicDetailViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="changeText:"/>
-                <relationship kind="action" name="touchBack:"/>
-                <relationship kind="action" name="touchBackground:"/>
-                <relationship kind="action" name="touchEdit:"/>
-                <relationship kind="action" name="touchSend:"/>
-                <relationship kind="outlet" name="buttonEdit" candidateClass="luxeysButtonBrown30"/>
-                <relationship kind="outlet" name="buttonSend" candidateClass="luxeysButtonBrown30"/>
-                <relationship kind="outlet" name="constraintCommentView" candidateClass="NSLayoutConstraint"/>
-                <relationship kind="outlet" name="gestureTap" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="outlet" name="tablePic" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="textComment" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="viewTextbox" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="luxeysPicInfoViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysPicInfoViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="touchBack:"/>
-                <relationship kind="outlet" name="imagePic" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="labelTitle" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="viewHeader" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="luxeysPicMapViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysPicMapViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="touchApp:"/>
-                <relationship kind="action" name="touchBack:"/>
-                <relationship kind="outlet" name="mapPic" candidateClass="MKMapView"/>
-            </relationships>
-        </class>
-        <class className="luxeysRankingViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysRankingViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="touchTab:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonDaily" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonMonthly" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonNavLeft" candidateClass="luxeysButtonBrown30"/>
-                <relationship kind="outlet" name="buttonWeekly" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="loadIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="viewTab" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="luxeysRegisterViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysRegisterViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="touchBack:"/>
-                <relationship kind="action" name="touchPolicy:"/>
-                <relationship kind="action" name="touchReg:"/>
-                <relationship kind="outlet" name="textMail" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="textName" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="textPassword" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="luxeysRightSideViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysRightSideViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="touchTab:"/>
-                <relationship kind="outlet" name="tableNotify" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="luxeysTabBarViewController" superclassName="UITabBarController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysTabBarViewController.h"/>
-        </class>
-        <class className="luxeysTableViewCellComment" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysTableViewCellComment.h"/>
-            <relationships>
-                <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="labelAuthor" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelDate" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="textComment" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="viewBack" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="luxeysTableViewCellPicture" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysTableViewCellPicture.h"/>
-            <relationships>
-                <relationship kind="outlet" name="buttonComment" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonInfo" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonLike" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonMap" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="imagePic" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="labelAccess" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelAuthor" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelComment" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelDate" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelLike" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelTitle" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="viewStats" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="luxeysTextField" superclassName="UITextField">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysTextField.h"/>
-        </class>
-        <class className="luxeysUserViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysUserViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="touchBack:"/>
-                <relationship kind="action" name="touchContact:"/>
-                <relationship kind="action" name="touchTab:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonCalendar" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonContact" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonFriendCount" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonPhotoCount" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonProfile" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonVoteCount" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="iconFollow" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="iconFriend" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="imageUser" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="labelNickname" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelTitleFriend" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelTitlePicCount" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="lableTitleVote" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="loadIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="tableProfile" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="viewContent" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewStats" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="luxeysWelcomeViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysWelcomeViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="loginPressed:"/>
-                <relationship kind="action" name="touchCloseLogin:"/>
-                <relationship kind="action" name="touchLogin:"/>
-                <relationship kind="action" name="touchReg:"/>
-                <relationship kind="action" name="touchTab:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonGrid" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonLeftMenu" candidateClass="luxeysButtonBrown30"/>
-                <relationship kind="outlet" name="buttonNavRight" candidateClass="luxeysButtonBrown30"/>
-                <relationship kind="outlet" name="buttonTimeline" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="indicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="tablePic" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="viewBack" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewHeader" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewLogin" candidateClass="UIView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
