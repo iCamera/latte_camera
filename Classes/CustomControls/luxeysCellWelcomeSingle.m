@@ -138,7 +138,7 @@
     if (pic.title.length > 0)
         labelTitle.text = pic.title;
     else
-        labelTitle.text = @"タイトルなし";
+        labelTitle.text = NSLocalizedString(@"No title", "@タイトルなし") ;
     labelUser.text = [NSString stringWithFormat:@"photo by %@ | %@", feed.user.name, [luxeysUtils timeDeltaFromNow:feed.updatedAt]];
     
     self.clipsToBounds = NO;
@@ -156,7 +156,7 @@
     Picture *pic = feed.targets[0];
     Comment *comment = pic.comments[indexPath.row];
     
-    luxeysTableViewCellComment *cell = [tableView dequeueReusableCellWithIdentifier:@"Comment" forIndexPath:indexPath];
+    luxeysTableViewCellComment *cell = [tableView dequeueReusableCellWithIdentifier:@"Comment"];
     if (cell == nil)
     {
         cell = [[luxeysTableViewCellComment alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Comment"];

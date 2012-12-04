@@ -15,11 +15,11 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        [self setTitle:@"戻る" forState:UIControlStateNormal];
+        [self setTitle:NSLocalizedString(@"back", @"戻る")  forState:UIControlStateNormal];
         [self setContentEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
 //        [self setS]
         self.titleLabel.shadowOffset = CGSizeMake(0, 1);
-        [self.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
+        self.titleLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Medium" size:16];
     }
     return self;
 }

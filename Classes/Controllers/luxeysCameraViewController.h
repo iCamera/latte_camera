@@ -74,7 +74,7 @@ typedef enum {
     CLLocationManager *locationManager;
     CLLocation *bestEffortAtLocation;
     UIImageOrientation imageOrientation;
-    UIInterfaceOrientation orientationLast;
+    UIImageOrientation orientationLast;
     MBProgressHUD *HUD;
     
     NSData *savedData;

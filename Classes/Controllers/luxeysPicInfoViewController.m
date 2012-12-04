@@ -78,7 +78,7 @@
                                              
                                              [self.tableView reloadData];
                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                             NSLog(@"Something went wrong (PicInfo)");
+                                             TFLog(@"Something went wrong (PicInfo)");
                                          }];
     
 }
@@ -130,21 +130,17 @@
     {        
         
         if ([[keyBasic objectAtIndex:indexPath.row] isEqualToString:@"taken_at"]) {
-            cell.labelField.text = @"撮影月日";
+            cell.labelField.text = NSLocalizedString(@"taken_date", @"撮影月日") ;
             cell.labelDetail.text = [picDict objectForKey:[keyBasic objectAtIndex:indexPath.row]];
         }
         if ([[keyBasic objectAtIndex:indexPath.row] isEqualToString:@"created_at"]) {
-            cell.labelField.text = @"追加月日";
+            cell.labelField.text = NSLocalizedString(@"uploaded_date", @"追加月日");
             cell.labelDetail.text = [picDict objectForKey:[keyBasic objectAtIndex:indexPath.row]];
         }
         if ([[keyBasic objectAtIndex:indexPath.row] isEqualToString:@"tags"]) {
-            cell.labelField.text = @"タグ";
+            cell.labelField.text = NSLocalizedString(@"tags", @"タグ");
             NSArray *tags = [picDict objectForKey:[keyBasic objectAtIndex:indexPath.row]];
             cell.labelDetail.text = [tags componentsJoinedByString:@", "];
-        }
-        if ([[keyBasic objectAtIndex:indexPath.row] isEqualToString:@"taken_at"]) {
-            cell.labelField.text = @"撮影月日";
-            cell.labelDetail.text = [picDict objectForKey:[keyBasic objectAtIndex:indexPath.row]];
         }
     }
     if (indexPath.section == 1) {
@@ -162,9 +158,9 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == 1) {
-        return @"カメラ情報";
+        return NSLocalizedString(@"exif_info", @"カメラ情報");
     }
-    return @"詳細情報";
+    return NSLocalizedString(@"photo_info", @"詳細情報");
     
 }
 
@@ -175,12 +171,9 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *view = [[UIView alloc] init];
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, 30)];
-    [title setFont:[UIFont boldSystemFontOfSize:12]];
+    title.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:12];
     title.textColor = [UIColor colorWithRed:101.0/255.0 green:90.0/255.0 blue:56.0/255.0 alpha:1];
-    if (section == 1) {
-        title.text = @"カメラ情報";
-    }
-    title.text = @"詳細情報";
+    title.text = [self tableView:tableView titleForHeaderInSection:section];
     [view addSubview:title];
     
     return view;

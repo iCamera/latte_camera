@@ -57,18 +57,18 @@
 
 - (void)sessionStateChanged:(NSNotification*)notification {
     if (FBSession.activeSession.isOpen) {
-        NSLog(@"Open fb");
+        TFLog(@"Open fb");
         [[LatteAPIClient sharedClient] postPath:@"api/user/login_facebook"
                                      parameters:[NSDictionary dictionaryWithObjectsAndKeys:
                                                  FBSession.activeSession.accessToken, @"facebook_token", nil]
                                         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                             [self processLogin:JSON];
                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                            NSLog(@"Something went wrong (Facebook): %@", error.description);
+                                            TFLog(@"Something went wrong (Facebook): %@", error.description);
                                         }];
 //        [self.authButton setTitle:@"Logout" forState:UIControlStateNormal];
     } else {
-        NSLog(@"Unopen fb");
+        TFLog(@"Unopen fb");
 //        [self.authButton setTitle:@"Login" forState:UIControlStateNormal];
     }
 }
@@ -112,7 +112,7 @@
                                     success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                         [self processLogin:JSON];
                                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        NSLog(@"Something went wrong (Login)");
+                                        TFLog(@"Something went wrong (Login)");
                                     }];
 }
 
@@ -124,6 +124,10 @@
     [HUD show:YES];
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     [app openSessionWithAllowLoginUI:YES];
+}
+
+- (IBAction)touchTest:(id)sender {
+    TFLog(@"Touched");
 }
 
 - (void)processLogin:(NSDictionary *)JSON {

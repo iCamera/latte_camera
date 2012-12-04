@@ -77,7 +77,7 @@
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];
-    //NSLog(@"Tap count %d", touch.tapCount);
+    //TFLog(@"Tap count %d", touch.tapCount);
     if (touch.tapCount == 0)
         [self redraw];
 }

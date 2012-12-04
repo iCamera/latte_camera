@@ -118,7 +118,8 @@
     HUD = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:HUD];
     HUD.mode = MBProgressHUDModeText;
-    HUD.labelText = @"Loading...";
+    HUD.labelText = NSLocalizedString(@"Loading...", @"Loading...") ;
+    HUD.labelFont = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:16];
     HUD.margin = 10.f;
     HUD.yOffset = 150.f;
     
@@ -142,7 +143,7 @@
 
                                        [HUD hide:YES];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       NSLog(@"Something went wrong (Timeline)");
+                                       TFLog(@"Something went wrong (Timeline)");
                                        
                                        [HUD hide:YES];
                                    }];
@@ -166,7 +167,7 @@
                                        [buttonFollowCount setTitle:[user.countFollows stringValue] forState:UIControlStateNormal];
                                        
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       NSLog(@"Something went wrong (Profile)");
+                                       TFLog(@"Something went wrong (Profile)");
                                    }];
 }
 
@@ -216,7 +217,7 @@
                                        pagePic += 1;
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        [loadIndicator stopAnimating];
-                                       NSLog(@"Something went wrong (Photolist)");
+                                       TFLog(@"Something went wrong (Photolist)");
                                        [self doneLoadingTableViewData];
                                        [HUD hide:YES];
                                    }];
@@ -236,7 +237,7 @@
                                        [self.tableView reloadData];
                                        
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       NSLog(@"Something went wrong (Friendlist)");
+                                       TFLog(@"Something went wrong (Friendlist)");
                                        [self doneLoadingTableViewData];
                                        
                                        [HUD hide:YES];
@@ -256,7 +257,7 @@
                                        [HUD hide:YES];
                                        [self.tableView reloadData];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       NSLog(@"Something went wrong (Friendlist)");
+                                       TFLog(@"Something went wrong (Friendlist)");
                                        [self doneLoadingTableViewData];
                                        [HUD hide:YES];
                                    }];
@@ -307,7 +308,7 @@
                                        pageVote += 1;
                                        [loadIndicator stopAnimating];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       NSLog(@"Something went wrong (Photolist)");
+                                       TFLog(@"Something went wrong (Photolist)");
                                        [self doneLoadingTableViewData];
                                        [HUD hide:YES];
                                        [loadIndicator stopAnimating];
@@ -381,7 +382,7 @@
                                            
                                            [HUD hide:YES];
                                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                           NSLog(@"Something went wrong (Timeline)");
+                                           TFLog(@"Something went wrong (Timeline)");
                                            [loadIndicator stopAnimating];
                                            [HUD hide:YES];
                                        }];
@@ -494,7 +495,7 @@
         Feed *feed = [feeds objectAtIndex:indexPath.row];
         if (feed.targets.count == 1)
         {
-            luxeysCellWelcomeSingle *cell = [tableView dequeueReusableCellWithIdentifier:@"Single" forIndexPath:indexPath];
+            luxeysCellWelcomeSingle *cell = [tableView dequeueReusableCellWithIdentifier:@"Single"];
             if (cell == nil) {
                 cell = [[luxeysCellWelcomeSingle alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Single"];
             }
@@ -509,7 +510,7 @@
             
             return cell;
         } else {
-            luxeysCellWelcomeMulti *cell = [tableView dequeueReusableCellWithIdentifier:@"Multi" forIndexPath:indexPath];
+            luxeysCellWelcomeMulti *cell = [tableView dequeueReusableCellWithIdentifier:@"Multi"];
             if (cell == nil) {
                 cell = [[luxeysCellWelcomeMulti alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Multi"];
             }
@@ -717,7 +718,7 @@
                                         [buttonProfilePic setBackgroundImage:[UIImage imageNamed:@"user.gif"] forState:UIControlStateNormal];
                                         [HUD hide:YES];
                                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        NSLog(@"Something went wrong (Delete profile pic)");
+                                        TFLog(@"Something went wrong (Delete profile pic)");
                                         [HUD hide:YES];
                                     }];
 
@@ -769,10 +770,10 @@
     
     void (^failUpload)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
         if([operation.response statusCode] != 200){
-            NSLog(@"Upload Failed");
+            TFLog(@"Upload Failed");
             return;
         }
-        NSLog(@"error: %@", [operation error]);
+        TFLog(@"error: %@", [operation error]);
         progessHUD.mode = MBProgressHUDModeText;
         progessHUD.labelText = @"Error";
         progessHUD.margin = 10.f;
@@ -877,9 +878,9 @@
     [[LatteAPIClient sharedClient] postPath:url
                                  parameters:param
                                     success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                        NSLog(@"Submited like");
+                                        TFLog(@"Submited like");
                                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        NSLog(@"Something went wrong (Vote)");
+                                        TFLog(@"Something went wrong (Vote)");
                                     }];
 }
 

@@ -55,7 +55,7 @@
     buttonUser.layer.cornerRadius = 3;
     buttonUser.tag = [feed.user.userId integerValue];
     
-    labelTitle.text = [NSString stringWithFormat:@"写真を%d枚追加しました", feed.targets.count];
+    labelTitle.text = [NSString stringWithFormat:NSLocalizedString(@"has_uploaded_x_photos", @"写真を%d枚追加しました") , feed.targets.count];
     labelUserDate.text = [NSString stringWithFormat:@"photo by %@ | %@", feed.user.name, [luxeysUtils timeDeltaFromNow:feed.updatedAt]];
 
     [buttonUser addTarget:viewController action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];

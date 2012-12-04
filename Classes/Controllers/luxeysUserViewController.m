@@ -141,7 +141,7 @@
                                        [HUD hide:YES];
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       NSLog(@"Something went wrong (User - Profile)");
+                                       TFLog(@"Something went wrong (User - Profile)");
                                        
                                        [HUD hide:YES];
                                    }];
@@ -160,7 +160,7 @@
                                        [self doneLoadingTableViewData];
                                        [HUD hide:YES];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       NSLog(@"Something went wrong (User - Friendlist)");
+                                       TFLog(@"Something went wrong (User - Friendlist)");
                                        
                                        [HUD hide:YES];
                                    }];
@@ -218,7 +218,7 @@
                                        pagePhoto += 1;
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        [loadIndicator stopAnimating];
-                                       NSLog(@"Something went wrong (Photolist)");
+                                       TFLog(@"Something went wrong (Photolist)");
                                        [self doneLoadingTableViewData];
                                        [HUD hide:YES];
                                    }];
@@ -276,7 +276,7 @@
                                        
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        [loadIndicator stopAnimating];
-                                       NSLog(@"Something went wrong (User - Interesting)");
+                                       TFLog(@"Something went wrong (User - Interesting)");
                                        [self doneLoadingTableViewData];
                                        [HUD hide:YES];
                                    }];
@@ -312,7 +312,7 @@
                                        [HUD hide:YES];
                                        
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       NSLog(@"Something went wrong (User - Interesting)");
+                                       TFLog(@"Something went wrong (User - Interesting)");
                                        
                                        [HUD hide:YES];
                                    }];
@@ -435,39 +435,39 @@
     if (tableMode == kTableProfile)
     {
         static NSString *CellIdentifier = @"Profile";
-        luxeysCellProfile *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        luxeysCellProfile *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             cell = [[luxeysCellProfile alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
         
         NSString* strKey = [showField objectAtIndex:indexPath.row];
         if ([strKey isEqualToString:@"gender"]) {
-            cell.labelField.text = @"性別";
+            cell.labelField.text = NSLocalizedString(@"gender", @"性別");
         } else if ([strKey isEqualToString:@"residence"]) {
-            cell.labelField.text = @"現住所";
+            cell.labelField.text = NSLocalizedString(@"current_residence", @"現住所");
         } else if ([strKey isEqualToString:@"hometown"]) {
-            cell.labelField.text = @"出身地";
+            cell.labelField.text = NSLocalizedString(@"hometown", @"出身地");
         } else if ([strKey isEqualToString:@"age"]) {
-            cell.labelField.text = @"年齢";
+            cell.labelField.text = NSLocalizedString(@"age", @"年齢");
         } else if ([strKey isEqualToString:@"birthdate"]) {
-            cell.labelField.text = @"誕生日";
+            cell.labelField.text = NSLocalizedString(@"birthdate", @"誕生日");
         } else if ([strKey isEqualToString:@"bloodtype"]) {
-            cell.labelField.text = @"血液型";
+            cell.labelField.text = NSLocalizedString(@"bloodtype", @"血液型");
         } else if ([strKey isEqualToString:@"occupation"]) {
-            cell.labelField.text = @"職業";
+            cell.labelField.text = NSLocalizedString(@"occupation", @"職業");
         } else if ([strKey isEqualToString:@"hobby"]) {
-            cell.labelField.text = @"趣味";
+            cell.labelField.text = NSLocalizedString(@"hobby", @"趣味");
         } else if ([strKey isEqualToString:@"introduction"]) {
-            cell.labelField.text = @"自己紹介";
+            cell.labelField.text = NSLocalizedString(@"introduction", @"自己紹介");
         }
         
         if ([strKey isEqualToString:@"gender"]) {
             switch ([[userDict objectForKey:strKey] integerValue]) {
                 case 1:
-                    cell.labelDetail.text = @"男性";
+                    cell.labelDetail.text = NSLocalizedString(@"male", @"男性");
                     break;
                 case 2:
-                    cell.labelDetail.text = @"女性";
+                    cell.labelDetail.text = NSLocalizedString(@"female", @"女性");
                     break;
             }
         } else {
@@ -631,36 +631,36 @@
 
 - (IBAction)touchContact:(id)sender {
     
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"友達から外す"
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"friend_setting", @"友達設定") 
                                                        delegate:self
                                               cancelButtonTitle:nil
                                          destructiveButtonTitle:nil
                                               otherButtonTitles:nil];
     
     if (user.isFriend) {
-        [sheet addButtonWithTitle:@"友達から外す"];
+        [sheet addButtonWithTitle:NSLocalizedString(@"remove_friend", @"友達から外す")];
     } else {
         if (user.requestToMe != nil) {
             if ([user.requestToMe integerValue] != kUserRequestAccepted) {
-                [sheet addButtonWithTitle:@"Approve"];
+                [sheet addButtonWithTitle:NSLocalizedString(@"approve_friend", @"承認")];
             }
         }
         if (user.requestToUser != nil) {
             if ([user.requestToMe integerValue] != kUserRequestAccepted) {
-                [sheet addButtonWithTitle:@"友達申請中"];
+                [sheet addButtonWithTitle:NSLocalizedString(@"pending_request", @"友達申請中")];
             }
         }
         if ((user.requestToMe == nil) && (user.requestToUser == nil)) {
-            [sheet addButtonWithTitle:@"友達に追加"];
+            [sheet addButtonWithTitle:NSLocalizedString(@"add_friend", @"友達に追加")];
         }
     }
     
     if (user.isFollowing) {
-        [sheet addButtonWithTitle:@"お気に入りから外す"];
+        [sheet addButtonWithTitle:NSLocalizedString(@"unfollow", @"お気に入りから外す")];
     } else {
-        [sheet addButtonWithTitle:@"お気に入りに追加"];
+        [sheet addButtonWithTitle:NSLocalizedString(@"follow", @"お気に入りに追加")];
     }
-    [sheet addButtonWithTitle:@"キャンセル"];
+    [sheet addButtonWithTitle:NSLocalizedString(@"cancel", @"キャンセル")];
     
     sheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
     sheet.delegate = self;
@@ -690,7 +690,7 @@
                                             success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                                 [self reloadProfile];
                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                                NSLog(@"Something went wrong (User - Approve)");
+                                                TFLog(@"Something went wrong (User - Approve)");
                                                 [HUD hide:YES];
                                             }];
         }
@@ -705,7 +705,7 @@
                                         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                             [self reloadProfile];
                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                            NSLog(@"Something went wrong (User - Send request)");
+                                            TFLog(@"Something went wrong (User - Send request)");
                                             [HUD hide:YES];
                                         }];
     }
@@ -721,7 +721,7 @@
                                        success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                            [self reloadProfile];
                                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                           NSLog(@"Something went wrong (User - Unfollow)");
+                                           TFLog(@"Something went wrong (User - Unfollow)");
                                            [HUD hide:YES];
                                        }];
     } else {
@@ -731,7 +731,7 @@
                                        success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                            [self reloadProfile];
                                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                           NSLog(@"Something went wrong (User - Follow)");
+                                           TFLog(@"Something went wrong (User - Follow)");
                                            [HUD hide:YES];
                                        }];
     }
@@ -746,7 +746,7 @@
                                     success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                         [self reloadProfile];
                                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        NSLog(@"Something went wrong (User - Remove friend)");
+                                        TFLog(@"Something went wrong (User - Remove friend)");
                                         [HUD hide:YES];
                                     }];
 }

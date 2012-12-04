@@ -131,7 +131,7 @@
                                                  
                                                  [self doneLoadingTableViewData];
                                                  
-                                                 NSLog(@"Something went wrong (Welcome)");
+                                                 TFLog(@"Something went wrong (Welcome)");
                                              }];
     });
 }
@@ -165,7 +165,7 @@
                                        [indicator stopAnimating];
                                        
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       NSLog(@"Something went wrong (Welcome)");
+                                       TFLog(@"Something went wrong (Welcome)");
                                        [indicator stopAnimating];
                                    }];
 }
@@ -183,7 +183,7 @@
     if (tableMode == kTableTimeline) {
         Feed *feed = feeds[indexPath.row];
         if (feed.targets.count == 1) {
-            luxeysCellWelcomeSingle *cell = [tableView dequeueReusableCellWithIdentifier:@"Single" forIndexPath:indexPath];
+            luxeysCellWelcomeSingle *cell = [tableView dequeueReusableCellWithIdentifier:@"Single"];
             if (nil == cell) {
                 cell = [[luxeysCellWelcomeSingle alloc] initWithStyle:UITableViewCellStyleDefault
                                                    reuseIdentifier:@"Single"];
@@ -194,7 +194,7 @@
 
             return cell;
         } else {
-            luxeysCellWelcomeMulti *cell = [tableView dequeueReusableCellWithIdentifier:@"Multi" forIndexPath:indexPath];
+            luxeysCellWelcomeMulti *cell = [tableView dequeueReusableCellWithIdentifier:@"Multi"];
             if (nil == cell) {
                 cell = [[luxeysCellWelcomeMulti alloc] initWithStyle:UITableViewCellStyleDefault
                                                       reuseIdentifier:@"Multi"];
@@ -208,7 +208,7 @@
         }
     
     } else {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Grid" forIndexPath:indexPath];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Grid"];
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Grid"];
         }

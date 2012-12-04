@@ -103,7 +103,7 @@
                                              [HUD hide:YES];
                                          }
                                          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                             NSLog(@"Something went wrong (Ranking)");
+                                             TFLog(@"Something went wrong (Ranking)");
                                              [self doneLoadingTableViewData];
                                              [HUD hide:YES];
                                          }
@@ -140,7 +140,7 @@
                                        [loadIndicator stopAnimating];
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       NSLog(@"Something went wrong (Ranking)");
+                                       TFLog(@"Something went wrong (Ranking)");
                                        [loadIndicator stopAnimating];
                                        [self.tableView endUpdates];
                                    }
@@ -220,7 +220,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        luxeysCellRankLv1 *cellLv1 = [tableView dequeueReusableCellWithIdentifier:@"First" forIndexPath:indexPath];
+        luxeysCellRankLv1 *cellLv1 = [tableView dequeueReusableCellWithIdentifier:@"First"];
         if (nil == cellLv1) {
             cellLv1 = [[luxeysCellRankLv1 alloc] initWithStyle:UITableViewCellStyleDefault
                                                reuseIdentifier:@"First"];
@@ -239,11 +239,11 @@
         
         return cellLv1;
     } else {
-        luxeysCellRankLv2 *cellLv2 = [tableView dequeueReusableCellWithIdentifier:@"Second" forIndexPath:indexPath];
+        luxeysCellRankLv2 *cellLv2 = [tableView dequeueReusableCellWithIdentifier:@"Second"];
         if (nil == cellLv2) {
             cellLv2 = [[luxeysCellRankLv2 alloc] initWithStyle:UITableViewCellStyleDefault
                                                                      reuseIdentifier:@"Second"];
-            NSLog(@"New row");
+            TFLog(@"New row");
         }
         
         [self initButton:cellLv2.buttonPic2];

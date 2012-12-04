@@ -7,7 +7,6 @@
 //
 
 #import "luxeysAppDelegate.h"
-#import "luxeysSideMenuViewController.h"
 #import "luxeysRightSideViewController.h"
 #import <Security/Security.h>
 #import "LXUIRevealController.h"
@@ -38,8 +37,8 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
 }
 
 void uncaughtExceptionHandler(NSException *exception) {
-    NSLog(@"CRASH: %@", exception);
-    NSLog(@"Stack Trace: %@", [exception callStackSymbols]);
+    TFLog(@"CRASH: %@", exception);
+    TFLog(@"Stack Trace: %@", [exception callStackSymbols]);
     // Internal error reporting
 }
 
@@ -137,7 +136,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         case FBSessionStateOpen:
             if (!error) {
                 // We have a valid session
-                NSLog(@"User session found");
+                TFLog(@"User session found");
             }
             break;
         case FBSessionStateClosed:
@@ -193,11 +192,11 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err {
-    NSLog(@"Error in registration. Error: %@", err);
+    TFLog(@"Error in registration. Error: %@", err);
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
-    NSLog(@"received push");
+    TFLog(@"received push");
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -242,7 +241,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
              // Replace this implementation with code to handle the error appropriately.
              // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            TFLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         } 
     }
@@ -314,7 +313,7 @@ void uncaughtExceptionHandler(NSException *exception) {
          Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
          
          */
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        TFLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }    
     

@@ -40,22 +40,22 @@
         if (first)
             first = true;
         else
-            labelNotify.text = [labelNotify.text stringByAppendingString:@"と"];
+            labelNotify.text = [labelNotify.text stringByAppendingString:NSLocalizedString(@"and", @"と")];
             
         if (user.name != nil) {
             labelNotify.text = [labelNotify.text stringByAppendingString:user.name];
-            labelNotify.text = [labelNotify.text stringByAppendingString:@"さん"];
+            labelNotify.text = [labelNotify.text stringByAppendingString:NSLocalizedString(@"subfix", @"さん") ];
         } else {
-            labelNotify.text = [labelNotify.text stringByAppendingString:@"ゲスト"];
+            labelNotify.text = [labelNotify.text stringByAppendingString:NSLocalizedString(@"guest", @"ゲスト") ];
         }
     }
     
     switch ([[notify objectForKey:@"kind"] integerValue]) {
         case 1: // Comment
-            labelNotify.text = [labelNotify.text stringByAppendingString:@"が、あなたの写真にコメントしました。"];
+            labelNotify.text = [labelNotify.text stringByAppendingString:NSLocalizedString(@"notify_commented", @"が、あなたの写真にコメントしました。")];
             break;
         case 2: // Vote
-            labelNotify.text = [labelNotify.text stringByAppendingString:@"が、あなたの写真を「いいね！」と評価しました。"];
+            labelNotify.text = [labelNotify.text stringByAppendingString:NSLocalizedString(@"notify_liked", @"が、あなたの写真を「いいね！」と評価しました。")];
             break;
         case 10: // target update
             labelNotify.text = [labelNotify.text stringByAppendingString:@" target update"];

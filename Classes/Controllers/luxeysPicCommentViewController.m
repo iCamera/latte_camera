@@ -70,7 +70,7 @@
                                                  
                                                  [tableComment reloadData];
                                              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                                 NSLog(@"Something went wrong (PicInfo)");
+                                                 TFLog(@"Something went wrong (PicInfo)");
                                              }];
     }
     
@@ -124,7 +124,7 @@
                                                   [parent performSelector:@selector(submitComment:) withObject:pic];
                                                   [self.navigationController popViewControllerAnimated:YES];
                                               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                                  NSLog(@"Something went wrong (Comment)");
+                                                  TFLog(@"Something went wrong (Comment)");
                                               }];
         
         return TRUE;

@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "luxeysSideMenuViewController.h"
 #import "luxeysLoginViewController.h"
 #import "luxeysCameraViewController.h"
 

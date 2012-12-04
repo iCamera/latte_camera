@@ -67,7 +67,7 @@
                                            
                                            [self doneLoadingTableViewData];
                                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                           NSLog(@"Something went wrong (Fav)");
+                                           TFLog(@"Something went wrong (Fav)");
                                            
                                            dispatch_async(dispatch_get_main_queue(), ^{
                                                [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -98,7 +98,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FavRow" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FavRow"];
 
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"FavRow"];

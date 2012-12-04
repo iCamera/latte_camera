@@ -63,7 +63,7 @@
 	// Do any additional setup after loading the view.
     // Tab style
     for (UITabBarItem* tab in [self.tabBarController.tabBar items]) {
-        NSLog(@"text");
+        TFLog(@"text");
         [tab setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                      [UIColor blackColor], UITextAttributeTextShadowColor,
                                      [NSValue valueWithUIOffset:UIOffsetMake(0, 1)], UITextAttributeTextShadowOffset,
@@ -73,8 +73,8 @@
     
     UILabel *labelCamera = [[UILabel alloc] init];
     labelCamera.frame = CGRectMake(0.0, 0.0, 60, 11);
-    labelCamera.font = [UIFont boldSystemFontOfSize:10];
-    labelCamera.text = @"写真を追加";
+    labelCamera.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:10];
+    labelCamera.text = NSLocalizedString(@"start_camera", @"写真を追加");
     labelCamera.backgroundColor = [UIColor clearColor];
     labelCamera.textColor = [UIColor whiteColor];
     labelCamera.shadowOffset = CGSizeMake(0, 1);
@@ -114,25 +114,28 @@
     
     // Re-style tabbar item
     for(UIViewController *tab in self.viewControllers) {
-        [tab.tabBarItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                [UIColor whiteColor], UITextAttributeTextColor,
-                                                CGSizeMake(0, 1), UITextAttributeTextShadowOffset,
-                                                [UIColor blackColor], UITextAttributeTextShadowColor,
-                                                nil]
+        UIFont *font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:10];
+        NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    font, UITextAttributeFont,
+                                    [UIColor whiteColor], UITextAttributeTextColor,
+                                    CGSizeMake(0, 1), UITextAttributeTextShadowOffset,
+                                    [UIColor blackColor], UITextAttributeTextShadowColor,
+                                    nil];
+
+        [tab.tabBarItem setTitleTextAttributes:attributes
                                       forState:UIControlStateNormal];
-//        [tab.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"bt_info.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"bt_add.png"]];
     }
     self.tabBar.selectionIndicatorImage = [UIImage imageNamed:@"bg_bottom_on.png"];
     self.tabBar.backgroundImage = [UIImage imageNamed: @"bg_bottom.png"];
     
-        // add the drop shadow
-        UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:self.tabBar.bounds];
-        self.tabBar.layer.masksToBounds = NO;
-        self.tabBar.layer.shadowColor = [UIColor blackColor].CGColor;
-        self.tabBar.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-        self.tabBar.layer.shadowOpacity = 0.8f;
-        self.tabBar.layer.shadowRadius = 2.5f;
-        self.tabBar.layer.shadowPath = shadowPath.CGPath;
+    // add the drop shadow
+    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:self.tabBar.bounds];
+    self.tabBar.layer.masksToBounds = NO;
+    self.tabBar.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.tabBar.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+    self.tabBar.layer.shadowOpacity = 0.8f;
+    self.tabBar.layer.shadowRadius = 2.5f;
+    self.tabBar.layer.shadowPath = shadowPath.CGPath;
 }
 
 
@@ -218,7 +221,7 @@
 		return;
 	UIView *transitionView = [[[self.view.subviews reverseObjectEnumerator] allObjects] lastObject];
 	if(transitionView == nil) {
-		NSLog(@"could not get the container view!");
+		TFLog(@"could not get the container view!");
 		return;
 	}
 	CGRect viewFrame = self.view.frame;

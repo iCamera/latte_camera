@@ -32,6 +32,7 @@
     BOOL reloading;
 }
 
+@property (strong, nonatomic) IBOutlet UISegmentedControl *segmentTab;
 @property (strong, nonatomic) IBOutlet UITableView *tableNotify;
 - (IBAction)touchTab:(id)sender;
 

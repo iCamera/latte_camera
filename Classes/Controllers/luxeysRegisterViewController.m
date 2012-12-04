@@ -67,21 +67,27 @@
                                 textPassword.text, @"password",
                                 textPassword.text, @"password_conf",
                                 nil];
+        
+        void (^successBlock)(AFHTTPRequestOperation *, NSDictionary *) = ^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+            [HUD hide:YES];
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"register_sent_email", @"登録確認メールを送信しました。")
+                                                            message:NSLocalizedString(@"register_click_the_link", @"メールに記載されたURLをクリックして、手続きを行ってください。") delegate:nil
+                                                  cancelButtonTitle:NSLocalizedString(@"close", @"閉じる")
+                                                  otherButtonTitles:nil];
+            [alert show];
+            [self.navigationController popViewControllerAnimated:YES];
+            
+        };
+        
+        void (^failureBlock)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
+            [HUD hide:YES];
+            TFLog(@"Something went wrong (Login)");
+        };
+        
         [[LatteAPIClient sharedClient] postPath:@"/api/user/register"
                                      parameters:params
-                                        success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                            [HUD hide:YES];
-                                            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"登録確認メールを送信しました。"
-                                                                                            message:@"メールに記載されたURLをクリックして、手続きを行ってください。" delegate:nil
-                                                                                  cancelButtonTitle:@"閉じる"
-                                                                                  otherButtonTitles:nil];
-                                            [alert show];
-                                            [self.navigationController popViewControllerAnimated:YES];
-
-                                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                            [HUD hide:YES];
-                                            NSLog(@"Something went wrong (Login)");
-                                        }];
+                                        success:successBlock
+                                        failure:failureBlock];
     }
 }
 
@@ -93,20 +99,20 @@
 - (BOOL)validateInput {
     NSString *error;
     if (textMail.text.length == 0) {
-        error = @"メールアドレスを入力してください";
+        error = NSLocalizedString(@"register_error_email_require", @"メールアドレスを入力してください") ;
     } else if (![self NSStringIsValidEmail:textMail.text]) {
-        error = @"メールアドレスを正しく入力してください";
+        error = NSLocalizedString(@"register_error_email_format", @"メールアドレスを正しく入力してください");
     } else if (textPassword.text.length == 0) {
-        error = @"パスワードを入力してください";
+        error = NSLocalizedString(@"register_error_password_require", @"パスワードを入力してください");
     } else  if (textName.text.length == 0) {
-        error = @"ニックネームを入力してください";
+        error = NSLocalizedString(@"register_error_username_require", @"ニックネームを入力してください");
     }
     
     if (error != nil) {
-        UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"エラー"
+        UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"エラー")
                                                              message:error
                                                             delegate:nil
-                                                   cancelButtonTitle:@"閉じる"
+                                                   cancelButtonTitle:NSLocalizedString(@"close", @"閉じる")
                                                    otherButtonTitles:nil];
         [errorAlert show];
         return false;
@@ -142,7 +148,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, 30)];
-    [title setFont:[UIFont boldSystemFontOfSize:12]];
+    title.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:16];
     title.textColor = [UIColor colorWithRed:101.0/255.0 green:90.0/255.0 blue:56.0/255.0 alpha:1];
     title.text = [self tableView:tableView titleForHeaderInSection:section];
     [view addSubview:title];

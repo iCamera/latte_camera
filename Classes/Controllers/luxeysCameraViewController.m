@@ -118,7 +118,7 @@
         UILabel *labelEffect = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 10)];
         labelEffect.backgroundColor = [UIColor clearColor];
         labelEffect.textColor = [UIColor whiteColor];
-        labelEffect.font = [UIFont systemFontOfSize:9];
+        labelEffect.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:9];
         UIButton *buttonEffect = [[UIButton alloc] initWithFrame:CGRectMake(5+55*i, 5, 50, 50)];
         labelEffect.center = CGPointMake(buttonEffect.center.x, 63);
         labelEffect.textAlignment = NSTextAlignmentCenter;
@@ -201,13 +201,14 @@
 - (void)viewDidAppear:(BOOL)animated {    
     [super viewDidAppear:animated];
     
-    // [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-    // UIAccelerometer* a = [UIAccelerometer sharedAccelerometer];
-    // a.updateInterval = 1 / kAccelerometerFrequency;
-    // a.delegate = self;
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    UIAccelerometer* a = [UIAccelerometer sharedAccelerometer];
+    a.updateInterval = 1 / kAccelerometerFrequency;
+    a.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
     self.navigationController.navigationBarHidden = YES;
 }
 
@@ -348,7 +349,7 @@
                                               NSInteger height = [luxeysUtils heightFromWidth:width width:processedImage.size.width height:processedImage.size.height];
                                               
 
-                                              imageOrientation = processedImage.imageOrientation;
+                                              imageOrientation = orientationLast;
                                               filter.frameSize = processedImage.size;
                                               filter.dofOrientation = imageOrientation;
                                               picture = [[GPUImagePicture alloc] initWithImage:processedImage];
@@ -417,11 +418,11 @@
 
 - (IBAction)close:(id)sender {
     if (!isSaved) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"写真が保存されていません"
-                                                        message:@"カメラを閉じますか？"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"photo_hasnt_been_saved", @"写真が保存されていません")
+                                                        message:NSLocalizedString(@"stop_camera_confirm", @"カメラを閉じますか？")
                                                        delegate:self
-                                              cancelButtonTitle:@"キャンセル"
-                                              otherButtonTitles:@"はい", nil];
+                                              cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
+                                              otherButtonTitles:NSLocalizedString(@"stop_camera", @"はい"), nil];
         alert.tag = 2;
         [alert show];
     } else
@@ -438,11 +439,11 @@
 }
 
 - (IBAction)changeLens:(id)sender {
-    sheet = [[UIActionSheet alloc] initWithTitle:@"レンズ交換"
+    sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"change_lens", @"レンズ交換")
                                         delegate:self
-                               cancelButtonTitle:@"キャンセル"
+                               cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
                           destructiveButtonTitle:nil
-                               otherButtonTitles:@"普通", @"ワイド", @"魚眼レンズ", nil];
+                               otherButtonTitles:NSLocalizedString(@"lens_normal", @"普通"), NSLocalizedString(@"lens_wide", @"ワイド"), NSLocalizedString(@"lens_fisheye", @"魚眼レンズ"), nil];
     [sheet setTag:0];
     sheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
     [sheet showInView:self.view];
@@ -712,7 +713,7 @@
     //
     ALAssetsLibraryAccessFailureBlock failureblock  = ^(NSError *myerror)
     {
-        NSLog(@"booya, cant get image - %@",[myerror localizedDescription]);
+        TFLog(@"booya, cant get image - %@",[myerror localizedDescription]);
     };
     
     ALAssetsLibrary* assetslibrary = [[ALAssetsLibrary alloc] init];
@@ -823,11 +824,11 @@
 
 - (IBAction)touchNo:(id)sender {
     if (!isSaved) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"写真が保存されていません"
-                                                        message:@"カメラを閉じますか？"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"photo_hasnt_been_saved", @"写真が保存されていません")
+                                                        message:NSLocalizedString(@"stop_camera_confirm", @"カメラを閉じますか？")
                                                        delegate:self
-                                              cancelButtonTitle:@"キャンセル"
-                                              otherButtonTitles:@"はい", nil];
+                                              cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
+                                              otherButtonTitles:NSLocalizedString(@"stop_camera", @"はい"), nil];
         alert.tag = 1;
         [alert show];
     } else
@@ -1050,10 +1051,9 @@
             else
                 [device setFlashMode:AVCaptureFlashModeOff];
             [device unlockForConfiguration];
-            NSLog(@"Set flash");
         }
     } else {
-        NSLog(@"ERROR = %@", error);
+        TFLog(@"ERROR = %@", error);
     }
 }
 
@@ -1072,7 +1072,7 @@
             [device unlockForConfiguration];
         }
     } else {
-        NSLog(@"ERROR = %@", error);
+        TFLog(@"ERROR = %@", error);
     }
 }
 
@@ -1092,7 +1092,7 @@
         }
         [device unlockForConfiguration];
     } else {
-        NSLog(@"ERROR = %@", error);
+        TFLog(@"ERROR = %@", error);
     }
 }
 
@@ -1137,18 +1137,18 @@
 
 #pragma mark UIAccelerometerDelegate
 -(void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration {
-    UIInterfaceOrientation orientationNew;
+    UIImageOrientation orientationNew;
     if (acceleration.x >= 0.75) {
-        orientationNew = UIInterfaceOrientationLandscapeLeft;
+        orientationNew = UIImageOrientationRight;
     }
     else if (acceleration.x <= -0.75) {
-        orientationNew = UIInterfaceOrientationLandscapeRight;
+        orientationNew = UIImageOrientationLeft;
     }
     else if (acceleration.y <= -0.75) {
-        orientationNew = UIInterfaceOrientationPortrait;
+        orientationNew = UIImageOrientationUp;
     }
     else if (acceleration.y >= 0.75) {
-        orientationNew = UIInterfaceOrientationPortraitUpsideDown;
+        orientationNew = UIImageOrientationDown;
     }
     else {
         // Consider same as last time
@@ -1158,7 +1158,7 @@
     if (orientationNew == orientationLast)
         return;
     #ifdef DEBUG
-        NSLog(@"Going from %@ to %@!", [[self class] orientationToText:orientationLast], [[self class] orientationToText:orientationNew]);
+        TFLog(@"Going from %@ to %@!", [[self class] orientationToText:orientationLast], [[self class] orientationToText:orientationNew]);
     #endif
     orientationLast = orientationNew;
 }

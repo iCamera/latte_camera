@@ -72,7 +72,6 @@
     } else {
         luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
 
-        // Disable for now, cost too much memory
         [imagePic setImage:preview];
         imageStatus = [app.currentUser.pictureStatus integerValue];
         [self setStatusLabel];
@@ -86,16 +85,16 @@
 - (void)setStatusLabel {
     switch (imageStatus) {
         case 0:
-            labelStatus.text = @"非公開";
+            labelStatus.text = NSLocalizedString(@"status_private", @"非公開");
             break;
         case 10:
-            labelStatus.text = @"友達まで";
+            labelStatus.text = NSLocalizedString(@"status_friends", @"友達まで");
             break;
         case 30:
-            labelStatus.text = @"会員まで";
+            labelStatus.text = NSLocalizedString(@"status_members", @"会員まで");
             break;
         case 40:
-            labelStatus.text = @"公開";
+            labelStatus.text = NSLocalizedString(@"status_public", @"公開");
             break;
         default:
             break;
@@ -113,11 +112,11 @@
 {
     if ((indexPath.section == 1) && (indexPath.row == 1))
     {
-        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"公開"
+        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"privacy_setting", @"公開設定")
                                                            delegate:self
-                                                  cancelButtonTitle:@"キャンセル"
+                                                  cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
                                              destructiveButtonTitle:nil
-                                                  otherButtonTitles:@"非公開", @"友達まで", @"会員まで", @"公開", nil];
+                                                  otherButtonTitles:NSLocalizedString(@"status_private", @"非公開"), NSLocalizedString(@"status_friends", @"友達まで"), NSLocalizedString(@"status_members", @"会員まで"), NSLocalizedString(@"status_public", @"公開"), nil];
         sheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
         sheet.tag = 0;
         if (self.tabBarController != nil) {
@@ -168,7 +167,7 @@
                                                 [self.navigationController popToViewController:parent animated:YES];
                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                 [HUD hide:YES];
-                                                NSLog(@"Something went wrong (Login)");
+                                                TFLog(@"Something went wrong (Login)");
                                             }];
         }
     }
@@ -203,8 +202,8 @@
 - (IBAction)touchDelete:(id)sender {
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil
                                                        delegate:self
-                                              cancelButtonTitle:@"キャンセル"
-                                         destructiveButtonTitle:@"この写真を削除する"
+                                              cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
+                                         destructiveButtonTitle:NSLocalizedString(@"delete_photo", @"この写真を削除する")
                                               otherButtonTitles:nil];
     sheet.tag = 1;
     sheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
@@ -249,7 +248,7 @@
                                         
                                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                         [HUD hide:YES];
-                                        NSLog(@"Something went wrong (Login)");
+                                        TFLog(@"Something went wrong (Login)");
                                     }];
 }
 
@@ -294,10 +293,10 @@
     
     void (^failUpload)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
         if([operation.response statusCode] != 200){
-            NSLog(@"Upload Failed");
+            TFLog(@"Upload Failed");
             return;
         }
-        NSLog(@"error: %@", [operation error]);
+        TFLog(@"error: %@", [operation error]);
         HUD.mode = MBProgressHUDModeText;
         HUD.labelText = @"Error";
         HUD.margin = 10.f;

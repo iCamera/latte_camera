@@ -70,7 +70,7 @@
                                               [HUD hide:YES];
                                               
                                           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                              NSLog(@"Something went wrong (Load setting)");
+                                              TFLog(@"Something went wrong (Load setting)");
                                               [HUD hide:YES];
                                           }];
 }
@@ -97,12 +97,17 @@
 
 - (void) cell:(QEntryTableViewCell *)cell willAppearForElement:(QElement *)element atIndexPath:(NSIndexPath *)indexPath{
     if ([element isKindOfClass:[QEntryElement class]] || [element isKindOfClass:[QRadioElement class]]){
-        cell.textLabel.font = [UIFont boldSystemFontOfSize:14];
-        cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
         cell.textLabel.textColor = [UIColor blackColor];
         cell.detailTextLabel.textColor = [UIColor colorWithRed:0.39 green:0.36 blue:0.23 alpha:1.0000];
-        cell.textField.font = [UIFont systemFontOfSize:14];
         cell.textField.textColor = [UIColor colorWithRed:0.39 green:0.36 blue:0.23 alpha:1.0000];
+
+        cell.textLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:14];
+        cell.detailTextLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:14];
+        cell.textField.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:14];
+    }
+    if ([element isKindOfClass:[QRadioItemElement class]]) {
+        cell.textLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:16];
+        cell.detailTextLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:16];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleGray;
 }
@@ -126,7 +131,7 @@
                                         [self.navigationController popViewControllerAnimated:YES];
                                         [HUD hide:YES];
                                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        NSLog(@"Something went wrong (Logout)");
+                                        TFLog(@"Something went wrong (Logout)");
                                         [HUD hide:YES];
                                     }];
 }
@@ -179,7 +184,7 @@
                                               }
  
                                           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                              NSLog(@"Something went wrong (Setting)");
+                                              TFLog(@"Something went wrong (Setting)");
                                               [self loading:NO];
                                           }];
 
@@ -192,7 +197,7 @@
     }
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, 30)];
-    [title setFont:[UIFont boldSystemFontOfSize:12]];
+    title.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:16];
     title.textColor = [UIColor colorWithRed:101.0/255.0 green:90.0/255.0 blue:56.0/255.0 alpha:1];
     title.text = section.title;
     [view addSubview:title];

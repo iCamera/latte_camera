@@ -96,7 +96,7 @@
                                                      [MBProgressHUD hideHUDForView:self.view animated:YES];
                                                  });
                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                             NSLog(@"Something went wrong (PicDetail)");
+                                             TFLog(@"Something went wrong (PicDetail)");
                                              dispatch_async(dispatch_get_main_queue(), ^{
                                                      [MBProgressHUD hideHUDForView:self.view animated:YES];
                                                  });
@@ -175,7 +175,7 @@
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        cellPicInfo = [tableView dequeueReusableCellWithIdentifier:@"Picture" forIndexPath:indexPath];
+        cellPicInfo = [tableView dequeueReusableCellWithIdentifier:@"Picture"];
         if (cellPicInfo == nil) {
             cellPicInfo = [[luxeysTableViewCellPicture alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Picture"];
         }
@@ -192,7 +192,7 @@
                 
         return cellPicInfo;
     } else {
-        luxeysTableViewCellComment* cellComment = [tableView dequeueReusableCellWithIdentifier:@"Comment" forIndexPath:indexPath];
+        luxeysTableViewCellComment* cellComment = [tableView dequeueReusableCellWithIdentifier:@"Comment"];
 
         if (nil == cellComment) {
             cellComment = (luxeysTableViewCellComment*)[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
@@ -313,7 +313,7 @@
                                                   [tablePic insertRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationRight];
                                                   [tablePic scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionTop animated:YES];
                                               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                                  NSLog(@"Something went wrong (Comment)");
+                                                  TFLog(@"Something went wrong (Comment)");
                                               }];
 
         textComment.text = @"";
@@ -364,7 +364,7 @@
                                               NSNumber *vote_count = [NSNumber numberWithInt:[cellPicInfo.labelLike.text integerValue] + 1 ];
                                               cellPicInfo.labelLike.text = [vote_count stringValue];
                                           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                              NSLog(@"Something went wrong (Vote)");
+                                              TFLog(@"Something went wrong (Vote)");
                                           }];
 }
 

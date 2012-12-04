@@ -14,6 +14,7 @@
 
 @implementation luxeysRightSideViewController
 @synthesize tableNotify;
+@synthesize segmentTab;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -44,6 +45,12 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    UIFont *font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:12];
+    NSDictionary *attributes = [NSDictionary dictionaryWithObject:font
+                                                           forKey:UITextAttributeFont];
+    [segmentTab setTitleTextAttributes:attributes
+                                    forState:UIControlStateNormal];
+    
     refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - tableNotify.bounds.size.height, tableNotify.frame.size.width, tableNotify.bounds.size.height)];
     refreshHeaderView.delegate = self;
     [tableNotify addSubview:refreshHeaderView];
@@ -150,7 +157,7 @@
                                              [tableNotify reloadData];
                                              [self doneLoadingTableViewData];
                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                             NSLog(@"Something went wrong (Notify)");
+                                             TFLog(@"Something went wrong (Notify)");
                                              [self doneLoadingTableViewData];
                                          }];
 }
@@ -167,7 +174,7 @@
                                              [tableNotify reloadData];
                                              [self doneLoadingTableViewData];
                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                             NSLog(@"Something went wrong (Notify)");
+                                             TFLog(@"Something went wrong (Notify)");
                                              [self doneLoadingTableViewData];
                                          }];
 }
@@ -199,7 +206,7 @@
                                                //[tableNotify reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
                                                [tableNotify reloadData];
                                            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                               NSLog(@"Something went wrong (FB Friends)");
+                                               TFLog(@"Something went wrong (FB Friends)");
                                            }];
         }
         
@@ -257,7 +264,7 @@
                                  parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                     success: nil
                                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        NSLog(@"Something went wrong (RightMenu - Approve/Request)");
+                                        TFLog(@"Something went wrong (RightMenu - Approve/Request)");
                                     }];
 }
 
@@ -272,7 +279,7 @@
                                  parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                     success: nil
                                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        NSLog(@"Something went wrong (RightMenu - ignore)");
+                                        TFLog(@"Something went wrong (RightMenu - ignore)");
                                     }];
 }
 
@@ -340,13 +347,13 @@
     if (tableMode == 1) {
         switch (section) {
             case 0:
-                return @"友達申請";
+                return NSLocalizedString(@"request_pending", @"友達申請");
                 break;
             case 1:
-                return @"保存";
+                return NSLocalizedString(@"request_ignored", @"保存");
                 break;
             case 2:
-                return @"Facebookの知り合い";
+                return NSLocalizedString(@"request_facebook", @"Facebookの知り合い");
                 break;
             default:
                 break;
@@ -361,7 +368,7 @@
 
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 260, 30)];
         label.text = [self tableView:tableView titleForHeaderInSection:section];
-        label.font = [UIFont systemFontOfSize:15];
+        label.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:14];
         label.shadowOffset = CGSizeMake(0, 1);
         label.textColor = [UIColor whiteColor];
         label.shadowColor = [UIColor blackColor];
@@ -415,4 +422,8 @@
 }
 
 
+- (void)viewDidUnload {
+    [self setSegmentTab:nil];
+    [super viewDidUnload];
+}
 @end

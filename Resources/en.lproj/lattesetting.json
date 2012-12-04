@@ -1,0 +1,31 @@
+{
+    "grouped": true,
+    "title": "Setting",
+    "controllerName": "luxeysSettingViewController",
+    "sections": [
+        { "title":"PROFILE SETTINGS", "elements":[
+                { "type":"QEntryElement", "key":"name", "title":"Username", "Placeholder":"Username", "bind":"textValue:name"},
+                { "type":"QRadioElement", "key":"gender", "title":"Gender", "items":["Male", "Female"], "values":[1, 2], "controllerAction":"handleUpdate:"},
+                { "type":"QDateTimeInlineElement", "key":"birthday", "title":"Birthday"},
+                { "type":"QEntryElement", "key":"current_residence", "title":"Current Address", "Placeholder":"Current Address", "bind":"textValue:current_residence"},
+                { "type":"QEntryElement", "key":"hometown", "title":"Hometown", "Placeholder":"Hometown", "bind":"textValue:hometown"},
+                { "type":"QEntryElement", "key":"occupation", "title":"Occupation", "Placeholder":"Occupation", "bind":"textValue:occupation"},
+                { "type":"QMultilineElement", "key":"introduction", "title":"Introduction", "bind":"textValue:introduction"},
+                { "type":"QMultilineElement", "key":"hobby", "title":"Hobby", "bind":"textValue:hobby"}
+            ]
+        },
+        { "title":"PRIVACY SETTINGS", "elements": [
+                { "type":"QRadioElement", "key":"picture_status", "title":"Photo", "items":["Me only", "Friends only", "Members only", "Public"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdate:"},
+                { "type":"QRadioElement", "key":"gender_public", "title":"Gender", "items":["Me only", "Friends only", "Members only", "Public"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdate:"},
+                { "type":"QRadioElement", "key":"current_residence_public", "title":"Current Address", "items":["Me only", "Friends only", "Members only", "Public"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdate:"},
+                { "type":"QRadioElement", "key":"hometown_public", "title":"Hometown", "items":["Me only", "Friends only", "Members only", "Public"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdate:"},
+                { "type":"QRadioElement", "key":"birthyear_public", "title":"Ago", "items":["Me only", "Friends only", "Members only", "Public"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdate:"},
+                { "type":"QRadioElement", "key":"birthdate_public", "title":"Birthday", "items":["Me only", "Friends only", "Members only", "Public"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdate:"}
+            ]
+        },
+        { "elements":[
+                { "type":"QButtonElement", "title":"Logout", "controllerAction":"handleLogout:"},
+            ]
+        }
+    ]
+}
