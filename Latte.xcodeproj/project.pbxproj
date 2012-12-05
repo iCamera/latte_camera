@@ -47,6 +47,9 @@
 		886413A2161593C700181E52 /* luxeysTemplateTimlinePicMultiItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 886413A0161593C700181E52 /* luxeysTemplateTimlinePicMultiItem.m */; };
 		886413A3161593C700181E52 /* luxeysTemplateTimlinePicMultiItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 886413A1161593C700181E52 /* luxeysTemplateTimlinePicMultiItem.xib */; };
 		88730A39166F216600CF7507 /* Avenir Next Condensed.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 88730A38166F216600CF7507 /* Avenir Next Condensed.ttc */; };
+		88730A3B166F34C100CF7507 /* localize.py in Resources */ = {isa = PBXBuildFile; fileRef = 88730A3A166F34C100CF7507 /* localize.py */; };
+		88730A41166F38AB00CF7507 /* CameraStoryboard.strings in Resources */ = {isa = PBXBuildFile; fileRef = 88730A3D166F38AB00CF7507 /* CameraStoryboard.strings */; };
+		88730A42166F38AB00CF7507 /* MainStoryboard.strings in Resources */ = {isa = PBXBuildFile; fileRef = 88730A3F166F38AB00CF7507 /* MainStoryboard.strings */; };
 		8874B9291609C9980052A7CA /* luxeysCell4Pics.m in Sources */ = {isa = PBXBuildFile; fileRef = 8874B9281609C9980052A7CA /* luxeysCell4Pics.m */; };
 		887E40931625493B0060623C /* luxeysImagePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 887E4092162549310060623C /* luxeysImagePickerViewController.m */; };
 		887E4095162552C20060623C /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 887E4094162552C10060623C /* icon.png */; };
@@ -760,6 +763,13 @@
 		886413A0161593C700181E52 /* luxeysTemplateTimlinePicMultiItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysTemplateTimlinePicMultiItem.m; path = Classes/Controllers/Modules/luxeysTemplateTimlinePicMultiItem.m; sourceTree = "<group>"; };
 		886413A1161593C700181E52 /* luxeysTemplateTimlinePicMultiItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = luxeysTemplateTimlinePicMultiItem.xib; path = Classes/Controllers/Modules/luxeysTemplateTimlinePicMultiItem.xib; sourceTree = "<group>"; };
 		88730A38166F216600CF7507 /* Avenir Next Condensed.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avenir Next Condensed.ttc"; sourceTree = "<group>"; };
+		88730A3A166F34C100CF7507 /* localize.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = localize.py; path = Vendor/localize.py; sourceTree = "<group>"; };
+		88730A3E166F38AB00CF7507 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CameraStoryboard.strings; sourceTree = "<group>"; };
+		88730A40166F38AB00CF7507 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
+		88730A43166F38B500CF7507 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/CameraStoryboard.strings; sourceTree = "<group>"; };
+		88730A44166F38B900CF7507 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
+		88730A45166F3E2A00CF7507 /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ja; path = ja.lproj/CameraStoryboard.storyboard; sourceTree = "<group>"; };
+		88730A46166F3E4A00CF7507 /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ja; path = ja.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		8874B9271609C9980052A7CA /* luxeysCell4Pics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysCell4Pics.h; path = Classes/CustomControls/luxeysCell4Pics.h; sourceTree = SOURCE_ROOT; };
 		8874B9281609C9980052A7CA /* luxeysCell4Pics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysCell4Pics.m; path = Classes/CustomControls/luxeysCell4Pics.m; sourceTree = SOURCE_ROOT; };
 		887E40911625492D0060623C /* luxeysImagePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysImagePickerViewController.h; path = Classes/Controllers/luxeysImagePickerViewController.h; sourceTree = "<group>"; };
@@ -1517,8 +1527,6 @@
 		88FE418F166C93D7004DCE53 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = ja; path = ja.lproj/lattesetting.json; sourceTree = "<group>"; };
 		88FE4192166C93D7004DCE53 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/CameraStoryboard.storyboard; sourceTree = "<group>"; };
 		88FE4194166C93D7004DCE53 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		88FE4195166C93D7004DCE53 /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ja; path = ja.lproj/CameraStoryboard.storyboard; sourceTree = "<group>"; };
-		88FE4196166C93D7004DCE53 /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ja; path = ja.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		88FE4389166C941A004DCE53 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		88FE438B166C9421004DCE53 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		88FE4416166C96A3004DCE53 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../../Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -1858,6 +1866,7 @@
 				88E96A6315EDC81500FB9CC8 /* quickdialog */,
 				88B47AFC15DE503F00FD9C72 /* AFNetworking */,
 				8821098D15DDFE6B00E1A179 /* LXUICustom */,
+				88730A3A166F34C100CF7507 /* localize.py */,
 			);
 			name = Vendor;
 			sourceTree = "<group>";
@@ -2115,10 +2124,10 @@
 			children = (
 				88730A38166F216600CF7507 /* Avenir Next Condensed.ttc */,
 				88FE3F9F166C93D6004DCE53 /* Effect */,
-				88FE3FA9166C93D6004DCE53 /* lattesetting.json */,
 				88FE3FAB166C93D6004DCE53 /* Images */,
-				88FE4190166C93D7004DCE53 /* NIBs */,
+				88FE3FA9166C93D6004DCE53 /* lattesetting.json */,
 				88FE438A166C941A004DCE53 /* Localizable.strings */,
+				88FE4190166C93D7004DCE53 /* NIBs */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -2636,6 +2645,8 @@
 		88FE4190166C93D7004DCE53 /* NIBs */ = {
 			isa = PBXGroup;
 			children = (
+				88730A3D166F38AB00CF7507 /* CameraStoryboard.strings */,
+				88730A3F166F38AB00CF7507 /* MainStoryboard.strings */,
 				88FE4191166C93D7004DCE53 /* CameraStoryboard.storyboard */,
 				88FE4193166C93D7004DCE53 /* MainStoryboard.storyboard */,
 			);
@@ -2652,6 +2663,7 @@
 				88D9863F15B8F97800858AD6 /* Sources */,
 				88D9864015B8F97800858AD6 /* Frameworks */,
 				88D9864115B8F97800858AD6 /* Resources */,
+				88730A3C166F351000CF7507 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -3270,10 +3282,29 @@
 				88FE4388166C941A004DCE53 /* Localizable.strings in Resources */,
 				88FE4417166C96A3004DCE53 /* Default-568h@2x.png in Resources */,
 				88730A39166F216600CF7507 /* Avenir Next Condensed.ttc in Resources */,
+				88730A3B166F34C100CF7507 /* localize.py in Resources */,
+				88730A41166F38AB00CF7507 /* CameraStoryboard.strings in Resources */,
+				88730A42166F38AB00CF7507 /* MainStoryboard.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		88730A3C166F351000CF7507 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "python ~/Desktop/Luxeys/Latte/Vendor/localize.py --mainIdiom=en --mainStoryboard=Resources/NIBs/en.lproj/MainStoryboard.storyboard ja\npython ~/Desktop/Luxeys/Latte/Vendor/localize.py --mainIdiom=en --mainStoryboard=Resources/NIBs/en.lproj/CameraStoryboard.storyboard ja";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		88D9863F15B8F97800858AD6 /* Sources */ = {
@@ -3383,6 +3414,24 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		88730A3D166F38AB00CF7507 /* CameraStoryboard.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				88730A3E166F38AB00CF7507 /* en */,
+				88730A43166F38B500CF7507 /* ja */,
+			);
+			name = CameraStoryboard.strings;
+			sourceTree = "<group>";
+		};
+		88730A3F166F38AB00CF7507 /* MainStoryboard.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				88730A40166F38AB00CF7507 /* en */,
+				88730A44166F38B900CF7507 /* ja */,
+			);
+			name = MainStoryboard.strings;
+			sourceTree = "<group>";
+		};
 		88FE3FA9166C93D6004DCE53 /* lattesetting.json */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -3396,7 +3445,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				88FE4192166C93D7004DCE53 /* en */,
-				88FE4195166C93D7004DCE53 /* ja */,
+				88730A45166F3E2A00CF7507 /* ja */,
 			);
 			name = CameraStoryboard.storyboard;
 			sourceTree = "<group>";
@@ -3405,7 +3454,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				88FE4194166C93D7004DCE53 /* en */,
-				88FE4196166C93D7004DCE53 /* ja */,
+				88730A46166F3E4A00CF7507 /* ja */,
 			);
 			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";

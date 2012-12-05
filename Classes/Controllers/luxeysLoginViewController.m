@@ -44,15 +44,11 @@
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
 	[self.view addSubview:HUD];
     
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(sessionStateChanged:)
-     name:FBSessionStateChangedNotification
-     object:nil];
+    
     
     // Check the session for a cached token to show the proper authenticated
     // UI. However, since this is not user intitiated, do not show the login UX.
-    [app openSessionWithAllowLoginUI:NO];
+    // [app openSessionWithAllowLoginUI:NO];
 }
 
 - (void)sessionStateChanged:(NSNotification*)notification {
@@ -122,6 +118,13 @@
 
 - (IBAction)touchFacebook:(id)sender {
     [HUD show:YES];
+
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(sessionStateChanged:)
+     name:FBSessionStateChangedNotification
+     object:nil];
+    
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     [app openSessionWithAllowLoginUI:YES];
 }

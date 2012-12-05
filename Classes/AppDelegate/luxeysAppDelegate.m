@@ -111,6 +111,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     // Clear notify but save badge
     [self clearNotification];
+    [self openSessionWithAllowLoginUI:NO];
     
     return YES;
 }

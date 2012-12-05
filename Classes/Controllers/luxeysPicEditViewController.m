@@ -321,7 +321,32 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    if (picture != nil) {
+        return 2;
+    } else {
+        return 3;
+    }
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, 30)];
+    title.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:16];
+    title.textColor = [UIColor colorWithRed:101.0/255.0 green:90.0/255.0 blue:56.0/255.0 alpha:1];
+    title.text = [self tableView:tableView titleForHeaderInSection:section];
+    [view addSubview:title];
+    title.backgroundColor = [UIColor clearColor];
+    view.backgroundColor = [UIColor clearColor];
+    return view;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    NSString *title = [self tableView:tableView titleForHeaderInSection:section];
+    if (title.length > 0)
+        return 30;
+    else
+        return 0;
+
 }
 
 @end
