@@ -109,6 +109,10 @@
         cell.textLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:16];
         cell.detailTextLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:16];
     }
+    if ([element isKindOfClass:[QButtonElement class]]) {
+        cell.textLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Medium" size:16];
+        cell.textLabel.textColor = [UIColor redColor];
+    }
     cell.selectionStyle = UITableViewCellSelectionStyleGray;
 }
 

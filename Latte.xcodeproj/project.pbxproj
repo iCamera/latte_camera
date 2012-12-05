@@ -46,6 +46,7 @@
 		8863F0DF165C6E4A00B71E11 /* UIImage+fixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8863F0DE165C6E4A00B71E11 /* UIImage+fixOrientation.m */; };
 		886413A2161593C700181E52 /* luxeysTemplateTimlinePicMultiItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 886413A0161593C700181E52 /* luxeysTemplateTimlinePicMultiItem.m */; };
 		886413A3161593C700181E52 /* luxeysTemplateTimlinePicMultiItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 886413A1161593C700181E52 /* luxeysTemplateTimlinePicMultiItem.xib */; };
+		88730A39166F216600CF7507 /* Avenir Next Condensed.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 88730A38166F216600CF7507 /* Avenir Next Condensed.ttc */; };
 		8874B9291609C9980052A7CA /* luxeysCell4Pics.m in Sources */ = {isa = PBXBuildFile; fileRef = 8874B9281609C9980052A7CA /* luxeysCell4Pics.m */; };
 		887E40931625493B0060623C /* luxeysImagePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 887E4092162549310060623C /* luxeysImagePickerViewController.m */; };
 		887E4095162552C20060623C /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 887E4094162552C10060623C /* icon.png */; };
@@ -758,6 +759,7 @@
 		8864139F161593C700181E52 /* luxeysTemplateTimlinePicMultiItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysTemplateTimlinePicMultiItem.h; path = Classes/Controllers/Modules/luxeysTemplateTimlinePicMultiItem.h; sourceTree = "<group>"; };
 		886413A0161593C700181E52 /* luxeysTemplateTimlinePicMultiItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysTemplateTimlinePicMultiItem.m; path = Classes/Controllers/Modules/luxeysTemplateTimlinePicMultiItem.m; sourceTree = "<group>"; };
 		886413A1161593C700181E52 /* luxeysTemplateTimlinePicMultiItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = luxeysTemplateTimlinePicMultiItem.xib; path = Classes/Controllers/Modules/luxeysTemplateTimlinePicMultiItem.xib; sourceTree = "<group>"; };
+		88730A38166F216600CF7507 /* Avenir Next Condensed.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avenir Next Condensed.ttc"; sourceTree = "<group>"; };
 		8874B9271609C9980052A7CA /* luxeysCell4Pics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysCell4Pics.h; path = Classes/CustomControls/luxeysCell4Pics.h; sourceTree = SOURCE_ROOT; };
 		8874B9281609C9980052A7CA /* luxeysCell4Pics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysCell4Pics.m; path = Classes/CustomControls/luxeysCell4Pics.m; sourceTree = SOURCE_ROOT; };
 		887E40911625492D0060623C /* luxeysImagePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysImagePickerViewController.h; path = Classes/Controllers/luxeysImagePickerViewController.h; sourceTree = "<group>"; };
@@ -2111,6 +2113,7 @@
 		88FE3F9E166C93D6004DCE53 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				88730A38166F216600CF7507 /* Avenir Next Condensed.ttc */,
 				88FE3F9F166C93D6004DCE53 /* Effect */,
 				88FE3FA9166C93D6004DCE53 /* lattesetting.json */,
 				88FE3FAB166C93D6004DCE53 /* Images */,
@@ -3266,6 +3269,7 @@
 				88FE4385166C93D7004DCE53 /* MainStoryboard.storyboard in Resources */,
 				88FE4388166C941A004DCE53 /* Localizable.strings in Resources */,
 				88FE4417166C96A3004DCE53 /* Default-568h@2x.png in Resources */,
+				88730A39166F216600CF7507 /* Avenir Next Condensed.ttc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

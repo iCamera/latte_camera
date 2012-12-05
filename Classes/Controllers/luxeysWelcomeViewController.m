@@ -176,7 +176,7 @@
     if (tableMode == kTableTimeline)
         return feeds.count;
     else
-        return feeds.count/3 + (feeds.count%3>0?1:0);
+        return feeds.count/3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
