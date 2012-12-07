@@ -111,7 +111,7 @@
     }
     if ([element isKindOfClass:[QButtonElement class]]) {
         cell.textLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Medium" size:16];
-        cell.textLabel.textColor = [UIColor redColor];
+        cell.textLabel.textColor = [UIColor grayColor];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleGray;
 }
@@ -127,9 +127,9 @@
                                         app.currentUser = nil;
                                         self.tabBarController.selectedIndex = 0;
 
-                                        if (FBSession.activeSession.isOpen) {
-                                            [app closeSession];
-                                        }
+//                                        if (FBSession.activeSession.isOpen) {
+//                                            [FBSession.activeSession closeAndClearTokenInformation];
+//                                        }
                                         
                                         [[NSNotificationCenter defaultCenter] postNotificationName:@"LoggedOut" object:self];
                                         [self.navigationController popViewControllerAnimated:YES];

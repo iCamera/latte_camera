@@ -425,8 +425,11 @@
                                               otherButtonTitles:NSLocalizedString(@"stop_camera", @"はい"), nil];
         alert.tag = 2;
         [alert show];
-    } else
+    } else {
         [self dismissViewControllerAnimated:NO completion:nil];
+        luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+        [app switchRoot];
+    }
 }
 
 - (IBAction)capture:(id)sender {
@@ -592,16 +595,14 @@
 }
 
 - (void)processSavedData {
-    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-    if (app.currentUser != nil) {
-        NSDictionary *info = [[NSDictionary alloc] initWithObjectsAndKeys:
-                              savedData, @"data",
-                              savedPreview, @"preview",
-                              nil];
+    NSDictionary *info = [[NSDictionary alloc] initWithObjectsAndKeys:
+                          savedData, @"data",
+                          savedPreview, @"preview",
+                          nil];
+    if (delegate != nil) {
         [delegate imagePickerController:self didFinishPickingMediaWithData:info];
-        
     } else {
-        [self switchCamera];
+        [self performSegueWithIdentifier:@"Edit" sender:info];
     }
 }
 

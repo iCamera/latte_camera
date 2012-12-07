@@ -8,6 +8,13 @@
 
 #import "luxeysCellPicture.h"
 
+#import "LatteAPIClient.h"
+#import "luxeysAppDelegate.h"
+#import "UIButton+AsyncImage.h"
+#import "User.h"
+#import "UIImageView+loadProgress.h"
+#import "luxeysUtils.h"
+
 @implementation luxeysTableViewCellPicture
 @synthesize labelTitle;
 @synthesize labelDate;

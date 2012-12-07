@@ -7,6 +7,7 @@
 //
 
 #import "luxeysWelcomeViewController.h"
+#import "luxeysAppDelegate.h"
 
 @interface luxeysWelcomeViewController ()
 @end
@@ -104,6 +105,16 @@
 
     [self.buttonLeftMenu addTarget:app.revealController action:@selector(revealLeft:) forControlEvents:UIControlEventTouchUpInside];
     [self.buttonNavRight addTarget:self action:@selector(loginPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    if (app.currentUser != nil) {
+        [self receiveLoggedIn:nil];
+    } else {
+        viewLogin.hidden = false;
+        [UIView animateWithDuration:0.3 animations:^{
+            viewLogin.alpha = 1;
+        }];
+    }
+
 }
 
 - (void)reloadView {

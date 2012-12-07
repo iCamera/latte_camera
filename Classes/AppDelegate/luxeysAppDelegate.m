@@ -16,11 +16,9 @@
 
 @synthesize currentUser;
 @synthesize apns;
-@synthesize window;
 @synthesize tokenItem;
-@synthesize viewMainTab;
 @synthesize revealController;
-
+@synthesize window;
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
@@ -33,7 +31,7 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
    sourceApplication:(NSString *)sourceApplication
           annotation:(id)annotation {
      // attempt to extract a token from the url
-     return [FBSession.activeSession handleOpenURL:url];
+    return [FBSession.activeSession handleOpenURL:url];
 }
 
 void uncaughtExceptionHandler(NSException *exception) {
@@ -52,9 +50,9 @@ void uncaughtExceptionHandler(NSException *exception) {
     [FBSession.activeSession close];
 }
 
-- (void) closeSession {
-    [FBSession.activeSession closeAndClearTokenInformation];
-}
+//- (void) closeSession {
+//    [FBSession.activeSession closeAndClearTokenInformation];
+//}
 
 - (void)setToken:(NSString *)token{
     [tokenItem setObject:token forKey:(id)CFBridgingRelease(kSecAttrService)];
@@ -75,6 +73,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                                                   if (apns != nil)
                                                       [self updateUserAPNS];
                                                   
+
                                                   [[NSNotificationCenter defaultCenter]
                                                    postNotificationName:@"LoggedIn"
                                                    object:self];
@@ -84,20 +83,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
-    // Normal launch stuff
-    
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                             bundle:nil];
-    viewMainTab = (luxeysTabBarViewController*)[mainStoryboard instantiateInitialViewController];
-    luxeysRightSideViewController *rightViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"RightSide"];
-    
-    revealController = [[LXUIRevealController alloc]initWithFrontViewController:(UIViewController*)viewMainTab
-                                                             leftViewController:rightViewController
-                                                            rightViewController:nil];
-    
-    window.rootViewController = revealController;
-    [window makeKeyAndVisible];
+    //NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     
     // Register for Push Notification
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
@@ -111,9 +97,25 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     // Clear notify but save badge
     [self clearNotification];
-    [self openSessionWithAllowLoginUI:NO];
+    [FBSession openActiveSessionWithAllowLoginUI:NO];
     
     return YES;
+}
+
+- (void)switchRoot {
+    if (window.rootViewController != revealController) {
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                                 bundle:nil];
+        luxeysTabBarViewController *viewMainTab = [mainStoryboard instantiateViewControllerWithIdentifier:@"MainTab"];
+        luxeysRightSideViewController *rightViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"RightSide"];
+        
+        revealController = [[LXUIRevealController alloc]initWithFrontViewController:viewMainTab
+                                                                 leftViewController:rightViewController
+                                                                rightViewController:nil];
+        
+        window.rootViewController = revealController;
+        [window makeKeyAndVisible];
+    }
 }
 
 - (void)updateUserAPNS {
@@ -153,13 +155,7 @@ void uncaughtExceptionHandler(NSException *exception) {
      object:session];
     
     if (error) {
-        UIAlertView *alertView = [[UIAlertView alloc]
-                                  initWithTitle:@"Error"
-                                  message:error.localizedDescription
-                                  delegate:nil
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-        [alertView show];
+        TFLog(error.localizedDescription);
     }
 }
 
@@ -176,10 +172,10 @@ void uncaughtExceptionHandler(NSException *exception) {
                                          completionHandler:^(FBSession *session,
                                                              FBSessionState state,
                                                              NSError *error) {
-                                             [self sessionStateChanged:session
+                                   [self sessionStateChanged:session
                                                                  state:state
-                                                                 error:error];
-                                         }];
+                                                       error:error];
+                               }];
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {

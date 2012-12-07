@@ -26,6 +26,9 @@
 @synthesize buttonDelete;
 @synthesize viewDelete;
 @synthesize preview;
+@synthesize buttonCheckFacebook;
+@synthesize buttonCheckLatte;
+@synthesize buttonCheckTwitter;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -58,6 +61,51 @@
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];
+    [nc addObserver:self selector:@selector(receiveLoggedIn:) name:@"LoggedIn" object:nil];
+
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    // From camera
+    if (imageData != nil) {
+        // Check Upload Latte
+        if (app.currentUser != nil) {
+            NSNumber *uploadLatte = [defaults objectForKey:@"upload_latte"];
+            if (uploadLatte != nil) {
+                buttonCheckLatte.selected = [uploadLatte boolValue];
+            }
+        } else
+            buttonCheckLatte.selected = false;
+        
+        // Check Facebook upload
+        NSNumber *uploadFacebook = [defaults objectForKey:@"upload_facebook"];
+        if (uploadFacebook != nil) {
+            if ([uploadFacebook boolValue] == true) {
+                buttonCheckFacebook.selected = [uploadFacebook boolValue];
+                if (FBSession.activeSession.isOpen) {
+                    [self checkPublishPermission];
+                } else {
+                    buttonCheckFacebook.selected = false;
+                }
+            }
+        }
+        
+        // Check Twitter
+        NSNumber *uploadTwitter = [defaults objectForKey:@"upload_twitter"];
+        if (uploadTwitter != nil) {
+            buttonCheckTwitter.selected = [uploadTwitter boolValue];
+            if ([uploadTwitter boolValue] == true) {
+                if (![TWTweetComposeViewController canSendTweet])
+                    buttonCheckTwitter.selected = false;
+            }
+        }
+    }
+}
+
+- (void)receiveLoggedIn:(NSNotification *) notification
+{
+    buttonCheckLatte.selected = true;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -116,7 +164,11 @@
                                                            delegate:self
                                                   cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
                                              destructiveButtonTitle:nil
-                                                  otherButtonTitles:NSLocalizedString(@"status_private", @"非公開"), NSLocalizedString(@"status_friends", @"友達まで"), NSLocalizedString(@"status_members", @"会員まで"), NSLocalizedString(@"status_public", @"公開"), nil];
+                                                  otherButtonTitles:
+                                NSLocalizedString(@"status_private", @"非公開"),
+                                NSLocalizedString(@"status_friends", @"友達まで"),
+                                NSLocalizedString(@"status_members", @"会員まで"),
+                                NSLocalizedString(@"status_public", @"公開"), nil];
         sheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
         sheet.tag = 0;
         if (self.tabBarController != nil) {
@@ -129,6 +181,8 @@
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1] animated:YES];
+    
     if (actionSheet.tag == 0) {
         switch (buttonIndex) {
             case 0:
@@ -179,7 +233,15 @@
     if (picture != nil) {
         [self updatePic];
     } else {
-        [self saveImage];
+        if (buttonCheckLatte.selected) {
+            [self saveImage];
+        }
+        if (buttonCheckFacebook.selected) {
+            [self uploadFacebook];
+        }
+        else {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     }
 }
 
@@ -197,6 +259,91 @@
 
 - (IBAction)switchService:(UIButton *)sender {
     sender.selected = !sender.selected;
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    switch (sender.tag) {
+        case 0: // Latte
+            [defaults setObject:[NSNumber numberWithBool:sender.selected] forKey:@"upload_latte"];
+            if (app.currentUser == nil) {
+                if (sender.selected) {
+                    sender.selected = false;
+                    UINavigationController *modalLogin = [[UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                                                      bundle: nil] instantiateViewControllerWithIdentifier:@"LoginModal"];
+                    
+                    
+                    
+                    [self presentViewController:modalLogin animated:YES completion:^{
+                        TFLog(@"Finsihed open login");
+                    }];
+                }
+            }
+            
+            break;
+            
+        case 1: // Facebook
+            [defaults setObject:[NSNumber numberWithBool:sender.selected] forKey:@"upload_facebook"];
+            if (sender.selected) {
+                FBSession *fbsession = FBSession.activeSession;
+                if (fbsession.isOpen) {
+                    if ([fbsession.permissions indexOfObject:@"publish_stream"] == NSNotFound) {
+                        [fbsession reauthorizeWithPublishPermissions:[NSArray arrayWithObject:@"publish_stream"]
+                                                     defaultAudience:FBSessionDefaultAudienceEveryone
+                                                   completionHandler:^(FBSession *session, NSError *error) {
+                                                       [self checkPublishPermission];
+                                                   }];
+                    }
+
+                } else {
+                    [FBSession openActiveSessionWithPublishPermissions:[NSArray arrayWithObject:@"publish_stream"]
+                                                       defaultAudience:FBSessionDefaultAudienceEveryone
+                                                          allowLoginUI:YES
+                                                     completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+                                                         [self checkPublishPermission];
+                                                     }];
+                }
+            }
+            
+            break;
+        case 2: // Twitter
+            [defaults setObject:[NSNumber numberWithBool:sender.selected] forKey:@"upload_twitter"];
+            if (![TWTweetComposeViewController canSendTweet]) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"エラー")
+                                                                message:NSLocalizedString(@"error_no_twitter", @"Please add one Twitter account in Setting")
+                                                               delegate:nil
+                                                      cancelButtonTitle:NSLocalizedString(@"close", @"閉じる")
+                                                      otherButtonTitles:nil
+                                      ];
+                [alert show];
+                buttonCheckTwitter.selected = false;
+            }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)checkPublishPermission {
+    if (![FBSession.activeSession.permissions containsObject:@"publish_stream"]) {
+        buttonCheckFacebook.selected = false;
+    }
+    
+    /*
+     NSString *accessToken = FBSession.activeSession.accessToken;
+    NSURL *url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"https://graph.facebook.com/me/permissions?access_token=%@", accessToken]];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSDictionary *JSON) {
+        NSArray *permissions = [JSON objectForKey:@"data"];
+        if (![permissions containsObject:@"publish_stream"]) {
+            buttonCheckFacebook.selected = false;
+        }
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        NSLog(@"Request Failed with Error: %@, %@", error, error.userInfo);
+        buttonCheckFacebook.selected = false;
+    }];
+    [operation start];
+      */            
 }
 
 - (IBAction)touchDelete:(id)sender {
@@ -218,9 +365,6 @@
 - (void)keyboardWillHide:(NSNotification *)notification
 {
     [self.tableView removeGestureRecognizer:gestureTap];
-}
-
-- (void)verifyImage {
 }
 
 - (void)updatePic {
@@ -312,6 +456,62 @@
         HUD.progress = (float)totalBytesWritten/(float)totalBytesExpectedToWrite;
     }];
     
+    
+    [operation start];
+}
+
+- (void)uploadFacebook {
+    HUD.mode = MBProgressHUDModeDeterminate;
+    [HUD show:YES];
+    
+    void (^createForm)(id<AFMultipartFormData>) = ^(id<AFMultipartFormData> formData) {
+        [formData appendPartWithFileData:imageData
+                                    name:@"source"
+                                fileName:@"latte.jpg"
+                                mimeType:@"image/jpeg"];
+    };
+    
+    NSString *accessToken = FBSession.activeSession.accessToken;
+    NSDictionary* params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            textTitle.text, @"message",
+                            nil];
+    
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] init];
+    [httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
+	[httpClient setDefaultHeader:@"Accept" value:@"application/json"];
+    
+    NSURLRequest *request = [httpClient multipartFormRequestWithMethod:@"POST"
+                                                                  path:[NSString stringWithFormat:@"https://graph.facebook.com/me/photos?access_token=%@", accessToken]
+                                                            parameters:params
+                                             constructingBodyWithBlock:createForm];
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    
+    void (^successUpload)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+        HUD.mode = MBProgressHUDModeCustomView;
+        [HUD hide:YES afterDelay:1];
+    };
+    
+    void (^failUpload)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
+        if([operation.response statusCode] != 200){
+            TFLog(@"Upload Failed");
+        }
+        TFLog(@"error: %@", [operation error]);
+        HUD.mode = MBProgressHUDModeText;
+        HUD.labelText = @"Error";
+        HUD.margin = 10.f;
+        HUD.yOffset = 150.f;
+        HUD.removeFromSuperViewOnHide = YES;
+        
+        [HUD hide:YES afterDelay:3];
+    };
+    
+    [operation setCompletionBlockWithSuccess: successUpload failure: failUpload];
+    
+    [operation setUploadProgressBlock:^(NSInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+        HUD.progress = (float)totalBytesWritten/(float)totalBytesExpectedToWrite;
+    }];
     
     [operation start];
 }

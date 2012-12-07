@@ -64,6 +64,7 @@
                                         }];
 //        [self.authButton setTitle:@"Logout" forState:UIControlStateNormal];
     } else {
+        [HUD hide:YES];
         TFLog(@"Unopen fb");
 //        [self.authButton setTitle:@"Login" forState:UIControlStateNormal];
     }
@@ -93,6 +94,7 @@
 
 - (IBAction)goBack:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)login:(id)sender {
@@ -129,6 +131,34 @@
     [app openSessionWithAllowLoginUI:YES];
 }
 
+- (IBAction)touchTwitter:(id)sender {
+    // Create an account store object.
+	ACAccountStore *accountStore = [[ACAccountStore alloc] init];
+	
+	// Create an account type that ensures Twitter accounts are retrieved.
+    ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+	
+	// Request access from the user to use their Twitter accounts.
+    [accountStore requestAccessToAccountsWithType:accountType withCompletionHandler:^(BOOL granted, NSError *error) {
+        if(granted) {
+			// Get the list of Twitter accounts.
+            NSArray *accountsArray = [accountStore accountsWithAccountType:accountType];
+			
+			// For the sake of brevity, we'll assume there is only one Twitter account present.
+			// You would ideally ask the user which account they want to tweet from, if there is more than one Twitter account present.
+			if ([accountsArray count] > 0) {
+				// Grab the initial Twitter account to tweet from.
+				ACAccount *twitterAccount = [accountsArray objectAtIndex:0];
+				
+				TFLog(@"Got account");
+			} else {
+                TFLog(@"No account");
+            }
+        }
+	}];
+
+}
+
 - (IBAction)touchTest:(id)sender {
     TFLog(@"Touched");
 }
@@ -136,11 +166,11 @@
 - (void)processLogin:(NSDictionary *)JSON {
     luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     
-    if ([JSON objectForKey:@"token"] == 0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"エラー"
-                                                        message:@"ログイン出来ませんでした。メールアドレスとパスワードを確認して下さい。"
+    if ([JSON objectForKey:@"token"] == nil) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"エラー")
+                                                        message:NSLocalizedString(@"error_login_fail", @"ログイン出来ませんでした。メールアドレスとパスワードを確認して下さい。")
                                                        delegate:nil
-                                              cancelButtonTitle:@"閉じる"
+                                              cancelButtonTitle:NSLocalizedString(@"close", @"閉じる")
                                               otherButtonTitles:nil
                               ];
         [HUD hide:YES];
@@ -152,6 +182,7 @@
             [app updateUserAPNS];
         
         [self.navigationController popViewControllerAnimated:YES];
+        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
         
         HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
         HUD.mode = MBProgressHUDModeCustomView;

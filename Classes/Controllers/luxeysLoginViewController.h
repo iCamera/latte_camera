@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Accounts/Accounts.h>
+#import <Twitter/Twitter.h>
 #import "User.h"
 #import "MBProgressHUD.h"
-#import "FacebookSDK.h"
 
 @class KeychainItemWrapper;
 
@@ -29,5 +30,6 @@
 - (IBAction)login:(id)sender;
 - (IBAction)touchForgot:(id)sender;
 - (IBAction)touchFacebook:(id)sender;
+- (IBAction)touchTwitter:(id)sender;
 
 @end

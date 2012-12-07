@@ -53,6 +53,16 @@
                                                  name:@"UploadedNewPicture"
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showUser:)
+                                                 name:@"ShowUser"
+                                               object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showPic:)
+                                                 name:@"ShowPic"
+                                               object:nil];
+
     isFirst = true;
     return self;
 }
@@ -136,6 +146,11 @@
     self.tabBar.layer.shadowOpacity = 0.8f;
     self.tabBar.layer.shadowRadius = 2.5f;
     self.tabBar.layer.shadowPath = shadowPath.CGPath;
+    
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+    if (app.currentUser != nil) {
+        [self receiveLoggedIn:nil];
+    }
 }
 
 
@@ -144,13 +159,13 @@
 }
 
 - (void)pickPhoto {
-    UINavigationController *storyCapture = [[UIStoryboard storyboardWithName:@"CameraStoryboard"
+    UINavigationController *storyMain = [[UIStoryboard storyboardWithName:@"MainStoryboard"
                                                                          bundle: nil] instantiateInitialViewController];
-    luxeysCameraViewController *viewCapture = storyCapture.viewControllers[0];
+    luxeysCameraViewController *viewCapture = storyMain.viewControllers[0];
     viewCapture.delegate = self;
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:NO];
-    [self presentViewController:storyCapture animated:NO completion:nil];
+    [self presentViewController:storyMain animated:NO completion:nil];
 }
 
 - (void)imagePickerController:(luxeysCameraViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info {
@@ -164,17 +179,6 @@
     
     [super viewWillAppear:animated];
 }
-
-
-- (void)viewDidAppear:(BOOL)animated {
-    if (isFirst) {
-        isFirst = false;
-        [self pickPhoto];
-    }
-    
-    [super viewDidAppear:animated];
-}
-
 
 - (void)didReceiveMemoryWarning
 {
@@ -200,6 +204,29 @@
 {
     [[self.tabBar.items objectAtIndex:3] setEnabled:NO];
     [[self.tabBar.items objectAtIndex:4] setEnabled:NO];
+}
+
+- (void)showUser:(NSNotification *)notify {
+    self.selectedIndex = 4;
+    UINavigationController *nav = (id)self.selectedViewController;
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    luxeysUserViewController *viewUser = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserProfile"];
+    User *user = notify.object;
+    [viewUser setUserID:[user.userId integerValue]];
+    [nav pushViewController:viewUser animated:YES];
+}
+
+
+- (void)showPic:(NSNotification *)notify {
+    self.selectedIndex = 4;
+    UINavigationController *nav = (id)self.selectedViewController;
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    luxeysPicDetailViewController *viewPic = [mainStoryboard instantiateViewControllerWithIdentifier:@"Picture"];
+    Picture *pic = notify.object;
+    [viewPic setPictureID:[pic.pictureId integerValue]];
+    [nav pushViewController:viewPic animated:YES];
 }
 
 

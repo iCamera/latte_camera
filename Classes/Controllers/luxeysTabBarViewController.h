@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "luxeysLoginViewController.h"
 #import "luxeysCameraViewController.h"
+#import "luxeysUserViewController.h"
+#import "luxeysPicDetailViewController.h"
+#import "User.h"
+#import "Picture.h"
 
 #define kAnimationDuration .3
 

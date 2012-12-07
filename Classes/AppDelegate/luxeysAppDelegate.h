@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "KeychainItemWrapper.h"
-#import "luxeysTabBarViewController.h"
 #import "LXUIRevealController.h"
-#import "FacebookSDK.h"
+#import "luxeysTabBarViewController.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @class User;
 
@@ -20,9 +20,7 @@
     NSString *apns;
 }
 
-@property (strong, nonatomic) luxeysTabBarViewController *viewMainTab;
 @property (strong, nonatomic) LXUIRevealController *revealController;
-
 @property (nonatomic, retain) KeychainItemWrapper *tokenItem;
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
@@ -42,6 +40,7 @@ extern NSString *const FBSessionStateChangedNotification;
 - (void)logOut;
 - (void)setToken:(NSString*)token;
 - (void)updateUserAPNS;
-- (void)closeSession;
+//- (void)closeSession;
+- (void)switchRoot;
 
 @end

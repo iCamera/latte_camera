@@ -7,13 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LatteAPIClient.h"
-#import "luxeysAppDelegate.h"
-#import "UIButton+AsyncImage.h"
-#import "User.h"
+
 #import "Picture.h"
-#import "UIImageView+loadProgress.h"
-#import "luxeysUtils.h"
 
 @interface luxeysTableViewCellPicture : UITableViewCell {
 }

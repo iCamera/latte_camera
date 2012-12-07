@@ -19,7 +19,6 @@
 #import <luxeysSettingViewController.h>
 #import "luxeysPicInfoViewController.h"
 #import "luxeysUserViewController.h"
-#import "luxeysTemplatePicTimeline.h"
 #import "luxeysPicCommentViewController.h"
 #import "luxeysPicMapViewController.h"
 #import "luxeysButtonBrown30.h"

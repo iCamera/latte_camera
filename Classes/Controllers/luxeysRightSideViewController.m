@@ -60,6 +60,15 @@
      selector:@selector(sessionStateChanged:)
      name:FBSessionStateChangedNotification
      object:nil];
+    
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+    if (app.currentUser != nil) {
+        [self receiveLoggedIn:nil];
+        
+        if (FBSession.activeSession.isOpen) {
+            [self loadFacebokFriend];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -204,7 +213,8 @@
                                            success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                                fbfriends = [User mutableArrayFromDictionary:JSON withKey:@"users"];
                                                //[tableNotify reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
-                                               [tableNotify reloadData];
+                                               if (tableMode == 1) {                                                                                                  [tableNotify reloadData];
+                                               }
                                            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                TFLog(@"Something went wrong (FB Friends)");
                                            }];
@@ -284,48 +294,35 @@
 }
 
 - (void)showRequestUser:(UIButton*)sender {
-    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-    
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                             bundle:nil];
-    luxeysUserViewController *viewUser = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserProfile"];
-    
     User *user = [requests objectAtIndex:sender.tag];
-    [viewUser setUserID:[user.userId integerValue]];
-    UINavigationController *nav = (id)app.viewMainTab.selectedViewController;
-    [nav pushViewController:viewUser animated:YES];
+    
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"ShowUser"
+     object:user];
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                             bundle:nil];
-    
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {    
     if (tableMode == 0) {
         NSDictionary *notify = [notifies objectAtIndex:indexPath.row];
         
-        luxeysPicDetailViewController *viewPic = [mainStoryboard instantiateViewControllerWithIdentifier:@"Picture"];
         Picture *pic = [Picture instanceFromDictionary:[notify objectForKey:@"target"]];
-        [viewPic setPictureID:[pic.pictureId integerValue]];
-        app.viewMainTab.selectedIndex = 4; // Switch to mypage
-        UINavigationController *nav = (UINavigationController *)app.viewMainTab.selectedViewController;
-        [nav pushViewController:viewPic animated:YES];
+
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:@"ShowPic"
+         object:pic];
     } else {
-        luxeysUserViewController *viewUser = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserProfile"];
+        User* user;
         switch (indexPath.section) {
             case 0: {
-                User *request = requests[indexPath.row];
-                [viewUser setUserID:[request.userId integerValue]];
+                user = requests[indexPath.row];
             }
                 break;
             case 1: {
-                User *ignore = ignores[indexPath.row];
-                [viewUser setUserID:[ignore.userId integerValue]];
+                user = ignores[indexPath.row];
             }
                 break;
             case 2: {
-                User *fbfriend = fbfriends[indexPath.row];
-                [viewUser setUserID:[fbfriend.userId integerValue]];
+                user = fbfriends[indexPath.row];
             }
                 break;
                 
@@ -333,14 +330,16 @@
                 break;
         }
         
-        app.viewMainTab.selectedIndex = 4; // Switch to mypage
-        UINavigationController *nav = (UINavigationController *)app.viewMainTab.selectedViewController;
-        [nav pushViewController:viewUser animated:YES];
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:@"ShowUser"
+         object:user];        
     }
     
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
     [app.revealController performSelector:@selector(revealRight:) withObject:self];
 
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {

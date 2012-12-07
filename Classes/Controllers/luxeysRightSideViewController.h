@@ -17,7 +17,6 @@
 #import "EGORefreshTableHeaderView.h"
 #import "User.h"
 #import "Picture.h"
-#import "FacebookSDK.h"
 
 @interface luxeysRightSideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, EGORefreshTableHeaderDelegate> {
     NSMutableArray *notifies;

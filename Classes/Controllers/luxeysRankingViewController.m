@@ -7,6 +7,7 @@
 //
 
 #import "luxeysRankingViewController.h"
+#import "luxeysAppDelegate.h"
 
 @interface luxeysRankingViewController ()
 
@@ -73,6 +74,11 @@
     [buttonNavLeft addTarget:app.revealController action:@selector(revealLeft:) forControlEvents:UIControlEventTouchUpInside];
 
     [self loadRanking];
+    
+    if (app.currentUser != nil) {
+        [self receiveLoggedIn:nil];
+    }
+
 }
 
 - (void)viewDidUnload

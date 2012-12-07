@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Twitter/Twitter.h>
 #import "LatteAPIClient.h"
 #import "AFHTTPRequestOperation.h"
 #import "MBProgressHUD.h"
 #import "Picture.h"
+#import "luxeysLoginViewController.h"
 #import "UIImageView+AFNetworking.h"
+#import "AFHTTPClient.h"
 
 @interface luxeysPicEditViewController : UITableViewController <UIActionSheetDelegate> {
     MBProgressHUD *HUD;
@@ -23,7 +26,6 @@
 }
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonCheckLatte;
-@property (strong, nonatomic) IBOutlet UIButton *buttonCheckLibrary;
 @property (strong, nonatomic) IBOutlet UIButton *buttonCheckFacebook;
 @property (strong, nonatomic) IBOutlet UIButton *buttonCheckTwitter;
 @property (strong, nonatomic) IBOutlet UIButton *buttonDelete;

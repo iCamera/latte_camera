@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "LatteAPIClient.h"
 #import "luxeysAppDelegate.h"
-#import "luxeysCollectionCellPic.h"
 #import "MBProgressHUD.h"
 #import "Picture.h"
 #import "UIButton+AsyncImage.h"

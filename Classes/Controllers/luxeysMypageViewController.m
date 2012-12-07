@@ -670,11 +670,11 @@
 }
 
 - (IBAction)touchSetProfilePic:(id)sender {
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"プロフィール"
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"change_profile_pic", @"プロフィール")
                                                        delegate:self
-                                              cancelButtonTitle:@"キャンセル"
-                                         destructiveButtonTitle:@"削除する"
-                                              otherButtonTitles:@"写真を選択する", @"自分のプロフィール", nil];
+                                              cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
+                                         destructiveButtonTitle:NSLocalizedString(@"remove_profile_pic", @"削除する")
+                                              otherButtonTitles:NSLocalizedString(@"select_profile_pic", @"写真を選択する"), NSLocalizedString(@"my_profile", @"自分のプロフィール"), nil];
     [sheet showFromTabBar:self.tabBarController.tabBar];
 }
 

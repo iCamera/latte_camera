@@ -63,11 +63,9 @@
         if (!pic.isVoted)
             buttonVote.enabled = YES;
     
-    
     buttonComment.tag = [pic.pictureId integerValue];
     buttonImage.tag = [pic.pictureId integerValue];
     buttonVote.tag = [pic.pictureId integerValue];
-    
     
     [buttonImage addTarget:parent action:@selector(showPic:) forControlEvents:UIControlEventTouchUpInside];
     [buttonComment addTarget:parent action:@selector(showComment:) forControlEvents:UIControlEventTouchUpInside];
