@@ -61,6 +61,8 @@
                                             [self processLogin:JSON];
                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                             TFLog(@"Something went wrong (Facebook): %@", error.description);
+                                            // Clear FBsession to be sure
+                                            [FBSession.activeSession closeAndClearTokenInformation];
                                         }];
 //        [self.authButton setTitle:@"Logout" forState:UIControlStateNormal];
     } else {
@@ -148,19 +150,21 @@
 			// You would ideally ask the user which account they want to tweet from, if there is more than one Twitter account present.
 			if ([accountsArray count] > 0) {
 				// Grab the initial Twitter account to tweet from.
-				ACAccount *twitterAccount = [accountsArray objectAtIndex:0];
+//				ACAccount *twitterAccount = [accountsArray objectAtIndex:0];
 				
 				TFLog(@"Got account");
 			} else {
-                TFLog(@"No account");
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"エラー")
+                                                                message:NSLocalizedString(@"error_no_twitter", @"Please add one Twitter account in Setting")
+                                                               delegate:nil
+                                                      cancelButtonTitle:NSLocalizedString(@"close", @"閉じる")
+                                                      otherButtonTitles:nil
+                                      ];
+                [alert show];
             }
         }
 	}];
 
-}
-
-- (IBAction)touchTest:(id)sender {
-    TFLog(@"Touched");
 }
 
 - (void)processLogin:(NSDictionary *)JSON {

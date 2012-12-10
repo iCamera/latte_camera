@@ -341,7 +341,7 @@
 }
 
 - (IBAction)touchEdit:(id)sender {
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"CameraStoryboard"
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
     
     luxeysPicEditViewController *viewEditPic = [mainStoryboard instantiateViewControllerWithIdentifier:@"PicEdit"];

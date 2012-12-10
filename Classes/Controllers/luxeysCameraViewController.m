@@ -595,14 +595,19 @@
 }
 
 - (void)processSavedData {
-    NSDictionary *info = [[NSDictionary alloc] initWithObjectsAndKeys:
-                          savedData, @"data",
-                          savedPreview, @"preview",
-                          nil];
-    if (delegate != nil) {
-        [delegate imagePickerController:self didFinishPickingMediaWithData:info];
+    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+    if (app.currentUser != nil) {
+        NSDictionary *info = [[NSDictionary alloc] initWithObjectsAndKeys:
+                              savedData, @"data",
+                              savedPreview, @"preview",
+                              nil];
+        if (delegate == nil) {
+            [self performSegueWithIdentifier:@"Edit" sender:info];
+        } else {
+            [delegate imagePickerController:self didFinishPickingMediaWithData:info];
+        }
     } else {
-        [self performSegueWithIdentifier:@"Edit" sender:info];
+        [self switchCamera];
     }
 }
 
@@ -843,8 +848,11 @@
                 [self switchCamera];
             break;
         case 2:
-            if (buttonIndex == 1)
+            if (buttonIndex == 1) {
                 [self dismissViewControllerAnimated:NO completion:nil];
+                luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
+                [app switchRoot];
+            }
             break;
         default:
             break;

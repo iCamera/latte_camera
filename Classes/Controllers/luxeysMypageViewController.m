@@ -725,7 +725,7 @@
 }
 
 - (void)pickPhoto {
-    UINavigationController *storyCapture = [[UIStoryboard storyboardWithName:@"CameraStoryboard"
+    UINavigationController *storyCapture = [[UIStoryboard storyboardWithName:@"MainStoryboard"
                                                                          bundle: nil] instantiateInitialViewController];
     luxeysCameraViewController *viewCapture = storyCapture.viewControllers[0];
     viewCapture.delegate = self;

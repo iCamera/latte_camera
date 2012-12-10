@@ -233,15 +233,19 @@
     if (picture != nil) {
         [self updatePic];
     } else {
-        if (buttonCheckLatte.selected) {
-            [self saveImage];
-        }
-        if (buttonCheckFacebook.selected) {
-            [self uploadFacebook];
-        }
-        else {
-            [self.navigationController popViewControllerAnimated:YES];
-        }
+        [self saveImage];
+//        if (buttonCheckLatte.selected) {
+//            [self saveImage];
+//        }
+//        if (buttonCheckFacebook.selected) {
+//            [self uploadFacebook];
+//        }
+//        if (buttonCheckTwitter.selected) {
+//            [self uploadTwitter];
+//        }
+//        else {
+//            [self.navigationController popViewControllerAnimated:YES];
+//        }
     }
 }
 
@@ -428,11 +432,12 @@
         HUD.mode = MBProgressHUDModeCustomView;
         [HUD hide:YES afterDelay:1];
         
+        [app switchRoot];
+        [self.navigationController dismissViewControllerAnimated:NO completion:nil];
+        
         [[NSNotificationCenter defaultCenter]
          postNotificationName:@"UploadedNewPicture"
          object:self];
-        
-        [self.navigationController dismissViewControllerAnimated:NO completion:nil];
     };
     
     void (^failUpload)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -516,11 +521,81 @@
     [operation start];
 }
 
+- (void)uploadTwitter {
+    // Create an account store object.
+	ACAccountStore *accountStore = [[ACAccountStore alloc] init];
+	
+	// Create an account type that ensures Twitter accounts are retrieved.
+    ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+	
+	// Request access from the user to use their Twitter accounts.
+    [accountStore requestAccessToAccountsWithType:accountType withCompletionHandler:^(BOOL granted, NSError *error) {
+        if(granted) {
+			// Get the list of Twitter accounts.
+            NSArray *accountsArray = [accountStore accountsWithAccountType:accountType];
+			
+			// For the sake of brevity, we'll assume there is only one Twitter account present.
+			// You would ideally ask the user which account they want to tweet from, if there is more than one Twitter account present.
+			if ([accountsArray count] > 0) {
+				// Grab the initial Twitter account to tweet from.
+				ACAccount *twitterAccount = [accountsArray objectAtIndex:0];
+				
+				NSURL *url =
+                [NSURL URLWithString:
+                 @"https://upload.twitter.com/1/statuses/update_with_media.json"];
+                
+                //  Create a POST request for the target endpoint
+                TWRequest *request =
+                [[TWRequest alloc] initWithURL:url
+                                    parameters:nil
+                                 requestMethod:TWRequestMethodPOST];
+                
+                //  self.accounts is an array of all available accounts;
+                //  we use the first one for simplicity
+                [request setAccount:twitterAccount];
+                
+                //  Add the data of the image with the
+                //  correct parameter name, "media[]"
+                [request addMultiPartData:imageData
+                                 withName:@"media[]"
+                                     type:@"multipart/form-data"];
+                
+                // NB: Our status must be passed as part of the multipart form data
+                NSString *status = textTitle.text;
+                
+                //  Add the data of the status as parameter "status"
+                [request addMultiPartData:[status dataUsingEncoding:NSUTF8StringEncoding]
+                                 withName:@"status"
+                                     type:@"multipart/form-data"];
+                
+                //  Perform the request.
+                //    Note that -[performRequestWithHandler] may be called on any thread,
+                //    so you should explicitly dispatch any UI operations to the main thread
+                [request performRequestWithHandler:
+                 ^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
+                     NSDictionary *dict = 
+                     (NSDictionary *)[NSJSONSerialization 
+                                      JSONObjectWithData:responseData options:0 error:nil];
+                     
+                     // Log the result
+                     NSLog(@"%@", dict);
+                     
+                     dispatch_async(dispatch_get_main_queue(), ^{
+                         // perform an action that updates the UI...
+                     });
+                 }];
+			}
+        }
+	}];
+}
+
 - (void)setData:(NSData *)aData {
     imageData = aData;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+    
     if (picture != nil) {
         return 2;
     } else {

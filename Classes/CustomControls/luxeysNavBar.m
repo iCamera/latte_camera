@@ -27,7 +27,7 @@
     self.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 font, UITextAttributeFont,
                                 [UIColor whiteColor], UITextAttributeTextColor,
-                                CGSizeMake(0, 1), UITextAttributeTextShadowOffset,
+                                [NSValue valueWithCGSize:CGSizeMake(0, 1)], UITextAttributeTextShadowOffset,
                                 [UIColor blackColor], UITextAttributeTextShadowColor,
                                 nil];
     return self;

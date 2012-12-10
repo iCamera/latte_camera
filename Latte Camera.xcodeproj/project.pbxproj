@@ -41,7 +41,6 @@
 		8863F0DF165C6E4A00B71E11 /* UIImage+fixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8863F0DE165C6E4A00B71E11 /* UIImage+fixOrientation.m */; };
 		88730A39166F216600CF7507 /* Avenir Next Condensed.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 88730A38166F216600CF7507 /* Avenir Next Condensed.ttc */; };
 		88730A3B166F34C100CF7507 /* localize.py in Resources */ = {isa = PBXBuildFile; fileRef = 88730A3A166F34C100CF7507 /* localize.py */; };
-		88730A42166F38AB00CF7507 /* MainStoryboard.strings in Resources */ = {isa = PBXBuildFile; fileRef = 88730A3F166F38AB00CF7507 /* MainStoryboard.strings */; };
 		8874B9291609C9980052A7CA /* luxeysCell4Pics.m in Sources */ = {isa = PBXBuildFile; fileRef = 8874B9281609C9980052A7CA /* luxeysCell4Pics.m */; };
 		887E40931625493B0060623C /* luxeysImagePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 887E4092162549310060623C /* luxeysImagePickerViewController.m */; };
 		887E4095162552C20060623C /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 887E4094162552C10060623C /* icon.png */; };
@@ -75,6 +74,7 @@
 		88A43B1316706C08001A8BB3 /* luxeysRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A43B1216706C07001A8BB3 /* luxeysRevealViewController.m */; };
 		88A43B451671DA4B001A8BB3 /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 88A43B441671DA4B001A8BB3 /* FacebookSDKResources.bundle */; };
 		88A43B471671DCD9001A8BB3 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A43B461671DCD9001A8BB3 /* FacebookSDK.framework */; };
+		88A43B8A16721BD9001A8BB3 /* MainStoryboard.strings in Resources */ = {isa = PBXBuildFile; fileRef = 88A43B8816721BD9001A8BB3 /* MainStoryboard.strings */; };
 		88A49B7F15B8FD5700CEA262 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A49B7A15B8FD5700CEA262 /* AVFoundation.framework */; };
 		88A49B8015B8FD5700CEA262 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A49B7B15B8FD5700CEA262 /* CoreMedia.framework */; };
 		88A49B8115B8FD5700CEA262 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A49B7C15B8FD5700CEA262 /* CoreVideo.framework */; };
@@ -741,9 +741,6 @@
 		8863F0DE165C6E4A00B71E11 /* UIImage+fixOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+fixOrientation.m"; path = "Classes/Helpers/UIImage+fixOrientation.m"; sourceTree = "<group>"; };
 		88730A38166F216600CF7507 /* Avenir Next Condensed.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avenir Next Condensed.ttc"; sourceTree = "<group>"; };
 		88730A3A166F34C100CF7507 /* localize.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = localize.py; path = Vendor/localize.py; sourceTree = "<group>"; };
-		88730A40166F38AB00CF7507 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
-		88730A44166F38B900CF7507 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
-		88730A46166F3E4A00CF7507 /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ja; path = ja.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		8874B9271609C9980052A7CA /* luxeysCell4Pics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysCell4Pics.h; path = Classes/CustomControls/luxeysCell4Pics.h; sourceTree = SOURCE_ROOT; };
 		8874B9281609C9980052A7CA /* luxeysCell4Pics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysCell4Pics.m; path = Classes/CustomControls/luxeysCell4Pics.m; sourceTree = SOURCE_ROOT; };
 		887E40911625492D0060623C /* luxeysImagePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luxeysImagePickerViewController.h; path = Classes/Controllers/luxeysImagePickerViewController.h; sourceTree = "<group>"; };
@@ -795,6 +792,9 @@
 		88A43B1216706C07001A8BB3 /* luxeysRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = luxeysRevealViewController.m; path = Classes/Controllers/luxeysRevealViewController.m; sourceTree = "<group>"; };
 		88A43B441671DA4B001A8BB3 /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = ../../../Documents/FacebookSDK/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle; sourceTree = "<group>"; };
 		88A43B461671DCD9001A8BB3 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		88A43B8716721B5F001A8BB3 /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ja; path = ja.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		88A43B8916721BD9001A8BB3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
+		88A43B8B16721BE9001A8BB3 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
 		88A49B7A15B8FD5700CEA262 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		88A49B7B15B8FD5700CEA262 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		88A49B7C15B8FD5700CEA262 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
@@ -867,14 +867,14 @@
 		88CFA833164CF0440000B219 /* UIImageView+loadProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImageView+loadProgress.h"; path = "Classes/CustomControls/UIImageView+loadProgress.h"; sourceTree = SOURCE_ROOT; };
 		88CFA834164CF0440000B219 /* UIImageView+loadProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+loadProgress.m"; path = "Classes/CustomControls/UIImageView+loadProgress.m"; sourceTree = SOURCE_ROOT; };
 		88D4B5D015D4B9F200FC4FBB /* Latte.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Latte.entitlements; sourceTree = "<group>"; };
-		88D9864315B8F97800858AD6 /* Latte.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Latte.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		88D9864315B8F97800858AD6 /* Latte Camera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Latte Camera.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		88D9864715B8F97800858AD6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		88D9864915B8F97800858AD6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		88D9864B15B8F97800858AD6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		88D9864D15B8F97800858AD6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		88D9865115B8F97800858AD6 /* Latte-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Latte-Info.plist"; sourceTree = "<group>"; };
+		88D9865115B8F97800858AD6 /* Latte Camera-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Latte Camera-Info.plist"; sourceTree = "<group>"; };
 		88D9865515B8F97800858AD6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		88D9865715B8F97800858AD6 /* Latte-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Latte-Prefix.pch"; sourceTree = "<group>"; };
+		88D9865715B8F97800858AD6 /* Latte Camera-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Latte Camera-Prefix.pch"; sourceTree = "<group>"; };
 		88D9865815B8F97800858AD6 /* luxeysAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = luxeysAppDelegate.h; path = Classes/AppDelegate/luxeysAppDelegate.h; sourceTree = "<group>"; };
 		88D9865915B8F97800858AD6 /* luxeysAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = luxeysAppDelegate.m; path = Classes/AppDelegate/luxeysAppDelegate.m; sourceTree = "<group>"; };
 		88D9866D15B8F97800858AD6 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -1853,7 +1853,7 @@
 		88D9864415B8F97800858AD6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				88D9864315B8F97800858AD6 /* Latte.app */,
+				88D9864315B8F97800858AD6 /* Latte Camera.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1895,9 +1895,9 @@
 			isa = PBXGroup;
 			children = (
 				88D4B5D015D4B9F200FC4FBB /* Latte.entitlements */,
-				88D9865115B8F97800858AD6 /* Latte-Info.plist */,
+				88D9865115B8F97800858AD6 /* Latte Camera-Info.plist */,
 				88D9865515B8F97800858AD6 /* main.m */,
-				88D9865715B8F97800858AD6 /* Latte-Prefix.pch */,
+				88D9865715B8F97800858AD6 /* Latte Camera-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			path = Latte;
@@ -2616,7 +2616,7 @@
 		88FE4190166C93D7004DCE53 /* NIBs */ = {
 			isa = PBXGroup;
 			children = (
-				88730A3F166F38AB00CF7507 /* MainStoryboard.strings */,
+				88A43B8816721BD9001A8BB3 /* MainStoryboard.strings */,
 				88FE4193166C93D7004DCE53 /* MainStoryboard.storyboard */,
 			);
 			path = NIBs;
@@ -2625,9 +2625,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		88D9864215B8F97800858AD6 /* Latte */ = {
+		88D9864215B8F97800858AD6 /* Latte Camera */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 88D9867F15B8F97800858AD6 /* Build configuration list for PBXNativeTarget "Latte" */;
+			buildConfigurationList = 88D9867F15B8F97800858AD6 /* Build configuration list for PBXNativeTarget "Latte Camera" */;
 			buildPhases = (
 				88D9863F15B8F97800858AD6 /* Sources */,
 				88D9864015B8F97800858AD6 /* Frameworks */,
@@ -2639,9 +2639,9 @@
 				88E96B4715EDCCBD00FB9CC8 /* PBXTargetDependency */,
 				88E96B2015EDCB8C00FB9CC8 /* PBXTargetDependency */,
 			);
-			name = Latte;
+			name = "Latte Camera";
 			productName = Latte;
-			productReference = 88D9864315B8F97800858AD6 /* Latte.app */;
+			productReference = 88D9864315B8F97800858AD6 /* Latte Camera.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -2654,7 +2654,7 @@
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = LUXEYS;
 			};
-			buildConfigurationList = 88D9863D15B8F97700858AD6 /* Build configuration list for PBXProject "Latte" */;
+			buildConfigurationList = 88D9863D15B8F97700858AD6 /* Build configuration list for PBXProject "Latte Camera" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -2677,7 +2677,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				88D9864215B8F97800858AD6 /* Latte */,
+				88D9864215B8F97800858AD6 /* Latte Camera */,
 			);
 		};
 /* End PBXProject section */
@@ -3229,13 +3229,13 @@
 				88FE4417166C96A3004DCE53 /* Default-568h@2x.png in Resources */,
 				88730A39166F216600CF7507 /* Avenir Next Condensed.ttc in Resources */,
 				88730A3B166F34C100CF7507 /* localize.py in Resources */,
-				88730A42166F38AB00CF7507 /* MainStoryboard.strings in Resources */,
 				88A43B0216703340001A8BB3 /* bt_twitter2_on.png in Resources */,
 				88A43B0316703340001A8BB3 /* bt_twitter2_on@2x.png in Resources */,
 				88A43B0416703340001A8BB3 /* bt_twitter2.png in Resources */,
 				88A43B0516703340001A8BB3 /* bt_twitter2@2x.png in Resources */,
 				88A43B1016705213001A8BB3 /* luxeysTemplateTimlinePicMultiItem.xib in Resources */,
 				88A43B451671DA4B001A8BB3 /* FacebookSDKResources.bundle in Resources */,
+				88A43B8A16721BD9001A8BB3 /* MainStoryboard.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3348,11 +3348,11 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		88730A3F166F38AB00CF7507 /* MainStoryboard.strings */ = {
+		88A43B8816721BD9001A8BB3 /* MainStoryboard.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				88730A40166F38AB00CF7507 /* en */,
-				88730A44166F38B900CF7507 /* ja */,
+				88A43B8916721BD9001A8BB3 /* en */,
+				88A43B8B16721BE9001A8BB3 /* ja */,
 			);
 			name = MainStoryboard.strings;
 			sourceTree = "<group>";
@@ -3370,7 +3370,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				88FE4194166C93D7004DCE53 /* en */,
-				88730A46166F3E4A00CF7507 /* ja */,
+				88A43B8716721B5F001A8BB3 /* ja */,
 			);
 			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";
@@ -3458,9 +3458,9 @@
 					"\"$(SRCROOT)/../../../Documents/FacebookSDK\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Latte/Latte-Prefix.pch";
+				GCC_PREFIX_HEADER = "Latte/Latte Camera-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = "Latte/Latte-Info.plist";
+				INFOPLIST_FILE = "Latte/Latte Camera-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3471,7 +3471,7 @@
 					"-fobjc-arc",
 					"-lsqlite3.0",
 				);
-				PRODUCT_NAME = Latte;
+				PRODUCT_NAME = "Latte Camera";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Vendor/QuickDialog\"/** \"$(SRCROOT)/Vendor/GPUImage\"/** /User/dungbx/Documents/FacebookSDK";
@@ -3493,9 +3493,9 @@
 					"\"$(SRCROOT)/../../../Documents/FacebookSDK\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Latte/Latte-Prefix.pch";
+				GCC_PREFIX_HEADER = "Latte/Latte Camera-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = "Latte/Latte-Info.plist";
+				INFOPLIST_FILE = "Latte/Latte Camera-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3506,7 +3506,7 @@
 					"-fobjc-arc",
 					"-lsqlite3.0",
 				);
-				PRODUCT_NAME = Latte;
+				PRODUCT_NAME = "Latte Camera";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Vendor/QuickDialog\"/** \"$(SRCROOT)/Vendor/GPUImage\"/** /User/dungbx/Documents/FacebookSDK";
@@ -3518,7 +3518,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		88D9863D15B8F97700858AD6 /* Build configuration list for PBXProject "Latte" */ = {
+		88D9863D15B8F97700858AD6 /* Build configuration list for PBXProject "Latte Camera" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				88D9867D15B8F97800858AD6 /* Debug */,
@@ -3527,7 +3527,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		88D9867F15B8F97800858AD6 /* Build configuration list for PBXNativeTarget "Latte" */ = {
+		88D9867F15B8F97800858AD6 /* Build configuration list for PBXNativeTarget "Latte Camera" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				88D9868015B8F97800858AD6 /* Debug */,

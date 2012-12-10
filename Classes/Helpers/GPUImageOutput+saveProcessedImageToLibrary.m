@@ -16,7 +16,7 @@
     CGImageRef cgImageFromBytes = [self newCGImageFromCurrentlyProcessedOutputWithOrientation:imageOrientation];
     UIImage *finalImage = [UIImage imageWithCGImage:cgImageFromBytes scale:1.0 orientation:imageOrientation];
     CGImageRelease(cgImageFromBytes);
-    UIImage *preview = [finalImage resizedImageWithContentMode:UIViewContentModeScaleAspectFill bounds:CGSizeMake(50.0, 50.0) interpolationQuality:kCGInterpolationHigh];
+    UIImage *preview = [finalImage resizedImageWithContentMode:UIViewContentModeScaleAspectFit bounds:CGSizeMake(50.0, 50.0) interpolationQuality:kCGInterpolationHigh];
 
     preview = [preview rotateOrientation:imageOrientation];
     

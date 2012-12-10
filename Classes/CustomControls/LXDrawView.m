@@ -129,7 +129,9 @@
     blur.blurSize = lineWidth/2.0;
     blur.blurPasses = 4;
     
-    mask = [UIImage imageWithCGImage:[blur newCGImageByFilteringImage:viewImage]];
+    CGImageRef newMask = [blur newCGImageByFilteringImage:viewImage];
+    mask = [UIImage imageWithCGImage:newMask];
+    CGImageRelease(newMask);
 
     drawImageView.image = mask;
     

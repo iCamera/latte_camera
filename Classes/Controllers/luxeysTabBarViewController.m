@@ -82,11 +82,12 @@
 
     
     UILabel *labelCamera = [[UILabel alloc] init];
-    labelCamera.frame = CGRectMake(0.0, 0.0, 60, 11);
-    labelCamera.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:10];
+    labelCamera.frame = CGRectMake(0.0, 0.0, 60, 14);
+    labelCamera.font = [UIFont fontWithName:@"AvenirNextCondensed-Medium" size:11];
     labelCamera.text = NSLocalizedString(@"start_camera", @"写真を追加");
     labelCamera.backgroundColor = [UIColor clearColor];
     labelCamera.textColor = [UIColor whiteColor];
+    labelCamera.shadowColor = [UIColor blackColor];
     labelCamera.shadowOffset = CGSizeMake(0, 1);
     labelCamera.textAlignment = NSTextAlignmentCenter;
 
@@ -124,11 +125,11 @@
     
     // Re-style tabbar item
     for(UIViewController *tab in self.viewControllers) {
-        UIFont *font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:10];
+        UIFont *font = [UIFont fontWithName:@"AvenirNextCondensed-Medium" size:11];
         NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                     font, UITextAttributeFont,
                                     [UIColor whiteColor], UITextAttributeTextColor,
-                                    CGSizeMake(0, 1), UITextAttributeTextShadowOffset,
+                                    [NSValue valueWithCGSize:CGSizeMake(0, 1)], UITextAttributeTextShadowOffset,
                                     [UIColor blackColor], UITextAttributeTextShadowColor,
                                     nil];
 
@@ -161,8 +162,6 @@
 - (void)pickPhoto {
     UINavigationController *storyMain = [[UIStoryboard storyboardWithName:@"MainStoryboard"
                                                                          bundle: nil] instantiateInitialViewController];
-    luxeysCameraViewController *viewCapture = storyMain.viewControllers[0];
-    viewCapture.delegate = self;
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:NO];
     [self presentViewController:storyMain animated:NO completion:nil];
