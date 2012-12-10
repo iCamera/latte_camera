@@ -12,7 +12,6 @@
 
 @implementation GPUImageFilter (saveProcessedImageToLibrary)
 - (void)saveImageFromCurrentlyProcessedOutputWithMeta:(NSDictionary *)metaData andOrientation:(UIImageOrientation)imageOrientation onComplete:(void(^)(NSURL *assetURL, NSError *error, UIImage *preview))block {
-    [self prepareForImageCapture];
     CGImageRef cgImageFromBytes = [self newCGImageFromCurrentlyProcessedOutputWithOrientation:imageOrientation];
     UIImage *finalImage = [UIImage imageWithCGImage:cgImageFromBytes scale:1.0 orientation:imageOrientation];
     CGImageRelease(cgImageFromBytes);

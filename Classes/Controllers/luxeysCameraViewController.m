@@ -336,6 +336,7 @@
 }
 
 - (void)capturePhotoAsync {
+    imageOrientation = orientationLast;
     [videoCamera capturePhotoAsImageProcessedUpToFilterWithMeta:[filter getDummy]
                                           withCompletionHandler:^(UIImage *processedImage, NSMutableDictionary *meta, NSError *error) {
                                               [locationManager stopUpdatingLocation];
@@ -347,9 +348,7 @@
                                               CGFloat width = 320.0;
 
                                               NSInteger height = [luxeysUtils heightFromWidth:width width:processedImage.size.width height:processedImage.size.height];
-                                              
-
-                                              imageOrientation = orientationLast;
+                                                                                            
                                               filter.frameSize = processedImage.size;
                                               filter.dofOrientation = imageOrientation;
                                               picture = [[GPUImagePicture alloc] initWithImage:processedImage];
@@ -358,26 +357,21 @@
                                               CGRect screen = [[UIScreen mainScreen] bounds];
                                               
                                               if (imageOrientation == UIImageOrientationLeft || imageOrientation == UIImageOrientationRight) {
-                                                  if (screen.size.height == 480)
-                                                      size = CGSizeMake(height*scale, width*scale);
-                                                  else
-                                                      size = CGSizeMake(height*scale, width*scale);
-                                                  viewCameraWraper.frame = CGRectMake(14, 0, 320, 240);
+                                                  viewCameraWraper.frame = CGRectMake(0, 0, 320, 240);
                                               }
                                               else {
-                                                  if (screen.size.height == 480) {
-                                                      viewCameraWraper.frame = CGRectMake(14, 0, 292, 390);
-                                                      size = CGSizeMake(width*scale, height*scale);
-                                                  }
-                                                  else {
-                                                      viewCameraWraper.frame = CGRectMake(3.5, 0, 313.5, 418);
-                                                      size = CGSizeMake(width*scale, height*scale);
-                                                  }
+                                                  viewCameraWraper.frame = CGRectMake(0, 0, 320, 425);
+                                              }
+                                              [self resizeCameraViewWithAnimation:NO];
+                                              
+                                              if (screen.size.height == 480) {
+                                                  size = CGSizeMake(width*scale, height*scale);
+                                              }
+                                              else {
+                                                  
+                                                  size = CGSizeMake(width*scale, height*scale);
                                               }
                                               
-                                              
-                                              [self resizeCameraViewWithAnimation:NO];
-
                                               
                                               UIImage *previewPic = [processedImage
                                                                      resizedImage: size

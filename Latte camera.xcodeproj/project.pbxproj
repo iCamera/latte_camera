@@ -867,14 +867,14 @@
 		88CFA833164CF0440000B219 /* UIImageView+loadProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImageView+loadProgress.h"; path = "Classes/CustomControls/UIImageView+loadProgress.h"; sourceTree = SOURCE_ROOT; };
 		88CFA834164CF0440000B219 /* UIImageView+loadProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+loadProgress.m"; path = "Classes/CustomControls/UIImageView+loadProgress.m"; sourceTree = SOURCE_ROOT; };
 		88D4B5D015D4B9F200FC4FBB /* Latte.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Latte.entitlements; sourceTree = "<group>"; };
-		88D9864315B8F97800858AD6 /* Latte Camera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Latte Camera.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		88D9864315B8F97800858AD6 /* Latte camera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Latte camera.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		88D9864715B8F97800858AD6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		88D9864915B8F97800858AD6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		88D9864B15B8F97800858AD6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		88D9864D15B8F97800858AD6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		88D9865115B8F97800858AD6 /* Latte Camera-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Latte Camera-Info.plist"; sourceTree = "<group>"; };
+		88D9865115B8F97800858AD6 /* Latte camera-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Latte camera-Info.plist"; sourceTree = "<group>"; };
 		88D9865515B8F97800858AD6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		88D9865715B8F97800858AD6 /* Latte Camera-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Latte Camera-Prefix.pch"; sourceTree = "<group>"; };
+		88D9865715B8F97800858AD6 /* Latte camera-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Latte camera-Prefix.pch"; sourceTree = "<group>"; };
 		88D9865815B8F97800858AD6 /* luxeysAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = luxeysAppDelegate.h; path = Classes/AppDelegate/luxeysAppDelegate.h; sourceTree = "<group>"; };
 		88D9865915B8F97800858AD6 /* luxeysAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = luxeysAppDelegate.m; path = Classes/AppDelegate/luxeysAppDelegate.m; sourceTree = "<group>"; };
 		88D9866D15B8F97800858AD6 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -1853,7 +1853,7 @@
 		88D9864415B8F97800858AD6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				88D9864315B8F97800858AD6 /* Latte Camera.app */,
+				88D9864315B8F97800858AD6 /* Latte camera.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1895,9 +1895,9 @@
 			isa = PBXGroup;
 			children = (
 				88D4B5D015D4B9F200FC4FBB /* Latte.entitlements */,
-				88D9865115B8F97800858AD6 /* Latte Camera-Info.plist */,
+				88D9865115B8F97800858AD6 /* Latte camera-Info.plist */,
 				88D9865515B8F97800858AD6 /* main.m */,
-				88D9865715B8F97800858AD6 /* Latte Camera-Prefix.pch */,
+				88D9865715B8F97800858AD6 /* Latte camera-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			path = Latte;
@@ -2625,9 +2625,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		88D9864215B8F97800858AD6 /* Latte Camera */ = {
+		88D9864215B8F97800858AD6 /* Latte camera */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 88D9867F15B8F97800858AD6 /* Build configuration list for PBXNativeTarget "Latte Camera" */;
+			buildConfigurationList = 88D9867F15B8F97800858AD6 /* Build configuration list for PBXNativeTarget "Latte camera" */;
 			buildPhases = (
 				88D9863F15B8F97800858AD6 /* Sources */,
 				88D9864015B8F97800858AD6 /* Frameworks */,
@@ -2639,9 +2639,9 @@
 				88E96B4715EDCCBD00FB9CC8 /* PBXTargetDependency */,
 				88E96B2015EDCB8C00FB9CC8 /* PBXTargetDependency */,
 			);
-			name = "Latte Camera";
+			name = "Latte camera";
 			productName = Latte;
-			productReference = 88D9864315B8F97800858AD6 /* Latte Camera.app */;
+			productReference = 88D9864315B8F97800858AD6 /* Latte camera.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -2654,7 +2654,7 @@
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = LUXEYS;
 			};
-			buildConfigurationList = 88D9863D15B8F97700858AD6 /* Build configuration list for PBXProject "Latte Camera" */;
+			buildConfigurationList = 88D9863D15B8F97700858AD6 /* Build configuration list for PBXProject "Latte camera" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -2677,7 +2677,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				88D9864215B8F97800858AD6 /* Latte Camera */,
+				88D9864215B8F97800858AD6 /* Latte camera */,
 			);
 		};
 /* End PBXProject section */
@@ -3458,9 +3458,9 @@
 					"\"$(SRCROOT)/../../../Documents/FacebookSDK\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Latte/Latte Camera-Prefix.pch";
+				GCC_PREFIX_HEADER = "Latte/Latte camera-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = "Latte/Latte Camera-Info.plist";
+				INFOPLIST_FILE = "Latte/Latte camera-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3471,7 +3471,7 @@
 					"-fobjc-arc",
 					"-lsqlite3.0",
 				);
-				PRODUCT_NAME = "Latte Camera";
+				PRODUCT_NAME = "Latte camera";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Vendor/QuickDialog\"/** \"$(SRCROOT)/Vendor/GPUImage\"/** /User/dungbx/Documents/FacebookSDK";
@@ -3493,9 +3493,9 @@
 					"\"$(SRCROOT)/../../../Documents/FacebookSDK\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Latte/Latte Camera-Prefix.pch";
+				GCC_PREFIX_HEADER = "Latte/Latte camera-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = "Latte/Latte Camera-Info.plist";
+				INFOPLIST_FILE = "Latte/Latte camera-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3506,7 +3506,7 @@
 					"-fobjc-arc",
 					"-lsqlite3.0",
 				);
-				PRODUCT_NAME = "Latte Camera";
+				PRODUCT_NAME = "Latte camera";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Vendor/QuickDialog\"/** \"$(SRCROOT)/Vendor/GPUImage\"/** /User/dungbx/Documents/FacebookSDK";
@@ -3518,7 +3518,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		88D9863D15B8F97700858AD6 /* Build configuration list for PBXProject "Latte Camera" */ = {
+		88D9863D15B8F97700858AD6 /* Build configuration list for PBXProject "Latte camera" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				88D9867D15B8F97800858AD6 /* Debug */,
@@ -3527,7 +3527,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		88D9867F15B8F97800858AD6 /* Build configuration list for PBXNativeTarget "Latte Camera" */ = {
+		88D9867F15B8F97800858AD6 /* Build configuration list for PBXNativeTarget "Latte camera" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				88D9868015B8F97800858AD6 /* Debug */,
