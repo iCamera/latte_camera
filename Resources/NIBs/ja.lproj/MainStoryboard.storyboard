@@ -3290,53 +3290,22 @@
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="r3N-0e-i7E">
-                                                <rect key="frame" x="170" y="70" width="70" height="28"/>
+                                            <switch opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="bTF-6y-EJH" userLabel="Switch Natual">
+                                                <rect key="frame" x="70" y="70" width="79" height="27"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="12"/>
-                                                <size key="titleShadowOffset" width="0.0" height="1"/>
-                                                <state key="normal" title="光" image="select_off.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <state key="disabled" backgroundImage="select3_2_on.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <state key="selected" image="select_on.png"/>
-                                                <state key="highlighted">
-                                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
+                                                <color key="onTintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                 <connections>
-                                                    <action selector="toggleGain:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="SxU-Nf-cZd"/>
+                                                    <action selector="toggleMaskNatual:" destination="ieL-KW-PiQ" eventType="valueChanged" id="6Zn-BW-dS6"/>
                                                 </connections>
-                                            </button>
-                                            <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="M5j-wP-ISF">
-                                                <rect key="frame" x="70" y="70" width="70" height="28"/>
+                                            </switch>
+                                            <switch opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="AcE-WQ-o5W" userLabel="Switch Gain">
+                                                <rect key="frame" x="170" y="70" width="79" height="27"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="12"/>
-                                                <size key="titleShadowOffset" width="0.0" height="1"/>
-                                                <state key="normal" image="select_off.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <state key="disabled">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <state key="selected" image="select_on.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <state key="highlighted">
-                                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
+                                                <color key="onTintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                 <connections>
-                                                    <action selector="toggleMaskNatual:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="OQs-da-0op"/>
+                                                    <action selector="toggleGain:" destination="ieL-KW-PiQ" eventType="valueChanged" id="bZ4-Bd-Pfe"/>
                                                 </connections>
-                                            </button>
+                                            </switch>
                                             <button opaque="NO" tag="5" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="72u-HV-OSg">
                                                 <rect key="frame" x="70" y="35" width="60" height="25"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -3626,7 +3595,7 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
-                        <outlet property="buttonBackgroundNatual" destination="M5j-wP-ISF" id="bmd-z2-Wtz"/>
+                        <outlet property="buttonBackgroundNatual" destination="bTF-6y-EJH" id="9Z1-vz-SmO"/>
                         <outlet property="buttonBlurNone" destination="72u-HV-OSg" id="Nk6-Qu-IYm"/>
                         <outlet property="buttonBlurNormal" destination="IUm-oH-XF2" id="mfc-DR-Rv6"/>
                         <outlet property="buttonBlurStrong" destination="K0B-RR-xPu" id="jgF-NM-8NG"/>
@@ -4046,15 +4015,12 @@
         <image name="menu_timeline_off.png" width="155" height="43"/>
         <image name="sample.png" width="280" height="190"/>
         <image name="select3_1_on.png" width="75" height="25"/>
-        <image name="select3_2_on.png" width="75" height="25"/>
         <image name="select42_1.png" width="60" height="25"/>
         <image name="select42_1_on.png" width="60" height="25"/>
         <image name="select42_2.png" width="60" height="25"/>
         <image name="select42_2_on.png" width="60" height="25"/>
         <image name="select42_3.png" width="60" height="25"/>
         <image name="select42_3_on.png" width="60" height="25"/>
-        <image name="select_off.png" width="70" height="28"/>
-        <image name="select_on.png" width="70" height="28"/>
         <image name="target.png" width="70" height="70"/>
         <image name="user.gif" width="100" height="100"/>
     </resources>
@@ -4110,14 +4076,14 @@
                 <relationship kind="action" name="setMask:" candidateClass="UIButton"/>
                 <relationship kind="action" name="setTimer:"/>
                 <relationship kind="action" name="toggleEffect:" candidateClass="UIButton"/>
-                <relationship kind="action" name="toggleGain:" candidateClass="UIButton"/>
-                <relationship kind="action" name="toggleMaskNatual:" candidateClass="UIButton"/>
+                <relationship kind="action" name="toggleGain:" candidateClass="UISwitch"/>
+                <relationship kind="action" name="toggleMaskNatual:" candidateClass="UISwitch"/>
                 <relationship kind="action" name="touchCloseHelp:"/>
                 <relationship kind="action" name="touchNo:"/>
                 <relationship kind="action" name="touchOpenHelp:"/>
                 <relationship kind="action" name="touchSave:"/>
                 <relationship kind="action" name="touchTimer:"/>
-                <relationship kind="outlet" name="buttonBackgroundNatual" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonBackgroundNatual" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="buttonBlurNone" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonBlurNormal" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonBlurStrong" candidateClass="UIButton"/>

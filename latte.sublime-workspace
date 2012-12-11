@@ -519,6 +519,24 @@
 	},
 	"buffers":
 	[
+		{
+			"contents": "Searching 930 files for \"supportedInterfaceOrientations\"\n\n/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/UINavigationController+autoRotate.h:\n   11  @interface UINavigationController (autoRotate)\n   12  -(BOOL)shouldAutorotate;\n   13: - (NSUInteger)supportedInterfaceOrientations;\n   14  \n   15  @end\n\n/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/UINavigationController+autoRotate.m:\n   14  }\n   15  \n   16: - (NSUInteger)supportedInterfaceOrientations {\n   17      return UIInterfaceOrientationMaskPortrait;\n   18  }\n\n/Users/dungbx/Desktop/Luxeys/Latte/Latte/Latte camera-Info.plist:\n   78  		</dict>\n   79  	</dict>\n   80: 	<key>UISupportedInterfaceOrientations</key>\n   81  	<array>\n   82  		<string>UIInterfaceOrientationPortrait</string>\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/AFNetworking/Example/iOS-Info.plist:\n   45  	<key>LSRequiresIPhoneOS</key>\n   46  	<true/>\n   47: 	<key>UISupportedInterfaceOrientations</key>\n   48  	<array>\n   49  		<string>UIInterfaceOrientationPortrait</string>\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/BenchmarkSuite/BenchmarkSuite/BenchmarkSuite-Info.plist:\n   33  		<string>opengles-2</string>\n   34  	</array>\n   35: 	<key>UISupportedInterfaceOrientations</key>\n   36  	<array>\n   37  		<string>UIInterfaceOrientationPortrait</string>\n   ..\n   39  		<string>UIInterfaceOrientationLandscapeRight</string>\n   40  	</array>\n   41: 	<key>UISupportedInterfaceOrientations~ipad</key>\n   42  	<array>\n   43  		<string>UIInterfaceOrientationPortrait</string>\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/ColorObjectTracking/ColorObjectTracking/ColorObjectTracking-Info.plist:\n   33  		<string>armv7</string>\n   34  	</array>\n   35: 	<key>UISupportedInterfaceOrientations</key>\n   36  	<array>\n   37  		<string>UIInterfaceOrientationPortrait</string>\n   ..\n   39  		<string>UIInterfaceOrientationLandscapeRight</string>\n   40  	</array>\n   41: 	<key>UISupportedInterfaceOrientations~ipad</key>\n   42  	<array>\n   43  		<string>UIInterfaceOrientationPortrait</string>\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/CubeExample/CubeExample-Info.plist:\n   31  		<string>armv7</string>\n   32  	</array>\n   33: 	<key>UISupportedInterfaceOrientations</key>\n   34  	<array>\n   35  		<string>UIInterfaceOrientationPortrait</string>\n   ..\n   37  		<string>UIInterfaceOrientationLandscapeRight</string>\n   38  	</array>\n   39: 	<key>UISupportedInterfaceOrientations~ipad</key>\n   40  	<array>\n   41  		<string>UIInterfaceOrientationPortrait</string>\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/FeatureExtractionTest/FeatureExtractionTest/FeatureExtractionTest-Info.plist:\n   31  		<string>armv7</string>\n   32  	</array>\n   33: 	<key>UISupportedInterfaceOrientations</key>\n   34  	<array>\n   35  		<string>UIInterfaceOrientationPortrait</string>\n   ..\n   37  		<string>UIInterfaceOrientationLandscapeRight</string>\n   38  	</array>\n   39: 	<key>UISupportedInterfaceOrientations~ipad</key>\n   40  	<array>\n   41  		<string>UIInterfaceOrientationPortrait</string>\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/FilterShowcase/FilterShowcase/FilterShowcase-Info.plist:\n   29  		<string>armv7</string>\n   30  	</array>\n   31: 	<key>UISupportedInterfaceOrientations</key>\n   32  	<array>\n   33  		<string>UIInterfaceOrientationPortrait</string>\n   ..\n   35  		<string>UIInterfaceOrientationLandscapeRight</string>\n   36  	</array>\n   37: 	<key>UISupportedInterfaceOrientations~ipad</key>\n   38  	<array>\n   39  		<string>UIInterfaceOrientationPortrait</string>\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/MultiViewFilterExample/MultiViewFilterExample/MultiViewFilterExample-Info.plist:\n   31  		<string>armv7</string>\n   32  	</array>\n   33: 	<key>UISupportedInterfaceOrientations</key>\n   34  	<array>\n   35  		<string>UIInterfaceOrientationPortrait</string>\n   ..\n   37  		<string>UIInterfaceOrientationLandscapeRight</string>\n   38  	</array>\n   39: 	<key>UISupportedInterfaceOrientations~ipad</key>\n   40  	<array>\n   41  		<string>UIInterfaceOrientationPortrait</string>\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/RawDataTest/RawDataTest/RawDataTest-Info.plist:\n   29  		<string>armv7</string>\n   30  	</array>\n   31: 	<key>UISupportedInterfaceOrientations</key>\n   32  	<array>\n   33  		<string>UIInterfaceOrientationPortrait</string>\n   ..\n   35  		<string>UIInterfaceOrientationLandscapeRight</string>\n   36  	</array>\n   37: 	<key>UISupportedInterfaceOrientations~ipad</key>\n   38  	<array>\n   39  		<string>UIInterfaceOrientationPortrait</string>\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/SimpleImageFilter/SimpleImageFilter/SimpleImageFilter-Info.plist:\n   33  		<string>opengles-2</string>\n   34  	</array>\n   35: 	<key>UISupportedInterfaceOrientations</key>\n   36  	<array>\n   37  		<string>UIInterfaceOrientationPortrait</string>\n   38  	</array>\n   39: 	<key>UISupportedInterfaceOrientations~ipad</key>\n   40  	<array>\n   41  		<string>UIInterfaceOrientationPortrait</string>\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/SimplePhotoFilter/SimplePhotoFilter/SimplePhotoFilter-Info.plist:\n   29  		<string>armv7</string>\n   30  	</array>\n   31: 	<key>UISupportedInterfaceOrientations</key>\n   32  	<array>\n   33  		<string>UIInterfaceOrientationPortrait</string>\n   ..\n   35  		<string>UIInterfaceOrientationLandscapeRight</string>\n   36  	</array>\n   37: 	<key>UISupportedInterfaceOrientations~ipad</key>\n   38  	<array>\n   39  		<string>UIInterfaceOrientationPortrait</string>\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/SimpleVideoFileFilter/SimpleVideoFileFilter/SimpleVideoFileFilter-Info.plist:\n   33  		<string>armv7</string>\n   34  	</array>\n   35: 	<key>UISupportedInterfaceOrientations</key>\n   36  	<array>\n   37  		<string>UIInterfaceOrientationPortrait</string>\n   ..\n   39  		<string>UIInterfaceOrientationLandscapeRight</string>\n   40  	</array>\n   41: 	<key>UISupportedInterfaceOrientations~ipad</key>\n   42  	<array>\n   43  		<string>UIInterfaceOrientationPortrait</string>\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/SimpleVideoFilter/SimpleVideoFilter/SimpleVideoFilter-Info.plist:\n   33  		<string>armv7</string>\n   34  	</array>\n   35: 	<key>UISupportedInterfaceOrientations</key>\n   36  	<array>\n   37  		<string>UIInterfaceOrientationPortrait</string>\n   ..\n   39  		<string>UIInterfaceOrientationLandscapeRight</string>\n   40  	</array>\n   41: 	<key>UISupportedInterfaceOrientations~ipad</key>\n   42  	<array>\n   43  		<string>UIInterfaceOrientationPortrait</string>\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/MBProgressHUD/Demo/Info.plist:\n   32  	<key>NSMainNibFile</key>\n   33  	<string>MainWindow</string>\n   34: 	<key>UISupportedInterfaceOrientations</key>\n   35  	<array>\n   36  		<string>UIInterfaceOrientationPortrait</string>\n\n/Users/dungbx/Desktop/Luxeys/Latte/Vendor/QuickDialog/sample/quickdialogexample-Info.plist:\n   47  	<key>LSRequiresIPhoneOS</key>\n   48  	<true/>\n   49: 	<key>UISupportedInterfaceOrientations</key>\n   50  	<array>\n   51  		<string>UIInterfaceOrientationPortrait</string>\n   ..\n   54  		<string>UIInterfaceOrientationPortraitUpsideDown</string>\n   55  	</array>\n   56: 	<key>UISupportedInterfaceOrientations~ipad</key>\n   57  	<array>\n   58  		<string>UIInterfaceOrientationPortrait</string>\n\n29 matches across 17 files\n",
+			"settings":
+			{
+				"buffer_size": 7421,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "Resources/Effect/blur.fsh",
+			"settings":
+			{
+				"buffer_size": 4039,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -560,6 +578,11 @@
 	},
 	"file_history":
 	[
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/UINavigationController+autoRotate.h",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Classes/CustomControls/UINavigationController+autoRotate.m",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Latte camera.xcodeproj/project.pbxproj",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Latte camera.xcodeproj/project.xcworkspace/contents.xcworkspacedata",
+		"/Users/dungbx/Desktop/Luxeys/Latte/Latte camera.xcodeproj/xcuserdata/dungbx.xcuserdatad/xcschemes/Latte.xcscheme",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Resources/NIBs/en.lproj/MainStoryboard.storyboard",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Resources/NIBs/ja.lproj/MainStoryboard.strings",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Resources/NIBs/en.lproj/MainStoryboard.strings",
@@ -682,12 +705,7 @@
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImagePinchDistortionFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageTiltShiftFilter.m",
 		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageGaussianSelectiveBlurFilter.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/FilterShowcase/FilterShowcase/CustomFilter.fsh",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageChromaKeyFilter.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageAlphaBlendFilter.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageToneCurveFilter.h",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageToneCurveFilter.m",
-		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/framework/Source/GPUImageGaussianSelectiveBlurFilter.h"
+		"/Users/dungbx/Desktop/Luxeys/Latte/Vendor/GPUImage/examples/FilterShowcase/FilterShowcase/CustomFilter.fsh"
 	],
 	"find":
 	{
@@ -695,7 +713,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 93.0,
+		"height": 0.0,
 		"where_history":
 		[
 			"*.*",
@@ -763,6 +781,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"supportedInterfaceOrientations",
+			"Latte.entitlements",
+			"Latte Camera",
+			".temp_caseinsensitive_rename",
 			"temp_caseinsensitive_rename",
 			"plain",
 			"dismissViewControllerAnimated",
@@ -886,10 +908,6 @@
 			"picDOF",
 			"orien",
 			"threshold",
-			"dbsize",
-			"Dbsize",
-			"dbsize",
-			"Dbsize",
 			"dbsize"
 		],
 		"highlight": true,
@@ -898,6 +916,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			"Latte camera",
+			"",
 			"TFLog",
 			"trans",
 			"gettext(",
@@ -916,8 +936,377 @@
 	"groups":
 	[
 		{
+			"selected": 1,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"settings":
+					{
+						"buffer_size": 7421,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										260,
+										290
+									],
+									[
+										446,
+										476
+									],
+									[
+										657,
+										687
+									],
+									[
+										916,
+										946
+									],
+									[
+										1213,
+										1243
+									],
+									[
+										1424,
+										1454
+									],
+									[
+										1736,
+										1766
+									],
+									[
+										1947,
+										1977
+									],
+									[
+										2223,
+										2253
+									],
+									[
+										2434,
+										2464
+									],
+									[
+										2752,
+										2782
+									],
+									[
+										2963,
+										2993
+									],
+									[
+										3260,
+										3290
+									],
+									[
+										3471,
+										3501
+									],
+									[
+										3792,
+										3822
+									],
+									[
+										4003,
+										4033
+									],
+									[
+										4291,
+										4321
+									],
+									[
+										4502,
+										4532
+									],
+									[
+										4813,
+										4843
+									],
+									[
+										4955,
+										4985
+									],
+									[
+										5261,
+										5291
+									],
+									[
+										5472,
+										5502
+									],
+									[
+										5790,
+										5820
+									],
+									[
+										6001,
+										6031
+									],
+									[
+										6307,
+										6337
+									],
+									[
+										6518,
+										6548
+									],
+									[
+										6791,
+										6821
+									],
+									[
+										7063,
+										7093
+									],
+									[
+										7278,
+										7308
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								281,
+								281
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"detect_indentation": false,
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"output_tag": 1,
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Resources/Effect/blur.fsh",
+					"settings":
+					{
+						"buffer_size": 4039,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3551,
+								3551
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E111",
+								"E221",
+								"E261",
+								"W293",
+								"E501",
+								"E401"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/OpenGL Shading Language (GLSL)/GLSL.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1333.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -970,6 +1359,10 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"blur",
+				"Resources/Effect/blur.fsh"
+			],
 			[
 				"main",
 				"Resources/NIBs/en.lproj/MainStoryboard.storyboard"
@@ -1129,10 +1522,6 @@
 			[
 				"lattes",
 				"Latte/Resources/en.lproj/lattesetting.json"
-			],
-			[
-				"blur",
-				"Resources/Effect/blur.fsh"
 			],
 			[
 				"gpuimagetw",
@@ -1497,6 +1886,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 262.0,
+	"side_bar_width": 410.0,
 	"status_bar_visible": true
 }

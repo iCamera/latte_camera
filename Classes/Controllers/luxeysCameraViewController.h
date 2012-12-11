@@ -107,7 +107,7 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet LXDrawView *viewDraw;
 @property (strong, nonatomic) IBOutlet UIButton *buttonChangeLens;
 
-@property (strong, nonatomic) IBOutlet UIButton *buttonBackgroundNatual;
+@property (strong, nonatomic) IBOutlet UISwitch *buttonBackgroundNatual;
 @property (strong, nonatomic) IBOutlet UIButton *buttonBlurWeak;
 @property (strong, nonatomic) IBOutlet UIButton *buttonBlurNormal;
 @property (strong, nonatomic) IBOutlet UIButton *buttonBlurStrong;
@@ -133,9 +133,9 @@ typedef enum {
 - (IBAction)panTarget:(UIPanGestureRecognizer *)sender;
 - (IBAction)setTimer:(id)sender;
 - (IBAction)setMask:(UIButton*)sender;
-- (IBAction)toggleMaskNatual:(UIButton*)sender;
+- (IBAction)toggleMaskNatual:(UISwitch*)sender;
 - (IBAction)touchCloseHelp:(id)sender;
 - (IBAction)touchOpenHelp:(id)sender;
-- (IBAction)toggleGain:(UIButton*)sender;
+- (IBAction)toggleGain:(UISwitch*)sender;
 - (IBAction)changePen:(UISlider *)sender;
 @end

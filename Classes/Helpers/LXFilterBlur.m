@@ -145,11 +145,11 @@
     CGRect screen = [[UIScreen mainScreen] bounds];
     if (screen.size.height < 568.0) //not iphone 5
     {
-        [self setInteger:2 forUniform:ringsUniform program:filterProgram];
-        [self setInteger:3 forUniform:samplesUniform program:filterProgram];
+        [self setInteger:1 forUniform:ringsUniform program:filterProgram];
+        [self setInteger:6 forUniform:samplesUniform program:filterProgram];
     } else {
-        [self setInteger:3 forUniform:ringsUniform program:filterProgram];
-        [self setInteger:4 forUniform:samplesUniform program:filterProgram];
+        [self setInteger:2 forUniform:ringsUniform program:filterProgram];
+        [self setInteger:12 forUniform:samplesUniform program:filterProgram];
     }
     
     //    [self setAutofocus:true];
