@@ -5,10 +5,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1930"/>
     </dependencies>
     <scenes>
-        <!--Luxeys Tab Bar View Controller-->
+        <!--Main Tab View Controller-->
         <scene sceneID="faj-gH-Wwd">
             <objects>
-                <tabBarController storyboardIdentifier="MainTab" definesPresentationContext="YES" id="Ydg-c4-h7a" customClass="luxeysTabBarViewController" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="MainTab" definesPresentationContext="YES" id="Ydg-c4-h7a" customClass="LXMainTabViewController" sceneMemberID="viewController">
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="Oj2-Jc-Hxy">
@@ -24,17 +24,16 @@
                         <segue destination="GvO-78-dmB" kind="relationship" relationship="viewControllers" id="f0q-cD-pbC"/>
                         <segue destination="R8R-B1-oGH" kind="relationship" relationship="viewControllers" id="vIp-5T-rnQ"/>
                         <segue destination="xVP-9E-OKe" kind="relationship" relationship="viewControllers" id="bVj-t8-fGa"/>
-                        <segue destination="G7c-9N-bed" kind="custom" identifier="Dummy" id="aS7-Df-FCt"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ni8-4s-O96" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1705" y="-9"/>
         </scene>
-        <!--Luxeys Reveal View Controller-->
+        <!--Reveal View Controller-->
         <scene sceneID="TZl-V3-BfZ">
             <objects>
-                <viewController storyboardIdentifier="MainSide" id="aiz-4B-X8t" customClass="luxeysRevealViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainSide" id="aiz-4B-X8t" customClass="LXRevealViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="exe-da-CTG">
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -54,7 +53,7 @@
                 <navigationController definesPresentationContext="YES" id="xio-iO-9Qi" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="ランキング" image="icon_rank.png" id="FCv-Eh-u4w"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="e2T-D0-L2O" customClass="luxeysNavBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="e2T-D0-L2O" customClass="LXNavBar">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -65,10 +64,10 @@
             </objects>
             <point key="canvasLocation" x="-1170" y="628"/>
         </scene>
-        <!--Luxeys Ranking View Controller - Latte-->
+        <!--Ranking View Controller - Latte-->
         <scene sceneID="7Ed-0H-6UI">
             <objects>
-                <tableViewController title="Latte" id="HL7-KM-o46" customClass="luxeysRankingViewController" sceneMemberID="viewController">
+                <tableViewController title="Latte" id="HL7-KM-o46" customClass="LXRankingViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="vfX-a7-nyP">
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -136,7 +135,7 @@
                                 </imageView>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="RANKING" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="ows-0i-Jyf">
                                     <rect key="frame" x="33" y="8" width="70" height="21"/>
-                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="18"/>
+                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="18"/>
                                     <color key="textColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -155,7 +154,7 @@
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="First" rowHeight="75" id="UqI-Pl-YSe" customClass="luxeysCellRankLv1">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="First" rowHeight="75" id="UqI-Pl-YSe" customClass="LXCellRankLv1">
                                 <rect key="frame" x="0.0" y="92" width="320" height="75"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -199,7 +198,7 @@
                                     <outlet property="buttonPic1" destination="Aii-ag-xHv" id="13M-0a-8It"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="Second" rowHeight="104" id="xvo-FL-hZi" customClass="luxeysCellRankLv2">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="Second" rowHeight="104" id="xvo-FL-hZi" customClass="LXCellRankLv2">
                                 <rect key="frame" x="0.0" y="167" width="320" height="104"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -297,7 +296,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Latte" id="73I-gl-Maa">
                         <barButtonItem key="leftBarButtonItem" style="done" id="KMg-TU-lOA">
-                            <button key="customView" hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="bQ7-9R-wdC" customClass="luxeysButtonBrown30">
+                            <button key="customView" hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="bQ7-9R-wdC" customClass="LXButtonBrown30">
                                 <rect key="frame" x="5" y="7" width="40" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -318,17 +317,16 @@
                         <outlet property="buttonWeekly" destination="mt2-aX-3UQ" id="hAC-S9-AHg"/>
                         <outlet property="loadIndicator" destination="9Bq-Yq-rnc" id="XU9-cy-VSr"/>
                         <outlet property="viewTab" destination="qhJ-TB-csr" id="ktt-CA-fl7"/>
-                        <segue destination="dih-F0-8jN" kind="push" identifier="PictureDetail" id="XsL-yG-6rG"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6kp-3V-gqj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-687" y="628"/>
         </scene>
-        <!--Luxeys Fav2 View Controller - Latte-->
+        <!--Liked View Controller - Latte-->
         <scene sceneID="Jtx-sC-pwm">
             <objects>
-                <tableViewController id="jBg-a2-N7Q" customClass="luxeysFav2ViewController" sceneMemberID="viewController">
+                <tableViewController id="jBg-a2-N7Q" customClass="LXLikedViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="CUI-Vc-8pj">
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -351,7 +349,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Latte" id="xvH-oV-sWe">
                         <barButtonItem key="leftBarButtonItem" style="done" id="uni-OM-TCz">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="8D9-qZ-pjc" customClass="luxeysButtonBrown30">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="8D9-qZ-pjc" customClass="LXButtonBrown30">
                                 <rect key="frame" x="5" y="7" width="40" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -367,7 +365,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="buttonNavRight" destination="8D9-qZ-pjc" id="V6R-sJ-CDy"/>
-                        <segue destination="dih-F0-8jN" kind="push" identifier="PictureDetail" id="gjc-UY-Qgh"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ixa-iD-05d" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -394,7 +391,7 @@
             <objects>
                 <navigationController definesPresentationContext="YES" id="R8R-B1-oGH" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" enabled="NO" title="お気に入り" image="icon_favorites.png" id="EL7-vA-SxW"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="bzG-xf-D2f" customClass="luxeysNavBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="bzG-xf-D2f" customClass="LXNavBar">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -405,10 +402,10 @@
             </objects>
             <point key="canvasLocation" x="-692" y="1304"/>
         </scene>
-        <!--Luxeys Mypage View Controller - Latte-->
+        <!--My Page View Controller - Latte-->
         <scene sceneID="1GG-um-JKQ">
             <objects>
-                <tableViewController id="Ftc-ZZ-Upd" customClass="luxeysMypageViewController" sceneMemberID="viewController">
+                <tableViewController id="Ftc-ZZ-Upd" customClass="LXMyPageViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" directionalLockEnabled="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="tGY-T3-2g4">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -657,7 +654,7 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="Friend" rowHeight="42" id="lG4-Yr-yla" customClass="luxeysCellFriend">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="Friend" rowHeight="42" id="lG4-Yr-yla" customClass="LXCellFriend">
                                 <rect key="frame" x="0.0" y="140" width="320" height="42"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -700,7 +697,7 @@
                                     <outlet property="labelName" destination="r3U-9j-Apo" id="xls-5o-kWL"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="Following" rowHeight="42" id="joC-Rt-m6G" customClass="luxeysCellFriend">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="Following" rowHeight="42" id="joC-Rt-m6G" customClass="LXCellFriend">
                                 <rect key="frame" x="0.0" y="182" width="320" height="42"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -743,7 +740,7 @@
                                     <outlet property="labelName" destination="Spf-0h-bAF" id="vCH-bf-qfh"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Multi" rowHeight="250" id="R1Z-3b-wp1" customClass="luxeysCellWelcomeMulti">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Multi" rowHeight="250" id="R1Z-3b-wp1" customClass="LXCellTimelineMulti">
                                 <rect key="frame" x="0.0" y="224" width="320" height="250"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -808,7 +805,7 @@
                                     <outlet property="scrollPic" destination="vO6-5w-ESA" id="abt-bb-dtp"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Single" rowHeight="248" id="eDN-OG-rBE" customClass="luxeysCellWelcomeSingle">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Single" rowHeight="248" id="eDN-OG-rBE" customClass="LXCellTimelineSingle">
                                 <rect key="frame" x="0.0" y="474" width="320" height="248"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -839,7 +836,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <prototypes>
-                                                        <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Comment" rowHeight="36" id="fIO-9D-X0C" customClass="luxeysTableViewCellComment">
+                                                        <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Comment" rowHeight="36" id="fIO-9D-X0C" customClass="LXCellComment">
                                                             <rect key="frame" x="0.0" y="25" width="320" height="36"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -1089,7 +1086,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Latte" id="IuJ-4O-GVS">
                         <barButtonItem key="leftBarButtonItem" style="done" id="Uio-Sc-0he">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="xNg-gJ-psg" customClass="luxeysButtonBrown30">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="xNg-gJ-psg" customClass="LXButtonBrown30">
                                 <rect key="frame" x="5" y="7" width="40" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -1103,7 +1100,7 @@
                             </button>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="done" id="sOV-Xw-TnK">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="eNf-ic-1I0" customClass="luxeysButtonBrown30">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="eNf-ic-1I0" customClass="LXButtonBrown30">
                                 <rect key="frame" x="275" y="7" width="40" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -1139,21 +1136,17 @@
                         <outlet property="labelTitleVote" destination="38p-uI-1e8" id="nrx-uJ-8bw"/>
                         <outlet property="loadIndicator" destination="30b-0d-qAV" id="sO7-q7-V6h"/>
                         <outlet property="viewStats" destination="7xi-04-y1U" id="4sj-kx-krX"/>
-                        <segue destination="dih-F0-8jN" kind="push" identifier="PictureDetail" id="dsB-7i-kX9"/>
-                        <segue destination="Js6-jp-wI3" kind="push" identifier="UserProfile" id="u0d-QM-VsA"/>
                         <segue destination="VlD-nX-p2P" kind="push" identifier="Comment" id="ut7-6g-swq"/>
-                        <segue destination="XyX-35-9as" kind="push" identifier="PictureMap" id="1tI-wB-IuL"/>
-                        <segue destination="TeH-Dj-TdG" kind="push" identifier="PictureInfo" id="MlQ-2b-c2u"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HVc-Wm-P1o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-687" y="-9"/>
         </scene>
-        <!--Luxeys Pic Comment View Controller - Latte-->
+        <!--Pic Comment View Controller - Latte-->
         <scene sceneID="Z4c-29-9RW">
             <objects>
-                <viewController storyboardIdentifier="TimelineComment" id="VlD-nX-p2P" customClass="luxeysPicCommentViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PictureComment" id="VlD-nX-p2P" customClass="LXPicCommentViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gWF-gL-tD2">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1174,7 +1167,7 @@
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="Comment" rowHeight="42" id="xhY-3t-3D8" customClass="luxeysTableViewCellComment">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="Comment" rowHeight="42" id="xhY-3t-3D8" customClass="LXCellComment">
                                         <rect key="frame" x="0.0" y="22" width="320" height="42"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -1182,7 +1175,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Author" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="BWb-uB-Xjb">
-                                                    <rect key="frame" x="42" y="7" width="134" height="12"/>
+                                                    <rect key="frame" x="42" y="7" width="134" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -1210,7 +1203,7 @@
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="今" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="J7S-Bj-J08">
                                                     <rect key="frame" x="240" y="6" width="74" height="11"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="11"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="11"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
@@ -1237,7 +1230,7 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bg_comment.png" id="Rct-1e-6kU">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="SN9-AT-jna" customClass="luxeysButtonBrown30">
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="SN9-AT-jna" customClass="LXButtonBrown30">
                                         <rect key="frame" x="265" y="8" width="50" height="30"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
                                         <size key="titleShadowOffset" width="0.0" height="1"/>
@@ -1249,7 +1242,6 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="touchSend:" destination="dih-F0-8jN" eventType="touchUpInside" id="CVy-gx-OZT"/>
                                             <action selector="touchSubmit:" destination="VlD-nX-p2P" eventType="touchUpInside" id="Qcm-ZT-jyg"/>
                                         </connections>
                                     </button>
@@ -1272,7 +1264,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="39Q-TF-m3H">
-                                        <rect key="frame" x="42" y="9" width="184" height="14"/>
+                                        <rect key="frame" x="42" y="8" width="184" height="14"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -1294,7 +1286,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Latte" id="K6Q-t0-kEE">
                         <barButtonItem key="leftBarButtonItem" id="jnm-CM-ARp">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="5IY-zi-5os" customClass="luxeysButtonBack">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="5IY-zi-5os" customClass="LXButtonBack">
                                 <rect key="frame" x="5" y="7" width="60" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
@@ -1323,7 +1315,6 @@
                         <outlet property="viewComment" destination="re1-Ag-DWI" id="SS1-f5-0iM"/>
                         <outlet property="viewHeader" destination="Q6e-YZ-Idn" id="hML-E4-Gop"/>
                         <outlet property="viewImage" destination="ob7-hz-DiC" id="Bwt-I7-gtU"/>
-                        <segue destination="Js6-jp-wI3" kind="push" identifier="UserProfile" id="VT2-A6-qBc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O3A-ep-MJ3" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1335,10 +1326,10 @@
             </objects>
             <point key="canvasLocation" x="-189" y="-9"/>
         </scene>
-        <!--Luxeys Login View Controller-->
+        <!--Login View Controller-->
         <scene sceneID="e8X-2u-VGC">
             <objects>
-                <viewController storyboardIdentifier="Login" id="fnp-zd-W6d" customClass="luxeysLoginViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Login" id="fnp-zd-W6d" customClass="LXLoginViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="K0E-g3-ylR">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1356,7 +1347,7 @@
                                 <rect key="frame" x="6" y="6" width="308" height="180"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="jyt-8I-CaM" customClass="luxeysButtonOrange">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="jyt-8I-CaM" customClass="LXButtonOrange">
                                 <rect key="frame" x="85" y="226" width="150" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
@@ -1371,7 +1362,7 @@
                                     <segue destination="uLo-di-fGC" kind="push" id="zE4-YJ-qFs"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="cYG-fA-UXC" customClass="luxeysButtonNormal">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="cYG-fA-UXC" customClass="LXButtonNormal">
                                 <rect key="frame" x="85" y="140" width="150" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
@@ -1401,13 +1392,13 @@
                                     <action selector="touchForgot:" destination="fnp-zd-W6d" eventType="touchUpInside" id="oyq-iJ-VaE"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="メールアドレス" minimumFontSize="17" id="U2D-jj-OWH" customClass="luxeysTextField">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="メールアドレス" minimumFontSize="17" id="U2D-jj-OWH" customClass="LXTextField">
                                 <rect key="frame" x="20" y="20" width="280" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="パースワード" minimumFontSize="17" id="whV-s0-8bD" customClass="luxeysTextField">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="パースワード" minimumFontSize="17" id="whV-s0-8bD" customClass="LXTextField">
                                 <rect key="frame" x="20" y="85" width="280" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
@@ -1452,7 +1443,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="qBd-wu-EwS">
                         <barButtonItem key="leftBarButtonItem" style="done" id="yqM-nS-yU9">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="gmS-g4-45P" customClass="luxeysButtonBack">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="gmS-g4-45P" customClass="LXButtonBack">
                                 <rect key="frame" x="5" y="7" width="60" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
@@ -1484,12 +1475,12 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-189" y="-658"/>
+            <point key="canvasLocation" x="-181" y="-736"/>
         </scene>
-        <!--Luxeys Register View Controller - Latte-->
+        <!--Register View Controller - Latte-->
         <scene sceneID="Ja4-2Q-fpA">
             <objects>
-                <tableViewController id="uLo-di-fGC" customClass="luxeysRegisterViewController" sceneMemberID="viewController">
+                <tableViewController id="uLo-di-fGC" customClass="LXRegisterViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="JZf-sp-tr1">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1499,7 +1490,7 @@
                             <rect key="frame" x="0.0" y="239" width="320" height="199"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="edx-rj-ErD" customClass="luxeysButtonOrange">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="edx-rj-ErD" customClass="LXButtonOrange">
                                     <rect key="frame" x="85" y="47" width="150" height="40"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
@@ -1600,7 +1591,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Latte" id="rIZ-9x-0aW">
                         <barButtonItem key="leftBarButtonItem" style="done" id="2WN-21-ZIR">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="nWb-7o-EMj" customClass="luxeysButtonBack">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="nWb-7o-EMj" customClass="LXButtonBack">
                                 <rect key="frame" x="5" y="7" width="60" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
@@ -1627,7 +1618,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cqg-rd-G58" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="200" y="-658"/>
+            <point key="canvasLocation" x="256" y="-650"/>
         </scene>
         <!--Navigation Controller - マイページ-->
         <scene sceneID="w3S-Mf-elA">
@@ -1635,7 +1626,7 @@
                 <navigationController definesPresentationContext="YES" id="xVP-9E-OKe" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" tag="5" enabled="NO" title="マイページ" image="icon_mypage.png" id="SW9-u7-WQa"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="TbP-bX-20h" customClass="luxeysNavBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="TbP-bX-20h" customClass="LXNavBar">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -1646,10 +1637,10 @@
             </objects>
             <point key="canvasLocation" x="-1170" y="-9"/>
         </scene>
-        <!--Luxeys Welcome View Controller - Latte-->
+        <!--Welcome View Controller - Latte-->
         <scene sceneID="rN8-3p-Ghn">
             <objects>
-                <viewController id="hGM-oV-eEH" customClass="luxeysWelcomeViewController" sceneMemberID="viewController">
+                <viewController id="hGM-oV-eEH" customClass="LXWelcomeViewController" sceneMemberID="viewController">
                     <view key="view" autoresizesSubviews="NO" contentMode="scaleToFill" id="fmg-pR-MmO">
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
@@ -1712,7 +1703,7 @@
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Multi" rowHeight="245" id="QWp-M4-P7E" customClass="luxeysCellWelcomeMulti">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Multi" rowHeight="245" id="QWp-M4-P7E" customClass="LXCellTimelineMulti">
                                         <rect key="frame" x="0.0" y="72" width="320" height="245"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -1772,7 +1763,7 @@
                                             <outlet property="scrollPic" destination="1Qe-hU-i2k" id="L5r-xr-J9o"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Single" rowHeight="90" id="K9y-re-eOf" customClass="luxeysCellWelcomeSingle">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Single" rowHeight="90" id="K9y-re-eOf" customClass="LXCellTimelineSingle">
                                         <rect key="frame" x="0.0" y="317" width="320" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -1918,7 +1909,7 @@
                                         <rect key="frame" x="10" y="85" width="110" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="14"/>
-                                        <state key="normal" title="会員登録（無料）" backgroundImage="bt_help.png">
+                                        <state key="normal" title="会員登録" backgroundImage="bt_help.png">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -1937,7 +1928,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Latte" id="JFa-oO-Hea">
                         <barButtonItem key="leftBarButtonItem" style="done" id="W1J-Mn-nL5">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="fcg-bn-6IT" customClass="luxeysButtonBrown30">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="fcg-bn-6IT" customClass="LXButtonBrown30">
                                 <rect key="frame" x="5" y="7" width="40" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -1951,7 +1942,7 @@
                             </button>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="done" id="ZFl-RG-FR3">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="JF1-gF-giP" customClass="luxeysButtonBrown30">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="JF1-gF-giP" customClass="LXButtonBrown30">
                                 <rect key="frame" x="275" y="7" width="40" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -1975,8 +1966,6 @@
                         <outlet property="viewBack" destination="DQK-Eh-4Uf" id="SW9-42-teV"/>
                         <outlet property="viewHeader" destination="Aaf-Kr-Lyh" id="YdM-mV-dHl"/>
                         <outlet property="viewLogin" destination="0Jd-Jw-FGQ" id="ezJ-y3-l4N"/>
-                        <segue destination="dih-F0-8jN" kind="push" identifier="PictureDetail" id="b5W-W7-HGr"/>
-                        <segue destination="Js6-jp-wI3" kind="push" identifier="UserDetail" id="UF9-un-0WO"/>
                         <segue destination="uLo-di-fGC" kind="push" identifier="Register" id="4NK-LT-yMU"/>
                         <segue destination="fnp-zd-W6d" kind="push" identifier="Login" id="hqV-M4-WFN"/>
                     </connections>
@@ -1985,10 +1974,10 @@
             </objects>
             <point key="canvasLocation" x="-692" y="-658"/>
         </scene>
-        <!--Luxeys Right Side View Controller-->
+        <!--Notify Side View Controller-->
         <scene sceneID="wne-oB-jj1">
             <objects>
-                <viewController storyboardIdentifier="RightSide" wantsFullScreenLayout="YES" id="G7c-9N-bed" customClass="luxeysRightSideViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RightSide" wantsFullScreenLayout="YES" id="G7c-9N-bed" customClass="LXNotifySideViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7h8-e5-QW1">
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2010,11 +1999,11 @@
                                 <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                 <color key="separatorColor" red="0.73725491759999995" green="0.72156864399999998" blue="0.66274511810000003" alpha="1" colorSpace="deviceRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Notify" rowHeight="40" id="CAs-Wv-AwP" customClass="luxeysCellNotify">
-                                        <rect key="frame" x="0.0" y="22" width="260" height="40"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Notify" rowHeight="60" id="CAs-Wv-AwP" customClass="LXCellNotify">
+                                        <rect key="frame" x="0.0" y="22" width="260" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="260" height="39"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="260" height="59"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="user.gif" id="V9v-0a-0yE">
@@ -2022,9 +2011,16 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qWd-vy-LIx">
-                                                    <rect key="frame" x="42" y="8" width="180" height="27"/>
+                                                    <rect key="frame" x="42" y="6" width="180" height="33"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="11"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Today" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Zy9-WJ-fzE">
+                                                    <rect key="frame" x="42" y="39" width="60" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="10"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
@@ -2032,12 +2028,13 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <connections>
+                                            <outlet property="labelDate" destination="Zy9-WJ-fzE" id="eMB-Yb-eku"/>
                                             <outlet property="labelNotify" destination="qWd-vy-LIx" id="Saf-aa-jQn"/>
                                             <outlet property="viewImage" destination="V9v-0a-0yE" id="jBt-B8-XJP"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Request" rowHeight="40" id="JEe-a3-2qn" customClass="luxeysCellFriendRequest">
-                                        <rect key="frame" x="0.0" y="62" width="260" height="40"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Request" rowHeight="40" id="JEe-a3-2qn" customClass="LXCellFriendRequest">
+                                        <rect key="frame" x="0.0" y="82" width="260" height="40"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="260" height="39"/>
@@ -2092,8 +2089,8 @@
                                             <outlet property="userName" destination="Tl7-Om-vUm" id="Q4q-Ag-DmJ"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Ignore" rowHeight="40" id="DBS-Fj-P6b" customClass="luxeysCellFriendRequest">
-                                        <rect key="frame" x="0.0" y="102" width="260" height="40"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Ignore" rowHeight="40" id="DBS-Fj-P6b" customClass="LXCellFriendRequest">
+                                        <rect key="frame" x="0.0" y="122" width="260" height="40"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="260" height="39"/>
@@ -2163,7 +2160,7 @@
                 <navigationController storyboardIdentifier="NavigationTop" definesPresentationContext="YES" id="eyD-El-Dp8" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="TOP" image="icon_home.png" id="oj4-fP-8Qc"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yi1-gW-lHf" customClass="luxeysNavBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yi1-gW-lHf" customClass="LXNavBar">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -2174,202 +2171,204 @@
             </objects>
             <point key="canvasLocation" x="-1176" y="-658"/>
         </scene>
-        <!--Luxeys Pic Detail View Controller - Latte-->
-        <scene sceneID="oil-x3-j59">
+        <!--Pic Detail View Controller - Latte-->
+        <scene sceneID="IyG-M1-YM8">
             <objects>
-                <viewController storyboardIdentifier="Picture" id="dih-F0-8jN" customClass="luxeysPicDetailViewController" sceneMemberID="viewController">
-                    <view key="view" autoresizesSubviews="NO" contentMode="scaleToFill" id="8rS-1c-XA7">
+                <viewController storyboardIdentifier="PictureDetail" id="XIi-oe-W48" customClass="LXPicDetailViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="MD6-7E-fO4">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView autoresizesSubviews="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" canCancelContentTouches="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="82n-Q0-oJK">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="371"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <tableView autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" canCancelContentTouches="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="82n-Q0-oJK">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                 <gestureRecognizers/>
                                 <color key="separatorColor" red="0.73725491759999995" green="0.72156864399999998" blue="0.66274511810000003" alpha="1" colorSpace="deviceRGB"/>
-                                <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="Picture" rowHeight="173" id="C8U-Ix-cbr" customClass="luxeysTableViewCellPicture">
-                                        <rect key="frame" x="0.0" y="22" width="320" height="173"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="172"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="d8f-3h-05p">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" id="aY0-AH-DG6" customClass="LXSubLayerView">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="174"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="backgroundColor" red="0.90588235289999997" green="0.8980392157" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        </view>
+                                        <view contentMode="scaleToFill" id="2gB-we-Nz1" customClass="LXSubLayerView">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="134"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" id="aY0-AH-DG6" customClass="LXSubLayerView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="166"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="backgroundColor" red="0.90588235289999997" green="0.8980392157" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
-                                                </view>
-                                                <view contentMode="scaleToFill" id="2gB-we-Nz1">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="129"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bg_views.png" id="1v1-9Q-XrG">
-                                                            <rect key="frame" x="255" y="6" width="65" height="30"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        </imageView>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="author" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="8iH-Me-xCj">
-                                                            <rect key="frame" x="42" y="23" width="164" height="14"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
-                                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="タイトルなし" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="jNB-Kj-Lzh">
-                                                            <rect key="frame" x="42" y="8" width="164" height="14"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
-                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="Orp-KT-sEr">
-                                                            <rect key="frame" x="6" y="42" width="308" height="85"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                        </imageView>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="yXe-Zy-Oup">
-                                                            <rect key="frame" x="6" y="6" width="30" height="30"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                            <state key="normal" backgroundImage="user.gif">
-                                                                <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                            <state key="highlighted">
-                                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                        </button>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="xxx前" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="X2R-qY-3XW">
-                                                            <rect key="frame" x="183" y="23" width="64" height="14"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
-                                                            <color key="textColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="dpl-AL-iFw">
-                                                            <rect key="frame" x="265" y="9" width="45" height="15"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="14"/>
-                                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <nil key="highlightedColor"/>
-                                                            <color key="shadowColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                            <size key="shadowOffset" width="0.0" height="1"/>
-                                                        </label>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="views" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="KlQ-qL-JOY">
-                                                            <rect key="frame" x="265" y="17" width="45" height="19"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="11"/>
-                                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <nil key="highlightedColor"/>
-                                                            <color key="shadowColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                            <size key="shadowOffset" width="0.0" height="1"/>
-                                                        </label>
-                                                    </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                                </view>
-                                                <view contentMode="scaleToFill" id="Xr2-ka-fEZ">
-                                                    <rect key="frame" x="0.0" y="135" width="320" height="25"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="VUc-Si-9QX">
-                                                            <rect key="frame" x="6" y="0.0" width="75" height="25"/>
-                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="12"/>
-                                                            <inset key="contentEdgeInsets" minX="14" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                            <size key="titleShadowOffset" width="0.0" height="1"/>
-                                                            <state key="normal" title="いいね" backgroundImage="bt_iine.png">
-                                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                            </state>
-                                                            <state key="disabled" backgroundImage="bt_iine_on.png"/>
-                                                            <state key="highlighted" backgroundImage="bt_iine_on.png">
-                                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                        </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="MNL-VH-sns">
-                                                            <rect key="frame" x="126" y="0.0" width="75" height="25"/>
-                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="12"/>
-                                                            <inset key="contentEdgeInsets" minX="14" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                            <size key="titleShadowOffset" width="0.0" height="1"/>
-                                                            <state key="normal" title="コメント" backgroundImage="bt_comment.png">
-                                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                            </state>
-                                                            <state key="disabled" backgroundImage="bt_comment_on.png"/>
-                                                            <state key="highlighted" backgroundImage="bt_comment_on.png">
-                                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                        </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="7IO-IG-ZzC">
-                                                            <rect key="frame" x="289" y="0.0" width="25" height="25"/>
-                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                            <state key="normal" image="bt_info.png">
-                                                                <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                            <state key="highlighted" image="bt_info_on.png">
-                                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                        </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="suA-Vy-bNo">
-                                                            <rect key="frame" x="259" y="0.0" width="25" height="25"/>
-                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                            <state key="normal" image="bt_map.png">
-                                                                <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                            <state key="highlighted" image="bt_map_on.png">
-                                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                        </button>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bg_sum.png" id="gWM-uD-lDW">
-                                                            <rect key="frame" x="204" y="0.0" width="30" height="25"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        </imageView>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="ksP-PV-G2a">
-                                                            <rect key="frame" x="209" y="0.0" width="25" height="25"/>
-                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="12"/>
-                                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <nil key="highlightedColor"/>
-                                                            <color key="shadowColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                            <size key="shadowOffset" width="0.0" height="1"/>
-                                                        </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bg_sum.png" id="KYE-AN-SlB">
-                                                            <rect key="frame" x="84" y="0.0" width="30" height="25"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        </imageView>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="KZc-53-tYT">
-                                                            <rect key="frame" x="89" y="0.0" width="25" height="25"/>
-                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="12"/>
-                                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <nil key="highlightedColor"/>
-                                                            <color key="shadowColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                            <size key="shadowOffset" width="0.0" height="1"/>
-                                                        </label>
-                                                    </subviews>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                </view>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bg_views.png" id="1v1-9Q-XrG">
+                                                    <rect key="frame" x="255" y="6" width="65" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="author" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="8iH-Me-xCj">
+                                                    <rect key="frame" x="42" y="23" width="164" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="タイトルなし" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="jNB-Kj-Lzh">
+                                                    <rect key="frame" x="42" y="8" width="164" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="Orp-KT-sEr">
+                                                    <rect key="frame" x="6" y="42" width="308" height="85"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="yXe-Zy-Oup">
+                                                    <rect key="frame" x="6" y="6" width="30" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <state key="normal" backgroundImage="user.gif">
+                                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="showUser:" destination="XIi-oe-W48" eventType="touchUpInside" id="IDo-Td-cfF"/>
+                                                    </connections>
+                                                </button>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="xxx前" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="X2R-qY-3XW">
+                                                    <rect key="frame" x="183" y="23" width="64" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
+                                                    <color key="textColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="dpl-AL-iFw">
+                                                    <rect key="frame" x="265" y="9" width="45" height="15"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="14"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <color key="shadowColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                                    <size key="shadowOffset" width="0.0" height="1"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="views" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="KlQ-qL-JOY">
+                                                    <rect key="frame" x="265" y="17" width="45" height="19"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="11"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <color key="shadowColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                                    <size key="shadowOffset" width="0.0" height="1"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                        </view>
+                                        <view contentMode="scaleToFill" id="Xr2-ka-fEZ">
+                                            <rect key="frame" x="0.0" y="142" width="320" height="25"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="VUc-Si-9QX">
+                                                    <rect key="frame" x="6" y="0.0" width="75" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="12"/>
+                                                    <inset key="contentEdgeInsets" minX="14" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                    <size key="titleShadowOffset" width="0.0" height="1"/>
+                                                    <state key="normal" title="いいね" backgroundImage="bt_iine.png">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                                    </state>
+                                                    <state key="disabled" backgroundImage="bt_iine_on.png"/>
+                                                    <state key="highlighted" backgroundImage="bt_iine_on.png">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="touchLike:" destination="XIi-oe-W48" eventType="touchUpInside" id="do1-V7-FDb"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="MNL-VH-sns">
+                                                    <rect key="frame" x="126" y="0.0" width="75" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="12"/>
+                                                    <inset key="contentEdgeInsets" minX="14" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                    <size key="titleShadowOffset" width="0.0" height="1"/>
+                                                    <state key="normal" title="コメント" backgroundImage="bt_comment.png">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                                    </state>
+                                                    <state key="disabled" backgroundImage="bt_comment_on.png"/>
+                                                    <state key="highlighted" backgroundImage="bt_comment_on.png">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="showKeyboard:" destination="XIi-oe-W48" eventType="touchUpInside" id="DiI-DQ-ueL"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="7IO-IG-ZzC">
+                                                    <rect key="frame" x="289" y="0.0" width="25" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <state key="normal" image="bt_info.png">
+                                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted" image="bt_info_on.png">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="showInfo:" destination="XIi-oe-W48" eventType="touchUpInside" id="bZv-aF-l17"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="suA-Vy-bNo">
+                                                    <rect key="frame" x="259" y="0.0" width="25" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <state key="normal" image="bt_map.png">
+                                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted" image="bt_map_on.png">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="showMap:" destination="XIi-oe-W48" eventType="touchUpInside" id="UEb-fn-CJb"/>
+                                                    </connections>
+                                                </button>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bg_sum.png" id="gWM-uD-lDW">
+                                                    <rect key="frame" x="204" y="0.0" width="30" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="ksP-PV-G2a">
+                                                    <rect key="frame" x="209" y="0.0" width="25" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="12"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <color key="shadowColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                                    <size key="shadowOffset" width="0.0" height="1"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bg_sum.png" id="KYE-AN-SlB">
+                                                    <rect key="frame" x="84" y="0.0" width="30" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="KZc-53-tYT">
+                                                    <rect key="frame" x="89" y="0.0" width="25" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="12"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <color key="shadowColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                                    <size key="shadowOffset" width="0.0" height="1"/>
+                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <connections>
-                                            <outlet property="buttonComment" destination="MNL-VH-sns" id="Mpu-Ck-RIq"/>
-                                            <outlet property="buttonInfo" destination="7IO-IG-ZzC" id="AgW-3g-Zwp"/>
-                                            <outlet property="buttonLike" destination="VUc-Si-9QX" id="LrH-Ef-R9z"/>
-                                            <outlet property="buttonMap" destination="suA-Vy-bNo" id="gv2-g3-far"/>
-                                            <outlet property="buttonUser" destination="yXe-Zy-Oup" id="IPG-zS-e2s"/>
-                                            <outlet property="imagePic" destination="Orp-KT-sEr" id="eiJ-ci-T5A"/>
-                                            <outlet property="labelAccess" destination="dpl-AL-iFw" id="nac-tR-ZdN"/>
-                                            <outlet property="labelAuthor" destination="8iH-Me-xCj" id="hUv-8R-FeH"/>
-                                            <outlet property="labelComment" destination="ksP-PV-G2a" id="ulJ-96-qQK"/>
-                                            <outlet property="labelDate" destination="X2R-qY-3XW" id="UHL-Ie-Qdq"/>
-                                            <outlet property="labelLike" destination="KZc-53-tYT" id="FpP-E5-y2V"/>
-                                            <outlet property="labelTitle" destination="jNB-Kj-Lzh" id="0sq-I8-5BJ"/>
-                                            <outlet property="viewStats" destination="Xr2-ka-fEZ" id="tYq-xM-i1p"/>
-                                        </connections>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="Comment" rowHeight="42" id="ohy-OU-wRJ" customClass="luxeysTableViewCellComment">
-                                        <rect key="frame" x="0.0" y="195" width="320" height="42"/>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="Comment" rowHeight="42" id="ohy-OU-wRJ" customClass="LXCellComment">
+                                        <rect key="frame" x="0.0" y="202" width="320" height="42"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="41"/>
@@ -2426,19 +2425,19 @@
                                 </prototypes>
                                 <sections/>
                                 <connections>
-                                    <outlet property="dataSource" destination="dih-F0-8jN" id="P7r-fD-DP4"/>
-                                    <outlet property="delegate" destination="dih-F0-8jN" id="2Pr-EG-TxF"/>
+                                    <outlet property="dataSource" destination="XIi-oe-W48" id="Vgb-Wi-L6S"/>
+                                    <outlet property="delegate" destination="XIi-oe-W48" id="iSM-Ro-jsI"/>
                                 </connections>
                             </tableView>
                             <view autoresizesSubviews="NO" contentMode="scaleToFill" id="biY-Ea-OHY">
                                 <rect key="frame" x="0.0" y="371" width="320" height="45"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bg_comment.png" id="Kye-hh-aSe">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="qwJ-mW-hYt" customClass="luxeysButtonBrown30">
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="qwJ-mW-hYt" customClass="LXButtonBrown30">
                                         <rect key="frame" x="265" y="8" width="50" height="30"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
                                         <size key="titleShadowOffset" width="0.0" height="1"/>
@@ -2450,7 +2449,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="touchSend:" destination="dih-F0-8jN" eventType="touchUpInside" id="HWm-rq-6TG"/>
+                                            <action selector="touchSend:" destination="XIi-oe-W48" eventType="touchUpInside" id="aqn-ye-vrh"/>
                                         </connections>
                                     </button>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="コメントを追加" minimumFontSize="14" background="bg_comment2.png" id="J42-G3-Zbq">
@@ -2458,8 +2457,8 @@
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="send" enablesReturnKeyAutomatically="YES"/>
                                         <connections>
-                                            <action selector="changeText:" destination="dih-F0-8jN" eventType="editingChanged" id="2wV-qt-rbu"/>
-                                            <outlet property="delegate" destination="dih-F0-8jN" id="e6Z-GE-U90"/>
+                                            <action selector="changeText:" destination="XIi-oe-W48" eventType="editingChanged" id="wdG-Ls-SJB"/>
+                                            <outlet property="delegate" destination="XIi-oe-W48" id="CNE-Ng-5zy"/>
                                         </connections>
                                     </textField>
                                 </subviews>
@@ -2471,7 +2470,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Latte" id="9vo-ne-vnf">
                         <barButtonItem key="leftBarButtonItem" style="done" id="G6h-lb-Wg5">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="y7S-M2-oVr" customClass="luxeysButtonBack">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="y7S-M2-oVr" customClass="LXButtonBack">
                                 <rect key="frame" x="5" y="7" width="60" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
@@ -2485,12 +2484,12 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="touchBack:" destination="dih-F0-8jN" eventType="touchUpInside" id="xzt-iR-XO2"/>
+                                    <action selector="touchBack:" destination="XIi-oe-W48" eventType="touchUpInside" id="wlW-Sa-4a9"/>
                                 </connections>
                             </button>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="done" id="JCy-MI-9jl">
-                            <button key="customView" hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="pYO-x0-Vpk" customClass="luxeysButtonBrown30">
+                            <button key="customView" hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="pYO-x0-Vpk" customClass="LXButtonBrown30">
                                 <rect key="frame" x="275" y="7" width="40" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -2502,38 +2501,53 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="touchEdit:" destination="dih-F0-8jN" eventType="touchUpInside" id="J7R-pP-zur"/>
+                                    <action selector="touchEdit:" destination="XIi-oe-W48" eventType="touchUpInside" id="w9x-Z9-5fe"/>
                                 </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
-                    <nil key="simulatedBottomBarMetrics"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="buttonEdit" destination="pYO-x0-Vpk" id="5A6-kj-saT"/>
-                        <outlet property="buttonSend" destination="qwJ-mW-hYt" id="apT-qu-8qX"/>
-                        <outlet property="gestureTap" destination="G1v-tT-Fs2" id="0Qj-bl-Vft"/>
-                        <outlet property="tablePic" destination="82n-Q0-oJK" id="0Lt-Rh-rjr"/>
-                        <outlet property="textComment" destination="J42-G3-Zbq" id="BLK-Xl-dBZ"/>
-                        <outlet property="viewTextbox" destination="biY-Ea-OHY" id="K6a-Kh-AXJ"/>
-                        <segue destination="Js6-jp-wI3" kind="push" identifier="UserProfile" id="wdy-1j-7ui"/>
-                        <segue destination="XyX-35-9as" kind="push" identifier="PictureMap" id="ZIs-3a-Tm6"/>
-                        <segue destination="TeH-Dj-TdG" kind="push" identifier="PictureInfo" id="X1N-Wl-dCB"/>
-                        <segue destination="LuE-hY-WRg" kind="push" identifier="PicEdit" id="UBl-tx-V7X"/>
+                        <outlet property="buttonComment" destination="MNL-VH-sns" id="ACn-eZ-053"/>
+                        <outlet property="buttonEdit" destination="pYO-x0-Vpk" id="m6A-kG-unZ"/>
+                        <outlet property="buttonInfo" destination="7IO-IG-ZzC" id="aZA-vN-Ook"/>
+                        <outlet property="buttonLike" destination="VUc-Si-9QX" id="u3J-sG-t3n"/>
+                        <outlet property="buttonMap" destination="suA-Vy-bNo" id="bWL-kf-Wu8"/>
+                        <outlet property="buttonSend" destination="qwJ-mW-hYt" id="9Ka-d0-98c"/>
+                        <outlet property="buttonUser" destination="yXe-Zy-Oup" id="aTh-yB-jv9"/>
+                        <outlet property="gestureTap" destination="v7C-xr-RmE" id="fkm-zk-AEU"/>
+                        <outlet property="imagePic" destination="Orp-KT-sEr" id="e3p-A8-PNc"/>
+                        <outlet property="labelAccess" destination="dpl-AL-iFw" id="Md3-n9-MNw"/>
+                        <outlet property="labelAuthor" destination="8iH-Me-xCj" id="5uf-rD-7tU"/>
+                        <outlet property="labelComment" destination="ksP-PV-G2a" id="Uf1-sw-aoL"/>
+                        <outlet property="labelDate" destination="X2R-qY-3XW" id="Kei-lI-mgB"/>
+                        <outlet property="labelLike" destination="KZc-53-tYT" id="2xZ-76-xmT"/>
+                        <outlet property="labelTitle" destination="jNB-Kj-Lzh" id="Pgl-V1-hZF"/>
+                        <outlet property="tablePic" destination="82n-Q0-oJK" id="ffG-nB-8mc"/>
+                        <outlet property="textComment" destination="J42-G3-Zbq" id="20N-GI-BpM"/>
+                        <outlet property="viewStats" destination="Xr2-ka-fEZ" id="V1P-mt-2jU"/>
+                        <outlet property="viewSubBg" destination="aY0-AH-DG6" id="j25-9D-UZP"/>
+                        <outlet property="viewSubPic" destination="2gB-we-Nz1" id="qOk-8B-j0S"/>
+                        <outlet property="viewTextbox" destination="biY-Ea-OHY" id="vdo-1b-6Gp"/>
+                        <segue destination="TeH-Dj-TdG" kind="push" id="lLL-x9-W3Y"/>
+                        <segue destination="XyX-35-9as" kind="push" id="VRH-XY-MCa"/>
+                        <segue destination="LuE-hY-WRg" kind="push" id="Ycu-8i-bn9"/>
+                        <segue destination="Js6-jp-wI3" kind="push" id="7dK-jH-ALs"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="i0S-DS-9Bs" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="G1v-tT-Fs2">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dBX-yT-QAU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="v7C-xr-RmE">
                     <connections>
-                        <action selector="touchBackground:" destination="dih-F0-8jN" id="fws-gC-CFl"/>
+                        <action selector="touchBackground:" destination="XIi-oe-W48" id="ChX-GJ-xnr"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-1170" y="-1363"/>
+            <point key="canvasLocation" x="-2333" y="-1348"/>
         </scene>
-        <!--Luxeys Pic Info View Controller-->
+        <!--Pic Info View Controller-->
         <scene sceneID="LAw-HG-MUL">
             <objects>
-                <tableViewController id="TeH-Dj-TdG" customClass="luxeysPicInfoViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="PictureInfo" id="TeH-Dj-TdG" customClass="LXPicInfoViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="TK9-bH-WnK">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2556,7 +2570,7 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="Profile" textLabel="Cok-ZR-fVQ" detailTextLabel="aVu-dI-tR8" rowHeight="30" style="IBUITableViewCellStyleValue2" id="aPv-Wu-WAn" customClass="luxeysCellProfile">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="Profile" textLabel="Cok-ZR-fVQ" detailTextLabel="aVu-dI-tR8" rowHeight="30" style="IBUITableViewCellStyleValue2" id="aPv-Wu-WAn" customClass="LXCellDataField">
                                 <rect key="frame" x="0.0" y="78" width="320" height="31"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -2593,7 +2607,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="Su9-tw-Eja">
                         <barButtonItem key="leftBarButtonItem" style="done" id="pDP-Df-9OC">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="JdG-CP-qah" customClass="luxeysButtonBack">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="JdG-CP-qah" customClass="LXButtonBack">
                                 <rect key="frame" x="5" y="7" width="60" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
@@ -2607,7 +2621,6 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="touchBack:" destination="dih-F0-8jN" eventType="touchUpInside" id="W99-sN-gEc"/>
                                     <action selector="touchBack:" destination="TeH-Dj-TdG" eventType="touchUpInside" id="cGs-ui-seB"/>
                                 </connections>
                             </button>
@@ -2621,12 +2634,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h7e-nG-dD9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-692" y="-1363"/>
+            <point key="canvasLocation" x="-1691" y="-1923"/>
         </scene>
-        <!--Luxeys Pic Map View Controller-->
+        <!--Pic Map View Controller-->
         <scene sceneID="1Ch-9B-nNu">
             <objects>
-                <viewController id="XyX-35-9as" customClass="luxeysPicMapViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PictureMap" id="XyX-35-9as" customClass="LXPicMapViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cQP-81-odQ">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -2643,7 +2656,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Xh5-qm-m6A">
                         <barButtonItem key="leftBarButtonItem" style="done" id="2u8-7G-QIC">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="zzs-9Z-8aP" customClass="luxeysButtonBack">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="zzs-9Z-8aP" customClass="LXButtonBack">
                                 <rect key="frame" x="5" y="7" width="60" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
@@ -2660,7 +2673,7 @@
                             </button>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="done" id="xQM-Hx-d6V">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="40q-20-f7r" customClass="luxeysButtonBrown30">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="40q-20-f7r" customClass="LXButtonBrown30">
                                 <rect key="frame" x="244" y="7" width="71" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
@@ -2684,13 +2697,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BtR-KZ-zKp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-189" y="-1363"/>
+            <point key="canvasLocation" x="-1176" y="-1317"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="d4D-jw-DPt">
             <objects>
                 <navigationController storyboardIdentifier="LoginModal" definesPresentationContext="YES" id="pxh-rk-bMU" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="th8-bB-hq5" customClass="luxeysNavBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="th8-bB-hq5" customClass="LXNavBar">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -2699,12 +2712,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="owb-mR-iqk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="235" y="-1368"/>
+            <point key="canvasLocation" x="-714" y="-1308"/>
         </scene>
-        <!--Luxeys User View Controller - Latte-->
+        <!--User Page View Controller - Latte-->
         <scene sceneID="hDJ-Ws-f0N">
             <objects>
-                <viewController storyboardIdentifier="UserProfile" id="Js6-jp-wI3" customClass="luxeysUserViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserPage" id="Js6-jp-wI3" customClass="LXUserPageViewController" sceneMemberID="viewController">
                     <view key="view" autoresizesSubviews="NO" contentMode="scaleToFill" id="efy-23-lRj">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
@@ -2721,7 +2734,7 @@
                                             <rect key="frame" x="82" y="36" width="232" height="40"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="user.gif" id="qzN-Tr-VTq" customClass="luxeysImageViewShadow">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="user.gif" id="qzN-Tr-VTq">
                                             <rect key="frame" x="6" y="6" width="70" height="70"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -2882,7 +2895,7 @@
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="Friend" rowHeight="42" id="Y8e-fu-QNK" customClass="luxeysCellFriend">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="Friend" rowHeight="42" id="Y8e-fu-QNK" customClass="LXCellFriend">
                                         <rect key="frame" x="0.0" y="140" width="320" height="42"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -2897,7 +2910,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="1JL-XC-6ag">
-                                                    <rect key="frame" x="42" y="9" width="164" height="12"/>
+                                                    <rect key="frame" x="42" y="9" width="164" height="16"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -2925,7 +2938,7 @@
                                             <outlet property="labelName" destination="1JL-XC-6ag" id="9wQ-tm-se3"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Profile" rowHeight="30" id="Fmq-AA-eot" customClass="luxeysCellProfile">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Profile" rowHeight="30" id="Fmq-AA-eot" customClass="LXCellDataField">
                                         <rect key="frame" x="0.0" y="182" width="320" height="30"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -2993,7 +3006,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Latte" id="eMy-TA-9DQ">
                         <barButtonItem key="leftBarButtonItem" style="done" id="jt3-Ln-zdq">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="SVn-X8-njc" customClass="luxeysButtonBack">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="SVn-X8-njc" customClass="LXButtonBack">
                                 <rect key="frame" x="5" y="7" width="60" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
@@ -3012,7 +3025,7 @@
                             </button>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="done" id="HtC-eK-8yd">
-                            <button key="customView" hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="udy-ky-0lx" customClass="luxeysButtonBrown30">
+                            <button key="customView" hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="udy-ky-0lx" customClass="LXButtonBrown30">
                                 <rect key="frame" x="275" y="7" width="40" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -3048,18 +3061,17 @@
                         <outlet property="loadIndicator" destination="Sa4-Ku-k5J" id="BH6-CJ-5cP"/>
                         <outlet property="tableProfile" destination="vCg-ZL-Ped" id="BIX-1K-fLC"/>
                         <outlet property="viewStats" destination="WUS-uj-N3S" id="wV6-5U-LcU"/>
-                        <segue destination="dih-F0-8jN" kind="push" identifier="PictureDetail" id="8ne-Uk-nUr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U9Z-3L-jgs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1705" y="-1363"/>
+            <point key="canvasLocation" x="-1176" y="-1923"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="diu-kD-PsD">
             <objects>
                 <navigationController definesPresentationContext="YES" id="9Uv-H9-P5J" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Dhg-6e-P4w" customClass="luxeysNavBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Dhg-6e-P4w" customClass="LXNavBar">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -3069,12 +3081,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AXR-9b-64l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2313" y="-9"/>
+            <point key="canvasLocation" x="-2301" y="598"/>
         </scene>
-        <!--Luxeys Camera View Controller-->
+        <!--Camera View Controller-->
         <scene sceneID="nlt-9Y-tte">
             <objects>
-                <viewController id="ieL-KW-PiQ" customClass="luxeysCameraViewController" sceneMemberID="viewController">
+                <viewController id="ieL-KW-PiQ" customClass="LXCameraViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xZT-cf-OKr">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
@@ -3647,14 +3659,14 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-2313" y="-658"/>
+            <point key="canvasLocation" x="-2309" y="-2"/>
         </scene>
-        <!--Luxeys Pic Edit View Controller - Latte-->
+        <!--Pic Edit View Controller - Latte-->
         <scene sceneID="ukJ-CP-EPt">
             <objects>
-                <tableViewController storyboardIdentifier="PicEdit" id="LuE-hY-WRg" customClass="luxeysPicEditViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="PicEdit" id="LuE-hY-WRg" customClass="LXPicEditViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="vaP-yt-Vn1">
-                        <rect key="frame" x="0.0" y="44" width="320" height="436"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <color key="separatorColor" red="0.73725490199999999" green="0.72156862749999995" blue="0.66274509800000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -3842,7 +3854,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Latte" id="Sun-Vq-fgo">
                         <barButtonItem key="leftBarButtonItem" style="done" id="IgC-Co-HGs">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="64a-ng-JIz" customClass="luxeysButtonBack">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="64a-ng-JIz" customClass="LXButtonBack">
                                 <rect key="frame" x="5" y="7" width="60" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
@@ -3900,7 +3912,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-2313" y="-1363"/>
+            <point key="canvasLocation" x="-1691" y="-1308"/>
         </scene>
     </scenes>
     <resources>
@@ -4028,40 +4040,20 @@
         <class className="GPUImageView" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/GPUImageView.h"/>
         </class>
-        <class className="LXDrawView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXDrawView.h"/>
-            <relationships>
-                <relationship kind="outlet" name="drawImageView" candidateClass="UIImageView"/>
-            </relationships>
+        <class className="LXButtonBack" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonBack.h"/>
         </class>
-        <class className="LXSubLayerView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXSubLayerView.h"/>
+        <class className="LXButtonBrown30" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonBrown30.h"/>
         </class>
-        <class className="LXUIRevealController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXUIRevealController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="frontViewController" candidateClass="UIViewController"/>
-                <relationship kind="outlet" name="leftViewController" candidateClass="UIViewController"/>
-                <relationship kind="outlet" name="rightViewController" candidateClass="UIViewController"/>
-            </relationships>
+        <class className="LXButtonNormal" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonNormal.h"/>
         </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        <class className="LXButtonOrange" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonOrange.h"/>
         </class>
-        <class className="luxeysButtonBack" superclassName="UIButton">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysButtonBack.h"/>
-        </class>
-        <class className="luxeysButtonBrown30" superclassName="UIButton">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysButtonBrown30.h"/>
-        </class>
-        <class className="luxeysButtonNormal" superclassName="UIButton">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysButtonNormal.h"/>
-        </class>
-        <class className="luxeysButtonOrange" superclassName="UIButton">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysButtonOrange.h"/>
-        </class>
-        <class className="luxeysCameraViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysCameraViewController.h"/>
+        <class className="LXCameraViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCameraViewController.h"/>
             <relationships>
                 <relationship kind="action" name="cameraTouch:" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="action" name="capture:"/>
@@ -4117,16 +4109,33 @@
                 <relationship kind="outlet" name="viewTimer" candidateClass="UIView"/>
             </relationships>
         </class>
-        <class className="luxeysCellFriend" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysCellFriend.h"/>
+        <class className="LXCellComment" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellComment.h"/>
+            <relationships>
+                <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="labelAuthor" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelDate" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="textComment" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="viewBack" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXCellDataField" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellDataField.h"/>
+            <relationships>
+                <relationship kind="outlet" name="labelDetail" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelField" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="LXCellFriend" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellFriend.h"/>
             <relationships>
                 <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="labelIntro" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="labelName" candidateClass="UILabel"/>
             </relationships>
         </class>
-        <class className="luxeysCellFriendRequest" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysCellFriendRequest.h"/>
+        <class className="LXCellFriendRequest" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellFriendRequest.h"/>
             <relationships>
                 <relationship kind="outlet" name="buttonAdd" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonIgnore" candidateClass="UIButton"/>
@@ -4135,28 +4144,22 @@
                 <relationship kind="outlet" name="userName" candidateClass="UILabel"/>
             </relationships>
         </class>
-        <class className="luxeysCellNotify" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysCellNotify.h"/>
+        <class className="LXCellNotify" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellNotify.h"/>
             <relationships>
+                <relationship kind="outlet" name="labelDate" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="labelNotify" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="viewImage" candidateClass="UIImageView"/>
             </relationships>
         </class>
-        <class className="luxeysCellProfile" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysCellProfile.h"/>
-            <relationships>
-                <relationship kind="outlet" name="labelDetail" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelField" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="luxeysCellRankLv1" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysCellRankLv1.h"/>
+        <class className="LXCellRankLv1" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellRankLv1.h"/>
             <relationships>
                 <relationship kind="outlet" name="buttonPic1" candidateClass="UIButton"/>
             </relationships>
         </class>
-        <class className="luxeysCellRankLv2" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysCellRankLv2.h"/>
+        <class className="LXCellRankLv2" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellRankLv2.h"/>
             <relationships>
                 <relationship kind="outlet" name="buttonPic2" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonPic3" candidateClass="UIButton"/>
@@ -4168,8 +4171,8 @@
                 <relationship kind="outlet" name="label3rd" candidateClass="UILabel"/>
             </relationships>
         </class>
-        <class className="luxeysCellWelcomeMulti" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysCellWelcomeMulti.h"/>
+        <class className="LXCellTimelineMulti" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellTimelineMulti.h"/>
             <relationships>
                 <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="labelTitle" candidateClass="UILabel"/>
@@ -4177,8 +4180,8 @@
                 <relationship kind="outlet" name="scrollPic" candidateClass="UIScrollView"/>
             </relationships>
         </class>
-        <class className="luxeysCellWelcomeSingle" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysCellWelcomeSingle.h"/>
+        <class className="LXCellTimelineSingle" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellTimelineSingle.h"/>
             <relationships>
                 <relationship kind="outlet" name="buttonComment" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonExpand" candidateClass="UIButton"/>
@@ -4199,17 +4202,20 @@
                 <relationship kind="outlet" name="viewStat" candidateClass="LXSubLayerView"/>
             </relationships>
         </class>
-        <class className="luxeysFav2ViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysFav2ViewController.h"/>
+        <class className="LXDrawView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXDrawView.h"/>
             <relationships>
-                <relationship kind="outlet" name="buttonNavRight" candidateClass="luxeysButtonBrown30"/>
+                <relationship kind="outlet" name="drawImageView" candidateClass="UIImageView"/>
             </relationships>
         </class>
-        <class className="luxeysImageViewShadow" superclassName="UIImageView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysImageViewShadow.h"/>
+        <class className="LXLikedViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXLikedViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="buttonNavRight" candidateClass="LXButtonBrown30"/>
+            </relationships>
         </class>
-        <class className="luxeysLoginViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysLoginViewController.h"/>
+        <class className="LXLoginViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXLoginViewController.h"/>
             <relationships>
                 <relationship kind="action" name="goBack:"/>
                 <relationship kind="action" name="login:"/>
@@ -4223,15 +4229,18 @@
                 <relationship kind="outlet" name="textUser" candidateClass="UITextField"/>
             </relationships>
         </class>
-        <class className="luxeysMypageViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysMypageViewController.h"/>
+        <class className="LXMainTabViewController" superclassName="UITabBarController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXMainTabViewController.h"/>
+        </class>
+        <class className="LXMyPageViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXMyPageViewController.h"/>
             <relationships>
                 <relationship kind="action" name="touchSetProfilePic:"/>
                 <relationship kind="action" name="touchSetting:"/>
                 <relationship kind="action" name="touchTab:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonFollowCount" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonFriendCount" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonNavLeft" candidateClass="luxeysButtonBrown30"/>
+                <relationship kind="outlet" name="buttonNavLeft" candidateClass="LXButtonBrown30"/>
                 <relationship kind="outlet" name="buttonPicCount" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonProfilePic" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonTimelineAll" candidateClass="UIButton"/>
@@ -4248,17 +4257,25 @@
                 <relationship kind="outlet" name="viewStats" candidateClass="UIView"/>
             </relationships>
         </class>
-        <class className="luxeysNavBar" superclassName="UINavigationBar">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysNavBar.h"/>
+        <class className="LXNavBar" superclassName="UINavigationBar">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavBar.h"/>
         </class>
-        <class className="luxeysPicCommentViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysPicCommentViewController.h"/>
+        <class className="LXNotifySideViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNotifySideViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="touchTab:"/>
+                <relationship kind="outlet" name="segmentTab" candidateClass="UISegmentedControl"/>
+                <relationship kind="outlet" name="tableNotify" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="LXPicCommentViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicCommentViewController.h"/>
             <relationships>
                 <relationship kind="action" name="changeText:"/>
                 <relationship kind="action" name="tapBackground:"/>
                 <relationship kind="action" name="touchClose:"/>
                 <relationship kind="action" name="touchSubmit:"/>
-                <relationship kind="outlet" name="buttonSubmit" candidateClass="luxeysButtonBrown30"/>
+                <relationship kind="outlet" name="buttonSubmit" candidateClass="LXButtonBrown30"/>
                 <relationship kind="outlet" name="gestureTap" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="outlet" name="labelAuthor" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="labelTitle" candidateClass="UILabel"/>
@@ -4269,25 +4286,44 @@
                 <relationship kind="outlet" name="viewImage" candidateClass="UIImageView"/>
             </relationships>
         </class>
-        <class className="luxeysPicDetailViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysPicDetailViewController.h"/>
+        <class className="LXPicDetailViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicDetailViewController.h"/>
             <relationships>
                 <relationship kind="action" name="changeText:"/>
+                <relationship kind="action" name="showInfo:" candidateClass="UIButton"/>
+                <relationship kind="action" name="showKeyboard:"/>
+                <relationship kind="action" name="showMap:" candidateClass="UIButton"/>
+                <relationship kind="action" name="showUser:" candidateClass="UIButton"/>
                 <relationship kind="action" name="touchBack:"/>
                 <relationship kind="action" name="touchBackground:"/>
                 <relationship kind="action" name="touchEdit:"/>
+                <relationship kind="action" name="touchLike:"/>
                 <relationship kind="action" name="touchSend:"/>
-                <relationship kind="outlet" name="buttonEdit" candidateClass="luxeysButtonBrown30"/>
-                <relationship kind="outlet" name="buttonSend" candidateClass="luxeysButtonBrown30"/>
-                <relationship kind="outlet" name="constraintCommentView" candidateClass="NSLayoutConstraint"/>
+                <relationship kind="outlet" name="buttonComment" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonEdit" candidateClass="LXButtonBrown30"/>
+                <relationship kind="outlet" name="buttonInfo" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonLike" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonMap" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonSend" candidateClass="LXButtonBrown30"/>
+                <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="gestureTap" candidateClass="UITapGestureRecognizer"/>
+                <relationship kind="outlet" name="imagePic" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="labelAccess" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelAuthor" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelComment" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelDate" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelLike" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelTitle" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="tablePic" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="textComment" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="viewStats" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewSubBg" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewSubPic" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewTextbox" candidateClass="UIView"/>
             </relationships>
         </class>
-        <class className="luxeysPicEditViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysPicEditViewController.h"/>
+        <class className="LXPicEditViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicEditViewController.h"/>
             <relationships>
                 <relationship kind="action" name="switchService:" candidateClass="UIButton"/>
                 <relationship kind="action" name="touchBack:"/>
@@ -4308,8 +4344,8 @@
                 <relationship kind="outlet" name="viewDelete" candidateClass="UIView"/>
             </relationships>
         </class>
-        <class className="luxeysPicInfoViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysPicInfoViewController.h"/>
+        <class className="LXPicInfoViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicInfoViewController.h"/>
             <relationships>
                 <relationship kind="action" name="touchBack:"/>
                 <relationship kind="outlet" name="imagePic" candidateClass="UIImageView"/>
@@ -4317,28 +4353,28 @@
                 <relationship kind="outlet" name="viewHeader" candidateClass="UIView"/>
             </relationships>
         </class>
-        <class className="luxeysPicMapViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysPicMapViewController.h"/>
+        <class className="LXPicMapViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicMapViewController.h"/>
             <relationships>
                 <relationship kind="action" name="touchApp:"/>
                 <relationship kind="action" name="touchBack:"/>
                 <relationship kind="outlet" name="mapPic" candidateClass="MKMapView"/>
             </relationships>
         </class>
-        <class className="luxeysRankingViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysRankingViewController.h"/>
+        <class className="LXRankingViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXRankingViewController.h"/>
             <relationships>
                 <relationship kind="action" name="touchTab:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonDaily" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonMonthly" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonNavLeft" candidateClass="luxeysButtonBrown30"/>
+                <relationship kind="outlet" name="buttonNavLeft" candidateClass="LXButtonBrown30"/>
                 <relationship kind="outlet" name="buttonWeekly" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="loadIndicator" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="viewTab" candidateClass="UIView"/>
             </relationships>
         </class>
-        <class className="luxeysRegisterViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysRegisterViewController.h"/>
+        <class className="LXRegisterViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXRegisterViewController.h"/>
             <relationships>
                 <relationship kind="action" name="touchBack:"/>
                 <relationship kind="action" name="touchPolicy:"/>
@@ -4348,53 +4384,25 @@
                 <relationship kind="outlet" name="textPassword" candidateClass="UITextField"/>
             </relationships>
         </class>
-        <class className="luxeysRevealViewController" superclassName="LXUIRevealController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysRevealViewController.h"/>
+        <class className="LXRevealViewController" superclassName="LXUIRevealController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXRevealViewController.h"/>
         </class>
-        <class className="luxeysRightSideViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysRightSideViewController.h"/>
+        <class className="LXSubLayerView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXSubLayerView.h"/>
+        </class>
+        <class className="LXTextField" superclassName="UITextField">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXTextField.h"/>
+        </class>
+        <class className="LXUIRevealController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXUIRevealController.h"/>
             <relationships>
-                <relationship kind="action" name="touchTab:"/>
-                <relationship kind="outlet" name="segmentTab" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="tableNotify" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="frontViewController" candidateClass="UIViewController"/>
+                <relationship kind="outlet" name="leftViewController" candidateClass="UIViewController"/>
+                <relationship kind="outlet" name="rightViewController" candidateClass="UIViewController"/>
             </relationships>
         </class>
-        <class className="luxeysTabBarViewController" superclassName="UITabBarController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysTabBarViewController.h"/>
-        </class>
-        <class className="luxeysTableViewCellComment" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysTableViewCellComment.h"/>
-            <relationships>
-                <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="labelAuthor" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelDate" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="textComment" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="viewBack" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="luxeysTableViewCellPicture" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysTableViewCellPicture.h"/>
-            <relationships>
-                <relationship kind="outlet" name="buttonComment" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonInfo" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonLike" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonMap" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="imagePic" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="labelAccess" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelAuthor" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelComment" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelDate" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelLike" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelTitle" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="viewStats" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="luxeysTextField" superclassName="UITextField">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysTextField.h"/>
-        </class>
-        <class className="luxeysUserViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysUserViewController.h"/>
+        <class className="LXUserPageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXUserPageViewController.h"/>
             <relationships>
                 <relationship kind="action" name="touchBack:"/>
                 <relationship kind="action" name="touchContact:"/>
@@ -4418,8 +4426,8 @@
                 <relationship kind="outlet" name="viewStats" candidateClass="UIView"/>
             </relationships>
         </class>
-        <class className="luxeysWelcomeViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/luxeysWelcomeViewController.h"/>
+        <class className="LXWelcomeViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXWelcomeViewController.h"/>
             <relationships>
                 <relationship kind="action" name="loginPressed:"/>
                 <relationship kind="action" name="touchCloseLogin:"/>
@@ -4427,8 +4435,8 @@
                 <relationship kind="action" name="touchReg:"/>
                 <relationship kind="action" name="touchTab:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonGrid" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonLeftMenu" candidateClass="luxeysButtonBrown30"/>
-                <relationship kind="outlet" name="buttonNavRight" candidateClass="luxeysButtonBrown30"/>
+                <relationship kind="outlet" name="buttonLeftMenu" candidateClass="LXButtonBrown30"/>
+                <relationship kind="outlet" name="buttonNavRight" candidateClass="LXButtonBrown30"/>
                 <relationship kind="outlet" name="buttonTimeline" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="indicator" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="tablePic" candidateClass="UITableView"/>
@@ -4444,11 +4452,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="lDx-N5-2UM"/>
-        <segue reference="XsL-yG-6rG"/>
-        <segue reference="u0d-QM-VsA"/>
-        <segue reference="1tI-wB-IuL"/>
-        <segue reference="MlQ-2b-c2u"/>
+        <segue reference="Ycu-8i-bn9"/>
         <segue reference="T7F-Bl-gjS"/>
         <segue reference="zE4-YJ-qFs"/>
     </inferredMetricsTieBreakers>

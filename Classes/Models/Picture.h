@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "ModelObject.h"
 #import "User.h"
-#import "luxeysUtils.h"
+#import "LXUtils.h"
 
 @interface Picture : ModelObject {
 
@@ -18,7 +18,7 @@
     NSNumber *longitude;
     NSString *model;
     NSNumber *pageviews;
-    NSString *takenAt;
+    NSDate *takenAt;
     NSNumber *pictureId;
     NSString *title;
     NSString *urlLarge;
@@ -46,7 +46,7 @@
 @property (nonatomic, copy) NSNumber *longitude;
 @property (nonatomic, copy) NSString *model;
 @property (nonatomic, copy) NSNumber *pageviews;
-@property (nonatomic, copy) NSString *takenAt;
+@property (nonatomic, copy) NSDate *takenAt;
 @property (nonatomic, copy) NSNumber *pictureId;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *urlLarge;

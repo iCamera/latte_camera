@@ -70,7 +70,9 @@
             self.user = [User instanceFromDictionary:value];
         }
     } else if ([key isEqualToString:@"created_at"]) {
-        self.createdAt = [luxeysUtils dateFromJSON:value];
+        self.createdAt = [LXUtils dateFromJSON:value];
+    } else if ([key isEqualToString:@"taken_at"]) {
+        self.takenAt = [LXUtils dateFromJSON:value];
     } else if ([key isEqualToString:@"tags"]) {
         self.tags = [NSArray arrayWithArray:value];
     }

@@ -37,7 +37,7 @@
         }
 
     } else if ([key isEqualToString:@"created_at"]) {
-        self.createdAt = [luxeysUtils dateFromJSON:value];
+        self.createdAt = [LXUtils dateFromJSON:value];
     } else {
         [super setValue:value forKey:key];
     }

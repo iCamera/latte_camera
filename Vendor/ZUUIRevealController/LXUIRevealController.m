@@ -31,7 +31,7 @@
  */
 
 #import "LXUIRevealController.h"
-#import "luxeysAppDelegate.h"
+#import "LXAppDelegate.h"
 
 @interface LXUIRevealController()
 

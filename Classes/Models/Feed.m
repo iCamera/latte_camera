@@ -53,7 +53,7 @@
         }
 
     } else if ([key isEqualToString:@"updated_at"]) {
-        self.updatedAt = [luxeysUtils dateFromJSON:value];
+        self.updatedAt = [LXUtils dateFromJSON:value];
     } else {
         [super setValue:value forKey:key];
     }

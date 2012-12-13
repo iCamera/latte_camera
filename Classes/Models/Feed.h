@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "ModelObject.h"
-#import "luxeysUtils.h"
+#import "LXUtils.h"
 
 @class User;
 

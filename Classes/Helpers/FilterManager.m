@@ -601,7 +601,6 @@
     
     NSNumber *orientation = [NSNumber numberWithInteger:[self metadataOrientationForUIImageOrientation:imageOrientation]];
     
-    [imageMeta setObject:orientation forKey:(NSString *)kCGImagePropertyTIFFOrientation];
     [imageMeta setObject:orientation forKey:(NSString *)kCGImagePropertyOrientation];
     
     // Add GPS
@@ -610,9 +609,15 @@
     }
     
     // Add App Info
-    [imageMeta setObject:@"Apple" forKey:(NSString*)kCGImagePropertyTIFFMake];
-    [imageMeta setObject:[[UIDevice currentDevice] model] forKey:(NSString *)kCGImagePropertyTIFFModel];
-    [imageMeta setObject:@"Latte" forKey:(NSString *)kCGImagePropertyTIFFSoftware];
+    NSMutableDictionary *dictForTIFF = [imageMeta objectForKey:(NSString *)kCGImagePropertyTIFFDictionary];
+    if (dictForTIFF == nil) {
+        dictForTIFF = [[NSMutableDictionary alloc] init];
+        [imageMeta setObject:dictForTIFF forKey:(NSString *)kCGImagePropertyTIFFDictionary];
+    }
+    
+    [dictForTIFF setObject:@"Latte camera" forKey:(NSString *)kCGImagePropertyTIFFSoftware];
+    
+    [imageMeta setObject:dictForTIFF forKey:(NSString *)kCGImagePropertyTIFFDictionary];
     
     [lastFilter saveImageFromCurrentlyProcessedOutputWithMeta:imageMeta
                                                andOrientation:imageOrientation

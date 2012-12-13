@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import "luxeysAppDelegate.h"
+#import "LXAppDelegate.h"
 
 int main(int argc, char *argv[])
 {
     @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([luxeysAppDelegate class]));
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([LXAppDelegate class]));
     }
 }
