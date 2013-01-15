@@ -63,7 +63,6 @@
     NSMutableDictionary *toggleSection;
     NSMutableArray *lxFeeds;
     EGORefreshTableHeaderView *refreshHeaderView;
-    MBProgressHUD *HUD;
 }
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonProfilePic;

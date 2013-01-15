@@ -51,31 +51,20 @@
 }
 
 - (void)reloadFav {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        
-        LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-        [[LatteAPIClient sharedClient] getPath:@"picture/user/me/voted"
-                                    parameters: [NSDictionary dictionaryWithObjectsAndKeys:
-                                                 [app getToken], @"token", nil]
-                                       success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                           pics = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
-                                           [self.tableView reloadData];
-                                           dispatch_async(dispatch_get_main_queue(), ^{
-                                               [MBProgressHUD hideHUDForView:self.view animated:YES];
-                                           });
-                                           
-                                           [self doneLoadingTableViewData];
-                                       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                           TFLog(@"Something went wrong (Fav)");
-                                           
-                                           dispatch_async(dispatch_get_main_queue(), ^{
-                                               [MBProgressHUD hideHUDForView:self.view animated:YES];
-                                           });
-                                           
-                                           [self doneLoadingTableViewData];
-                                       }];
-    });
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    [[LatteAPIClient sharedClient] getPath:@"picture/user/me/voted"
+                                parameters: [NSDictionary dictionaryWithObjectsAndKeys:
+                                             [app getToken], @"token", nil]
+                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       pics = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
+                                       [self.tableView reloadData];
+                                       
+                                       [self doneLoadingTableViewData];
+                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       TFLog(@"Something went wrong (Fav)");
+                                       
+                                       [self doneLoadingTableViewData];
+                                   }];
 }
 
 - (void)didReceiveMemoryWarning

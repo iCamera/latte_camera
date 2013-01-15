@@ -48,15 +48,15 @@
                                                      name:@"LoggedOut"
                                                    object:nil];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(receiveLoggedIn:)
-                                                     name:@"NoConnection"
-                                                   object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(receiveLoggedOut:)
-                                                     name:@"ConnectedInternet"
-                                                   object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:self
+//                                                 selector:@selector(receiveLoggedIn:)
+//                                                     name:@"NoConnection"
+//                                                   object:nil];
+//        
+//        [[NSNotificationCenter defaultCenter] addObserver:self
+//                                                 selector:@selector(receiveLoggedOut:)
+//                                                     name:@"ConnectedInternet"
+//                                                   object:nil];
         
         loadEnded = false;
         pagephoto = 1;
@@ -89,7 +89,6 @@
     refreshHeaderView.delegate = self;
     [tablePic addSubview:refreshHeaderView];
     
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self reloadView];
 
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
@@ -120,31 +119,24 @@
 - (void)reloadView {
     loadEnded = false;
     pagephoto = 1;
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [[LatteAPIClient sharedClient] getPath:@"user/everyone/timeline"
-                                          parameters:nil
-                                             success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                 feeds = [Feed mutableArrayFromDictionary:JSON withKey:@"feeds"];
-
-                                                 [tablePic reloadData];
-                                                 
-                                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
-                                                 });
-                                                 
-                                                 [self doneLoadingTableViewData];
-                                                 
-                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                                 
-                                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
-                                                 });
-                                                 
-                                                 [self doneLoadingTableViewData];
-                                                 
-                                                 TFLog(@"Something went wrong (Welcome)");
-                                             }];
-    });
+    [indicator startAnimating];
+    [[LatteAPIClient sharedClient] getPath:@"user/everyone/timeline"
+                                parameters:nil
+                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       feeds = [Feed mutableArrayFromDictionary:JSON withKey:@"feeds"];
+                                       
+                                       [tablePic reloadData];
+                                       
+                                       [self doneLoadingTableViewData];
+                                       [indicator stopAnimating];
+                                       
+                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                    
+                                       [self doneLoadingTableViewData];
+                                       [indicator stopAnimating];
+                                       
+                                       TFLog(@"Something went wrong (Welcome)");
+                                   }];
 }
 
 - (void)loadMore {

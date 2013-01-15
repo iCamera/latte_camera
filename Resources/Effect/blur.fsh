@@ -30,6 +30,11 @@
  
  
  mediump float CoC = 0.03;//circle of confusion size in mm (35mm film = 0.03mm)
+
+ bool vignetting = true; //use optical lens vignetting?
+ float vignout = 1.3; //vignetting outer border
+ float vignin = 0.0; //vignetting inner border
+ float vignfade = 22.0; //f-stops till vignete fades
  
  uniform bool autofocus; //use autofocus in shader? disable if you use external focalDepth value
  uniform vec2 focus; // autofocus point on screen (0.0,0.0 - left lower corner, 1.0,1.0 - upper right)
@@ -69,10 +74,16 @@
 {
 	return -zfar * znear / (depth * (zfar - znear) - zfar);
 }
- 
- void main()
+
+float vignette()
 {
-    
+	float dist = distance(textureCoordinate.xy, vec2(0.5,0.5));
+	dist = smoothstep(vignout+(fstop/vignfade), vignin+(fstop/vignfade), dist);
+	return clamp(dist,0.0,1.0);
+}
+
+void main()
+{
 	//scene depth calculation
 	
 	mediump float depth = linearize(texture2D(inputImageTexture2, textureCoordinate2).a);
@@ -135,7 +146,7 @@
 			{
 				float step = PI*2.0 / float(ringsamples);
 				float pw = (cos(float(j)*step)*float(i));
-                float ph = (sin(float(j)*step)*float(i));
+				float ph = (sin(float(j)*step)*float(i));
 				float p = 1.0;
 				
 				col += color(textureCoordinate.xy + vec2(pw*w,ph*h),blur)*mix(1.0,(float(i))/(float(rings)),bias)*p;
@@ -143,6 +154,11 @@
 			}
 		}
 		col /= s; //divide by sample count
+	}
+
+	if (vignetting)
+	{
+		col *= vignette();
 	}
 	
 	gl_FragColor = vec4(col, 1.0);

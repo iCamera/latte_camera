@@ -16,7 +16,6 @@
 #import "LXCellFriend.h"
 #import "User.h"
 #import "Picture.h"
-#import "MBProgressHUD.h"
 #import "EGORefreshTableHeaderView.h"
 #import "LXButtonBrown30.h"
 #import "UIActionSheet+ButtonState.h"
@@ -48,7 +47,6 @@
     int userID;
     NSArray *allTab;
     EGORefreshTableHeaderView *refreshHeaderView;
-    MBProgressHUD *HUD;
     BOOL reloading;
     BOOL isEmpty;
 

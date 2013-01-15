@@ -15,7 +15,15 @@
 		880C4B17161C2A1400252C6A /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 880C4AFC161C2A1400252C6A /* MBProgressHUD.m */; };
 		8820D82E16634D7000DBBFF9 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8820D82D16634D7000DBBFF9 /* CoreImage.framework */; };
 		8821099115DDFE9300E1A179 /* LXUIRevealController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8821098F15DDFE8300E1A179 /* LXUIRevealController.m */; };
+		88341A881684358E0084A8CD /* GPUImageStillCamera+captureWithMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = 88341A871684358D0084A8CD /* GPUImageStillCamera+captureWithMeta.m */; };
 		884FBB90163E24A3006C4359 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 884FBB8F163E24A3006C4359 /* SystemConfiguration.framework */; };
+		886C63A116816CC20007D952 /* LXFilterDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 886C63A016816CC20007D952 /* LXFilterDetail.m */; };
+		886C63A41681A68C0007D952 /* bg_canvas.png in Resources */ = {isa = PBXBuildFile; fileRef = 886C63A21681A68C0007D952 /* bg_canvas.png */; };
+		886C63A51681A68C0007D952 /* bg_canvas@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 886C63A31681A68C0007D952 /* bg_canvas@2x.png */; };
+		886C63A81681B92D0007D952 /* lattefragment.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 886C63A61681B4A20007D952 /* lattefragment.fsh */; };
+		886C63AC1682E17E0007D952 /* lattedof.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 886C63AB1682E1710007D952 /* lattedof.fsh */; };
+		886C63AF1682E1DB0007D952 /* LXFilterDOF.m in Sources */ = {isa = PBXBuildFile; fileRef = 886C63AE1682E1DA0007D952 /* LXFilterDOF.m */; };
+		886C63B1168302610007D952 /* fisheye.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 886C63B0168302550007D952 /* fisheye.fsh */; };
 		88730A39166F216600CF7507 /* Avenir Next Condensed.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 88730A38166F216600CF7507 /* Avenir Next Condensed.ttc */; };
 		88730A3B166F34C100CF7507 /* localize.py in Resources */ = {isa = PBXBuildFile; fileRef = 88730A3A166F34C100CF7507 /* localize.py */; };
 		887E4095162552C20060623C /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 887E4094162552C10060623C /* icon.png */; };
@@ -67,7 +75,6 @@
 		889072EC16770EBB0013DF7A /* UIImageView+loadProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890728E16770EBB0013DF7A /* UIImageView+loadProgress.m */; };
 		889072ED16770EBB0013DF7A /* FilterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890729116770EBB0013DF7A /* FilterManager.m */; };
 		889072EE16770EBB0013DF7A /* GPUImageOutput+saveProcessedImageToLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890729316770EBB0013DF7A /* GPUImageOutput+saveProcessedImageToLibrary.m */; };
-		889072EF16770EBB0013DF7A /* GPUImageStillCamera+captureWithMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890729516770EBB0013DF7A /* GPUImageStillCamera+captureWithMeta.m */; };
 		889072F016770EBB0013DF7A /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890729716770EBB0013DF7A /* KeychainItemWrapper.m */; };
 		889072F116770EBB0013DF7A /* LatteAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890729916770EBB0013DF7A /* LatteAPIClient.m */; };
 		889072F216770EBB0013DF7A /* LXFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890729B16770EBB0013DF7A /* LXFilter.m */; };
@@ -683,7 +690,18 @@
 		8820D82D16634D7000DBBFF9 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		8821098E15DDFE8300E1A179 /* LXUIRevealController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LXUIRevealController.h; path = Vendor/ZUUIRevealController/LXUIRevealController.h; sourceTree = "<group>"; };
 		8821098F15DDFE8300E1A179 /* LXUIRevealController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LXUIRevealController.m; path = Vendor/ZUUIRevealController/LXUIRevealController.m; sourceTree = "<group>"; };
+		88341A861684358D0084A8CD /* GPUImageStillCamera+captureWithMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GPUImageStillCamera+captureWithMeta.h"; sourceTree = "<group>"; };
+		88341A871684358D0084A8CD /* GPUImageStillCamera+captureWithMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GPUImageStillCamera+captureWithMeta.m"; sourceTree = "<group>"; };
 		884FBB8F163E24A3006C4359 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		886C639F16816CC20007D952 /* LXFilterDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFilterDetail.h; sourceTree = "<group>"; };
+		886C63A016816CC20007D952 /* LXFilterDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFilterDetail.m; sourceTree = "<group>"; };
+		886C63A21681A68C0007D952 /* bg_canvas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_canvas.png; sourceTree = "<group>"; };
+		886C63A31681A68C0007D952 /* bg_canvas@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_canvas@2x.png"; sourceTree = "<group>"; };
+		886C63A61681B4A20007D952 /* lattefragment.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lattefragment.fsh; sourceTree = "<group>"; };
+		886C63AB1682E1710007D952 /* lattedof.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = lattedof.fsh; sourceTree = "<group>"; };
+		886C63AD1682E1DA0007D952 /* LXFilterDOF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFilterDOF.h; sourceTree = "<group>"; };
+		886C63AE1682E1DA0007D952 /* LXFilterDOF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFilterDOF.m; sourceTree = "<group>"; };
+		886C63B0168302550007D952 /* fisheye.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = fisheye.fsh; sourceTree = "<group>"; };
 		88730A38166F216600CF7507 /* Avenir Next Condensed.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avenir Next Condensed.ttc"; sourceTree = "<group>"; };
 		88730A3A166F34C100CF7507 /* localize.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = localize.py; path = Vendor/localize.py; sourceTree = "<group>"; };
 		887E4094162552C10060623C /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../../icon.png; sourceTree = "<group>"; };
@@ -776,8 +794,6 @@
 		8890729116770EBB0013DF7A /* FilterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterManager.m; sourceTree = "<group>"; };
 		8890729216770EBB0013DF7A /* GPUImageOutput+saveProcessedImageToLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GPUImageOutput+saveProcessedImageToLibrary.h"; sourceTree = "<group>"; };
 		8890729316770EBB0013DF7A /* GPUImageOutput+saveProcessedImageToLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GPUImageOutput+saveProcessedImageToLibrary.m"; sourceTree = "<group>"; };
-		8890729416770EBB0013DF7A /* GPUImageStillCamera+captureWithMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GPUImageStillCamera+captureWithMeta.h"; sourceTree = "<group>"; };
-		8890729516770EBB0013DF7A /* GPUImageStillCamera+captureWithMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GPUImageStillCamera+captureWithMeta.m"; sourceTree = "<group>"; };
 		8890729616770EBB0013DF7A /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
 		8890729716770EBB0013DF7A /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
 		8890729816770EBB0013DF7A /* LatteAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LatteAPIClient.h; sourceTree = "<group>"; };
@@ -1671,12 +1687,12 @@
 		8890728F16770EBB0013DF7A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				88341A861684358D0084A8CD /* GPUImageStillCamera+captureWithMeta.h */,
+				88341A871684358D0084A8CD /* GPUImageStillCamera+captureWithMeta.m */,
 				8890729016770EBB0013DF7A /* FilterManager.h */,
 				8890729116770EBB0013DF7A /* FilterManager.m */,
 				8890729216770EBB0013DF7A /* GPUImageOutput+saveProcessedImageToLibrary.h */,
 				8890729316770EBB0013DF7A /* GPUImageOutput+saveProcessedImageToLibrary.m */,
-				8890729416770EBB0013DF7A /* GPUImageStillCamera+captureWithMeta.h */,
-				8890729516770EBB0013DF7A /* GPUImageStillCamera+captureWithMeta.m */,
 				8890729616770EBB0013DF7A /* KeychainItemWrapper.h */,
 				8890729716770EBB0013DF7A /* KeychainItemWrapper.m */,
 				8890729816770EBB0013DF7A /* LatteAPIClient.h */,
@@ -1685,6 +1701,8 @@
 				8890729B16770EBB0013DF7A /* LXFilter.m */,
 				8890729C16770EBB0013DF7A /* LXFilterBlur.h */,
 				8890729D16770EBB0013DF7A /* LXFilterBlur.m */,
+				886C639F16816CC20007D952 /* LXFilterDetail.h */,
+				886C63A016816CC20007D952 /* LXFilterDetail.m */,
 				8890729E16770EBB0013DF7A /* LXFilterFish.h */,
 				8890729F16770EBB0013DF7A /* LXFilterFish.m */,
 				889072A016770EBB0013DF7A /* LXFilterMono.h */,
@@ -1701,6 +1719,8 @@
 				889072A916770EBB0013DF7A /* UIImage+Resize.m */,
 				889072AA16770EBB0013DF7A /* UIImage+RoundedCorner.h */,
 				889072AB16770EBB0013DF7A /* UIImage+RoundedCorner.m */,
+				886C63AD1682E1DA0007D952 /* LXFilterDOF.h */,
+				886C63AE1682E1DA0007D952 /* LXFilterDOF.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -2040,6 +2060,9 @@
 		88FE3F9F166C93D6004DCE53 /* Effect */ = {
 			isa = PBXGroup;
 			children = (
+				886C63B0168302550007D952 /* fisheye.fsh */,
+				886C63AB1682E1710007D952 /* lattedof.fsh */,
+				886C63A61681B4A20007D952 /* lattefragment.fsh */,
 				88FE3FA2166C93D6004DCE53 /* effect1.acv */,
 				88FE3FA3166C93D6004DCE53 /* effect2.acv */,
 				88FE3FA4166C93D6004DCE53 /* effect3.acv */,
@@ -2054,6 +2077,8 @@
 		88FE3FAB166C93D6004DCE53 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				886C63A21681A68C0007D952 /* bg_canvas.png */,
+				886C63A31681A68C0007D952 /* bg_canvas@2x.png */,
 				88A43AFE16703340001A8BB3 /* bt_twitter2_on.png */,
 				88A43AFF16703340001A8BB3 /* bt_twitter2_on@2x.png */,
 				88A43B0016703340001A8BB3 /* bt_twitter2.png */,
@@ -2656,6 +2681,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				886C63B1168302610007D952 /* fisheye.fsh in Resources */,
+				886C63AC1682E17E0007D952 /* lattedof.fsh in Resources */,
+				886C63A81681B92D0007D952 /* lattefragment.fsh in Resources */,
 				88E952C7161994DA00E44619 /* blackArrow.png in Resources */,
 				88E952C8161994DA00E44619 /* blackArrow@2x.png in Resources */,
 				88E952C9161994DA00E44619 /* blueArrow.png in Resources */,
@@ -3174,6 +3202,8 @@
 				88A43B451671DA4B001A8BB3 /* FacebookSDKResources.bundle in Resources */,
 				88A43B8A16721BD9001A8BB3 /* MainStoryboard.strings in Resources */,
 				889072E616770EBB0013DF7A /* LXTimelineMultiItemViewController.xib in Resources */,
+				886C63A41681A68C0007D952 /* bg_canvas.png in Resources */,
+				886C63A51681A68C0007D952 /* bg_canvas@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3239,7 +3269,6 @@
 				889072EC16770EBB0013DF7A /* UIImageView+loadProgress.m in Sources */,
 				889072ED16770EBB0013DF7A /* FilterManager.m in Sources */,
 				889072EE16770EBB0013DF7A /* GPUImageOutput+saveProcessedImageToLibrary.m in Sources */,
-				889072EF16770EBB0013DF7A /* GPUImageStillCamera+captureWithMeta.m in Sources */,
 				889072F016770EBB0013DF7A /* KeychainItemWrapper.m in Sources */,
 				889072F116770EBB0013DF7A /* LatteAPIClient.m in Sources */,
 				889072F216770EBB0013DF7A /* LXFilter.m in Sources */,
@@ -3258,6 +3287,9 @@
 				889072FF16770EBB0013DF7A /* PicturePin.m in Sources */,
 				8890730016770EBB0013DF7A /* User.m in Sources */,
 				8890730116770EBB0013DF7A /* LXUtils.m in Sources */,
+				886C63A116816CC20007D952 /* LXFilterDetail.m in Sources */,
+				886C63AF1682E1DB0007D952 /* LXFilterDOF.m in Sources */,
+				88341A881684358E0084A8CD /* GPUImageStillCamera+captureWithMeta.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

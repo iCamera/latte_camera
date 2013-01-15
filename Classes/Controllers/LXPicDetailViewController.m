@@ -13,6 +13,7 @@
 
 @implementation LXPicDetailViewController
 
+@synthesize picID;
 @synthesize gestureTap;
 @synthesize viewTextbox;
 @synthesize textComment;
@@ -20,6 +21,7 @@
 @synthesize buttonEdit;
 @synthesize tablePic;
 @synthesize pic;
+//@synthesize user;
 
 @synthesize labelTitle;
 @synthesize labelDate;
@@ -91,16 +93,14 @@
     }
     
     [indicatorComment startAnimating];
-
-    NSString *url = [NSString stringWithFormat:@"picture/%d", [pic.pictureId integerValue]];
+    
+    
+    NSString *url = [NSString stringWithFormat:@"picture/%d", pic!=nil?[pic.pictureId integerValue]:picID];
     [[LatteAPIClient sharedClient] getPath:url
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       user = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
-                                       pic = [Picture instanceFromDictionary:[JSON objectForKey:@"picture"]];
-                                       if (pic.canEdit) {
-                                           buttonEdit.hidden = false;
-                                       }
+                                       User *user = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
+                                       
                                        
                                        comments = [Comment mutableArrayFromDictionary:JSON withKey:@"comments"];
                                        
@@ -109,6 +109,21 @@
                                        
                                        
                                        //Addition data
+                                       buttonUser.tag = [user.userId integerValue];
+                                       [buttonUser loadBackground:user.profilePicture placeholderImage:@"user.gif"];
+                                       labelAuthor.text = user.name;
+                                       
+                                       if (pic == nil) {
+                                           pic = [Picture instanceFromDictionary:[JSON objectForKey:@"picture"]];
+                                           [self setPicture];
+                                       } else {
+                                           pic = [Picture instanceFromDictionary:[JSON objectForKey:@"picture"]];
+                                       }
+
+                                       if (pic.canEdit) {
+                                           buttonEdit.hidden = false;
+                                       }
+                                       
                                        labelAccess.text = [pic.pageviews stringValue];
                                        if (pic.canVote)
                                            if (!pic.isVoted)
@@ -126,6 +141,16 @@
                                            tablePic.contentInset = contentInsets;
                                        }
                                        [indicatorComment stopAnimating];
+                                       
+                                       // Increase counter
+                                       NSString *url = [NSString stringWithFormat:@"picture/counter/%d/%d",
+                                                        [pic.pictureId integerValue],
+                                                        [user.userId integerValue]];
+                                       
+                                       [[LatteAPIClient sharedClient] getPath:url
+                                                                   parameters:[NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"]
+                                                                      success:nil
+                                                                      failure:nil];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        TFLog(@"Something went wrong (PicDetail)");
                                        [indicatorComment stopAnimating];
@@ -148,24 +173,10 @@
     [tablePic setNeedsLayout];
     [viewSubBg setNeedsDisplay];
     [viewSubPic setNeedsDisplay];
-
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    // NSDictionary* user = [pic objectForKey:@"owner"];
-    // Increase counter
-    NSString *url = [NSString stringWithFormat:@"picture/counter/%d/%d",
-                     [pic.pictureId integerValue],
-                     [user.userId integerValue]];
     
-    [[LatteAPIClient sharedClient] getPath:url
-                                parameters:[NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"]
-                                   success:nil
-                                   failure:nil];
     // Do any additional setup after loading the view from its nib.
     if (pic.title.length > 0)
         labelTitle.text = pic.title;
-    
-    [buttonUser loadBackground:user.profilePicture placeholderImage:@"user.gif"];
-    labelAuthor.text = user.name;
     
     labelDate.text = [LXUtils timeDeltaFromNow:pic.createdAt];
     labelLike.text = [pic.voteCount stringValue];
@@ -177,7 +188,7 @@
     }
     
     //self.view.frame = CGRectMake(0, 0, 320, imagePic.frame.size.height + 100);
-    buttonUser.tag = [user.userId integerValue];
+    buttonUser.tag = [pic.userId integerValue];
     
     // Style
     buttonUser.clipsToBounds = YES;

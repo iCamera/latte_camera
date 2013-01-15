@@ -63,9 +63,6 @@
     // Do any additional setup after loading the view from its nib.
     // Style
     showSet = [NSMutableSet setWithObjects:@"gender", @"residence", @"age", @"birthdate", @"bloodtype", @"occupation", @"introduction", @"hobby", nil];
-    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:HUD];
-    HUD.mode = MBProgressHUDModeIndeterminate;
     
     imageUser.clipsToBounds = YES;
     imageUser.layer.cornerRadius = 5;
@@ -138,12 +135,9 @@
                                                iconFollow.hidden = !user.isFollowing;
                                            }
                                        }
-                                       [HUD hide:YES];
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        TFLog(@"Something went wrong (User - Profile)");
-                                       
-                                       [HUD hide:YES];
                                    }];
 }
 
@@ -158,11 +152,8 @@
                                        [tableProfile reloadData];
                                        
                                        [self doneLoadingTableViewData];
-                                       [HUD hide:YES];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        TFLog(@"Something went wrong (User - Friendlist)");
-                                       
-                                       [HUD hide:YES];
                                    }];
 
 }
@@ -212,7 +203,6 @@
                                        [tableProfile endUpdates];
                                        [self doneLoadingTableViewData];
                                        
-                                       [HUD hide:YES];
                                        [loadIndicator stopAnimating];
                                        
                                        pagePhoto += 1;
@@ -220,7 +210,6 @@
                                        [loadIndicator stopAnimating];
                                        TFLog(@"Something went wrong (Photolist)");
                                        [self doneLoadingTableViewData];
-                                       [HUD hide:YES];
                                    }];
 }
 
@@ -269,7 +258,6 @@
                                        [tableProfile endUpdates];
                                        [self doneLoadingTableViewData];
                                        
-                                       [HUD hide:YES];
                                        [loadIndicator stopAnimating];
                                        
                                        pageInterest += 1;
@@ -278,7 +266,6 @@
                                        [loadIndicator stopAnimating];
                                        TFLog(@"Something went wrong (User - Interesting)");
                                        [self doneLoadingTableViewData];
-                                       [HUD hide:YES];
                                    }];
 }
 
@@ -292,7 +279,7 @@
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"yyyyMM"];
     NSString* urlPhotos = [NSString stringWithFormat:@"picture/album/by_month/%@/%d", [dateFormat stringFromDate:currentMonth], userID];
-    [HUD show:YES];
+
     [[LatteAPIClient sharedClient] getPath:urlPhotos
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -309,12 +296,10 @@
                                        [tableProfile reloadData];
                                        
                                        [self doneLoadingTableViewData];
-                                       [HUD hide:YES];
                                        
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        TFLog(@"Something went wrong (User - Interesting)");
                                        
-                                       [HUD hide:YES];
                                    }];
     //[self performSegueWithIdentifier:@"Calendar" sender:self];
 }
@@ -376,7 +361,6 @@
             lableTitleVote.highlighted = YES;
             tableMode = kTableVotes;
             if (interests.count == 0) {
-                [HUD show:YES];
                 [self reloadInterest];
             } else
                 [tableProfile reloadData];
@@ -385,7 +369,6 @@
             labelTitlePicCount.highlighted = YES;
             tableMode = kTablePicList;
             if (photos.count == 0) {
-                [HUD show:YES];
                 [self reloadPicList];
             } else
                 [tableProfile reloadData];
@@ -394,7 +377,6 @@
             labelTitleFriend.highlighted = YES;
             tableMode = kTableFriends;
             if (friends == nil) {
-                [HUD show:YES];
                 [self reloadFriends];
             } else
                 [tableProfile reloadData];
@@ -533,7 +515,7 @@
             NSInteger row = i/5;
             NSInteger col = i%5;
             
-            NSString *key = [NSString stringWithFormat:@"%2d", i+1];
+            NSString *key = [NSString stringWithFormat:@"%2d", i];
             Picture *pic = [currentMonthPics objectForKey:key];
             [cell addSubview:[self viewForCalendarPic:pic atRow:row atColumn:col cellIndex:i]];
         }
@@ -627,7 +609,7 @@
 }
 
 - (void)showPhotoFromCalendar:(UIButton*)sender {
-    Picture *pic = [currentMonthPics objectForKey:[NSString stringWithFormat:@"%d", sender.tag]];
+    Picture *pic = [currentMonthPics objectForKey:[NSString stringWithFormat:@"%2d", sender.tag]];
     [self showPhoto:pic];
 }
 
@@ -694,7 +676,6 @@
 }
 
 - (void)sendFriendRequest {
-    [HUD show:YES];
     if (user.requestToMe != nil) {
         if ([user.requestToMe integerValue] != kUserRequestAccepted) {
             
@@ -707,7 +688,6 @@
                                                 [self reloadProfile];
                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                 TFLog(@"Something went wrong (User - Approve)");
-                                                [HUD hide:YES];
                                             }];
         }
     }
@@ -722,13 +702,11 @@
                                             [self reloadProfile];
                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                             TFLog(@"Something went wrong (User - Send request)");
-                                            [HUD hide:YES];
                                         }];
     }
 }
 
 - (void)toggleFollow {
-    [HUD show:YES];
     LXAppDelegate* app = (LXAppDelegate*)[[UIApplication sharedApplication] delegate];
     if (user.isFollowing) {
         NSString *url = [NSString stringWithFormat:@"user/unfollow/%d", [user.userId integerValue]];
@@ -738,7 +716,6 @@
                                            [self reloadProfile];
                                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                            TFLog(@"Something went wrong (User - Unfollow)");
-                                           [HUD hide:YES];
                                        }];
     } else {
         NSString *url = [NSString stringWithFormat:@"user/follow/%d", [user.userId integerValue]];
@@ -748,13 +725,11 @@
                                            [self reloadProfile];
                                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                            TFLog(@"Something went wrong (User - Follow)");
-                                           [HUD hide:YES];
                                        }];
     }
 }
 
 - (void)removeFriend {
-    [HUD show:YES];
     LXAppDelegate* app = (LXAppDelegate*)[[UIApplication sharedApplication] delegate];
     NSString *url = [NSString stringWithFormat:@"user/friend/remove/%d", [user.userId integerValue]];
     [[LatteAPIClient sharedClient] postPath:url
@@ -763,7 +738,6 @@
                                         [self reloadProfile];
                                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                         TFLog(@"Something went wrong (User - Remove friend)");
-                                        [HUD hide:YES];
                                     }];
 }
 

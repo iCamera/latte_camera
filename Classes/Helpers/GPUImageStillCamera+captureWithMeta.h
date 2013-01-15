@@ -10,9 +10,7 @@
 
 @interface GPUImageStillCamera (captureWithMeta)
 
-//- (void)capturePhotoAsImageWithMeta:(void (^)(UIImage *processedImage, NSMutableDictionary *metadata, NSError *error))block;
-- (void)capturePhotoAsImageProcessedUpToFilterWithMeta:(GPUImageOutput<GPUImageInput> *)finalFilterInChain
-                                        forOrientation:(UIImageOrientation)imageOrientation
-                                 withCompletionHandler:(void (^)(UIImage *processedImage, NSMutableDictionary *imageMeta, NSError *error))block;
-
+- (void)capturePhotoAsImageProcessedUpToFilter:(GPUImageOutput<GPUImageInput> *)finalFilterInChain
+                               withOrientation:(UIImageOrientation)imageOrientation
+                         withCompletionHandler:(void (^)(UIImage *processedImage, NSError *error))block;
 @end

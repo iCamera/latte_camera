@@ -13,7 +13,6 @@
 #import "LXUtils.h"
 #import "LatteAPIClient.h"
 #import "LXPicDetailViewController.h"
-#import "MBProgressHUD.h"
 #import "EGORefreshTableHeaderView.h"
 
 @interface LXRankingViewController : UITableViewController <EGORefreshTableHeaderDelegate> {
@@ -24,7 +23,6 @@
     BOOL reloading;
     EGORefreshTableHeaderView *refreshHeaderView;
     UIPanGestureRecognizer *navigationBarPanGestureRecognizer;
-    MBProgressHUD *HUD;
 }
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonDaily;

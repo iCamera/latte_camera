@@ -115,19 +115,11 @@
               buttonTimelineMe,
               nil];
     
-    HUD = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:HUD];
-    HUD.mode = MBProgressHUDModeText;
-    HUD.labelText = NSLocalizedString(@"Loading...", @"Loading...") ;
-    HUD.labelFont = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:16];
-    HUD.margin = 10.f;
-    HUD.yOffset = 150.f;
-    
     [self reloadView];
 }
 
 - (void)reloadTimeline {
-    [HUD show:YES];
+    [loadIndicator startAnimating];
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     [[LatteAPIClient sharedClient] getPath:@"user/me/timeline"
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:
@@ -140,12 +132,10 @@
                                        isEmpty = feeds.count == 0;
                                        [self.tableView reloadData];
                                        [self doneLoadingTableViewData];
-
-                                       [HUD hide:YES];
+                                       [loadIndicator stopAnimating];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       [loadIndicator stopAnimating];
                                        TFLog(@"Something went wrong (Timeline)");
-                                       
-                                       [HUD hide:YES];
                                    }];
 }
 
@@ -221,7 +211,6 @@
                                        [self.tableView endUpdates];
                                        [self doneLoadingTableViewData];
                                        
-                                       [HUD hide:YES];
                                        [loadIndicator stopAnimating];
                                        
                                        pagePic += 1;
@@ -229,7 +218,6 @@
                                        [loadIndicator stopAnimating];
                                        TFLog(@"Something went wrong (Photolist)");
                                        [self doneLoadingTableViewData];
-                                       [HUD hide:YES];
                                    }];
 }
 
@@ -241,7 +229,6 @@
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        friends = [User mutableArrayFromDictionary:JSON
                                                                           withKey:@"friends"];
-                                       [HUD hide:YES];
                                        isEmpty = friends.count == 0;
                                        [self doneLoadingTableViewData];
                                        [self.tableView reloadData];
@@ -249,8 +236,6 @@
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        TFLog(@"Something went wrong (Friendlist)");
                                        [self doneLoadingTableViewData];
-                                       
-                                       [HUD hide:YES];
                                    }];
 }
 
@@ -264,12 +249,10 @@
                                                                              withKey:@"following"];
                                        isEmpty = followings.count == 0;
                                        [self doneLoadingTableViewData];
-                                       [HUD hide:YES];
                                        [self.tableView reloadData];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        TFLog(@"Something went wrong (Friendlist)");
                                        [self doneLoadingTableViewData];
-                                       [HUD hide:YES];
                                    }];
 }
 
@@ -313,14 +296,12 @@
                                        
                                        [self doneLoadingTableViewData];
                                        
-                                       [HUD hide:YES];
-                                       
                                        pageVote += 1;
                                        [loadIndicator stopAnimating];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        TFLog(@"Something went wrong (Photolist)");
                                        [self doneLoadingTableViewData];
-                                       [HUD hide:YES];
+                                       
                                        [loadIndicator stopAnimating];
                                    }];
 }
@@ -389,12 +370,9 @@
                                            
                                            [loadIndicator stopAnimating];
                                            [self doneLoadingTableViewData];
-                                           
-                                           [HUD hide:YES];
                                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                            TFLog(@"Something went wrong (Timeline)");
                                            [loadIndicator stopAnimating];
-                                           [HUD hide:YES];
                                        }];
     }
 }
@@ -625,7 +603,6 @@
             labelTitleVote.highlighted = YES;
             tableMode = kTableVoted;
             if (votes.count == 0){
-                [HUD show:YES];
                 [self reloadVoted];
             }else
                 [self.tableView reloadData];
@@ -634,7 +611,6 @@
             labelTitlePicCount.highlighted = YES;
             tableMode = kTablePicList;
             if (pictures.count == 0) {
-                [HUD show:YES];
                 [self reloadPicList];
             } else
                 [self.tableView reloadData];
@@ -643,7 +619,6 @@
             labelTitleFriends.highlighted = YES;
             tableMode = kTableFriends;
             if (friends == nil) {
-                [HUD show:YES];
                 [self reloadFriends];
             } else
                 [self.tableView reloadData];
@@ -652,7 +627,6 @@
             labelTitleFav.highlighted = YES;
             tableMode = kTableFollowings;
             if (followings == nil) {
-                [HUD show:YES];
                 [self reloadFollowings];
             } else
                 [self.tableView reloadData];
@@ -717,8 +691,6 @@
 
 
 - (void)deleteProfilePic {
-    [HUD show:YES];
-    
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
     [[LatteAPIClient sharedClient] postPath:@"user/me/profile_picture_delete"
@@ -726,10 +698,8 @@
                                              [app getToken], @"token", nil]
                                     success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                         [buttonProfilePic setBackgroundImage:[UIImage imageNamed:@"user.gif"] forState:UIControlStateNormal];
-                                        [HUD hide:YES];
                                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                         TFLog(@"Something went wrong (Delete profile pic)");
-                                        [HUD hide:YES];
                                     }];
 
 }
@@ -829,6 +799,8 @@
     LXPicDetailViewController *viewPicDetail = [mainStoryboard instantiateViewControllerWithIdentifier:@"PictureDetail"];
     
     viewPicDetail.pic = [self picFromPicID:sender.tag];
+    viewPicDetail.picID = sender.tag;
+
     [self.navigationController pushViewController:viewPicDetail animated:YES];
 }
 

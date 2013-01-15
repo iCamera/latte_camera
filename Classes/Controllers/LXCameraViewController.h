@@ -12,12 +12,15 @@
 #import "FilterManager.h"
 #import "LXNavBar.h"
 #import "LXPicEditViewController.h"
-#import "GPUImageStillCamera+captureWithMeta.h"
 #import "LXUtils.h"
 #import "LXDrawView.h"
 #import "UIImage+Resize.h"
 #import "UIImage+fixOrientation.h"
 #import "MBProgressHUD.h"
+#import "LXFilterDetail.h"
+#import "LXFilterDOF.h"
+#import "LXFilterFish.h"
+#import "GPUImageStillCamera+captureWithMeta.h"
 
 #define kTimerNone       0
 #define kTimer5s         1
@@ -27,6 +30,9 @@
 #define kTabPreview 0
 #define kTabEffect 1
 #define kTabBokeh 2
+#define kTabBasic 3
+#define kTabLens 4
+#define kTabText 5
 
 #define kMaskBlurNone 5
 #define kMaskBlurWeak 6
@@ -51,10 +57,19 @@ typedef enum {
 
 @interface LXCameraViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, UIScrollViewDelegate, UIAccelerometerDelegate, LXDrawViewDelegate, UIAlertViewDelegate> {
     GPUImageStillCamera *videoCamera;
+    GPUImageSharpenFilter *filterSharpen;
+    GPUImageFilterPipeline *pipe;
+    LXFilterDetail *filter;
+    LXFilterDOF *filterDOF;
+    LXFilterFish *filterFish;
+    GPUImageFilter *effect;
+    FilterManager *effectManager;
     
     GPUImagePicture *picture;
     GPUImagePicture *previewFilter;
-    FilterManager *filter;
+    GPUImagePicture *pictureDOF;
+    CGSize picSize;
+    
     UIActionSheet *sheet;
     UIImagePickerController *imagePicker;
     NSMutableDictionary *imageMeta;
@@ -82,8 +97,8 @@ typedef enum {
     NSInteger currentTab;
 }
 @property (strong, nonatomic) IBOutlet UIView *viewBottomBar;
-@property (strong, nonatomic) IBOutlet UIImageView *imageBottom;
-@property (strong, nonatomic) IBOutlet GPUImageView *cameraView;
+
+@property (strong, nonatomic) IBOutlet GPUImageView *viewCamera;
 @property (strong, nonatomic) IBOutlet UIView *viewTimer;
 @property (strong, nonatomic) IBOutlet UIImageView *imageAutoFocus;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollEffect;
@@ -93,42 +108,70 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIButton *buttonTimer;
 @property (strong, nonatomic) IBOutlet UIButton *buttonFlash;
 @property (strong, nonatomic) IBOutlet UIButton *buttonFlip;
-@property (strong, nonatomic) IBOutlet UIPanGestureRecognizer *gesturePan;
-@property (strong, nonatomic) IBOutlet UIButton *buttonCrop;
 @property (strong, nonatomic) IBOutlet UIButton *buttonPick;
-@property (strong, nonatomic) IBOutlet UIButton *buttonScroll;
+@property (strong, nonatomic) IBOutlet UIButton *buttonReset;
+
+@property (strong, nonatomic) IBOutlet UIPanGestureRecognizer *gesturePan;
+@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapFocus;
+@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapCloseHelp;
+
 @property (strong, nonatomic) IBOutlet UIButton *buttonSetNoTimer;
 @property (strong, nonatomic) IBOutlet UIButton *buttonSetTimer5s;
-@property (strong, nonatomic) IBOutlet UIScrollView *scrollCamera;
-@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapFocus;
+
 @property (strong, nonatomic) IBOutlet UIView *viewFocusControl;
-@property (strong, nonatomic) IBOutlet UIButton *buttonToggleFocus;
+@property (strong, nonatomic) IBOutlet UIView *viewLensControl;
+@property (strong, nonatomic) IBOutlet UIView *viewBasicControl;
+@property (strong, nonatomic) IBOutlet UIView *viewTextControl;
+@property (strong, nonatomic) IBOutlet UIView *viewEffectControl;
+
 @property (strong, nonatomic) IBOutlet UIView *viewCameraWraper;
 @property (strong, nonatomic) IBOutlet LXDrawView *viewDraw;
-@property (strong, nonatomic) IBOutlet UIButton *buttonChangeLens;
+
+@property (strong, nonatomic) IBOutlet UIButton *buttonToggleEffect;
+@property (strong, nonatomic) IBOutlet UIButton *buttonToggleFocus;
+@property (strong, nonatomic) IBOutlet UIButton *buttonToggleBasic;
+@property (strong, nonatomic) IBOutlet UIButton *buttonToggleLens;
+@property (strong, nonatomic) IBOutlet UIButton *buttonToggleText;
 
 @property (strong, nonatomic) IBOutlet UISwitch *buttonBackgroundNatual;
+@property (strong, nonatomic) IBOutlet UISwitch *switchGain;
 @property (strong, nonatomic) IBOutlet UIButton *buttonBlurWeak;
 @property (strong, nonatomic) IBOutlet UIButton *buttonBlurNormal;
 @property (strong, nonatomic) IBOutlet UIButton *buttonBlurStrong;
 @property (strong, nonatomic) IBOutlet UIButton *buttonBlurNone;
+
+@property (strong, nonatomic) IBOutlet UIButton *buttonLensNormal;
+@property (strong, nonatomic) IBOutlet UIButton *buttonLensWide;
+@property (strong, nonatomic) IBOutlet UIButton *buttonLensFish;
+
+@property (strong, nonatomic) IBOutlet UIButton *buttonClose;
 @property (strong, nonatomic) IBOutlet UIView *viewHelp;
 @property (strong, nonatomic) IBOutlet UIView *viewPopupHelp;
+@property (strong, nonatomic) IBOutlet UIView *viewTopBar;
+@property (strong, nonatomic) IBOutlet UIView *viewTopBar35;
 
+@property (strong, nonatomic) IBOutlet UIImageView *viewCanvas;
 
 @property (unsafe_unretained) id <LXImagePickerDelegate> delegate;
 
-- (IBAction)setEffect:(id)sender;
+@property (strong, nonatomic) IBOutlet UISlider *sliderExposure;
+@property (strong, nonatomic) IBOutlet UISlider *sliderVignette;
+@property (strong, nonatomic) IBOutlet UISlider *sliderSharpness;
+@property (strong, nonatomic) IBOutlet UISlider *sliderClear;
+@property (strong, nonatomic) IBOutlet UISlider *sliderSaturation;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollFont;
+
 - (IBAction)cameraTouch:(UITapGestureRecognizer *)sender;
 - (IBAction)openImagePicker:(id)sender;
 - (IBAction)close:(id)sender;
 - (IBAction)capture:(id)sender;
-- (IBAction)changeLens:(id)sender;
+- (IBAction)changeLens:(UIButton*)sender;
 - (IBAction)changeFlash:(id)sender;
 - (IBAction)touchTimer:(id)sender;
 - (IBAction)touchSave:(id)sender;
-- (IBAction)toggleEffect:(UIButton*)sender;
+- (IBAction)toggleControl:(UIButton*)sender;
 - (IBAction)touchNo:(id)sender;
+- (IBAction)touchReset:(id)sender;
 - (IBAction)flipCamera:(id)sender;
 - (IBAction)panTarget:(UIPanGestureRecognizer *)sender;
 - (IBAction)setTimer:(id)sender;
@@ -138,4 +181,5 @@ typedef enum {
 - (IBAction)touchOpenHelp:(id)sender;
 - (IBAction)toggleGain:(UISwitch*)sender;
 - (IBAction)changePen:(UISlider *)sender;
+- (IBAction)updateFilter:(id)sender;
 @end

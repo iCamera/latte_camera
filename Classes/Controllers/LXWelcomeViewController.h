@@ -11,7 +11,6 @@
 #import "LXLoginViewController.h"
 #import "Feed.h"
 #import "Picture.h"
-#import "MBProgressHUD.h"
 #import "LatteAPIClient.h"
 #import "LXPicDetailViewController.h"
 #import "LXAppDelegate.h"

@@ -34,7 +34,7 @@
     "uniform float maxblur;\n"
     "uniform float gain;\n"
     "float threshold = 0.5;\n"
-    "float bias = 0.5;\n"
+    "float bias = 0.0;\n"
     "float fringe = 0.7;\n"
     "lowp float namount = 0.0001;\n"
     "vec3 color(vec2 coords,float blur)\n"
@@ -148,8 +148,8 @@
         [self setInteger:1 forUniform:ringsUniform program:filterProgram];
         [self setInteger:6 forUniform:samplesUniform program:filterProgram];
     } else {
-        [self setInteger:2 forUniform:ringsUniform program:filterProgram];
-        [self setInteger:12 forUniform:samplesUniform program:filterProgram];
+        [self setInteger:4 forUniform:ringsUniform program:filterProgram];
+        [self setInteger:5 forUniform:samplesUniform program:filterProgram];
     }
     
     //    [self setAutofocus:true];

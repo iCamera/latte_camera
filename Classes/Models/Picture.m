@@ -27,12 +27,11 @@
 @synthesize voteCount;
 @synthesize width;
 @synthesize exif;
-@synthesize user;
+@synthesize userId;
 @synthesize tags;
 @synthesize status;
 
 + (Picture *)instanceFromDictionary:(NSDictionary *)aDictionary {
-
     Picture *instance = [[Picture alloc] init];
     [instance setAttributesFromDictionary:aDictionary];
     return instance;
@@ -67,7 +66,7 @@
 
     } else if ([key isEqualToString:@"user"]) {
         if ([value isKindOfClass:[NSDictionary class]]) {
-            self.user = [User instanceFromDictionary:value];
+            user = [User instanceFromDictionary:value];
         }
     } else if ([key isEqualToString:@"created_at"]) {
         self.createdAt = [LXUtils dateFromJSON:value];
@@ -103,6 +102,8 @@
         [self setValue:value forKey:@"takenAt"];
     } else if ([key isEqualToString:@"id"]) {
         [self setValue:value forKey:@"pictureId"];
+    } else if ([key isEqualToString:@"user_id"]) {
+        [self setValue:value forKey:@"userId"];
     } else if ([key isEqualToString:@"url_large"]) {
         [self setValue:value forKey:@"urlLarge"];
     } else if ([key isEqualToString:@"url_medium"]) {

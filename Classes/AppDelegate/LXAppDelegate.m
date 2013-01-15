@@ -65,20 +65,20 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)checkTokenValidity {
     //FIX ME
     [[LatteAPIClient sharedClient] getPath:@"user/me"
-                                       parameters:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                   [self getToken], @"token", nil]
-                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                              if ([[JSON objectForKey:@"status"] integerValue] == 1) {
-                                                  currentUser = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
-                                                  if (apns != nil)
-                                                      [self updateUserAPNS];
-                                                  
-
-                                                  [[NSNotificationCenter defaultCenter]
-                                                   postNotificationName:@"LoggedIn"
-                                                   object:self];
-                                              }
-                                          } failure:nil];
+                                parameters:[NSDictionary dictionaryWithObjectsAndKeys:
+                                            [self getToken], @"token", nil]
+                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       if ([[JSON objectForKey:@"status"] integerValue] == 1) {
+                                           currentUser = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
+                                           if (apns != nil)
+                                               [self updateUserAPNS];
+                                           
+                                           
+                                           [[NSNotificationCenter defaultCenter]
+                                            postNotificationName:@"LoggedIn"
+                                            object:self];
+                                       }
+                                   } failure:nil];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -100,7 +100,11 @@ void uncaughtExceptionHandler(NSException *exception) {
     [FBSession openActiveSessionWithAllowLoginUI:NO];
 #define TESTING 1
 #ifdef TESTING
-    [TestFlight setDeviceIdentifier:[[[UIDevice currentDevice] identifierForVendor] UUIDString]];
+    if ([[UIDevice currentDevice] respondsToSelector:@selector(identifierForVendor)]) {
+        // This is will run if it is iOS6
+        [TestFlight setDeviceIdentifier:[[[UIDevice currentDevice] identifierForVendor] UUIDString]];
+    } 
+
 #endif
     [TestFlight takeOff:@"5c606ea8c15647469c8ee49d61ffd6dc_MTYxMjQzMjAxMi0xMS0zMCAwNTo0NjowMy4zMjQwNjI"];
     

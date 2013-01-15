@@ -29,7 +29,8 @@
 @interface LXPicDetailViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, EGORefreshTableHeaderDelegate> {
     EGORefreshTableHeaderView *refreshHeaderView;
     Picture *pic;
-    User *user;
+    NSInteger picID;
+    //User *user;
     BOOL reloading;
     BOOL loaded;
     NSMutableArray *comments;
@@ -72,6 +73,8 @@
 - (IBAction)showKeyboard:(id)sender;
 
 @property (strong, nonatomic) Picture *pic;
+@property (assign, nonatomic) NSInteger picID;
+//@property (strong, nonatomic) User *user;
 
 //- (void)setPictureID:(int)aPicID;
 - (void)reloadView;

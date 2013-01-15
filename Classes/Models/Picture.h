@@ -20,6 +20,7 @@
     NSNumber *pageviews;
     NSDate *takenAt;
     NSNumber *pictureId;
+    NSNumber *userId;
     NSString *title;
     NSString *urlLarge;
     NSString *urlMedium;
@@ -48,6 +49,7 @@
 @property (nonatomic, copy) NSNumber *pageviews;
 @property (nonatomic, copy) NSDate *takenAt;
 @property (nonatomic, copy) NSNumber *pictureId;
+@property (nonatomic, copy) NSNumber *userId;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *urlLarge;
 @property (nonatomic, copy) NSString *urlMedium;
@@ -58,7 +60,6 @@
 @property (nonatomic, copy) NSNumber *status;
 @property (nonatomic, copy) NSDictionary *exif;
 @property (nonatomic, copy) NSArray *tags;
-@property (nonatomic, strong) User *user;
 
 + (Picture *)instanceFromDictionary:(NSDictionary *)aDictionary;
 - (void)setAttributesFromDictionary:(NSDictionary *)aDictionary;

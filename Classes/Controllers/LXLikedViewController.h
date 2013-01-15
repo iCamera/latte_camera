@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "LatteAPIClient.h"
 #import "LXAppDelegate.h"
-#import "MBProgressHUD.h"
 #import "Picture.h"
 #import "UIButton+AsyncImage.h"
 #import "EGORefreshTableHeaderView.h"

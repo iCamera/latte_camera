@@ -8,61 +8,18 @@
 
 #import "LXFilter.h"
 
-NSString *const kLXSharpenVertexShaderString = SHADER_STRING
-(
- attribute vec4 position;
- attribute vec4 inputTextureCoordinate;
- 
- uniform float imageWidthFactor;
- uniform float imageHeightFactor;
- 
- varying vec2 textureCoordinate;
- varying vec2 leftTextureCoordinate;
- varying vec2 rightTextureCoordinate;
- varying vec2 topTextureCoordinate;
- varying vec2 bottomTextureCoordinate;
- 
- varying float centerMultiplier;
- varying float edgeMultiplier;
- 
- void main()
- {
-     float sharpness = 0.5;
-     gl_Position = position;
-     
-     mediump vec2 widthStep = vec2(imageWidthFactor, 0.0);
-     mediump vec2 heightStep = vec2(0.0, imageHeightFactor);
-     
-     textureCoordinate = inputTextureCoordinate.xy;
-     leftTextureCoordinate = inputTextureCoordinate.xy - widthStep;
-     rightTextureCoordinate = inputTextureCoordinate.xy + widthStep;
-     topTextureCoordinate = inputTextureCoordinate.xy + heightStep;
-     bottomTextureCoordinate = inputTextureCoordinate.xy - heightStep;
-     
-     centerMultiplier = 1.0 + 4.0 * sharpness;
-     edgeMultiplier = sharpness;
- }
- );
 
 NSString *const kLXFragment = SHADER_STRING
 (
  precision highp float;
  
  varying highp vec2 textureCoordinate;
- varying highp vec2 leftTextureCoordinate;
- varying highp vec2 rightTextureCoordinate;
- varying highp vec2 topTextureCoordinate;
- varying highp vec2 bottomTextureCoordinate;
- 
- varying highp float centerMultiplier;
- varying highp float edgeMultiplier;
  
  uniform sampler2D inputImageTexture;
  uniform sampler2D gradientMapTexture;
- uniform lowp float saturation;
+ 
  uniform lowp float overlay;
  uniform lowp float gradient;
- uniform lowp float brightness;
  
  const highp vec3 luminanceWeighting = vec3(0.2125, 0.7154, 0.0721);
  
@@ -71,29 +28,11 @@ NSString *const kLXFragment = SHADER_STRING
      mediump vec4 base = texture2D(inputImageTexture, textureCoordinate);
      
      float luminance = dot(base.rgb, luminanceWeighting);
-     float average = (base.r + base.g + base.b)/3.0;
-     lowp vec3 greyScaleColor = vec3(luminance);
-     lowp vec3 averageColor = vec3(average);
-     
-     // Sharpen
-     mediump vec3 textureColor = texture2D(inputImageTexture, textureCoordinate).rgb;
-     mediump vec3 leftTextureColor = texture2D(inputImageTexture, leftTextureCoordinate).rgb;
-     mediump vec3 rightTextureColor = texture2D(inputImageTexture, rightTextureCoordinate).rgb;
-     mediump vec3 topTextureColor = texture2D(inputImageTexture, topTextureCoordinate).rgb;
-     mediump vec3 bottomTextureColor = texture2D(inputImageTexture, bottomTextureCoordinate).rgb;
-     
-     base = vec4((textureColor * centerMultiplier - (leftTextureColor * edgeMultiplier + rightTextureColor * edgeMultiplier + topTextureColor * edgeMultiplier + bottomTextureColor * edgeMultiplier)), texture2D(inputImageTexture, bottomTextureCoordinate).w);
-     
-     // Vignette
-     float dist = distance(textureCoordinate, vec2(0.5,0.5));
-     dist = smoothstep(0.9, 0.45, dist);
-     base.rgb *= clamp(dist,0.0,1.0);
      
      // Gradient Map
      base = vec4(mix(base.rgb, texture2D(gradientMapTexture, vec2(luminance, 0.0)).rgb, gradient), base.a);
      
      // Overlay
-     
      if (base.r < 0.5) {
          base.r = 2.0 * luminance * base.r * overlay + base.r * (1.0 - overlay);
      } else {
@@ -111,15 +50,8 @@ NSString *const kLXFragment = SHADER_STRING
      } else {
          base.b = (1.0 - 2.0 * (1.0 - base.b) * (1.0 - luminance)) * overlay + base.b * (1.0 - overlay);
      }
-     
-     // Brightness
-     vec3 brtColor = base.rgb + vec3(brightness);
-     // Saturation
-     vec3 satColor = mix(greyScaleColor, brtColor, 1.2);
-     // Contrast
-     vec3 conColor = mix(averageColor, satColor, 1.2);
-     
-     gl_FragColor = vec4(conColor, base.w);
+
+     gl_FragColor = base;
  }
  );
 
@@ -129,31 +61,23 @@ NSString *const kLXFragment = SHADER_STRING
 @synthesize greenCurve;
 @synthesize blueCurve;
 @synthesize overlay;
-@synthesize saturation;
 @synthesize gradient;
-@synthesize brightness;
 
 - (id)init;
 {
     
-    if (!(self = [super initWithVertexShaderFromString:kLXSharpenVertexShaderString fragmentShaderFromString:kLXFragment]))
+    if (!(self = [super initWithFragmentShaderFromString:kLXFragment]))
     {
 		return nil;
     }
     
     gradientMapTextureUniform = [filterProgram uniformIndex:@"gradientMapTexture"];
-    saturationUniform = [filterProgram uniformIndex:@"saturation"];
+
     overlayUniform = [filterProgram uniformIndex:@"overlay"];
     gradientUniform = [filterProgram uniformIndex:@"gradient"];
-    brightnessUniform = [filterProgram uniformIndex:@"brightness"];
-    
-    imageWidthFactorUniform = [filterProgram uniformIndex:@"imageWidthFactor"];
-    imageHeightFactorUniform = [filterProgram uniformIndex:@"imageHeightFactor"];
-    
-    saturation = 2.0;
     overlay = 0.0;
     gradient = -0.1;
-    brightness = 0.0;
+
     
     [self setRedCurve:[NSArray arrayWithObjects:
                        [NSValue valueWithCGPoint:CGPointMake(0, 0)],
@@ -174,10 +98,6 @@ NSString *const kLXFragment = SHADER_STRING
     [self updateToneCurveTexture];
 }
 
-- (void)setSaturation:(CGFloat)aSaturation {
-    saturation = aSaturation;
-    [self setFloat:saturation forUniform:saturationUniform program:filterProgram];
-}
 
 - (void)setOverlay:(CGFloat)aOverlay {
     overlay = aOverlay;
@@ -189,10 +109,6 @@ NSString *const kLXFragment = SHADER_STRING
     [self setFloat:gradient forUniform:gradientUniform program:filterProgram];
 }
 
-- (void)setBrightness:(CGFloat)aBrightness {
-    brightness = aBrightness;
-    [self setFloat:brightness forUniform:brightnessUniform program:filterProgram];
-}
 
 - (NSMutableArray *)splineCurve:(NSArray *)points
 {
@@ -392,23 +308,6 @@ NSString *const kLXFragment = SHADER_STRING
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
-- (void)setupFilterForSize:(CGSize)filterFrameSize;
-{
-    runSynchronouslyOnVideoProcessingQueue(^{
-        [GPUImageOpenGLESContext setActiveShaderProgram:filterProgram];
-        
-        if (GPUImageRotationSwapsWidthAndHeight(inputRotation))
-        {
-            glUniform1f(imageWidthFactorUniform, 1.0 / filterFrameSize.height);
-            glUniform1f(imageHeightFactorUniform, 1.0 / filterFrameSize.width);
-        }
-        else
-        {
-            glUniform1f(imageWidthFactorUniform, 1.0 / filterFrameSize.width);
-            glUniform1f(imageHeightFactorUniform, 1.0 / filterFrameSize.height);
-        }
-    });
-}
 
 - (void)dealloc
 {

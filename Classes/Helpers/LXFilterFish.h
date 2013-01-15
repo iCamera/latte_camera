@@ -8,6 +8,8 @@
 
 #import "GPUImageFilter.h"
 
-@interface LXFilterFish : GPUImageFilter
+@interface LXFilterFish : GPUImageFilter {
+    GLint aspectratioUniform;
+}
 
 @end

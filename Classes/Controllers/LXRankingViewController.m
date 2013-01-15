@@ -94,11 +94,7 @@
 - (void)loadRanking {
     NSString* url = [NSString stringWithFormat:@"picture/ranking/%@/%d", ranktype, rankpage];
     
-    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:HUD];
-    HUD.mode = MBProgressHUDModeIndeterminate;
-    [HUD show:YES];
-    
+    [loadIndicator startAnimating];
     [[LatteAPIClient sharedClient] getPath:url
                                       parameters: nil
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -106,12 +102,12 @@
                                              [self.tableView reloadData];
 
                                              [self doneLoadingTableViewData];
-                                             [HUD hide:YES];
+                                             [loadIndicator stopAnimating];
                                          }
                                          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                              TFLog(@"Something went wrong (Ranking)");
                                              [self doneLoadingTableViewData];
-                                             [HUD hide:YES];
+                                             [loadIndicator stopAnimating];
                                          }
      ];
 }
