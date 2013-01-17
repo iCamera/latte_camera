@@ -20,6 +20,7 @@
 #import "LXFilterDetail.h"
 #import "LXFilterDOF.h"
 #import "LXFilterFish.h"
+#import "LXFilterText.h"
 #import "GPUImageStillCamera+captureWithMeta.h"
 
 #define kTimerNone       0
@@ -33,6 +34,7 @@
 #define kTabBasic 3
 #define kTabLens 4
 #define kTabText 5
+#define kTabTextEdit 51
 
 #define kMaskBlurNone 5
 #define kMaskBlurWeak 6
@@ -55,19 +57,21 @@ typedef enum {
 - (void)imagePickerControllerDidCancel:(LXCameraViewController *)picker;
 @end
 
-@interface LXCameraViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, UIScrollViewDelegate, UIAccelerometerDelegate, LXDrawViewDelegate, UIAlertViewDelegate> {
+@interface LXCameraViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, UIScrollViewDelegate, UIAccelerometerDelegate, LXDrawViewDelegate, UIAlertViewDelegate, UITextFieldDelegate> {
     GPUImageStillCamera *videoCamera;
     GPUImageSharpenFilter *filterSharpen;
     GPUImageFilterPipeline *pipe;
     LXFilterDetail *filter;
     LXFilterDOF *filterDOF;
     LXFilterFish *filterFish;
+    LXFilterText *filterText;
     GPUImageFilter *effect;
     FilterManager *effectManager;
     
     GPUImagePicture *picture;
     GPUImagePicture *previewFilter;
     GPUImagePicture *pictureDOF;
+    GPUImagePicture *pictureText;
     CGSize picSize;
     
     UIActionSheet *sheet;
@@ -75,6 +79,8 @@ typedef enum {
     NSMutableDictionary *imageMeta;
     NSTimer *timer;
     NSInteger timerCount;
+    CGSize keyboardSize;
+    CGPoint posText;
 
     BOOL isEditing;
     BOOL isSaved;
@@ -84,6 +90,9 @@ typedef enum {
     NSInteger currentEffect;
     NSInteger currentLens;
     NSInteger currentTimer;
+    NSString *currentFont;
+    NSString *currentText;
+    CGFloat currentFontSize;
     NSLayoutConstraint *cameraAspect;
     NSInteger timerMode;
     CLLocationManager *locationManager;
@@ -114,6 +123,7 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIPanGestureRecognizer *gesturePan;
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapFocus;
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapCloseHelp;
+@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapDoubleEditText;
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonSetNoTimer;
 @property (strong, nonatomic) IBOutlet UIButton *buttonSetTimer5s;
@@ -160,6 +170,7 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UISlider *sliderClear;
 @property (strong, nonatomic) IBOutlet UISlider *sliderSaturation;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollFont;
+@property (strong, nonatomic) IBOutlet UITextField *textText;
 
 - (IBAction)cameraTouch:(UITapGestureRecognizer *)sender;
 - (IBAction)openImagePicker:(id)sender;
@@ -182,4 +193,8 @@ typedef enum {
 - (IBAction)toggleGain:(UISwitch*)sender;
 - (IBAction)changePen:(UISlider *)sender;
 - (IBAction)updateFilter:(id)sender;
+- (IBAction)textChange:(UITextField *)sender;
+- (IBAction)doubleTapEdit:(UITapGestureRecognizer *)sender;
+- (IBAction)pinchCamera:(UIPinchGestureRecognizer *)sender;
+- (IBAction)panCamera:(UIPanGestureRecognizer *)sender;
 @end

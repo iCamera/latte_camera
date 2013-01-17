@@ -2985,14 +2985,14 @@
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Aju-lT-PdD">
                                                     <rect key="frame" x="18" y="7" width="66" height="15"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="13"/>
                                                     <color key="textColor" red="0.40000003579999999" green="0.36470589040000001" blue="0.22352942819999999" alpha="1" colorSpace="deviceRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Desc" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hfx-zz-pW4">
                                                     <rect key="frame" x="94" y="4" width="212" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="13"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
@@ -3107,7 +3107,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="430"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" id="MaH-yl-Ahh" userLabel="Camera View">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" id="MaH-yl-Ahh" userLabel="Wrapper Camera">
                                 <rect key="frame" x="10" y="15" width="300" height="400"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -3118,6 +3118,9 @@
                                         <gestureRecognizers/>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="0L2-OD-J43" appends="YES" id="bbT-5A-M4c"/>
+                                            <outletCollection property="gestureRecognizers" destination="MxV-xb-8fN" appends="YES" id="bSF-c0-U6D"/>
+                                            <outletCollection property="gestureRecognizers" destination="QOO-hh-DgX" appends="YES" id="81I-KR-1Pb"/>
+                                            <outletCollection property="gestureRecognizers" destination="PM7-1H-PWN" appends="YES" id="VUA-qE-9ar"/>
                                         </connections>
                                     </view>
                                     <view hidden="YES" multipleTouchEnabled="YES" alpha="0.80000001192092896" contentMode="scaleToFill" id="FQQ-lk-STG" userLabel="Subject Mask" customClass="LXDrawView">
@@ -3225,7 +3228,7 @@
                                         </connections>
                                     </button>
                                     <button hidden="YES" opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="0vk-fe-vbR" userLabel="Button Cancel">
-                                        <rect key="frame" x="210" y="0.0" width="40" height="40"/>
+                                        <rect key="frame" x="210" y="5" width="40" height="30"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" image="icon_no.png" backgroundImage="bg_camera_bt3.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -3239,7 +3242,7 @@
                                         </connections>
                                     </button>
                                     <button hidden="YES" opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="2vO-5s-PVr" userLabel="Button OK">
-                                        <rect key="frame" x="270" y="0.0" width="40" height="40"/>
+                                        <rect key="frame" x="270" y="5" width="40" height="30"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" image="icon_ok.png" backgroundImage="bg_camera_bt3.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -3397,7 +3400,7 @@
                                             <switch opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="bTF-6y-EJH" userLabel="Switch Natual">
                                                 <rect key="frame" x="70" y="70" width="79" height="27"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="onTintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                                <color key="onTintColor" red="0.60226004460000004" green="0.53549094019999999" blue="0.31669781419999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
                                                     <action selector="toggleMaskNatual:" destination="ieL-KW-PiQ" eventType="valueChanged" id="6Zn-BW-dS6"/>
                                                 </connections>
@@ -3405,7 +3408,7 @@
                                             <switch opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="AcE-WQ-o5W" userLabel="Switch Gain">
                                                 <rect key="frame" x="170" y="70" width="79" height="27"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="onTintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                                <color key="onTintColor" red="0.60226004460000004" green="0.53549094019999999" blue="0.31669781419999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
                                                     <action selector="toggleGain:" destination="ieL-KW-PiQ" eventType="valueChanged" id="bZ4-Bd-Pfe"/>
                                                 </connections>
@@ -3498,7 +3501,6 @@
                                                 <rect key="frame" x="70" y="5" width="240" height="23"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="minimumTrackTintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                <color key="maximumTrackTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <color key="thumbTintColor" red="0.60226004460000004" green="0.53549094019999999" blue="0.31669781419999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
                                                     <action selector="changePen:" destination="ieL-KW-PiQ" eventType="valueChanged" id="Cdi-BK-L3r"/>
@@ -3689,80 +3691,25 @@
                                 <color key="backgroundColor" red="0.21960784310000001" green="0.19215686269999999" blue="0.1137254902" alpha="0.90000000000000002" colorSpace="deviceRGB"/>
                             </view>
                             <view contentMode="scaleToFill" id="dNo-k5-FNy" userLabel="Text Control">
-                                <rect key="frame" x="0.0" y="430" width="320" height="110"/>
+                                <rect key="frame" x="0.0" y="430" width="320" height="140"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Lens" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bgv-Kn-Vkv">
-                                        <rect key="frame" x="10" y="10" width="52" height="16"/>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="8ax-Ld-6V0">
+                                        <rect key="frame" x="0.0" y="30" width="320" height="110"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </scrollView>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Edit text" minimumFontSize="17" id="7lS-CE-iHu">
+                                        <rect key="frame" x="10" y="0.0" width="300" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="10"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                        <size key="shadowOffset" width="0.0" height="0.0"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Vignette" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="12X-cc-Egw">
-                                        <rect key="frame" x="10" y="36" width="52" height="16"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="10"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                        <size key="shadowOffset" width="0.0" height="0.0"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="063-Kq-bPJ" userLabel="Button - Lens Normal">
-                                        <rect key="frame" x="70" y="5" width="75" height="25"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
-                                        <state key="normal" title="Normal" backgroundImage="select3_1.png">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="disabled" backgroundImage="select3_1_on.png"/>
-                                        <state key="highlighted" backgroundImage="select3_1_on.png">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
                                         <connections>
-                                            <action selector="changeLens:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="xtZ-T1-avw"/>
+                                            <action selector="textChange:" destination="ieL-KW-PiQ" eventType="editingChanged" id="E9x-gn-mhz"/>
+                                            <outlet property="delegate" destination="ieL-KW-PiQ" id="faN-Qp-YN6"/>
                                         </connections>
-                                    </button>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="DgE-Lw-4ke" userLabel="Button - Lens Wide">
-                                        <rect key="frame" x="145" y="5" width="75" height="25"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
-                                        <state key="normal" title="Wide Angle" backgroundImage="select3_2.png">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="disabled" backgroundImage="select3_2_on.png"/>
-                                        <state key="highlighted" backgroundImage="select3_2_on.png">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="changeLens:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="ACS-h9-e0y"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="1fC-8L-FHC" userLabel="Button - Lens Fish">
-                                        <rect key="frame" x="220" y="5" width="75" height="25"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
-                                        <state key="normal" title="Fish Eye" backgroundImage="select3_3.png">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="disabled" backgroundImage="select3_3_on.png"/>
-                                        <state key="highlighted" backgroundImage="select3_3_on.png">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="changeLens:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="46Z-yg-XIi"/>
-                                        </connections>
-                                    </button>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" continuous="NO" id="KOv-yH-74V" userLabel="Slider Vignette">
-                                        <rect key="frame" x="70" y="33" width="240" height="23"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="minimumTrackTintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                        <color key="maximumTrackTintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                        <color key="thumbTintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                    </slider>
+                                    </textField>
                                 </subviews>
                                 <color key="backgroundColor" red="0.21960784310000001" green="0.19215686269999999" blue="0.1137254902" alpha="0.90000000000000002" colorSpace="deviceRGB"/>
                             </view>
@@ -3846,7 +3793,7 @@
                                     <button hidden="YES" opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="oPW-i4-NiR" userLabel="Button Lens">
                                         <rect key="frame" x="5" y="5" width="58" height="40"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
-                                        <state key="normal" title="LENS" image="icon_lens.png" backgroundImage="bg_camera_bt2.png">
+                                        <state key="normal" title="" image="icon_lens.png" backgroundImage="bg_camera_bt2.png">
                                             <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -3859,7 +3806,7 @@
                                     <button hidden="YES" opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="qfz-nj-8Si" userLabel="Button Text">
                                         <rect key="frame" x="257" y="5" width="58" height="40"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
-                                        <state key="normal" title="TEXT" backgroundImage="bg_camera_bt2.png">
+                                        <state key="normal" title="ABC" backgroundImage="bg_camera_bt2.png">
                                             <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -3999,13 +3946,17 @@
                         <outlet property="gesturePan" destination="hTp-5Z-FXa" id="uUj-cF-AyW"/>
                         <outlet property="imageAutoFocus" destination="HJh-Fe-F58" id="rM3-JH-QPU"/>
                         <outlet property="scrollEffect" destination="Qcy-0Z-pzw" id="UTy-zR-1Lx"/>
+                        <outlet property="scrollFont" destination="8ax-Ld-6V0" id="jiI-us-nlh"/>
                         <outlet property="sliderClear" destination="DiY-Yx-d3c" id="oIN-zC-8I9"/>
                         <outlet property="sliderExposure" destination="gjg-9E-8CH" id="mfD-nv-6X5"/>
                         <outlet property="sliderSaturation" destination="dm9-te-SJe" id="LWD-cH-rFH"/>
                         <outlet property="sliderSharpness" destination="zO7-i5-Csa" id="7pi-2g-b6S"/>
                         <outlet property="sliderVignette" destination="hha-63-Bgt" id="smH-lM-KYU"/>
+                        <outlet property="switchGain" destination="AcE-WQ-o5W" id="wyb-UE-BO9"/>
                         <outlet property="tapCloseHelp" destination="TPR-cT-6jO" id="AGZ-SI-Oca"/>
+                        <outlet property="tapDoubleEditText" destination="MxV-xb-8fN" id="pqO-Li-q1h"/>
                         <outlet property="tapFocus" destination="0L2-OD-J43" id="FBq-oo-lpD"/>
+                        <outlet property="textText" destination="7lS-CE-iHu" id="vP9-ef-QO3"/>
                         <outlet property="viewBasicControl" destination="Mhu-tQ-y79" id="qi9-rh-6l8"/>
                         <outlet property="viewBottomBar" destination="Lm7-x6-syS" id="YEs-gV-JNZ"/>
                         <outlet property="viewCamera" destination="T0W-nj-LFr" id="dwd-za-4ld"/>
@@ -4042,6 +3993,23 @@
                         <action selector="touchCloseHelp:" destination="ieL-KW-PiQ" id="h5b-4Z-Wjz"/>
                     </connections>
                 </tapGestureRecognizer>
+                <tapGestureRecognizer enabled="NO" numberOfTapsRequired="2" id="MxV-xb-8fN" userLabel="Double Tap Edit Text">
+                    <connections>
+                        <action selector="doubleTapEdit:" destination="ieL-KW-PiQ" id="MQ2-D7-RZK"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="QOO-hh-DgX" userLabel="Pan Camera">
+                    <connections>
+                        <action selector="panCamera:" destination="ieL-KW-PiQ" id="o91-fJ-jd8"/>
+                        <outlet property="delegate" destination="ieL-KW-PiQ" id="lvs-G0-Keo"/>
+                    </connections>
+                </panGestureRecognizer>
+                <pinchGestureRecognizer id="PM7-1H-PWN" userLabel="Pinch Camera">
+                    <connections>
+                        <action selector="pinchCamera:" destination="ieL-KW-PiQ" id="hTY-wQ-G1i"/>
+                        <outlet property="delegate" destination="ieL-KW-PiQ" id="08K-BX-J0e"/>
+                    </connections>
+                </pinchGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-2309" y="-2"/>
         </scene>
@@ -4449,12 +4417,16 @@
                 <relationship kind="action" name="changeLens:" candidateClass="UIButton"/>
                 <relationship kind="action" name="changePen:" candidateClass="UISlider"/>
                 <relationship kind="action" name="close:"/>
+                <relationship kind="action" name="doubleTapEdit:" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="action" name="flipCamera:"/>
                 <relationship kind="action" name="openImagePicker:"/>
+                <relationship kind="action" name="panCamera:" candidateClass="UIPanGestureRecognizer"/>
                 <relationship kind="action" name="panTarget:" candidateClass="UIPanGestureRecognizer"/>
+                <relationship kind="action" name="pinchCamera:" candidateClass="UIPinchGestureRecognizer"/>
                 <relationship kind="action" name="setEffect:"/>
                 <relationship kind="action" name="setMask:" candidateClass="UIButton"/>
                 <relationship kind="action" name="setTimer:"/>
+                <relationship kind="action" name="textChange:" candidateClass="UITextField"/>
                 <relationship kind="action" name="toggleControl:" candidateClass="UIButton"/>
                 <relationship kind="action" name="toggleGain:" candidateClass="UISwitch"/>
                 <relationship kind="action" name="toggleMaskNatual:" candidateClass="UISwitch"/>
@@ -4492,13 +4464,17 @@
                 <relationship kind="outlet" name="gesturePan" candidateClass="UIPanGestureRecognizer"/>
                 <relationship kind="outlet" name="imageAutoFocus" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="scrollEffect" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="scrollFont" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="sliderClear" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="sliderExposure" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="sliderSaturation" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="sliderSharpness" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="sliderVignette" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="switchGain" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="tapCloseHelp" candidateClass="UITapGestureRecognizer"/>
+                <relationship kind="outlet" name="tapDoubleEditText" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="outlet" name="tapFocus" candidateClass="UITapGestureRecognizer"/>
+                <relationship kind="outlet" name="textText" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="viewBasicControl" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewBottomBar" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewCamera" candidateClass="GPUImageView"/>

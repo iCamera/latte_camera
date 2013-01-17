@@ -29,6 +29,7 @@
 @synthesize buttonReset;
 
 @synthesize gesturePan;
+@synthesize tapDoubleEditText;
 @synthesize viewBottomBar;
 @synthesize imageAutoFocus;
 @synthesize buttonPick;
@@ -80,6 +81,8 @@
 @synthesize sliderClear;
 @synthesize sliderSaturation;
 
+@synthesize textText;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -127,6 +130,10 @@
     HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:HUD];
     
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
+    [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];
+    
 	// Do any additional setup after loading the view.
     // Setup filter
     pipe = [[GPUImageFilterPipeline alloc] init];
@@ -136,7 +143,10 @@
     filterSharpen = [[GPUImageSharpenFilter alloc] init];
     filterFish = [[LXFilterFish alloc] init];
     filterDOF = [[LXFilterDOF alloc] init];
+    filterText = [[LXFilterText alloc] init];
+    
 //    [filterDOF disableSecondFrameCheck];
+//    [filterText disableSecondFrameCheck];
     effectManager = [[FilterManager alloc] init];
     
     videoCamera = [[GPUImageStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionBack];
@@ -245,6 +255,7 @@
         buttonFont.titleLabel.font = [UIFont fontWithName:fontNames[0] size:20];
         [buttonFont setTitle:familyName forState:UIControlStateNormal];
         buttonFont.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        [buttonFont addTarget:self action:@selector(selectFont:) forControlEvents:UIControlEventTouchUpInside];
         
         i++;
         [scrollFont addSubview:buttonFont];
@@ -258,6 +269,29 @@
         [videoCamera startCameraCapture];
         [self applyCurrentFilters];
     });
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    currentTab = kTabTextEdit;
+    keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    [self resizeCameraViewWithAnimation:YES];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    currentTab = kTabText;
+    [self resizeCameraViewWithAnimation:YES];
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+    return YES;
+}
+
+- (void)selectFont:(UIButton*)sender {
+    currentFont = sender.titleLabel.text;
+    [self newText];
 }
 
 - (void)viewDidAppear:(BOOL)animated {    
@@ -343,34 +377,11 @@
     [self setButtonReset:nil];
     [self setSwitchGain:nil];
     [self setScrollFont:nil];
+    [self setTapDoubleEditText:nil];
+    [self setTextText:nil];
     [super viewDidUnload];
 }
 
-- (void)showStillImage {
-    
-    GPUImageRotationMode imageViewRotationMode = kGPUImageNoRotation;
-    switch (imageOrientation) {
-        case UIImageOrientationLeft:
-            imageViewRotationMode = kGPUImageRotateLeft;
-            break;
-        case UIImageOrientationRight:
-            imageViewRotationMode = kGPUImageRotateRight;
-            break;
-        case UIImageOrientationDown:
-            imageViewRotationMode = kGPUImageRotate180;
-            break;
-        case UIImageOrientationUp:
-            imageViewRotationMode = kGPUImageNoRotation;
-            break;
-        default:
-            imageViewRotationMode = kGPUImageRotateLeft;
-    }
-    
-    // seems like atIndex is ignored by GPUImageView...
-    [viewCamera setInputRotation:imageViewRotationMode atIndex:0];
-    
-    [previewFilter processImage];
-}
 
 - (void)applyCurrentFilters {
     [self applyCurrentFilters:NO];
@@ -387,6 +398,14 @@
         } else {
             pipe.input = previewFilter;
         }
+        
+        [filter removeAllTargets];
+        [filterText removeAllTargets];
+        [filterFish removeAllTargets];
+        [filterDOF removeAllTargets];
+        [filterSharpen removeAllTargets];
+        [pictureDOF removeAllTargets];
+        [pictureText removeAllTargets];
         
         filter.vignfade = 0.8-sliderVignette.value;
         filter.brightness = sliderExposure.value;
@@ -432,36 +451,51 @@
             [pipe addFilter:effect];
         }
         
+        if (textText.text.length > 0) {
+            [pipe addFilter:filterText];
+        }
+
+        
         // Two input filter has to be setup at last
-        if (buttonBlurNone.enabled && (pictureDOF != nil)) {
-            GPUImageRotationMode imageViewRotationMode = kGPUImageNoRotation;
-            switch (imageOrientation) {
-                case UIImageOrientationLeft:
-                    imageViewRotationMode = kGPUImageRotateRight;
-                    break;
-                case UIImageOrientationRight:
-                    imageViewRotationMode = kGPUImageRotateLeft;
-                    break;
-                case UIImageOrientationDown:
-                    imageViewRotationMode = kGPUImageRotate180;
-                    break;
-                case UIImageOrientationUp:
-                    imageViewRotationMode = kGPUImageNoRotation;
-                    break;
-                default:
-                    imageViewRotationMode = kGPUImageRotateLeft;
-            }
-            
-            [pictureDOF removeAllTargets];
+        GPUImageRotationMode imageViewRotationMode = kGPUImageNoRotation;
+        switch (imageOrientation) {
+            case UIImageOrientationLeft:
+                imageViewRotationMode = kGPUImageRotateRight;
+                break;
+            case UIImageOrientationRight:
+                imageViewRotationMode = kGPUImageRotateLeft;
+                break;
+            case UIImageOrientationDown:
+                imageViewRotationMode = kGPUImageRotate180;
+                break;
+            case UIImageOrientationUp:
+                imageViewRotationMode = kGPUImageNoRotation;
+                break;
+            default:
+                imageViewRotationMode = kGPUImageRotateLeft;
+        }
+
+        
+        if (buttonBlurNone.enabled && (pictureDOF != nil)) {            
             [filterDOF setInputRotation:imageViewRotationMode atIndex:1];
             [pictureDOF processImage];
-            [pictureDOF addTarget:filterDOF];
+            [pictureDOF addTarget:filterDOF atTextureLocation:1];
         }
+        
+        if (textText.text.length > 0) {
+            [filterText setInputRotation:imageViewRotationMode atIndex:1];
+            [pictureText processImage];
+            [pictureText addTarget:filterText];
+        }
+        
+        
+        // seems like atIndex is ignored by GPUImageView...
+        [viewCamera setInputRotation:imageViewRotationMode atIndex:0];
         
         // UI is more responsive with dispatch
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            [self showStillImage];
+            [previewFilter processImage];
         });
 
 
@@ -473,6 +507,43 @@
     }
     
     
+}
+
+-(UIImage *)imageFromText:(NSString *)text
+{
+    // set the font type and size
+    UIFont *font = [UIFont fontWithName:currentFont size:currentFontSize];
+    CGSize size  = [text sizeWithFont:font];
+    
+    // shadow
+    size.height += 10;
+    size.width += 10;
+    
+    // check if UIGraphicsBeginImageContextWithOptions is available (iOS is 4.0+)
+    if (UIGraphicsBeginImageContextWithOptions != NULL)
+        UIGraphicsBeginImageContextWithOptions(size,NO,0.0);
+    else
+        // iOS is < 4.0
+        UIGraphicsBeginImageContext(size);
+    
+    // optional: add a shadow, to avoid clipping the shadow you should make the context size bigger
+    //
+    // CGContextRef ctx = UIGraphicsGetCurrentContext();
+    // CGContextSetShadowWithColor(ctx, CGSizeMake(1.0, 1.0), 5.0, [[UIColor grayColor] CGColor]);
+    
+    // draw in context, you can use also drawInRect:withFont:
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+	CGContextSetShadowWithColor(context, CGSizeMake(0, 1.0f), 1.0f, [UIColor blackColor].CGColor);
+    
+    CGContextSetRGBFillColor(context, 1.0, 1.0, 1.0, 1);
+    [text drawAtPoint:CGPointMake(5.0, 5.0) withFont:font];
+    
+    // transfer image
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
 }
 
 
@@ -647,10 +718,10 @@
             buttonToggleText.selected = false;
             break;
         case kTabText:
+            buttonToggleFocus.selected = false;
             buttonToggleEffect.selected = false;
             buttonToggleBasic.selected = false;
             buttonToggleLens.selected = false;
-            buttonToggleText.selected = false;
             break;
         case kTabBokeh: {
             buttonToggleEffect.selected = false;
@@ -678,6 +749,7 @@
     [self resizeCameraViewWithAnimation:YES];
     
     viewDraw.hidden = currentTab != kTabBokeh;
+    tapDoubleEditText.enabled = buttonToggleText.selected;
         
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
@@ -720,7 +792,10 @@
             frameBasic.origin.y = posBottom - 110;
             break;
         case kTabText:
-            frameText.origin.y = posBottom - 110;
+            frameText.origin.y = posBottom - 140;
+            break;
+        case kTabTextEdit:
+            frameText.origin.y = posBottom - keyboardSize.height + 20;
             break;
         case kTabPreview:
             break;
@@ -737,7 +812,13 @@
         }
         
         if (currentTab != kTabPreview) {
-            height -= 110;
+            if (currentTab == kTabText)
+                height -= 140;
+            else if (currentTab == kTabTextEdit) {
+                height -= keyboardSize.height - 20;
+            }
+            else
+                height -= 110;
         }
         
         frameCanvas = CGRectMake(0, 40, 320, height+20);
@@ -902,7 +983,7 @@
         ALAssetRepresentation *rep = [myasset defaultRepresentation];
         bestEffortAtLocation = nil;
         imageMeta = [NSMutableDictionary dictionaryWithDictionary:myasset.defaultRepresentation.metadata];
-        
+    
         UIImage *tmp = [info objectForKey:UIImagePickerControllerOriginalImage];
         picture = [[GPUImagePicture alloc] initWithCGImage:rep.fullResolutionImage];
         imageOrientation = tmp.imageOrientation;
@@ -1004,6 +1085,11 @@
 
 - (void)switchEditImage {
     // Reset to normal lens
+    currentFont = @"Arial";
+    posText = CGPointMake(0.1, 0.5);
+    currentFontSize = 50.0;
+    textText.text = @"";
+
     currentLens = 0;
     
     isEditing = YES;
@@ -1217,6 +1303,50 @@
     [self applyCurrentFilters];
 }
 
+- (IBAction)textChange:(UITextField *)sender {
+    [self newText];
+}
+
+- (IBAction)doubleTapEdit:(UITapGestureRecognizer *)sender {
+}
+
+- (IBAction)pinchCamera:(UIPinchGestureRecognizer *)sender {
+    static CGFloat mCurrentScale;
+    static CGFloat mLastScale;
+    mCurrentScale += [sender scale] - mLastScale;
+    mLastScale = [sender scale];
+    
+    if (sender.state == UIGestureRecognizerStateEnded)
+    {
+        mLastScale = 1.0;
+    }
+    currentFontSize = mCurrentScale * 100.0;
+    [self newText];
+}
+
+- (IBAction)panCamera:(UIPanGestureRecognizer *)sender {
+    CGPoint translation = [sender translationInView:viewCamera];
+
+    posText.x += translation.x/viewCamera.frame.size.width;
+    posText.y += translation.y/viewCamera.frame.size.height;
+    
+    filterText.position = posText;
+    //[filterText disableFirstFrameCheck];
+    //[pictureText processImage];
+    [self applyCurrentFilters];
+    
+    [sender setTranslation:CGPointMake(0, 0) inView:viewCamera];
+}
+
+- (void)newText {
+    if (textText.text.length > 0) {
+        UIImage *imageText = [self imageFromText:textText.text];
+        pictureText = [[GPUImagePicture alloc] initWithImage:imageText];
+        filterText.aspect = CGPointMake(picSize.width/imageText.size.width, picSize.height/imageText.size.height);
+    }
+    [self applyCurrentFilters];
+}
+
 - (void)countDown:(id)sender {
     if (timerCount == 0) {
         switch (currentTimer) {
@@ -1387,7 +1517,7 @@
         [self applyCurrentFilters];
 }
 
-/*- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     return YES;
-}*/
+}
 @end

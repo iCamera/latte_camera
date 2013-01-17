@@ -122,6 +122,7 @@
 		88D9864C15B8F97800858AD6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D9864B15B8F97800858AD6 /* CoreGraphics.framework */; };
 		88D9864E15B8F97800858AD6 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D9864D15B8F97800858AD6 /* CoreData.framework */; };
 		88D9865615B8F97800858AD6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D9865515B8F97800858AD6 /* main.m */; };
+		88E8C1B016A64254006FC065 /* LXFilterText.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E8C1AF16A64254006FC065 /* LXFilterText.m */; };
 		88E952C6161994DA00E44619 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E952BC161994DA00E44619 /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		88E952C7161994DA00E44619 /* blackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 88E952BE161994DA00E44619 /* blackArrow.png */; };
 		88E952C8161994DA00E44619 /* blackArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88E952BF161994DA00E44619 /* blackArrow@2x.png */; };
@@ -877,6 +878,8 @@
 		88D9865515B8F97800858AD6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		88D9865715B8F97800858AD6 /* Latte camera-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Latte camera-Prefix.pch"; sourceTree = "<group>"; };
 		88D9866D15B8F97800858AD6 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		88E8C1AE16A64254006FC065 /* LXFilterText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFilterText.h; sourceTree = "<group>"; };
+		88E8C1AF16A64254006FC065 /* LXFilterText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFilterText.m; sourceTree = "<group>"; };
 		88E952BB161994DA00E44619 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
 		88E952BC161994DA00E44619 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		88E952BE161994DA00E44619 /* blackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackArrow.png; sourceTree = "<group>"; };
@@ -1687,12 +1690,12 @@
 		8890728F16770EBB0013DF7A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				88341A861684358D0084A8CD /* GPUImageStillCamera+captureWithMeta.h */,
-				88341A871684358D0084A8CD /* GPUImageStillCamera+captureWithMeta.m */,
 				8890729016770EBB0013DF7A /* FilterManager.h */,
 				8890729116770EBB0013DF7A /* FilterManager.m */,
 				8890729216770EBB0013DF7A /* GPUImageOutput+saveProcessedImageToLibrary.h */,
 				8890729316770EBB0013DF7A /* GPUImageOutput+saveProcessedImageToLibrary.m */,
+				88341A861684358D0084A8CD /* GPUImageStillCamera+captureWithMeta.h */,
+				88341A871684358D0084A8CD /* GPUImageStillCamera+captureWithMeta.m */,
 				8890729616770EBB0013DF7A /* KeychainItemWrapper.h */,
 				8890729716770EBB0013DF7A /* KeychainItemWrapper.m */,
 				8890729816770EBB0013DF7A /* LatteAPIClient.h */,
@@ -1703,10 +1706,14 @@
 				8890729D16770EBB0013DF7A /* LXFilterBlur.m */,
 				886C639F16816CC20007D952 /* LXFilterDetail.h */,
 				886C63A016816CC20007D952 /* LXFilterDetail.m */,
+				886C63AD1682E1DA0007D952 /* LXFilterDOF.h */,
+				886C63AE1682E1DA0007D952 /* LXFilterDOF.m */,
 				8890729E16770EBB0013DF7A /* LXFilterFish.h */,
 				8890729F16770EBB0013DF7A /* LXFilterFish.m */,
 				889072A016770EBB0013DF7A /* LXFilterMono.h */,
 				889072A116770EBB0013DF7A /* LXFilterMono.m */,
+				88E8C1AE16A64254006FC065 /* LXFilterText.h */,
+				88E8C1AF16A64254006FC065 /* LXFilterText.m */,
 				889072BA16770EBB0013DF7A /* LXUtils.h */,
 				889072BB16770EBB0013DF7A /* LXUtils.m */,
 				889072A216770EBB0013DF7A /* UIActionSheet+ButtonState.h */,
@@ -1719,8 +1726,6 @@
 				889072A916770EBB0013DF7A /* UIImage+Resize.m */,
 				889072AA16770EBB0013DF7A /* UIImage+RoundedCorner.h */,
 				889072AB16770EBB0013DF7A /* UIImage+RoundedCorner.m */,
-				886C63AD1682E1DA0007D952 /* LXFilterDOF.h */,
-				886C63AE1682E1DA0007D952 /* LXFilterDOF.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -3290,6 +3295,7 @@
 				886C63A116816CC20007D952 /* LXFilterDetail.m in Sources */,
 				886C63AF1682E1DB0007D952 /* LXFilterDOF.m in Sources */,
 				88341A881684358E0084A8CD /* GPUImageStillCamera+captureWithMeta.m in Sources */,
+				88E8C1B016A64254006FC065 /* LXFilterText.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
