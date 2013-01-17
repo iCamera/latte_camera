@@ -11,9 +11,11 @@
 @interface LXFilterText : GPUImageTwoInputFilter {
     GLint aspectUniform;
     GLint positionUniform;
+    GLint scaleUniform;
 }
 
 @property(readwrite, nonatomic) CGPoint position;
 @property(readwrite, nonatomic) CGPoint aspect;
+@property(readwrite, nonatomic) CGFloat scale;
 
 @end

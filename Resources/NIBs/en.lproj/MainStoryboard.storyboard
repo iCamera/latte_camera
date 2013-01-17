@@ -3171,10 +3171,24 @@
                                             <action selector="changeFlash:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="Xw5-cR-lsA"/>
                                         </connections>
                                     </button>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="nd3-L5-6sn" userLabel="Button Pick Photo">
+                                        <rect key="frame" x="69" y="5" width="58" height="30"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" size="button"/>
+                                        <state key="normal" image="icon_flash_30.png" backgroundImage="bg_camera_bt3.png">
+                                            <color key="titleColor" red="0.1960784314" green="0.30980392159999998" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <state key="selected" image="icon_flash.png"/>
+                                        <state key="highlighted" backgroundImage="bg_camera_bt3_on.png">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="openImagePicker:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="51I-fQ-DZS"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="iHT-Uf-hQm" userLabel="Button Close">
                                         <rect key="frame" x="257" y="5" width="58" height="30"/>
                                         <fontDescription key="fontDescription" type="boldSystem" size="button"/>
-                                        <state key="normal" image="icon_escape2.png" backgroundImage="bg_camera_bt3.png">
+                                        <state key="normal" image="icon_home.png" backgroundImage="bg_camera_bt3.png">
                                             <color key="titleColor" red="0.1960784314" green="0.30980392159999998" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <state key="highlighted" backgroundImage="bg_camera_bt3_on.png">
@@ -3277,7 +3291,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="seV-Cg-FRl" userLabel="Button Close">
                                         <rect key="frame" x="260" y="0.0" width="50" height="30"/>
                                         <fontDescription key="fontDescription" type="boldSystem" size="button"/>
-                                        <state key="normal" image="icon_escape2.png">
+                                        <state key="normal" image="icon_home.png">
                                             <color key="titleColor" red="0.1960784314" green="0.30980392159999998" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <state key="highlighted">
@@ -3715,7 +3729,7 @@
                                 <rect key="frame" x="0.0" y="430" width="320" height="110"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Intensity" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Cz9-M7-MWi">
+                                    <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Intensity" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Cz9-M7-MWi">
                                         <rect key="frame" x="10" y="8" width="52" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="10"/>
@@ -3723,7 +3737,7 @@
                                         <nil key="highlightedColor"/>
                                         <size key="shadowOffset" width="0.0" height="0.0"/>
                                     </label>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="ECu-pG-NDT" userLabel="Slider Intensity">
+                                    <slider hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="ECu-pG-NDT" userLabel="Slider Intensity">
                                         <rect key="frame" x="70" y="5" width="215" height="23"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="minimumTrackTintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
@@ -3929,6 +3943,7 @@
                         <outlet property="buttonLensWide" destination="gaj-3f-cjX" id="fcj-EK-19V"/>
                         <outlet property="buttonNo" destination="0vk-fe-vbR" id="S0M-79-RqL"/>
                         <outlet property="buttonPick" destination="T0q-UT-yaq" id="VrV-w1-HNs"/>
+                        <outlet property="buttonPickTop" destination="nd3-L5-6sn" id="6GB-D7-Gea"/>
                         <outlet property="buttonReset" destination="38S-r4-fnf" id="6Uv-Vn-2JC"/>
                         <outlet property="buttonSetNoTimer" destination="use-KV-0gw" id="IBj-HC-gg9"/>
                         <outlet property="buttonSetTimer5s" destination="0np-hc-mAc" id="lZa-hn-HJf"/>
@@ -4447,6 +4462,7 @@
                 <relationship kind="outlet" name="buttonLensWide" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonNo" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonPick" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonPickTop" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonReset" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonSetNoTimer" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonSetTimer5s" candidateClass="UIButton"/>

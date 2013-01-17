@@ -27,6 +27,7 @@
 @synthesize buttonFlash;
 @synthesize buttonFlip;
 @synthesize buttonReset;
+@synthesize buttonPickTop;
 
 @synthesize gesturePan;
 @synthesize tapDoubleEditText;
@@ -141,12 +142,13 @@
     pipe.output = viewCamera;
     filter = [[LXFilterDetail alloc] init];
     filterSharpen = [[GPUImageSharpenFilter alloc] init];
+    pictureDOF = [[GPUImageRawDataInput alloc] initWithBytes:nil size:CGSizeMake(0, 0)];
+    pictureText = [[GPUImageRawDataInput alloc] initWithBytes:nil size:CGSizeMake(0, 0)];
+
     filterFish = [[LXFilterFish alloc] init];
     filterDOF = [[LXFilterDOF alloc] init];
     filterText = [[LXFilterText alloc] init];
     
-//    [filterDOF disableSecondFrameCheck];
-//    [filterText disableSecondFrameCheck];
     effectManager = [[FilterManager alloc] init];
     
     videoCamera = [[GPUImageStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionBack];
@@ -267,7 +269,7 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [videoCamera startCameraCapture];
-        [self applyCurrentFilters];
+        [self preparePipe:NO];
     });
 }
 
@@ -379,19 +381,18 @@
     [self setScrollFont:nil];
     [self setTapDoubleEditText:nil];
     [self setTextText:nil];
+    [self setButtonPickTop:nil];
     [super viewDidUnload];
 }
 
 
-- (void)applyCurrentFilters {
-    [self applyCurrentFilters:NO];
-}
-
-- (void)applyCurrentFilters:(BOOL)saving {
+- (void)preparePipe:(BOOL)saving {
     if (isEditing) {
-        isSaved = false;
         savedData = nil;
         savedPreview = nil;
+        
+        [picture removeAllTargets];
+        [previewFilter removeAllTargets];
         
         if (saving) {
             pipe.input = picture;
@@ -404,15 +405,9 @@
         [filterFish removeAllTargets];
         [filterDOF removeAllTargets];
         [filterSharpen removeAllTargets];
+        
         [pictureDOF removeAllTargets];
         [pictureText removeAllTargets];
-        
-        filter.vignfade = 0.8-sliderVignette.value;
-        filter.brightness = sliderExposure.value;
-        filter.clearness = sliderClear.value;
-        filter.saturation = sliderSaturation.value;
-        
-        filterSharpen.sharpness = sliderSharpness.value;
         
         [pipe removeAllFilters];
         if (sliderSharpness.value > 0) {
@@ -427,24 +422,6 @@
         
         if (buttonBlurNone.enabled && (pictureDOF != nil)) {
             [pipe addFilter:filterDOF];
-            
-            if (!buttonBlurNormal.enabled) {
-                filterDOF.bias = 0.02;
-            }
-            
-            if (!buttonBlurWeak.enabled) {
-                filterDOF.bias = 0.01;
-            }
-
-            if (!buttonBlurStrong.enabled) {
-                filterDOF.bias = 0.03;
-            }
-            
-            if (switchGain.on)
-                filterDOF.gain = 1.0;
-            else
-                filterDOF.gain = 0.0;
-
         }
         
         if (effect != nil) {
@@ -454,65 +431,101 @@
         if (textText.text.length > 0) {
             [pipe addFilter:filterText];
         }
-
+        
         
         // Two input filter has to be setup at last
-        GPUImageRotationMode imageViewRotationMode = kGPUImageNoRotation;
+        GPUImageRotationMode imageViewRotationModeIdx0 = kGPUImageNoRotation;
+        GPUImageRotationMode imageViewRotationModeIdx1 = kGPUImageNoRotation;
         switch (imageOrientation) {
             case UIImageOrientationLeft:
-                imageViewRotationMode = kGPUImageRotateRight;
+                imageViewRotationModeIdx0 = kGPUImageRotateLeft;
+                imageViewRotationModeIdx1 = kGPUImageRotateRight;
                 break;
             case UIImageOrientationRight:
-                imageViewRotationMode = kGPUImageRotateLeft;
+                imageViewRotationModeIdx0 = kGPUImageRotateRight;
+                imageViewRotationModeIdx1 = kGPUImageRotateLeft;
                 break;
             case UIImageOrientationDown:
-                imageViewRotationMode = kGPUImageRotate180;
+                imageViewRotationModeIdx0 = kGPUImageRotate180;
+                imageViewRotationModeIdx1 = kGPUImageRotate180;
                 break;
             case UIImageOrientationUp:
-                imageViewRotationMode = kGPUImageNoRotation;
+                imageViewRotationModeIdx0 = kGPUImageNoRotation;
+                imageViewRotationModeIdx1 = kGPUImageNoRotation;
                 break;
             default:
-                imageViewRotationMode = kGPUImageRotateLeft;
+                imageViewRotationModeIdx0 = kGPUImageRotateLeft;
+                imageViewRotationModeIdx1 = kGPUImageRotateLeft;
+                break;
         }
-
         
-        if (buttonBlurNone.enabled && (pictureDOF != nil)) {            
-            [filterDOF setInputRotation:imageViewRotationMode atIndex:1];
-            [pictureDOF processImage];
+        
+        if (buttonBlurNone.enabled && (pictureDOF != nil)) {
+            [filterDOF setInputRotation:imageViewRotationModeIdx1 atIndex:1];
             [pictureDOF addTarget:filterDOF atTextureLocation:1];
         }
         
         if (textText.text.length > 0) {
-            [filterText setInputRotation:imageViewRotationMode atIndex:1];
-            [pictureText processImage];
+            [filterText setInputRotation:imageViewRotationModeIdx1 atIndex:1];
             [pictureText addTarget:filterText];
         }
         
         
         // seems like atIndex is ignored by GPUImageView...
-        [viewCamera setInputRotation:imageViewRotationMode atIndex:0];
-        
-        // UI is more responsive with dispatch
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            [previewFilter processImage];
-        });
-
-
+        [viewCamera setInputRotation:imageViewRotationModeIdx0 atIndex:0];
     } else {
         GPUImageFilter *dummy = [[GPUImageFilter alloc] init];
         pipe.input = videoCamera;
         [pipe removeAllFilters];
         [pipe addFilter:dummy];
     }
-    
-    
 }
 
--(UIImage *)imageFromText:(NSString *)text
+- (void)applyFilterSetting {
+    filter.vignfade = 0.8-sliderVignette.value;
+    filter.brightness = sliderExposure.value;
+    filter.clearness = sliderClear.value;
+    filter.saturation = sliderSaturation.value;
+    
+    currentSharpness = sliderSharpness.value;
+    filterSharpen.sharpness = sliderSharpness.value;
+    
+    if (!buttonBlurNormal.enabled) {
+        filterDOF.bias = 0.02;
+    }
+    
+    if (!buttonBlurWeak.enabled) {
+        filterDOF.bias = 0.01;
+    }
+    
+    if (!buttonBlurStrong.enabled) {
+        filterDOF.bias = 0.03;
+    }
+    
+    if (switchGain.on)
+        filterDOF.gain = 1.0;
+    else
+        filterDOF.gain = 0.0;
+}
+
+- (void)processImage {
+    isSaved = false;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [previewFilter processImage];
+        if (buttonBlurNone.enabled && (pictureDOF != nil)) {
+            [pictureDOF processData];
+        }
+        if (textText.text.length > 0) {
+            [pictureText processData];
+        }
+    });
+
+}
+
+- (UIImage *)imageFromText:(NSString *)text
 {
     // set the font type and size
-    UIFont *font = [UIFont fontWithName:currentFont size:currentFontSize];
+    UIFont *font = [UIFont fontWithName:currentFont size:200.0];
     CGSize size  = [text sizeWithFont:font];
     
     // shadow
@@ -534,7 +547,7 @@
     // draw in context, you can use also drawInRect:withFont:
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-	CGContextSetShadowWithColor(context, CGSizeMake(0, 1.0f), 1.0f, [UIColor blackColor].CGColor);
+	CGContextSetShadowWithColor(context, CGSizeMake(0, 3.0f), 2.0f, [UIColor blackColor].CGColor);
     
     CGContextSetRGBFillColor(context, 1.0, 1.0, 1.0, 1);
     [text drawAtPoint:CGPointMake(5.0, 5.0) withFont:font];
@@ -551,7 +564,8 @@
     UIButton* buttonEffect = (UIButton*)sender;
     currentEffect = buttonEffect.tag;
     effect = [effectManager getEffect:currentEffect];
-    [self applyCurrentFilters];
+    [self preparePipe:NO];
+    [self processImage];
 }
 
 
@@ -597,7 +611,9 @@
                                       else {
                                           size = CGSizeMake(width*scale, height*scale);
                                       }
+                                      
                                       picSize = processedImage.size;
+                                      previewSize = CGSizeMake(width*scale, height*scale);
                                       
                                       UIImage *previewPic = [processedImage
                                                              resizedImage: size
@@ -607,8 +623,9 @@
                                       
                                       [self switchEditImage];
                                       [self resizeCameraViewWithAnimation:NO];
-                                      [self applyCurrentFilters];
-
+                                      [self preparePipe:NO];
+                                      [self applyFilterSetting];
+                                      [self processImage];
                                   }];
 }
 
@@ -671,7 +688,8 @@
     sender.enabled = false;
     
     currentLens = sender.tag;
-    [self applyCurrentFilters];
+    [self preparePipe:NO];
+    [self processImage];
 }
 
 - (IBAction)changeFlash:(id)sender {
@@ -914,8 +932,18 @@
     
     HUD.mode = MBProgressHUDModeIndeterminate;
     [HUD show:YES];
-    [self applyCurrentFilters:YES];
+    
+    [self preparePipe:YES];
+    [self applyFilterSetting];
+    
     [picture processImage];
+    if (buttonBlurNone.enabled && (pictureDOF != nil)) {
+        [pictureDOF processData];
+    }
+    if (textText.text.length > 0) {
+        [pictureText processData];
+    }
+    
     [self saveImage:saveImage];
 }
 
@@ -1004,6 +1032,7 @@
         else {
             size = CGSizeMake(300.0*scale, height*scale);
         }
+        previewSize = CGSizeMake(300.0*scale, height*scale);
         
         UIImage *previewPic = [tmp
                                resizedImage: size
@@ -1013,7 +1042,9 @@
 
         [self switchEditImage];
         [self resizeCameraViewWithAnimation:NO];
-        [self applyCurrentFilters];
+        [self preparePipe:NO];
+        [self applyFilterSetting];
+        [self processImage];
     };
     
     //
@@ -1051,6 +1082,7 @@
     
     buttonBlurNone.enabled = false;
     
+    [textText resignFirstResponder];
     [locationManager startUpdatingLocation];
     [videoCamera resumeCameraCapture];
     [videoCamera startCameraCapture];
@@ -1063,6 +1095,7 @@
     buttonFlip.hidden = NO;
     imageAutoFocus.hidden = NO;
     buttonReset.hidden = YES;
+    buttonPickTop.hidden = YES;
     
     buttonPick.hidden = NO;
     tapFocus.enabled = true;
@@ -1080,17 +1113,21 @@
     isEditing = NO;
     
     [self resizeCameraViewWithAnimation:NO];
-    [self applyCurrentFilters];
+    [self preparePipe:NO];
 }
 
 - (void)switchEditImage {
     // Reset to normal lens
     currentFont = @"Arial";
     posText = CGPointMake(0.1, 0.5);
-    currentFontSize = 50.0;
     textText.text = @"";
+    currentText = @"";
+    mCurrentScale = 1.0;
+    mLastScale = 1.0;
 
     currentLens = 0;
+    currentSharpness = 0.0;
+    currentMask = kMaskBlurNone;
     
     isEditing = YES;
     buttonCapture.hidden = YES;
@@ -1100,6 +1137,7 @@
     buttonTimer.hidden = YES;
     buttonFlip.hidden = YES;
     buttonPick.hidden = YES;
+    buttonPickTop.hidden = NO;
     
     buttonToggleFocus.hidden = NO;
     buttonToggleBasic.hidden = NO;
@@ -1159,7 +1197,8 @@
     sliderSharpness.value = 0.0;
     sliderVignette.value = 0.0;
     effect = nil;
-    [self applyCurrentFilters];
+    
+    [self updateFilter:nil];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -1232,7 +1271,8 @@
 
 - (IBAction)setMask:(UIButton*)sender {
     [self setUIMask:sender.tag];
-    [self applyCurrentFilters];
+    [self applyFilterSetting];
+    [self processImage];
 }
 
 - (IBAction)toggleMaskNatual:(UISwitch*)sender {
@@ -1263,7 +1303,8 @@
 }
 
 - (IBAction)toggleGain:(UISwitch*)sender {
-    [self applyCurrentFilters];
+    [self applyFilterSetting];
+    [self processImage];
 }
 
 - (void)setUIMask:(NSInteger)tag {
@@ -1277,20 +1318,22 @@
             buttonBlurNone.enabled = false;
             break;
         case kMaskBlurWeak:
-//            filter.maxblur = 5.0;
             buttonBlurWeak.enabled = false;
             break;
         case kMaskBlurNormal:
             buttonBlurNormal.enabled = false;
-//            filter.maxblur = 7.0;
             break;
         case kMaskBlurStrong:
-//            filter.maxblur = 15.0;
             buttonBlurStrong.enabled = false;
             break;
         default:
             break;
     }
+    
+    if ((currentMask == kMaskBlurNone) != (tag == kMaskBlurNone)) {
+        [self preparePipe:NO];
+    }
+    currentMask = tag;
 }
 
 
@@ -1300,7 +1343,11 @@
 }
 
 - (IBAction)updateFilter:(id)sender {
-    [self applyCurrentFilters];
+    if ((currentSharpness > 0) != (sliderSharpness.value > 0)) {
+        [self preparePipe:NO];
+    }
+    [self applyFilterSetting];
+    [self processImage];
 }
 
 - (IBAction)textChange:(UITextField *)sender {
@@ -1311,17 +1358,19 @@
 }
 
 - (IBAction)pinchCamera:(UIPinchGestureRecognizer *)sender {
-    static CGFloat mCurrentScale;
-    static CGFloat mLastScale;
-    mCurrentScale += [sender scale] - mLastScale;
-    mLastScale = [sender scale];
-    
-    if (sender.state == UIGestureRecognizerStateEnded)
-    {
-        mLastScale = 1.0;
+    if (textText.text.length > 0) {
+        mCurrentScale += [sender scale] - mLastScale;
+        mLastScale = [sender scale];
+        
+        if (sender.state == UIGestureRecognizerStateEnded)
+        {
+            mLastScale = 1.0;
+        }
+        
+        filterText.scale = mCurrentScale-0.7;
+        [self applyFilterSetting];
+        [self processImage];
     }
-    currentFontSize = mCurrentScale * 100.0;
-    [self newText];
 }
 
 - (IBAction)panCamera:(UIPanGestureRecognizer *)sender {
@@ -1331,9 +1380,7 @@
     posText.y += translation.y/viewCamera.frame.size.height;
     
     filterText.position = posText;
-    //[filterText disableFirstFrameCheck];
-    //[pictureText processImage];
-    [self applyCurrentFilters];
+    [self processImage];
     
     [sender setTranslation:CGPointMake(0, 0) inView:viewCamera];
 }
@@ -1341,10 +1388,27 @@
 - (void)newText {
     if (textText.text.length > 0) {
         UIImage *imageText = [self imageFromText:textText.text];
-        pictureText = [[GPUImagePicture alloc] initWithImage:imageText];
-        filterText.aspect = CGPointMake(picSize.width/imageText.size.width, picSize.height/imageText.size.height);
+        
+        GLubyte *imageData = NULL;
+        // For resized image, redraw
+        imageData = (GLubyte *) calloc(1, (int)imageText.size.width * (int)imageText.size.height * 4);
+        CGColorSpaceRef genericRGBColorspace = CGColorSpaceCreateDeviceRGB();
+        CGContextRef imageContext = CGBitmapContextCreate(imageData, (size_t)imageText.size.width, (size_t)imageText.size.height, 8, (size_t)imageText.size.width * 4, genericRGBColorspace,  kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
+        CGContextDrawImage(imageContext, CGRectMake(0.0, 0.0, imageText.size.width, imageText.size.height), imageText.CGImage);
+        CGContextRelease(imageContext);
+        CGColorSpaceRelease(genericRGBColorspace);
+        
+        [pictureText updateDataFromBytes:imageData size:imageText.size];
+        free(imageData);
+        
+        filterText.aspect = CGPointMake(previewSize.width/imageText.size.width, previewSize.height/imageText.size.height);
     }
-    [self applyCurrentFilters];
+    if ((currentText.length > 0) != (textText.text.length > 0)) {
+        [self preparePipe:NO];
+    }
+    currentText = textText.text;
+    [self applyFilterSetting];
+    [self processImage];
 }
 
 - (void)countDown:(id)sender {
@@ -1509,12 +1573,24 @@
 #pragma mark -
 
 - (void)newMask:(UIImage *)mask {
-    pictureDOF = [[GPUImagePicture alloc] initWithImage:mask];
     if (!buttonBlurNone.enabled) {
-        [self setMask:buttonBlurNormal];
+        [self setUIMask:kMaskBlurNormal];
     }
-    else
-        [self applyCurrentFilters];
+    
+    GLubyte *imageData = NULL;
+    // For resized image, redraw
+    imageData = (GLubyte *) calloc(1, (int)mask.size.width * (int)mask.size.height * 4);
+    CGColorSpaceRef genericRGBColorspace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef imageContext = CGBitmapContextCreate(imageData, (size_t)mask.size.width, (size_t)mask.size.height, 8, (size_t)mask.size.width * 4, genericRGBColorspace,  kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
+    CGContextDrawImage(imageContext, CGRectMake(0.0, 0.0, mask.size.width, mask.size.height), mask.CGImage);
+    CGContextRelease(imageContext);
+    CGColorSpaceRelease(genericRGBColorspace);
+    
+    [pictureDOF updateDataFromBytes:imageData size:mask.size];
+    free(imageData);
+    
+    [self applyFilterSetting];
+    [self processImage];
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {

@@ -18,12 +18,13 @@ NSString *const kLXFilterTextFragmentShaderString = SHADER_STRING
  uniform sampler2D inputImageTexture2;
  
  uniform lowp vec2 aspect;
+ uniform lowp float scale;
  uniform lowp vec2 position;
  
  void main()
  {
      lowp vec4 c2 = texture2D(inputImageTexture, textureCoordinate);
-	 lowp vec4 c1 = texture2D(inputImageTexture2, textureCoordinate2*aspect-(position*aspect));
+	 lowp vec4 c1 = texture2D(inputImageTexture2, (textureCoordinate2*aspect-(position*aspect))/scale);
      
      lowp vec4 outputColor;
      
@@ -43,6 +44,7 @@ NSString *const kLXFilterTextFragmentShaderString = SHADER_STRING
 
 @synthesize position;
 @synthesize aspect;
+@synthesize scale;
 
 - (id)init;
 {
@@ -53,9 +55,11 @@ NSString *const kLXFilterTextFragmentShaderString = SHADER_STRING
     
     aspectUniform = [filterProgram uniformIndex:@"aspect"];
     positionUniform = [filterProgram uniformIndex:@"position"];
+    scaleUniform = [filterProgram uniformIndex:@"scale"];
     
     self.position = CGPointMake(0.1, 0.5);
     self.aspect = CGPointMake(1.0, 1.0);
+    self.scale = 0.3;
         
     return self;
 }
@@ -64,9 +68,12 @@ NSString *const kLXFilterTextFragmentShaderString = SHADER_STRING
     [self setPoint:aPosition forUniform:positionUniform program:filterProgram];
 }
 
-
 - (void)setAspect:(CGPoint)aAspect {
     [self setPoint:aAspect forUniform:aspectUniform program:filterProgram];
+}
+
+- (void)setScale:(CGFloat)aScale {
+    [self setFloat:aScale forUniform:scaleUniform program:filterProgram];
 }
 
 @end

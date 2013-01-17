@@ -70,9 +70,10 @@ typedef enum {
     
     GPUImagePicture *picture;
     GPUImagePicture *previewFilter;
-    GPUImagePicture *pictureDOF;
-    GPUImagePicture *pictureText;
+    GPUImageRawDataInput *pictureDOF;
+    GPUImageRawDataInput *pictureText;
     CGSize picSize;
+    CGSize previewSize;
     
     UIActionSheet *sheet;
     UIImagePickerController *imagePicker;
@@ -81,6 +82,8 @@ typedef enum {
     NSInteger timerCount;
     CGSize keyboardSize;
     CGPoint posText;
+    CGFloat mCurrentScale;
+    CGFloat mLastScale;
 
     BOOL isEditing;
     BOOL isSaved;
@@ -92,7 +95,9 @@ typedef enum {
     NSInteger currentTimer;
     NSString *currentFont;
     NSString *currentText;
-    CGFloat currentFontSize;
+    CGFloat currentSharpness;
+    NSInteger currentMask;
+    
     NSLayoutConstraint *cameraAspect;
     NSInteger timerMode;
     CLLocationManager *locationManager;
@@ -119,6 +124,7 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIButton *buttonFlip;
 @property (strong, nonatomic) IBOutlet UIButton *buttonPick;
 @property (strong, nonatomic) IBOutlet UIButton *buttonReset;
+@property (strong, nonatomic) IBOutlet UIButton *buttonPickTop;
 
 @property (strong, nonatomic) IBOutlet UIPanGestureRecognizer *gesturePan;
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapFocus;
