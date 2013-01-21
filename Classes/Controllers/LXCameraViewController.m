@@ -25,12 +25,12 @@
 @synthesize buttonNo;
 @synthesize buttonTimer;
 @synthesize buttonFlash;
+@synthesize buttonFlash35;
 @synthesize buttonFlip;
 @synthesize buttonReset;
 @synthesize buttonPickTop;
 
 @synthesize gesturePan;
-@synthesize tapDoubleEditText;
 @synthesize viewBottomBar;
 @synthesize imageAutoFocus;
 @synthesize buttonPick;
@@ -81,6 +81,8 @@
 @synthesize sliderSharpness;
 @synthesize sliderClear;
 @synthesize sliderSaturation;
+@synthesize sliderFeather;
+@synthesize sliderEffectIntensity;
 
 @synthesize textText;
 
@@ -106,6 +108,26 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // LAShare
+    laSharekit = [[LXShare alloc] init];
+    laSharekit.controller = self;
+    
+    // COMPLETION BLOCKS
+    [laSharekit setCompletionDone:^{
+        TFLog(@"Share OK");
+    }];
+    [laSharekit setCompletionCanceled:^{
+        TFLog(@"Share Canceled");
+    }];
+    [laSharekit setCompletionFailed:^{
+        TFLog(@"Share Failed");
+    }];
+    [laSharekit setCompletionSaved:^{
+        TFLog(@"Share Saved");
+    }];
+    
+    isKeyboard = NO;
     
     UIImage *imageCanvas = [[UIImage imageNamed:@"bg_canvas.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(8, 8, 8, 8)];
     viewCanvas.image = imageCanvas;
@@ -144,6 +166,10 @@
     filterSharpen = [[GPUImageSharpenFilter alloc] init];
     pictureDOF = [[GPUImageRawDataInput alloc] initWithBytes:nil size:CGSizeMake(0, 0)];
     pictureText = [[GPUImageRawDataInput alloc] initWithBytes:nil size:CGSizeMake(0, 0)];
+    filterCrop = [[GPUImageCropFilter alloc] init];
+    filterDistord = [[GPUImagePinchDistortionFilter alloc] init];
+    filterIntensity = [[GPUImageAlphaBlendFilter alloc] init];
+    filterIntensity.mix = 0.0;
 
     filterFish = [[LXFilterFish alloc] init];
     filterDOF = [[LXFilterDOF alloc] init];
@@ -242,20 +268,21 @@
     }
     scrollEffect.contentSize = CGSizeMake(16*55+10, 60);
     
+
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"fonts" ofType:@"plist"];
+    NSDictionary *fonts = [[NSDictionary alloc] initWithContentsOfFile:plistPath];
+    
     // get font family
-    NSArray *fontFamilyNames = [UIFont familyNames];
     
     // loop
     NSInteger i = 0;
-    for (NSString *familyName in fontFamilyNames) {
-        NSArray *fontNames = [UIFont fontNamesForFamilyName:familyName];
-
-        CGRect frame = CGRectMake(0, i * 30, 320, 30);
+    for (NSDictionary *dictFont in [fonts objectForKey:@"fonts"]) {
+        CGRect frame = CGRectMake(10, i * 30, 300, 30);
         UIButton *buttonFont = [[UIButton alloc] initWithFrame:frame];
-        buttonFont.titleLabel.text = familyName;
+        buttonFont.titleLabel.text = [dictFont objectForKey:@"displayedName"];
         buttonFont.titleLabel.textAlignment = NSTextAlignmentLeft;
-        buttonFont.titleLabel.font = [UIFont fontWithName:fontNames[0] size:20];
-        [buttonFont setTitle:familyName forState:UIControlStateNormal];
+        buttonFont.titleLabel.font = [UIFont fontWithName:[dictFont objectForKey:@"name"] size:20];
+        [buttonFont setTitle:[dictFont objectForKey:@"displayedName"] forState:UIControlStateNormal];
         buttonFont.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         [buttonFont addTarget:self action:@selector(selectFont:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -267,22 +294,22 @@
     
     [self resizeCameraViewWithAnimation:NO];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [videoCamera startCameraCapture];
-        [self preparePipe:NO];
-    });
+    [videoCamera startCameraCapture];
+    
+    [self preparePipe:NO];
+    
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification
 {
-    currentTab = kTabTextEdit;
     keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    isKeyboard = YES;
     [self resizeCameraViewWithAnimation:YES];
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification
 {
-    currentTab = kTabText;
+    isKeyboard = NO;
     [self resizeCameraViewWithAnimation:YES];
 }
 
@@ -379,18 +406,17 @@
     [self setButtonReset:nil];
     [self setSwitchGain:nil];
     [self setScrollFont:nil];
-    [self setTapDoubleEditText:nil];
     [self setTextText:nil];
     [self setButtonPickTop:nil];
+    [self setSliderFeather:nil];
+    [self setSliderEffectIntensity:nil];
+    [self setButtonFlash35:nil];
     [super viewDidUnload];
 }
 
 
 - (void)preparePipe:(BOOL)saving {
-    if (isEditing) {
-        savedData = nil;
-        savedPreview = nil;
-        
+    if (isEditing) {        
         [picture removeAllTargets];
         [previewFilter removeAllTargets];
         
@@ -405,6 +431,9 @@
         [filterFish removeAllTargets];
         [filterDOF removeAllTargets];
         [filterSharpen removeAllTargets];
+        [filterDistord removeAllTargets];
+        [filterCrop removeAllTargets];
+        [filterIntensity removeAllTargets];
         
         [pictureDOF removeAllTargets];
         [pictureText removeAllTargets];
@@ -416,22 +445,40 @@
         
         [pipe addFilter:filter];
         
+//        if (!buttonLensFish.enabled) {
+//            [pipe addFilter:filterFish];
+//        }
+        
         if (!buttonLensFish.enabled) {
-            [pipe addFilter:filterFish];
+            [pipe addFilter:filterDistord];
+            [pipe addFilter:filterCrop];
         }
+
+        if (!buttonLensWide.enabled) {
+            [pipe addFilter:filterDistord];
+        }
+
         
         if (buttonBlurNone.enabled && (pictureDOF != nil)) {
             [pipe addFilter:filterDOF];
         }
         
+        NSInteger mark;
         if (effect != nil) {
+            mark = pipe.filters.count-1;
             [pipe addFilter:effect];
+            [pipe addFilter:filterIntensity];
         }
         
         if (textText.text.length > 0) {
             [pipe addFilter:filterText];
         }
         
+        // AFTER THIS LINE, NO MORE ADDFILTER
+        if (effect != nil) {
+            GPUImageFilter *tmp = pipe.filters[mark];
+            [tmp addTarget:pipe.filters[mark+2]];
+        }
         
         // Two input filter has to be setup at last
         GPUImageRotationMode imageViewRotationModeIdx0 = kGPUImageNoRotation;
@@ -478,6 +525,7 @@
         pipe.input = videoCamera;
         [pipe removeAllFilters];
         [pipe addFilter:dummy];
+        [dummy prepareForImageCapture];
     }
 }
 
@@ -489,6 +537,21 @@
     
     currentSharpness = sliderSharpness.value;
     filterSharpen.sharpness = sliderSharpness.value;
+    
+    if (effect != nil) {
+        filterIntensity.mix = 1.0 - sliderEffectIntensity.value;
+    }
+    
+    if (!buttonLensFish.enabled) {
+        filterDistord.scale = -0.2;
+        filterDistord.radius = 0.75;
+        filterCrop.cropRegion = CGRectMake(0.05, 0.05, 0.9, 0.9);
+    }
+    
+    if (!buttonLensWide.enabled) {
+        filterDistord.scale = 0.1;
+        filterDistord.radius = 1.0;
+    }
     
     if (!buttonBlurNormal.enabled) {
         filterDOF.bias = 0.02;
@@ -510,15 +573,17 @@
 
 - (void)processImage {
     isSaved = false;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+    savedData = nil;
+    savedPreview = nil;
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         [previewFilter processImage];
         if (buttonBlurNone.enabled && (pictureDOF != nil)) {
             [pictureDOF processData];
         }
-        if (textText.text.length > 0) {
+        if (currentText.length > 0) {
             [pictureText processData];
         }
-    });
+//    });
 
 }
 
@@ -550,6 +615,7 @@
 	CGContextSetShadowWithColor(context, CGSizeMake(0, 3.0f), 2.0f, [UIColor blackColor].CGColor);
     
     CGContextSetRGBFillColor(context, 1.0, 1.0, 1.0, 1);
+    
     [text drawAtPoint:CGPointMake(5.0, 5.0) withFont:font];
     
     // transfer image
@@ -589,20 +655,22 @@
 
 - (void)capturePhotoAsync {
     imageOrientation = orientationLast;
+    
     [videoCamera capturePhotoAsImageProcessedUpToFilter:pipe.filters[0]
                                         withOrientation:imageOrientation
                                   withCompletionHandler:^(UIImage *processedImage, NSError *error) {
-                                      [locationManager stopUpdatingLocation];
                                       [videoCamera stopCameraCapture];
+                                      
+                                      [locationManager stopUpdatingLocation];
+                                      
+                                      
                                       imageMeta = [NSMutableDictionary dictionaryWithDictionary:videoCamera.currentCaptureMetadata];
                                       
                                       CGFloat scale = [[UIScreen mainScreen] scale];
                                       CGFloat width = 300.0;
                                       
                                       NSInteger height = [LXUtils heightFromWidth:width width:processedImage.size.width height:processedImage.size.height];
-                                      
-                                      picture = [[GPUImagePicture alloc] initWithImage:processedImage];
-                                      
+
                                       CGSize size;
                                       
                                       if (imageOrientation == UIImageOrientationLeft || imageOrientation == UIImageOrientationRight) {
@@ -612,6 +680,8 @@
                                           size = CGSizeMake(width*scale, height*scale);
                                       }
                                       
+                                      picture = [[GPUImagePicture alloc] initWithImage:processedImage];
+                                      
                                       picSize = processedImage.size;
                                       previewSize = CGSizeMake(width*scale, height*scale);
                                       
@@ -620,9 +690,10 @@
                                                              interpolationQuality:kCGInterpolationHigh];
                                       
                                       previewFilter = [[GPUImagePicture alloc] initWithImage:previewPic];
-                                      
                                       [self switchEditImage];
+                                      
                                       [self resizeCameraViewWithAnimation:NO];
+                                      
                                       [self preparePipe:NO];
                                       [self applyFilterSetting];
                                       [self processImage];
@@ -649,7 +720,6 @@
         [locationManager stopUpdatingLocation];
         [videoCamera pauseCameraCapture];
         [videoCamera stopCameraCapture];
-//        [filter clearTargetWithCamera:videoCamera andPicture:previewFilter];
     }
     
     [self presentViewController:imagePicker animated:NO completion:nil];
@@ -689,11 +759,13 @@
     
     currentLens = sender.tag;
     [self preparePipe:NO];
+    [self applyFilterSetting];
     [self processImage];
 }
 
 - (IBAction)changeFlash:(id)sender {
     buttonFlash.selected = !buttonFlash.selected;
+    buttonFlash35.selected = !buttonFlash35.selected;
     [self setFlash:buttonFlash.selected];
 }
 
@@ -703,7 +775,157 @@
 }
 
 - (IBAction)touchSave:(id)sender {
-    [self saveImage];
+    [HUD show:NO];
+    
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [self getFinalImage:^{
+//            dispatch_async(dispatch_get_main_queue(), ^{
+                [self processSavedData];
+//            });
+        }];
+//    });
+    
+}
+
+- (void)processSavedData {
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    [HUD hide:YES];
+    if (app.currentUser != nil) {
+        NSDictionary *info = [[NSDictionary alloc] initWithObjectsAndKeys:
+                              savedData, @"data",
+                              savedPreview, @"preview",
+                              nil];
+        if (delegate == nil) {
+            [self performSegueWithIdentifier:@"Edit" sender:info];
+        } else {
+            [delegate imagePickerController:self didFinishPickingMediaWithData:info];
+        }
+    } else {
+        RDActionSheet *actionSheet = [[RDActionSheet alloc] initWithCancelButtonTitle:NSLocalizedString(@"Cancel", @"")
+                                                                   primaryButtonTitle:nil
+                                                               destructiveButtonTitle:nil
+                                                                    otherButtonTitles:@"Email", @"Twitter", @"Facebook", nil];
+        
+        actionSheet.callbackBlock = ^(RDActionSheetResult result, NSInteger buttonIndex)
+        {
+            switch (result) {
+                case RDActionSheetButtonResultSelected: {
+                    laSharekit.imageData = savedData;
+                    laSharekit.imagePreview = savedPreview;
+                    
+                    switch (buttonIndex) {
+                        case 0: // email
+                            [laSharekit emailIt];
+                            break;
+                        case 1: // twitter
+                            [laSharekit tweet];
+                            break;
+                        case 2: // facebook
+                            [laSharekit facebookPost];
+                            break;
+                            
+                        default:
+                            break;
+                    }
+                }
+                    break;
+                case RDActionSheetResultResultCancelled:
+                    NSLog(@"Sheet cancelled");
+            }
+        };
+        
+        [actionSheet showFrom:self.view];
+    }
+}
+
+- (void)getFinalImage:(void(^)())block {
+    if (isSaved) {
+        block();
+        return;
+    }
+    
+    [self preparePipe:NO];
+    [self applyFilterSetting];
+    
+    [previewFilter processImage];
+    if (buttonBlurNone.enabled && (pictureDOF != nil)) {
+        [pictureDOF processData];
+    }
+    if (textText.text.length > 0) {
+        [pictureText processData];
+    }
+    
+    CGImageRef cgImagePreviewFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:imageOrientation];
+    savedPreview = [UIImage imageWithCGImage:cgImagePreviewFromBytes scale:1.0 orientation:imageOrientation];
+    CGImageRelease(cgImagePreviewFromBytes);
+    
+    [self preparePipe:YES];
+    [self applyFilterSetting];
+    
+    [picture processImage];
+    if (buttonBlurNone.enabled && (pictureDOF != nil)) {
+        [pictureDOF processData];
+    }
+    if (textText.text.length > 0) {
+        [pictureText processData];
+    }
+    
+    CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:imageOrientation];
+    
+    // Return to preview mode
+    [self preparePipe:NO];
+    
+    // Prepare meta data
+    if (imageMeta == nil) {
+        imageMeta = [[NSMutableDictionary alloc] init];
+    }
+    
+    NSNumber *orientation = [NSNumber numberWithInteger:[self metadataOrientationForUIImageOrientation:imageOrientation]];
+    
+    [imageMeta setObject:orientation forKey:(NSString *)kCGImagePropertyOrientation];
+    
+    // Add GPS
+    NSDictionary *location;
+    if (bestEffortAtLocation != nil) {
+        location = [LXUtils getGPSDictionaryForLocation:bestEffortAtLocation];
+        [imageMeta setObject:location forKey:(NSString *)kCGImagePropertyGPSDictionary];
+    }
+    
+    // Add App Info
+    NSMutableDictionary *dictForTIFF = [imageMeta objectForKey:(NSString *)kCGImagePropertyTIFFDictionary];
+    if (dictForTIFF == nil) {
+        dictForTIFF = [[NSMutableDictionary alloc] init];
+        [imageMeta setObject:dictForTIFF forKey:(NSString *)kCGImagePropertyTIFFDictionary];
+    }
+    
+    [dictForTIFF setObject:@"Latte camera" forKey:(NSString *)kCGImagePropertyTIFFSoftware];
+    
+    [imageMeta setObject:dictForTIFF forKey:(NSString *)kCGImagePropertyTIFFDictionary];
+    
+    // Save now
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    [library writeImageToSavedPhotosAlbum:cgImageFromBytes metadata:imageMeta completionBlock:^(NSURL *assetURL, NSError *error) {
+        CGImageRelease(cgImageFromBytes);
+        
+        if (!error) {
+            [library assetForURL:assetURL
+                     resultBlock:^(ALAsset *asset) {
+                         ALAssetRepresentation *rep = [asset defaultRepresentation];
+                         Byte *buffer = (Byte*)malloc(rep.size);
+                         NSUInteger buffered = [rep getBytes:buffer fromOffset:0.0 length:rep.size error:nil];
+                         savedData = [NSData dataWithBytesNoCopy:buffer length:buffered freeWhenDone:YES];
+                         isSaved = true;
+                         block();
+                     }
+                    failureBlock:^(NSError *error) {
+                        TFLog(@"Cannot saved 2");
+                    }];
+
+        } else {
+            TFLog(@"Cannot saved 1");
+        }
+    }];
+    
 }
 
 - (IBAction)toggleControl:(UIButton*)sender {
@@ -767,7 +989,6 @@
     [self resizeCameraViewWithAnimation:YES];
     
     viewDraw.hidden = currentTab != kTabBokeh;
-    tapDoubleEditText.enabled = buttonToggleText.selected;
         
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
@@ -810,10 +1031,10 @@
             frameBasic.origin.y = posBottom - 110;
             break;
         case kTabText:
-            frameText.origin.y = posBottom - 140;
-            break;
-        case kTabTextEdit:
-            frameText.origin.y = posBottom - keyboardSize.height + 20;
+            if (isKeyboard)
+                frameText.origin.y = posBottom - keyboardSize.height + 20;
+            else
+                frameText.origin.y = posBottom - 140;
             break;
         case kTabPreview:
             break;
@@ -830,9 +1051,9 @@
         }
         
         if (currentTab != kTabPreview) {
-            if (currentTab == kTabText)
+            if ((currentTab == kTabText) && (!isKeyboard))
                 height -= 140;
-            else if (currentTab == kTabTextEdit) {
+            else if ((currentTab == kTabText) && (isKeyboard)) {
                 height -= keyboardSize.height - 20;
             }
             else
@@ -890,101 +1111,6 @@
         
         
     }];
-}
-
-- (void)processSavedData {
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    if (app.currentUser != nil) {
-        NSDictionary *info = [[NSDictionary alloc] initWithObjectsAndKeys:
-                              savedData, @"data",
-                              savedPreview, @"preview",
-                              nil];
-        if (delegate == nil) {
-            [self performSegueWithIdentifier:@"Edit" sender:info];
-        } else {
-            [delegate imagePickerController:self didFinishPickingMediaWithData:info];
-        }
-        [HUD hide:YES];
-    } else {
-        [self switchCamera];
-        HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
-        HUD.mode = MBProgressHUDModeCustomView;
-        [HUD hide:YES afterDelay:1];
-    }
-}
-
-- (void)saveImage {
-    if (isSaved) {
-        [self processSavedData];
-        return;
-    }
-        
-    void (^saveImage)(ALAsset *, UIImage *) = ^(ALAsset *asset, UIImage *preview) {
-        ALAssetRepresentation *rep = [asset defaultRepresentation];
-        Byte *buffer = (Byte*)malloc(rep.size);
-        NSUInteger buffered = [rep getBytes:buffer fromOffset:0.0 length:rep.size error:nil];
-        savedData = [NSData dataWithBytesNoCopy:buffer length:buffered freeWhenDone:YES];
-        savedPreview = preview;
-        isSaved = true;
-        
-        [self processSavedData];
-    };
-    
-    HUD.mode = MBProgressHUDModeIndeterminate;
-    [HUD show:YES];
-    
-    [self preparePipe:YES];
-    [self applyFilterSetting];
-    
-    [picture processImage];
-    if (buttonBlurNone.enabled && (pictureDOF != nil)) {
-        [pictureDOF processData];
-    }
-    if (textText.text.length > 0) {
-        [pictureText processData];
-    }
-    
-    [self saveImage:saveImage];
-}
-
-- (void)saveImage:(void(^)(ALAsset *asset, UIImage *preview))block {
-    
-    if (imageMeta == nil) {
-        imageMeta = [[NSMutableDictionary alloc] init];
-    }
-    
-    NSNumber *orientation = [NSNumber numberWithInteger:[self metadataOrientationForUIImageOrientation:imageOrientation]];
-    
-    [imageMeta setObject:orientation forKey:(NSString *)kCGImagePropertyOrientation];
-    
-    // Add GPS
-    NSDictionary *location;
-    if (bestEffortAtLocation != nil) {
-        location = [LXUtils getGPSDictionaryForLocation:bestEffortAtLocation];
-        [imageMeta setObject:location forKey:(NSString *)kCGImagePropertyGPSDictionary];
-    }
-    
-    // Add App Info
-    NSMutableDictionary *dictForTIFF = [imageMeta objectForKey:(NSString *)kCGImagePropertyTIFFDictionary];
-    if (dictForTIFF == nil) {
-        dictForTIFF = [[NSMutableDictionary alloc] init];
-        [imageMeta setObject:dictForTIFF forKey:(NSString *)kCGImagePropertyTIFFDictionary];
-    }
-    
-    [dictForTIFF setObject:@"Latte camera" forKey:(NSString *)kCGImagePropertyTIFFSoftware];
-    
-    [imageMeta setObject:dictForTIFF forKey:(NSString *)kCGImagePropertyTIFFDictionary];
-    
-    [pipe saveImageFromCurrentlyProcessedOutputWithMeta:imageMeta
-                                         andOrientation:imageOrientation
-                                             onComplete:^(NSURL *assetURL, NSError *error, UIImage *preview) {
-                                                 ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-                                                 [library assetForURL:assetURL
-                                                          resultBlock:^(ALAsset *asset) {
-                                                              block(asset, preview);
-                                                          }
-                                                         failureBlock:nil];
-                                             }];
 }
 
 - (int) metadataOrientationForUIImageOrientation:(UIImageOrientation)orientation
@@ -1122,8 +1248,11 @@
     posText = CGPointMake(0.1, 0.5);
     textText.text = @"";
     currentText = @"";
+    
     mCurrentScale = 1.0;
     mLastScale = 1.0;
+    filterText.position = CGPointMake(0.1, 0.5);
+    filterText.scale = 0.3;
 
     currentLens = 0;
     currentSharpness = 0.0;
@@ -1196,9 +1325,19 @@
     sliderSaturation.value = 1.0;
     sliderSharpness.value = 0.0;
     sliderVignette.value = 0.0;
-    effect = nil;
+    sliderFeather.value = 10.0;
+    [self setUIMask:kMaskBlurNone];
     
-    [self updateFilter:nil];
+    effect = nil;
+    buttonLensFish.enabled = true;
+    buttonLensWide.enabled = true;
+    buttonLensNormal.enabled = false;
+    textText.text = @"";
+    currentText = @"";
+    
+    [self preparePipe:NO];
+    [self applyFilterSetting];
+    [self processImage];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -1373,16 +1512,23 @@
     }
 }
 
-- (IBAction)panCamera:(UIPanGestureRecognizer *)sender {
-    CGPoint translation = [sender translationInView:viewCamera];
-
-    posText.x += translation.x/viewCamera.frame.size.width;
-    posText.y += translation.y/viewCamera.frame.size.height;
-    
-    filterText.position = posText;
+- (IBAction)changeEffectIntensity:(UISlider *)sender {
+    [self applyFilterSetting];
     [self processImage];
-    
-    [sender setTranslation:CGPointMake(0, 0) inView:viewCamera];
+}
+
+- (IBAction)panCamera:(UIPanGestureRecognizer *)sender {
+    if (textText.text.length > 0) {
+        CGPoint translation = [sender translationInView:viewCamera];
+        
+        posText.x += translation.x/viewCamera.frame.size.width;
+        posText.y += translation.y/viewCamera.frame.size.height;
+        
+        filterText.position = posText;
+        [self processImage];
+        
+        [sender setTranslation:CGPointMake(0, 0) inView:viewCamera];
+    }
 }
 
 - (void)newText {

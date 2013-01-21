@@ -21,5 +21,6 @@
 }
 
 @property (strong, nonatomic) IBOutlet LXButtonBrown30 *buttonNavRight;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadIndicator;
 
 @end

@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LXNavigationController : UINavigationController
+@interface LXNavigationController : UINavigationController<UIGestureRecognizerDelegate>
 
 @end

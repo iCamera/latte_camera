@@ -1,0 +1,31 @@
+{
+    "grouped": true,
+    "title": "Setting",
+    "controllerName": "luxeysSettingViewController",
+    "sections": [
+        { "title":"HỒ SƠ CÁ NHÂN", "elements":[
+                { "type":"QEntryElement", "key":"name", "title":"Tài khoản", "Placeholder":"Tài khoản", "bind":"textValue:name"},
+                { "type":"QRadioElement", "key":"gender", "title":"Giới tính", "items":["Nam", "Nữ"], "values":[1, 2], "controllerAction":"handleUpdate:"},
+                { "type":"QDateTimeInlineElement", "key":"birthday", "title":"Ngày sinh"},
+                { "type":"QEntryElement", "key":"current_residence", "title":"Nơi ở", "Placeholder":"Nơi ở", "bind":"textValue:current_residence"},
+                { "type":"QEntryElement", "key":"hometown", "title":"Nơi sinh", "Placeholder":"Nơi sinh", "bind":"textValue:hometown"},
+                { "type":"QEntryElement", "key":"occupation", "title":"Nghề nghiệp", "Placeholder":"Nghề nghiệp", "bind":"textValue:occupation"},
+                { "type":"QMultilineElement", "key":"introduction", "title":"Giới thiệu", "bind":"textValue:introduction"},
+                { "type":"QMultilineElement", "key":"hobby", "title":"Sở thích", "bind":"textValue:hobby"}
+            ]
+        },
+        { "title":"PRIVACY SETTINGS", "elements": [
+                { "type":"QRadioElement", "key":"picture_status", "title":"Ảnh", "items":["Cá nhân", "Bạn bè", "Thành viên", "Công khai"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdate:"},
+                { "type":"QRadioElement", "key":"gender_public", "title":"Giới tính", "items":["Cá nhân", "Bạn bè", "Thành viên", "Công khai"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdate:"},
+                { "type":"QRadioElement", "key":"current_residence_public", "title":"Nơi ở", "items":["Cá nhân", "Bạn bè", "Thành viên", "Công khai"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdate:"},
+                { "type":"QRadioElement", "key":"hometown_public", "title":"Nơi sinh", "items":["Cá nhân", "Bạn bè", "Thành viên", "Công khai"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdate:"},
+                { "type":"QRadioElement", "key":"birthyear_public", "title":"Tuổi", "items":["Cá nhân", "Bạn bè", "Thành viên", "Công khai"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdate:"},
+                { "type":"QRadioElement", "key":"birthdate_public", "title":"Ngày sinh", "items":["Cá nhân", "Bạn bè", "Thành viên", "Công khai"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdate:"}
+            ]
+        },
+        { "elements":[
+                { "type":"QButtonElement", "title":"THOÁT", "controllerAction":"handleLogout:"},
+            ]
+        }
+    ]
+}

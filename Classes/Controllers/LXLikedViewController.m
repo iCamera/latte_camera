@@ -15,6 +15,7 @@
 @implementation LXLikedViewController
 
 @synthesize buttonNavRight;
+@synthesize loadIndicator;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -51,6 +52,7 @@
 }
 
 - (void)reloadFav {
+    [loadIndicator startAnimating];
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     [[LatteAPIClient sharedClient] getPath:@"picture/user/me/voted"
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:
@@ -60,10 +62,12 @@
                                        [self.tableView reloadData];
                                        
                                        [self doneLoadingTableViewData];
+                                       [loadIndicator stopAnimating];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        TFLog(@"Something went wrong (Fav)");
                                        
                                        [self doneLoadingTableViewData];
+                                       [loadIndicator stopAnimating];
                                    }];
 }
 
@@ -188,5 +192,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 6;
+}
+- (void)viewDidUnload {
+    [self setLoadIndicator:nil];
+    [super viewDidUnload];
 }
 @end

@@ -52,6 +52,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    HUD = [[MBProgressHUD alloc] initWithView:self.tableView];
+    [self.tableView addSubview:HUD];
+    HUD.mode = MBProgressHUDModeText;
+    HUD.labelText = NSLocalizedString(@"Loading...", @"Loading...") ;
+    HUD.labelFont = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:16];
+    HUD.margin = 10.f;
+    HUD.yOffset = 150.f;
+    
   // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
 
@@ -95,6 +104,7 @@
     NSString* url = [NSString stringWithFormat:@"picture/ranking/%@/%d", ranktype, rankpage];
     
     [loadIndicator startAnimating];
+    [HUD show:YES];
     [[LatteAPIClient sharedClient] getPath:url
                                       parameters: nil
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -103,11 +113,13 @@
 
                                              [self doneLoadingTableViewData];
                                              [loadIndicator stopAnimating];
+                                             [HUD hide:YES];
                                          }
                                          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                              TFLog(@"Something went wrong (Ranking)");
                                              [self doneLoadingTableViewData];
                                              [loadIndicator stopAnimating];
+                                             [HUD hide:YES];
                                          }
      ];
 }

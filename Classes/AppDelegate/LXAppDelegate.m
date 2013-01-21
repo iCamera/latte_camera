@@ -34,12 +34,6 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
     return [FBSession.activeSession handleOpenURL:url];
 }
 
-void uncaughtExceptionHandler(NSException *exception) {
-    TFLog(@"CRASH: %@", exception);
-    TFLog(@"Stack Trace: %@", [exception callStackSymbols]);
-    // Internal error reporting
-}
-
 - (NSString*)getToken {
     return [tokenItem objectForKey:(id)CFBridgingRelease(kSecAttrService)];
 }
@@ -78,13 +72,21 @@ void uncaughtExceptionHandler(NSException *exception) {
                                             postNotificationName:@"LoggedIn"
                                             object:self];
                                        }
-                                   } failure:nil];
+                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       TFLog(@"Something went wrong (Login check)");
+                                   }];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+#define TESTING 1
+#ifdef TESTING
+    NSString *uuid = [[UIDevice currentDevice] uniqueIdentifier];
+    [TestFlight setDeviceIdentifier:uuid];
+#endif
     
+    [TestFlight takeOff:@"7f1fb2cd-bf2d-41bc-bbf7-4a6870785c9e"];
+
     // Register for Push Notification
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     
@@ -98,15 +100,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     // Clear notify but save badge
     [self clearNotification];
     [FBSession openActiveSessionWithAllowLoginUI:NO];
-#define TESTING 1
-#ifdef TESTING
-    if ([[UIDevice currentDevice] respondsToSelector:@selector(identifierForVendor)]) {
-        // This is will run if it is iOS6
-        [TestFlight setDeviceIdentifier:[[[UIDevice currentDevice] identifierForVendor] UUIDString]];
-    } 
-
-#endif
-    [TestFlight takeOff:@"5c606ea8c15647469c8ee49d61ffd6dc_MTYxMjQzMjAxMi0xMS0zMCAwNTo0NjowMy4zMjQwNjI"];
     
     return YES;
 }
@@ -117,10 +110,10 @@ void uncaughtExceptionHandler(NSException *exception) {
         UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                                  bundle:nil];
         LXMainTabViewController *viewMainTab = [mainStoryboard instantiateViewControllerWithIdentifier:@"MainTab"];
-        LXNotifySideViewController *rightViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"RightSide"];
+        LXNotifySideViewController *leftViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"LeftSide"];
         
         revealController = [[LXUIRevealController alloc]initWithFrontViewController:viewMainTab
-                                                                 leftViewController:rightViewController
+                                                                 leftViewController:leftViewController
                                                                 rightViewController:nil];
         
         window.rootViewController = revealController;

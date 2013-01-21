@@ -15,6 +15,8 @@
 
 @class User;
 
+#define APPDELEGATE (AppDelegate *)[UIApplication sharedApplication].delegate
+
 @interface LXAppDelegate : UIResponder <UIApplicationDelegate> {
     KeychainItemWrapper *tokenItem;
     LXUIRevealController* revealController;

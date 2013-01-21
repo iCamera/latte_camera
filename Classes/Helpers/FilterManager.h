@@ -11,7 +11,6 @@
 #import "GPUImageOutput.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <ImageIO/ImageIO.h>
-#import "GPUImageOutput+saveProcessedImageToLibrary.h"
 #import "LXFilter.h"
 #import "LXFilterBlur.h"
 #import "LXFilterMono.h"
@@ -21,12 +20,8 @@
 
     GPUImageToneCurveFilter *tonecurve;
     GPUImageRGBFilter *rgb;
-    GPUImageCropFilter *crop2;
-    GPUImageBrightnessFilter *dummy;
     LXFilter *filter;
     LXFilterMono *filterMono;
-    
-    GPUImagePicture *picDOF;
 }
 
 - (GPUImageFilter*)getEffect:(NSInteger)aEffect;

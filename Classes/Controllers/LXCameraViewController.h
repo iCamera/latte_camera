@@ -22,6 +22,8 @@
 #import "LXFilterFish.h"
 #import "LXFilterText.h"
 #import "GPUImageStillCamera+captureWithMeta.h"
+#import "LXShare.h"
+#import "RDActionSheet.h"
 
 #define kTimerNone       0
 #define kTimer5s         1
@@ -34,7 +36,6 @@
 #define kTabBasic 3
 #define kTabLens 4
 #define kTabText 5
-#define kTabTextEdit 51
 
 #define kMaskBlurNone 5
 #define kMaskBlurWeak 6
@@ -65,7 +66,10 @@ typedef enum {
     LXFilterDOF *filterDOF;
     LXFilterFish *filterFish;
     LXFilterText *filterText;
+    GPUImageCropFilter *filterCrop;
+    GPUImagePinchDistortionFilter *filterDistord;
     GPUImageFilter *effect;
+    GPUImageAlphaBlendFilter *filterIntensity;
     FilterManager *effectManager;
     
     GPUImagePicture *picture;
@@ -87,6 +91,7 @@ typedef enum {
 
     BOOL isEditing;
     BOOL isSaved;
+    BOOL isKeyboard;
     
     id <LXImagePickerDelegate> __unsafe_unretained delegate;
 
@@ -109,6 +114,8 @@ typedef enum {
     NSData *savedData;
     UIImage *savedPreview;
     NSInteger currentTab;
+    
+    LXShare *laSharekit;
 }
 @property (strong, nonatomic) IBOutlet UIView *viewBottomBar;
 
@@ -121,6 +128,7 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIButton *buttonNo;
 @property (strong, nonatomic) IBOutlet UIButton *buttonTimer;
 @property (strong, nonatomic) IBOutlet UIButton *buttonFlash;
+@property (strong, nonatomic) IBOutlet UIButton *buttonFlash35;
 @property (strong, nonatomic) IBOutlet UIButton *buttonFlip;
 @property (strong, nonatomic) IBOutlet UIButton *buttonPick;
 @property (strong, nonatomic) IBOutlet UIButton *buttonReset;
@@ -129,7 +137,6 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIPanGestureRecognizer *gesturePan;
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapFocus;
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapCloseHelp;
-@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapDoubleEditText;
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonSetNoTimer;
 @property (strong, nonatomic) IBOutlet UIButton *buttonSetTimer5s;
@@ -175,6 +182,8 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UISlider *sliderSharpness;
 @property (strong, nonatomic) IBOutlet UISlider *sliderClear;
 @property (strong, nonatomic) IBOutlet UISlider *sliderSaturation;
+@property (strong, nonatomic) IBOutlet UISlider *sliderFeather;
+@property (strong, nonatomic) IBOutlet UISlider *sliderEffectIntensity;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollFont;
 @property (strong, nonatomic) IBOutlet UITextField *textText;
 
@@ -202,5 +211,6 @@ typedef enum {
 - (IBAction)textChange:(UITextField *)sender;
 - (IBAction)doubleTapEdit:(UITapGestureRecognizer *)sender;
 - (IBAction)pinchCamera:(UIPinchGestureRecognizer *)sender;
+- (IBAction)changeEffectIntensity:(UISlider *)sender;
 - (IBAction)panCamera:(UIPanGestureRecognizer *)sender;
 @end

@@ -68,6 +68,14 @@
 {
     [super viewDidLoad];
     
+    HUD = [[MBProgressHUD alloc] initWithView:self.tableView];
+    [self.tableView addSubview:HUD];
+    HUD.mode = MBProgressHUDModeText;
+    HUD.labelText = NSLocalizedString(@"Loading...", @"Loading...") ;
+    HUD.labelFont = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:16];
+    HUD.margin = 10.f;
+    HUD.yOffset = 150.f;
+    
     UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:buttonProfilePic.bounds];
     buttonProfilePic.layer.masksToBounds = NO;
     buttonProfilePic.layer.shadowColor = [UIColor blackColor].CGColor;
@@ -119,6 +127,7 @@
 }
 
 - (void)reloadTimeline {
+    [HUD show:YES];
     [loadIndicator startAnimating];
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     [[LatteAPIClient sharedClient] getPath:@"user/me/timeline"
@@ -133,9 +142,11 @@
                                        [self.tableView reloadData];
                                        [self doneLoadingTableViewData];
                                        [loadIndicator stopAnimating];
+                                       [HUD hide:YES];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        [loadIndicator stopAnimating];
                                        TFLog(@"Something went wrong (Timeline)");
+                                       [HUD hide:YES];
                                    }];
 }
 

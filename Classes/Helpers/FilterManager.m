@@ -14,10 +14,7 @@
     self = [super init];
     if (self != nil) {
         tonecurve = [[GPUImageToneCurveFilter alloc] init];
-
         rgb = [[GPUImageRGBFilter alloc] init];
-        dummy = [[GPUImageBrightnessFilter alloc] init];
-        crop2 = [[GPUImageCropFilter alloc] init];
         filter = [[LXFilter alloc] init];
         filterMono = [[LXFilterMono alloc] init];
     }
@@ -61,17 +58,6 @@
         default:
             return nil;
     }
-}
-
-- (BOOL)dofReady {
-    return picDOF != nil;
-}
-
-- (void)setDof:(UIImage *)dof {
-    if (dof != nil)
-        picDOF = [[GPUImagePicture alloc] initWithImage:dof];
-    else
-        picDOF = nil;
 }
 
 - (GPUImageFilter *)effect1 {
@@ -142,7 +128,11 @@
 
 
 - (GPUImageFilter *)effect4 {
-    return nil;
+    rgb.red = 2.36;
+    rgb.green = 2.36;
+    rgb.blue = 2.28;
+    
+    return rgb;
 }
 
 - (GPUImageFilter *)effect5 {
@@ -230,10 +220,6 @@
     return tonecurve;
 }
 
-
-- (GPUImageBrightnessFilter*) getDummy {
-    return dummy;
-}
 
 - (NSArray *)curveWithPoint:(float[16][3])points atIndex:(int)idx {
     NSMutableArray *array = [[NSMutableArray alloc] init];

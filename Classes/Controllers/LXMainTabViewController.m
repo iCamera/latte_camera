@@ -8,6 +8,8 @@
 
 #import "LXMainTabViewController.h"
 #import "LXAppDelegate.h"
+#import "LXAboutViewController.h"
+#import "TestFlight.h"
 
 @interface LXMainTabViewController ()
 
@@ -276,6 +278,14 @@
          ];
     }
     
+}
+
+- (void)showAbout:(id)sender {
+//    [TestFlight openFeedbackView];
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    LXAboutViewController *viewAbout = [mainStoryboard instantiateViewControllerWithIdentifier:@"About"];
+    [self presentViewController:viewAbout animated:YES completion:nil];
 }
 
 - (void)showTab:(NSNotification *) notification

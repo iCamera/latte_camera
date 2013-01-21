@@ -15,6 +15,7 @@
 #import "LXLoginViewController.h"
 #import "UIImageView+AFNetworking.h"
 #import "AFHTTPClient.h"
+#import "LXShare.h"
 
 @interface LXPicEditViewController : UITableViewController <UIActionSheetDelegate> {
     MBProgressHUD *HUD;
@@ -23,6 +24,8 @@
     NSInteger imageStatus;
     UIImage *preview;
     Picture *picture;
+    
+    LXShare *share;
 }
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonCheckLatte;
@@ -43,9 +46,10 @@
 - (IBAction)touchPost:(id)sender;
 - (IBAction)touchBack:(id)sender;
 - (IBAction)touchBackground:(id)sender;
-- (IBAction)touchLatte:(id)sender;
-- (IBAction)switchService:(UIButton *)sender;
 - (IBAction)touchDelete:(id)sender;
+- (IBAction)shareEmail:(id)sender;
+- (IBAction)shareFacebook:(id)sender;
+- (IBAction)shareTwitter:(id)sender;
 
 - (void)setData:(NSData *)aData;
 

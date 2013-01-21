@@ -27,6 +27,9 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self.parentViewController action:@selector(showAbout:)];
+    tap.delegate = self;
+    [self.navigationBar addGestureRecognizer:tap];
 //    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] ini]
 }
 
@@ -36,5 +39,8 @@
     // Dispose of any resources that can be recreated.
 }
 
-
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    return (![[[touch view] class] isSubclassOfClass:[UIControl class]]);
+}
 @end
