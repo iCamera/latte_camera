@@ -81,7 +81,7 @@
     if (pic.title.length > 0)
         labelTitle.text = pic.title;
     else
-        labelTitle.text = @"タイトルなし";
+        labelTitle.text = NSLocalizedString(@"no_title", @"タイトルなし");
 
     UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
     textComment.leftView = paddingView;

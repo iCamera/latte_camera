@@ -14,7 +14,7 @@
                 { "type":"QMultilineElement", "key":"hobby", "title":"Sở thích", "bind":"textValue:hobby"}
             ]
         },
-        { "title":"PRIVACY SETTINGS", "elements": [
+        { "title":"CHÍNH SÁCH RIÊNG TƯ", "elements": [
                 { "type":"QRadioElement", "key":"picture_status", "title":"Ảnh", "items":["Cá nhân", "Bạn bè", "Thành viên", "Công khai"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdate:"},
                 { "type":"QRadioElement", "key":"gender_public", "title":"Giới tính", "items":["Cá nhân", "Bạn bè", "Thành viên", "Công khai"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdate:"},
                 { "type":"QRadioElement", "key":"current_residence_public", "title":"Nơi ở", "items":["Cá nhân", "Bạn bè", "Thành viên", "Công khai"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdate:"},
@@ -25,6 +25,10 @@
         },
         { "elements":[
                 { "type":"QButtonElement", "title":"THOÁT", "controllerAction":"handleLogout:"},
+            ]
+        },
+        { "elements":[
+                { "type":"QButtonElement", "title":"GÓP Ý", "controllerAction":"handleFeedback:"},
             ]
         }
     ]

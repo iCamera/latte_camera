@@ -9,8 +9,7 @@
 #import "LatteAPIClient.h"
 #import "AFJSONRequestOperation.h"
 
-//static NSString * const kLatteAPIBaseURLString = @"http://192.168.1.13:5000/";
-//static NSString * const kLatteAPIBaseURLString = @"http://dev.latte.la:8080/";
+//static NSString * const kLatteAPIBaseURLString = @"http://dev-latte.luxeys.co.jp/api";
 static NSString * const kLatteAPIBaseURLString = @"https://latte.la/api/";
 
 @implementation LatteAPIClient
@@ -20,6 +19,8 @@ static NSString * const kLatteAPIBaseURLString = @"https://latte.la/api/";
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedClient = [[LatteAPIClient alloc] initWithBaseURL:[NSURL URLWithString:kLatteAPIBaseURLString]];
+        [_sharedClient setAuthorizationHeaderWithUsername:@"luxeys" password:@"13579"];
+        
         [_sharedClient setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
             switch (status) {
                 case AFNetworkReachabilityStatusNotReachable:

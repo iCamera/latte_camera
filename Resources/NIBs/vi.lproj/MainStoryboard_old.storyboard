@@ -47,11 +47,11 @@
             </objects>
             <point key="canvasLocation" x="-1705" y="598"/>
         </scene>
-        <!--Navigation Controller - Ranking-->
+        <!--Navigation Controller - Xếp hạng-->
         <scene sceneID="0hi-1C-sJs">
             <objects>
                 <navigationController definesPresentationContext="YES" id="xio-iO-9Qi" customClass="LXNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Ranking" image="icon_rank.png" id="FCv-Eh-u4w"/>
+                    <tabBarItem key="tabBarItem" title="Xếp hạng" image="icon_rank.png" id="FCv-Eh-u4w"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="e2T-D0-L2O" customClass="LXNavBar">
                         <autoresizingMask key="autoresizingMask"/>
@@ -398,11 +398,11 @@
             </objects>
             <point key="canvasLocation" x="-1171" y="1292"/>
         </scene>
-        <!--Navigation Controller - Liked-->
+        <!--Navigation Controller - Thích-->
         <scene sceneID="ko1-zf-11d">
             <objects>
                 <navigationController definesPresentationContext="YES" id="R8R-B1-oGH" customClass="LXNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" enabled="NO" title="Liked" image="icon_favorites.png" id="EL7-vA-SxW"/>
+                    <tabBarItem key="tabBarItem" enabled="NO" title="Thích" image="icon_favorites.png" id="EL7-vA-SxW"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="bzG-xf-D2f" customClass="LXNavBar">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -435,7 +435,7 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="12"/>
                                     <inset key="contentEdgeInsets" minX="0.0" minY="2" maxX="0.0" maxY="0.0"/>
-                                    <state key="normal" title="EVERYONE" backgroundImage="menu4_1_off.png">
+                                    <state key="normal" title="MỌI NGƯỜI" backgroundImage="menu4_1_off.png">
                                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <state key="disabled" backgroundImage="menu4_1.png">
@@ -473,7 +473,7 @@
                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="12"/>
                                     <inset key="contentEdgeInsets" minX="0.0" minY="2" maxX="0.0" maxY="0.0"/>
                                     <inset key="imageEdgeInsets" minX="-5" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    <state key="normal" title="ME" backgroundImage="menu4_2_off.png">
+                                    <state key="normal" title="TÔI" backgroundImage="menu4_2_off.png">
                                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <state key="disabled" backgroundImage="menu4_2.png">
@@ -593,7 +593,7 @@
                                         <action selector="touchTab:" destination="Ftc-ZZ-Upd" eventType="touchUpInside" id="c3D-bv-9dN"/>
                                     </connections>
                                 </button>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="HIGH RATED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="38p-uI-1e8">
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="ĐÁNH GIÁ CAO" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="38p-uI-1e8">
                                     <rect key="frame" x="84" y="36" width="55" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="9"/>
@@ -620,7 +620,7 @@
                                     <color key="shadowColor" red="0.40000003579999999" green="0.36470589040000001" blue="0.22352942819999999" alpha="1" colorSpace="deviceRGB"/>
                                     <size key="shadowOffset" width="0.0" height="1"/>
                                 </label>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="FRIENDS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="BIe-qP-wHd">
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="BẠN BÈ" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="BIe-qP-wHd">
                                     <rect key="frame" x="200" y="36" width="55" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="9"/>
@@ -629,7 +629,7 @@
                                     <color key="shadowColor" red="0.40000003579999999" green="0.36470589040000001" blue="0.22352942819999999" alpha="1" colorSpace="deviceRGB"/>
                                     <size key="shadowOffset" width="0.0" height="1"/>
                                 </label>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Nickname" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="uRB-ZZ-I6f">
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Biệt danh" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="uRB-ZZ-I6f">
                                     <rect key="frame" x="82" y="9" width="219" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="18"/>
@@ -723,7 +723,7 @@
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="Spf-0h-bAF">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Tên" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="Spf-0h-bAF">
                                             <rect key="frame" x="42" y="7" width="258" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
@@ -878,7 +878,7 @@
                                                                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
-                                                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Date" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zaI-FL-Brr">
+                                                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Ngày" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zaI-FL-Brr">
                                                                                 <rect key="frame" x="203" y="5" width="100" height="12"/>
                                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
@@ -952,7 +952,7 @@
                                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="12"/>
                                                     <inset key="contentEdgeInsets" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                     <size key="titleShadowOffset" width="0.0" height="1"/>
-                                                    <state key="normal" title="Like" backgroundImage="bt_iine.png">
+                                                    <state key="normal" title="Thích" backgroundImage="bt_iine.png">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                     </state>
@@ -1186,7 +1186,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="41"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Author" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="BWb-uB-Xjb">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Tác giả" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="BWb-uB-Xjb">
                                                     <rect key="frame" x="42" y="7" width="134" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
@@ -1205,7 +1205,7 @@
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Comment" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BAR-Xu-UH7">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Bình luận" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BAR-Xu-UH7">
                                                     <rect key="frame" x="42" y="21" width="255" height="12"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="11"/>
@@ -1304,7 +1304,7 @@
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <size key="titleShadowOffset" width="0.0" height="1"/>
-                                <state key="normal" title="QUAY LẠI">
+                                <state key="normal" title="LÙI">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                 </state>
@@ -1404,7 +1404,7 @@
                                     <action selector="touchForgot:" destination="fnp-zd-W6d" eventType="touchUpInside" id="oyq-iJ-VaE"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mail address" minimumFontSize="17" id="U2D-jj-OWH" customClass="LXTextField">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Địa chỉ email" minimumFontSize="17" id="U2D-jj-OWH" customClass="LXTextField">
                                 <rect key="frame" x="20" y="20" width="280" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
@@ -1439,7 +1439,7 @@
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
                                 <inset key="contentEdgeInsets" minX="40" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <size key="titleShadowOffset" width="0.0" height="1"/>
-                                <state key="normal" title="LOGIN" backgroundImage="bt_facebook2.png">
+                                <state key="normal" title="ĐĂNG NHẬP" backgroundImage="bt_facebook2.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" red="0.096989388440000004" green="0.19518149509999999" blue="0.24730947070000001" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -1461,7 +1461,7 @@
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <size key="titleShadowOffset" width="0.0" height="1"/>
-                                <state key="normal" title="QUAY LẠI">
+                                <state key="normal" title="LÙI">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                 </state>
@@ -1583,7 +1583,7 @@
                                             <rect key="frame" x="10" y="1" width="300" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" minimumFontSize="17" id="V76-M6-pHl">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Biệt danh" minimumFontSize="17" id="V76-M6-pHl">
                                                     <rect key="frame" x="10" y="0.0" width="215" height="45"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
@@ -1609,7 +1609,7 @@
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <size key="titleShadowOffset" width="0.0" height="1"/>
-                                <state key="normal" title="QUAY LẠI">
+                                <state key="normal" title="LÙI">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                 </state>
@@ -1886,7 +1886,7 @@
                                         <rect key="frame" x="12" y="12" width="15" height="15"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Login or register to use much more interesting features!" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XRt-Dp-0YJ">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Hãy đăng nhập để có thể có thêm nhiều chức năng tuyệt vời!" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XRt-Dp-0YJ">
                                         <rect key="frame" x="12" y="28" width="225" height="56"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
@@ -2002,7 +2002,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="32"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Inquiry" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Qbc-6n-7ca">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Lời chào" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Qbc-6n-7ca">
                                                     <rect key="frame" x="20" y="0.0" width="219" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -2039,12 +2039,12 @@
                                                     <rect key="frame" x="20" y="-4" width="280" height="220"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                    <string key="text">We here at Latte are working everyday to improve our services based on your feedback.
+                                                    <string key="text">Bọn tớ ở Latte hàng ngày vẫn cố gắng hết sức để nâng cao chất lượng dịch vụ dựa trên phản hồi của các ấy.
 
-If there are any areas where you think 'it would be nice to be able to do this' or 'this feature needs more work',
-please do not hesitate to fill out and send the form below.
+Nếu ấy nghĩ rằng 'giá mà có chức năng hay ho này' hoặc 'chức năng này chưa ổn',
+hãy cho bọn tớ biết. Bọn tớ sẽ tiếp thu và nâng cấp với hết sức có thể.
 
-We improve our services to the best of our ability,but please understand that not every idea gets accepted.</string>
+Gửi lời chào thân mến từ đất nước Nhật Bản.</string>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -2060,7 +2060,7 @@ We improve our services to the best of our ability,but please understand that no
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="190"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Ý kiến/Opinion Submission Form" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fp2-1j-a0S">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Ý kiến/Đóng góp" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fp2-1j-a0S">
                                                     <rect key="frame" x="20" y="0.0" width="300" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -2122,7 +2122,7 @@ We improve our services to the best of our ability,but please understand that no
                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                 <segments>
                                     <segment title="THÔNG BÁO"/>
-                                    <segment title="FRIEND REQUEST"/>
+                                    <segment title="MỜI KẾT BẠN"/>
                                 </segments>
                                 <color key="tintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                 <connections>
@@ -2175,7 +2175,7 @@ We improve our services to the best of our ability,but please understand that no
                                             <rect key="frame" x="0.0" y="0.0" width="260" height="39"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Nickname" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Tl7-Om-vUm">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Biệt danh" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Tl7-Om-vUm">
                                                     <rect key="frame" x="47" y="0.0" width="118" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
@@ -2242,7 +2242,7 @@ We improve our services to the best of our ability,but please understand that no
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Nickname" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MFD-mt-6sW">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Biệt danh" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MFD-mt-6sW">
                                                     <rect key="frame" x="47" y="0.0" width="114" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
@@ -2387,7 +2387,7 @@ We improve our services to the best of our ability,but please understand that no
                                                     <color key="shadowColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                     <size key="shadowOffset" width="0.0" height="1"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="views" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="KlQ-qL-JOY">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="lượt xem" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="KlQ-qL-JOY">
                                                     <rect key="frame" x="265" y="17" width="45" height="19"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="11"/>
@@ -2525,7 +2525,7 @@ We improve our services to the best of our ability,but please understand that no
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" red="0.90588235289999997" green="0.8980392157" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
                                                 </view>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Author" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="iXV-i1-KVR">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Tác giả" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="iXV-i1-KVR">
                                                     <rect key="frame" x="48" y="4" width="134" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="12"/>
@@ -2622,7 +2622,7 @@ We improve our services to the best of our ability,but please understand that no
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <size key="titleShadowOffset" width="0.0" height="1"/>
-                                <state key="normal" title="QUAY LẠI">
+                                <state key="normal" title="LÙI">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                 </state>
@@ -2731,7 +2731,7 @@ We improve our services to the best of our ability,but please understand that no
                                             <color key="textColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="5" id="aVu-dI-tR8">
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Chi tiết" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="5" id="aVu-dI-tR8">
                                             <rect key="frame" x="83" y="5" width="29" height="20"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
@@ -2760,7 +2760,7 @@ We improve our services to the best of our ability,but please understand that no
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <size key="titleShadowOffset" width="0.0" height="1"/>
-                                <state key="normal" title="QUAY LẠI">
+                                <state key="normal" title="LÙI">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                 </state>
@@ -2809,7 +2809,7 @@ We improve our services to the best of our ability,but please understand that no
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <size key="titleShadowOffset" width="0.0" height="1"/>
-                                <state key="normal" title="QUAY LẠI">
+                                <state key="normal" title="LÙI">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                 </state>
@@ -2985,7 +2985,7 @@ We improve our services to the best of our ability,but please understand that no
                                                 <action selector="touchTab:" destination="Js6-jp-wI3" eventType="touchUpInside" id="5Ds-eN-BJA"/>
                                             </connections>
                                         </button>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="VOTES" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="NxQ-m4-OD3">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="ĐÃ THÍCH" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="NxQ-m4-OD3">
                                             <rect key="frame" x="100" y="37" width="42" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="9"/>
@@ -2994,7 +2994,7 @@ We improve our services to the best of our ability,but please understand that no
                                             <color key="shadowColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                             <size key="shadowOffset" width="0.0" height="1"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="PHOTOS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="OA8-ED-7e3">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="ẢNH" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="OA8-ED-7e3">
                                             <rect key="frame" x="177" y="38" width="42" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="9"/>
@@ -3012,7 +3012,7 @@ We improve our services to the best of our ability,but please understand that no
                                             <color key="shadowColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                             <size key="shadowOffset" width="0.0" height="1"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Nickname" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="e4V-zq-yCm">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Biệt danh" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="e4V-zq-yCm">
                                             <rect key="frame" x="82" y="10" width="179" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="17"/>
@@ -3056,7 +3056,7 @@ We improve our services to the best of our ability,but please understand that no
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="1JL-XC-6ag">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Tên" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="1JL-XC-6ag">
                                                     <rect key="frame" x="42" y="9" width="164" height="16"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
@@ -3117,7 +3117,7 @@ We improve our services to the best of our ability,but please understand that no
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                 </view>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Aju-lT-PdD">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Tiêu đề" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Aju-lT-PdD">
                                                     <rect key="frame" x="18" y="7" width="66" height="15"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="13"/>
@@ -3159,7 +3159,7 @@ We improve our services to the best of our ability,but please understand that no
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <size key="titleShadowOffset" width="0.0" height="1"/>
-                                <state key="normal" title="QUAY LẠI">
+                                <state key="normal" title="LÙI">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                 </state>
@@ -3310,7 +3310,7 @@ We improve our services to the best of our ability,but please understand that no
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="nd3-L5-6sn" userLabel="Button Pick Photo">
                                         <rect key="frame" x="69" y="5" width="58" height="30"/>
                                         <fontDescription key="fontDescription" type="boldSystem" size="button"/>
-                                        <state key="normal" image="icon_photo_select.png" backgroundImage="bg_camera_bt3.png">
+                                        <state key="normal" image="icon_photo_select2.png" backgroundImage="bg_camera_bt3.png">
                                             <color key="titleColor" red="0.1960784314" green="0.30980392159999998" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <state key="selected" image="icon_flash.png"/>
@@ -3364,7 +3364,7 @@ We improve our services to the best of our ability,but please understand that no
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="38S-r4-fnf" userLabel="Button Reset">
                                         <rect key="frame" x="5" y="5" width="58" height="30"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
-                                        <state key="normal" title="RESET" backgroundImage="bg_camera_bt3.png">
+                                        <state key="normal" title="" image="icon_reset.png" backgroundImage="bg_camera_bt3.png">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <state key="highlighted" backgroundImage="bg_camera_bt3_on.png">
@@ -3374,10 +3374,10 @@ We improve our services to the best of our ability,but please understand that no
                                             <action selector="touchReset:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="UWK-0O-xwu"/>
                                         </connections>
                                     </button>
-                                    <button hidden="YES" opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="0vk-fe-vbR" userLabel="Button Cancel">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="0vk-fe-vbR" userLabel="Button Cancel">
                                         <rect key="frame" x="210" y="5" width="40" height="30"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="icon_no.png" backgroundImage="bg_camera_bt3.png">
+                                        <state key="normal" image="icon_no2.png" backgroundImage="bg_camera_bt3.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -3388,10 +3388,10 @@ We improve our services to the best of our ability,but please understand that no
                                             <action selector="touchNo:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="GQe-uF-jhJ"/>
                                         </connections>
                                     </button>
-                                    <button hidden="YES" opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="2vO-5s-PVr" userLabel="Button OK">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="2vO-5s-PVr" userLabel="Button OK">
                                         <rect key="frame" x="270" y="5" width="40" height="30"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="icon_ok.png" backgroundImage="bg_camera_bt3.png">
+                                        <state key="normal" image="icon_ok2.png" backgroundImage="bg_camera_bt3.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -3530,14 +3530,14 @@ We improve our services to the best of our ability,but please understand that no
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="120"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Intensity" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ytw-uz-Dwd">
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Độ mạnh" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ytw-uz-Dwd">
                                                 <rect key="frame" x="10" y="38" width="52" height="16"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="10"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Feather" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8L3-2K-BGi">
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Viền mềm" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8L3-2K-BGi">
                                                 <rect key="frame" x="10" y="8" width="52" height="16"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="10"/>
@@ -3565,7 +3565,7 @@ We improve our services to the best of our ability,but please understand that no
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
                                                 <size key="titleShadowOffset" width="0.0" height="1"/>
-                                                <state key="normal" title="None" backgroundImage="select42_1.png">
+                                                <state key="normal" title="Không" backgroundImage="select42_1.png">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                 </state>
@@ -3607,7 +3607,7 @@ We improve our services to the best of our ability,but please understand that no
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
                                                 <size key="titleShadowOffset" width="0.0" height="1"/>
-                                                <state key="normal" title="Medium" backgroundImage="select42_2.png">
+                                                <state key="normal" title="Vừa" backgroundImage="select42_2.png">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                 </state>
@@ -3694,7 +3694,7 @@ We improve our services to the best of our ability,but please understand that no
                                         <nil key="highlightedColor"/>
                                         <size key="shadowOffset" width="0.0" height="0.0"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Clearness" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XaZ-kT-Cct">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Độ rõ" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XaZ-kT-Cct">
                                         <rect key="frame" x="10" y="75" width="52" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="10"/>
@@ -3772,7 +3772,7 @@ We improve our services to the best of our ability,but please understand that no
                                         <rect key="frame" x="70" y="10" width="75" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
-                                        <state key="normal" title="Normal" backgroundImage="select3_1.png">
+                                        <state key="normal" title="Bình thường" backgroundImage="select3_1.png">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -3845,7 +3845,7 @@ We improve our services to the best of our ability,but please understand that no
                                         <rect key="frame" x="0.0" y="30" width="320" height="110"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </scrollView>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Edit text" minimumFontSize="17" id="7lS-CE-iHu">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Sửa chữ" minimumFontSize="17" id="7lS-CE-iHu">
                                         <rect key="frame" x="10" y="0.0" width="300" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -3864,7 +3864,7 @@ We improve our services to the best of our ability,but please understand that no
                                 <rect key="frame" x="0.0" y="430" width="320" height="110"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Intensity" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Cz9-M7-MWi">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Độ mạnh" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Cz9-M7-MWi">
                                         <rect key="frame" x="10" y="8" width="52" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="10"/>
@@ -3930,7 +3930,7 @@ We improve our services to the best of our ability,but please understand that no
                                     <button hidden="YES" opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="9ht-r3-gIX" userLabel="Button Detail">
                                         <rect key="frame" x="68" y="5" width="58" height="40"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
-                                        <state key="normal" title="DETAIL" backgroundImage="bg_camera_bt2.png">
+                                        <state key="normal" title="" image="icon_detail.png" backgroundImage="bg_camera_bt2.png">
                                             <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -3943,7 +3943,7 @@ We improve our services to the best of our ability,but please understand that no
                                     <button hidden="YES" opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="oPW-i4-NiR" userLabel="Button Lens">
                                         <rect key="frame" x="5" y="5" width="58" height="40"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
-                                        <state key="normal" image="icon_lens.png" backgroundImage="bg_camera_bt2.png">
+                                        <state key="normal" image="icon_lens3.png" backgroundImage="bg_camera_bt2.png">
                                             <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -4016,14 +4016,14 @@ We improve our services to the best of our ability,but please understand that no
                                         <rect key="frame" x="10" y="50" width="300" height="270"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Select the in-focus area to progess image. You also can adjust characteristic of bokeh at the control panel below." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ohl-wb-jqN">
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Khoanh vùng để làm rõ nét và chỉnh sửa tính chất của vùng bị mờ ở bảng bên dưới." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ohl-wb-jqN">
                                                 <rect key="frame" x="10" y="30" width="253" height="35"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="11"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="SLR-like BOKEH" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ijM-ak-O6b">
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Mờ như thật" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ijM-ak-O6b">
                                                 <rect key="frame" x="27" y="5" width="161" height="25"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="17"/>
@@ -4163,7 +4163,7 @@ We improve our services to the best of our ability,but please understand that no
         <scene sceneID="ukJ-CP-EPt">
             <objects>
                 <tableViewController storyboardIdentifier="PicEdit" id="LuE-hY-WRg" customClass="LXPicEditViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="vaP-yt-Vn1">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="vaP-yt-Vn1">
                         <rect key="frame" x="0.0" y="44" width="320" height="436"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -4223,7 +4223,7 @@ We improve our services to the best of our ability,but please understand that no
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Description" minimumFontSize="17" id="8bs-yP-qpG">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mô tả" minimumFontSize="17" id="8bs-yP-qpG">
                                                     <rect key="frame" x="10" y="7" width="280" height="30"/>
                                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
@@ -4245,7 +4245,7 @@ We improve our services to the best of our ability,but please understand that no
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Everyone" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" id="jcA-Cp-MZ9">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Mọi người" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" id="jcA-Cp-MZ9">
                                                     <rect key="frame" x="181" y="14" width="93" height="16"/>
                                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -4259,29 +4259,32 @@ We improve our services to the best of our ability,but please understand that no
                             </tableViewSection>
                             <tableViewSection headerTitle="LOAN TIN" id="gpg-SV-JRw">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="DdR-jH-tOD">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="DdR-jH-tOD">
                                         <rect key="frame" x="0.0" y="226" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="rqq-xW-zMA">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="rqq-xW-zMA">
                                                     <rect key="frame" x="0.0" y="0.0" width="137" height="44"/>
                                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="16"/>
                                                     <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                     <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                    <state key="normal" title="Latte" image="checkbox_off.png">
+                                                    <state key="normal" title="Sao chép">
                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
-                                                    <state key="disabled" image="checkbox_on.png">
+                                                    <state key="disabled">
                                                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <state key="selected" image="checkbox_on.png"/>
                                                     <state key="highlighted" image="checkbox_on.png">
                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="shareClipboard:" destination="LuE-hY-WRg" eventType="touchUpInside" id="ivq-yG-yzB"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="5Rk-p1-OVb" userLabel="Button - Email">
                                                     <rect key="frame" x="159" y="0.0" width="137" height="44"/>
@@ -4373,7 +4376,7 @@ We improve our services to the best of our ability,but please understand that no
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <size key="titleShadowOffset" width="0.0" height="1"/>
-                                <state key="normal" title="QUAY LẠI">
+                                <state key="normal" title="LÙI">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                 </state>
@@ -4406,7 +4409,6 @@ We improve our services to the best of our ability,but please understand that no
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="buttonCheckLatte" destination="rqq-xW-zMA" id="XWb-9j-SJD"/>
                         <outlet property="buttonDelete" destination="3eW-cv-Fnh" id="yNF-x5-Nax"/>
                         <outlet property="gestureTap" destination="9O5-jY-hJK" id="FCv-ok-IN7"/>
                         <outlet property="imagePic" destination="etq-2B-F31" id="5FX-CN-Fde"/>
@@ -4478,7 +4480,6 @@ We improve our services to the best of our ability,but please understand that no
         <image name="bt_timer_none.png" width="77" height="38"/>
         <image name="bt_twitter2.png" width="150" height="40"/>
         <image name="bt_twitter2_on.png" width="150" height="40"/>
-        <image name="checkbox_off.png" width="15" height="15"/>
         <image name="checkbox_on.png" width="15" height="15"/>
         <image name="icon_boke.png" width="13" height="20"/>
         <image name="icon_boke2.png" width="10" height="15"/>
@@ -4488,6 +4489,7 @@ We improve our services to the best of our ability,but please understand that no
         <image name="icon_change_camera.png" width="32" height="15"/>
         <image name="icon_close.png" width="20" height="20"/>
         <image name="icon_comment2.png" width="10" height="10"/>
+        <image name="icon_detail.png" width="20" height="20"/>
         <image name="icon_escape2.png" width="15" height="15"/>
         <image name="icon_favorites.png" width="20" height="21"/>
         <image name="icon_filter.png" width="20" height="20"/>
@@ -4497,18 +4499,20 @@ We improve our services to the best of our ability,but please understand that no
         <image name="icon_help.png" width="21" height="21"/>
         <image name="icon_home.png" width="20" height="21"/>
         <image name="icon_info.png" width="17" height="16"/>
-        <image name="icon_lens.png" width="15" height="15"/>
+        <image name="icon_lens3.png" width="20" height="20"/>
         <image name="icon_light.png" width="12" height="12"/>
         <image name="icon_login.png" width="13" height="16"/>
         <image name="icon_mypage.png" width="20" height="21"/>
-        <image name="icon_no.png" width="15" height="15"/>
-        <image name="icon_ok.png" width="15" height="14"/>
+        <image name="icon_no2.png" width="15" height="15"/>
+        <image name="icon_ok2.png" width="15" height="14"/>
         <image name="icon_photo_select.png" width="22" height="22"/>
+        <image name="icon_photo_select2.png" width="22" height="22"/>
         <image name="icon_plus.png" width="15" height="16"/>
         <image name="icon_profile.png" width="15" height="15"/>
         <image name="icon_profile_off.png" width="15" height="15"/>
         <image name="icon_rank.png" width="20" height="21"/>
         <image name="icon_rank2.png" width="20" height="20"/>
+        <image name="icon_reset.png" width="15" height="15"/>
         <image name="icon_setting.png" width="15" height="16"/>
         <image name="icon_time2.png" width="14" height="15"/>
         <image name="icon_time2_none.png" width="15" height="15"/>
@@ -4592,7 +4596,6 @@ We improve our services to the best of our ability,but please understand that no
                 <relationship kind="action" name="panCamera:" candidateClass="UIPanGestureRecognizer"/>
                 <relationship kind="action" name="panTarget:" candidateClass="UIPanGestureRecognizer"/>
                 <relationship kind="action" name="pinchCamera:" candidateClass="UIPinchGestureRecognizer"/>
-                <relationship kind="action" name="setEffect:"/>
                 <relationship kind="action" name="setMask:" candidateClass="UIButton"/>
                 <relationship kind="action" name="setTimer:"/>
                 <relationship kind="action" name="textChange:" candidateClass="UITextField"/>
@@ -4645,7 +4648,6 @@ We improve our services to the best of our ability,but please understand that no
                 <relationship kind="outlet" name="sliderVignette" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="switchGain" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="tapCloseHelp" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="outlet" name="tapDoubleEditText" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="outlet" name="tapFocus" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="outlet" name="textText" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="viewBasicControl" candidateClass="UIView"/>
@@ -4886,16 +4888,14 @@ We improve our services to the best of our ability,but please understand that no
         <class className="LXPicEditViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicEditViewController.h"/>
             <relationships>
-                <relationship kind="action" name="shareEmail:"/>
-                <relationship kind="action" name="shareFacebook:"/>
-                <relationship kind="action" name="shareTwitter:"/>
+                <relationship kind="action" name="shareClipboard:" candidateClass="UIButton"/>
+                <relationship kind="action" name="shareEmail:" candidateClass="UIButton"/>
+                <relationship kind="action" name="shareFacebook:" candidateClass="UIButton"/>
+                <relationship kind="action" name="shareTwitter:" candidateClass="UIButton"/>
                 <relationship kind="action" name="touchBack:"/>
                 <relationship kind="action" name="touchBackground:"/>
                 <relationship kind="action" name="touchDelete:"/>
                 <relationship kind="action" name="touchPost:"/>
-                <relationship kind="outlet" name="buttonCheckFacebook" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonCheckLatte" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonCheckTwitter" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonDelete" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="gestureTap" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="outlet" name="imagePic" candidateClass="UIImageView"/>

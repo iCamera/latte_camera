@@ -69,11 +69,10 @@ typedef enum {
     }
     else
     {
-        NSString *deviceType = [UIDevice currentDevice].model;
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"")
-                                                        message:[NSString stringWithFormat:NSLocalizedString(@"Your %@ must have an email account set up", @""), deviceType]
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"Error")
+                                                        message:NSLocalizedString(@"Your device must have an email account set up", @"")
                                                        delegate:nil
-                                              cancelButtonTitle:NSLocalizedString(@"Ok", @"")
+                                              cancelButtonTitle:NSLocalizedString(@"close", @"Close")
                                               otherButtonTitles:nil];
         [alert show];
     }

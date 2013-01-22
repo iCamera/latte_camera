@@ -21,6 +21,7 @@
     KeychainItemWrapper *tokenItem;
     LXUIRevealController* revealController;
     NSString *apns;
+    UIViewController *viewCamera;
 }
 
 @property (strong, nonatomic) LXUIRevealController *revealController;
@@ -43,7 +44,6 @@ extern NSString *const FBSessionStateChangedNotification;
 - (void)logOut;
 - (void)setToken:(NSString*)token;
 - (void)updateUserAPNS;
-//- (void)closeSession;
-- (void)switchRoot;
+- (void)toogleCamera;
 
 @end

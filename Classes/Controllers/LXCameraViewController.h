@@ -65,17 +65,19 @@ typedef enum {
     LXFilterDetail *filter;
     LXFilterDOF *filterDOF;
     LXFilterFish *filterFish;
-    LXFilterText *filterText;
+    GPUImageAlphaBlendFilter *filterText;
     GPUImageCropFilter *filterCrop;
     GPUImagePinchDistortionFilter *filterDistord;
     GPUImageFilter *effect;
     GPUImageAlphaBlendFilter *filterIntensity;
     FilterManager *effectManager;
     
-    GPUImagePicture *picture;
     GPUImagePicture *previewFilter;
     GPUImageRawDataInput *pictureDOF;
-    GPUImageRawDataInput *pictureText;
+    GPUImageUIElement *uiElement;
+    UIView *uiWrap;
+    UILabel *timeLabel;
+
     CGSize picSize;
     CGSize previewSize;
     
@@ -113,6 +115,7 @@ typedef enum {
     
     NSData *savedData;
     UIImage *savedPreview;
+    UIImage *capturedImage;
     NSInteger currentTab;
     
     LXShare *laSharekit;
@@ -213,4 +216,6 @@ typedef enum {
 - (IBAction)pinchCamera:(UIPinchGestureRecognizer *)sender;
 - (IBAction)changeEffectIntensity:(UISlider *)sender;
 - (IBAction)panCamera:(UIPanGestureRecognizer *)sender;
+
+-(void)switchCamera;
 @end

@@ -28,9 +28,6 @@
     LXShare *share;
 }
 
-@property (strong, nonatomic) IBOutlet UIButton *buttonCheckLatte;
-@property (strong, nonatomic) IBOutlet UIButton *buttonCheckFacebook;
-@property (strong, nonatomic) IBOutlet UIButton *buttonCheckTwitter;
 @property (strong, nonatomic) IBOutlet UIButton *buttonDelete;
 @property (strong, nonatomic) IBOutlet UIImageView *imagePic;
 @property (strong, nonatomic) IBOutlet UITextField *textTitle;
@@ -47,9 +44,9 @@
 - (IBAction)touchBack:(id)sender;
 - (IBAction)touchBackground:(id)sender;
 - (IBAction)touchDelete:(id)sender;
-- (IBAction)shareEmail:(id)sender;
-- (IBAction)shareFacebook:(id)sender;
-- (IBAction)shareTwitter:(id)sender;
+- (IBAction)shareEmail:(UIButton*)sender;
+- (IBAction)shareFacebook:(UIButton*)sender;
+- (IBAction)shareTwitter:(UIButton*)sender;
 
 - (void)setData:(NSData *)aData;
 

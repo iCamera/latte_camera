@@ -26,6 +26,10 @@
         { "elements":[
                 { "type":"QButtonElement", "title":"LOGOUT", "controllerAction":"handleLogout:"},
             ]
+        },
+        { "elements":[
+                { "type":"QButtonElement", "title":"FEEDBACK", "controllerAction":"handleFeedback:"},
+            ]
         }
     ]
 }

@@ -138,7 +138,7 @@
     if (pic.title.length > 0)
         labelTitle.text = pic.title;
     else
-        labelTitle.text = NSLocalizedString(@"No title", "@タイトルなし") ;
+        labelTitle.text = NSLocalizedString(@"no_title", @"タイトルなし");
     labelUser.text = [NSString stringWithFormat:@"photo by %@ | %@", feed.user.name, [LXUtils timeDeltaFromNow:feed.updatedAt]];
     
     self.clipsToBounds = NO;

@@ -158,15 +158,8 @@
 
 
 - (void)cameraView:(id)sender {
-    [self pickPhoto];
-}
-
-- (void)pickPhoto {
-    UINavigationController *storyMain = [[UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                                         bundle: nil] instantiateInitialViewController];
-    
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:NO];
-    [self presentViewController:storyMain animated:NO completion:nil];
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    [app toogleCamera];
 }
 
 - (void)imagePickerController:(LXCameraViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info {

@@ -26,9 +26,6 @@
 @synthesize buttonDelete;
 @synthesize viewDelete;
 @synthesize preview;
-@synthesize buttonCheckFacebook;
-@synthesize buttonCheckLatte;
-@synthesize buttonCheckTwitter;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -46,6 +43,14 @@
     [self.navigationController.view addSubview:HUD];
     share = [[LXShare alloc] init];
     share.controller = self;
+    
+    [share setCompletionDone:^{
+        MBProgressHUD *HUD2 = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+        HUD2.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+        HUD2.mode = MBProgressHUDModeCustomView;
+        [HUD2 show:YES];
+        [HUD2 hide:YES afterDelay:1];
+    }];
     
     self.tableView.backgroundView = nil;
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
@@ -69,11 +74,6 @@
         share.imageData = imageData;
         share.imagePreview = preview;
     }
-}
-
-- (void)receiveLoggedIn:(NSNotification *) notification
-{
-    buttonCheckLatte.selected = true;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -225,15 +225,15 @@
     [sheet showFromTabBar:self.tabBarController.tabBar];
 }
 
-- (IBAction)shareEmail:(id)sender {
+- (IBAction)shareEmail:(UIButton*)sender {
     [share emailIt];
 }
 
-- (IBAction)shareFacebook:(id)sender {
+- (IBAction)shareFacebook:(UIButton*)sender {
     [share facebookPost];
 }
 
-- (IBAction)shareTwitter:(id)sender {
+- (IBAction)shareTwitter:(UIButton*)sender {
     [share tweet];
 }
 
@@ -276,9 +276,16 @@
                                     }];
 }
 
-- (void)saveImage {
-    HUD.mode = MBProgressHUDModeDeterminate;
+- (void)backToCamera {
+    HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+    HUD.mode = MBProgressHUDModeCustomView;
     [HUD show:YES];
+    [HUD hide:YES afterDelay:1];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+- (void)saveImage {
+    [self performSelector:@selector(backToCamera) withObject:nil afterDelay:1];
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
@@ -304,16 +311,13 @@
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     
     void (^successUpload)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
-        HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
-        HUD.mode = MBProgressHUDModeCustomView;
-        [HUD hide:YES afterDelay:1];
         
-        [app switchRoot];
-        [self.navigationController dismissViewControllerAnimated:NO completion:nil];
+/*        [app toogleCamera];
         
         [[NSNotificationCenter defaultCenter]
          postNotificationName:@"UploadedNewPicture"
-         object:self];
+         object:self];*/
+        
     };
     
     void (^failUpload)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {

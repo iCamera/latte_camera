@@ -116,6 +116,10 @@
     cell.selectionStyle = UITableViewCellSelectionStyleGray;
 }
 
+- (void)handleFeedback:(QButtonElement *) button {
+    [self.navigationController.parentViewController performSelector:@selector(showAbout:) withObject:nil];
+}
+
 - (void)handleLogout:(QButtonElement *) button {
     [HUD show:YES];
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;

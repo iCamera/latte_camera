@@ -1,3 +1,9 @@
+/*
+ Created by Martins Upitis
+ I got this from here:
+ http://artmartinsh.blogspot.jp/2010/02/glsl-lens-blur-filter-with-bokeh.html
+ */
+
 precision highp float;
 
 varying highp vec2 textureCoordinate;

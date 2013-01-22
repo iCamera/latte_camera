@@ -26,6 +26,10 @@
         { "elements":[
                 { "type":"QButtonElement", "title":"ログアウト", "controllerAction":"handleLogout:"},
             ]
+        },
+        { "elements":[
+                { "type":"QButtonElement", "title":"機能要望・ご意見", "controllerAction":"handleFeedback:"},
+            ]
         }
     ]
 }

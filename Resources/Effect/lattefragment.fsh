@@ -1,3 +1,7 @@
+/*
+ Created by Xuan Dung Bui
+ */
+
 precision highp float;
 
 varying highp vec2 textureCoordinate;
