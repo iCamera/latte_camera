@@ -19,7 +19,7 @@
 #import "MBProgressHUD.h"
 #import "LXFilterDetail.h"
 #import "LXFilterDOF.h"
-#import "LXFilterFish.h"
+//#import "LXFilterFish.h"
 #import "LXFilterText.h"
 #import "GPUImageStillCamera+captureWithMeta.h"
 #import "LXShare.h"
@@ -64,7 +64,7 @@ typedef enum {
     GPUImageFilterPipeline *pipe;
     LXFilterDetail *filter;
     LXFilterDOF *filterDOF;
-    LXFilterFish *filterFish;
+//    LXFilterFish *filterFish;
     GPUImageAlphaBlendFilter *filterText;
     GPUImageCropFilter *filterCrop;
     GPUImagePinchDistortionFilter *filterDistord;
@@ -94,6 +94,7 @@ typedef enum {
     BOOL isEditing;
     BOOL isSaved;
     BOOL isKeyboard;
+    BOOL isWatingToUpload;
     
     id <LXImagePickerDelegate> __unsafe_unretained delegate;
 

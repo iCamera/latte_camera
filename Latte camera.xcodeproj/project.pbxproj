@@ -24,7 +24,6 @@
 		886C63A81681B92D0007D952 /* lattefragment.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 886C63A61681B4A20007D952 /* lattefragment.fsh */; };
 		886C63AC1682E17E0007D952 /* lattedof.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 886C63AB1682E1710007D952 /* lattedof.fsh */; };
 		886C63AF1682E1DB0007D952 /* LXFilterDOF.m in Sources */ = {isa = PBXBuildFile; fileRef = 886C63AE1682E1DA0007D952 /* LXFilterDOF.m */; };
-		886C63B1168302610007D952 /* fisheye.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 886C63B0168302550007D952 /* fisheye.fsh */; };
 		88730A39166F216600CF7507 /* Avenir Next Condensed.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 88730A38166F216600CF7507 /* Avenir Next Condensed.ttc */; };
 		88730A3B166F34C100CF7507 /* localize.py in Resources */ = {isa = PBXBuildFile; fileRef = 88730A3A166F34C100CF7507 /* localize.py */; };
 		887E4095162552C20060623C /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 887E4094162552C10060623C /* icon.png */; };
@@ -744,7 +743,6 @@
 		886C63AB1682E1710007D952 /* lattedof.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = lattedof.fsh; sourceTree = "<group>"; };
 		886C63AD1682E1DA0007D952 /* LXFilterDOF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFilterDOF.h; sourceTree = "<group>"; };
 		886C63AE1682E1DA0007D952 /* LXFilterDOF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFilterDOF.m; sourceTree = "<group>"; };
-		886C63B0168302550007D952 /* fisheye.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = fisheye.fsh; sourceTree = "<group>"; };
 		88730A38166F216600CF7507 /* Avenir Next Condensed.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avenir Next Condensed.ttc"; sourceTree = "<group>"; };
 		88730A3A166F34C100CF7507 /* localize.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = localize.py; path = Vendor/localize.py; sourceTree = "<group>"; };
 		887E4094162552C10060623C /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../../icon.png; sourceTree = "<group>"; };
@@ -2216,7 +2214,6 @@
 		88FE3F9F166C93D6004DCE53 /* Effect */ = {
 			isa = PBXGroup;
 			children = (
-				886C63B0168302550007D952 /* fisheye.fsh */,
 				886C63AB1682E1710007D952 /* lattedof.fsh */,
 				886C63A61681B4A20007D952 /* lattefragment.fsh */,
 				88FE3FA2166C93D6004DCE53 /* effect1.acv */,
@@ -2852,7 +2849,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				886C63B1168302610007D952 /* fisheye.fsh in Resources */,
 				886C63AC1682E17E0007D952 /* lattedof.fsh in Resources */,
 				886C63A81681B92D0007D952 /* lattefragment.fsh in Resources */,
 				88E952C7161994DA00E44619 /* blackArrow.png in Resources */,

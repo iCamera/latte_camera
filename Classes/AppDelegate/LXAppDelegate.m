@@ -22,6 +22,7 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+@synthesize viewCamera;
 
 
 NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSessionStateChangedNotification";
@@ -79,11 +80,11 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-#define TESTING 1
-#ifdef TESTING
-    NSString *uuid = [[UIDevice currentDevice] uniqueIdentifier];
-    [TestFlight setDeviceIdentifier:uuid];
-#endif
+//#define TESTING 1
+//#ifdef TESTING
+//    NSString *uuid = [[UIDevice currentDevice] uniqueIdentifier];
+//    [TestFlight setDeviceIdentifier:uuid];
+//#endif
     
     [TestFlight takeOff:@"7f1fb2cd-bf2d-41bc-bbf7-4a6870785c9e"];
 

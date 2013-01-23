@@ -152,12 +152,15 @@
     
     HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:HUD];
+    HUD.userInteractionEnabled = NO;
     
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];
     [nc addObserver:self selector:@selector(appBecomeActive:) name: @"BecomeActive" object:nil];
     [nc addObserver:self selector:@selector(appResignActive:) name: @"ResignActive" object:nil];
+    [nc addObserver:self selector:@selector(receiveLoggedIn:) name:@"LoggedIn" object:nil];
+
     
 	// Do any additional setup after loading the view.
     // Setup filter
@@ -185,7 +188,7 @@
 //    uiElement = [[GPUImageUIElement alloc] initWithView:uiWrap];
     filterIntensity.mix = 0.0;
 
-    filterFish = [[LXFilterFish alloc] init];
+//    filterFish = [[LXFilterFish alloc] init];
     filterDOF = [[LXFilterDOF alloc] init];
     
     effectManager = [[FilterManager alloc] init];
@@ -455,7 +458,7 @@
         
         [filter removeAllTargets];
         [filterText removeAllTargets];
-        [filterFish removeAllTargets];
+//        [filterFish removeAllTargets];
         [filterDOF removeAllTargets];
         [filterSharpen removeAllTargets];
         [filterDistord removeAllTargets];
@@ -676,6 +679,7 @@
 
 - (void)capturePhotoAsync {
     imageOrientation = orientationLast;
+    buttonCapture.enabled = false;
     [videoCamera capturePhotoAsSampleBufferWithCompletionHandler:^(CMSampleBufferRef imageSampleBuffer, NSError *error) {
         [videoCamera stopCameraCapture];
         
@@ -790,16 +794,31 @@
 }
 
 - (IBAction)touchSave:(id)sender {
+    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:HUD];
+    HUD.userInteractionEnabled = NO;
+    HUD.mode = MBProgressHUDModeIndeterminate;
     [HUD show:NO];
     
-    [self getFinalImage:^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [self getFinalImage:^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self processSavedData];
+            });
+        }];
+    });
+}
+
+- (void)receiveLoggedIn:(NSNotification *)notification
+{
+    if (isEditing && isWatingToUpload && isSaved) {
         [self processSavedData];
-    }];
+    }
 }
 
 - (void)processSavedData {
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    [HUD hide:YES];
+    
     if (app.currentUser != nil) {
         NSDictionary *info = [[NSDictionary alloc] initWithObjectsAndKeys:
                               savedData, @"data",
@@ -814,7 +833,7 @@
         RDActionSheet *actionSheet = [[RDActionSheet alloc] initWithCancelButtonTitle:NSLocalizedString(@"Cancel", @"")
                                                                    primaryButtonTitle:nil
                                                                destructiveButtonTitle:nil
-                                                                    otherButtonTitles:@"Email", @"Twitter", @"Facebook", nil];
+                                                                    otherButtonTitles:@"Email", @"Twitter", @"Facebook", @"Latte", nil];
         
         actionSheet.callbackBlock = ^(RDActionSheetResult result, NSInteger buttonIndex)
         {
@@ -833,6 +852,15 @@
                         case 2: // facebook
                             [laSharekit facebookPost];
                             break;
+                        case 3: {
+                            UINavigationController *modalLogin = [[UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                                                            bundle: nil] instantiateViewControllerWithIdentifier:@"LoginModal"];
+                            [self presentViewController:modalLogin animated:YES completion:^{
+                                isWatingToUpload = YES;
+                            }];
+
+                            break;
+                        }
                             
                         default:
                             break;
@@ -851,6 +879,9 @@
 - (void)getFinalImage:(void(^)())block {
     if (isSaved) {
         block();
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [HUD hide:YES];
+        });
         return;
     }
     
@@ -928,6 +959,16 @@
         } else {
             TFLog(@"Cannot saved 1");
         }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            HUD.mode = MBProgressHUDModeText;
+            HUD.labelText = NSLocalizedString(@"saved_photo", @"Saved to Camera Roll") ;
+            HUD.margin = 10.f;
+            HUD.yOffset = 150.f;
+            HUD.removeFromSuperViewOnHide = YES;
+            
+            [HUD hide:YES afterDelay:2];
+        });
     }];
     
 }
@@ -1190,7 +1231,12 @@
     //
     ALAssetsLibraryAccessFailureBlock failureblock  = ^(NSError *myerror)
     {
-        TFLog(@"booya, cant get image - %@",[myerror localizedDescription]);
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"Error")
+                                                        message:[myerror localizedDescription]
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"cancel", @"Error")
+                                              otherButtonTitles:nil];
+        [alert show];
     };
     
     ALAssetsLibrary* assetslibrary = [[ALAssetsLibrary alloc] init];
@@ -1232,6 +1278,7 @@
     buttonNo.hidden = YES;
     buttonYes.hidden = YES;
     buttonCapture.hidden = NO;
+    buttonCapture.enabled = true;
     buttonFlash.hidden = NO;
     buttonTimer.hidden = NO;
     buttonFlip.hidden = NO;
@@ -1264,6 +1311,7 @@
     posText = CGPointMake(0.1, 0.5);
     textText.text = @"";
     currentText = @"";
+    isWatingToUpload = NO;
     
 //    uiWrap.frame = CGRectMake(0, 0, previewSize.width, previewSize.height);
     timeLabel.center = uiWrap.center;

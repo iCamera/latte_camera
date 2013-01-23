@@ -17,9 +17,7 @@
 #import "AFHTTPClient.h"
 #import "LXShare.h"
 
-@interface LXPicEditViewController : UITableViewController <UIActionSheetDelegate> {
-    MBProgressHUD *HUD;
-    
+@interface LXPicEditViewController : UITableViewController <UIActionSheetDelegate> {    
     NSData *imageData;
     NSInteger imageStatus;
     UIImage *preview;
@@ -44,9 +42,6 @@
 - (IBAction)touchBack:(id)sender;
 - (IBAction)touchBackground:(id)sender;
 - (IBAction)touchDelete:(id)sender;
-- (IBAction)shareEmail:(UIButton*)sender;
-- (IBAction)shareFacebook:(UIButton*)sender;
-- (IBAction)shareTwitter:(UIButton*)sender;
 
 - (void)setData:(NSData *)aData;
 

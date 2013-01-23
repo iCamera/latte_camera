@@ -181,24 +181,34 @@
         [alert show];
     } else {
         [app setToken:[JSON objectForKey:@"token"]];
-        app.currentUser = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
-        if (app.apns != nil)
-            [app updateUserAPNS];
-        
-        [self.navigationController popViewControllerAnimated:YES];
-        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-        
-        HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
-        HUD.mode = MBProgressHUDModeCustomView;
-        [HUD hide:YES afterDelay:0.3];
-        
-        [[NSNotificationCenter defaultCenter]
-         postNotificationName:@"LoggedIn"
-         object:self];
-        
-        [[NSNotificationCenter defaultCenter]
-         postNotificationName:@"UploadedNewPicture"
-         object:self];
+        [[LatteAPIClient sharedClient] getPath:@"user/me"
+                                    parameters:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                [app getToken], @"token", nil]
+                                       success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                           if ([[JSON objectForKey:@"status"] integerValue] == 1) {
+                                               app.currentUser = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
+                                               
+                                               if (app.apns != nil)
+                                                   [app updateUserAPNS];
+                                               
+                                               [self.navigationController popViewControllerAnimated:YES];
+                                               [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+                                               
+                                               HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+                                               HUD.mode = MBProgressHUDModeCustomView;
+                                               [HUD hide:YES afterDelay:0.3];
+                                               
+                                               [[NSNotificationCenter defaultCenter]
+                                                postNotificationName:@"LoggedIn"
+                                                object:self];
+                                               
+                                               [[NSNotificationCenter defaultCenter]
+                                                postNotificationName:@"UploadedNewPicture"
+                                                object:self];
+                                           }
+                                       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                           TFLog(@"Something went wrong (Login check 2)");
+                                       }];
     }
 }
 

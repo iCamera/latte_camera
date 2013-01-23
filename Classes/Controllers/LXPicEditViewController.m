@@ -39,8 +39,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:HUD];
     share = [[LXShare alloc] init];
     share.controller = self;
     
@@ -68,7 +66,6 @@
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];
-    [nc addObserver:self selector:@selector(receiveLoggedIn:) name:@"LoggedIn" object:nil];
     
     if (picture == nil) {
         share.imageData = imageData;
@@ -125,6 +122,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if ((indexPath.section == 1) && (indexPath.row == 1))
     {
         UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"privacy_setting", @"公開設定")
@@ -144,12 +142,24 @@
         }
         else
             [sheet showInView:self.view];
+    } else if (indexPath.section == 2) {
+        switch (indexPath.row) {
+            case 0:
+                [share facebookPost];
+                break;
+            case 1:
+                [share tweet];
+                break;
+            case 2:
+                [share emailIt];
+                break;
+            default:
+                break;
+        }
     }
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1] animated:YES];
-    
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {    
     if (actionSheet.tag == 0) {
         switch (buttonIndex) {
             case 0:
@@ -170,6 +180,8 @@
         [self setStatusLabel];
     } else {
         if (buttonIndex == 0) { // Remove Pic
+            MBProgressHUD* HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+            [self.navigationController.view addSubview:HUD];
             HUD.mode = MBProgressHUDModeIndeterminate;
             [HUD show:YES];
             LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
@@ -225,18 +237,6 @@
     [sheet showFromTabBar:self.tabBarController.tabBar];
 }
 
-- (IBAction)shareEmail:(UIButton*)sender {
-    [share emailIt];
-}
-
-- (IBAction)shareFacebook:(UIButton*)sender {
-    [share facebookPost];
-}
-
-- (IBAction)shareTwitter:(UIButton*)sender {
-    [share tweet];
-}
-
 - (void)keyboardWillShow:(NSNotification *)notification
 {
     [self.tableView addGestureRecognizer:gestureTap];
@@ -248,6 +248,8 @@
 }
 
 - (void)updatePic {
+    MBProgressHUD* HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:HUD];
     HUD.mode = MBProgressHUDModeIndeterminate;
     [HUD show:YES];
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
@@ -277,15 +279,23 @@
 }
 
 - (void)backToCamera {
-    HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
-    HUD.mode = MBProgressHUDModeCustomView;
-    [HUD show:YES];
-    [HUD hide:YES afterDelay:1];
+    
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    UINavigationController *navCamera = (UINavigationController*)app.viewCamera;
+    
     [self.navigationController popToRootViewControllerAnimated:YES];
+    LXCameraViewController *cameraView = (LXCameraViewController*)navCamera.viewControllers[0];
+    [cameraView switchCamera];
 }
 
 - (void)saveImage {
-    [self performSelector:@selector(backToCamera) withObject:nil afterDelay:1];
+    MBProgressHUD* HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:HUD];
+    HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+    HUD.mode = MBProgressHUDModeCustomView;
+    [HUD show:YES];
+    [HUD hide:YES afterDelay:2];
+    
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
@@ -332,6 +342,7 @@
         HUD.yOffset = 150.f;
         HUD.removeFromSuperViewOnHide = YES;
         
+        [HUD show:YES];
         [HUD hide:YES afterDelay:3];
     };
     
@@ -343,6 +354,7 @@
     
     
     [operation start];
+    [self performSelector:@selector(backToCamera) withObject:nil afterDelay:1];
 }
 
 
