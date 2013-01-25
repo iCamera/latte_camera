@@ -11,6 +11,7 @@
 #import <Security/Security.h>
 #import "LXUIRevealController.h"
 #import "LatteAPIClient.h"
+#import "Appirater.h"
 
 @implementation LXAppDelegate
 
@@ -87,6 +88,8 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
 //#endif
     
     [TestFlight takeOff:@"7f1fb2cd-bf2d-41bc-bbf7-4a6870785c9e"];
+    
+    [Appirater setAppId:@"582903721"];
 
     // Register for Push Notification
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
@@ -103,6 +106,8 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
     [FBSession openActiveSessionWithAllowLoginUI:NO];
     
     viewCamera = window.rootViewController;
+    
+    [Appirater appLaunched:YES];
     
     return YES;
 }
@@ -203,7 +208,7 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
-    TFLog(@"received push");
+//    TFLog(@"received push");
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -223,7 +228,7 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    
+    [Appirater appEnteredForeground:YES];
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
