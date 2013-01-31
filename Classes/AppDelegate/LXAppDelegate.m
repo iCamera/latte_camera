@@ -23,7 +23,7 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize viewCamera;
-
+@synthesize tracker;
 
 NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSessionStateChangedNotification";
 
@@ -86,7 +86,17 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
 //    [TestFlight setDeviceIdentifier:uuid];
 //#endif
     
+    // Optional: automatically send uncaught exceptions to Google Analytics.
+    [GAI sharedInstance].trackUncaughtExceptions = YES;
+    // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
+    [GAI sharedInstance].dispatchInterval = 20;
+    // Optional: set debug to YES for extra debugging information.
+    [GAI sharedInstance].debug = YES;
+    // Create tracker instance.
+    tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-242292-26"];
+    
     [TestFlight takeOff:@"7f1fb2cd-bf2d-41bc-bbf7-4a6870785c9e"];
+    
 
     // Register for Push Notification
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
@@ -108,7 +118,15 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
 }
 
 - (void)toogleCamera {
-    if (window.rootViewController != revealController) {
+    if (window.rootViewController != viewCamera) {
+        [[UIApplication sharedApplication] setStatusBarHidden:YES];
+        window.rootViewController = viewCamera;
+        [window makeKeyAndVisible];
+    }
+    else if (revealController != nil) {
+        window.rootViewController = revealController;
+        [window makeKeyAndVisible];
+    } else {
         [[UIApplication sharedApplication] setStatusBarHidden:NO];
         UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                                  bundle:nil];
@@ -121,10 +139,7 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
         
         window.rootViewController = revealController;
         [window makeKeyAndVisible];
-    } else {
-        [[UIApplication sharedApplication] setStatusBarHidden:YES];
-        window.rootViewController = viewCamera;
-        [window makeKeyAndVisible];
+
     }
 }
 

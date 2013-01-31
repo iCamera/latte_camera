@@ -17,6 +17,10 @@
         rgb = [[GPUImageRGBFilter alloc] init];
         filter = [[LXFilter alloc] init];
         filterMono = [[LXFilterMono alloc] init];
+        lxEffect1 = [[LXEffect1 alloc] init];
+        lxEffect2 = [[LXEffect2 alloc] init];
+        lxEffect3 = [[LXEffect3 alloc] init];
+        lxEffect5 = [[LXEffect5 alloc] init];
     }
     return self;
 }
@@ -24,37 +28,37 @@
 - (GPUImageFilter*)getEffect:(NSInteger)aEffect {
     switch (aEffect) {
         case 1:
-            return [self myEffect1];
+            return lxEffect1;
         case 2:
-            return [self myEffect2];
+            return lxEffect2;
         case 3:
-            return [self myEffect3];
+            return lxEffect3;
         case 4:
-            return [self myEffect4];
+            return lxEffect5;
         case 5:
-            return [self myEffect5];
+            return [self myEffect1];
         case 6:
-            return [self myEffect6];
+            return [self myEffect2];
         case 7:
-            return [self myEffect7];
+            return [self myEffect3];
         case 8:
-            return [self tmpEffect1];
+            return [self myEffect4];
         case 9:
-            return [self tmpEffect2];
+            return [self myEffect5];
         case 10:
-            return [self effect5];
+            return [self myEffect6];
         case 11:
-            return [self effect4];
+            return [self myEffect7];
         case 12:
-            return [self tmpEffect5];
+            return [self tmpEffect1];
         case 13:
-            return [self tmpEffect6];
+            return [self effect5];
         case 14:
-            return [self effect3];
+            return [self tmpEffect5];
         case 15:
-            return [self effect1];
+            return [self effect3];
         case 16:
-            return [self effect2];
+            return [self effect1];
         default:
             return nil;
     }

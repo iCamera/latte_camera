@@ -30,6 +30,9 @@
 {
     [super viewDidLoad];
     
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    [app.tracker sendView:@"Liked Screen"];
+    
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     // Do any additional setup after loading the view.
     refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
@@ -37,7 +40,6 @@
     [self.tableView addSubview:refreshHeaderView];
     
     //Init sidebar
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     UIPanGestureRecognizer *navigationBarPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:app.revealController action:@selector(revealGesture:)];
     [self.navigationController.navigationBar addGestureRecognizer:navigationBarPanGestureRecognizer];
     [buttonNavRight addTarget:app.revealController action:@selector(revealLeft:) forControlEvents:UIControlEventTouchUpInside];

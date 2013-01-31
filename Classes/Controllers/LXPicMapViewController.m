@@ -46,6 +46,9 @@
 {
     [super viewDidLoad];
     
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    [app.tracker sendView:@"Picture Map Screen"];
+    
     MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(pin.coordinate, 0.5*METERS_PER_MILE, 0.5*METERS_PER_MILE);
     
     MKCoordinateRegion adjustedRegion = [mapPic regionThatFits:viewRegion];

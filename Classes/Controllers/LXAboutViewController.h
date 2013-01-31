@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LXAppDelegate.h"
 
 @interface LXAboutViewController : UITableViewController<UIAlertViewDelegate>
 @property (strong, nonatomic) IBOutlet UITextView *textForm;

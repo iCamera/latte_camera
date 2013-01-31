@@ -68,6 +68,9 @@
 {
     [super viewDidLoad];
     
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    [app.tracker sendView:@"Mypage Screen"];
+    
     HUD = [[MBProgressHUD alloc] initWithView:self.tableView];
     [self.tableView addSubview:HUD];
     HUD.mode = MBProgressHUDModeText;
@@ -99,8 +102,6 @@
     refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
     refreshHeaderView.delegate = self;
     [self.tableView addSubview:refreshHeaderView];
-    
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
     
     self.viewStats.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
@@ -716,22 +717,28 @@
 }
 
 - (void)pickPhoto {
-    UINavigationController *storyCapture = [[UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                                         bundle: nil] instantiateInitialViewController];
-    LXCameraViewController *viewCapture = storyCapture.viewControllers[0];
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    
+    LXCameraViewController *viewCapture = ((UINavigationController*)app.viewCamera).viewControllers[0];
     viewCapture.delegate = self;
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:NO];
-    [self presentViewController:storyCapture animated:NO completion:nil];
+    [app toogleCamera];
 }
 
 - (void)imagePickerController:(LXCameraViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info {
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    UINavigationController* navCamera = (id)app.viewCamera;
+    LXCameraViewController *viewCapture = navCamera.viewControllers[0];
+    [navCamera popToRootViewControllerAnimated:NO];
+    [viewCapture switchCamera];
+    viewCapture.delegate = nil;
+    [app toogleCamera];
+
+    
     MBProgressHUD *progessHUD = [[MBProgressHUD alloc] initWithView:picker.view];
     [picker.view addSubview:progessHUD];
     
     progessHUD.mode = MBProgressHUDModeDeterminate;
     [progessHUD show:YES];
-    
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
     void (^createForm)(id<AFMultipartFormData>) = ^(id<AFMultipartFormData> formData) {
         [formData appendPartWithFileData:[info objectForKey:@"data"]

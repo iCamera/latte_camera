@@ -30,6 +30,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    [app.tracker sendView:@"Picture Info Screen"];
     
     viewHeader.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     CAGradientLayer *gradient = [CAGradientLayer layer];
@@ -51,7 +53,6 @@
     
     NSString *url = [NSString stringWithFormat:@"picture/%d", picID];
 
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     [[LatteAPIClient sharedClient] getPath:url
                                       parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {

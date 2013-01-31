@@ -39,6 +39,7 @@
 @synthesize viewSubBg;
 @synthesize viewSubPic;
 @synthesize indicatorComment;
+@synthesize scrollVotes;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -53,6 +54,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    [app.tracker sendView:@"Picture Detail Screen"];
+    
     // Style
     UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:viewTextbox.bounds];
     viewTextbox.layer.masksToBounds = NO;
@@ -74,7 +79,6 @@
     refreshHeaderView.delegate = self;
     [self.tablePic addSubview:refreshHeaderView];
     
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     if (app.currentUser != nil) {
         UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, viewTextbox.frame.size.height, 0.0);
         tablePic.scrollIndicatorInsets = contentInsets;
@@ -165,6 +169,37 @@
     
     CGRect frame = tablePic.tableHeaderView.frame;
     frame.size.height = newheight + 98;
+    
+    if ([pic.voteCount integerValue] > 0) {
+        frame.size.height += 50;
+        
+        NSString *url = [NSString stringWithFormat:@"picture/%d/votes", pic!=nil?[pic.pictureId integerValue]:picID];
+        LXAppDelegate* app = (LXAppDelegate*)[[UIApplication sharedApplication] delegate];
+        
+        [[LatteAPIClient sharedClient] getPath:url
+                                    parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                       success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                           NSMutableArray *votes = [User mutableArrayFromDictionary:JSON withKey:@"votes"];
+                                           for (UIView *subview in scrollVotes.subviews) {
+                                               [subview removeFromSuperview];
+                                           }
+                                           
+                                           for (NSInteger i = 0; i < votes.count; i++) {
+                                               User *voteUser = votes[i];
+                                               UIButton *buttonVotedUser = [[UIButton alloc] initWithFrame:CGRectMake(5+45*i, 0, 40, 40)];
+                                               [buttonVotedUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
+                                               buttonVotedUser.layer.cornerRadius = 5;
+                                               buttonVotedUser.clipsToBounds = YES;
+                                               buttonVotedUser.tag = [voteUser.userId integerValue];
+                                               [buttonVotedUser loadBackground:voteUser.profilePicture placeholderImage:@"user.gif"];
+                                               [scrollVotes addSubview:buttonVotedUser];
+                                           }
+                                           scrollVotes.contentSize = CGSizeMake(45*votes.count + 5, 50);
+                                       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                           TFLog(@"Something went wrong (Get vote)");
+                                       }];
+    } else
+        scrollVotes.hidden = true;
     tablePic.tableHeaderView.frame = frame;
     
     // Hack, to refresh header height
@@ -172,12 +207,18 @@
 
     [tablePic setNeedsLayout];
     [viewSubBg setNeedsDisplay];
-    [viewSubPic setNeedsDisplay];
+    frame = viewSubPic.frame;
+    frame.size.height = newheight + 52;
+    viewSubPic.frame = frame;
+    
+    frame = viewStats.frame;
+    frame.origin.y = newheight + 58;
+    viewStats.frame = frame;
     
     // Do any additional setup after loading the view from its nib.
     if (pic.title.length > 0)
         labelTitle.text = pic.title;
-    
+        
     labelDate.text = [LXUtils timeDeltaFromNow:pic.createdAt];
     labelLike.text = [pic.voteCount stringValue];
     labelComment.text = [pic.commentCount stringValue];
@@ -216,6 +257,7 @@
     [self setViewSubBg:nil];
     [self setViewSubPic:nil];
     [self setIndicatorComment:nil];
+    [self setScrollVotes:nil];
     [super viewDidUnload];
 }
 

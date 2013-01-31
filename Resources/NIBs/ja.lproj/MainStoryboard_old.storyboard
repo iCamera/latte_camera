@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2844" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="9Uv-H9-P5J">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="9Uv-H9-P5J">
     <dependencies>
         <deployment version="1280" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1930"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
         <!--Main Tab View Controller-->
@@ -680,7 +680,7 @@
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="r3U-9j-Apo">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="名前" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="r3U-9j-Apo">
                                             <rect key="frame" x="42" y="7" width="258" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
@@ -2321,17 +2321,17 @@ Latteについて、「こんな機能があったら良い」、「この機能
                                 <gestureRecognizers/>
                                 <color key="separatorColor" red="0.73725491759999995" green="0.72156864399999998" blue="0.66274511810000003" alpha="1" colorSpace="deviceRGB"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="d8f-3h-05p">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="228"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" id="aY0-AH-DG6" customClass="LXSubLayerView">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="174"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="222"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" red="0.90588235289999997" green="0.8980392157" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
                                         </view>
                                         <view contentMode="scaleToFill" id="2gB-we-Nz1" customClass="LXSubLayerView">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="134"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bg_views.png" id="1v1-9Q-XrG">
                                                     <rect key="frame" x="255" y="6" width="65" height="30"/>
@@ -2401,7 +2401,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
                                         </view>
                                         <view contentMode="scaleToFill" id="Xr2-ka-fEZ">
                                             <rect key="frame" x="0.0" y="142" width="320" height="25"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="VUc-Si-9QX">
                                                     <rect key="frame" x="6" y="0.0" width="75" height="25"/>
@@ -2498,11 +2498,22 @@ Latteについて、「こんな機能があったら良い」、「この機能
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="UAe-AN-cxk">
+                                            <rect key="frame" x="0.0" y="172" width="320" height="50"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
+                                            <subviews>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" animating="YES" style="gray" id="SfJ-Az-x6h">
+                                                    <rect key="frame" x="30" y="14" width="20" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </activityIndicatorView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </scrollView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="ehR-F8-o1f">
-                                    <rect key="frame" x="0.0" y="244" width="320" height="44"/>
+                                    <rect key="frame" x="0.0" y="292" width="320" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="gray" id="NLz-Xm-TV3">
@@ -2514,7 +2525,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
                                 </view>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="Comment" rowHeight="42" id="ohy-OU-wRJ" customClass="LXCellComment">
-                                        <rect key="frame" x="0.0" y="202" width="320" height="42"/>
+                                        <rect key="frame" x="0.0" y="250" width="320" height="42"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="41"/>
@@ -2670,6 +2681,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
                         <outlet property="labelDate" destination="X2R-qY-3XW" id="Kei-lI-mgB"/>
                         <outlet property="labelLike" destination="KZc-53-tYT" id="2xZ-76-xmT"/>
                         <outlet property="labelTitle" destination="jNB-Kj-Lzh" id="Pgl-V1-hZF"/>
+                        <outlet property="scrollVotes" destination="UAe-AN-cxk" id="l0A-Ab-NlX"/>
                         <outlet property="tablePic" destination="82n-Q0-oJK" id="ffG-nB-8mc"/>
                         <outlet property="textComment" destination="J42-G3-Zbq" id="20N-GI-BpM"/>
                         <outlet property="viewStats" destination="Xr2-ka-fEZ" id="V1P-mt-2jU"/>
@@ -3229,6 +3241,86 @@ Latteについて、「こんな機能があったら良い」、「この機能
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AXR-9b-64l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2301" y="598"/>
+        </scene>
+        <!--Help Bokeh View Controller-->
+        <scene sceneID="xro-gi-UY8">
+            <objects>
+                <viewController storyboardIdentifier="HelpBokeh" id="tqa-CK-grS" customClass="LXHelpBokehViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dcl-0S-gS0">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="f2T-bK-SvP">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="481"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="touchClose:" destination="tqa-CK-grS" eventType="touchUpInside" id="AaP-i0-wdm"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" id="9vd-YT-DeK">
+                                <rect key="frame" x="10" y="50" width="300" height="270"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ohl-wb-jqN">
+                                        <rect key="frame" x="10" y="30" width="253" height="35"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <string key="text">ぼかしたくない場所を指で囲い
+下のパネルからぼかし具合を調節しましょう</string>
+                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="11"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="ぼかし" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ijM-ak-O6b">
+                                        <rect key="frame" x="27" y="5" width="161" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="17"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="sample.png" id="p5q-du-AEp">
+                                        <rect key="frame" x="10" y="70" width="280" height="190"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="icon_boke2.png" id="KxS-Dw-ykO">
+                                        <rect key="frame" x="10" y="10" width="10" height="15"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="XLe-TJ-Ijk">
+                                        <rect key="frame" x="260" y="0.0" width="40" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" image="icon_close.png">
+                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="touchClose:" destination="tqa-CK-grS" eventType="touchUpInside" id="Tb8-Lh-SZo"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.25" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="viewPopupHelp" destination="9vd-YT-DeK" id="Msu-Mx-WXT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dKc-th-0ZU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2947" y="-250"/>
         </scene>
         <!--Camera View Controller-->
         <scene sceneID="nlt-9Y-tte">
@@ -3816,7 +3908,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
                                             <action selector="changeLens:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="T52-Ie-lUy"/>
                                         </connections>
                                     </button>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" id="hha-63-Bgt" userLabel="Slider Vignette">
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.40000000000000002" minValue="0.0" maxValue="1" id="hha-63-Bgt" userLabel="Slider Vignette">
                                         <rect key="frame" x="70" y="45" width="240" height="23"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="minimumTrackTintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
@@ -3825,7 +3917,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
                                             <action selector="updateFilter:" destination="ieL-KW-PiQ" eventType="valueChanged" id="Xb3-hb-TiH"/>
                                         </connections>
                                     </slider>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="2" id="zO7-i5-Csa" userLabel="Slider Sharpness">
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.25" minValue="0.0" maxValue="2" id="zO7-i5-Csa" userLabel="Slider Sharpness">
                                         <rect key="frame" x="70" y="75" width="240" height="23"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="minimumTrackTintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
@@ -3864,24 +3956,111 @@ Latteについて、「こんな機能があったら良い」、「この機能
                                 <rect key="frame" x="0.0" y="430" width="320" height="110"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="強さ" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Cz9-M7-MWi">
-                                        <rect key="frame" x="10" y="8" width="52" height="16"/>
+                                    <scrollView autoresizesSubviews="NO" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="Qcy-0Z-pzw" userLabel="Effect Scroll">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="110"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </scrollView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.21960784310000001" green="0.19215686269999999" blue="0.1137254902" alpha="0.90000000000000002" colorSpace="deviceRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="bB1-Df-FM9" userLabel="Blending Control">
+                                <rect key="frame" x="0.0" y="430" width="320" height="110"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Intensity" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6bm-Wu-j5W">
+                                        <rect key="frame" x="10" y="15" width="52" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="10"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <size key="shadowOffset" width="0.0" height="0.0"/>
                                     </label>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" id="ECu-pG-NDT" userLabel="Slider Intensity">
-                                        <rect key="frame" x="70" y="5" width="215" height="23"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="nQ3-i4-zrj">
+                                        <rect key="frame" x="70" y="10" width="60" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="minimumTrackTintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                        <color key="thumbTintColor" red="0.60226004464285721" green="0.53549094017847199" blue="0.31669781422365439" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
+                                        <size key="titleShadowOffset" width="0.0" height="1"/>
+                                        <state key="normal" title="None" backgroundImage="select42_1.png">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                        </state>
+                                        <state key="disabled" backgroundImage="select42_1_on.png">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                        </state>
+                                        <state key="highlighted" backgroundImage="select3_1_on.png">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                        </state>
                                         <connections>
-                                            <action selector="changeEffectIntensity:" destination="ieL-KW-PiQ" eventType="valueChanged" id="Zs7-rJ-6sv"/>
+                                            <action selector="setBlend:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="cCO-90-tc1"/>
                                         </connections>
-                                    </slider>
-                                    <scrollView autoresizesSubviews="NO" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="Qcy-0Z-pzw" userLabel="Effect Scroll">
+                                    </button>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="DQ4-p0-rhN">
+                                        <rect key="frame" x="130" y="10" width="60" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
+                                        <size key="titleShadowOffset" width="0.0" height="1"/>
+                                        <state key="normal" title="弱" backgroundImage="select42_2.png">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                        </state>
+                                        <state key="disabled" backgroundImage="select42_2_on.png">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                        </state>
+                                        <state key="highlighted" backgroundImage="select42_2_on.png">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="setBlend:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="fhZ-k4-H7b"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="uJR-Gj-fer">
+                                        <rect key="frame" x="190" y="10" width="60" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
+                                        <size key="titleShadowOffset" width="0.0" height="1"/>
+                                        <state key="normal" title="中" backgroundImage="select42_2.png">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                        </state>
+                                        <state key="disabled" backgroundImage="select42_2_on.png">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                        </state>
+                                        <state key="highlighted" backgroundImage="select42_2_on.png">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="setBlend:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="Crh-1N-ZwQ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="ptF-bn-atR">
+                                        <rect key="frame" x="250" y="10" width="60" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
+                                        <size key="titleShadowOffset" width="0.0" height="1"/>
+                                        <state key="normal" title="強" backgroundImage="select42_3.png">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                        </state>
+                                        <state key="disabled" backgroundImage="select42_3_on.png">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                        </state>
+                                        <state key="highlighted" backgroundImage="select42_3_on.png">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="setBlend:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="dAq-IZ-Iz6"/>
+                                        </connections>
+                                    </button>
+                                    <scrollView autoresizesSubviews="NO" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="dO5-U0-YJt" userLabel="Blend Scroll">
                                         <rect key="frame" x="0.0" y="38" width="320" height="72"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -3896,76 +4075,6 @@ Latteについて、「こんな機能があったら良い」、「この機能
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bg_camera_bottom.png" id="r6B-Di-spN">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                     </imageView>
-                                    <button hidden="YES" opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="jki-9k-LiL" userLabel="Button Filter">
-                                        <rect key="frame" x="194" y="5" width="58" height="40"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="icon_filter.png" backgroundImage="bg_camera_bt2.png">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="disabled" backgroundImage="bg_camera_bt2_on.png"/>
-                                        <state key="selected" backgroundImage="bg_camera_bt2_on.png"/>
-                                        <state key="highlighted" backgroundImage="bg_camera_bt2.png">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="toggleControl:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="FgE-sN-ohz"/>
-                                        </connections>
-                                    </button>
-                                    <button hidden="YES" opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="4Av-ia-SWc" userLabel="Button Focus">
-                                        <rect key="frame" x="131" y="5" width="58" height="40"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="icon_boke.png" backgroundImage="bg_camera_bt2.png">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="selected" backgroundImage="bg_camera_bt2_on.png"/>
-                                        <state key="highlighted" backgroundImage="bg_camera_bt2_on.png">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="toggleControl:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="xx4-4M-nnR"/>
-                                        </connections>
-                                    </button>
-                                    <button hidden="YES" opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="9ht-r3-gIX" userLabel="Button Detail">
-                                        <rect key="frame" x="68" y="5" width="58" height="40"/>
-                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
-                                        <state key="normal" title="" image="icon_detail.png" backgroundImage="bg_camera_bt2.png">
-                                            <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="selected" backgroundImage="bg_camera_bt2_on.png"/>
-                                        <state key="highlighted" backgroundImage="bg_camera_bt2_on.png"/>
-                                        <connections>
-                                            <action selector="toggleControl:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="abY-T8-DJ0"/>
-                                        </connections>
-                                    </button>
-                                    <button hidden="YES" opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="oPW-i4-NiR" userLabel="Button Lens">
-                                        <rect key="frame" x="5" y="5" width="58" height="40"/>
-                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
-                                        <state key="normal" title="" image="icon_lens3.png" backgroundImage="bg_camera_bt2.png">
-                                            <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="selected" backgroundImage="bg_camera_bt2_on.png"/>
-                                        <state key="highlighted" backgroundImage="bg_camera_bt2_on.png"/>
-                                        <connections>
-                                            <action selector="toggleControl:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="Nup-Qq-I0Q"/>
-                                        </connections>
-                                    </button>
-                                    <button hidden="YES" opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="qfz-nj-8Si" userLabel="Button Text">
-                                        <rect key="frame" x="257" y="5" width="58" height="40"/>
-                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
-                                        <state key="normal" title="ABC" backgroundImage="bg_camera_bt2.png">
-                                            <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="selected" backgroundImage="bg_camera_bt2_on.png"/>
-                                        <state key="highlighted" backgroundImage="bg_camera_bt2_on.png"/>
-                                        <connections>
-                                            <action selector="toggleControl:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="qab-B2-N82"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="T0q-UT-yaq" userLabel="Button Picker">
                                         <rect key="frame" x="5" y="5" width="58" height="40"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -3996,70 +4105,100 @@ Latteについて、「こんな機能があったら良い」、「この機能
                                             <action selector="capture:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="Agx-eV-2R1"/>
                                         </connections>
                                     </button>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                            </view>
-                            <view hidden="YES" alpha="0.0" contentMode="scaleToFill" id="eib-43-vSZ" userLabel="Help">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" id="EsS-3z-MzB" userLabel="Back">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <gestureRecognizers/>
-                                        <connections>
-                                            <outletCollection property="gestureRecognizers" destination="TPR-cT-6jO" appends="YES" id="mn4-FK-umy"/>
-                                        </connections>
-                                    </view>
-                                    <view contentMode="scaleToFill" id="9vd-YT-DeK">
-                                        <rect key="frame" x="10" y="50" width="300" height="270"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <scrollView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="aZh-bB-hzl" userLabel="Scroll View Process">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <subviews>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ohl-wb-jqN">
-                                                <rect key="frame" x="10" y="30" width="253" height="35"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <string key="text">ぼかしたくない場所を指で囲い
-下のパネルからぼかし具合を調節しましょう</string>
-                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="11"/>
-                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="ぼかし" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ijM-ak-O6b">
-                                                <rect key="frame" x="27" y="5" width="161" height="25"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="17"/>
-                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="sample.png" id="p5q-du-AEp">
-                                                <rect key="frame" x="10" y="70" width="280" height="190"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="icon_boke2.png" id="KxS-Dw-ykO">
-                                                <rect key="frame" x="10" y="10" width="10" height="15"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="XLe-TJ-Ijk">
-                                                <rect key="frame" x="260" y="0.0" width="40" height="40"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="jki-9k-LiL" userLabel="Button Film">
+                                                <rect key="frame" x="6" y="5" width="58" height="40"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                <state key="normal" image="icon_close.png">
+                                                <state key="normal" image="icon_filter.png" backgroundImage="bg_camera_bt2.png">
                                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
-                                                <state key="highlighted">
+                                                <state key="disabled" backgroundImage="bg_camera_bt2_on.png"/>
+                                                <state key="selected" backgroundImage="bg_camera_bt2_on.png"/>
+                                                <state key="highlighted" backgroundImage="bg_camera_bt2.png">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="touchCloseHelp:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="fbg-e1-b99"/>
+                                                    <action selector="toggleControl:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="FgE-sN-ohz"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="wI0-ni-c6t" userLabel="Button Blend">
+                                                <rect key="frame" x="255" y="5" width="58" height="40"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" image="icon_filter.png" backgroundImage="bg_camera_bt2.png">
+                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="disabled" backgroundImage="bg_camera_bt2_on.png"/>
+                                                <state key="selected" backgroundImage="bg_camera_bt2_on.png"/>
+                                                <state key="highlighted" backgroundImage="bg_camera_bt2.png">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="toggleControl:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="vH2-BO-0vH"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="4Av-ia-SWc" userLabel="Button Focus">
+                                                <rect key="frame" x="131" y="5" width="58" height="40"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" image="icon_boke.png" backgroundImage="bg_camera_bt2.png">
+                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="selected" backgroundImage="bg_camera_bt2_on.png"/>
+                                                <state key="highlighted" backgroundImage="bg_camera_bt2_on.png">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="toggleControl:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="xx4-4M-nnR"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="9ht-r3-gIX" userLabel="Button Detail">
+                                                <rect key="frame" x="69" y="5" width="58" height="40"/>
+                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
+                                                <state key="normal" title="" image="icon_detail.png" backgroundImage="bg_camera_bt2.png">
+                                                    <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="selected" backgroundImage="bg_camera_bt2_on.png"/>
+                                                <state key="highlighted" backgroundImage="bg_camera_bt2_on.png"/>
+                                                <connections>
+                                                    <action selector="toggleControl:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="abY-T8-DJ0"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="oPW-i4-NiR" userLabel="Button Lens">
+                                                <rect key="frame" x="193" y="5" width="58" height="40"/>
+                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
+                                                <state key="normal" title="" image="icon_lens3.png" backgroundImage="bg_camera_bt2.png">
+                                                    <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="selected" backgroundImage="bg_camera_bt2_on.png"/>
+                                                <state key="highlighted" backgroundImage="bg_camera_bt2_on.png"/>
+                                                <connections>
+                                                    <action selector="toggleControl:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="Nup-Qq-I0Q"/>
+                                                </connections>
+                                            </button>
+                                            <button hidden="YES" opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="qfz-nj-8Si" userLabel="Button Text">
+                                                <rect key="frame" x="302" y="5" width="58" height="40"/>
+                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
+                                                <state key="normal" title="ABC" backgroundImage="bg_camera_bt2.png">
+                                                    <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="selected" backgroundImage="bg_camera_bt2_on.png"/>
+                                                <state key="highlighted" backgroundImage="bg_camera_bt2_on.png"/>
+                                                <connections>
+                                                    <action selector="toggleControl:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="qab-B2-N82"/>
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
-                                    </view>
+                                    </scrollView>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
@@ -4070,6 +4209,10 @@ Latteについて、「こんな機能があったら良い」、「この機能
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="buttonBackgroundNatual" destination="bTF-6y-EJH" id="9Z1-vz-SmO"/>
+                        <outlet property="buttonBlendMedium" destination="uJR-Gj-fer" id="rJD-he-t8E"/>
+                        <outlet property="buttonBlendNone" destination="nQ3-i4-zrj" id="Gxw-hT-Jxf"/>
+                        <outlet property="buttonBlendStrong" destination="ptF-bn-atR" id="4vm-e8-I8C"/>
+                        <outlet property="buttonBlendWeak" destination="DQ4-p0-rhN" id="pQv-2l-EjC"/>
                         <outlet property="buttonBlurNone" destination="72u-HV-OSg" id="Nk6-Qu-IYm"/>
                         <outlet property="buttonBlurNormal" destination="IUm-oH-XF2" id="mfc-DR-Rv6"/>
                         <outlet property="buttonBlurStrong" destination="K0B-RR-xPu" id="jgF-NM-8NG"/>
@@ -4090,6 +4233,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
                         <outlet property="buttonSetTimer5s" destination="0np-hc-mAc" id="lZa-hn-HJf"/>
                         <outlet property="buttonTimer" destination="rTz-jy-UqG" id="dGZ-sp-9Xb"/>
                         <outlet property="buttonToggleBasic" destination="9ht-r3-gIX" id="VZF-Ex-npS"/>
+                        <outlet property="buttonToggleBlend" destination="wI0-ni-c6t" id="xHG-dw-noE"/>
                         <outlet property="buttonToggleEffect" destination="jki-9k-LiL" id="d6e-FB-ybr"/>
                         <outlet property="buttonToggleFocus" destination="4Av-ia-SWc" id="fTZ-GV-K1d"/>
                         <outlet property="buttonToggleLens" destination="oPW-i4-NiR" id="vgV-Si-3zC"/>
@@ -4097,10 +4241,11 @@ Latteについて、「こんな機能があったら良い」、「この機能
                         <outlet property="buttonYes" destination="2vO-5s-PVr" id="lpD-vP-PQA"/>
                         <outlet property="gesturePan" destination="hTp-5Z-FXa" id="uUj-cF-AyW"/>
                         <outlet property="imageAutoFocus" destination="HJh-Fe-F58" id="rM3-JH-QPU"/>
+                        <outlet property="scrollBlend" destination="dO5-U0-YJt" id="anH-On-7Qo"/>
                         <outlet property="scrollEffect" destination="Qcy-0Z-pzw" id="UTy-zR-1Lx"/>
                         <outlet property="scrollFont" destination="8ax-Ld-6V0" id="jiI-us-nlh"/>
+                        <outlet property="scrollProcess" destination="aZh-bB-hzl" id="3t7-n5-7IG"/>
                         <outlet property="sliderClear" destination="DiY-Yx-d3c" id="oIN-zC-8I9"/>
-                        <outlet property="sliderEffectIntensity" destination="ECu-pG-NDT" id="dCb-xu-VJJ"/>
                         <outlet property="sliderExposure" destination="gjg-9E-8CH" id="mfD-nv-6X5"/>
                         <outlet property="sliderFeather" destination="sQH-Rb-pdV" id="1GD-d6-U0q"/>
                         <outlet property="sliderSaturation" destination="dm9-te-SJe" id="LWD-cH-rFH"/>
@@ -4111,6 +4256,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
                         <outlet property="tapFocus" destination="0L2-OD-J43" id="FBq-oo-lpD"/>
                         <outlet property="textText" destination="7lS-CE-iHu" id="vP9-ef-QO3"/>
                         <outlet property="viewBasicControl" destination="Mhu-tQ-y79" id="qi9-rh-6l8"/>
+                        <outlet property="viewBlendControl" destination="bB1-Df-FM9" id="GUs-YT-9fz"/>
                         <outlet property="viewBottomBar" destination="Lm7-x6-syS" id="YEs-gV-JNZ"/>
                         <outlet property="viewCamera" destination="T0W-nj-LFr" id="dwd-za-4ld"/>
                         <outlet property="viewCameraWraper" destination="MaH-yl-Ahh" id="U4b-l8-4rE"/>
@@ -4118,14 +4264,13 @@ Latteについて、「こんな機能があったら良い」、「この機能
                         <outlet property="viewDraw" destination="FQQ-lk-STG" id="xle-CX-xfL"/>
                         <outlet property="viewEffectControl" destination="dqe-Wh-apE" id="WQj-Be-gUu"/>
                         <outlet property="viewFocusControl" destination="PVp-WU-NEV" id="x0K-cC-6jd"/>
-                        <outlet property="viewHelp" destination="eib-43-vSZ" id="eNR-al-Fx5"/>
                         <outlet property="viewLensControl" destination="elJ-9y-gt7" id="s9F-DI-zo6"/>
-                        <outlet property="viewPopupHelp" destination="9vd-YT-DeK" id="c2k-hj-NGw"/>
                         <outlet property="viewTextControl" destination="dNo-k5-FNy" id="C3H-Ta-HIe"/>
                         <outlet property="viewTimer" destination="peM-8M-0hP" id="NCL-vc-YkR"/>
                         <outlet property="viewTopBar" destination="VLZ-BD-bMh" id="XWp-yt-b0v"/>
                         <outlet property="viewTopBar35" destination="8YX-Qh-UVy" id="sWx-QL-4kZ"/>
                         <segue destination="LuE-hY-WRg" kind="push" identifier="Edit" id="lDx-N5-2UM"/>
+                        <segue destination="tqa-CK-grS" kind="modal" identifier="HelpBokeh" modalTransitionStyle="crossDissolve" id="EaX-yO-L1u"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hXn-cW-VIk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4159,14 +4304,14 @@ Latteについて、「こんな機能があったら良い」、「この機能
                     </connections>
                 </pinchGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-2309" y="-2"/>
+            <point key="canvasLocation" x="-2356" y="-31"/>
         </scene>
         <!--Pic Edit View Controller - Latte-->
         <scene sceneID="ukJ-CP-EPt">
             <objects>
                 <tableViewController storyboardIdentifier="PicEdit" id="LuE-hY-WRg" customClass="LXPicEditViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="vaP-yt-Vn1">
-                        <rect key="frame" x="0.0" y="44" width="320" height="436"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <color key="separatorColor" red="0.73725490199999999" green="0.72156862749999995" blue="0.66274509800000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -4536,7 +4681,6 @@ Latteについて、「こんな機能があったら良い」、「この機能
             <relationships>
                 <relationship kind="action" name="cameraTouch:" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="action" name="capture:"/>
-                <relationship kind="action" name="changeEffectIntensity:" candidateClass="UISlider"/>
                 <relationship kind="action" name="changeFlash:"/>
                 <relationship kind="action" name="changeLens:" candidateClass="UIButton"/>
                 <relationship kind="action" name="changePen:" candidateClass="UISlider"/>
@@ -4547,13 +4691,14 @@ Latteについて、「こんな機能があったら良い」、「この機能
                 <relationship kind="action" name="panCamera:" candidateClass="UIPanGestureRecognizer"/>
                 <relationship kind="action" name="panTarget:" candidateClass="UIPanGestureRecognizer"/>
                 <relationship kind="action" name="pinchCamera:" candidateClass="UIPinchGestureRecognizer"/>
+                <relationship kind="action" name="setBlend:" candidateClass="UIButton"/>
                 <relationship kind="action" name="setMask:" candidateClass="UIButton"/>
                 <relationship kind="action" name="setTimer:"/>
                 <relationship kind="action" name="textChange:" candidateClass="UITextField"/>
+                <relationship kind="action" name="toggleBlending:" candidateClass="UIButton"/>
                 <relationship kind="action" name="toggleControl:" candidateClass="UIButton"/>
                 <relationship kind="action" name="toggleGain:" candidateClass="UISwitch"/>
                 <relationship kind="action" name="toggleMaskNatual:" candidateClass="UISwitch"/>
-                <relationship kind="action" name="touchCloseHelp:"/>
                 <relationship kind="action" name="touchNo:"/>
                 <relationship kind="action" name="touchOpenHelp:"/>
                 <relationship kind="action" name="touchReset:"/>
@@ -4561,6 +4706,10 @@ Latteについて、「こんな機能があったら良い」、「この機能
                 <relationship kind="action" name="touchTimer:"/>
                 <relationship kind="action" name="updateFilter:"/>
                 <relationship kind="outlet" name="buttonBackgroundNatual" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="buttonBlendMedium" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonBlendNone" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonBlendStrong" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonBlendWeak" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonBlurNone" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonBlurNormal" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonBlurStrong" candidateClass="UIButton"/>
@@ -4581,6 +4730,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
                 <relationship kind="outlet" name="buttonSetTimer5s" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonTimer" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonToggleBasic" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonToggleBlend" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonToggleEffect" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonToggleFocus" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonToggleLens" candidateClass="UIButton"/>
@@ -4588,10 +4738,11 @@ Latteについて、「こんな機能があったら良い」、「この機能
                 <relationship kind="outlet" name="buttonYes" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="gesturePan" candidateClass="UIPanGestureRecognizer"/>
                 <relationship kind="outlet" name="imageAutoFocus" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="scrollBlend" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="scrollEffect" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="scrollFont" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="scrollProcess" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="sliderClear" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderEffectIntensity" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="sliderExposure" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="sliderFeather" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="sliderSaturation" candidateClass="UISlider"/>
@@ -4602,6 +4753,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
                 <relationship kind="outlet" name="tapFocus" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="outlet" name="textText" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="viewBasicControl" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewBlendControl" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewBottomBar" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewCamera" candidateClass="GPUImageView"/>
                 <relationship kind="outlet" name="viewCameraWraper" candidateClass="UIView"/>
@@ -4609,9 +4761,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
                 <relationship kind="outlet" name="viewDraw" candidateClass="LXDrawView"/>
                 <relationship kind="outlet" name="viewEffectControl" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewFocusControl" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewHelp" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewLensControl" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewPopupHelp" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewTextControl" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewTimer" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewTopBar" candidateClass="UIView"/>
@@ -4715,6 +4865,14 @@ Latteについて、「こんな機能があったら良い」、「この機能
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXDrawView.h"/>
             <relationships>
                 <relationship kind="outlet" name="drawImageView" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="LXHelpBokehViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXHelpBokehViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="touchClose:"/>
+                <relationship kind="outlet" name="viewHelp" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewPopupHelp" candidateClass="UIView"/>
             </relationships>
         </class>
         <class className="LXLikedViewController" superclassName="UITableViewController">
@@ -4828,6 +4986,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
                 <relationship kind="outlet" name="labelDate" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="labelLike" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="labelTitle" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="scrollVotes" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="tablePic" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="textComment" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="viewStats" candidateClass="UIView"/>
@@ -4839,9 +4998,6 @@ Latteについて、「こんな機能があったら良い」、「この機能
         <class className="LXPicEditViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicEditViewController.h"/>
             <relationships>
-                <relationship kind="action" name="shareEmail:" candidateClass="UIButton"/>
-                <relationship kind="action" name="shareFacebook:" candidateClass="UIButton"/>
-                <relationship kind="action" name="shareTwitter:" candidateClass="UIButton"/>
                 <relationship kind="action" name="touchBack:"/>
                 <relationship kind="action" name="touchBackground:"/>
                 <relationship kind="action" name="touchDelete:"/>
@@ -4964,8 +5120,8 @@ Latteについて、「こんな機能があったら良い」、「この機能
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="Ycu-8i-bn9"/>
         <segue reference="4NK-LT-yMU"/>
-        <segue reference="lDx-N5-2UM"/>
         <segue reference="T7F-Bl-gjS"/>
     </inferredMetricsTieBreakers>
 </document>
