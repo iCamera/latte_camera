@@ -20,6 +20,7 @@
 @synthesize scrollEffect;
 @synthesize scrollProcess;
 @synthesize scrollBlend;
+@synthesize viewShoot;
 
 @synthesize viewCamera;
 @synthesize viewTimer;
@@ -71,6 +72,7 @@
 @synthesize viewCameraWraper;
 @synthesize viewDraw;
 @synthesize scrollFont;
+@synthesize buttonToggleFisheye;
 
 @synthesize viewBasicControl;
 @synthesize viewFocusControl;
@@ -143,6 +145,8 @@
     UIImage *imageCanvas = [[UIImage imageNamed:@"bg_canvas.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(8, 8, 8, 8)];
     viewCanvas.image = imageCanvas;
     
+    deviceHardware = [[UIDeviceHardware alloc] init];
+    
     viewCameraWraper.layer.masksToBounds = NO;
     viewCameraWraper.layer.shadowColor = [UIColor blackColor].CGColor;
     viewCameraWraper.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
@@ -189,14 +193,13 @@
     pictureBlend = [[GPUImagePicture alloc] init];
     filterText = [[GPUImageAlphaBlendFilter alloc] init];
     filterText.mix = 1.0;
-    filterCrop = [[GPUImageCropFilter alloc] init];
     blendCrop = [[GPUImageCropFilter alloc] init];
     filterDistord = [[GPUImagePinchDistortionFilter alloc] init];
     screenBlend = [[LXFilterScreenBlend alloc] init];
     
     //    uiElement = [[GPUImageUIElement alloc] initWithView:uiWrap];
     
-    //    filterFish = [[LXFilterFish alloc] init];
+    filterFish = [[LXFilterFish alloc] init];
     filterDOF = [[LXFilterDOF alloc] init];
     
     effectManager = [[FilterManager alloc] init];
@@ -490,6 +493,8 @@
     [self setButtonBlendMedium:nil];
     [self setButtonBlendStrong:nil];
     [self setScrollBlend:nil];
+    [self setButtonToggleFisheye:nil];
+    [self setViewShoot:nil];
     [super viewDidUnload];
 }
 
@@ -510,11 +515,10 @@
         
         [filter removeAllTargets];
         [filterText removeAllTargets];
-        //        [filterFish removeAllTargets];
+        [filterFish removeAllTargets];
         [filterDOF removeAllTargets];
         [filterSharpen removeAllTargets];
         [filterDistord removeAllTargets];
-        [filterCrop removeAllTargets];
         [screenBlend removeAllTargets];
         [blendCrop removeAllTargets];
         
@@ -529,13 +533,13 @@
         
         [pipe addFilter:filter];
         
-        if (!buttonLensFish.enabled) {
-            [pipe addFilter:filterDistord];
-            [pipe addFilter:filterCrop];
-        }
         
         if (!buttonLensWide.enabled) {
             [pipe addFilter:filterDistord];
+        }
+        
+        if (!buttonLensFish.enabled) {
+            [pipe addFilter:filterFish];
         }
         
         
@@ -547,6 +551,7 @@
             [pipe addFilter:screenBlend];
         }
         
+        //Film
         if (effect != nil) {
             [pipe addFilter:effect];
         }
@@ -608,9 +613,13 @@
         [viewCamera setInputRotation:imageViewRotationModeIdx0 atIndex:0];
     } else {
         GPUImageFilter *dummy = [[GPUImageFilter alloc] init];
+        [filterFish removeAllTargets];
         pipe.input = videoCamera;
         [pipe removeAllFilters];
         [pipe addFilter:dummy];
+        if (buttonToggleFisheye.selected) {
+            [pipe addFilter:filterFish];
+        }
         [dummy prepareForImageCapture];
     }
 }
@@ -657,14 +666,9 @@
         screenBlend.mix = 0.90;
     }
     
-    if (!buttonLensFish.enabled) {
-        filterDistord.scale = -0.2;
-        filterDistord.radius = 0.75;
-        filterCrop.cropRegion = CGRectMake(0.05, 0.05, 0.9, 0.9);
-    }
     
     if (!buttonLensWide.enabled) {
-        filterDistord.scale = 0.1;
+        filterDistord.scale = 0.3;
         filterDistord.radius = 1.0;
     }
     
@@ -1236,11 +1240,13 @@
         }
     }
     
-    CABasicAnimation *theAnimation = [CABasicAnimation animationWithKeyPath:@"shadowPath"];
-    theAnimation.duration = 0.3;
-    theAnimation.toValue = [UIBezierPath bezierPathWithRect:frame];
-    [viewCameraWraper.layer addAnimation:theAnimation forKey:@"animateShadowPath"];
-    
+    if ([[deviceHardware platform] rangeOfString:@"iPhone5"].location != NSNotFound) {
+        CABasicAnimation *theAnimation = [CABasicAnimation animationWithKeyPath:@"shadowPath"];
+        theAnimation.duration = 0.3;
+        theAnimation.toValue = [UIBezierPath bezierPathWithRect:frame];
+        [viewCameraWraper.layer addAnimation:theAnimation forKey:@"animateShadowPath"];
+    }
+
     [UIView animateWithDuration:animation?0.3:0 animations:^{
         viewFocusControl.frame = frameBokeh;
         viewEffectControl.frame = frameEffect;
@@ -1366,7 +1372,6 @@
     
     buttonNo.hidden = YES;
     buttonYes.hidden = YES;
-    buttonCapture.hidden = NO;
     buttonCapture.enabled = true;
     buttonFlash.hidden = NO;
     buttonTimer.hidden = NO;
@@ -1379,9 +1384,9 @@
     tapFocus.enabled = true;
     
     scrollEffect.hidden = false;
-    buttonPick.hidden = NO;
     
     scrollProcess.hidden = YES;
+    viewShoot.hidden = NO;
     
     buttonClose.hidden = NO;
     isEditing = NO;
@@ -1413,15 +1418,16 @@
     currentMask = kMaskBlurNone;
     
     isEditing = YES;
-    buttonCapture.hidden = YES;
+    
     buttonNo.hidden = NO;
     buttonYes.hidden = NO;
     buttonFlash.hidden = YES;
     buttonTimer.hidden = YES;
     buttonFlip.hidden = YES;
-    buttonPick.hidden = YES;
+
     buttonPickTop.hidden = NO;
-    
+
+    viewShoot.hidden = YES;
     scrollProcess.hidden = NO;
     
     buttonClose.hidden = YES;
@@ -1741,6 +1747,14 @@
 
 - (IBAction)setBlend:(UIButton *)sender {
     [self setBlendImpl:sender.tag];
+}
+
+- (IBAction)toggleFisheye:(UIButton *)sender {
+    sender.selected = !sender.selected;
+    buttonLensNormal.enabled = sender.selected;
+    buttonLensFish.enabled = !sender.selected;
+    buttonLensWide.enabled = true;
+    [self preparePipe];
 }
 
 - (void)setBlendImpl:(NSInteger)tag {

@@ -19,13 +19,13 @@
 #import "MBProgressHUD.h"
 #import "LXFilterDetail.h"
 #import "LXFilterDOF.h"
-//#import "LXFilterFish.h"
+#import "LXFilterFish.h"
 #import "LXFilterText.h"
 #import "LXFilterScreenBlend.h"
-#import "GPUImageStillCamera+captureWithMeta.h"
 #import "GPUImagePicture+updateImage.h"
 #import "LXShare.h"
 #import "RDActionSheet.h"
+#import "UIDeviceHardware.h"
 
 #define kTimerNone       0
 #define kTimer5s         1
@@ -72,14 +72,14 @@ typedef enum {
     GPUImageFilterPipeline *pipe;
     LXFilterDetail *filter;
     LXFilterDOF *filterDOF;
-//    LXFilterFish *filterFish;
+    LXFilterFish *filterFish;
     GPUImageAlphaBlendFilter *filterText;
-    GPUImageCropFilter *filterCrop;
     GPUImageCropFilter *blendCrop;
     GPUImagePinchDistortionFilter *filterDistord;
     GPUImageFilter *effect;
     LXFilterScreenBlend *screenBlend;
     FilterManager *effectManager;
+    UIDeviceHardware *deviceHardware;
     
     GPUImagePicture *previewFilter;
     GPUImagePicture *pictureBlend;
@@ -210,6 +210,8 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollProcess;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollBlend;
 @property (strong, nonatomic) IBOutlet UITextField *textText;
+@property (strong, nonatomic) IBOutlet UIButton *buttonToggleFisheye;
+@property (strong, nonatomic) IBOutlet UIView *viewShoot;
 
 - (IBAction)cameraTouch:(UITapGestureRecognizer *)sender;
 - (IBAction)openImagePicker:(id)sender;
@@ -237,6 +239,7 @@ typedef enum {
 - (IBAction)panCamera:(UIPanGestureRecognizer *)sender;
 - (IBAction)toggleBlending:(UIButton *)sender;
 - (IBAction)setBlend:(UIButton *)sender;
+- (IBAction)toggleFisheye:(UIButton *)sender;
 
 -(void)switchCamera;
 @end

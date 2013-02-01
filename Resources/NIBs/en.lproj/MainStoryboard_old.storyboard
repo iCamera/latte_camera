@@ -4073,36 +4073,6 @@ We improve our services to the best of our ability,but please understand that no
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bg_camera_bottom.png" id="r6B-Di-spN">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="T0q-UT-yaq" userLabel="Button Picker">
-                                        <rect key="frame" x="5" y="5" width="58" height="40"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="icon_photo_select.png" backgroundImage="bg_camera_bt2.png">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="disabled" backgroundImage="bg_camera_bt2_on.png"/>
-                                        <state key="selected" backgroundImage="bg_camera_bt2_on.png"/>
-                                        <state key="highlighted" backgroundImage="bg_camera_bt2_on.png">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="openImagePicker:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="eTC-sy-Zp9"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="NxJ-dI-Srf" userLabel="Button Shoot">
-                                        <rect key="frame" x="105" y="5" width="110" height="40"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="icon_camera2.png" backgroundImage="bg_camera_bt.png">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="capture:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="Agx-eV-2R1"/>
-                                        </connections>
-                                    </button>
                                     <scrollView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="aZh-bB-hzl" userLabel="Scroll View Process">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -4126,7 +4096,7 @@ We improve our services to the best of our ability,but please understand that no
                                             <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="wI0-ni-c6t" userLabel="Button Blend">
                                                 <rect key="frame" x="255" y="5" width="58" height="40"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                <state key="normal" image="icon_filter.png" backgroundImage="bg_camera_bt2.png">
+                                                <state key="normal" image="icon_blending2.png" backgroundImage="bg_camera_bt2.png">
                                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
@@ -4195,6 +4165,59 @@ We improve our services to the best of our ability,but please understand that no
                                             </button>
                                         </subviews>
                                     </scrollView>
+                                    <view contentMode="scaleToFill" id="AME-uF-hdZ" userLabel="View Shoot">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="NxJ-dI-Srf" userLabel="Button Shoot">
+                                                <rect key="frame" x="105" y="5" width="110" height="40"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" image="icon_camera2.png" backgroundImage="bg_camera_bt.png">
+                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="highlighted">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="capture:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="Agx-eV-2R1"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="T0q-UT-yaq" userLabel="Button Picker">
+                                                <rect key="frame" x="6" y="5" width="58" height="40"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" image="icon_photo_select.png" backgroundImage="bg_camera_bt2.png">
+                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="disabled" backgroundImage="bg_camera_bt2_on.png"/>
+                                                <state key="selected" backgroundImage="bg_camera_bt2_on.png"/>
+                                                <state key="highlighted" backgroundImage="bg_camera_bt2_on.png">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="openImagePicker:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="eTC-sy-Zp9"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="jEB-en-3zj" userLabel="Button Fisheye">
+                                                <rect key="frame" x="256" y="5" width="58" height="40"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" image="icon_photo_select.png" backgroundImage="bg_camera_bt2.png">
+                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="disabled" backgroundImage="bg_camera_bt2_on.png"/>
+                                                <state key="selected" backgroundImage="bg_camera_bt2_on.png"/>
+                                                <state key="highlighted" backgroundImage="bg_camera_bt2_on.png">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="toggleFisheye:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="wDt-j0-bTv"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -4233,6 +4256,7 @@ We improve our services to the best of our ability,but please understand that no
                         <outlet property="buttonToggleBasic" destination="9ht-r3-gIX" id="VZF-Ex-npS"/>
                         <outlet property="buttonToggleBlend" destination="wI0-ni-c6t" id="xHG-dw-noE"/>
                         <outlet property="buttonToggleEffect" destination="jki-9k-LiL" id="d6e-FB-ybr"/>
+                        <outlet property="buttonToggleFisheye" destination="jEB-en-3zj" id="uer-7I-V39"/>
                         <outlet property="buttonToggleFocus" destination="4Av-ia-SWc" id="fTZ-GV-K1d"/>
                         <outlet property="buttonToggleLens" destination="oPW-i4-NiR" id="vgV-Si-3zC"/>
                         <outlet property="buttonToggleText" destination="qfz-nj-8Si" id="f4m-wY-X76"/>
@@ -4263,6 +4287,7 @@ We improve our services to the best of our ability,but please understand that no
                         <outlet property="viewEffectControl" destination="dqe-Wh-apE" id="WQj-Be-gUu"/>
                         <outlet property="viewFocusControl" destination="PVp-WU-NEV" id="x0K-cC-6jd"/>
                         <outlet property="viewLensControl" destination="elJ-9y-gt7" id="s9F-DI-zo6"/>
+                        <outlet property="viewShoot" destination="AME-uF-hdZ" id="6Fm-a0-yuv"/>
                         <outlet property="viewTextControl" destination="dNo-k5-FNy" id="C3H-Ta-HIe"/>
                         <outlet property="viewTimer" destination="peM-8M-0hP" id="NCL-vc-YkR"/>
                         <outlet property="viewTopBar" destination="VLZ-BD-bMh" id="XWp-yt-b0v"/>
@@ -4309,7 +4334,7 @@ We improve our services to the best of our ability,but please understand that no
             <objects>
                 <tableViewController storyboardIdentifier="PicEdit" id="LuE-hY-WRg" customClass="LXPicEditViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="vaP-yt-Vn1">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="44" width="320" height="436"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <color key="separatorColor" red="0.73725490199999999" green="0.72156862749999995" blue="0.66274509800000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -4575,6 +4600,7 @@ We improve our services to the best of our ability,but please understand that no
         <image name="bt_timer_none.png" width="77" height="38"/>
         <image name="bt_twitter2.png" width="150" height="40"/>
         <image name="bt_twitter2_on.png" width="150" height="40"/>
+        <image name="icon_blending2.png" width="20" height="20"/>
         <image name="icon_boke.png" width="13" height="20"/>
         <image name="icon_boke2.png" width="10" height="15"/>
         <image name="icon_calender.png" width="15" height="15"/>
@@ -4695,6 +4721,7 @@ We improve our services to the best of our ability,but please understand that no
                 <relationship kind="action" name="textChange:" candidateClass="UITextField"/>
                 <relationship kind="action" name="toggleBlending:" candidateClass="UIButton"/>
                 <relationship kind="action" name="toggleControl:" candidateClass="UIButton"/>
+                <relationship kind="action" name="toggleFisheye:" candidateClass="UIButton"/>
                 <relationship kind="action" name="toggleGain:" candidateClass="UISwitch"/>
                 <relationship kind="action" name="toggleMaskNatual:" candidateClass="UISwitch"/>
                 <relationship kind="action" name="touchNo:"/>
@@ -4730,6 +4757,7 @@ We improve our services to the best of our ability,but please understand that no
                 <relationship kind="outlet" name="buttonToggleBasic" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonToggleBlend" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonToggleEffect" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonToggleFisheye" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonToggleFocus" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonToggleLens" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonToggleText" candidateClass="UIButton"/>
@@ -4760,6 +4788,7 @@ We improve our services to the best of our ability,but please understand that no
                 <relationship kind="outlet" name="viewEffectControl" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewFocusControl" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewLensControl" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewShoot" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewTextControl" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewTimer" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewTopBar" candidateClass="UIView"/>
@@ -5118,7 +5147,7 @@ We improve our services to the best of our ability,but please understand that no
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Ycu-8i-bn9"/>
+        <segue reference="lDx-N5-2UM"/>
         <segue reference="4NK-LT-yMU"/>
         <segue reference="T7F-Bl-gjS"/>
     </inferredMetricsTieBreakers>

@@ -268,7 +268,7 @@ typedef enum {
                 //composeViewController.navigationItem.rightBarButtonItem.tintColor   = [UIColor colorWithRed:70.0/255.0 green:91.0/255.0 blue:192.0/255.0 alpha:1.0];
                 
                 // Alternative use with REComposeViewControllerCompletionHandler
-                composeViewController.completionHandler = ^(REComposeResult result)
+                composeViewController.completionHandler = ^(REComposeViewController *composeViewController, REComposeResult result)
                 {
                     switch (result)
                     {
