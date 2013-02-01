@@ -12,6 +12,7 @@
 #import "LXMainTabViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "TestFlight.h"
+#import "GAI.h"
 
 @class User;
 
@@ -22,8 +23,10 @@
     LXUIRevealController* revealController;
     NSString *apns;
     UIViewController *viewCamera;
+    id<GAITracker> tracker;
 }
 
+@property(nonatomic, retain) id<GAITracker> tracker;
 @property (strong, nonatomic) LXUIRevealController *revealController;
 @property (nonatomic, retain) KeychainItemWrapper *tokenItem;
 

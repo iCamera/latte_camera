@@ -60,6 +60,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    [app.tracker sendView:@"UserPage Screen"];
+    
     // Do any additional setup after loading the view from its nib.
     // Style
     showSet = [NSMutableSet setWithObjects:@"gender", @"residence", @"age", @"birthdate", @"bloodtype", @"occupation", @"introduction", @"hobby", nil];

@@ -19,11 +19,13 @@
 #import "MBProgressHUD.h"
 #import "LXFilterDetail.h"
 #import "LXFilterDOF.h"
-//#import "LXFilterFish.h"
+#import "LXFilterFish.h"
 #import "LXFilterText.h"
-#import "GPUImageStillCamera+captureWithMeta.h"
+#import "LXFilterScreenBlend.h"
+#import "GPUImagePicture+updateImage.h"
 #import "LXShare.h"
 #import "RDActionSheet.h"
+#import "UIDeviceHardware.h"
 
 #define kTimerNone       0
 #define kTimer5s         1
@@ -36,11 +38,17 @@
 #define kTabBasic 3
 #define kTabLens 4
 #define kTabText 5
+#define kTabBlend 6
 
 #define kMaskBlurNone 5
 #define kMaskBlurWeak 6
 #define kMaskBlurNormal 7
 #define kMaskBlurStrong 8
+
+#define kBlendNone 0
+#define kBlendWeak 1
+#define kBlendNormal 2
+#define kBlendStrong 3
 
 typedef enum {
     kEffect1,
@@ -64,15 +72,17 @@ typedef enum {
     GPUImageFilterPipeline *pipe;
     LXFilterDetail *filter;
     LXFilterDOF *filterDOF;
-//    LXFilterFish *filterFish;
+    LXFilterFish *filterFish;
     GPUImageAlphaBlendFilter *filterText;
-    GPUImageCropFilter *filterCrop;
+    GPUImageCropFilter *blendCrop;
     GPUImagePinchDistortionFilter *filterDistord;
     GPUImageFilter *effect;
-    GPUImageAlphaBlendFilter *filterIntensity;
+    LXFilterScreenBlend *screenBlend;
     FilterManager *effectManager;
+    UIDeviceHardware *deviceHardware;
     
     GPUImagePicture *previewFilter;
+    GPUImagePicture *pictureBlend;
     GPUImageRawDataInput *pictureDOF;
     GPUImageUIElement *uiElement;
     UIView *uiWrap;
@@ -80,6 +90,7 @@ typedef enum {
 
     CGSize picSize;
     CGSize previewSize;
+    CGSize blendSize;
     
     UIActionSheet *sheet;
     UIImagePickerController *imagePicker;
@@ -95,6 +106,7 @@ typedef enum {
     BOOL isSaved;
     BOOL isKeyboard;
     BOOL isWatingToUpload;
+    BOOL isFixedAspectBlend;
     
     id <LXImagePickerDelegate> __unsafe_unretained delegate;
 
@@ -103,8 +115,10 @@ typedef enum {
     NSInteger currentTimer;
     NSString *currentFont;
     NSString *currentText;
-    CGFloat currentSharpness;
     NSInteger currentMask;
+    NSInteger currentBlend;
+    NSInteger effectNum;
+    NSMutableArray *effectPreview;
     
     NSLayoutConstraint *cameraAspect;
     NSInteger timerMode;
@@ -150,6 +164,7 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIView *viewBasicControl;
 @property (strong, nonatomic) IBOutlet UIView *viewTextControl;
 @property (strong, nonatomic) IBOutlet UIView *viewEffectControl;
+@property (strong, nonatomic) IBOutlet UIView *viewBlendControl;
 
 @property (strong, nonatomic) IBOutlet UIView *viewCameraWraper;
 @property (strong, nonatomic) IBOutlet LXDrawView *viewDraw;
@@ -159,6 +174,7 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIButton *buttonToggleBasic;
 @property (strong, nonatomic) IBOutlet UIButton *buttonToggleLens;
 @property (strong, nonatomic) IBOutlet UIButton *buttonToggleText;
+@property (strong, nonatomic) IBOutlet UIButton *buttonToggleBlend;
 
 @property (strong, nonatomic) IBOutlet UISwitch *buttonBackgroundNatual;
 @property (strong, nonatomic) IBOutlet UISwitch *switchGain;
@@ -167,13 +183,16 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIButton *buttonBlurStrong;
 @property (strong, nonatomic) IBOutlet UIButton *buttonBlurNone;
 
+@property (strong, nonatomic) IBOutlet UIButton *buttonBlendNone;
+@property (strong, nonatomic) IBOutlet UIButton *buttonBlendWeak;
+@property (strong, nonatomic) IBOutlet UIButton *buttonBlendMedium;
+@property (strong, nonatomic) IBOutlet UIButton *buttonBlendStrong;
+
 @property (strong, nonatomic) IBOutlet UIButton *buttonLensNormal;
 @property (strong, nonatomic) IBOutlet UIButton *buttonLensWide;
 @property (strong, nonatomic) IBOutlet UIButton *buttonLensFish;
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonClose;
-@property (strong, nonatomic) IBOutlet UIView *viewHelp;
-@property (strong, nonatomic) IBOutlet UIView *viewPopupHelp;
 @property (strong, nonatomic) IBOutlet UIView *viewTopBar;
 @property (strong, nonatomic) IBOutlet UIView *viewTopBar35;
 
@@ -187,9 +206,12 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UISlider *sliderClear;
 @property (strong, nonatomic) IBOutlet UISlider *sliderSaturation;
 @property (strong, nonatomic) IBOutlet UISlider *sliderFeather;
-@property (strong, nonatomic) IBOutlet UISlider *sliderEffectIntensity;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollFont;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollProcess;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollBlend;
 @property (strong, nonatomic) IBOutlet UITextField *textText;
+@property (strong, nonatomic) IBOutlet UIButton *buttonToggleFisheye;
+@property (strong, nonatomic) IBOutlet UIView *viewShoot;
 
 - (IBAction)cameraTouch:(UITapGestureRecognizer *)sender;
 - (IBAction)openImagePicker:(id)sender;
@@ -207,7 +229,6 @@ typedef enum {
 - (IBAction)setTimer:(id)sender;
 - (IBAction)setMask:(UIButton*)sender;
 - (IBAction)toggleMaskNatual:(UISwitch*)sender;
-- (IBAction)touchCloseHelp:(id)sender;
 - (IBAction)touchOpenHelp:(id)sender;
 - (IBAction)toggleGain:(UISwitch*)sender;
 - (IBAction)changePen:(UISlider *)sender;
@@ -215,8 +236,10 @@ typedef enum {
 - (IBAction)textChange:(UITextField *)sender;
 - (IBAction)doubleTapEdit:(UITapGestureRecognizer *)sender;
 - (IBAction)pinchCamera:(UIPinchGestureRecognizer *)sender;
-- (IBAction)changeEffectIntensity:(UISlider *)sender;
 - (IBAction)panCamera:(UIPanGestureRecognizer *)sender;
+- (IBAction)toggleBlending:(UIButton *)sender;
+- (IBAction)setBlend:(UIButton *)sender;
+- (IBAction)toggleFisheye:(UIButton *)sender;
 
 -(void)switchCamera;
 @end

@@ -23,6 +23,7 @@
 #import "Comment.h"
 #import "MBProgressHUD.h"
 #import "UIImageView+loadProgress.h"
+#import "UIButton+AsyncImage.h"
 
 @class LXCellComment, LXButtonBrown30;
 
@@ -60,6 +61,7 @@
 @property (strong, nonatomic) IBOutlet UIView *viewSubBg;
 @property (strong, nonatomic) IBOutlet UIView *viewSubPic;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorComment;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollVotes;
 
 - (IBAction)touchBackground:(id)sender;
 - (IBAction)touchBack:(id)sender;

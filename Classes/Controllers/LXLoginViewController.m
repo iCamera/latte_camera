@@ -33,6 +33,8 @@
     //[self.navigationController setNavigationBarHidden:true];
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
+    [app.tracker sendView:@"Login Screen"];
+    
     self.textUser.text = [app.tokenItem objectForKey:(id)CFBridgingRelease(kSecAttrAccount)];
     self.textPass.text = [app.tokenItem objectForKey:(id)CFBridgingRelease(kSecValueData)];
     

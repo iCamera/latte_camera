@@ -30,6 +30,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    [app.tracker sendView:@"About Screen"];
 	// Do any additional setup after loading the view.
 }
 
@@ -44,9 +47,23 @@
 }
 
 - (IBAction)touchSend:(id)sender {
-    [TestFlight submitFeedback:textForm.text];
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    
+    NSString *senderName = @"";
+    if (app.currentUser != nil) {
+        senderName = [NSString stringWithFormat:@"%@ [ID: %d]", app.currentUser.name, [app.currentUser.userId integerValue]] ;
+    }
+    
+    [[LatteAPIClient sharedClient] postPath:@"user/inqury"
+                                 parameters:[NSDictionary dictionaryWithObjectsAndKeys:
+                                             textForm.text, @"memo",
+                                             senderName, @"sender",
+                                             nil]
+                                    success:nil
+                                    failure:nil];
+    
     UIAlertView *viewOK = [[UIAlertView alloc] initWithTitle:@"Submitted"
-                                                     message:@"Thank you!"
+                                                     message:@"Thank you! :)"
                                                     delegate:self
                                            cancelButtonTitle:nil
                                            otherButtonTitles:@"OK", nil];

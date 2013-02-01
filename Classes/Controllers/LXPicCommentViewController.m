@@ -37,6 +37,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    [app.tracker sendView:@"Picture Comment Screen"];
+    
 	// Do any additional setup after loading the view.
     viewHeader.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     CAGradientLayer *gradient = [CAGradientLayer layer];
@@ -61,7 +65,6 @@
     [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];
     
     if ([pic.commentCount longValue] != pic.comments.count) { //Comments was not loaded
-        LXAppDelegate* app = (LXAppDelegate*)[[UIApplication sharedApplication] delegate];
         NSString *url = [NSString stringWithFormat:@"picture/%d", picID];
         [[LatteAPIClient sharedClient] getPath:url
                                           parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]

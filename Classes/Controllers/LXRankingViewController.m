@@ -53,6 +53,9 @@
 {
     [super viewDidLoad];
     
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    [app.tracker sendView:@"Ranking Screen"];
+    
     HUD = [[MBProgressHUD alloc] initWithView:self.tableView];
     [self.tableView addSubview:HUD];
     HUD.mode = MBProgressHUDModeText;
@@ -71,8 +74,6 @@
     loadEnded = FALSE;
     ranktype = @"daily";
     rankpage = 1;
-    
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
 
     navigationBarPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:app.revealController action:@selector(revealGesture:)];
     [self.navigationController.navigationBar addGestureRecognizer:navigationBarPanGestureRecognizer];

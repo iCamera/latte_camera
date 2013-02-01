@@ -19,6 +19,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    [app.tracker sendView:@"Setting Screen"];
+    
     //Style
     self.resizeWhenKeyboardPresented = YES;
     
@@ -32,8 +35,6 @@
     [self.navigationController.view addSubview:HUD];
     HUD.mode = MBProgressHUDModeIndeterminate;
     [HUD show:YES];
-    
-    LXAppDelegate *app = (LXAppDelegate*)[[UIApplication sharedApplication] delegate];
     
     [[LatteAPIClient sharedClient] getPath:@"user/me"
                                        parameters: [NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"]

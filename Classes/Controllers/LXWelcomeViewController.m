@@ -72,6 +72,9 @@
 {
     [super viewDidLoad];
     
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    [app.tracker sendView:@"Welcome Screen"];
+    
     viewHeader.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     viewBack.layer.cornerRadius = 5;
     
@@ -90,8 +93,6 @@
     [tablePic addSubview:refreshHeaderView];
     
     [self reloadView];
-
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
     [viewLogin removeFromSuperview];
     [self.navigationController.view addSubview:viewLogin];
