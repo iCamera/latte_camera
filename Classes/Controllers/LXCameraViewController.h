@@ -107,6 +107,7 @@ typedef enum {
     BOOL isKeyboard;
     BOOL isWatingToUpload;
     BOOL isFixedAspectBlend;
+    BOOL isBackCamera;
     
     id <LXImagePickerDelegate> __unsafe_unretained delegate;
 

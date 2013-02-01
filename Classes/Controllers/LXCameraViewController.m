@@ -117,6 +117,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    isBackCamera = YES;
     orientationLast = UIImageOrientationRight;
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     [app.tracker sendView:@"Camera Screen"];
@@ -1557,6 +1558,7 @@
 
 
 - (IBAction)flipCamera:(id)sender {
+    isBackCamera = !isBackCamera;
     [videoCamera rotateCamera];
 }
 
@@ -1938,10 +1940,10 @@
 -(void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration {
     UIImageOrientation orientationNew;
     if (acceleration.x >= 0.75) {
-        orientationNew = UIImageOrientationDown;
+        orientationNew = isBackCamera?UIImageOrientationDown:UIImageOrientationUp;
     }
     else if (acceleration.x <= -0.75) {
-        orientationNew = UIImageOrientationUp;
+        orientationNew = isBackCamera?UIImageOrientationUp:UIImageOrientationDown;
     }
     else if (acceleration.y <= -0.75) {
         orientationNew = UIImageOrientationRight;
