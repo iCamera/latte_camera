@@ -234,7 +234,6 @@
 		889072EB16770EBB0013DF7A /* UIButton+AsyncImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890728C16770EBB0013DF7A /* UIButton+AsyncImage.m */; };
 		889072EC16770EBB0013DF7A /* UIImageView+loadProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890728E16770EBB0013DF7A /* UIImageView+loadProgress.m */; };
 		889072ED16770EBB0013DF7A /* FilterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890729116770EBB0013DF7A /* FilterManager.m */; };
-		889072F016770EBB0013DF7A /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890729716770EBB0013DF7A /* KeychainItemWrapper.m */; };
 		889072F116770EBB0013DF7A /* LatteAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890729916770EBB0013DF7A /* LatteAPIClient.m */; };
 		889072F216770EBB0013DF7A /* LXFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890729B16770EBB0013DF7A /* LXFilter.m */; };
 		889072F316770EBB0013DF7A /* LXFilterBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890729D16770EBB0013DF7A /* LXFilterBlur.m */; };
@@ -1109,8 +1108,6 @@
 		8890728E16770EBB0013DF7A /* UIImageView+loadProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+loadProgress.m"; sourceTree = "<group>"; };
 		8890729016770EBB0013DF7A /* FilterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterManager.h; sourceTree = "<group>"; };
 		8890729116770EBB0013DF7A /* FilterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterManager.m; sourceTree = "<group>"; };
-		8890729616770EBB0013DF7A /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
-		8890729716770EBB0013DF7A /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
 		8890729816770EBB0013DF7A /* LatteAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LatteAPIClient.h; sourceTree = "<group>"; };
 		8890729916770EBB0013DF7A /* LatteAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LatteAPIClient.m; sourceTree = "<group>"; };
 		8890729A16770EBB0013DF7A /* LXFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFilter.h; sourceTree = "<group>"; };
@@ -2221,8 +2218,6 @@
 				885C061C16BB69B0000820E7 /* UIDeviceHardware.m */,
 				8890729016770EBB0013DF7A /* FilterManager.h */,
 				8890729116770EBB0013DF7A /* FilterManager.m */,
-				8890729616770EBB0013DF7A /* KeychainItemWrapper.h */,
-				8890729716770EBB0013DF7A /* KeychainItemWrapper.m */,
 				8890729816770EBB0013DF7A /* LatteAPIClient.h */,
 				8890729916770EBB0013DF7A /* LatteAPIClient.m */,
 				8890729A16770EBB0013DF7A /* LXFilter.h */,
@@ -2379,12 +2374,11 @@
 		88D9864615B8F97800858AD6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				88AB7E1B16BB755E00040C00 /* CFNetwork.framework */,
-				88AB7E1C16BB755F00040C00 /* StoreKit.framework */,
 				887E40CE1626CE300060623C /* Accounts.framework */,
 				887E40CF1626CE330060623C /* AdSupport.framework */,
 				8802253515BD3E7E00CF901A /* AssetsLibrary.framework */,
 				88A49B7A15B8FD5700CEA262 /* AVFoundation.framework */,
+				88AB7E1B16BB755E00040C00 /* CFNetwork.framework */,
 				88D9864D15B8F97800858AD6 /* CoreData.framework */,
 				88D9864B15B8F97800858AD6 /* CoreGraphics.framework */,
 				8820D82D16634D7000DBBFF9 /* CoreImage.framework */,
@@ -2405,6 +2399,7 @@
 				88B08D4315D369EC003CB0D3 /* Security.framework */,
 				88D9866D15B8F97800858AD6 /* SenTestingKit.framework */,
 				887E40D01626CE350060623C /* Social.framework */,
+				88AB7E1C16BB755F00040C00 /* StoreKit.framework */,
 				884FBB8F163E24A3006C4359 /* SystemConfiguration.framework */,
 				88A43B061670355A001A8BB3 /* Twitter.framework */,
 				88D9864715B8F97800858AD6 /* UIKit.framework */,
@@ -3954,7 +3949,6 @@
 				889072EB16770EBB0013DF7A /* UIButton+AsyncImage.m in Sources */,
 				889072EC16770EBB0013DF7A /* UIImageView+loadProgress.m in Sources */,
 				889072ED16770EBB0013DF7A /* FilterManager.m in Sources */,
-				889072F016770EBB0013DF7A /* KeychainItemWrapper.m in Sources */,
 				889072F116770EBB0013DF7A /* LatteAPIClient.m in Sources */,
 				889072F216770EBB0013DF7A /* LXFilter.m in Sources */,
 				889072F316770EBB0013DF7A /* LXFilterBlur.m in Sources */,

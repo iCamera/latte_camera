@@ -78,6 +78,7 @@ typedef enum {
     GPUImagePinchDistortionFilter *filterDistord;
     GPUImageFilter *effect;
     LXFilterScreenBlend *screenBlend;
+    GPUImageAlphaBlendFilter *filterIntensity;
     FilterManager *effectManager;
     UIDeviceHardware *deviceHardware;
     
@@ -207,6 +208,7 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UISlider *sliderClear;
 @property (strong, nonatomic) IBOutlet UISlider *sliderSaturation;
 @property (strong, nonatomic) IBOutlet UISlider *sliderFeather;
+@property (strong, nonatomic) IBOutlet UISlider *sliderEffectIntensity;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollFont;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollProcess;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollBlend;

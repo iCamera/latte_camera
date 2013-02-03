@@ -131,10 +131,6 @@
                                         [app setToken:@""];
                                         app.currentUser = nil;
                                         self.tabBarController.selectedIndex = 0;
-
-//                                        if (FBSession.activeSession.isOpen) {
-//                                            [FBSession.activeSession closeAndClearTokenInformation];
-//                                        }
                                         
                                         [[NSNotificationCenter defaultCenter] postNotificationName:@"LoggedOut" object:self];
                                         [self.navigationController popViewControllerAnimated:YES];
@@ -153,6 +149,8 @@
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
     
     [self.root fetchValueIntoObject:dict];
+    QEntryElement *test = [self.root elementWithKey:@"hometown"];
+
     NSString *msg = @"Values:";
     for (NSString *aKey in dict){
         msg = [msg stringByAppendingFormat:@"\n- %@: %@", aKey, [dict objectForKey:aKey]];
@@ -231,6 +229,5 @@
 - (void)QEntryDidEndEditingElement:(QEntryElement *)element andCell:(QEntryTableViewCell *)cell {
     [self updateNow];
 }
-
 
 @end

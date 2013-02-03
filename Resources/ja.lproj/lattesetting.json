@@ -4,14 +4,14 @@
     "controllerName": "luxeysSettingViewController",
     "sections": [
         { "title":"プロフィール設定", "elements":[
-                { "type":"QEntryElement", "key":"name", "title":"ニックネーム", "Placeholder":"ニックネーム", "bind":"textValue:name"},
+                { "type":"QEntryElement", "key":"name", "title":"ニックネーム", "Placeholder":"ニックネーム", "bind":"textValue:name", "controllerAction":"handleUpdate:"},
                 { "type":"QRadioElement", "key":"gender", "title":"性別", "items":["男性", "女性"], "values":[1, 2], "controllerAction":"handleUpdate:"},
                 { "type":"QDateTimeInlineElement", "key":"birthday", "title":"生年月日"},
-                { "type":"QEntryElement", "key":"current_residence", "title":"現住所", "Placeholder":"現住所", "bind":"textValue:current_residence"},
-                { "type":"QEntryElement", "key":"hometown", "title":"出身地", "Placeholder":"出身地", "bind":"textValue:hometown"},
-                { "type":"QEntryElement", "key":"occupation", "title":"職業", "Placeholder":"職業", "bind":"textValue:occupation"},
-                { "type":"QMultilineElement", "key":"introduction", "title":"自己紹介", "bind":"textValue:introduction"},
-                { "type":"QMultilineElement", "key":"hobby", "title":"趣味", "bind":"textValue:hobby"}
+                { "type":"QEntryElement", "key":"current_residence", "title":"現住所", "Placeholder":"現住所", "bind":"textValue:current_residence", "controllerAction":"handleUpdate:"},
+                { "type":"QEntryElement", "key":"hometown", "title":"出身地", "Placeholder":"出身地", "bind":"textValue:hometown", "controllerAction":"handleUpdate:"},
+                { "type":"QEntryElement", "key":"occupation", "title":"職業", "Placeholder":"職業", "bind":"textValue:occupation", "controllerAction":"handleUpdate:"},
+                { "type":"QEntryElement", "key":"introduction", "title":"自己紹介", "bind":"textValue:introduction", "controllerAction":"handleUpdate:"},
+                { "type":"QEntryElement", "key":"hobby", "title":"趣味", "bind":"textValue:hobby", "controllerAction":"handleUpdate:"}
             ]
         },
         { "title":"公開設定", "elements": [

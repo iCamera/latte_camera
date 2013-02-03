@@ -172,34 +172,8 @@
     
     if ([pic.voteCount integerValue] > 0) {
         frame.size.height += 50;
-        
-        NSString *url = [NSString stringWithFormat:@"picture/%d/votes", pic!=nil?[pic.pictureId integerValue]:picID];
-        LXAppDelegate* app = (LXAppDelegate*)[[UIApplication sharedApplication] delegate];
-        
-        [[LatteAPIClient sharedClient] getPath:url
-                                    parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
-                                       success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                           NSMutableArray *votes = [User mutableArrayFromDictionary:JSON withKey:@"votes"];
-                                           for (UIView *subview in scrollVotes.subviews) {
-                                               [subview removeFromSuperview];
-                                           }
-                                           
-                                           for (NSInteger i = 0; i < votes.count; i++) {
-                                               User *voteUser = votes[i];
-                                               UIButton *buttonVotedUser = [[UIButton alloc] initWithFrame:CGRectMake(5+45*i, 0, 40, 40)];
-                                               [buttonVotedUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
-                                               buttonVotedUser.layer.cornerRadius = 5;
-                                               buttonVotedUser.clipsToBounds = YES;
-                                               buttonVotedUser.tag = [voteUser.userId integerValue];
-                                               [buttonVotedUser loadBackground:voteUser.profilePicture placeholderImage:@"user.gif"];
-                                               [scrollVotes addSubview:buttonVotedUser];
-                                           }
-                                           scrollVotes.contentSize = CGSizeMake(45*votes.count + 5, 50);
-                                       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                           TFLog(@"Something went wrong (Get vote)");
-                                       }];
-    } else
-        scrollVotes.hidden = true;
+    }
+    
     tablePic.tableHeaderView.frame = frame;
     
     // Hack, to refresh header height
@@ -207,6 +181,7 @@
 
     [tablePic setNeedsLayout];
     [viewSubBg setNeedsDisplay];
+    [viewSubPic setNeedsDisplay];
     frame = viewSubPic.frame;
     frame.size.height = newheight + 52;
     viewSubPic.frame = frame;
@@ -245,6 +220,56 @@
     
 
     [imagePic loadProgess:pic.urlMedium];
+    
+    if ([pic.voteCount integerValue] > 0) {
+        scrollVotes.hidden = NO;
+        NSString *url = [NSString stringWithFormat:@"picture/%d/votes", pic!=nil?[pic.pictureId integerValue]:picID];
+        LXAppDelegate* app = (LXAppDelegate*)[[UIApplication sharedApplication] delegate];
+        
+        [[LatteAPIClient sharedClient] getPath:url
+                                    parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                       success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                           NSMutableArray *votes = [User mutableArrayFromDictionary:JSON withKey:@"votes"];
+                                           for (UIView *subview in scrollVotes.subviews) {
+                                               [subview removeFromSuperview];
+                                           }
+                                           
+                                           NSInteger guestVoteCount = [pic.voteCount integerValue] - votes.count;
+                                           NSInteger userVoteCount = 0;
+                                           
+                                           for (User *voteUser in votes) {
+                                               if ([voteUser.userId integerValue] != 0) {
+                                                   UIButton *buttonVotedUser = [[UIButton alloc] initWithFrame:CGRectMake(5+45*userVoteCount, 0, 40, 40)];
+                                                   [buttonVotedUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
+                                                   buttonVotedUser.layer.cornerRadius = 5;
+                                                   buttonVotedUser.clipsToBounds = YES;
+                                                   buttonVotedUser.tag = [voteUser.userId integerValue];
+                                                   [buttonVotedUser loadBackground:voteUser.profilePicture placeholderImage:@"user.gif"];
+                                                   [scrollVotes addSubview:buttonVotedUser];
+
+                                                   userVoteCount++;
+                                               } else
+                                                   guestVoteCount++;
+                                           }
+                                           
+                                           
+                                           if (guestVoteCount > 0) {
+                                               UILabel *labelGuestVote = [[UILabel alloc] initWithFrame:CGRectMake(userVoteCount*45+5, 0, 40, 40)];
+                                               labelGuestVote.backgroundColor = [UIColor clearColor];
+                                               labelGuestVote.textColor = [UIColor colorWithRed:187.0/255.0 green:184.0/255.0 blue:169.0/255.0 alpha:1];
+                                               labelGuestVote.textAlignment = NSTextAlignmentCenter;
+                                               labelGuestVote.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:20];
+                                               labelGuestVote.text = [NSString stringWithFormat:@"+%d", guestVoteCount];
+                                               [scrollVotes addSubview:labelGuestVote];
+                                               scrollVotes.contentSize = CGSizeMake(45*userVoteCount + 50, 50);
+                                           } else {
+                                               scrollVotes.contentSize = CGSizeMake(45*userVoteCount + 5, 50);
+                                           }
+                                       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                           TFLog(@"Something went wrong (Get vote)");
+                                       }];
+    } else
+        scrollVotes.hidden = true;
 }
 
 - (void)viewDidUnload

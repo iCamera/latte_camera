@@ -4,14 +4,14 @@
     "controllerName": "luxeysSettingViewController",
     "sections": [
         { "title":"HỒ SƠ CÁ NHÂN", "elements":[
-                { "type":"QEntryElement", "key":"name", "title":"Tài khoản", "Placeholder":"Tài khoản", "bind":"textValue:name"},
+                { "type":"QEntryElement", "key":"name", "title":"Tài khoản", "Placeholder":"Tài khoản", "bind":"textValue:name", "controllerAction":"handleUpdate:"},
                 { "type":"QRadioElement", "key":"gender", "title":"Giới tính", "items":["Nam", "Nữ"], "values":[1, 2], "controllerAction":"handleUpdate:"},
                 { "type":"QDateTimeInlineElement", "key":"birthday", "title":"Ngày sinh"},
                 { "type":"QEntryElement", "key":"current_residence", "title":"Nơi ở", "Placeholder":"Nơi ở", "bind":"textValue:current_residence"},
-                { "type":"QEntryElement", "key":"hometown", "title":"Nơi sinh", "Placeholder":"Nơi sinh", "bind":"textValue:hometown"},
-                { "type":"QEntryElement", "key":"occupation", "title":"Nghề nghiệp", "Placeholder":"Nghề nghiệp", "bind":"textValue:occupation"},
-                { "type":"QMultilineElement", "key":"introduction", "title":"Giới thiệu", "bind":"textValue:introduction"},
-                { "type":"QMultilineElement", "key":"hobby", "title":"Sở thích", "bind":"textValue:hobby"}
+                { "type":"QEntryElement", "key":"hometown", "title":"Nơi sinh", "Placeholder":"Nơi sinh", "bind":"textValue:hometown", "controllerAction":"handleUpdate:"},
+                { "type":"QEntryElement", "key":"occupation", "title":"Nghề nghiệp", "Placeholder":"Nghề nghiệp", "bind":"textValue:occupation", "controllerAction":"handleUpdate:"},
+                { "type":"QEntryElement", "key":"introduction", "title":"Giới thiệu", "bind":"textValue:introduction", "controllerAction":"handleUpdate:"},
+                { "type":"QEntryElement", "key":"hobby", "title":"Sở thích", "bind":"textValue:hobby", "controllerAction":"handleUpdate:"}
             ]
         },
         { "title":"CHÍNH SÁCH RIÊNG TƯ", "elements": [

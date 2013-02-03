@@ -20,6 +20,7 @@
 @synthesize scrollEffect;
 @synthesize scrollProcess;
 @synthesize scrollBlend;
+@synthesize sliderEffectIntensity;
 @synthesize viewShoot;
 
 @synthesize viewCamera;
@@ -173,7 +174,7 @@
     [nc addObserver:self selector:@selector(appResignActive:) name: @"ResignActive" object:nil];
     [nc addObserver:self selector:@selector(receiveLoggedIn:) name:@"LoggedIn" object:nil];
     
-    
+    scrollProcess.contentSize = CGSizeMake(384, 50);
 	// Do any additional setup after loading the view.
     // Setup filter
     uiWrap = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 480, 640)];
@@ -196,6 +197,8 @@
     filterText.mix = 1.0;
     blendCrop = [[GPUImageCropFilter alloc] init];
     filterDistord = [[GPUImagePinchDistortionFilter alloc] init];
+    filterIntensity = [[GPUImageAlphaBlendFilter alloc] init];
+    filterIntensity.mix = 0.0;
     screenBlend = [[LXFilterScreenBlend alloc] init];
     
     //    uiElement = [[GPUImageUIElement alloc] initWithView:uiWrap];
@@ -227,16 +230,25 @@
         UILabel *labelEffect = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 70, 12)];
         labelEffect.backgroundColor = [UIColor clearColor];
         labelEffect.textColor = [UIColor whiteColor];
+        labelEffect.shadowColor = [UIColor blackColor];
+        labelEffect.shadowOffset = CGSizeMake(0.0, 1.0);
         labelEffect.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:11];
-        UIButton *buttonEffect = [[UIButton alloc] initWithFrame:CGRectMake(5+75*i, 10, 70, 70)];
+        labelEffect.userInteractionEnabled = NO;
+        UIButton *buttonEffect = [[UIButton alloc] initWithFrame:CGRectMake(5+75*i, 0, 70, 70)];
         GPUImageView *effectView = [[GPUImageView alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
         effectView.fillMode = kGPUImageFillModePreserveAspectRatioAndFill;
         effectView.userInteractionEnabled = NO;
         
         [effectPreview addObject:effectView];
-        [buttonEffect addSubview:effectView];
         
-        labelEffect.center = CGPointMake(buttonEffect.center.x, 93);
+        UIView *labelBack = [[UIView alloc] initWithFrame:CGRectMake(0, 53, 70, 20)];
+        labelBack.userInteractionEnabled = NO;
+        labelBack.backgroundColor = [UIColor blackColor];
+        labelBack.alpha = 0.2;
+        [buttonEffect addSubview:effectView];
+        [buttonEffect addSubview:labelBack];
+        
+        labelEffect.center = CGPointMake(buttonEffect.center.x, 62);
         labelEffect.textAlignment = NSTextAlignmentCenter;
         
         [buttonEffect addTarget:self action:@selector(setEffect:) forControlEvents:UIControlEventTouchUpInside];
@@ -290,7 +302,7 @@
                 labelEffect.text = @"Aussie";
                 break;
             case 16:
-                labelEffect.text = @"Aussie";
+                labelEffect.text = @"Alone";
                 break;
             default:
                 labelEffect.text = @"Original";
@@ -300,7 +312,7 @@
         [scrollEffect addSubview:buttonEffect];
         [scrollEffect addSubview:labelEffect];
     }
-    scrollEffect.contentSize = CGSizeMake(effectNum*75+10, 110);
+    scrollEffect.contentSize = CGSizeMake(effectNum*75+10, 70);
     
     
     for (int i=0; i < 2; i++) {
@@ -496,6 +508,7 @@
     [self setScrollBlend:nil];
     [self setButtonToggleFisheye:nil];
     [self setViewShoot:nil];
+    [self setSliderEffectIntensity:nil];
     [super viewDidUnload];
 }
 
@@ -553,8 +566,11 @@
         }
         
         //Film
+        NSInteger mark;
         if (effect != nil) {
+            mark = pipe.filters.count-1;
             [pipe addFilter:effect];
+            [pipe addFilter:filterIntensity];
         }
         
         if (textText.text.length > 0) {
@@ -562,6 +578,10 @@
         }
         
         // AFTER THIS LINE, NO MORE ADDFILTER
+        if (effect != nil) {
+            GPUImageFilter *tmp = pipe.filters[mark];
+            [tmp addTarget:pipe.filters[mark+2]];
+        }
         
         // Two input filter has to be setup at last
         GPUImageRotationMode imageViewRotationModeIdx0 = kGPUImageNoRotation;
@@ -632,6 +652,10 @@
     filter.saturation = sliderSaturation.value;
     
     filterSharpen.sharpness = sliderSharpness.value;
+    
+    if (effect != nil) {
+        filterIntensity.mix = 1.0 - sliderEffectIntensity.value;
+    }
     
     if (buttonBlendNone.enabled) {
         if (isFixedAspectBlend) {
@@ -1002,7 +1026,6 @@
     // Save now
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     [library writeImageToSavedPhotosAlbum:cgImageFromBytes metadata:imageMeta completionBlock:^(NSURL *assetURL, NSError *error) {
-        CGImageRelease(cgImageFromBytes);
         
         // Return to preview mode
         [self preparePipe];
@@ -1032,9 +1055,46 @@
                     }];
             
         } else {
+            NSData *jpeg = UIImageJPEGRepresentation([UIImage imageWithCGImage:cgImageFromBytes], 0.9);
+            CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)jpeg, NULL);
+            
+            CFStringRef UTI = CGImageSourceGetType(source); //this is the type of image (e.g., public.jpeg)
+            
+            //this will be the data CGImageDestinationRef will write into
+            NSMutableData *dest_data = [NSMutableData data];
+            
+            CGImageDestinationRef destination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)dest_data,UTI,1,NULL);
+            
+            if(!destination) {
+                NSLog(@"***Could not create image destination ***");
+            }
+            
+            //add the image contained in the image source to the destination, overidding the old metadata with our modified metadata
+            CGImageDestinationAddImageFromSource(destination,source,0, (__bridge CFDictionaryRef) imageMeta);
+            
+            //tell the destination to write the image data and metadata into our data object.
+            //It will return false if something goes wrong
+            BOOL success = NO;
+            success = CGImageDestinationFinalize(destination);
+            
+            if(!success) {
+                NSLog(@"***Could not create data from image destination ***");
+            }
+            
+            //now we have the data ready to go, so do whatever you want with it
+            //here we just write it to disk at the same path we were passed
+            savedData = dest_data;
+            //cleanup
+            
+            CFRelease(destination);
+            CFRelease(source);
+            
+            
+            isSaved = true;
+            block();
             dispatch_async(dispatch_get_main_queue(), ^{
                 HUD.mode = MBProgressHUDModeText;
-                HUD.labelText = NSLocalizedString(@"Cannot save to Camera Roll", @"Cannot save to Camera Roll") ;
+                HUD.labelText = NSLocalizedString(@"cannot_save_photo", @"Cannot save to Camera Roll") ;
                 HUD.margin = 10.f;
                 HUD.yOffset = 150.f;
                 HUD.removeFromSuperViewOnHide = YES;
@@ -1043,6 +1103,8 @@
             });
             
         }
+        
+        CGImageRelease(cgImageFromBytes);
     }];
     
 }
@@ -1525,6 +1587,7 @@
     sliderSharpness.value = 0.25;
     sliderVignette.value = 0.4;
     sliderFeather.value = 10.0;
+    sliderEffectIntensity.value = 1.0;
     [self setUIMask:kMaskBlurNone];
     
     effect = nil;

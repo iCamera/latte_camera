@@ -35,8 +35,10 @@
     
     [app.tracker sendView:@"Login Screen"];
     
-    self.textUser.text = [app.tokenItem objectForKey:(id)CFBridgingRelease(kSecAttrAccount)];
-    self.textPass.text = [app.tokenItem objectForKey:(id)CFBridgingRelease(kSecValueData)];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    self.textUser.text = [defaults objectForKey:@"latte_email"];
+    self.textPass.text = [defaults objectForKey:@"latte_password"];
     
     isPreload = true;
     isPreload2 = true;
@@ -103,9 +105,11 @@
 
 - (IBAction)login:(id)sender {
     [HUD show:YES];
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    [app.tokenItem setObject:self.textUser.text forKey:(id)CFBridgingRelease(kSecAttrAccount)];
-    [app.tokenItem setObject:self.textPass.text forKey:(id)CFBridgingRelease(kSecValueData)];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:self.textUser.text forKey:@"latte_email"];
+    [defaults setObject:self.textPass.text forKey:@"latte_password"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
     [[LatteAPIClient sharedClient] postPath:@"user/login"
                                  parameters:[NSDictionary dictionaryWithObjectsAndKeys:

@@ -3956,9 +3956,25 @@ Latteについて、「こんな機能があったら良い」、「この機能
                                 <rect key="frame" x="0.0" y="430" width="320" height="110"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="強さ" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qBW-8D-dLw">
+                                        <rect key="frame" x="4" y="8" width="52" height="16"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="10"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" id="EJH-M2-ZLc" userLabel="Brush Slider">
+                                        <rect key="frame" x="62" y="5" width="240" height="23"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="minimumTrackTintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                        <color key="thumbTintColor" red="0.60226004460000004" green="0.53549094019999999" blue="0.31669781419999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="updateFilter:" destination="ieL-KW-PiQ" eventType="valueChanged" id="v7W-uG-JpG"/>
+                                        </connections>
+                                    </slider>
                                     <scrollView autoresizesSubviews="NO" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="Qcy-0Z-pzw" userLabel="Effect Scroll">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="110"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <rect key="frame" x="0.0" y="33" width="320" height="70"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </scrollView>
                                 </subviews>
@@ -4075,7 +4091,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bg_camera_bottom.png" id="r6B-Di-spN">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                     </imageView>
-                                    <scrollView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="aZh-bB-hzl" userLabel="Scroll View Process">
+                                    <scrollView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="aZh-bB-hzl" userLabel="Scroll View Process">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <subviews>
@@ -4152,8 +4168,8 @@ Latteについて、「こんな機能があったら良い」、「この機能
                                                     <action selector="toggleControl:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="Nup-Qq-I0Q"/>
                                                 </connections>
                                             </button>
-                                            <button hidden="YES" opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="qfz-nj-8Si" userLabel="Button Text">
-                                                <rect key="frame" x="302" y="5" width="58" height="40"/>
+                                            <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="qfz-nj-8Si" userLabel="Button Text">
+                                                <rect key="frame" x="320" y="5" width="58" height="40"/>
                                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
                                                 <state key="normal" title="ABC" backgroundImage="bg_camera_bt2.png">
                                                     <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
@@ -4204,7 +4220,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="jEB-en-3zj" userLabel="Button Fisheye">
                                                 <rect key="frame" x="256" y="5" width="58" height="40"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                <state key="normal" image="icon_photo_select.png" backgroundImage="bg_camera_bt2.png">
+                                                <state key="normal" image="icon_lens3.png" backgroundImage="bg_camera_bt2.png">
                                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
@@ -4270,6 +4286,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
                         <outlet property="scrollFont" destination="8ax-Ld-6V0" id="jiI-us-nlh"/>
                         <outlet property="scrollProcess" destination="aZh-bB-hzl" id="3t7-n5-7IG"/>
                         <outlet property="sliderClear" destination="DiY-Yx-d3c" id="oIN-zC-8I9"/>
+                        <outlet property="sliderEffectIntensity" destination="EJH-M2-ZLc" id="HEZ-yy-O1B"/>
                         <outlet property="sliderExposure" destination="gjg-9E-8CH" id="mfD-nv-6X5"/>
                         <outlet property="sliderFeather" destination="sQH-Rb-pdV" id="1GD-d6-U0q"/>
                         <outlet property="sliderSaturation" destination="dm9-te-SJe" id="LWD-cH-rFH"/>
@@ -4771,6 +4788,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
                 <relationship kind="outlet" name="scrollFont" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="scrollProcess" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="sliderClear" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderEffectIntensity" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="sliderExposure" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="sliderFeather" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="sliderSaturation" candidateClass="UISlider"/>
