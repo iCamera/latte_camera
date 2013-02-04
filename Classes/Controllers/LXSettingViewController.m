@@ -149,7 +149,6 @@
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
     
     [self.root fetchValueIntoObject:dict];
-    QEntryElement *test = [self.root elementWithKey:@"hometown"];
 
     NSString *msg = @"Values:";
     for (NSString *aKey in dict){

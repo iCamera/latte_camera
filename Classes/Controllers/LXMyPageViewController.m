@@ -659,7 +659,17 @@
 }
 
 - (IBAction)touchSetting:(id)sender {
-    QRootElement *root = [[QRootElement alloc] initWithJSONFile:@"lattesetting"];
+    Class JSONSerialization = [QRootElement JSONParserClass];
+    NSAssert(JSONSerialization != NULL, @"No JSON serializer available!");
+    
+    NSError *jsonParsingError = nil;
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"lattesetting" ofType:@"json"];
+    NSDictionary *data = [JSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:filePath] options:0 error:&jsonParsingError];
+    
+    QRootElement *root = [[LXRootBuilder new]buildWithObject:data];
+    if (data != nil) {
+        [root bindToObject:data];
+    }
     LXSettingViewController* viewSetting = [[LXSettingViewController alloc] initWithRoot:root];
     
     [self.navigationController pushViewController:viewSetting animated:YES];

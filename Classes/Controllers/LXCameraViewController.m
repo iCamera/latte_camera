@@ -186,7 +186,7 @@
     timeLabel.shadowOffset = CGSizeMake(0, 1);
     [uiWrap addSubview:timeLabel];
     
-    pipe = [[GPUImageFilterPipeline alloc] init];
+    pipe = [[LXFilterPipe alloc] init];
     pipe.filters = [[NSMutableArray alloc] init];
     pipe.output = viewCamera;
     filter = [[LXFilterDetail alloc] init];
@@ -208,7 +208,7 @@
     
     effectManager = [[FilterManager alloc] init];
     
-    videoCamera = [[GPUImageStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionBack];
+    videoCamera = [[LXStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionBack];
     [videoCamera setOutputImageOrientation:UIInterfaceOrientationPortrait];
     
     imagePicker = [[UIImagePickerController alloc]init];

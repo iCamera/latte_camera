@@ -26,6 +26,8 @@
 #import "LXShare.h"
 #import "RDActionSheet.h"
 #import "UIDeviceHardware.h"
+#import "LXFilterPipe.h"
+#import "LXStillCamera.h"
 
 #define kTimerNone       0
 #define kTimer5s         1
@@ -67,9 +69,9 @@ typedef enum {
 @end
 
 @interface LXCameraViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, UIScrollViewDelegate, UIAccelerometerDelegate, LXDrawViewDelegate, UIAlertViewDelegate, UITextFieldDelegate> {
-    GPUImageStillCamera *videoCamera;
+    LXStillCamera *videoCamera;
     GPUImageSharpenFilter *filterSharpen;
-    GPUImageFilterPipeline *pipe;
+    LXFilterPipe *pipe;
     LXFilterDetail *filter;
     LXFilterDOF *filterDOF;
     LXFilterFish *filterFish;

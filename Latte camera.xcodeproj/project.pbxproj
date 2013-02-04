@@ -264,6 +264,10 @@
 		88A49B8115B8FD5700CEA262 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A49B7C15B8FD5700CEA262 /* CoreVideo.framework */; };
 		88A49B8215B8FD5700CEA262 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A49B7D15B8FD5700CEA262 /* OpenGLES.framework */; };
 		88A49B8315B8FD5700CEA262 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A49B7E15B8FD5700CEA262 /* QuartzCore.framework */; };
+		88A9576316BFC18B003649E8 /* LXFilterPipe.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A9576216BFC18B003649E8 /* LXFilterPipe.m */; };
+		88A9576916BFC2A2003649E8 /* LXStillCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A9576816BFC2A2003649E8 /* LXStillCamera.m */; };
+		88A9576C16BFCFED003649E8 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A9576B16BFCFED003649E8 /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		88A9576F16BFD406003649E8 /* LXRootBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A9576E16BFD406003649E8 /* LXRootBuilder.m */; };
 		88AB7E1D16BB755F00040C00 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AB7E1B16BB755E00040C00 /* CFNetwork.framework */; };
 		88AB7E1E16BB755F00040C00 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AB7E1C16BB755F00040C00 /* StoreKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		88AB7E3D16BB759300040C00 /* Appirater.m in Sources */ = {isa = PBXBuildFile; fileRef = 88AB7E2216BB759300040C00 /* Appirater.m */; };
@@ -289,15 +293,6 @@
 		88E1CE3416B8D0860040ADBD /* sample.png in Resources */ = {isa = PBXBuildFile; fileRef = 88E1CE3216B8D0860040ADBD /* sample.png */; };
 		88E1CE3516B8D0860040ADBD /* sample@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88E1CE3316B8D0860040ADBD /* sample@2x.png */; };
 		88E8C1B016A64254006FC065 /* LXFilterText.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E8C1AF16A64254006FC065 /* LXFilterText.m */; };
-		88E952C6161994DA00E44619 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E952BC161994DA00E44619 /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		88E952C7161994DA00E44619 /* blackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 88E952BE161994DA00E44619 /* blackArrow.png */; };
-		88E952C8161994DA00E44619 /* blackArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88E952BF161994DA00E44619 /* blackArrow@2x.png */; };
-		88E952C9161994DA00E44619 /* blueArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 88E952C0161994DA00E44619 /* blueArrow.png */; };
-		88E952CA161994DA00E44619 /* blueArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88E952C1161994DA00E44619 /* blueArrow@2x.png */; };
-		88E952CB161994DA00E44619 /* grayArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 88E952C2161994DA00E44619 /* grayArrow.png */; };
-		88E952CC161994DA00E44619 /* grayArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88E952C3161994DA00E44619 /* grayArrow@2x.png */; };
-		88E952CD161994DA00E44619 /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 88E952C4161994DA00E44619 /* whiteArrow.png */; };
-		88E952CE161994DA00E44619 /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88E952C5161994DA00E44619 /* whiteArrow@2x.png */; };
 		88E96B2115EDCB9500FB9CC8 /* libQuickDialog.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E96B1E15EDCB5F00FB9CC8 /* libQuickDialog.a */; };
 		88E96B2315EDCBC200FB9CC8 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E96B2215EDCBC200FB9CC8 /* MapKit.framework */; };
 		88E96B2515EDCBC800FB9CC8 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E96B2415EDCBC800FB9CC8 /* CoreLocation.framework */; };
@@ -1157,6 +1152,14 @@
 		88A49B7C15B8FD5700CEA262 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		88A49B7D15B8FD5700CEA262 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		88A49B7E15B8FD5700CEA262 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		88A9576116BFC18B003649E8 /* LXFilterPipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFilterPipe.h; sourceTree = "<group>"; };
+		88A9576216BFC18B003649E8 /* LXFilterPipe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFilterPipe.m; sourceTree = "<group>"; };
+		88A9576716BFC2A2003649E8 /* LXStillCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXStillCamera.h; sourceTree = "<group>"; };
+		88A9576816BFC2A2003649E8 /* LXStillCamera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXStillCamera.m; sourceTree = "<group>"; };
+		88A9576A16BFCFED003649E8 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
+		88A9576B16BFCFED003649E8 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
+		88A9576D16BFD406003649E8 /* LXRootBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXRootBuilder.h; sourceTree = "<group>"; };
+		88A9576E16BFD406003649E8 /* LXRootBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXRootBuilder.m; sourceTree = "<group>"; };
 		88AB7E1B16BB755E00040C00 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		88AB7E1C16BB755F00040C00 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		88AB7E2116BB759300040C00 /* Appirater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Appirater.h; sourceTree = "<group>"; };
@@ -1223,16 +1226,6 @@
 		88E1CE3316B8D0860040ADBD /* sample@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sample@2x.png"; sourceTree = "<group>"; };
 		88E8C1AE16A64254006FC065 /* LXFilterText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFilterText.h; sourceTree = "<group>"; };
 		88E8C1AF16A64254006FC065 /* LXFilterText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFilterText.m; sourceTree = "<group>"; };
-		88E952BB161994DA00E44619 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
-		88E952BC161994DA00E44619 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
-		88E952BE161994DA00E44619 /* blackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackArrow.png; sourceTree = "<group>"; };
-		88E952BF161994DA00E44619 /* blackArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackArrow@2x.png"; sourceTree = "<group>"; };
-		88E952C0161994DA00E44619 /* blueArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueArrow.png; sourceTree = "<group>"; };
-		88E952C1161994DA00E44619 /* blueArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueArrow@2x.png"; sourceTree = "<group>"; };
-		88E952C2161994DA00E44619 /* grayArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayArrow.png; sourceTree = "<group>"; };
-		88E952C3161994DA00E44619 /* grayArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayArrow@2x.png"; sourceTree = "<group>"; };
-		88E952C4161994DA00E44619 /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteArrow.png; sourceTree = "<group>"; };
-		88E952C5161994DA00E44619 /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteArrow@2x.png"; sourceTree = "<group>"; };
 		88E96A6415EDC81500FB9CC8 /* DOAutocompleteTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DOAutocompleteTextField.h; sourceTree = "<group>"; };
 		88E96A6515EDC81500FB9CC8 /* DOAutocompleteTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DOAutocompleteTextField.m; sourceTree = "<group>"; };
 		88E96A6615EDC81500FB9CC8 /* NSMutableArray+IMSExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+IMSExtensions.h"; sourceTree = "<group>"; };
@@ -2164,6 +2157,8 @@
 		8890725416770EBB0013DF7A /* CustomControls */ = {
 			isa = PBXGroup;
 			children = (
+				88A9576A16BFCFED003649E8 /* EGORefreshTableHeaderView.h */,
+				88A9576B16BFCFED003649E8 /* EGORefreshTableHeaderView.m */,
 				8890725F16770EBB0013DF7A /* LXCellComment.h */,
 				8890726016770EBB0013DF7A /* LXCellComment.m */,
 				8890726116770EBB0013DF7A /* LXCellFriend.h */,
@@ -2260,6 +2255,12 @@
 				8845F7EF16B7E389003873A2 /* LXEffect3.m */,
 				88E1CE2A16B8BC910040ADBD /* LXEffect5.h */,
 				88E1CE2B16B8BC910040ADBD /* LXEffect5.m */,
+				88A9576116BFC18B003649E8 /* LXFilterPipe.h */,
+				88A9576216BFC18B003649E8 /* LXFilterPipe.m */,
+				88A9576716BFC2A2003649E8 /* LXStillCamera.h */,
+				88A9576816BFC2A2003649E8 /* LXStillCamera.m */,
+				88A9576D16BFD406003649E8 /* LXRootBuilder.h */,
+				88A9576E16BFD406003649E8 /* LXRootBuilder.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -2338,7 +2339,6 @@
 				88AB7E1F16BB759300040C00 /* appirater */,
 				888165F816B902260089106D /* GoogleAnalyticsiOS_2.0beta4 */,
 				88B47AFC15DE503F00FD9C72 /* AFNetworking */,
-				88E952B8161994DA00E44619 /* EGOTableViewPullRefresh */,
 				8821098D15DDFE6B00E1A179 /* LXUICustom */,
 				880C4AE1161C2A1400252C6A /* MBProgressHUD */,
 				88E96A6315EDC81500FB9CC8 /* quickdialog */,
@@ -2417,48 +2417,6 @@
 			);
 			name = "Supporting Files";
 			path = Latte;
-			sourceTree = "<group>";
-		};
-		88E952B8161994DA00E44619 /* EGOTableViewPullRefresh */ = {
-			isa = PBXGroup;
-			children = (
-				88E952B9161994DA00E44619 /* Classes */,
-				88E952BD161994DA00E44619 /* Resources */,
-			);
-			name = EGOTableViewPullRefresh;
-			path = Vendor/EGOTableViewPullRefresh/EGOTableViewPullRefresh;
-			sourceTree = "<group>";
-		};
-		88E952B9161994DA00E44619 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				88E952BA161994DA00E44619 /* View */,
-			);
-			path = Classes;
-			sourceTree = "<group>";
-		};
-		88E952BA161994DA00E44619 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				88E952BB161994DA00E44619 /* EGORefreshTableHeaderView.h */,
-				88E952BC161994DA00E44619 /* EGORefreshTableHeaderView.m */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		88E952BD161994DA00E44619 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				88E952BE161994DA00E44619 /* blackArrow.png */,
-				88E952BF161994DA00E44619 /* blackArrow@2x.png */,
-				88E952C0161994DA00E44619 /* blueArrow.png */,
-				88E952C1161994DA00E44619 /* blueArrow@2x.png */,
-				88E952C2161994DA00E44619 /* grayArrow.png */,
-				88E952C3161994DA00E44619 /* grayArrow@2x.png */,
-				88E952C4161994DA00E44619 /* whiteArrow.png */,
-				88E952C5161994DA00E44619 /* whiteArrow@2x.png */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 		88E96A6315EDC81500FB9CC8 /* quickdialog */ = {
@@ -3250,14 +3208,6 @@
 			files = (
 				886C63AC1682E17E0007D952 /* lattedof.fsh in Resources */,
 				886C63A81681B92D0007D952 /* lattefragment.fsh in Resources */,
-				88E952C7161994DA00E44619 /* blackArrow.png in Resources */,
-				88E952C8161994DA00E44619 /* blackArrow@2x.png in Resources */,
-				88E952C9161994DA00E44619 /* blueArrow.png in Resources */,
-				88E952CA161994DA00E44619 /* blueArrow@2x.png in Resources */,
-				88E952CB161994DA00E44619 /* grayArrow.png in Resources */,
-				88E952CC161994DA00E44619 /* grayArrow@2x.png in Resources */,
-				88E952CD161994DA00E44619 /* whiteArrow.png in Resources */,
-				88E952CE161994DA00E44619 /* whiteArrow@2x.png in Resources */,
 				887E4095162552C20060623C /* icon.png in Resources */,
 				887E40971625536C0060623C /* icon@2x.png in Resources */,
 				887E40A116257A310060623C /* Default@2x.png in Resources */,
@@ -3907,7 +3857,6 @@
 				88B47B3B15DE522F00FD9C72 /* AFURLConnectionOperation.m in Sources */,
 				88B47B3C15DE522F00FD9C72 /* AFXMLRequestOperation.m in Sources */,
 				88B47B3D15DE522F00FD9C72 /* UIImageView+AFNetworking.m in Sources */,
-				88E952C6161994DA00E44619 /* EGORefreshTableHeaderView.m in Sources */,
 				880C4B17161C2A1400252C6A /* MBProgressHUD.m in Sources */,
 				889072BC16770EBB0013DF7A /* LXAppDelegate.m in Sources */,
 				889072BD16770EBB0013DF7A /* LXCameraViewController.m in Sources */,
@@ -3986,6 +3935,10 @@
 				88E1CE2C16B8BC910040ADBD /* LXEffect5.m in Sources */,
 				885C061D16BB69B0000820E7 /* UIDeviceHardware.m in Sources */,
 				88AB7E3D16BB759300040C00 /* Appirater.m in Sources */,
+				88A9576316BFC18B003649E8 /* LXFilterPipe.m in Sources */,
+				88A9576916BFC2A2003649E8 /* LXStillCamera.m in Sources */,
+				88A9576C16BFCFED003649E8 /* EGORefreshTableHeaderView.m in Sources */,
+				88A9576F16BFD406003649E8 /* LXRootBuilder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -29,6 +29,7 @@
 #import "UIActionSheet+ButtonState.h"
 #import "LXCellTimelineSingle.h"
 #import "LXCellTimelineMulti.h"
+#import "LXRootBuilder.h"
 
 #define kTableTimeline 1
 #define kTableFriends 2
