@@ -779,13 +779,13 @@
         
         [locationManager stopUpdatingLocation];
         
-        
         imageMeta = [NSMutableDictionary dictionaryWithDictionary:videoCamera.currentCaptureMetadata];
         
         CGFloat scale = [[UIScreen mainScreen] scale];
         CGFloat width = 300.0;
         
         NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
+        
         capturedImage = [UIImage imageWithData:imageData];
         
         NSInteger height = [LXUtils heightFromWidth:width width:capturedImage.size.width height:capturedImage.size.height];
@@ -1034,6 +1034,7 @@
     
     // Save now
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+
     [library writeImageToSavedPhotosAlbum:cgImageFromBytes metadata:imageMeta completionBlock:^(NSURL *assetURL, NSError *error) {
         
         // Return to preview mode

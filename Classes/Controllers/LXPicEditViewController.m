@@ -293,7 +293,7 @@
     HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
     HUD.mode = MBProgressHUDModeCustomView;
     [HUD show:YES];
-    [HUD hide:YES afterDelay:2];
+    [HUD hide:YES afterDelay:1];
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
@@ -311,7 +311,7 @@
     cameraView.dataUpload = imageData;
     [cameraView uploadData];
     
-    [self performSelector:@selector(backToCamera) withObject:nil afterDelay:1];
+    [self performSelector:@selector(backToCamera) withObject:nil];
 }
 
 

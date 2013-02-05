@@ -85,7 +85,12 @@
     
     UILabel *labelCamera = [[UILabel alloc] init];
     labelCamera.frame = CGRectMake(0.0, 0.0, 60, 14);
-    labelCamera.font = [UIFont fontWithName:@"AvenirNextCondensed-Medium" size:11];
+    
+    NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
+    if ([language isEqualToString:@"ja"])
+        labelCamera.font = [UIFont fontWithName:@"AvenirNextCondensed-Medium" size:9];
+    else
+        labelCamera.font = [UIFont fontWithName:@"AvenirNextCondensed-Medium" size:11];
     labelCamera.text = NSLocalizedString(@"start_camera", @"写真を追加");
     labelCamera.backgroundColor = [UIColor clearColor];
     labelCamera.textColor = [UIColor whiteColor];
@@ -127,7 +132,13 @@
     
     // Re-style tabbar item
     for(UIViewController *tab in self.viewControllers) {
-        UIFont *font = [UIFont fontWithName:@"AvenirNextCondensed-Medium" size:11];
+        NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
+        UIFont *font;
+        if ([language isEqualToString:@"ja"])
+            font = [UIFont fontWithName:@"AvenirNextCondensed-Medium" size:9];
+        else
+            font = [UIFont fontWithName:@"AvenirNextCondensed-Medium" size:11];
+        
         NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                     font, UITextAttributeFont,
                                     [UIColor whiteColor], UITextAttributeTextColor,
