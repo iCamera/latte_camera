@@ -52,6 +52,10 @@
 #define kBlendNormal 2
 #define kBlendStrong 3
 
+#define kUploadOK 0
+#define kUploadProgress 1
+#define kUploadFail 2
+
 typedef enum {
     kEffect1,
     kEffect2,
@@ -88,6 +92,7 @@ typedef enum {
     GPUImagePicture *pictureBlend;
     GPUImageRawDataInput *pictureDOF;
     GPUImageUIElement *uiElement;
+
     UIView *uiWrap;
     UILabel *timeLabel;
 
@@ -104,6 +109,7 @@ typedef enum {
     CGPoint posText;
     CGFloat mCurrentScale;
     CGFloat mLastScale;
+    NSInteger uploadState;
 
     BOOL isEditing;
     BOOL isSaved;
@@ -138,6 +144,8 @@ typedef enum {
     NSInteger currentTab;
     
     LXShare *laSharekit;
+    
+    MBRoundProgressView *viewRoundProgess;
 }
 @property (strong, nonatomic) IBOutlet UIView *viewBottomBar;
 
@@ -217,6 +225,10 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UITextField *textText;
 @property (strong, nonatomic) IBOutlet UIButton *buttonToggleFisheye;
 @property (strong, nonatomic) IBOutlet UIView *viewShoot;
+@property (strong, nonatomic) IBOutlet UIButton *buttonUploadStatus;
+
+@property (strong, nonatomic) NSData *dataUpload;
+@property (strong, nonatomic) NSDictionary *dictUpload;
 
 - (IBAction)cameraTouch:(UITapGestureRecognizer *)sender;
 - (IBAction)openImagePicker:(id)sender;
@@ -245,6 +257,8 @@ typedef enum {
 - (IBAction)toggleBlending:(UIButton *)sender;
 - (IBAction)setBlend:(UIButton *)sender;
 - (IBAction)toggleFisheye:(UIButton *)sender;
+- (IBAction)touchUploadStatus:(id)sender;
 
--(void)switchCamera;
+- (void)switchCamera;
+- (void)uploadData;
 @end

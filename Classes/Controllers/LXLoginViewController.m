@@ -118,7 +118,13 @@
                                     success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                         [self processLogin:JSON];
                                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        TFLog(@"Something went wrong (Login)");
+                                        [HUD hide:NO];
+                                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                        message:error.localizedDescription
+                                                                                       delegate:nil
+                                                                              cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                              otherButtonTitles:nil];
+                                        [alert show];
                                     }];
 }
 

@@ -71,8 +71,14 @@
                                               [HUD hide:YES];
                                               
                                           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                              TFLog(@"Something went wrong (Load setting)");
                                               [HUD hide:YES];
+                                              
+                                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                              message:error.localizedDescription
+                                                                                             delegate:nil
+                                                                                    cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                                    otherButtonTitles:nil];
+                                              [alert show];
                                           }];
 }
 
@@ -136,8 +142,14 @@
                                         [self.navigationController popViewControllerAnimated:YES];
                                         [HUD hide:YES];
                                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        TFLog(@"Something went wrong (Logout)");
                                         [HUD hide:YES];
+                                        
+                                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                        message:error.localizedDescription
+                                                                                       delegate:nil
+                                                                              cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                              otherButtonTitles:nil];
+                                        [alert show];
                                     }];
 }
 
@@ -190,8 +202,14 @@
                                               }
  
                                           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                              TFLog(@"Something went wrong (Setting)");
                                               [self loading:NO];
+                                              
+                                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                              message:error.localizedDescription
+                                                                                             delegate:nil
+                                                                                    cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                                    otherButtonTitles:nil];
+                                              [alert show];
                                           }];
 
 }

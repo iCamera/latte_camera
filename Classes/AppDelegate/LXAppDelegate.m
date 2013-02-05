@@ -93,7 +93,7 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
     // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
     [GAI sharedInstance].dispatchInterval = 20;
     // Optional: set debug to YES for extra debugging information.
-    [GAI sharedInstance].debug = YES;
+    [GAI sharedInstance].debug = NO;
     // Create tracker instance.
     tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-242292-26"];
     

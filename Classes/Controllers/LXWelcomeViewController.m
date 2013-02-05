@@ -135,6 +135,7 @@
                                     
                                        [self doneLoadingTableViewData];
                                        [indicator stopAnimating];
+                                       loadEnded = true;
                                        
                                        TFLog(@"Something went wrong (Welcome)");
                                    }];

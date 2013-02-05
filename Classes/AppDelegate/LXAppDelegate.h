@@ -9,19 +9,21 @@
 #import <UIKit/UIKit.h>
 #import "LXUIRevealController.h"
 #import "LXMainTabViewController.h"
-#import <FacebookSDK/FacebookSDK.h>
+#import "FacebookSDK.h"
 #import "TestFlight.h"
 #import "GAI.h"
+
 
 @class User;
 
 #define APPDELEGATE (AppDelegate *)[UIApplication sharedApplication].delegate
 
-@interface LXAppDelegate : UIResponder <UIApplicationDelegate> {
+@interface LXAppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate> {
     LXUIRevealController* revealController;
     NSString *apns;
     UIViewController *viewCamera;
     id<GAITracker> tracker;
+    AFHTTPRequestOperation *operation;
 }
 
 @property(nonatomic, retain) id<GAITracker> tracker;

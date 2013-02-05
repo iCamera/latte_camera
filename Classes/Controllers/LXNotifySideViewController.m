@@ -167,6 +167,12 @@
                                              [self doneLoadingTableViewData];
                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                              TFLog(@"Something went wrong (Notify)");
+                                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                             message:error.localizedDescription
+                                                                                            delegate:nil
+                                                                                   cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                                   otherButtonTitles:nil];
+                                             [alert show];
                                              [self doneLoadingTableViewData];
                                          }];
 }
@@ -183,7 +189,13 @@
                                              [tableNotify reloadData];
                                              [self doneLoadingTableViewData];
                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                             TFLog(@"Something went wrong (Notify)");
+                                             TFLog(@"Something went wrong (Notify Request)");
+                                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                             message:error.localizedDescription
+                                                                                            delegate:nil
+                                                                                   cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                                   otherButtonTitles:nil];
+                                             [alert show];
                                              [self doneLoadingTableViewData];
                                          }];
 }
@@ -274,7 +286,17 @@
                                  parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                     success: nil
                                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                        sender.enabled = true;
+                                        if (buttonIgnore != nil)
+                                            buttonIgnore.enabled = true;
                                         TFLog(@"Something went wrong (RightMenu - Approve/Request)");
+                                        
+                                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                        message:error.localizedDescription
+                                                                                       delegate:nil
+                                                                              cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                              otherButtonTitles:nil];
+                                        [alert show];
                                     }];
 }
 
@@ -289,7 +311,16 @@
                                  parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                     success: nil
                                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                        sender.enabled = true;
+                                        buttonAdd.enabled = true;
                                         TFLog(@"Something went wrong (RightMenu - ignore)");
+                                        
+                                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                        message:error.localizedDescription
+                                                                                       delegate:nil
+                                                                              cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                              otherButtonTitles:nil];
+                                        [alert show];
                                     }];
 }
 

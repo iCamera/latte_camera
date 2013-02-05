@@ -74,6 +74,13 @@
                                                  [tableComment reloadData];
                                              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                  TFLog(@"Something went wrong (PicInfo)");
+                                                 
+                                                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                                 message:error.localizedDescription
+                                                                                                delegate:nil
+                                                                                       cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                                       otherButtonTitles:nil];
+                                                 [alert show];
                                              }];
     }
     
@@ -128,6 +135,13 @@
                                                   [self.navigationController popViewControllerAnimated:YES];
                                               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                   TFLog(@"Something went wrong (Comment)");
+                                                  
+                                                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                                  message:error.localizedDescription
+                                                                                                 delegate:nil
+                                                                                        cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                                        otherButtonTitles:nil];
+                                                  [alert show];
                                               }];
         
         return TRUE;

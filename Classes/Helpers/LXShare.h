@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import <MessageUI/MFMailComposeViewController.h>
-#import <FacebookSDK/FacebookSDK.h>
+#import "FacebookSDK.h"
 
 // MY OWN BLOCK
 typedef void (^MyCompletionBlock)();

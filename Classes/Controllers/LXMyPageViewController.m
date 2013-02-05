@@ -793,10 +793,9 @@
     
     [operation setCompletionBlockWithSuccess: successUpload failure: failUpload];
     
-    [operation setUploadProgressBlock:^(NSInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+    [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
         progessHUD.progress = (float)totalBytesWritten/(float)totalBytesExpectedToWrite;
     }];
-    
     
     [operation start];
 }
@@ -864,22 +863,25 @@
     [self.navigationController pushViewController:viewPicMap animated:YES];
 }
 
-
-- (void)submitLike:(UIButton*)sender {
-    sender.enabled = FALSE;
+- (void)updatePhotoVoteCount:(UIButton*)sender increase:(BOOL)increase {
+    sender.enabled = increase;
     Feed *feed = [self feedFromPicID:sender.tag];
     Picture *pic = [self picFromPicID:sender.tag];
-    pic.isVoted = TRUE;
+    pic.isVoted = increase;
     if (feed.targets.count > 1) {
         NSInteger likeCount = [sender.titleLabel.text integerValue];
-        NSNumber *num = [NSNumber numberWithInteger:likeCount + 1];
+        NSNumber *num = [NSNumber numberWithInteger:likeCount + increase?1:-1];
         [sender setTitle:[num stringValue] forState:UIControlStateDisabled];
     } else {
-        pic.voteCount = [NSNumber numberWithInteger:[pic.voteCount integerValue] + 1];
+        pic.voteCount = [NSNumber numberWithInteger:[pic.voteCount integerValue] + increase?1:-1];
         
         long row = [feeds indexOfObject:feed];
         [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForItem:row inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
+}
+
+- (void)submitLike:(UIButton*)sender {
+    [self updatePhotoVoteCount:sender increase:true];
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -893,6 +895,13 @@
                                     success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                         TFLog(@"Submited like");
                                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                        [self updatePhotoVoteCount:sender increase:false];
+                                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                        message:error.localizedDescription
+                                                                                       delegate:nil
+                                                                              cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                              otherButtonTitles:nil];
+                                        [alert show];
                                         TFLog(@"Something went wrong (Vote)");
                                     }];
 }

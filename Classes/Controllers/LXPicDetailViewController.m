@@ -156,8 +156,14 @@
                                                                       success:nil
                                                                       failure:nil];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       TFLog(@"Something went wrong (PicDetail)");
                                        [indicatorComment stopAnimating];
+                                       
+                                       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                       message:error.localizedDescription
+                                                                                      delegate:nil
+                                                                             cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                             otherButtonTitles:nil];
+                                       [alert show];
                                    }];
 }
 
@@ -170,7 +176,7 @@
     CGRect frame = tablePic.tableHeaderView.frame;
     frame.size.height = newheight + 98;
     
-    if ([pic.voteCount integerValue] > 0) {
+    if (pic.canEdit && ([pic.voteCount integerValue] > 0)) {
         frame.size.height += 50;
     }
     
@@ -221,7 +227,7 @@
 
     [imagePic loadProgess:pic.urlMedium];
     
-    if ([pic.voteCount integerValue] > 0) {
+    if (pic.canEdit && ([pic.voteCount integerValue] > 0)) {
         scrollVotes.hidden = NO;
         NSString *url = [NSString stringWithFormat:@"picture/%d/votes", pic!=nil?[pic.pictureId integerValue]:picID];
         LXAppDelegate* app = (LXAppDelegate*)[[UIApplication sharedApplication] delegate];
@@ -267,6 +273,13 @@
                                            }
                                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                            TFLog(@"Something went wrong (Get vote)");
+                                           
+                                           UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                           message:error.localizedDescription
+                                                                                          delegate:nil
+                                                                                 cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                                 otherButtonTitles:nil];
+                                           [alert show];
                                        }];
     } else
         scrollVotes.hidden = true;
@@ -451,6 +464,12 @@
                                             [tablePic scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionTop animated:YES];
                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                             TFLog(@"Something went wrong (Comment)");
+                                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                            message:error.localizedDescription
+                                                                                           delegate:nil
+                                                                                  cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                                  otherButtonTitles:nil];
+                                            [alert show];
                                         }];
         
         textComment.text = @"";
@@ -503,6 +522,12 @@
                                               labelLike.text = [vote_count stringValue];
                                           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                               TFLog(@"Something went wrong (Vote)");
+                                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                              message:error.localizedDescription
+                                                                                             delegate:nil
+                                                                                    cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                                    otherButtonTitles:nil];
+                                              [alert show];
                                           }];
 }
 

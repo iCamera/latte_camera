@@ -40,7 +40,7 @@
     
     [operation setCompletionBlockWithSuccess: successDownload failure: failDownload];
     
-    [operation setDownloadProgressBlock:^(NSInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+    [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
         progess.progress = (float)totalBytesRead/(float)totalBytesExpectedToRead;
     }];
     

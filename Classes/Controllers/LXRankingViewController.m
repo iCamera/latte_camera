@@ -106,6 +106,7 @@
     
     [loadIndicator startAnimating];
     [HUD show:YES];
+    loadEnded = false;
     [[LatteAPIClient sharedClient] getPath:url
                                       parameters: nil
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -121,6 +122,7 @@
                                              [self doneLoadingTableViewData];
                                              [loadIndicator stopAnimating];
                                              [HUD hide:YES];
+                                             loadEnded = true;
                                          }
      ];
 }
