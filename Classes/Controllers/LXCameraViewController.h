@@ -85,7 +85,6 @@ typedef enum {
     GPUImageFilter *effect;
     LXFilterScreenBlend *screenBlend;
     GPUImageAlphaBlendFilter *filterIntensity;
-    FilterManager *effectManager;
     UIDeviceHardware *deviceHardware;
     
     GPUImagePicture *previewFilter;

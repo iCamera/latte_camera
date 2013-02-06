@@ -10,31 +10,25 @@
 
 @implementation FilterManager
 
+
 - (id)init {
     self = [super init];
     if (self != nil) {
-        tonecurve = [[GPUImageToneCurveFilter alloc] init];
-        rgb = [[GPUImageRGBFilter alloc] init];
-        filter = [[LXFilter alloc] init];
-        filterMono = [[LXFilterMono alloc] init];
-        lxEffect1 = [[LXEffect1 alloc] init];
-        lxEffect2 = [[LXEffect2 alloc] init];
-        lxEffect3 = [[LXEffect3 alloc] init];
-        lxEffect5 = [[LXEffect5 alloc] init];
+
     }
     return self;
 }
 
-- (GPUImageFilter*)getEffect:(NSInteger)aEffect {
++ (GPUImageFilter*)getEffect:(NSInteger)aEffect {
     switch (aEffect) {
         case 1:
-            return lxEffect1;
+            return [[LXEffect1 alloc] init];
         case 2:
-            return lxEffect2;
+            return [[LXEffect2 alloc] init];
         case 3:
-            return lxEffect3;
+            return [[LXEffect3 alloc] init];
         case 4:
-            return lxEffect5;
+            return [[LXEffect5 alloc] init];
         case 5:
             return [self myEffect1];
         case 6:
@@ -64,7 +58,9 @@
     }
 }
 
-- (GPUImageFilter *)effect1 {
++ (GPUImageFilter *)effect1 {
+    GPUImageToneCurveFilter *tonecurve = [[GPUImageToneCurveFilter alloc] init];
+    
     [tonecurve setRedControlPoints:[NSArray arrayWithObjects:
                                     [NSValue valueWithCGPoint:CGPointMake(0.0, 0.0)],
                                     [NSValue valueWithCGPoint:CGPointMake(102.0f/255.0f, 90.0f/255.0f)],
@@ -88,6 +84,8 @@
 }
 
 - (GPUImageFilter *)effect2 {
+    GPUImageToneCurveFilter *tonecurve = [[GPUImageToneCurveFilter alloc] init];
+    
     float curve[16][3] = {
         {23,20,60},
         {32,37,78},
@@ -107,17 +105,17 @@
         {238,248,229}
     };
     
-    [tonecurve setRedControlPoints:[self curveWithPoint:curve atIndex:0]];
-    [tonecurve setGreenControlPoints:[self curveWithPoint:curve atIndex:1]];
-    [tonecurve setBlueControlPoints:[self curveWithPoint:curve atIndex:2]];
+    [tonecurve setRedControlPoints:[FilterManager curveWithPoint:curve atIndex:0]];
+    [tonecurve setGreenControlPoints:[FilterManager curveWithPoint:curve atIndex:1]];
+    [tonecurve setBlueControlPoints:[FilterManager curveWithPoint:curve atIndex:2]];
     
     return tonecurve;
 }
 
-- (GPUImageFilter *)effect3 {
++ (GPUImageFilter *)effect3 {
 //    UIImage *image = [UIImage imageNamed:@"grain.jpg"];
 //    texture = [[GPUImagePicture alloc] initWithImage:image smoothlyScaleOutput:YES];
-    
+    GPUImageRGBFilter *rgb = [[GPUImageRGBFilter alloc] init];
     rgb.red = 1.36;
     rgb.green = 1.36;
     rgb.blue = 1.28;
@@ -132,6 +130,8 @@
 
 
 - (GPUImageFilter *)effect4 {
+    GPUImageRGBFilter *rgb = [[GPUImageRGBFilter alloc] init];
+    
     rgb.red = 2.36;
     rgb.green = 2.36;
     rgb.blue = 2.28;
@@ -139,10 +139,8 @@
     return rgb;
 }
 
-- (GPUImageFilter *)effect5 {
-//    UIImage *image = [UIImage imageNamed:@"grain.jpg"];
-//    texture = [[GPUImagePicture alloc] initWithImage:image smoothlyScaleOutput:YES];
-        
++ (GPUImageFilter *)effect5 {
+    GPUImageToneCurveFilter *tonecurve = [[GPUImageToneCurveFilter alloc] init];
     float curve[16][3] = {
         {19.0, 0.0, 0.0},
         {31.0, 9.0, 0.0},
@@ -169,7 +167,7 @@
     return tonecurve;
 }
 
-- (GPUImageFilter*)tmpEffect1 {
++ (GPUImageFilter*)tmpEffect1 {
     return [[GPUImageToneCurveFilter alloc] initWithACV:@"effect1"];
 }
 
@@ -185,7 +183,7 @@
     return [[GPUImageToneCurveFilter alloc] initWithACV:@"effect4"];
 }
 
-- (GPUImageFilter*)tmpEffect5 {
++ (GPUImageFilter*)tmpEffect5 {
     return [[GPUImageToneCurveFilter alloc] initWithACV:@"effect5"];
 }
 
@@ -198,6 +196,7 @@
 }
 
 - (GPUImageFilter*)curve1 {
+    GPUImageToneCurveFilter *tonecurve = [[GPUImageToneCurveFilter alloc] init];
     float curve[16][3] = {
         {12.0, 0.0, 0.0},
         {24.0, 9.0, 4.0},
@@ -217,15 +216,15 @@
         {224.0, 240.0, 250.0}
     };
     
-    [tonecurve setRedControlPoints:[self curveWithPoint:curve atIndex:0]];
-    [tonecurve setGreenControlPoints:[self curveWithPoint:curve atIndex:1]];
-    [tonecurve setBlueControlPoints:[self curveWithPoint:curve atIndex:2]];
+    [tonecurve setRedControlPoints:[FilterManager curveWithPoint:curve atIndex:0]];
+    [tonecurve setGreenControlPoints:[FilterManager curveWithPoint:curve atIndex:1]];
+    [tonecurve setBlueControlPoints:[FilterManager curveWithPoint:curve atIndex:2]];
         
     return tonecurve;
 }
 
 
-- (NSArray *)curveWithPoint:(float[16][3])points atIndex:(int)idx {
++ (NSArray *)curveWithPoint:(float[16][3])points atIndex:(int)idx {
     NSMutableArray *array = [[NSMutableArray alloc] init];
     for (int i = 0; i < 16; i++) {
         [array addObject:[NSValue valueWithCGPoint:CGPointMake(16.0*i/240.0, points[i][idx]/255.0)]];
@@ -233,7 +232,8 @@
     return array;
 }
 
-- (GPUImageFilter*)myEffect1 {
++ (GPUImageFilter*)myEffect1 {
+    LXFilter *filter = [[LXFilter alloc] init];
     [filter setRedCurve:[NSArray arrayWithObjects:
                        [NSValue valueWithCGPoint:CGPointMake(0, 5)],
                        [NSValue valueWithCGPoint:CGPointMake(127, 133)],
@@ -254,7 +254,8 @@
     return filter;
 }
 
-- (GPUImageFilter*)myEffect2 {
++ (GPUImageFilter*)myEffect2 {
+    LXFilter *filter = [[LXFilter alloc] init];
     [filter setRedCurve:[NSArray arrayWithObjects:
                          [NSValue valueWithCGPoint:CGPointMake(0, 89)],
                          [NSValue valueWithCGPoint:CGPointMake(127, 120)],
@@ -275,7 +276,8 @@
     return filter;
 }
 
-- (GPUImageFilter*)myEffect3 {
++ (GPUImageFilter*)myEffect3 {
+    LXFilter *filter = [[LXFilter alloc] init];
     [filter setRedCurve:[NSArray arrayWithObjects:
                          [NSValue valueWithCGPoint:CGPointMake(0, 73)],
                          [NSValue valueWithCGPoint:CGPointMake(127, 184)],
@@ -296,7 +298,8 @@
     return filter;
 }
 
-- (GPUImageFilter*)myEffect4 {
++ (GPUImageFilter*)myEffect4 {
+    LXFilter *filter = [[LXFilter alloc] init];
     [filter setRedCurve:[NSArray arrayWithObjects:
                          [NSValue valueWithCGPoint:CGPointMake(0, 10)],
                          [NSValue valueWithCGPoint:CGPointMake(127, 99)],
@@ -317,7 +320,8 @@
     return filter;
 }
 
-- (GPUImageFilter*)myEffect5 {
++ (GPUImageFilter*)myEffect5 {
+    LXFilter *filter = [[LXFilter alloc] init];
     [filter setRedCurve:[NSArray arrayWithObjects:
                          [NSValue valueWithCGPoint:CGPointMake(0, 38)],
                          [NSValue valueWithCGPoint:CGPointMake(127, 133)],
@@ -339,7 +343,8 @@
 }
 
 
-- (GPUImageFilter*)myEffect6 {
++ (GPUImageFilter*)myEffect6 {
+    LXFilter *filter = [[LXFilter alloc] init];
     [filter setRedCurve:[NSArray arrayWithObjects:
                          [NSValue valueWithCGPoint:CGPointMake(0, 36)],
                          [NSValue valueWithCGPoint:CGPointMake(102, 132)],
@@ -361,7 +366,8 @@
 }
 
 
-- (GPUImageFilter*)myEffect7 {
++ (GPUImageFilter*)myEffect7 {
+    LXFilter *filter = [[LXFilter alloc] init];
     [filter setRedCurve:[NSArray arrayWithObjects:
                          [NSValue valueWithCGPoint:CGPointMake(0, 117)],
                          [NSValue valueWithCGPoint:CGPointMake(140, 133)],

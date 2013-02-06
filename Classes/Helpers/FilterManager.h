@@ -20,18 +20,11 @@
 #import "LXEffect5.h"
 
 @interface FilterManager : NSObject {
-    NSMutableArray *filters;
-
-    GPUImageToneCurveFilter *tonecurve;
-    GPUImageRGBFilter *rgb;
-    LXFilter *filter;
-    LXFilterMono *filterMono;
-    LXEffect1 *lxEffect1;
-    LXEffect2 *lxEffect2;
-    LXEffect3 *lxEffect3;
-    LXEffect5 *lxEffect5;
+//    GPUImageToneCurveFilter *tonecurve;
+//    GPUImageRGBFilter *rgb;
+//    LXFilterMono *filterMono;
 }
 
-- (GPUImageFilter*)getEffect:(NSInteger)aEffect;
++ (GPUImageFilter*)getEffect:(NSInteger)aEffect;
 
 @end

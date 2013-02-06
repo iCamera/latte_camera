@@ -3493,7 +3493,7 @@ We improve our services to the best of our ability,but please understand that no
                                             <action selector="touchNo:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="GQe-uF-jhJ"/>
                                         </connections>
                                     </button>
-                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="2vO-5s-PVr" userLabel="Button OK">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="2vO-5s-PVr" userLabel="Button OK">
                                         <rect key="frame" x="270" y="5" width="40" height="30"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" image="icon_ok2.png" backgroundImage="bg_camera_bt3.png">
@@ -4738,7 +4738,6 @@ We improve our services to the best of our ability,but please understand that no
             <relationships>
                 <relationship kind="action" name="cameraTouch:" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="action" name="capture:"/>
-                <relationship kind="action" name="changeEffectIntensity:" candidateClass="UISlider"/>
                 <relationship kind="action" name="changeFlash:"/>
                 <relationship kind="action" name="changeLens:" candidateClass="UIButton"/>
                 <relationship kind="action" name="changePen:" candidateClass="UISlider"/>
@@ -4750,7 +4749,6 @@ We improve our services to the best of our ability,but please understand that no
                 <relationship kind="action" name="panTarget:" candidateClass="UIPanGestureRecognizer"/>
                 <relationship kind="action" name="pinchCamera:" candidateClass="UIPinchGestureRecognizer"/>
                 <relationship kind="action" name="setBlend:" candidateClass="UIButton"/>
-                <relationship kind="action" name="setEffect:"/>
                 <relationship kind="action" name="setMask:" candidateClass="UIButton"/>
                 <relationship kind="action" name="setTimer:"/>
                 <relationship kind="action" name="textChange:" candidateClass="UITextField"/>

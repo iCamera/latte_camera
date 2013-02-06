@@ -198,24 +198,12 @@
     pipe.filters = [[NSMutableArray alloc] init];
     
     filter = [[LXFilterDetail alloc] init];
-    filterSharpen = [[GPUImageSharpenFilter alloc] init];
     pictureDOF = [[GPUImageRawDataInput alloc] initWithBytes:nil size:CGSizeMake(0, 0)];
-    pictureBlend = [[GPUImagePicture alloc] init];
+
     filterText = [[GPUImageAlphaBlendFilter alloc] init];
     filterText.mix = 1.0;
-    blendCrop = [[GPUImageCropFilter alloc] init];
-    filterDistord = [[GPUImagePinchDistortionFilter alloc] init];
-    filterIntensity = [[GPUImageAlphaBlendFilter alloc] init];
-    filterIntensity.mix = 0.0;
-    screenBlend = [[LXFilterScreenBlend alloc] init];
     
     //    uiElement = [[GPUImageUIElement alloc] initWithView:uiWrap];
-    
-    filterFish = [[LXFilterFish alloc] init];
-    filterDOF = [[LXFilterDOF alloc] init];
-    
-    effectManager = [[FilterManager alloc] init];
-    
     videoCamera = [[LXStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionBack];
     [videoCamera setOutputImageOrientation:UIInterfaceOrientationPortrait];
     
@@ -356,32 +344,6 @@
     }
     scrollBlend.contentSize = CGSizeMake(2*55+10, 60);
     
-    
-    // get font family
-    
-    // loop
-    
-    
-    //     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"fonts" ofType:@"plist"];
-    //     NSDictionary *fonts = [[NSDictionary alloc] initWithContentsOfFile:plistPath];
-    //    NSInteger i = 0;
-    //
-    //    for (NSDictionary *dictFont in [fonts objectForKey:@"fonts"]) {
-    //        CGRect frame = CGRectMake(10, i * 30, 300, 30);
-    //        UIButton *buttonFont = [[UIButton alloc] initWithFrame:frame];
-    //        buttonFont.titleLabel.text = [dictFont objectForKey:@"name"];
-    //        buttonFont.titleLabel.textAlignment = NSTextAlignmentLeft;
-    //        buttonFont.titleLabel.font = [UIFont fontWithName:[dictFont objectForKey:@"name"] size:20];
-    //        [buttonFont setTitle:[dictFont objectForKey:@"name"] forState:UIControlStateNormal];
-    //        buttonFont.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    //        [buttonFont addTarget:self action:@selector(selectFont:) forControlEvents:UIControlEventTouchUpInside];
-    //
-    //        i++;
-    //        [scrollFont addSubview:buttonFont];
-    //
-    //    }
-    //    scrollFont.contentSize = CGSizeMake(320, i * 30);
-    
     [self resizeCameraViewWithAnimation:NO];
     [self preparePipe];
 }
@@ -458,79 +420,26 @@
     [super viewWillDisappear:animated];
 }
 
-- (void)viewDidUnload {
-    [self setViewCamera:nil];
-    [self setScrollEffect:nil];
-    [self setImageAutoFocus:nil];
-    [self setViewTimer:nil];
-    
-    videoCamera = nil;
-    
-    [self setButtonSetNoTimer:nil];
-    [self setButtonSetTimer5s:nil];
-    [self setTapFocus:nil];
-    [self setViewFocusControl:nil];
-    [self setButtonToggleFocus:nil];
-    [self setViewCameraWraper:nil];
-    [self setViewDraw:nil];
-    [self setButtonBackgroundNatual:nil];
-    [self setButtonBlurWeak:nil];
-    [self setButtonBlurNormal:nil];
-    [self setButtonBlurStrong:nil];
-    [self setButtonBlurNone:nil];
-    
-    [self setViewBasicControl:nil];
-    [self setButtonClose:nil];
-    [self setButtonToggleBasic:nil];
-    [self setButtonToggleLens:nil];
-    [self setViewLensControl:nil];
-    [self setButtonToggleText:nil];
-    [self setButtonLensNormal:nil];
-    [self setButtonLensWide:nil];
-    [self setButtonLensFish:nil];
-    [self setViewTopBar:nil];
-    [self setTapCloseHelp:nil];
-    [self setViewTextControl:nil];
-    [self setViewEffectControl:nil];
-    [self setViewTopBar35:nil];
-    [self setViewCanvas:nil];
-    [self setSliderExposure:nil];
-    [self setSliderVignette:nil];
-    [self setSliderSharpness:nil];
-    [self setSliderClear:nil];
-    [self setSliderSaturation:nil];
-    [self setButtonReset:nil];
-    [self setSwitchGain:nil];
-    [self setScrollFont:nil];
-    [self setTextText:nil];
-    [self setButtonPickTop:nil];
-    [self setSliderFeather:nil];
-    [self setButtonFlash35:nil];
-    [self setScrollProcess:nil];
-    [self setViewBlendControl:nil];
-    [self setButtonToggleBlend:nil];
-    [self setButtonBlendNone:nil];
-    [self setButtonBlendWeak:nil];
-    [self setButtonBlendMedium:nil];
-    [self setButtonBlendStrong:nil];
-    [self setScrollBlend:nil];
-    [self setButtonToggleFisheye:nil];
-    [self setViewShoot:nil];
-    [self setSliderEffectIntensity:nil];
-    [self setButtonUploadStatus:nil];
-    [super viewDidUnload];
-}
-
 - (void)preparePipe {
     [self preparePipe:nil];
 }
 
 
 - (void)preparePipe:(GPUImageOutput *)picture {
+    filter = nil;
+    filterText = nil;
+    filterFish = nil;
+    filterDOF = nil;
+    filterSharpen = nil;
+    filterDistord = nil;
+    screenBlend = nil;
+    blendCrop = nil;
+    
     if (isEditing) {
         [previewFilter removeAllTargets];
         
         if (picture != nil) {
+            [picture removeAllTargets];
             pipe.input = picture;
             pipe.output = nil;
         } else {
@@ -538,49 +447,44 @@
             pipe.output = viewCamera;
         }
         
-        [filter removeAllTargets];
-        [filterText removeAllTargets];
-        [filterFish removeAllTargets];
-        [filterDOF removeAllTargets];
-        [filterSharpen removeAllTargets];
-        [filterDistord removeAllTargets];
-        [screenBlend removeAllTargets];
-        [blendCrop removeAllTargets];
-        
-        [pictureDOF removeAllTargets];
-        [uiElement removeAllTargets];
-        [pictureBlend removeAllTargets];
-        
         [pipe removeAllFilters];
+        
         if (sliderSharpness.value > 0) {
+            filterSharpen = [[GPUImageSharpenFilter alloc] init];
             [pipe addFilter:filterSharpen];
         }
         
+        filter = [[LXFilterDetail alloc] init];
         [pipe addFilter:filter];
         
         
         if (!buttonLensWide.enabled) {
+            filterDistord = [[GPUImagePinchDistortionFilter alloc] init];
             [pipe addFilter:filterDistord];
         }
         
         if (!buttonLensFish.enabled) {
+            filterFish = [[LXFilterFish alloc] init];
             [pipe addFilter:filterFish];
         }
         
         
         if (buttonBlurNone.enabled) {
+            filterDOF = [[LXFilterDOF alloc] init];
             [pipe addFilter:filterDOF];
         }
         
         if (buttonBlendNone.enabled) {
+            screenBlend = [[LXFilterScreenBlend alloc] init];
             [pipe addFilter:screenBlend];
         }
         
         //Film
         NSInteger mark;
-        if (effect != nil) {
+        if (currentEffect != 0) {
             mark = pipe.filters.count-1;
-            [pipe addFilter:effect];
+            [pipe addFilter:[FilterManager getEffect:currentEffect]];
+            filterIntensity = [[GPUImageAlphaBlendFilter alloc] init];
             [pipe addFilter:filterIntensity];
         }
         
@@ -589,7 +493,7 @@
         }
         
         // AFTER THIS LINE, NO MORE ADDFILTER
-        if (effect != nil) {
+        if (currentEffect != 0) {
             GPUImageFilter *tmp = pipe.filters[mark];
             [tmp addTarget:pipe.filters[mark+2]];
         }
@@ -743,7 +647,6 @@
 - (IBAction)setEffect:(id)sender {
     UIButton* buttonEffect = (UIButton*)sender;
     currentEffect = buttonEffect.tag;
-    effect = [effectManager getEffect:currentEffect];
     [self preparePipe];
     [self processImage];
 }
@@ -891,6 +794,7 @@
 }
 
 - (IBAction)touchSave:(id)sender {
+//    buttonYes.enabled = false;
     HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:HUD];
     HUD.userInteractionEnabled = NO;
@@ -899,6 +803,7 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [self getFinalImage:^{
+//            buttonYes.enabled = true;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self processSavedData];
             });
@@ -991,6 +896,7 @@
     
     [self preparePipe:picture];
     [self applyFilterSetting];
+    [(GPUImageFilter *)[pipe.filters lastObject] prepareForImageCapture];
     
     [picture processImage];
     if (buttonBlendNone.enabled) {
@@ -1004,6 +910,7 @@
     }
     
     CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:imageOrientation];
+    // Return to preview mode
     picture = nil;
     
     // Prepare meta data
@@ -1023,12 +930,9 @@
     
     // Save now
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    
 
     [library writeImageToSavedPhotosAlbum:cgImageFromBytes metadata:imageMeta completionBlock:^(NSURL *assetURL, NSError *error) {
-        
-        // Return to preview mode
-        [self preparePipe];
-        
         if (!error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 HUD.mode = MBProgressHUDModeText;
@@ -1104,8 +1008,10 @@
         }
         
         CGImageRelease(cgImageFromBytes);
+        [self preparePipe];
+        [self applyFilterSetting];
+        [self processImage];
     }];
-    
 }
 
 - (IBAction)toggleControl:(UIButton*)sender {
@@ -1509,7 +1415,7 @@
         GPUImageView *effectView = effectPreview[i];
         [previewFilter removeAllTargets];
         
-        GPUImageFilter *effectSmallPreview = [effectManager getEffect:i];
+        GPUImageFilter *effectSmallPreview = [FilterManager getEffect:i];
         if (effectSmallPreview != nil) {
             [effectSmallPreview removeAllTargets];
             [previewFilter addTarget:effectSmallPreview];
