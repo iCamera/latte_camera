@@ -14,6 +14,6 @@
 
 @property (readonly) NSDictionary *currentCaptureMetadata;
 
-- (void)capturePhotoAsSampleBufferWithCompletionHandler:(void (^)(CMSampleBufferRef imageSampleBuffer, NSError *error))block;
+- (void)capturePhotoAsSampleBufferWithCompletionHandler:(void (^)(CMSampleBufferRef imageSampleBuffer, NSError *error))block withOrientation:(UIInterfaceOrientation)uiOrientation;
 
 @end

@@ -126,7 +126,7 @@
     [buttonUploadStatus addSubview:viewRoundProgess];
     
     isBackCamera = YES;
-    orientationLast = UIImageOrientationRight;
+    orientationLast = UIInterfaceOrientationPortrait;
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     [app.tracker sendView:@"Camera Screen"];
     
@@ -196,7 +196,7 @@
     
     pipe = [[LXFilterPipe alloc] init];
     pipe.filters = [[NSMutableArray alloc] init];
-    pipe.output = viewCamera;
+    
     filter = [[LXFilterDetail alloc] init];
     filterSharpen = [[GPUImageSharpenFilter alloc] init];
     pictureDOF = [[GPUImageRawDataInput alloc] initWithBytes:nil size:CGSizeMake(0, 0)];
@@ -532,8 +532,10 @@
         
         if (picture != nil) {
             pipe.input = picture;
+            pipe.output = nil;
         } else {
             pipe.input = previewFilter;
+            pipe.output = viewCamera;
         }
         
         [filter removeAllTargets];
@@ -593,29 +595,26 @@
         }
         
         // Two input filter has to be setup at last
-        GPUImageRotationMode imageViewRotationModeIdx0 = kGPUImageNoRotation;
         GPUImageRotationMode imageViewRotationModeIdx1 = kGPUImageNoRotation;
-        switch (imageOrientation) {
-            case UIImageOrientationLeft:
-                imageViewRotationModeIdx0 = kGPUImageRotateLeft;
-                imageViewRotationModeIdx1 = kGPUImageRotateRight;
-                break;
-            case UIImageOrientationRight:
-                imageViewRotationModeIdx0 = kGPUImageRotateRight;
-                imageViewRotationModeIdx1 = kGPUImageRotateLeft;
-                break;
-            case UIImageOrientationDown:
-                imageViewRotationModeIdx0 = kGPUImageRotate180;
-                imageViewRotationModeIdx1 = kGPUImageRotate180;
-                break;
-            case UIImageOrientationUp:
-                imageViewRotationModeIdx0 = kGPUImageNoRotation;
-                imageViewRotationModeIdx1 = kGPUImageNoRotation;
-                break;
-            default:
-                imageViewRotationModeIdx0 = kGPUImageRotateLeft;
-                imageViewRotationModeIdx1 = kGPUImageRotateLeft;
-                break;
+        
+        if (picture != nil) {
+            switch (imageOrientation) {
+                case UIImageOrientationLeft:
+                    imageViewRotationModeIdx1 = kGPUImageRotateRight;
+                    break;
+                case UIImageOrientationRight:
+                    imageViewRotationModeIdx1 = kGPUImageRotateLeft;
+                    break;
+                case UIImageOrientationDown:
+                    imageViewRotationModeIdx1 = kGPUImageRotate180;
+                    break;
+                case UIImageOrientationUp:
+                    imageViewRotationModeIdx1 = kGPUImageNoRotation;
+                    break;
+                default:
+                    imageViewRotationModeIdx1 = kGPUImageRotateLeft;
+                    break;
+            }
         }
         
         if (buttonBlendNone.enabled) {
@@ -637,14 +636,11 @@
             [filterText setInputRotation:imageViewRotationModeIdx1 atIndex:1];
             [uiElement addTarget:filterText];
         }
-        
-        
-        // seems like atIndex is ignored by GPUImageView...
-        [viewCamera setInputRotation:imageViewRotationModeIdx0 atIndex:0];
     } else {
         GPUImageFilter *dummy = [[GPUImageFilter alloc] init];
         [filterFish removeAllTargets];
         pipe.input = videoCamera;
+        pipe.output = viewCamera;
         [pipe removeAllFilters];
         [pipe addFilter:dummy];
         if (buttonToggleFisheye.selected) {
@@ -772,48 +768,54 @@
 }
 
 - (void)capturePhotoAsync {
-    imageOrientation = orientationLast;
     buttonCapture.enabled = false;
+    
+    // Save last GPS and Orientation
+    [locationManager stopUpdatingLocation];
+    
     [videoCamera capturePhotoAsSampleBufferWithCompletionHandler:^(CMSampleBufferRef imageSampleBuffer, NSError *error) {
-        [videoCamera stopCameraCapture];
         
-        [locationManager stopUpdatingLocation];
+        [videoCamera stopCameraCapture];
         
         imageMeta = [NSMutableDictionary dictionaryWithDictionary:videoCamera.currentCaptureMetadata];
         
-        CGFloat scale = [[UIScreen mainScreen] scale];
-        CGFloat width = 300.0;
-        
-        NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
-        
-        capturedImage = [UIImage imageWithData:imageData];
-        
-        NSInteger height = [LXUtils heightFromWidth:width width:capturedImage.size.width height:capturedImage.size.height];
-        
-        CGSize size;
-        
-        size = CGSizeMake(height*scale, width*scale);
-        if (imageOrientation == UIImageOrientationLeft || imageOrientation == UIImageOrientationRight) {
-            picSize = capturedImage.size;
-        }
-        else {
-            picSize = CGSizeMake(capturedImage.size.height, capturedImage.size.width);
+        // Add GPS
+        NSDictionary *location;
+        if (bestEffortAtLocation != nil) {
+            location = [LXUtils getGPSDictionaryForLocation:bestEffortAtLocation];
+            [imageMeta setObject:location forKey:(NSString *)kCGImagePropertyGPSDictionary];
         }
         
-        previewSize = CGSizeMake(width*scale, height*scale);
+        // Save GPS & Correct orientation        
+        NSData *jpeg = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
+
+        capturedImage = [UIImage imageWithData:jpeg];
         
-        UIImage *previewPic = [capturedImage
-                               resizedImage: size
-                               interpolationQuality:kCGInterpolationHigh];
+        picSize = capturedImage.size;
+        previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:capturedImage.size.width height:capturedImage.size.height]);
+        
+        UIImage *previewPic = [LXCameraViewController imageWithImage:capturedImage scaledToSize:previewUISize];
+        
+        imageOrientation = capturedImage.imageOrientation;
         
         previewFilter = [[GPUImagePicture alloc] initWithImage:previewPic];
+        
         [self initPreviewPic];
         [self switchEditImage];
         [self resizeCameraViewWithAnimation:NO];
         [self preparePipe];
         [self applyFilterSetting];
         [self processImage];
-    }];
+    } withOrientation:orientationLast];
+}
+
++ (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
+    //UIGraphicsBeginImageContext(newSize);
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
 }
 
 - (IBAction)cameraTouch:(UITapGestureRecognizer *)sender {
@@ -981,8 +983,8 @@
     }
     
     
-    CGImageRef cgImagePreviewFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:imageOrientation];
-    savedPreview = [UIImage imageWithCGImage:cgImagePreviewFromBytes scale:1.0 orientation:imageOrientation];
+    CGImageRef cgImagePreviewFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:UIImageOrientationUp];
+    savedPreview = [UIImage imageWithCGImage:cgImagePreviewFromBytes scale:1.0 orientation:UIImageOrientationUp];
     CGImageRelease(cgImagePreviewFromBytes);
     
     GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:capturedImage];
@@ -1004,28 +1006,15 @@
     CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:imageOrientation];
     picture = nil;
     
-    
     // Prepare meta data
     if (imageMeta == nil) {
         imageMeta = [[NSMutableDictionary alloc] init];
-    }
-    
-    NSNumber *orientation = [NSNumber numberWithInteger:[self metadataOrientationForUIImageOrientation:imageOrientation]];
-    
-    [imageMeta setObject:orientation forKey:(NSString *)kCGImagePropertyOrientation];
-    
-    // Add GPS
-    NSDictionary *location;
-    if (bestEffortAtLocation != nil) {
-        location = [LXUtils getGPSDictionaryForLocation:bestEffortAtLocation];
-        [imageMeta setObject:location forKey:(NSString *)kCGImagePropertyGPSDictionary];
     }
     
     // Add App Info
     NSMutableDictionary *dictForTIFF = [imageMeta objectForKey:(NSString *)kCGImagePropertyTIFFDictionary];
     if (dictForTIFF == nil) {
         dictForTIFF = [[NSMutableDictionary alloc] init];
-        [imageMeta setObject:dictForTIFF forKey:(NSString *)kCGImagePropertyTIFFDictionary];
     }
     
     [dictForTIFF setObject:@"Latte camera" forKey:(NSString *)kCGImagePropertyTIFFSoftware];
@@ -1336,19 +1325,19 @@
     }];
 }
 
-- (int) metadataOrientationForUIImageOrientation:(UIImageOrientation)orientation
+- (UIImageOrientation) imageOrientationForUI:(UIInterfaceOrientation)orientation
 {
 	switch (orientation) {
-		case UIImageOrientationUp: // the picture was taken with the home button is placed right
-			return 1;
-		case UIImageOrientationRight: // bottom (portrait)
-			return 6;
-		case UIImageOrientationDown: // left
-			return 3;
-		case UIImageOrientationLeft: // top
-			return 8;
+		case UIInterfaceOrientationPortrait:
+			return UIImageOrientationUp;
+		case UIInterfaceOrientationLandscapeLeft:
+			return UIImageOrientationUp;
+		case UIInterfaceOrientationLandscapeRight:
+			return UIImageOrientationUp;
+		case UIInterfaceOrientationPortraitUpsideDown:
+			return UIImageOrientationRight;
 		default:
-			return 1;
+			return UIImageOrientationLeft;
 	}
 }
 
@@ -1363,25 +1352,12 @@
         capturedImage = [info objectForKey:UIImagePickerControllerOriginalImage];
         imageOrientation = capturedImage.imageOrientation;
         
-        CGFloat scale = [[UIScreen mainScreen] scale];
-        
-        NSInteger height = [LXUtils heightFromWidth:300.0 width:capturedImage.size.width height:capturedImage.size.height];
         picSize = capturedImage.size;
         
         //
-        CGSize size;
+        previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:capturedImage.size.width height:capturedImage.size.height]);
         
-        if (imageOrientation == UIImageOrientationLeft || imageOrientation == UIImageOrientationRight) {
-            size = CGSizeMake(height*scale, 300.0*scale);
-        }
-        else {
-            size = CGSizeMake(300.0*scale, height*scale);
-        }
-        //        previewSize = CGSizeMake(300.0*scale, height*scale);
-        
-        UIImage *previewPic = [capturedImage
-                               resizedImage: size
-                               interpolationQuality:kCGInterpolationHigh];
+        UIImage *previewPic = [LXCameraViewController imageWithImage:capturedImage scaledToSize:previewUISize];
         
         previewFilter = [[GPUImagePicture alloc] initWithImage:previewPic];
         
@@ -1529,25 +1505,6 @@
 }
 
 - (void)initPreviewPic {
-    GPUImageRotationMode imageViewRotationModeIdx0 = kGPUImageNoRotation;
-    switch (imageOrientation) {
-        case UIImageOrientationLeft:
-            imageViewRotationModeIdx0 = kGPUImageRotateLeft;
-            break;
-        case UIImageOrientationRight:
-            imageViewRotationModeIdx0 = kGPUImageRotateRight;
-            break;
-        case UIImageOrientationDown:
-            imageViewRotationModeIdx0 = kGPUImageRotate180;
-            break;
-        case UIImageOrientationUp:
-            imageViewRotationModeIdx0 = kGPUImageNoRotation;
-            break;
-        default:
-            imageViewRotationModeIdx0 = kGPUImageRotateLeft;
-            break;
-    }
-    
     for (NSInteger i = 0; i < effectNum; i++) {
         GPUImageView *effectView = effectPreview[i];
         [previewFilter removeAllTargets];
@@ -1561,7 +1518,6 @@
             [previewFilter addTarget:effectView];
         }
         
-        [effectView setInputRotation:imageViewRotationModeIdx0 atIndex:0];
         [previewFilter processImage];
     }
 }
@@ -1595,7 +1551,7 @@
     sliderClear.value = 0.0;
     sliderSaturation.value = 1.0;
     sliderSharpness.value = 0.25;
-    sliderVignette.value = 0.4;
+    sliderVignette.value = 0.25;
     sliderFeather.value = 10.0;
     sliderEffectIntensity.value = 1.0;
     [self setUIMask:kMaskBlurNone];
@@ -2027,36 +1983,35 @@
 }
 
 #ifdef DEBUG
-+(NSString*)orientationToText:(const UIImageOrientation)ORIENTATION {
++(NSString*)orientationToText:(const UIInterfaceOrientation)ORIENTATION {
     switch (ORIENTATION) {
-        case UIImageOrientationUp:
-            return @"UIImageOrientationUp";
-        case UIImageOrientationDown:
-            return @"UIImageOrientationDown";
-        case UIImageOrientationLeft:
-            return @"UIImageOrientationLeft";
-        case UIImageOrientationRight:
-            return @"UIImageOrientationRight";
-        default:
-            return @"Unknown orientation!";
+        case UIInterfaceOrientationPortrait:
+            return @"UIInterfaceOrientationPortrait";
+        case UIInterfaceOrientationPortraitUpsideDown:
+            return @"UIInterfaceOrientationPortraitUpsideDown";
+        case UIInterfaceOrientationLandscapeLeft:
+            return @"UIInterfaceOrientationLandscapeLeft";
+        case UIInterfaceOrientationLandscapeRight:
+            return @"UIInterfaceOrientationLandscapeRight";
     }
+    return @"Unknown orientation!";
 }
 #endif
 
 #pragma mark UIAccelerometerDelegate
 -(void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration {
-    UIImageOrientation orientationNew;
+    UIInterfaceOrientation orientationNew;
     if (acceleration.x >= 0.75) {
-        orientationNew = isBackCamera?UIImageOrientationDown:UIImageOrientationUp;
+        orientationNew = UIInterfaceOrientationLandscapeLeft;
     }
     else if (acceleration.x <= -0.75) {
-        orientationNew = isBackCamera?UIImageOrientationUp:UIImageOrientationDown;
+        orientationNew = UIInterfaceOrientationLandscapeRight;
     }
     else if (acceleration.y <= -0.75) {
-        orientationNew = UIImageOrientationRight;
+        orientationNew = UIInterfaceOrientationPortrait;
     }
     else if (acceleration.y >= 0.75) {
-        orientationNew = UIImageOrientationLeft;
+        orientationNew = UIInterfaceOrientationPortraitUpsideDown;
     }
     else {
         // Consider same as last time

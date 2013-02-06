@@ -40,9 +40,30 @@
     return self;
 }
 
-- (void)capturePhotoAsSampleBufferWithCompletionHandler:(void (^)(CMSampleBufferRef imageSampleBuffer, NSError *error))block
+- (void)capturePhotoAsSampleBufferWithCompletionHandler:(void (^)(CMSampleBufferRef imageSampleBuffer, NSError *error))block withOrientation:(UIInterfaceOrientation)uiOrientation
 {
     dispatch_semaphore_wait(frameRenderingSemaphore, DISPATCH_TIME_FOREVER);
+    
+    AVCaptureConnection *captureConnection = [[photoOutput connections] objectAtIndex:0];
+    if ([captureConnection isVideoOrientationSupported])
+    {
+        AVCaptureVideoOrientation orientation = AVCaptureVideoOrientationPortrait;
+        switch (uiOrientation) {
+            case UIInterfaceOrientationLandscapeLeft:
+                orientation = AVCaptureVideoOrientationLandscapeLeft;
+                break;
+            case UIInterfaceOrientationLandscapeRight:
+                orientation = AVCaptureVideoOrientationLandscapeRight;
+                break;
+            case UIInterfaceOrientationPortraitUpsideDown:
+                orientation = AVCaptureVideoOrientationPortraitUpsideDown;
+                break;
+            default:
+                break;
+        }
+        
+        [captureConnection setVideoOrientation:orientation];
+    }
     
     [photoOutput captureStillImageAsynchronouslyFromConnection:[[photoOutput connections] objectAtIndex:0] completionHandler:^(CMSampleBufferRef imageSampleBuffer, NSError *error) {
         CFDictionaryRef metadata = CMCopyDictionaryOfAttachments(NULL, imageSampleBuffer, kCMAttachmentMode_ShouldPropagate);

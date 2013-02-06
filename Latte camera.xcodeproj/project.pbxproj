@@ -239,10 +239,6 @@
 		889072F416770EBB0013DF7A /* LXFilterFish.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890729F16770EBB0013DF7A /* LXFilterFish.m */; };
 		889072F516770EBB0013DF7A /* LXFilterMono.m in Sources */ = {isa = PBXBuildFile; fileRef = 889072A116770EBB0013DF7A /* LXFilterMono.m */; };
 		889072F616770EBB0013DF7A /* UIActionSheet+ButtonState.m in Sources */ = {isa = PBXBuildFile; fileRef = 889072A316770EBB0013DF7A /* UIActionSheet+ButtonState.m */; };
-		889072F716770EBB0013DF7A /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 889072A516770EBB0013DF7A /* UIImage+Alpha.m */; };
-		889072F816770EBB0013DF7A /* UIImage+fixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 889072A716770EBB0013DF7A /* UIImage+fixOrientation.m */; };
-		889072F916770EBB0013DF7A /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 889072A916770EBB0013DF7A /* UIImage+Resize.m */; };
-		889072FA16770EBB0013DF7A /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 889072AB16770EBB0013DF7A /* UIImage+RoundedCorner.m */; };
 		889072FB16770EBB0013DF7A /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 889072AE16770EBB0013DF7A /* Comment.m */; };
 		889072FC16770EBB0013DF7A /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = 889072B016770EBB0013DF7A /* Feed.m */; };
 		889072FD16770EBB0013DF7A /* ModelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 889072B216770EBB0013DF7A /* ModelObject.m */; };
@@ -1126,14 +1122,6 @@
 		889072A116770EBB0013DF7A /* LXFilterMono.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFilterMono.m; sourceTree = "<group>"; };
 		889072A216770EBB0013DF7A /* UIActionSheet+ButtonState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActionSheet+ButtonState.h"; sourceTree = "<group>"; };
 		889072A316770EBB0013DF7A /* UIActionSheet+ButtonState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+ButtonState.m"; sourceTree = "<group>"; };
-		889072A416770EBB0013DF7A /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
-		889072A516770EBB0013DF7A /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
-		889072A616770EBB0013DF7A /* UIImage+fixOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+fixOrientation.h"; sourceTree = "<group>"; };
-		889072A716770EBB0013DF7A /* UIImage+fixOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+fixOrientation.m"; sourceTree = "<group>"; };
-		889072A816770EBB0013DF7A /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
-		889072A916770EBB0013DF7A /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
-		889072AA16770EBB0013DF7A /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
-		889072AB16770EBB0013DF7A /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		889072AD16770EBB0013DF7A /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
 		889072AE16770EBB0013DF7A /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 		889072AF16770EBB0013DF7A /* Feed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Feed.h; sourceTree = "<group>"; };
@@ -2247,14 +2235,6 @@
 				889072BB16770EBB0013DF7A /* LXUtils.m */,
 				889072A216770EBB0013DF7A /* UIActionSheet+ButtonState.h */,
 				889072A316770EBB0013DF7A /* UIActionSheet+ButtonState.m */,
-				889072A416770EBB0013DF7A /* UIImage+Alpha.h */,
-				889072A516770EBB0013DF7A /* UIImage+Alpha.m */,
-				889072A616770EBB0013DF7A /* UIImage+fixOrientation.h */,
-				889072A716770EBB0013DF7A /* UIImage+fixOrientation.m */,
-				889072A816770EBB0013DF7A /* UIImage+Resize.h */,
-				889072A916770EBB0013DF7A /* UIImage+Resize.m */,
-				889072AA16770EBB0013DF7A /* UIImage+RoundedCorner.h */,
-				889072AB16770EBB0013DF7A /* UIImage+RoundedCorner.m */,
 				88079F8D16B6933900420AC3 /* GPUImagePicture+updateImage.h */,
 				88079F8E16B6933900420AC3 /* GPUImagePicture+updateImage.m */,
 				8845F7E416B7CFE4003873A2 /* LXEffect1.h */,
@@ -3935,10 +3915,6 @@
 				889072F416770EBB0013DF7A /* LXFilterFish.m in Sources */,
 				889072F516770EBB0013DF7A /* LXFilterMono.m in Sources */,
 				889072F616770EBB0013DF7A /* UIActionSheet+ButtonState.m in Sources */,
-				889072F716770EBB0013DF7A /* UIImage+Alpha.m in Sources */,
-				889072F816770EBB0013DF7A /* UIImage+fixOrientation.m in Sources */,
-				889072F916770EBB0013DF7A /* UIImage+Resize.m in Sources */,
-				889072FA16770EBB0013DF7A /* UIImage+RoundedCorner.m in Sources */,
 				889072FB16770EBB0013DF7A /* Comment.m in Sources */,
 				889072FC16770EBB0013DF7A /* Feed.m in Sources */,
 				889072FD16770EBB0013DF7A /* ModelObject.m in Sources */,

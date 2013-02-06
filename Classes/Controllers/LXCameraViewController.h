@@ -97,7 +97,7 @@ typedef enum {
     UILabel *timeLabel;
 
     CGSize picSize;
-    CGSize previewSize;
+    CGSize previewUISize;
     CGSize blendSize;
     
     UIActionSheet *sheet;
@@ -135,7 +135,8 @@ typedef enum {
     CLLocationManager *locationManager;
     CLLocation *bestEffortAtLocation;
     UIImageOrientation imageOrientation;
-    UIImageOrientation orientationLast;
+    UIInterfaceOrientation uiOrientation;
+    UIInterfaceOrientation orientationLast;
     MBProgressHUD *HUD;
     
     NSData *savedData;

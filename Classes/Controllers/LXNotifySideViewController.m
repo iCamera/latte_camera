@@ -29,13 +29,7 @@
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(receiveLoggedIn:)
-                                                     name:@"LoggedIn"
-                                                   object:nil];
-        page = 1;
-        limit = 12;
-        tableMode = 0;
+        
     }
     return self;
 }
@@ -44,6 +38,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveLoggedIn:) name:@"LoggedIn" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive:) name:@"BecomeActive" object:nil];
+
+    page = 1;
+    limit = 12;
+    tableMode = 0;
+    
     // Do any additional setup after loading the view from its nib.
     UIFont *font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:12];
     NSDictionary *attributes = [NSDictionary dictionaryWithObject:font
@@ -250,6 +252,14 @@
     notifies = nil;
     [self reloadView];
 }
+
+- (void)becomeActive:(NSNotification *) notification {
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    if (app.currentUser != nil) {
+        [self reloadView];
+    }
+}
+
 
 - (IBAction)touchTab:(UISegmentedControl*)sender {
     tableMode = sender.selectedSegmentIndex;
