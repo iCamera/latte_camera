@@ -236,7 +236,7 @@
 
 - (void)_revealLeftAnimationWithDuration:(NSTimeInterval)duration
 {	// Trigger remove badge
-    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ReadNotify" object:self];
     
 	[UIView animateWithDuration:duration delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionAllowUserInteraction animations:^
 	{

@@ -48,6 +48,20 @@
                                                      name:@"LoggedOut"
                                                    object:nil];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(receivedPushNotify:)
+                                                     name:@"ReceivedPushNotify"
+                                                   object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(readNotify:)
+                                                     name:@"ReadNotify"
+                                                   object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(becomeActive:)
+                                                     name:@"BecomeActive" object:nil];
+        
 //        [[NSNotificationCenter defaultCenter] addObserver:self
 //                                                 selector:@selector(receiveLoggedIn:)
 //                                                     name:@"NoConnection"
@@ -66,11 +80,25 @@
     return self;
 }
 
+- (void)becomeActive:(id)sender {
+    [self reloadView];
+}
 
+- (void)receivedPushNotify:(id)sender {
+    [buttonLeftMenu setImage:[UIImage imageNamed:@"icon_info_on.png"] forState:UIControlStateNormal];
+}
+
+- (void)readNotify:(id)sender {
+    [buttonLeftMenu setImage:[UIImage imageNamed:@"icon_info.png"] forState:UIControlStateNormal];
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if ([UIApplication sharedApplication].applicationIconBadgeNumber > 0) {
+        [buttonLeftMenu setImage:[UIImage imageNamed:@"icon_info_on.png"] forState:UIControlStateNormal];
+    }
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     [app.tracker sendView:@"Welcome Screen"];

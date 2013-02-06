@@ -41,7 +41,8 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveLoggedIn:) name:@"LoggedIn" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive:) name:@"BecomeActive" object:nil];
-
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive:) name:@"ReceivedPushNotify" object:nil];
+    
     page = 1;
     limit = 12;
     tableMode = 0;
@@ -256,6 +257,9 @@
 - (void)becomeActive:(NSNotification *) notification {
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     if (app.currentUser != nil) {
+        requests = nil;
+        ignores = nil;
+        notifies = nil;
         [self reloadView];
     }
 }

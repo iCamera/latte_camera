@@ -252,7 +252,7 @@
         UIView *labelBack = [[UIView alloc] initWithFrame:CGRectMake(0, 53, 70, 20)];
         labelBack.userInteractionEnabled = NO;
         labelBack.backgroundColor = [UIColor blackColor];
-        labelBack.alpha = 0.2;
+        labelBack.alpha = 0.4;
         [buttonEffect addSubview:effectView];
         [buttonEffect addSubview:labelBack];
         
@@ -1550,7 +1550,7 @@
     sliderExposure.value = 0.0;
     sliderClear.value = 0.0;
     sliderSaturation.value = 1.0;
-    sliderSharpness.value = 0.25;
+    sliderSharpness.value = 0.15;
     sliderVignette.value = 0.25;
     sliderFeather.value = 10.0;
     sliderEffectIntensity.value = 1.0;

@@ -45,9 +45,17 @@
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTimeline:) name:@"UploadedNewPicture" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive:) name:@"BecomeActive" object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showTimeline:)
-                                                 name:@"UploadedNewPicture"
+                                             selector:@selector(receivedPushNotify:)
+                                                 name:@"ReceivedPushNotify"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(readNotify:)
+                                                 name:@"ReadNotify"
                                                object:nil];
     tableMode = kTableTimeline;
     timelineMode = kListAll;
@@ -63,10 +71,22 @@
     return self;
 }
 
+- (void)receivedPushNotify:(id)sender {
+    [buttonNavLeft setImage:[UIImage imageNamed:@"icon_info_on.png"] forState:UIControlStateNormal];
+}
+
+- (void)readNotify:(id)sender {
+    [buttonNavLeft setImage:[UIImage imageNamed:@"icon_info.png"] forState:UIControlStateNormal];
+}
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if ([UIApplication sharedApplication].applicationIconBadgeNumber > 0) {
+        [buttonNavLeft setImage:[UIImage imageNamed:@"icon_info_on.png"] forState:UIControlStateNormal];
+    }
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     [app.tracker sendView:@"Mypage Screen"];
@@ -811,6 +831,11 @@
     
     [self switchTimeline:kListAll];
 }
+
+- (void)becomeActive:(NSNotification *) notification {
+    [self reloadView];
+}
+
 
 - (void)showInfo:(UIButton*)sender {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"

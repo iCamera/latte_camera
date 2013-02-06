@@ -116,7 +116,13 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
     
     [Appirater appLaunched:YES];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(readNotify:) name:@"ReadNotify" object:nil];
+    
     return YES;
+}
+
+- (void)readNotify:(id)sender {
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 }
 
 - (void)toogleCamera {
@@ -220,7 +226,15 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
-    TFLog(@"received push");
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ReceivedPushNotify" object:self];
+    
+    NSDictionary *aps = [userInfo objectForKey:@"aps"];
+    NSDictionary *alert = [aps objectForKey:@"alert"];
+    NSString *action = [alert objectForKey:@"loc-key"];
+    
+    if ([action isEqualToString:@"apns_friend_request"]) {
+        
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -250,10 +264,11 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
     [FBSession.activeSession handleDidBecomeActive];
     
     [self clearNotification];
-    [[NSNotificationCenter defaultCenter]
-     postNotificationName:@"BecomeActive"
-     object:self];
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"BecomeActive" object:self];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshNotify" object:self];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshFriendRequest" object:self];
+    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface._revealLeftAnimationWithDuration
 }
 
 - (void)clearNotification {

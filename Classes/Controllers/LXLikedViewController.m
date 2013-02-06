@@ -30,6 +30,16 @@
 {
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receivedPushNotify:)
+                                                 name:@"ReceivedPushNotify"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(readNotify:)
+                                                 name:@"ReadNotify"
+                                               object:nil];
+    
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     [app.tracker sendView:@"Liked Screen"];
     
@@ -51,6 +61,17 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    if ([UIApplication sharedApplication].applicationIconBadgeNumber > 0) {
+        [buttonNavRight setImage:[UIImage imageNamed:@"icon_info_on.png"] forState:UIControlStateNormal];
+    }
+}
+
+- (void)receivedPushNotify:(id)sender {
+    [buttonNavRight setImage:[UIImage imageNamed:@"icon_info_on.png"] forState:UIControlStateNormal];
+}
+
+- (void)readNotify:(id)sender {
+    [buttonNavRight setImage:[UIImage imageNamed:@"icon_info.png"] forState:UIControlStateNormal];
 }
 
 - (void)reloadFav {

@@ -44,14 +44,48 @@
                                                  selector:@selector(receiveLoggedOut:)
                                                      name:@"LoggedOut"
                                                    object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(receivedPushNotify:)
+                                                     name:@"ReceivedPushNotify"
+                                                   object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(readNotify:)
+                                                     name:@"ReadNotify"
+                                                   object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(becomeActive:)
+                                                     name:@"BecomeActive" object:nil];
+        
+        loadEnded = FALSE;
+        ranktype = @"daily";
+        rankpage = 1;
     }
     
     return self;
 }
 
+- (void)becomeActive:(id)sender {
+    [self loadRanking];
+}
+
+- (void)receivedPushNotify:(id)sender {
+    [buttonNavLeft setImage:[UIImage imageNamed:@"icon_info_on.png"] forState:UIControlStateNormal];
+}
+
+- (void)readNotify:(id)sender {
+    [buttonNavLeft setImage:[UIImage imageNamed:@"icon_info.png"] forState:UIControlStateNormal];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if ([UIApplication sharedApplication].applicationIconBadgeNumber > 0) {
+        [buttonNavLeft setImage:[UIImage imageNamed:@"icon_info_on.png"] forState:UIControlStateNormal];
+    }
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     [app.tracker sendView:@"Ranking Screen"];
@@ -70,10 +104,6 @@
     refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
     refreshHeaderView.delegate = self;
     [self.tableView addSubview:refreshHeaderView];
-        
-    loadEnded = FALSE;
-    ranktype = @"daily";
-    rankpage = 1;
 
     navigationBarPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:app.revealController action:@selector(revealGesture:)];
     [self.navigationController.navigationBar addGestureRecognizer:navigationBarPanGestureRecognizer];

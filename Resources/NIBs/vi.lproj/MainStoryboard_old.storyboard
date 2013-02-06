@@ -3362,6 +3362,21 @@ Gửi lời chào thân mến từ đất nước Nhật Bản.</string>
                                             <outlet property="drawImageView" destination="dD8-u3-0B6" id="CfM-Na-XQX"/>
                                         </connections>
                                     </view>
+                                    <button hidden="YES" opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Yge-Hd-Piw" userLabel="Button Upload status">
+                                        <rect key="frame" x="5" y="355" width="40" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal">
+                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="touchUploadStatus:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="XUW-70-LVG"/>
+                                        </connections>
+                                    </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="target.png" id="HJh-Fe-F58">
                                         <rect key="frame" x="115" y="165" width="70" height="70"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
@@ -3375,21 +3390,6 @@ Gửi lời chào thân mến từ đất nước Nhật Bản.</string>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                             </view>
-                            <button hidden="YES" opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Yge-Hd-Piw" userLabel="Button Upload status">
-                                <rect key="frame" x="15" y="370" width="40" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="touchUploadStatus:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="XUW-70-LVG"/>
-                                </connections>
-                            </button>
                             <view hidden="YES" contentMode="scaleToFill" id="VLZ-BD-bMh" userLabel="Top Bar">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -4738,6 +4738,7 @@ Gửi lời chào thân mến từ đất nước Nhật Bản.</string>
             <relationships>
                 <relationship kind="action" name="cameraTouch:" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="action" name="capture:"/>
+                <relationship kind="action" name="changeEffectIntensity:" candidateClass="UISlider"/>
                 <relationship kind="action" name="changeFlash:"/>
                 <relationship kind="action" name="changeLens:" candidateClass="UIButton"/>
                 <relationship kind="action" name="changePen:" candidateClass="UISlider"/>
@@ -4749,6 +4750,7 @@ Gửi lời chào thân mến từ đất nước Nhật Bản.</string>
                 <relationship kind="action" name="panTarget:" candidateClass="UIPanGestureRecognizer"/>
                 <relationship kind="action" name="pinchCamera:" candidateClass="UIPinchGestureRecognizer"/>
                 <relationship kind="action" name="setBlend:" candidateClass="UIButton"/>
+                <relationship kind="action" name="setEffect:"/>
                 <relationship kind="action" name="setMask:" candidateClass="UIButton"/>
                 <relationship kind="action" name="setTimer:"/>
                 <relationship kind="action" name="textChange:" candidateClass="UITextField"/>
