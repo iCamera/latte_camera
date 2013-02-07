@@ -30,7 +30,6 @@ typedef enum {
 
 @implementation LXShare
 
-@synthesize controller;
 @synthesize text;
 @synthesize imagePreview;
 @synthesize imageData;
@@ -42,7 +41,7 @@ typedef enum {
 {
     if ([MFMailComposeViewController canSendMail]==YES)
     {
-        NSAssert(controller, @"ViewController must not be nil.");
+        NSAssert(_controller, @"ViewController must not be nil.");
         
         MFMailComposeViewController* controllerMail = [[MFMailComposeViewController alloc] init];
         controllerMail.mailComposeDelegate = self;
@@ -65,7 +64,7 @@ typedef enum {
             [controllerMail addAttachmentData:imageData mimeType:@"image/png" fileName:@"image"];
         }
         
-        if (controllerMail) [controller presentModalViewController:controllerMail animated:YES];
+        if (controllerMail) [_controller presentModalViewController:controllerMail animated:YES];
     }
     else
     {
@@ -80,7 +79,7 @@ typedef enum {
 
 - (void) tweet
 {
-    NSAssert(controller, @"ViewController must not be nil.");
+    NSAssert(_controller, @"ViewController must not be nil.");
     
     // share to twitter
     // esto lo hago solo si la version del sistema es menor al 6.0
@@ -151,7 +150,7 @@ typedef enum {
             }
         }];
         
-        [controller presentModalViewController:tweetVC animated:YES];
+        [_controller presentModalViewController:tweetVC animated:YES];
     }
     else
     {
@@ -207,7 +206,7 @@ typedef enum {
          [socialComposer addImage:self.image];*/
 
         [socialComposer setCompletionHandler:^(SLComposeViewControllerResult result){
-            [controller dismissViewControllerAnimated:YES completion:nil];
+            [_controller dismissViewControllerAnimated:YES completion:nil];
             
             switch (result) {
                 case SLComposeViewControllerResultCancelled:
@@ -224,7 +223,7 @@ typedef enum {
             }
         }];
         
-        [controller presentModalViewController:socialComposer animated:YES];
+        [_controller presentModalViewController:socialComposer animated:YES];
     }
 }
 
@@ -238,7 +237,7 @@ typedef enum {
         if (FBSession.activeSession.isOpen)
         {
             // if it is available to us, we will post using the native dialog
-            BOOL displayedNativeDialog = [FBNativeDialogs presentShareDialogModallyFrom:controller
+            BOOL displayedNativeDialog = [FBNativeDialogs presentShareDialogModallyFrom:_controller
                                                                             initialText:text
                                                                                   image:imagePreview
                                                                                     url:nil
@@ -309,7 +308,7 @@ typedef enum {
                     }
                 };
                 
-                [controller presentViewController:composeViewController animated:YES completion:nil];
+                [_controller presentViewController:composeViewController animated:YES completion:nil];
             }
         }
         else
@@ -319,7 +318,7 @@ typedef enum {
     }
     else
     {
-        NSAssert(controller, @"ViewController must not be nil.");
+        NSAssert(_controller, @"ViewController must not be nil.");
         
         SLComposeViewController *socialComposer = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
         if (title != nil)
@@ -347,7 +346,7 @@ typedef enum {
             //[controller dismissViewControllerAnimated:YES completion:nil];
         }];
         
-        [controller presentModalViewController:socialComposer animated:YES];
+        [_controller presentModalViewController:socialComposer animated:YES];
     }
 }
 

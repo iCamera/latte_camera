@@ -116,8 +116,6 @@ typedef enum {
     BOOL isWatingToUpload;
     BOOL isFixedAspectBlend;
     BOOL isBackCamera;
-    
-    id <LXImagePickerDelegate> __unsafe_unretained delegate;
 
     NSInteger currentEffect;
     NSInteger currentLens;
@@ -147,6 +145,8 @@ typedef enum {
     
     MBRoundProgressView *viewRoundProgess;
 }
+@property (weak, nonatomic) id <LXImagePickerDelegate> delegate;
+
 @property (strong, nonatomic) IBOutlet UIView *viewBottomBar;
 
 @property (strong, nonatomic) IBOutlet GPUImageView *viewCamera;
@@ -209,8 +209,6 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIView *viewTopBar35;
 
 @property (strong, nonatomic) IBOutlet UIImageView *viewCanvas;
-
-@property (unsafe_unretained) id <LXImagePickerDelegate> delegate;
 
 @property (strong, nonatomic) IBOutlet UISlider *sliderExposure;
 @property (strong, nonatomic) IBOutlet UISlider *sliderVignette;

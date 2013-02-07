@@ -17,12 +17,8 @@
 #import "AFHTTPClient.h"
 #import "LXShare.h"
 
-@interface LXPicEditViewController : UITableViewController <UIActionSheetDelegate> {    
-    NSData *imageData;
-    NSInteger imageStatus;
-    UIImage *preview;
-    Picture *picture;
-    
+@interface LXPicEditViewController : UITableViewController <UIActionSheetDelegate> {
+    NSInteger imageStatus;    
     LXShare *share;
 }
 
@@ -37,12 +33,11 @@
 
 @property (strong, nonatomic) Picture *picture;
 @property (strong, nonatomic) UIImage *preview;
+@property (strong, nonatomic) NSData *imageData;
 
 - (IBAction)touchPost:(id)sender;
 - (IBAction)touchBack:(id)sender;
 - (IBAction)touchBackground:(id)sender;
 - (IBAction)touchDelete:(id)sender;
-
-- (void)setData:(NSData *)aData;
 
 @end

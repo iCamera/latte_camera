@@ -39,7 +39,6 @@
 @synthesize viewBottomBar;
 @synthesize imageAutoFocus;
 @synthesize buttonPick;
-@synthesize delegate;
 @synthesize buttonSetNoTimer;
 @synthesize buttonSetTimer5s;
 @synthesize tapFocus;
@@ -693,13 +692,12 @@
         NSData *jpeg = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
 
         capturedImage = [UIImage imageWithData:jpeg];
+        imageOrientation = capturedImage.imageOrientation;
         
         picSize = capturedImage.size;
         previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:capturedImage.size.width height:capturedImage.size.height]);
         
         UIImage *previewPic = [LXCameraViewController imageWithImage:capturedImage scaledToSize:previewUISize];
-        
-        imageOrientation = capturedImage.imageOrientation;
         
         previewFilter = [[GPUImagePicture alloc] initWithImage:previewPic];
         
@@ -794,7 +792,7 @@
 }
 
 - (IBAction)touchSave:(id)sender {
-//    buttonYes.enabled = false;
+    buttonYes.enabled = false;
     HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:HUD];
     HUD.userInteractionEnabled = NO;
@@ -803,7 +801,7 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [self getFinalImage:^{
-//            buttonYes.enabled = true;
+            buttonYes.enabled = true;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self processSavedData];
             });
@@ -822,14 +820,14 @@
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
     if (app.currentUser != nil) {
-        NSDictionary *info = [[NSDictionary alloc] initWithObjectsAndKeys:
-                              savedData, @"data",
-                              savedPreview, @"preview",
-                              nil];
-        if (delegate == nil) {
-            [self performSegueWithIdentifier:@"Edit" sender:info];
+        if (_delegate == nil) {
+            [self performSegueWithIdentifier:@"Edit" sender:nil];
         } else {
-            [delegate imagePickerController:self didFinishPickingMediaWithData:info];
+            NSDictionary *info = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                  savedData, @"data",
+                                  savedPreview, @"preview",
+                                  nil];
+            [_delegate imagePickerController:self didFinishPickingMediaWithData:info];
         }
     } else {
         RDActionSheet *actionSheet = [[RDActionSheet alloc] initWithCancelButtonTitle:NSLocalizedString(@"Cancel", @"")
@@ -887,9 +885,8 @@
         return;
     }
     
-    
-    CGImageRef cgImagePreviewFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:UIImageOrientationUp];
-    savedPreview = [UIImage imageWithCGImage:cgImagePreviewFromBytes scale:1.0 orientation:UIImageOrientationUp];
+    CGImageRef cgImagePreviewFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:imageOrientation];
+    savedPreview = [UIImage imageWithCGImage:cgImagePreviewFromBytes];
     CGImageRelease(cgImagePreviewFromBytes);
     
     GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:capturedImage];
@@ -909,9 +906,14 @@
         [uiElement update];
     }
     
+    // Save to Jpeg NSData
     CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:imageOrientation];
+    NSData *jpeg = UIImageJPEGRepresentation([UIImage imageWithCGImage:cgImageFromBytes], 0.9);
+    CGImageRelease(cgImageFromBytes);
+    [picture removeAllTargets];
+    
     // Return to preview mode
-    picture = nil;
+    [self preparePipe];
     
     // Prepare meta data
     if (imageMeta == nil) {
@@ -928,11 +930,48 @@
     
     [imageMeta setObject:dictForTIFF forKey:(NSString *)kCGImagePropertyTIFFDictionary];
     
+    
+    CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)jpeg, NULL);
+    
+    CFStringRef UTI = CGImageSourceGetType(source); //this is the type of image (e.g., public.jpeg)
+    
+    //this will be the data CGImageDestinationRef will write into
+    NSMutableData *dest_data = [NSMutableData data];
+    
+    CGImageDestinationRef destination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)dest_data,UTI,1,NULL);
+    
+    if(!destination) {
+        NSLog(@"***Could not create image destination ***");
+    }
+    
+    //add the image contained in the image source to the destination, overidding the old metadata with our modified metadata
+    CGImageDestinationAddImageFromSource(destination,source,0, (__bridge CFDictionaryRef) imageMeta);
+    
+    //tell the destination to write the image data and metadata into our data object.
+    //It will return false if something goes wrong
+    BOOL success = NO;
+    success = CGImageDestinationFinalize(destination);
+    
+    if(!success) {
+        NSLog(@"***Could not create data from image destination ***");
+    }
+    
+    //now we have the data ready to go, so do whatever you want with it
+    //here we just write it to disk at the same path we were passed
+    savedData = dest_data;
+    isSaved = true;
+    
+    //cleanup
+    
+    CFRelease(destination);
+    CFRelease(source);
+    
     // Save now
+    block();
+    
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     
-
-    [library writeImageToSavedPhotosAlbum:cgImageFromBytes metadata:imageMeta completionBlock:^(NSURL *assetURL, NSError *error) {
+    [library writeImageDataToSavedPhotosAlbum:savedData metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
         if (!error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 HUD.mode = MBProgressHUDModeText;
@@ -943,58 +982,7 @@
                 
                 [HUD hide:YES afterDelay:2];
             });
-            
-            [library assetForURL:assetURL
-                     resultBlock:^(ALAsset *asset) {
-                         ALAssetRepresentation *rep = [asset defaultRepresentation];
-                         Byte *buffer = (Byte*)malloc(rep.size);
-                         NSUInteger buffered = [rep getBytes:buffer fromOffset:0.0 length:rep.size error:nil];
-                         savedData = [NSData dataWithBytesNoCopy:buffer length:buffered freeWhenDone:YES];
-                         isSaved = true;
-                         block();
-                     }
-                    failureBlock:^(NSError *error) {
-                        TFLog(@"Cannot saved 2");
-                    }];
-            
         } else {
-            NSData *jpeg = UIImageJPEGRepresentation([UIImage imageWithCGImage:cgImageFromBytes], 0.9);
-            CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)jpeg, NULL);
-            
-            CFStringRef UTI = CGImageSourceGetType(source); //this is the type of image (e.g., public.jpeg)
-            
-            //this will be the data CGImageDestinationRef will write into
-            NSMutableData *dest_data = [NSMutableData data];
-            
-            CGImageDestinationRef destination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)dest_data,UTI,1,NULL);
-            
-            if(!destination) {
-                NSLog(@"***Could not create image destination ***");
-            }
-            
-            //add the image contained in the image source to the destination, overidding the old metadata with our modified metadata
-            CGImageDestinationAddImageFromSource(destination,source,0, (__bridge CFDictionaryRef) imageMeta);
-            
-            //tell the destination to write the image data and metadata into our data object.
-            //It will return false if something goes wrong
-            BOOL success = NO;
-            success = CGImageDestinationFinalize(destination);
-            
-            if(!success) {
-                NSLog(@"***Could not create data from image destination ***");
-            }
-            
-            //now we have the data ready to go, so do whatever you want with it
-            //here we just write it to disk at the same path we were passed
-            savedData = dest_data;
-            //cleanup
-            
-            CFRelease(destination);
-            CFRelease(source);
-            
-            
-            isSaved = true;
-            block();
             dispatch_async(dispatch_get_main_queue(), ^{
                 HUD.mode = MBProgressHUDModeText;
                 HUD.labelText = NSLocalizedString(@"cannot_save_photo", @"Cannot save to Camera Roll") ;
@@ -1004,13 +992,7 @@
                 
                 [HUD hide:YES afterDelay:2];
             });
-            
         }
-        
-        CGImageRelease(cgImageFromBytes);
-        [self preparePipe];
-        [self applyFilterSetting];
-        [self processImage];
     }];
 }
 
@@ -1431,8 +1413,8 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(NSDictionary *)info {
     if ([segue.identifier isEqualToString:@"Edit"]) {
         LXPicEditViewController *controllerPicEdit = segue.destinationViewController;
-        [controllerPicEdit setData:[info objectForKey:@"data"]];
-        [controllerPicEdit setPreview:[info objectForKey:@"preview"]];
+        controllerPicEdit.imageData = savedData;
+        controllerPicEdit.preview = savedPreview;
     }
     if ([segue.identifier isEqualToString:@"HelpBokeh"]) {
         

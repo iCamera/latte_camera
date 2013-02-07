@@ -21,12 +21,11 @@
 @interface LXDrawView : UIView {
     BOOL isEmpty;
     UIBezierPath *aPath;
-    id<LXDrawViewDelegate>  __unsafe_unretained delegate;
     UIImage *mask;
     NSInteger backgroundType;
 }
 
-@property (unsafe_unretained) id <LXDrawViewDelegate> delegate;
+@property (weak, nonatomic) id <LXDrawViewDelegate> delegate;
 
 @property (nonatomic,retain) IBOutlet UIImageView *drawImageView;
 @property (nonatomic,retain) UIColor *currentColor;

@@ -68,6 +68,8 @@
 }
 
 - (void)becomeActive:(id)sender {
+    [self reloadTableViewDataSource];
+    rankpage = 1;
     [self loadRanking];
 }
 

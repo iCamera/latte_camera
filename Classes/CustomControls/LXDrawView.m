@@ -17,7 +17,6 @@
 @synthesize lineWidth;
 @synthesize currentColor;
 @synthesize isEmpty;
-@synthesize delegate;
 @synthesize backgroundType;
 
 /*
@@ -135,7 +134,7 @@
 
     drawImageView.image = mask;
     
-    [delegate newMask:mask];
+    [_delegate newMask:mask];
     
     [UIView animateWithDuration:0.5
                           delay:1.0

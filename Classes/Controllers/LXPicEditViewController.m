@@ -22,10 +22,8 @@
 @synthesize gestureTap;
 @synthesize switchGPS;
 @synthesize labelStatus;
-@synthesize picture;
 @synthesize buttonDelete;
 @synthesize viewDelete;
-@synthesize preview;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -61,24 +59,24 @@
     [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];
     
-    if (picture == nil) {
-        share.imageData = imageData;
-        share.imagePreview = preview;
+    if (_picture == nil) {
+        share.imageData = _imageData;
+        share.imagePreview = _preview;
     }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    if (picture != nil) {
-        [imagePic setImageWithURL:[NSURL URLWithString:picture.urlSquare]];
-        textDesc.text = picture.descriptionText;
-        textTitle.text = picture.title;
-        imageStatus = [picture.status integerValue];
+    if (_picture != nil) {
+        [imagePic setImageWithURL:[NSURL URLWithString:_picture.urlSquare]];
+        textDesc.text = _picture.descriptionText;
+        textTitle.text = _picture.title;
+        imageStatus = [_picture.status integerValue];
         buttonDelete.hidden = false;
         [self setStatusLabel];
     } else {
         LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
 
-        [imagePic setImage:preview];
+        [imagePic setImage:_preview];
         imageStatus = [app.currentUser.pictureStatus integerValue];
         [self setStatusLabel];
     }
@@ -180,7 +178,7 @@
             [HUD show:YES];
             LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
             
-            NSString *url = [NSString stringWithFormat:@"picture/%d/delete", [picture.pictureId integerValue]];
+            NSString *url = [NSString stringWithFormat:@"picture/%d/delete", [_picture.pictureId integerValue]];
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                                     [app getToken], @"token", nil];
             
@@ -203,7 +201,7 @@
 - (IBAction)touchPost:(id)sender {
     [textTitle resignFirstResponder];
     [textDesc resignFirstResponder];
-    if (picture != nil) {
+    if (_picture != nil) {
         [self updatePic];
     } else {
         [self saveImage];
@@ -211,6 +209,9 @@
 }
 
 - (IBAction)touchBack:(id)sender {
+    _imageData = nil;
+    _preview = nil;
+    _picture = nil;
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -248,7 +249,7 @@
     [HUD show:YES];
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
-    NSString *url = [NSString stringWithFormat:@"picture/%d/edit", [picture.pictureId integerValue]];
+    NSString *url = [NSString stringWithFormat:@"picture/%d/edit", [_picture.pictureId integerValue]];
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             [app getToken], @"token",
                             textTitle.text, @"name",
@@ -308,7 +309,7 @@
     UINavigationController *navCamera = (UINavigationController*)app.viewCamera;
     LXCameraViewController *cameraView = (LXCameraViewController*)navCamera.viewControllers[0];
     cameraView.dictUpload = params;
-    cameraView.dataUpload = imageData;
+    cameraView.dataUpload = _imageData;
     [cameraView uploadData];
     
     [self performSelector:@selector(backToCamera) withObject:nil];
@@ -351,7 +352,7 @@
                 
                 //  Add the data of the image with the
                 //  correct parameter name, "media[]"
-                [request addMultiPartData:imageData
+                [request addMultiPartData:_imageData
                                  withName:@"media[]"
                                      type:@"multipart/form-data"];
                 
@@ -384,12 +385,9 @@
 	}];
 }
 
-- (void)setData:(NSData *)aData {
-    imageData = aData;
-}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (picture != nil) {
+    if (_picture != nil) {
         return 2;
     } else {
         return 3;

@@ -15,7 +15,6 @@
 typedef void (^MyCompletionBlock)();
 
 @interface LXShare : NSObject<MFMailComposeViewControllerDelegate, FBLoginViewDelegate, UIAlertViewDelegate> {
-    id controller;
     NSString *title;
     NSString *text;
     NSData *imageData;
@@ -30,7 +29,7 @@ typedef void (^MyCompletionBlock)();
 - (void) setCompletionFailed:(MyCompletionBlock)blockFailed;
 - (void) setCompletionSaved:(MyCompletionBlock)blockSaved;
 
-@property (nonatomic, retain) id controller;
+@property (nonatomic, weak) id controller;
 @property (nonatomic, retain) NSString *title;
 @property (nonatomic, retain) NSString *text;
 @property (nonatomic, retain) NSData *imageData;
