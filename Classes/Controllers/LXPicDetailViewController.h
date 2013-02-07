@@ -76,9 +76,7 @@
 
 @property (strong, nonatomic) Picture *pic;
 @property (assign, nonatomic) NSInteger picID;
-//@property (strong, nonatomic) User *user;
 
-//- (void)setPictureID:(int)aPicID;
 - (void)reloadView;
 
 @end

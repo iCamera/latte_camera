@@ -806,12 +806,16 @@
     [self.navigationController.view addSubview:HUD];
     HUD.userInteractionEnabled = NO;
     HUD.mode = MBProgressHUDModeIndeterminate;
+    HUD.dimBackground = YES;
+    
     [HUD show:NO];
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [self getFinalImage:^{
             buttonYes.enabled = true;
             dispatch_async(dispatch_get_main_queue(), ^{
+                [[UIApplication sharedApplication] endIgnoringInteractionEvents];
                 [self processSavedData];
             });
         }];
@@ -985,7 +989,7 @@
                 HUD.margin = 10.f;
                 HUD.yOffset = 150.f;
                 HUD.removeFromSuperViewOnHide = YES;
-                
+                HUD.dimBackground = NO;
                 [HUD hide:YES afterDelay:2];
             });
         } else {
@@ -995,8 +999,8 @@
                 HUD.margin = 10.f;
                 HUD.yOffset = 150.f;
                 HUD.removeFromSuperViewOnHide = YES;
-                
-                [HUD hide:YES afterDelay:2];
+                HUD.dimBackground = NO;
+                [HUD hide:YES afterDelay:3];
             });
         }
     }];
