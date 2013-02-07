@@ -23,4 +23,8 @@
                                  userInfo:nil];
 }
 
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
+    TFLog(@"Unknown model field: %@ in %@", key, NSStringFromClass([self class]));
+}
+
 @end
