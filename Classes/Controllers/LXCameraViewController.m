@@ -435,6 +435,12 @@
     blendCrop = nil;
     
     if (isEditing) {
+        if (pictureBlend != nil) {
+            [pictureBlend removeAllTargets];
+        }
+        if (pictureDOF != nil) {
+            [pictureDOF removeAllTargets];
+        }
         [previewFilter removeAllTargets];
         
         if (picture != nil) {
@@ -475,6 +481,9 @@
         
         if (buttonBlendNone.enabled) {
             screenBlend = [[LXFilterScreenBlend alloc] init];
+            if (isFixedAspectBlend) {
+                blendCrop = [[GPUImageCropFilter alloc] init];
+            }
             [pipe addFilter:screenBlend];
         }
         
@@ -547,6 +556,7 @@
         [pipe removeAllFilters];
         [pipe addFilter:dummy];
         if (buttonToggleFisheye.selected) {
+            filterFish = [[LXFilterFish alloc] init];
             [pipe addFilter:filterFish];
         }
         [dummy prepareForImageCapture];
@@ -561,7 +571,7 @@
     
     filterSharpen.sharpness = sliderSharpness.value;
     
-    if (effect != nil) {
+    if (currentEffect != 0) {
         filterIntensity.mix = 1.0 - sliderEffectIntensity.value;
     }
     
@@ -582,8 +592,6 @@
             }
             
             blendCrop.cropRegion = crop;
-        } else {
-            blendCrop.cropRegion = CGRectMake(0.0, 0.0, 1.0, 1.0);
         }
     }
     
@@ -647,6 +655,7 @@
     UIButton* buttonEffect = (UIButton*)sender;
     currentEffect = buttonEffect.tag;
     [self preparePipe];
+    [self applyFilterSetting];
     [self processImage];
 }
 
@@ -901,9 +910,6 @@
     }
     if (buttonBlurNone.enabled) {
         [pictureDOF processData];
-    }
-    if (textText.text.length > 0) {
-        [uiElement update];
     }
     
     // Save to Jpeg NSData
@@ -1596,8 +1602,6 @@
     [self newText];
 }
 
-- (IBAction)doubleTapEdit:(UITapGestureRecognizer *)sender {
-}
 
 - (IBAction)pinchCamera:(UIPinchGestureRecognizer *)sender {
     if (textText.text.length > 0) {
@@ -1615,11 +1619,6 @@
         [self applyFilterSetting];
         [self processImage];
     }
-}
-
-- (IBAction)changeEffectIntensity:(UISlider *)sender {
-    [self applyFilterSetting];
-    [self processImage];
 }
 
 - (IBAction)panCamera:(UIPanGestureRecognizer *)sender {

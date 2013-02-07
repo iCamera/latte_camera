@@ -88,13 +88,9 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
 //    [TestFlight setDeviceIdentifier:uuid];
 //#endif
     
-    // Optional: automatically send uncaught exceptions to Google Analytics.
     [GAI sharedInstance].trackUncaughtExceptions = YES;
-    // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
     [GAI sharedInstance].dispatchInterval = 20;
-    // Optional: set debug to YES for extra debugging information.
     [GAI sharedInstance].debug = NO;
-    // Create tracker instance.
     tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-242292-26"];
     
     [TestFlight takeOff:@"7f1fb2cd-bf2d-41bc-bbf7-4a6870785c9e"];
@@ -228,13 +224,13 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ReceivedPushNotify" object:self];
     
-    NSDictionary *aps = [userInfo objectForKey:@"aps"];
-    NSDictionary *alert = [aps objectForKey:@"alert"];
-    NSString *action = [alert objectForKey:@"loc-key"];
-    
-    if ([action isEqualToString:@"apns_friend_request"]) {
-        
-    }
+//    NSDictionary *aps = [userInfo objectForKey:@"aps"];
+//    NSDictionary *alert = [aps objectForKey:@"alert"];
+//    NSString *action = [alert objectForKey:@"loc-key"];
+//    
+//    if ([action isEqualToString:@"apns_friend_request"]) {
+//        
+//    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

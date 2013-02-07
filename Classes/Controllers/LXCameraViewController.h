@@ -249,7 +249,6 @@ typedef enum {
 - (IBAction)changePen:(UISlider *)sender;
 - (IBAction)updateFilter:(id)sender;
 - (IBAction)textChange:(UITextField *)sender;
-- (IBAction)doubleTapEdit:(UITapGestureRecognizer *)sender;
 - (IBAction)pinchCamera:(UIPinchGestureRecognizer *)sender;
 - (IBAction)panCamera:(UIPanGestureRecognizer *)sender;
 - (IBAction)toggleBlending:(UIButton *)sender;

@@ -901,7 +901,10 @@
         pic.voteCount = [NSNumber numberWithInteger:[pic.voteCount integerValue] + increase?1:-1];
         
         long row = [feeds indexOfObject:feed];
-        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForItem:row inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+        NSArray *rowIndexes = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:row inSection:0]];
+        [self.tableView reloadRowsAtIndexPaths:rowIndexes
+                              withRowAnimation:UITableViewRowAnimationAutomatic];
     }
 }
 
@@ -951,7 +954,7 @@
     }
     
     NSInteger row = [feeds indexOfObject:feed];
-    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForItem:row inSection:0]]
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:row inSection:0]]
                           withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
@@ -1042,7 +1045,7 @@
 
 - (void)submitComment:(Picture *)pic {
     long row = [feeds indexOfObject:[self feedFromPicID:[pic.pictureId longValue]]];
-    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForItem:row inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:row inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 - (Feed *)feedFromPicID:(long)picID {
