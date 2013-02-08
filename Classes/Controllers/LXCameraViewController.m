@@ -399,12 +399,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    
-    if (isEditing) {
-        isSaved = false;
-        savedData = nil;
-        savedPreview = nil;
-    }
     // Dispose of any resources that can be recreated.
 }
 
@@ -631,9 +625,6 @@
 
 - (void)processImage {
     isSaved = false;
-    savedData = nil;
-    savedPreview = nil;
-    
     [previewFilter processImage];
     
     if (buttonBlendNone.enabled) {
@@ -971,7 +962,7 @@
     
     //now we have the data ready to go, so do whatever you want with it
     //here we just write it to disk at the same path we were passed
-    savedData = dest_data;
+    savedData = [NSData dataWithData:dest_data];
     isSaved = true;
     
     //cleanup
@@ -1299,8 +1290,6 @@
 
 - (void)switchCamera {
     isSaved = true;
-    savedData = nil;
-    savedPreview = nil;
     // Clear memory/blur mode
     previewFilter = nil;
     capturedImage = nil;
@@ -1948,7 +1937,7 @@
 
 - (void)uploadData {
     void (^createForm)(id<AFMultipartFormData>) = ^(id<AFMultipartFormData> formData) {
-        [formData appendPartWithFileData:_dataUpload
+        [formData appendPartWithFileData:savedData
                                     name:@"file"
                                 fileName:@"latte.jpg"
                                 mimeType:@"image/jpeg"];
@@ -1963,9 +1952,6 @@
     
     void (^successUpload)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
         TFLog(@"Upload done");
-        
-        _dataUpload = nil;
-        _dictUpload = nil;
         
         uploadState = kUploadOK;
         

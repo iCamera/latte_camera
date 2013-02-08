@@ -309,7 +309,6 @@
     UINavigationController *navCamera = (UINavigationController*)app.viewCamera;
     LXCameraViewController *cameraView = (LXCameraViewController*)navCamera.viewControllers[0];
     cameraView.dictUpload = params;
-    cameraView.dataUpload = _imageData;
     [cameraView uploadData];
     
     [self performSelector:@selector(backToCamera) withObject:nil];
