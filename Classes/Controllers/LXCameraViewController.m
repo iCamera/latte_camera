@@ -454,10 +454,8 @@
         
         [pipe removeAllFilters];
         
-        if (sliderSharpness.value > 0) {
-            filterSharpen = [[GPUImageSharpenFilter alloc] init];
-            [pipe addFilter:filterSharpen];
-        }
+        filterSharpen = [[GPUImageSharpenFilter alloc] init];
+        [pipe addFilter:filterSharpen];
         
         filter = [[LXFilterDetail alloc] init];
         [pipe addFilter:filter];
@@ -685,37 +683,42 @@
     [locationManager stopUpdatingLocation];
     
     [videoCamera capturePhotoAsSampleBufferWithCompletionHandler:^(CMSampleBufferRef imageSampleBuffer, NSError *error) {
-        
-        [videoCamera stopCameraCapture];
-        
-        imageMeta = [NSMutableDictionary dictionaryWithDictionary:videoCamera.currentCaptureMetadata];
-        
-        // Add GPS
-        NSDictionary *location;
-        if (bestEffortAtLocation != nil) {
-            location = [LXUtils getGPSDictionaryForLocation:bestEffortAtLocation];
-            [imageMeta setObject:location forKey:(NSString *)kCGImagePropertyGPSDictionary];
+        if (error) {
+            TFLog(error.description);
+        } else {
+            [videoCamera stopCameraCapture];
+            
+            NSData *jpeg = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
+            imageMeta = [NSMutableDictionary dictionaryWithDictionary:videoCamera.currentCaptureMetadata];
+            
+            // Add GPS
+            NSDictionary *location;
+            if (bestEffortAtLocation != nil) {
+                location = [LXUtils getGPSDictionaryForLocation:bestEffortAtLocation];
+                [imageMeta setObject:location forKey:(NSString *)kCGImagePropertyGPSDictionary];
+            }
+            
+            // Save GPS & Correct orientation
+            
+            capturedImage = [UIImage imageWithData:jpeg];
+            imageOrientation = capturedImage.imageOrientation;
+            
+            picSize = capturedImage.size;
+            previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:capturedImage.size.width height:capturedImage.size.height]);
+            
+            UIImage *previewPic = [LXCameraViewController imageWithImage:capturedImage scaledToSize:previewUISize];
+            
+            previewFilter = [[GPUImagePicture alloc] initWithImage:previewPic];
+            
+            [self initPreviewPic];
+            [self switchEditImage];
+            [self resizeCameraViewWithAnimation:NO];
+            [self preparePipe];
+            [self applyFilterSetting];
+            [self processImage];
         }
         
-        // Save GPS & Correct orientation        
-        NSData *jpeg = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
-
-        capturedImage = [UIImage imageWithData:jpeg];
-        imageOrientation = capturedImage.imageOrientation;
-        
-        picSize = capturedImage.size;
-        previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:capturedImage.size.width height:capturedImage.size.height]);
-        
-        UIImage *previewPic = [LXCameraViewController imageWithImage:capturedImage scaledToSize:previewUISize];
-        
-        previewFilter = [[GPUImagePicture alloc] initWithImage:previewPic];
-        
-        [self initPreviewPic];
-        [self switchEditImage];
-        [self resizeCameraViewWithAnimation:NO];
-        [self preparePipe];
-        [self applyFilterSetting];
-        [self processImage];
+        buttonCapture.enabled = true;
     } withOrientation:orientationLast];
 }
 
@@ -813,8 +816,8 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [self getFinalImage:^{
-            buttonYes.enabled = true;
             dispatch_async(dispatch_get_main_queue(), ^{
+                buttonYes.enabled = true;
                 [[UIApplication sharedApplication] endIgnoringInteractionEvents];
                 [self processSavedData];
             });
@@ -1319,7 +1322,7 @@
     
     buttonNo.hidden = YES;
     buttonYes.hidden = YES;
-    buttonCapture.enabled = true;
+    
     buttonFlash.hidden = NO;
     buttonTimer.hidden = NO;
     buttonFlip.hidden = NO;
