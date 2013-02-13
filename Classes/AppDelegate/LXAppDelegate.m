@@ -108,7 +108,7 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
     [self clearNotification];
     [FBSession openActiveSessionWithAllowLoginUI:NO];
     
-    viewCamera = window.rootViewController;
+    viewCamera = (id)window.rootViewController;    
     
     [Appirater appLaunched:YES];
     
@@ -126,6 +126,10 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
         [[UIApplication sharedApplication] setStatusBarHidden:YES];
         window.rootViewController = viewCamera;
         [window makeKeyAndVisible];
+        LXCameraViewController *tmp = (id)viewCamera.topViewController;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            [tmp.videoCamera startCameraCapture];
+        });
     }
     else if (revealController != nil) {
         window.rootViewController = revealController;
@@ -143,7 +147,6 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
         
         window.rootViewController = revealController;
         [window makeKeyAndVisible];
-
     }
 }
 
@@ -240,6 +243,9 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"ResignActive"
      object:self];
+    
+    LXCameraViewController *tmp = (id)viewCamera.topViewController;
+    [tmp.videoCamera pauseCameraCapture];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -251,6 +257,9 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     [Appirater appEnteredForeground:YES];
+    
+    LXCameraViewController *tmp = (id)viewCamera.topViewController;
+    [tmp.videoCamera resumeCameraCapture];
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 

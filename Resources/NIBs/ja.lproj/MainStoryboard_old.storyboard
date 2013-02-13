@@ -3495,7 +3495,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
                                             <action selector="touchNo:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="GQe-uF-jhJ"/>
                                         </connections>
                                     </button>
-                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="2vO-5s-PVr" userLabel="Button OK">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="2vO-5s-PVr" userLabel="Button OK">
                                         <rect key="frame" x="270" y="5" width="40" height="30"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" image="icon_ok2.png" backgroundImage="bg_camera_bt3.png">
@@ -3923,7 +3923,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
                                             <action selector="changeLens:" destination="ieL-KW-PiQ" eventType="touchUpInside" id="T52-Ie-lUy"/>
                                         </connections>
                                     </button>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.40000000000000002" minValue="0.0" maxValue="1" id="hha-63-Bgt" userLabel="Slider Vignette">
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.14999999999999999" minValue="0.0" maxValue="1" id="hha-63-Bgt" userLabel="Slider Vignette">
                                         <rect key="frame" x="70" y="45" width="240" height="23"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="minimumTrackTintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
@@ -4369,7 +4369,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
             <objects>
                 <tableViewController storyboardIdentifier="PicEdit" id="LuE-hY-WRg" customClass="LXPicEditViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="vaP-yt-Vn1">
-                        <rect key="frame" x="0.0" y="44" width="320" height="436"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <color key="separatorColor" red="0.73725490199999999" green="0.72156862749999995" blue="0.66274509800000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -4740,12 +4740,10 @@ Latteについて、「こんな機能があったら良い」、「この機能
             <relationships>
                 <relationship kind="action" name="cameraTouch:" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="action" name="capture:"/>
-                <relationship kind="action" name="changeEffectIntensity:" candidateClass="UISlider"/>
                 <relationship kind="action" name="changeFlash:"/>
                 <relationship kind="action" name="changeLens:" candidateClass="UIButton"/>
                 <relationship kind="action" name="changePen:" candidateClass="UISlider"/>
                 <relationship kind="action" name="close:"/>
-                <relationship kind="action" name="doubleTapEdit:" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="action" name="flipCamera:"/>
                 <relationship kind="action" name="openImagePicker:"/>
                 <relationship kind="action" name="panCamera:" candidateClass="UIPanGestureRecognizer"/>
@@ -5187,8 +5185,8 @@ Latteについて、「こんな機能があったら良い」、「この機能
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="lDx-N5-2UM"/>
         <segue reference="T7F-Bl-gjS"/>
         <segue reference="zE4-YJ-qFs"/>
+        <segue reference="Ycu-8i-bn9"/>
     </inferredMetricsTieBreakers>
 </document>

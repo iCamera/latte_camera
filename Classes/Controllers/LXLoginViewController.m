@@ -213,10 +213,6 @@
                                                [[NSNotificationCenter defaultCenter]
                                                 postNotificationName:@"LoggedIn"
                                                 object:self];
-                                               
-                                               [[NSNotificationCenter defaultCenter]
-                                                postNotificationName:@"UploadedNewPicture"
-                                                object:self];
                                            }
                                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                            TFLog(@"Something went wrong (Login check 2)");

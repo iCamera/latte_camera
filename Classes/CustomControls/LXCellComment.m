@@ -49,8 +49,14 @@
     frame.size = labelSize;
     textComment.frame = frame;
     
-//    buttonUser.layer.cornerRadius = 3;
-//    buttonUser.clipsToBounds = YES;
+    buttonUser.layer.cornerRadius = 3;
+    buttonUser.clipsToBounds = YES;
+    viewBack.layer.cornerRadius = 3;
+    viewBack.clipsToBounds = YES;
+}
+
+- (void)detect {
+    TFLog(@"Detected");
 }
 
 @end

@@ -82,12 +82,23 @@
     if (app.currentUser != nil) {
         UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, viewTextbox.frame.size.height, 0.0);
         tablePic.scrollIndicatorInsets = contentInsets;
+
+        // Edit Swipe
+        UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipedHorizontal)];
+        swipe.direction = UISwipeGestureRecognizerDirectionRight | UISwipeGestureRecognizerDirectionLeft;
+        [tablePic addGestureRecognizer:swipe];
+
     } else {
         viewTextbox.hidden = true;
     }
-
+    
+    
     [self setPicture];
     [self reloadView];
+}
+
+- (void)swipedHorizontal {
+    [tablePic setEditing:!tablePic.editing animated:YES];
 }
 
 - (void)reloadView {
@@ -473,6 +484,7 @@
                                         }];
         
         textComment.text = @"";
+        buttonSend.enabled = false;
         [self.textComment resignFirstResponder];
         return TRUE;
     } else {
@@ -513,14 +525,14 @@
                            nil];
     
     NSString *url = [NSString stringWithFormat:@"picture/%d/vote_post", [pic.pictureId integerValue]];
+    buttonLike.enabled = NO;
     [[LatteAPIClient sharedClient] postPath:url
                                        parameters:param
                                           success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                              
-                                              buttonLike.enabled = NO;
                                               NSNumber *vote_count = [NSNumber numberWithInt:[labelLike.text integerValue] + 1 ];
                                               labelLike.text = [vote_count stringValue];
                                           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                              buttonLike.enabled = YES;
                                               TFLog(@"Something went wrong (Vote)");
                                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
                                                                                               message:error.localizedDescription
@@ -570,6 +582,35 @@
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
     [refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
 }
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    Comment *comment = comments[indexPath.row];
+    return [comment.user.userId integerValue] == [app.currentUser.userId integerValue];;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        Comment* comment = comments[indexPath.row];
+        [comments removeObject:comment];
+        [tablePic deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+        LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+        
+        NSString *url = [NSString stringWithFormat:@"picture/comment/%d/delete", [comment.commentId integerValue]];
+        buttonLike.enabled = NO;
+        [[LatteAPIClient sharedClient] postPath:url
+                                     parameters:[NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"]
+                                        success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                            NSNumber *vote_count = [NSNumber numberWithInt:[labelLike.text integerValue] + 1 ];
+                                            labelLike.text = [vote_count stringValue];
+                                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                            [comments insertObject:comment atIndex:indexPath.row];
+                                            [tablePic insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                                        }];
+    }
+}
+
 
 
 @end

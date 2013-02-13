@@ -50,15 +50,18 @@
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
     NSString *senderName = @"";
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   textForm.text, @"memo",
+                                   senderName, @"sender",
+                                   nil];
     if (app.currentUser != nil) {
         senderName = [NSString stringWithFormat:@"%@ [ID: %d]", app.currentUser.name, [app.currentUser.userId integerValue]] ;
+        [params setObject:[app getToken] forKey:@"token"];
     }
     
+    
     [[LatteAPIClient sharedClient] postPath:@"user/inqury"
-                                 parameters:[NSDictionary dictionaryWithObjectsAndKeys:
-                                             textForm.text, @"memo",
-                                             senderName, @"sender",
-                                             nil]
+                                 parameters:params
                                     success:nil
                                     failure:nil];
     

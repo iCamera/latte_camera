@@ -45,7 +45,7 @@
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTimeline:) name:@"UploadedNewPicture" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTimeline:) name:@"LoggedIn" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive:) name:@"BecomeActive" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -206,9 +206,35 @@
 - (void)reloadPicList {
     pagePic = 0;
     endedPic = false;
-    [pictures removeAllObjects];
-    [self.tableView reloadData];
-    [self loadMorePicList];
+    
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    [loadIndicator startAnimating];
+    
+    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
+                           [app getToken], @"token",
+                           [NSNumber numberWithInt:pagePic + 1], @"page",
+                           [NSNumber numberWithInt:40], @"limit",
+                           nil];
+    
+    [[LatteAPIClient sharedClient] getPath:@"picture/user/me"
+                                parameters: param
+                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       pictures = [Picture mutableArrayFromDictionary:JSON
+                                                                                      withKey:@"pictures"];
+                                       
+                                       endedPic = pictures.count == 0;
+                                       isEmpty = pictures.count == 0;
+                                       [self.tableView reloadData];
+                                       [self doneLoadingTableViewData];
+                                       
+                                       [loadIndicator stopAnimating];
+                                       
+                                       pagePic += 1;
+                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       [loadIndicator stopAnimating];
+                                       TFLog(@"Something went wrong (Photolist)");
+                                       [self doneLoadingTableViewData];
+                                   }];
 }
 
 - (void)loadMorePicList {
@@ -291,9 +317,36 @@
 - (void)reloadVoted {
     endedVoted = false;
     pageVote = 0;
-    [votes removeAllObjects];
-    [self.tableView reloadData];
-    [self loadMoreVotes];
+    
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    [loadIndicator startAnimating];
+    
+    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
+                           [app getToken], @"token",
+                           [NSNumber numberWithInt:pageVote + 1], @"page",
+                           [NSNumber numberWithInt:40], @"limit",
+                           nil];
+    
+    [[LatteAPIClient sharedClient] getPath:@"picture/user/interesting/me"
+                                parameters: param
+                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       votes = [Picture mutableArrayFromDictionary:JSON
+                                                                                       withKey:@"pictures"];
+                                       endedVoted = votes.count == 0;
+                                       isEmpty = votes.count == 0;
+                                       
+                                       [self.tableView reloadData];
+                                       
+                                       [self doneLoadingTableViewData];
+                                       
+                                       pageVote += 1;
+                                       [loadIndicator stopAnimating];
+                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       TFLog(@"Something went wrong (Photolist)");
+                                       [self doneLoadingTableViewData];
+                                       
+                                       [loadIndicator stopAnimating];
+                                   }];
 }
 
 - (void)loadMoreVotes {
@@ -821,15 +874,7 @@
 }
 
 - (void)showTimeline:(NSNotification *) notification {
-    [self.tableView setContentOffset:CGPointZero animated:YES];
-    
-    for (UIButton *button in allTab) {
-        button.enabled = YES;
-    }
-    buttonTimelineAll.enabled = NO;
-    timelineMode = -1;
-    
-    [self switchTimeline:kListAll];
+    [self reloadView];
 }
 
 - (void)becomeActive:(NSNotification *) notification {

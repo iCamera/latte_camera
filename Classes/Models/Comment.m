@@ -4,10 +4,11 @@
 
 @implementation Comment
 
-@synthesize luxeysCommentId;
+@synthesize commentId;
 @synthesize createdAt;
 @synthesize descriptionText;
 @synthesize hidden;
+@synthesize canEdit;
 @synthesize user;
 
 + (Comment *)instanceFromDictionary:(NSDictionary *)aDictionary {
@@ -29,9 +30,7 @@
 }
 
 - (void)setValue:(id)value forKey:(NSString *)key {
-
     if ([key isEqualToString:@"user"]) {
-
         if ([value isKindOfClass:[NSDictionary class]]) {
             self.user = [User instanceFromDictionary:value];
         }
@@ -48,11 +47,13 @@
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key {
 
     if ([key isEqualToString:@"id"]) {
-        [self setValue:value forKey:@"luxeysCommentId"];
+        [self setValue:value forKey:@"commentId"];
     } else if ([key isEqualToString:@"created_at"]) {
         [self setValue:value forKey:@"createdAt"];
     } else if ([key isEqualToString:@"description"]) {
         [self setValue:value forKey:@"descriptionText"];
+    } else if ([key isEqualToString:@"can_edit"]) {
+        [self setValue:value forKey:@"canEdit"];
     } else {
         [super setValue:value forUndefinedKey:key];
     }

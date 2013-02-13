@@ -17,6 +17,7 @@
 
 @implementation LXCameraViewController
 
+@synthesize videoCamera;
 @synthesize scrollEffect;
 @synthesize scrollProcess;
 @synthesize scrollBlend;
@@ -177,8 +178,6 @@
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];
-    [nc addObserver:self selector:@selector(appBecomeActive:) name: @"BecomeActive" object:nil];
-    [nc addObserver:self selector:@selector(appResignActive:) name: @"ResignActive" object:nil];
     [nc addObserver:self selector:@selector(receiveLoggedIn:) name:@"LoggedIn" object:nil];
     
     scrollProcess.contentSize = CGSizeMake(384, 50);
@@ -345,16 +344,11 @@
     
     [self resizeCameraViewWithAnimation:NO];
     [self preparePipe];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [videoCamera startCameraCapture];
+    });
 }
-
-- (void)appBecomeActive:(id)sender {
-    [videoCamera resumeCameraCapture];
-}
-
-- (void)appResignActive:(id)sender {
-    [videoCamera pauseCameraCapture];
-}
-
 
 - (void)keyboardWillShow:(NSNotification *)notification
 {
@@ -391,9 +385,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
     self.navigationController.navigationBarHidden = YES;
-    if (!isEditing) {
-        [videoCamera startCameraCapture];
-    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -408,7 +399,9 @@
     a.delegate = nil;
     [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
     
-    [videoCamera stopCameraCapture];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [videoCamera stopCameraCapture];
+    });
     
     [super viewWillDisappear:animated];
 }
@@ -1306,7 +1299,9 @@
     [locationManager startUpdatingLocation];
     
     
-    [videoCamera startCameraCapture];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [videoCamera startCameraCapture];
+    });
     
     
     buttonNo.hidden = YES;

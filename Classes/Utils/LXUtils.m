@@ -18,7 +18,7 @@
     BOOL first = true;
     for (User *user in users) {
         if (first)
-            first = true;
+            first = false;
         else
             notifyString= [notifyString stringByAppendingString:NSLocalizedString(@"and", @"と")];
         

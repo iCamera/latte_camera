@@ -226,6 +226,7 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIButton *buttonUploadStatus;
 
 @property (strong, nonatomic) NSDictionary *dictUpload;
+@property (strong, nonatomic) LXStillCamera *videoCamera;
 
 - (IBAction)cameraTouch:(UITapGestureRecognizer *)sender;
 - (IBAction)openImagePicker:(id)sender;

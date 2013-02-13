@@ -51,11 +51,6 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(newPicture:)
-                                                 name:@"UploadedNewPicture"
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showUser:)
                                                  name:@"ShowUser"
                                                object:nil];
@@ -201,6 +196,7 @@
 {
     [[self.tabBar.items objectAtIndex:3] setEnabled:YES];
     [[self.tabBar.items objectAtIndex:4] setEnabled:YES];
+    self.selectedIndex = 4;
 }
 
 - (void)receiveLoggedOut:(NSNotification *) notification
@@ -300,11 +296,6 @@
 - (void)hideTab:(NSNotification *) notification
 {
     [self setTabBarHidden:TRUE];
-}
-
-- (void)newPicture:(NSNotification *) notification
-{
-    self.selectedIndex = 4;
 }
 
 @end

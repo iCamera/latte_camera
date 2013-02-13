@@ -21,7 +21,7 @@
 @interface LXAppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate> {
     LXUIRevealController* revealController;
     NSString *apns;
-    UIViewController *viewCamera;
+    UINavigationController *viewCamera;
     id<GAITracker> tracker;
     AFHTTPRequestOperation *operation;
 }
@@ -31,7 +31,7 @@
 
 @property (strong, nonatomic) User *currentUser;
 @property (strong, nonatomic) NSString *apns;
-@property (strong, nonatomic) UIViewController *viewCamera;
+@property (strong, nonatomic) UINavigationController *viewCamera;
 
 extern NSString *const FBSessionStateChangedNotification;
 

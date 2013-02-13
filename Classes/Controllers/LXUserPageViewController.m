@@ -165,11 +165,38 @@
 - (void)reloadPicList {
     pagePhoto = 0;
     endedPhoto = false;
-
-    [photos removeAllObjects];
-    [tableProfile reloadData];
-
-    [self loadMorePiclist];
+    
+    [loadIndicator startAnimating];
+    LXAppDelegate* app = (LXAppDelegate*)[[UIApplication sharedApplication] delegate];
+    
+    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
+                           [app getToken], @"token",
+                           [NSNumber numberWithInt:pagePhoto + 1], @"page",
+                           [NSNumber numberWithInt:40], @"limit",
+                           nil];
+    
+    NSString* urlPhotos = [NSString stringWithFormat:@"picture/user/%d", userID];
+    
+    
+    [[LatteAPIClient sharedClient] getPath:urlPhotos
+                                parameters: param
+                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       photos = [Picture mutableArrayFromDictionary:JSON
+                                                                                      withKey:@"pictures"];
+                                       
+                                       endedPhoto = photos.count == 0;
+                                       isEmpty = photos.count == 0;
+                                       [tableProfile reloadData];
+                                       [self doneLoadingTableViewData];
+                                       
+                                       [loadIndicator stopAnimating];
+                                       
+                                       pagePhoto += 1;
+                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       [loadIndicator stopAnimating];
+                                       TFLog(@"Something went wrong (Photolist)");
+                                       [self doneLoadingTableViewData];
+                                   }];
 }
 
 - (void)loadMorePiclist {
@@ -193,18 +220,18 @@
 
                                        endedPhoto = newPics.count == 0;
                                        NSInteger oldRow = [self tableView:tableProfile numberOfRowsInSection:0];
-                                       [tableProfile beginUpdates];
-                                       
                                        
                                        [photos addObjectsFromArray:newPics];
                                        isEmpty = photos.count == 0;
                                        NSInteger newRow = [self tableView:tableProfile numberOfRowsInSection:0];
-                                       for (NSInteger i = oldRow; i < newRow; i++) {
-                                           [tableProfile insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]]
-                                                                 withRowAnimation:UITableViewRowAnimationAutomatic];
-                                       }
+                                       NSMutableArray *indexes = [[NSMutableArray alloc] init];
                                        
-                                       [tableProfile endUpdates];
+                                       for (NSInteger i = oldRow; i < newRow; i++) {
+                                           [indexes addObject:[NSIndexPath indexPathForRow:i inSection:0]];
+                                       }
+                                       [tableProfile insertRowsAtIndexPaths:indexes
+                                                           withRowAnimation:UITableViewRowAnimationAutomatic];
+                                       
                                        [self doneLoadingTableViewData];
                                        
                                        [loadIndicator stopAnimating];
@@ -220,11 +247,38 @@
 - (void)reloadInterest {
     pageInterest = 0;
     endedInterest = false;
+    
+    [loadIndicator startAnimating];
+    LXAppDelegate* app = (LXAppDelegate*)[[UIApplication sharedApplication] delegate];
+    
+    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
+                           [app getToken], @"token",
+                           [NSNumber numberWithInt:pageInterest + 1], @"page",
+                           [NSNumber numberWithInt:40], @"limit",
+                           nil];
+    
+    NSString* urlPhotos = [NSString stringWithFormat:@"picture/user/interesting/%d", userID];
+    
+    [[LatteAPIClient sharedClient] getPath: urlPhotos
+                                parameters: param
+                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       interests = [Picture mutableArrayFromDictionary:JSON
+                                                                                      withKey:@"pictures"];
+                                       endedInterest = interests.count == 0;
+                                       isEmpty = interests.count == 0;
 
-    [interests removeAllObjects];
-    [tableProfile reloadData];
-
-    [self loadMoreInterest];
+                                           [tableProfile reloadData];
+                                       [self doneLoadingTableViewData];
+                                       
+                                       [loadIndicator stopAnimating];
+                                       
+                                       pageInterest += 1;
+                                       
+                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       [loadIndicator stopAnimating];
+                                       TFLog(@"Something went wrong (User - Interesting)");
+                                       [self doneLoadingTableViewData];
+                                   }];
 }
 
 
@@ -748,7 +802,11 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     switch (buttonIndex) {
         case 0:
-            [self sendFriendRequest];
+            if (!user.isFriend) {
+                [self sendFriendRequest];
+            } else {
+                [self removeFriend];
+            }
             break;
         case 1:
             [self toggleFollow];
