@@ -187,7 +187,7 @@
     CGRect frame = tablePic.tableHeaderView.frame;
     frame.size.height = newheight + 98;
     
-    if (pic.canEdit && ([pic.voteCount integerValue] > 0)) {
+    if (pic.isOwner && ([pic.voteCount integerValue] > 0)) {
         frame.size.height += 50;
     }
     
@@ -238,7 +238,7 @@
 
     [imagePic loadProgess:pic.urlMedium];
     
-    if (pic.canEdit && ([pic.voteCount integerValue] > 0)) {
+    if (pic.isOwner && ([pic.voteCount integerValue] > 0)) {
         scrollVotes.hidden = NO;
         NSString *url = [NSString stringWithFormat:@"picture/%d/votes", pic!=nil?[pic.pictureId integerValue]:picID];
         LXAppDelegate* app = (LXAppDelegate*)[[UIApplication sharedApplication] delegate];

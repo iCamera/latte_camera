@@ -30,6 +30,7 @@
 @synthesize userId;
 @synthesize tags;
 @synthesize status;
+@synthesize isOwner;
 
 + (Picture *)instanceFromDictionary:(NSDictionary *)aDictionary {
     Picture *instance = [[Picture alloc] init];
@@ -98,6 +99,8 @@
         [self setValue:value forKey:@"descriptionText"];
     } else if ([key isEqualToString:@"is_voted"]) {
         [self setValue:value forKey:@"isVoted"];
+    } else if ([key isEqualToString:@"is_owner"]) {
+        [self setValue:value forKey:@"isOwner"];
     } else if ([key isEqualToString:@"taken_at"]) {
         [self setValue:value forKey:@"takenAt"];
     } else if ([key isEqualToString:@"id"]) {

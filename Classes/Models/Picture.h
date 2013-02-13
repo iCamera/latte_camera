@@ -14,6 +14,7 @@
     NSString *descriptionText;
     NSNumber *height;
     BOOL isVoted;
+    BOOL isOwner;
     NSNumber *latitude;
     NSNumber *longitude;
     NSString *model;
@@ -43,6 +44,7 @@
 @property (nonatomic, copy) NSString *descriptionText;
 @property (nonatomic, copy) NSNumber *height;
 @property (nonatomic, assign) BOOL isVoted;
+@property (nonatomic, assign) BOOL isOwner;
 @property (nonatomic, copy) NSNumber *latitude;
 @property (nonatomic, copy) NSNumber *longitude;
 @property (nonatomic, copy) NSString *model;
