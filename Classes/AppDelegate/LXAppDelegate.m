@@ -266,6 +266,8 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    LXCameraViewController *tmp = (id)viewCamera.topViewController;
+    [tmp.videoCamera resumeCameraCapture];
     [FBSession.activeSession handleDidBecomeActive];
     
     [self clearNotification];
