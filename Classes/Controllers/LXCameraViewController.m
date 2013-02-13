@@ -618,6 +618,7 @@
 
 - (void)processImage {
     isSaved = false;
+    buttonReset.enabled = true;
     [previewFilter processImage];
     
     if (buttonBlendNone.enabled) {
@@ -700,6 +701,7 @@
             [self preparePipe];
             [self applyFilterSetting];
             [self processImage];
+            buttonReset.enabled = false;
         }
         
         buttonCapture.enabled = true;
@@ -1255,6 +1257,7 @@
         [self preparePipe];
         [self applyFilterSetting];
         [self processImage];
+        buttonReset.enabled = false;
     };
     
     //
@@ -1331,6 +1334,7 @@
 
 - (void)switchEditImage {
     // Reset to normal lens
+    [self resetSetting];
     currentFont = @"Arial";
     posText = CGPointMake(0.1, 0.5);
     textText.text = @"";
@@ -1432,25 +1436,36 @@
 }
 
 - (IBAction)touchReset:(id)sender {
+    [self resetSetting];
+    
+    [self preparePipe];
+    [self applyFilterSetting];
+    [self processImage];
+    buttonReset.enabled = false;
+}
+
+- (void)resetSetting {
     sliderExposure.value = 0.0;
     sliderClear.value = 0.0;
     sliderSaturation.value = 1.0;
-    sliderSharpness.value = 0.15;
-    sliderVignette.value = 0.25;
+    sliderSharpness.value = 0.25;
+    sliderVignette.value = 0.0;
     sliderFeather.value = 10.0;
     sliderEffectIntensity.value = 1.0;
+    currentEffect = 0;
     [self setUIMask:kMaskBlurNone];
     
     effect = nil;
     buttonLensFish.enabled = true;
     buttonLensWide.enabled = true;
     buttonLensNormal.enabled = false;
+    
+    buttonBlendNone.enabled = false;
+    buttonBlendMedium.enabled = true;
+    buttonBlendStrong.enabled = true;
+    buttonBlendWeak.enabled = true;
     textText.text = @"";
     currentText = @"";
-    
-    [self preparePipe];
-    [self applyFilterSetting];
-    [self processImage];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {

@@ -940,10 +940,10 @@
     pic.isVoted = increase;
     if (feed.targets.count > 1) {
         NSInteger likeCount = [sender.titleLabel.text integerValue];
-        NSNumber *num = [NSNumber numberWithInteger:likeCount + increase?1:-1];
+        NSNumber *num = [NSNumber numberWithInteger:likeCount + (increase?1:-1)];
         [sender setTitle:[num stringValue] forState:UIControlStateDisabled];
     } else {
-        pic.voteCount = [NSNumber numberWithInteger:[pic.voteCount integerValue] + increase?1:-1];
+        pic.voteCount = [NSNumber numberWithInteger:[pic.voteCount integerValue] + (increase?1:-1)];
         
         long row = [feeds indexOfObject:feed];
         

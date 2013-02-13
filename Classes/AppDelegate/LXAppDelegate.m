@@ -10,7 +10,6 @@
 #import "LXNotifySideViewController.h"
 #import "LXUIRevealController.h"
 #import "LatteAPIClient.h"
-#import "Appirater.h"
 
 @implementation LXAppDelegate
 
@@ -94,7 +93,6 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
     tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-242292-26"];
     
     [TestFlight takeOff:@"7f1fb2cd-bf2d-41bc-bbf7-4a6870785c9e"];
-    [Appirater setAppId:@"582903721"];
     // Register for Push Notification
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     
@@ -108,9 +106,7 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
     [self clearNotification];
     [FBSession openActiveSessionWithAllowLoginUI:NO];
     
-    viewCamera = (id)window.rootViewController;    
-    
-    [Appirater appLaunched:YES];
+    viewCamera = (id)window.rootViewController;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(readNotify:) name:@"ReadNotify" object:nil];
     
@@ -256,8 +252,6 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    [Appirater appEnteredForeground:YES];
-    
     LXCameraViewController *tmp = (id)viewCamera.topViewController;
     [tmp.videoCamera resumeCameraCapture];
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
