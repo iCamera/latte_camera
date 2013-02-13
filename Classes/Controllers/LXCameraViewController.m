@@ -293,7 +293,7 @@
                 labelEffect.text = @"Stingray";
                 break;
             case 15:
-                labelEffect.text = @"Aussie";
+                labelEffect.text = @"Forever";
                 break;
             case 16:
                 labelEffect.text = @"Alone";

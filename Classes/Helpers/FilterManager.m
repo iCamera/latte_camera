@@ -8,6 +8,17 @@
 
 #import "FilterManager.h"
 
+#import "LXFilter.h"
+#import "LXFilterBlur.h"
+#import "LXFilterMono.h"
+#import "LXEffect1.h"
+#import "LXEffect2.h"
+#import "LXEffect3.h"
+#import "LXEffect5.h"
+#import "LXEffect8.h"
+#import "LXEffect9.h"
+#import "LXEffect10.h"
+
 @implementation FilterManager
 
 
@@ -24,25 +35,25 @@
         case 1:
             return [[LXEffect1 alloc] init];
         case 2:
-            return [[LXEffect2 alloc] init];
+            return [[LXEffect10 alloc] init];
         case 3:
             return [[LXEffect3 alloc] init];
         case 4:
             return [[LXEffect5 alloc] init];
-        case 5:
-            return [self myEffect1];
-        case 6:
-            return [self myEffect2];
-        case 7:
-            return [self myEffect3];
-        case 8:
-            return [self myEffect4];
-        case 9:
-            return [self myEffect5];
-        case 10:
-            return [self myEffect6];
-        case 11:
-            return [self myEffect7];
+        case 5: // sucks
+            return [[LXEffect9 alloc] init];
+        case 6: // sucks
+            return [self tmpEffect2];
+        case 7: // sucks
+            return [self tmpEffect3];
+        case 8: // sucks
+            return [self tmpEffect4];
+        case 9: // sucks
+            return [self tmpEffect6];
+        case 10: // sucks
+            return [[LXEffect8 alloc] init];;
+        case 11: // sucks
+            return [self effect2];
         case 12:
             return [self tmpEffect1];
         case 13:
@@ -50,9 +61,9 @@
         case 14:
             return [self tmpEffect5];
         case 15:
-            return [self effect3];
+            return [self myEffect6];
         case 16:
-            return [self effect1];
+            return [self myEffect7];
         default:
             return nil;
     }
@@ -83,7 +94,7 @@
     return tonecurve;
 }
 
-- (GPUImageFilter *)effect2 {
++ (GPUImageFilter *)effect2 {
     GPUImageToneCurveFilter *tonecurve = [[GPUImageToneCurveFilter alloc] init];
     
     float curve[16][3] = {
@@ -129,7 +140,7 @@
 }
 
 
-- (GPUImageFilter *)effect4 {
++ (GPUImageFilter *)effect4 {
     GPUImageRGBFilter *rgb = [[GPUImageRGBFilter alloc] init];
     
     rgb.red = 2.36;
@@ -171,15 +182,15 @@
     return [[GPUImageToneCurveFilter alloc] initWithACV:@"effect1"];
 }
 
-- (GPUImageFilter*)tmpEffect2 {
++ (GPUImageFilter*)tmpEffect2 {
     return [[GPUImageToneCurveFilter alloc] initWithACV:@"effect2"];
 }
 
-- (GPUImageFilter*)tmpEffect3 {
++ (GPUImageFilter*)tmpEffect3 {
     return [[GPUImageToneCurveFilter alloc] initWithACV:@"effect3"];
 }
 
-- (GPUImageFilter*)tmpEffect4 {
++ (GPUImageFilter*)tmpEffect4 {
     return [[GPUImageToneCurveFilter alloc] initWithACV:@"effect4"];
 }
 
@@ -187,15 +198,15 @@
     return [[GPUImageToneCurveFilter alloc] initWithACV:@"effect5"];
 }
 
-- (GPUImageFilter*)tmpEffect6 {
++ (GPUImageFilter*)tmpEffect6 {
     return [[GPUImageToneCurveFilter alloc] initWithACV:@"effect6"];
 }
 
-- (GPUImageFilter*)tmpEffect7 {
++ (GPUImageFilter*)tmpEffect7 {
     return [[GPUImageToneCurveFilter alloc] initWithACV:@"effect7"];
 }
 
-- (GPUImageFilter*)curve1 {
++ (GPUImageFilter*)curve1 {
     GPUImageToneCurveFilter *tonecurve = [[GPUImageToneCurveFilter alloc] init];
     float curve[16][3] = {
         {12.0, 0.0, 0.0},

@@ -134,9 +134,15 @@
 		8845F7F016B7E389003873A2 /* LXEffect3.m in Sources */ = {isa = PBXBuildFile; fileRef = 8845F7EF16B7E389003873A2 /* LXEffect3.m */; };
 		884C54D516B22EF500DA318E /* LXHelpBokehViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 884C54D416B22EF500DA318E /* LXHelpBokehViewController.m */; };
 		884FBB90163E24A3006C4359 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 884FBB8F163E24A3006C4359 /* SystemConfiguration.framework */; };
+		88508CAC16CB9CED0026DE1E /* LXEffect8.m in Sources */ = {isa = PBXBuildFile; fileRef = 88508CAB16CB9CED0026DE1E /* LXEffect8.m */; };
+		88508CB416CB9EEF0026DE1E /* LXEffect9.m in Sources */ = {isa = PBXBuildFile; fileRef = 88508CB316CB9EEF0026DE1E /* LXEffect9.m */; };
+		88508CB616CB9EFE0026DE1E /* effect9curve.png in Resources */ = {isa = PBXBuildFile; fileRef = 88508CB516CB9EFE0026DE1E /* effect9curve.png */; };
+		88508CB916CBA2E90026DE1E /* LXEffect10.m in Sources */ = {isa = PBXBuildFile; fileRef = 88508CB816CBA2E90026DE1E /* LXEffect10.m */; };
+		88508CBB16CBA2F00026DE1E /* effect10curve.png in Resources */ = {isa = PBXBuildFile; fileRef = 88508CBA16CBA2F00026DE1E /* effect10curve.png */; };
 		885C061516BB6514000820E7 /* icon_blending2.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C061416BB6514000820E7 /* icon_blending2.png */; };
 		885C061A16BB65A5000820E7 /* icon_blending2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C061916BB65A5000820E7 /* icon_blending2@2x.png */; };
 		885C061D16BB69B0000820E7 /* UIDeviceHardware.m in Sources */ = {isa = PBXBuildFile; fileRef = 885C061C16BB69B0000820E7 /* UIDeviceHardware.m */; };
+		886A83AC16CB9B9A009BCA92 /* effect8curve.png in Resources */ = {isa = PBXBuildFile; fileRef = 886A83AB16CB9B9A009BCA92 /* effect8curve.png */; };
 		886B4E1D16A8004300DA4783 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 880E35AA16A7F7150097B97F /* libTestFlight.a */; };
 		886C63A116816CC20007D952 /* LXFilterDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 886C63A016816CC20007D952 /* LXFilterDetail.m */; };
 		886C63A41681A68C0007D952 /* bg_canvas.png in Resources */ = {isa = PBXBuildFile; fileRef = 886C63A21681A68C0007D952 /* bg_canvas.png */; };
@@ -955,10 +961,19 @@
 		884C54D316B22EF500DA318E /* LXHelpBokehViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHelpBokehViewController.h; sourceTree = "<group>"; };
 		884C54D416B22EF500DA318E /* LXHelpBokehViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHelpBokehViewController.m; sourceTree = "<group>"; };
 		884FBB8F163E24A3006C4359 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		88508CAA16CB9CED0026DE1E /* LXEffect8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXEffect8.h; sourceTree = "<group>"; };
+		88508CAB16CB9CED0026DE1E /* LXEffect8.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXEffect8.m; sourceTree = "<group>"; };
+		88508CB216CB9EEF0026DE1E /* LXEffect9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXEffect9.h; sourceTree = "<group>"; };
+		88508CB316CB9EEF0026DE1E /* LXEffect9.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXEffect9.m; sourceTree = "<group>"; };
+		88508CB516CB9EFE0026DE1E /* effect9curve.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = effect9curve.png; sourceTree = "<group>"; };
+		88508CB716CBA2E90026DE1E /* LXEffect10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXEffect10.h; sourceTree = "<group>"; };
+		88508CB816CBA2E90026DE1E /* LXEffect10.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXEffect10.m; sourceTree = "<group>"; };
+		88508CBA16CBA2F00026DE1E /* effect10curve.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = effect10curve.png; sourceTree = "<group>"; };
 		885C061416BB6514000820E7 /* icon_blending2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_blending2.png; sourceTree = "<group>"; };
 		885C061916BB65A5000820E7 /* icon_blending2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_blending2@2x.png"; sourceTree = "<group>"; };
 		885C061B16BB69B0000820E7 /* UIDeviceHardware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDeviceHardware.h; sourceTree = "<group>"; };
 		885C061C16BB69B0000820E7 /* UIDeviceHardware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIDeviceHardware.m; sourceTree = "<group>"; };
+		886A83AB16CB9B9A009BCA92 /* effect8curve.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = effect8curve.png; sourceTree = "<group>"; };
 		886C639F16816CC20007D952 /* LXFilterDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFilterDetail.h; sourceTree = "<group>"; };
 		886C63A016816CC20007D952 /* LXFilterDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFilterDetail.m; sourceTree = "<group>"; };
 		886C63A21681A68C0007D952 /* bg_canvas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_canvas.png; sourceTree = "<group>"; };
@@ -2211,12 +2226,22 @@
 		8890728F16770EBB0013DF7A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				885C061B16BB69B0000820E7 /* UIDeviceHardware.h */,
-				885C061C16BB69B0000820E7 /* UIDeviceHardware.m */,
 				8890729016770EBB0013DF7A /* FilterManager.h */,
 				8890729116770EBB0013DF7A /* FilterManager.m */,
+				88079F8D16B6933900420AC3 /* GPUImagePicture+updateImage.h */,
+				88079F8E16B6933900420AC3 /* GPUImagePicture+updateImage.m */,
 				8890729816770EBB0013DF7A /* LatteAPIClient.h */,
 				8890729916770EBB0013DF7A /* LatteAPIClient.m */,
+				8845F7E416B7CFE4003873A2 /* LXEffect1.h */,
+				8845F7E516B7CFE4003873A2 /* LXEffect1.m */,
+				8845F7E916B7DFCD003873A2 /* LXEffect2.h */,
+				8845F7EA16B7DFCE003873A2 /* LXEffect2.m */,
+				8845F7EE16B7E389003873A2 /* LXEffect3.h */,
+				8845F7EF16B7E389003873A2 /* LXEffect3.m */,
+				88E1CE2A16B8BC910040ADBD /* LXEffect5.h */,
+				88E1CE2B16B8BC910040ADBD /* LXEffect5.m */,
+				88508CAA16CB9CED0026DE1E /* LXEffect8.h */,
+				88508CAB16CB9CED0026DE1E /* LXEffect8.m */,
 				8890729A16770EBB0013DF7A /* LXFilter.h */,
 				8890729B16770EBB0013DF7A /* LXFilter.m */,
 				8890729C16770EBB0013DF7A /* LXFilterBlur.h */,
@@ -2229,32 +2254,28 @@
 				8890729F16770EBB0013DF7A /* LXFilterFish.m */,
 				889072A016770EBB0013DF7A /* LXFilterMono.h */,
 				889072A116770EBB0013DF7A /* LXFilterMono.m */,
+				88A9576116BFC18B003649E8 /* LXFilterPipe.h */,
+				88A9576216BFC18B003649E8 /* LXFilterPipe.m */,
 				88079C5916B622B400420AC3 /* LXFilterScreenBlend.h */,
 				88079C5A16B622B400420AC3 /* LXFilterScreenBlend.m */,
 				88E8C1AE16A64254006FC065 /* LXFilterText.h */,
 				88E8C1AF16A64254006FC065 /* LXFilterText.m */,
+				88A9576D16BFD406003649E8 /* LXRootBuilder.h */,
+				88A9576E16BFD406003649E8 /* LXRootBuilder.m */,
 				8884E45716A9012E00DCBAC7 /* LXShare.h */,
 				8884E45816A9012E00DCBAC7 /* LXShare.m */,
+				88A9576716BFC2A2003649E8 /* LXStillCamera.h */,
+				88A9576816BFC2A2003649E8 /* LXStillCamera.m */,
 				889072BA16770EBB0013DF7A /* LXUtils.h */,
 				889072BB16770EBB0013DF7A /* LXUtils.m */,
 				889072A216770EBB0013DF7A /* UIActionSheet+ButtonState.h */,
 				889072A316770EBB0013DF7A /* UIActionSheet+ButtonState.m */,
-				88079F8D16B6933900420AC3 /* GPUImagePicture+updateImage.h */,
-				88079F8E16B6933900420AC3 /* GPUImagePicture+updateImage.m */,
-				8845F7E416B7CFE4003873A2 /* LXEffect1.h */,
-				8845F7E516B7CFE4003873A2 /* LXEffect1.m */,
-				8845F7E916B7DFCD003873A2 /* LXEffect2.h */,
-				8845F7EA16B7DFCE003873A2 /* LXEffect2.m */,
-				8845F7EE16B7E389003873A2 /* LXEffect3.h */,
-				8845F7EF16B7E389003873A2 /* LXEffect3.m */,
-				88E1CE2A16B8BC910040ADBD /* LXEffect5.h */,
-				88E1CE2B16B8BC910040ADBD /* LXEffect5.m */,
-				88A9576116BFC18B003649E8 /* LXFilterPipe.h */,
-				88A9576216BFC18B003649E8 /* LXFilterPipe.m */,
-				88A9576716BFC2A2003649E8 /* LXStillCamera.h */,
-				88A9576816BFC2A2003649E8 /* LXStillCamera.m */,
-				88A9576D16BFD406003649E8 /* LXRootBuilder.h */,
-				88A9576E16BFD406003649E8 /* LXRootBuilder.m */,
+				885C061B16BB69B0000820E7 /* UIDeviceHardware.h */,
+				885C061C16BB69B0000820E7 /* UIDeviceHardware.m */,
+				88508CB216CB9EEF0026DE1E /* LXEffect9.h */,
+				88508CB316CB9EEF0026DE1E /* LXEffect9.m */,
+				88508CB716CBA2E90026DE1E /* LXEffect10.h */,
+				88508CB816CBA2E90026DE1E /* LXEffect10.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -2578,6 +2599,9 @@
 		88FE3F9F166C93D6004DCE53 /* Effect */ = {
 			isa = PBXGroup;
 			children = (
+				88508CBA16CBA2F00026DE1E /* effect10curve.png */,
+				88508CB516CB9EFE0026DE1E /* effect9curve.png */,
+				886A83AB16CB9B9A009BCA92 /* effect8curve.png */,
 				88E1CE3016B8BE8E0040ADBD /* effect5curve.png */,
 				8845F7EC16B7E015003873A2 /* effect2curve.png */,
 				8845F7E716B7D69E003873A2 /* effect1curve.png */,
@@ -3855,6 +3879,9 @@
 				88AB7E3E16BB759300040C00 /* AppiraterLocalizable.strings in Resources */,
 				8833ADC716C1FA4700E06C97 /* icon_info_on.png in Resources */,
 				8833ADC816C1FA4700E06C97 /* icon_info_on@2x.png in Resources */,
+				886A83AC16CB9B9A009BCA92 /* effect8curve.png in Resources */,
+				88508CB616CB9EFE0026DE1E /* effect9curve.png in Resources */,
+				88508CBB16CBA2F00026DE1E /* effect10curve.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3954,6 +3981,9 @@
 				88A9576916BFC2A2003649E8 /* LXStillCamera.m in Sources */,
 				88A9576C16BFCFED003649E8 /* EGORefreshTableHeaderView.m in Sources */,
 				88A9576F16BFD406003649E8 /* LXRootBuilder.m in Sources */,
+				88508CAC16CB9CED0026DE1E /* LXEffect8.m in Sources */,
+				88508CB416CB9EEF0026DE1E /* LXEffect9.m in Sources */,
+				88508CB916CBA2E90026DE1E /* LXEffect10.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,21 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "GPUImage.h"
-#import "GPUImageOutput.h"
-#import <AssetsLibrary/AssetsLibrary.h>
-#import <ImageIO/ImageIO.h>
-#import "LXFilter.h"
-#import "LXFilterBlur.h"
-#import "LXFilterMono.h"
-#import "LXEffect1.h"
-#import "LXEffect2.h"
-#import "LXEffect3.h"
-#import "LXEffect5.h"
 
 @interface FilterManager : NSObject {
-//    GPUImageToneCurveFilter *tonecurve;
-//    GPUImageRGBFilter *rgb;
-//    LXFilterMono *filterMono;
+
 }
 
 + (GPUImageFilter*)getEffect:(NSInteger)aEffect;
