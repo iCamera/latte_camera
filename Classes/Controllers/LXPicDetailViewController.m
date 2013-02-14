@@ -40,6 +40,7 @@
 @synthesize viewSubPic;
 @synthesize indicatorComment;
 @synthesize scrollVotes;
+@synthesize labelDesc;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -93,7 +94,9 @@
     }
     
     
-    [self setPicture];
+    if (pic) {
+        [self setPicture];
+    }
     [self reloadView];
 }
 
@@ -183,29 +186,52 @@
     float newheight = [LXUtils heightFromWidth:308
                                          width:[pic.width floatValue]
                                         height:[pic.height floatValue]];
+    imagePic.frame = CGRectMake(imagePic.frame.origin.x, imagePic.frame.origin.y, 308, newheight);
     
-    CGRect frame = tablePic.tableHeaderView.frame;
-    frame.size.height = newheight + 98;
-    
-    if (pic.isOwner && ([pic.voteCount integerValue] > 0)) {
-        frame.size.height += 50;
+    CGRect frameSubPic;
+    frameSubPic.origin = CGPointMake(0, 0);
+    frameSubPic.size.width = 320;
+    frameSubPic.size.height = newheight + 52;
+
+    CGRect frameDesc;
+    if (pic.descriptionText.length > 0) {
+        frameDesc.size = [pic.descriptionText sizeWithFont:[UIFont fontWithName:@"AvenirNextCondensed-Regular" size:11]
+                                     constrainedToSize:CGSizeMake(308.0f, MAXFLOAT)
+                                         lineBreakMode:NSLineBreakByWordWrapping];
+        frameDesc.origin = CGPointMake(6.0, newheight + 48);
+        frameSubPic.size.height += frameDesc.size.height + 6;
+        labelDesc.frame = frameDesc;
+        labelDesc.text = pic.descriptionText;
+        labelDesc.hidden = false;
     }
     
-    tablePic.tableHeaderView.frame = frame;
+    CGRect frameStats = viewStats.frame;
+    frameStats.origin.y = frameSubPic.size.height + 6;
+    viewStats.frame = frameStats;
+    
+    viewSubPic.frame = frameSubPic;
+    
+    CGRect frameHeader = tablePic.tableHeaderView.frame;
+    frameHeader.size.height = frameSubPic.size.height + 25 + 14;
+    
+    if (pic.isOwner && ([pic.voteCount integerValue] > 0)) {
+        CGRect frameVote = scrollVotes.frame;
+        frameVote.origin.y = frameHeader.size.height;
+        scrollVotes.frame = frameVote;
+        frameHeader.size.height += 50;
+    }
+    
+    viewSubBg.frame = frameHeader;
+    tablePic.tableHeaderView.frame = frameHeader;
     
     // Hack, to refresh header height
     tablePic.tableHeaderView = tablePic.tableHeaderView;
-
+    
     [tablePic setNeedsLayout];
     [viewSubBg setNeedsDisplay];
     [viewSubPic setNeedsDisplay];
-    frame = viewSubPic.frame;
-    frame.size.height = newheight + 52;
-    viewSubPic.frame = frame;
     
-    frame = viewStats.frame;
-    frame.origin.y = newheight + 58;
-    viewStats.frame = frame;
+    // ------------------------------ SET DATA
     
     // Do any additional setup after loading the view from its nib.
     if (pic.title.length > 0)
@@ -214,7 +240,6 @@
     labelDate.text = [LXUtils timeDeltaFromNow:pic.createdAt];
     labelLike.text = [pic.voteCount stringValue];
     labelComment.text = [pic.commentCount stringValue];
-    imagePic.frame = CGRectMake(imagePic.frame.origin.x, imagePic.frame.origin.y, 308, newheight);
     
     if ((pic.latitude != nil) && (pic.longitude != nil)) {
         buttonMap.enabled = YES;
@@ -294,6 +319,7 @@
                                        }];
     } else
         scrollVotes.hidden = true;
+
 }
 
 - (void)viewDidUnload
@@ -307,6 +333,7 @@
     [self setViewSubPic:nil];
     [self setIndicatorComment:nil];
     [self setScrollVotes:nil];
+    [self setLabelDesc:nil];
     [super viewDidUnload];
 }
 

@@ -42,7 +42,11 @@
     
     CGSize size = CGSizeMake(6, 202);
     for (Picture *pic in feed.targets) {
-        LXTimelineMultiItemViewController *viewPic = [[LXTimelineMultiItemViewController alloc] initWithPic:pic parent:viewController showButton:showControl];
+        LXTimelineMultiItemViewController *viewPic = [[LXTimelineMultiItemViewController alloc] init];
+        
+        viewPic.pic = pic;
+        viewPic.parent = viewController;
+        viewPic.showButton = showControl;
         viewPic.view.frame = CGRectMake(size.width, 6, 190, 190);
         [scrollPic addSubview:viewPic.view];
         

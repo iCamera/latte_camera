@@ -53,6 +53,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *labelLike;
 @property (strong, nonatomic) IBOutlet UILabel *labelAuthor;
 @property (strong, nonatomic) IBOutlet UILabel *labelDate;
+@property (strong, nonatomic) IBOutlet UILabel *labelDesc;
 @property (strong, nonatomic) IBOutlet UIButton *buttonLike;
 @property (strong, nonatomic) IBOutlet UIButton *buttonUser;
 @property (strong, nonatomic) IBOutlet UIButton *buttonComment;

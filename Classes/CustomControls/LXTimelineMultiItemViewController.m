@@ -27,21 +27,10 @@
     return self;
 }
 
-- (id)initWithPic:(Picture *)aPic parent:(id)aParent showButton:(BOOL)button
-{
-    self = [super init];
-    if (self) {
-        pic = aPic;
-        parent = aParent;
-        showButton = button;
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [buttonImage loadBackground:pic.urlSquare];
+    [buttonImage loadBackground:_pic.urlSquare];
     
     buttonImage.layer.borderColor = [[UIColor whiteColor] CGColor];
     buttonImage.layer.borderWidth = 3;
@@ -56,23 +45,23 @@
     buttonComment.layer.cornerRadius = 5;
     buttonVote.layer.cornerRadius = 5;
     
-    [buttonComment setTitle:[pic.commentCount stringValue] forState:UIControlStateNormal];
-    [buttonVote setTitle:[pic.voteCount stringValue] forState:UIControlStateNormal];
+    [buttonComment setTitle:[_pic.commentCount stringValue] forState:UIControlStateNormal];
+    [buttonVote setTitle:[_pic.voteCount stringValue] forState:UIControlStateNormal];
     
-    if (pic.canVote)
-        if (!pic.isVoted)
+    if (_pic.canVote)
+        if (!_pic.isVoted)
             buttonVote.enabled = YES;
     
-    buttonComment.tag = [pic.pictureId integerValue];
-    buttonImage.tag = [pic.pictureId integerValue];
-    buttonVote.tag = [pic.pictureId integerValue];
+    buttonComment.tag = [_pic.pictureId integerValue];
+    buttonImage.tag = [_pic.pictureId integerValue];
+    buttonVote.tag = [_pic.pictureId integerValue];
     
-    [buttonImage addTarget:parent action:@selector(showPic:) forControlEvents:UIControlEventTouchUpInside];
-    [buttonComment addTarget:parent action:@selector(showComment:) forControlEvents:UIControlEventTouchUpInside];
-    [buttonVote addTarget:parent action:@selector(submitLike:) forControlEvents:UIControlEventTouchUpInside];
+    [buttonImage addTarget:_parent action:@selector(showPic:) forControlEvents:UIControlEventTouchUpInside];
+    [buttonComment addTarget:_parent action:@selector(showComment:) forControlEvents:UIControlEventTouchUpInside];
+    [buttonVote addTarget:_parent action:@selector(submitLike:) forControlEvents:UIControlEventTouchUpInside];
     
-    buttonComment.hidden = !showButton;
-    buttonVote.hidden = !showButton;
+    buttonComment.hidden = !_showButton;
+    buttonVote.hidden = !_showButton;
 
     // Do any additional setup after loading the view from its nib.
 }

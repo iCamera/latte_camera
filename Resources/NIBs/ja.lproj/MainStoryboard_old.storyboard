@@ -2563,7 +2563,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Just now" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jsx-wA-XUV">
-                                                    <rect key="frame" x="233" y="7" width="74" height="11"/>
+                                                    <rect key="frame" x="233" y="7" width="74" height="16"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="11"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -2577,6 +2577,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
                                             <outlet property="labelAuthor" destination="iXV-i1-KVR" id="SCU-fP-HOg"/>
                                             <outlet property="labelDate" destination="jsx-wA-XUV" id="f1Y-nk-IgG"/>
                                             <outlet property="textComment" destination="mDG-Gy-e7N" id="c90-Vw-iNg"/>
+                                            <outlet property="viewBack" destination="7FL-CA-WDa" id="5xT-h7-gd9"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -4369,7 +4370,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
             <objects>
                 <tableViewController storyboardIdentifier="PicEdit" id="LuE-hY-WRg" customClass="LXPicEditViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="vaP-yt-Vn1">
-                        <rect key="frame" x="0.0" y="44" width="320" height="436"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <color key="separatorColor" red="0.73725490199999999" green="0.72156862749999995" blue="0.66274509800000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -5186,6 +5187,6 @@ Latteについて、「こんな機能があったら良い」、「この機能
     <inferredMetricsTieBreakers>
         <segue reference="T7F-Bl-gjS"/>
         <segue reference="zE4-YJ-qFs"/>
-        <segue reference="lDx-N5-2UM"/>
+        <segue reference="Ycu-8i-bn9"/>
     </inferredMetricsTieBreakers>
 </document>

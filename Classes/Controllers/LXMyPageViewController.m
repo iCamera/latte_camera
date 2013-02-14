@@ -934,22 +934,17 @@
 }
 
 - (void)updatePhotoVoteCount:(UIButton*)sender increase:(BOOL)increase {
-    sender.enabled = increase;
+    sender.enabled = !increase;
     Feed *feed = [self feedFromPicID:sender.tag];
     Picture *pic = [self picFromPicID:sender.tag];
     pic.isVoted = increase;
     if (feed.targets.count > 1) {
         NSInteger likeCount = [sender.titleLabel.text integerValue];
         NSNumber *num = [NSNumber numberWithInteger:likeCount + (increase?1:-1)];
-        [sender setTitle:[num stringValue] forState:UIControlStateDisabled];
+        [sender setTitle:[num stringValue] forState:UIControlStateNormal];
     } else {
         pic.voteCount = [NSNumber numberWithInteger:[pic.voteCount integerValue] + (increase?1:-1)];
-        
-        long row = [feeds indexOfObject:feed];
-        
-        NSArray *rowIndexes = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:row inSection:0]];
-        [self.tableView reloadRowsAtIndexPaths:rowIndexes
-                              withRowAnimation:UITableViewRowAnimationAutomatic];
+        [sender setTitle:[pic.voteCount stringValue] forState:UIControlStateNormal];
     }
 }
 

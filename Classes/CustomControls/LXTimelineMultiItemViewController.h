@@ -11,14 +11,13 @@
 #import "Picture.h"
 
 @interface LXTimelineMultiItemViewController : UIViewController {
-    Picture *pic;
-    id parent;
-    BOOL showButton;
 }
 @property (strong, nonatomic) IBOutlet UIButton *buttonComment;
 @property (strong, nonatomic) IBOutlet UIButton *buttonImage;
 @property (strong, nonatomic) IBOutlet UIButton *buttonVote;
 
-- (id)initWithPic:(Picture *)aPic parent:(id)aParent showButton:(BOOL)button;
+@property (strong, nonatomic) IBOutlet Picture *pic;
+@property (weak, nonatomic) id parent;
+@property (assign, nonatomic) BOOL showButton;
 
 @end

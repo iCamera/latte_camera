@@ -2320,13 +2320,13 @@ We improve our services to the best of our ability,but please understand that no
                                 <color key="backgroundColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                 <gestureRecognizers/>
                                 <color key="separatorColor" red="0.73725491759999995" green="0.72156864399999998" blue="0.66274511810000003" alpha="1" colorSpace="deviceRGB"/>
-                                <view key="tableHeaderView" contentMode="scaleToFill" id="d8f-3h-05p">
+                                <view key="tableHeaderView" autoresizesSubviews="NO" contentMode="scaleToFill" id="d8f-3h-05p">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="228"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" id="aY0-AH-DG6" customClass="LXSubLayerView">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="222"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" red="0.90588235289999997" green="0.8980392157" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
                                         </view>
                                         <view contentMode="scaleToFill" id="2gB-we-Nz1" customClass="LXSubLayerView">
@@ -2352,7 +2352,7 @@ We improve our services to the best of our ability,but please understand that no
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="Orp-KT-sEr">
-                                                    <rect key="frame" x="6" y="42" width="308" height="85"/>
+                                                    <rect key="frame" x="6" y="42" width="308" height="65"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                 </imageView>
@@ -2395,6 +2395,13 @@ We improve our services to the best of our ability,but please understand that no
                                                     <nil key="highlightedColor"/>
                                                     <color key="shadowColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                     <size key="shadowOffset" width="0.0" height="1"/>
+                                                </label>
+                                                <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="---" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fvV-8c-kbH">
+                                                    <rect key="frame" x="6" y="111" width="308" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -2500,7 +2507,6 @@ We improve our services to the best of our ability,but please understand that no
                                         </view>
                                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="UAe-AN-cxk">
                                             <rect key="frame" x="0.0" y="172" width="320" height="50"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                             <subviews>
                                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" animating="YES" style="gray" id="SfJ-Az-x6h">
                                                     <rect key="frame" x="30" y="14" width="20" height="20"/>
@@ -2563,7 +2569,7 @@ We improve our services to the best of our ability,but please understand that no
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Just now" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jsx-wA-XUV">
-                                                    <rect key="frame" x="233" y="7" width="74" height="11"/>
+                                                    <rect key="frame" x="233" y="7" width="74" height="16"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="11"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -2577,6 +2583,7 @@ We improve our services to the best of our ability,but please understand that no
                                             <outlet property="labelAuthor" destination="iXV-i1-KVR" id="SCU-fP-HOg"/>
                                             <outlet property="labelDate" destination="jsx-wA-XUV" id="f1Y-nk-IgG"/>
                                             <outlet property="textComment" destination="mDG-Gy-e7N" id="c90-Vw-iNg"/>
+                                            <outlet property="viewBack" destination="7FL-CA-WDa" id="5xT-h7-gd9"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -2679,6 +2686,7 @@ We improve our services to the best of our ability,but please understand that no
                         <outlet property="labelAuthor" destination="8iH-Me-xCj" id="5uf-rD-7tU"/>
                         <outlet property="labelComment" destination="ksP-PV-G2a" id="Uf1-sw-aoL"/>
                         <outlet property="labelDate" destination="X2R-qY-3XW" id="Kei-lI-mgB"/>
+                        <outlet property="labelDesc" destination="fvV-8c-kbH" id="Oab-vq-k6g"/>
                         <outlet property="labelLike" destination="KZc-53-tYT" id="2xZ-76-xmT"/>
                         <outlet property="labelTitle" destination="jNB-Kj-Lzh" id="Pgl-V1-hZF"/>
                         <outlet property="scrollVotes" destination="UAe-AN-cxk" id="l0A-Ab-NlX"/>
@@ -4367,7 +4375,7 @@ We improve our services to the best of our ability,but please understand that no
             <objects>
                 <tableViewController storyboardIdentifier="PicEdit" id="LuE-hY-WRg" customClass="LXPicEditViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="vaP-yt-Vn1">
-                        <rect key="frame" x="0.0" y="44" width="320" height="436"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <color key="separatorColor" red="0.73725490199999999" green="0.72156862749999995" blue="0.66274509800000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -5046,6 +5054,7 @@ We improve our services to the best of our ability,but please understand that no
                 <relationship kind="outlet" name="labelAuthor" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="labelComment" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="labelDate" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelDesc" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="labelLike" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="labelTitle" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="scrollVotes" candidateClass="UIScrollView"/>
@@ -5184,6 +5193,6 @@ We improve our services to the best of our ability,but please understand that no
     <inferredMetricsTieBreakers>
         <segue reference="T7F-Bl-gjS"/>
         <segue reference="zE4-YJ-qFs"/>
-        <segue reference="lDx-N5-2UM"/>
+        <segue reference="Ycu-8i-bn9"/>
     </inferredMetricsTieBreakers>
 </document>
