@@ -13,7 +13,17 @@
                 { "type":"QEntryElement", "key":"introduction", "title":"自己紹介", "bind":"textValue:introduction", "controllerAction":"handleUpdate:"},
                 { "type":"QEntryElement", "key":"hobby", "title":"趣味", "bind":"textValue:hobby", "controllerAction":"handleUpdate:"}
             ]
-        },
+         },
+         { "title":"プッシュ通知設定", "elements":[
+                                                    { "type":"QBooleanElement", "key":"push_notify_comment", "title":"コメント通知", "boolValue":0, "controllerAction":"handleUpdate:"},
+                                                    { "type":"QBooleanElement", "key":"push_notify_vote", "title":"評価通知", "boolValue":0, "controllerAction":"handleUpdate:"}
+                                                    ]
+         },
+         { "title":"配信メール設定", "elements":[
+                                                    { "type":"QBooleanElement", "key":"mail_comment", "title":"コメント通知", "boolValue":0, "controllerAction":"handleUpdate:"},
+                                                    { "type":"QBooleanElement", "key":"mail_vote", "title":"評価通知", "boolValue":0, "controllerAction":"handleUpdate:"}
+                                                    ]
+         },
         { "title":"公開設定", "elements": [
                 { "type":"QRadioElement", "key":"picture_status", "title":"写真", "items":["非公開", "友達まで", "会員まで", "全体"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdate:"},
                 { "type":"QRadioElement", "key":"gender_public", "title":"性別公開", "items":["非公開", "友達まで", "会員まで", "全体"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdate:"},

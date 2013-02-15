@@ -10,6 +10,7 @@
 #import "LXAppDelegate.h"
 #import "LXButtonBack.h"
 #import "LatteAPIClient.h"
+#import "User.h"
 
 @interface LXSettingViewController ()
 
@@ -36,50 +37,54 @@
     HUD.mode = MBProgressHUDModeIndeterminate;
     [HUD show:YES];
     
-    [[LatteAPIClient sharedClient] getPath:@"user/me"
-                                       parameters: [NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"]
-                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                              
-                                              NSDictionary *user = [JSON objectForKey:@"user"];
-                                              
-                                              [self.root bindToObject:user];
-                                              
-                                              NSArray *permission = [NSArray arrayWithObjects:
-                                                                     @"picture_status",
-                                                                     @"gender_public",
-                                                                     @"current_residence_public",
-                                                                     @"hometown_public",
-                                                                     @"birthyear_public",
-                                                                     @"birthdate_public", nil];
-                                              
-                                              for (NSString *aKey in permission) {
-                                                  NSArray *status = [NSArray arrayWithObjects:@"0", @"10", @"30", @"40", nil];
-                                                  ((QRadioElement *)[self.root elementWithKey:aKey]).selected = [status indexOfObject:[[user objectForKey:aKey] stringValue]];
-                                              }
-                                              
-                                              NSArray *gender = [NSArray arrayWithObjects:@"1", @"2", nil];
-                                              ((QRadioElement *)[self.root elementWithKey:@"gender"]).selected = [gender indexOfObject:[[user objectForKey:@"gender"] stringValue]];
-                                              
-                                              NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-                                              [dateFormat setDateFormat:@"yyyy-MM-dd"];
-                                              
-                                              ((QDateTimeInlineElement *)[self.root elementWithKey:@"birthday"]).dateValue = [dateFormat dateFromString:[user objectForKey:@"birthdate"]];
-
-                                              
-                                              [self.quickDialogTableView reloadData];
-
-                                              [HUD hide:YES];
-                                              
-                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                              [HUD hide:YES];
-                                              
-                                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
-                                                                                              message:error.localizedDescription
-                                                                                             delegate:nil
-                                                                                    cancelButtonTitle:NSLocalizedString(@"close", "Close")
-                                                                                    otherButtonTitles:nil];
-                                              [alert show];
-                                          }];
+    NSDictionary *params = [NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"];
+    [[LatteAPIClient sharedClient] getPath:@"user/me" parameters:params  success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+        
+        NSDictionary *userDict = [JSON objectForKey:@"user"];
+        User* user = [User instanceFromDictionary:userDict];
+        
+        [self.root bindToObject:userDict];
+        
+        NSArray *permission = [NSArray arrayWithObjects:
+                               @"picture_status",
+                               @"gender_public",
+                               @"current_residence_public",
+                               @"hometown_public",
+                               @"birthyear_public",
+                               @"birthdate_public", nil];
+        
+        for (NSString *aKey in permission) {
+            NSArray *status = [NSArray arrayWithObjects:@"0", @"10", @"30", @"40", nil];
+            ((QRadioElement *)[self.root elementWithKey:aKey]).selected = [status indexOfObject:[[userDict objectForKey:aKey] stringValue]];
+        }
+        
+        NSArray *gender = [NSArray arrayWithObjects:@"1", @"2", nil];
+        ((QRadioElement *)[self.root elementWithKey:@"gender"]).selected = [gender indexOfObject:[[userDict objectForKey:@"gender"] stringValue]];
+        
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        [dateFormat setDateFormat:@"yyyy-MM-dd"];
+        
+        ((QDateTimeInlineElement *)[self.root elementWithKey:@"birthday"]).dateValue = [dateFormat dateFromString:[userDict objectForKey:@"birthdate"]];
+        
+        ((QBooleanElement *)[self.root elementWithKey:@"push_notify_comment"]).boolValue = user.notifyAccepts.comment;
+        ((QBooleanElement *)[self.root elementWithKey:@"push_notify_vote"]).boolValue = user.notifyAccepts.vote;
+        ((QBooleanElement *)[self.root elementWithKey:@"mail_comment"]).boolValue = user.mailAccepts.comment;
+        ((QBooleanElement *)[self.root elementWithKey:@"mail_vote"]).boolValue = user.mailAccepts.vote;
+        
+        [self.quickDialogTableView reloadData];
+        
+        [HUD hide:YES];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [HUD hide:YES];
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                        message:error.localizedDescription
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                              otherButtonTitles:nil];
+        [alert show];
+    }];
 }
 
 - (void)setQuickDialogTableView:(QuickDialogTableView *)aQuickDialogTableView {
@@ -112,7 +117,7 @@
         cell.detailTextLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:14];
         cell.textField.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:14];
     }
-    if ([element isKindOfClass:[QRadioItemElement class]]) {
+    if ([element isKindOfClass:[QRadioItemElement class]] || [element isKindOfClass:[QBooleanElement class]]) {
         cell.textLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:16];
         cell.detailTextLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:16];
     }
@@ -154,7 +159,6 @@
 }
 
 - (void)updateNow {
-    [self loading:YES];
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     NSMutableDictionary *param = [NSMutableDictionary dictionaryWithObject:[app getToken] forKey:@"token"];
     
@@ -190,7 +194,6 @@
     [[LatteAPIClient sharedClient] postPath:@"user/me/update"
                                        parameters: param
                                           success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                              [self loading:NO];
                                               if ([[JSON objectForKey:@"status"] integerValue] == 0) {
                                                   NSString *error = @"";
                                                   NSDictionary *errors = [JSON objectForKey:@"errors"];
@@ -201,9 +204,7 @@
                                                   [alert show];
                                               }
  
-                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                              [self loading:NO];
-                                              
+                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) { 
                                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
                                                                                               message:error.localizedDescription
                                                                                              delegate:nil

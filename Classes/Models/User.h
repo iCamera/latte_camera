@@ -1,6 +1,28 @@
 #import <Foundation/Foundation.h>
 #import "ModelObject.h"
 
+@interface UserMailAccept : ModelObject {
+    BOOL comment;
+    BOOL vote;
+}
+
+@property (nonatomic, assign) BOOL comment;
+@property (nonatomic, assign) BOOL vote;
+- (void)setAttributesFromDictionary:(NSDictionary *)aDictionary;
+
+@end
+
+@interface UserPushAccept : ModelObject {
+    BOOL comment;
+    BOOL vote;
+}
+
+@property (nonatomic, assign) BOOL comment;
+@property (nonatomic, assign) BOOL vote;
+- (void)setAttributesFromDictionary:(NSDictionary *)aDictionary;
+
+@end
+
 @interface User : ModelObject {
 
     NSString *age;
@@ -32,6 +54,9 @@
     BOOL isFriend;
     NSNumber *requestToMe;
     NSNumber *requestToUser;
+    
+    UserMailAccept *mailAccepts;
+    UserPushAccept *notifyAccepts;
 }
 
 @property (nonatomic, copy) NSString *age;
@@ -63,8 +88,13 @@
 @property (nonatomic, copy) NSNumber *requestToMe;
 @property (nonatomic, copy) NSNumber *requestToUser;
 
+@property (nonatomic, strong) UserMailAccept *mailAccepts;
+@property (nonatomic, strong) UserPushAccept *notifyAccepts;
+
 + (User *)instanceFromDictionary:(NSDictionary *)aDictionary;
 - (void)setAttributesFromDictionary:(NSDictionary *)aDictionary;
 + (NSMutableArray *)mutableArrayFromDictionary:(NSDictionary *)aDictionary withKey:(NSString *)aKey;
 
 @end
+
+

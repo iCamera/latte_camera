@@ -14,6 +14,16 @@
                 { "type":"QEntryElement", "key":"hobby", "title":"Hobby", "bind":"textValue:hobby", "controllerAction":"handleUpdate:"}
             ]
         },
+        { "title":"PUSH NOTIFICATION", "elements":[
+                { "type":"QBooleanElement", "key":"push_notify_comment", "title":"Comment", "boolValue":0, "controllerAction":"handleUpdate:"},
+                { "type":"QBooleanElement", "key":"push_notify_vote", "title":"Rating", "boolValue":0, "controllerAction":"handleUpdate:"}
+            ]
+        },
+        { "title":"MAIL NOTIFICATION", "elements":[
+                { "type":"QBooleanElement", "key":"mail_comment", "title":"Comment", "boolValue":0, "controllerAction":"handleUpdate:"},
+                { "type":"QBooleanElement", "key":"mail_vote", "title":"Rating", "boolValue":0, "controllerAction":"handleUpdate:"}
+            ]
+        },
         { "title":"PRIVACY SETTINGS", "elements": [
                 { "type":"QRadioElement", "key":"picture_status", "title":"Photo", "items":["Me only", "Friends only", "Members only", "Everyone"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdate:"},
                 { "type":"QRadioElement", "key":"gender_public", "title":"Gender", "items":["Me only", "Friends only", "Members only", "Everyone"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdate:"},

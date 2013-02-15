@@ -12,8 +12,18 @@
                 { "type":"QEntryElement", "key":"occupation", "title":"Nghề nghiệp", "Placeholder":"Nghề nghiệp", "bind":"textValue:occupation", "controllerAction":"handleUpdate:"},
                 { "type":"QEntryElement", "key":"introduction", "title":"Giới thiệu", "bind":"textValue:introduction", "controllerAction":"handleUpdate:"},
                 { "type":"QEntryElement", "key":"hobby", "title":"Sở thích", "bind":"textValue:hobby", "controllerAction":"handleUpdate:"}
-            ]
-        },
+            ]    
+                 },
+                 { "title":"Thông báo bằng push", "elements":[
+                                                   { "type":"QBooleanElement", "key":"push_notify_comment", "title":"Bình luận", "boolValue":0, "controllerAction":"handleUpdate:"},
+                                                   { "type":"QBooleanElement", "key":"push_notify_vote", "title":"Thích", "boolValue":0, "controllerAction":"handleUpdate:"}
+                                                   ]
+                 },
+                 { "title":"Thông báo bằng eMail", "elements":[
+                                                  { "type":"QBooleanElement", "key":"mail_comment", "title":"Bình luận", "boolValue":0, "controllerAction":"handleUpdate:"},
+                                                  { "type":"QBooleanElement", "key":"mail_vote", "title":"Thích", "boolValue":0, "controllerAction":"handleUpdate:"}
+                                                  ]
+                 },
         { "title":"CHÍNH SÁCH RIÊNG TƯ", "elements": [
                 { "type":"QRadioElement", "key":"picture_status", "title":"Ảnh", "items":["Cá nhân", "Bạn bè", "Thành viên", "Công khai"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdate:"},
                 { "type":"QRadioElement", "key":"gender_public", "title":"Giới tính", "items":["Cá nhân", "Bạn bè", "Thành viên", "Công khai"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdate:"},

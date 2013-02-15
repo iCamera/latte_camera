@@ -31,6 +31,9 @@
 @synthesize requestToMe;
 @synthesize requestToUser;
 
+@synthesize notifyAccepts;
+@synthesize mailAccepts;
+
 + (User *)instanceFromDictionary:(NSDictionary *)aDictionary {
 
     User *instance = [[User alloc] init];
@@ -54,6 +57,20 @@
     }
 
     [self setValuesForKeysWithDictionary:aDictionary];
+
+}
+
+- (void)setValue:(id)value forKey:(NSString *)key {
+    if ([key isEqualToString:@"mail_accepts"]) {
+        mailAccepts = [[UserMailAccept alloc] init];
+        [mailAccepts setValuesForKeysWithDictionary:value];
+    } else if ([key isEqualToString:@"app_notify_accepts"]) {
+        notifyAccepts = [[UserPushAccept alloc] init];
+        [notifyAccepts setValuesForKeysWithDictionary:value];
+    }
+    else {
+        [super setValue:value forKey:key];
+    }
 
 }
 
@@ -105,6 +122,63 @@
 
 }
 
+@end
 
+
+@implementation UserMailAccept
+
+@synthesize comment;
+@synthesize vote;
+
+- (void)setAttributesFromDictionary:(NSDictionary *)aDictionary {
+    
+    if (![aDictionary isKindOfClass:[NSDictionary class]]) {
+        return;
+    }
+    
+    [self setValuesForKeysWithDictionary:aDictionary];
+    
+}
+
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
+    
+    if ([key isEqualToString:@"comment"]) {
+        [self setValue:value forKey:@"comment"];
+    } else if ([key isEqualToString:@"vote"]) {
+        [self setValue:value forKey:@"vote"];
+    }
+    else {
+        [super setValue:value forUndefinedKey:key];
+    }
+}
+
+@end
+
+@implementation UserPushAccept
+
+@synthesize comment;
+@synthesize vote;
+
+- (void)setAttributesFromDictionary:(NSDictionary *)aDictionary {
+    
+    if (![aDictionary isKindOfClass:[NSDictionary class]]) {
+        return;
+    }
+    
+    [self setValuesForKeysWithDictionary:aDictionary];
+    
+}
+
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
+    
+    if ([key isEqualToString:@"comment"]) {
+        [self setValue:value forKey:@"_comment"];
+    } else if ([key isEqualToString:@"vote"]) {
+        [self setValue:value forKey:@"vote"];
+    }
+    else {
+        [super setValue:value forUndefinedKey:key];
+    }
+}
 
 @end
