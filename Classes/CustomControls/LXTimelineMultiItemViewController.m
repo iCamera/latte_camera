@@ -8,6 +8,8 @@
 
 #import "LXTimelineMultiItemViewController.h"
 
+#import "LXAppDelegate.h"
+
 @interface LXTimelineMultiItemViewController ()
 
 @end
@@ -48,9 +50,14 @@
     [buttonComment setTitle:[_pic.commentCount stringValue] forState:UIControlStateNormal];
     [buttonVote setTitle:[_pic.voteCount stringValue] forState:UIControlStateNormal];
     
-    if (_pic.canVote)
-        if (!_pic.isVoted)
+    LXAppDelegate* app = (LXAppDelegate*)[[UIApplication sharedApplication] delegate];
+    
+    if (_pic.canVote) {
+        if (!(_pic.isVoted && !app.currentUser))
             buttonVote.enabled = YES;
+    }
+    
+    buttonVote.selected = _pic.isVoted;
     
     buttonComment.tag = [_pic.pictureId integerValue];
     buttonImage.tag = [_pic.pictureId integerValue];

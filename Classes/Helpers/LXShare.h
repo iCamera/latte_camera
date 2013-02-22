@@ -9,19 +9,13 @@
 #import <Foundation/Foundation.h>
 
 #import <MessageUI/MFMailComposeViewController.h>
+#import "REComposeViewController.h"
 #import "FacebookSDK.h"
 
 // MY OWN BLOCK
 typedef void (^MyCompletionBlock)();
 
-@interface LXShare : NSObject<MFMailComposeViewControllerDelegate, FBLoginViewDelegate, UIAlertViewDelegate> {
-    NSString *title;
-    NSString *text;
-    NSData *imageData;
-    UIImage *imagePreview;
-    NSString *tweetCC;
-
-}
+@interface LXShare : NSObject<MFMailComposeViewControllerDelegate, FBLoginViewDelegate, UIAlertViewDelegate, REComposeViewControllerDelegate> 
 
 // BLOCKS
 - (void) setCompletionDone:(MyCompletionBlock)blockDone;

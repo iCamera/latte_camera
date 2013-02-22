@@ -8,6 +8,7 @@
 
 #import "LXPicDetailViewController.h"
 
+
 @interface LXPicDetailViewController ()
 @end
 
@@ -143,9 +144,12 @@
                                        }
                                        
                                        labelAccess.text = [pic.pageviews stringValue];
-                                       if (pic.canVote)
-                                           if (!pic.isVoted)
-                                               buttonLike.enabled = YES;
+                                       if (pic.canVote) {
+                                       if (!(pic.isVoted && !app.currentUser))
+                                           buttonLike.enabled = YES;
+                                       }
+
+                                       buttonLike.selected = pic.isVoted;
                                        
                                        if (pic.canComment) {
                                            buttonComment.enabled = YES;
@@ -551,15 +555,20 @@
                            @"1", @"vote_type",
                            nil];
     
+    if (!app.currentUser)
+        buttonLike.enabled = NO;
+    else {
+        buttonLike.selected = !buttonLike.selected;
+        NSNumber *vote_count = [NSNumber numberWithInt:[labelLike.text integerValue] + (buttonLike.selected?1:-1) ];
+        labelLike.text = [vote_count stringValue];
+    }
+    
     NSString *url = [NSString stringWithFormat:@"picture/%d/vote_post", [pic.pictureId integerValue]];
-    buttonLike.enabled = NO;
     [[LatteAPIClient sharedClient] postPath:url
                                        parameters:param
                                           success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                              NSNumber *vote_count = [NSNumber numberWithInt:[labelLike.text integerValue] + 1 ];
-                                              labelLike.text = [vote_count stringValue];
+                                              
                                           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                              buttonLike.enabled = YES;
                                               TFLog(@"Something went wrong (Vote)");
                                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
                                                                                               message:error.localizedDescription
@@ -613,7 +622,7 @@
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     Comment *comment = comments[indexPath.row];
-    return [comment.user.userId integerValue] == [app.currentUser.userId integerValue];;
+    return ([comment.user.userId integerValue] == [app.currentUser.userId integerValue]) || pic.isOwner;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -625,7 +634,6 @@
         LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
         
         NSString *url = [NSString stringWithFormat:@"picture/comment/%d/delete", [comment.commentId integerValue]];
-        buttonLike.enabled = NO;
         [[LatteAPIClient sharedClient] postPath:url
                                      parameters:[NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"]
                                         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {

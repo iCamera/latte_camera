@@ -956,7 +956,7 @@
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                     </state>
-                                                    <state key="disabled" backgroundImage="bt_iine_on.png"/>
+                                                    <state key="selected" backgroundImage="bt_iine_on.png"/>
                                                     <state key="highlighted" backgroundImage="bt_iine_on.png"/>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="nHF-t0-AEz">
@@ -2320,13 +2320,13 @@ Latteについて、「こんな機能があったら良い」、「この機能
                                 <color key="backgroundColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                 <gestureRecognizers/>
                                 <color key="separatorColor" red="0.73725491759999995" green="0.72156864399999998" blue="0.66274511810000003" alpha="1" colorSpace="deviceRGB"/>
-                                <view key="tableHeaderView" contentMode="scaleToFill" id="d8f-3h-05p">
+                                <view key="tableHeaderView" autoresizesSubviews="NO" contentMode="scaleToFill" id="d8f-3h-05p">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="228"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" id="aY0-AH-DG6" customClass="LXSubLayerView">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="222"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" red="0.90588235289999997" green="0.8980392157" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
                                         </view>
                                         <view contentMode="scaleToFill" id="2gB-we-Nz1" customClass="LXSubLayerView">
@@ -2352,7 +2352,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="Orp-KT-sEr">
-                                                    <rect key="frame" x="6" y="42" width="308" height="85"/>
+                                                    <rect key="frame" x="6" y="42" width="308" height="65"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                 </imageView>
@@ -2396,6 +2396,13 @@ Latteについて、「こんな機能があったら良い」、「この機能
                                                     <color key="shadowColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                     <size key="shadowOffset" width="0.0" height="1"/>
                                                 </label>
+                                                <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="---" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fvV-8c-kbH">
+                                                    <rect key="frame" x="6" y="111" width="308" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                         </view>
@@ -2413,7 +2420,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                     </state>
-                                                    <state key="disabled" backgroundImage="bt_iine_on.png"/>
+                                                    <state key="selected" backgroundImage="bt_iine_on.png"/>
                                                     <state key="highlighted" backgroundImage="bt_iine_on.png">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -2500,7 +2507,6 @@ Latteについて、「こんな機能があったら良い」、「この機能
                                         </view>
                                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="UAe-AN-cxk">
                                             <rect key="frame" x="0.0" y="172" width="320" height="50"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                             <subviews>
                                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" animating="YES" style="gray" id="SfJ-Az-x6h">
                                                     <rect key="frame" x="30" y="14" width="20" height="20"/>
@@ -2680,6 +2686,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
                         <outlet property="labelAuthor" destination="8iH-Me-xCj" id="5uf-rD-7tU"/>
                         <outlet property="labelComment" destination="ksP-PV-G2a" id="Uf1-sw-aoL"/>
                         <outlet property="labelDate" destination="X2R-qY-3XW" id="Kei-lI-mgB"/>
+                        <outlet property="labelDesc" destination="fvV-8c-kbH" id="Oab-vq-k6g"/>
                         <outlet property="labelLike" destination="KZc-53-tYT" id="2xZ-76-xmT"/>
                         <outlet property="labelTitle" destination="jNB-Kj-Lzh" id="Pgl-V1-hZF"/>
                         <outlet property="scrollVotes" destination="UAe-AN-cxk" id="l0A-Ab-NlX"/>
@@ -5049,6 +5056,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
                 <relationship kind="outlet" name="labelAuthor" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="labelComment" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="labelDate" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelDesc" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="labelLike" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="labelTitle" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="scrollVotes" candidateClass="UIScrollView"/>

@@ -934,7 +934,13 @@
 }
 
 - (void)updatePhotoVoteCount:(UIButton*)sender increase:(BOOL)increase {
-    sender.enabled = !increase;
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    if (!app.currentUser)
+        sender.enabled = NO;
+    else {
+        sender.selected = !sender.selected;
+    }
+    
     Feed *feed = [self feedFromPicID:sender.tag];
     Picture *pic = [self picFromPicID:sender.tag];
     pic.isVoted = increase;
@@ -944,12 +950,17 @@
         [sender setTitle:[num stringValue] forState:UIControlStateNormal];
     } else {
         pic.voteCount = [NSNumber numberWithInteger:[pic.voteCount integerValue] + (increase?1:-1)];
-        [sender setTitle:[pic.voteCount stringValue] forState:UIControlStateNormal];
+        
+        long row = [feeds indexOfObject:feed];
+        
+        NSArray *rowIndexes = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:row inSection:0]];
+        [self.tableView reloadRowsAtIndexPaths:rowIndexes
+                              withRowAnimation:UITableViewRowAnimationAutomatic];
     }
 }
 
 - (void)submitLike:(UIButton*)sender {
-    [self updatePhotoVoteCount:sender increase:true];
+    [self updatePhotoVoteCount:sender increase:!sender.selected];
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -963,7 +974,6 @@
                                     success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                         TFLog(@"Submited like");
                                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        [self updatePhotoVoteCount:sender increase:false];
                                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
                                                                                         message:error.localizedDescription
                                                                                        delegate:nil

@@ -231,7 +231,7 @@
         cellComment = (LXCellComment*)[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                                           reuseIdentifier:@"Comment"];
     }
-    Comment *comment = [[[pic.comments reverseObjectEnumerator] allObjects] objectAtIndex:indexPath.row];
+    Comment *comment = pic.comments[indexPath.row];
     [cellComment setComment:comment];
 
     if (!comment.user.isUnregister) {
@@ -251,7 +251,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Comment *comment = [[[pic.comments reverseObjectEnumerator] allObjects] objectAtIndex:indexPath.row];
+    Comment *comment = pic.comments[indexPath.row];
     CGSize labelSize = [comment.descriptionText sizeWithFont:[UIFont fontWithName:@"AvenirNextCondensed-Regular" size:11]
                               constrainedToSize:CGSizeMake(255.0f, MAXFLOAT)
                                   lineBreakMode:NSLineBreakByWordWrapping];

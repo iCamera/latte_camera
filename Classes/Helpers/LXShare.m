@@ -13,8 +13,6 @@
 #import <Social/Social.h>
 #import <objc/runtime.h>
 
-#import "REComposeViewController.h"
-
 #define SYSTEM_VERSION_LESS_THAN(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
 #define BLOCK_DONE                      @"BlockDone"
 #define BLOCK_CANCELED                  @"BlockCanceled"
@@ -28,7 +26,14 @@ typedef enum {
     typeSaved
 }typeResult;
 
-@implementation LXShare
+@implementation LXShare {
+    NSString *title;
+    NSString *text;
+    NSData *imageData;
+    UIImage *imagePreview;
+    NSString *tweetCC;
+    
+}
 
 @synthesize text;
 @synthesize imagePreview;
@@ -231,8 +236,7 @@ typedef enum {
 {
     //share to facebook
     // esto lo hago solo si la version del sistema es menor a la 6.0
-    if (SYSTEM_VERSION_LESS_THAN(@"6.0"))
-    {
+
         // If the session is open, do the post, if not, try login
         if (FBSession.activeSession.isOpen)
         {
@@ -259,54 +263,8 @@ typedef enum {
                 titleView.textColor         = [UIColor whiteColor];
                 titleView.text              = @"Facebook";
                 composeViewController.navigationItem.titleView = titleView;
-                
-                // UIApperance setup
-                // Facebook colors
-                composeViewController.navigationBar.tintColor                       = [UIColor colorWithRed:44.0/255.0 green:67.0/255.0 blue:136.0/255.0 alpha:1.0];
-                //composeViewController.navigationItem.leftBarButtonItem.tintColor    = [UIColor colorWithRed:70.0/255.0 green:91.0/255.0 blue:192.0/255.0 alpha:1.0];
-                //composeViewController.navigationItem.rightBarButtonItem.tintColor   = [UIColor colorWithRed:70.0/255.0 green:91.0/255.0 blue:192.0/255.0 alpha:1.0];
-                
-                // Alternative use with REComposeViewControllerCompletionHandler
-                composeViewController.completionHandler = ^(REComposeResult result)
-                {
-                    switch (result)
-                    {
-                        case REComposeResultCancelled:
-                            [self completionResult:typeCanceled];
-                            break;
-                            
-                        case REComposeResultPosted: {
-                            [self performPublishAction:^{
-                                
-                                // paso los parametros para mandar al feed del usuario
-                                NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                                               imageData, @"source",
-                                                               composeViewController.text, @"message",
-                                                               title, @"caption",
-                                                               nil];
-                                [FBRequestConnection startWithGraphPath:@"me/photos"
-                                                             parameters:params
-                                                             HTTPMethod:@"POST"
-                                                      completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-                                                          
-                                                          if (!error)
-                                                          {
-                                                              [self completionResult:typeDone];
-                                                          }
-                                                          else
-                                                          {
-                                                              NSLog(@"ERROR AT 'startWithGraphPath': %@", [error localizedDescription]);
-                                                              [self completionResult:typeCanceled];
-                                                          }
-                                                      }];
-                            }];
-                        }
-                            break;
-                            
-                        default:
-                            break;
-                    }
-                };
+
+                composeViewController.navigationBar.tintColor = [UIColor colorWithRed:44.0/255.0 green:67.0/255.0 blue:136.0/255.0 alpha:1.0];
                 
                 [_controller presentViewController:composeViewController animated:YES completion:nil];
             }
@@ -315,38 +273,45 @@ typedef enum {
         {
             [self openSessionWithAllowLoginUI:YES];
         }
-    }
-    else
+}
+
+- (void)composeViewController:(REComposeViewController *)composeViewController didFinishWithResult:(REComposeResult)result {
+    switch (result)
     {
-        NSAssert(_controller, @"ViewController must not be nil.");
-        
-        SLComposeViewController *socialComposer = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
-        if (title != nil)
-            [socialComposer setTitle:title];
-        if (text != nil)
-            [socialComposer setInitialText:text];
-        if (imagePreview != nil)
-            [socialComposer addImage:imagePreview];
-        
-        [socialComposer setCompletionHandler:^(SLComposeViewControllerResult result){
-            switch (result) {
-                case SLComposeViewControllerResultCancelled:
-                    [self completionResult:typeCanceled];
-                    
-                    break;
-                case SLComposeViewControllerResultDone:
-                    [self completionResult:typeDone];
-                    
-                    break;
-                default:
-                    [self completionResult:typeFailed];
-                    break;
-            }
+        case REComposeResultCancelled:
+            [self completionResult:typeCanceled];
+            break;
             
-            //[controller dismissViewControllerAnimated:YES completion:nil];
-        }];
-        
-        [_controller presentModalViewController:socialComposer animated:YES];
+        case REComposeResultPosted: {
+            [self performPublishAction:^{
+                
+                // paso los parametros para mandar al feed del usuario
+                NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                               imageData, @"source",
+                                               composeViewController.text, @"message",
+                                               title, @"caption",
+                                               nil];
+                [FBRequestConnection startWithGraphPath:@"me/photos"
+                                             parameters:params
+                                             HTTPMethod:@"POST"
+                                      completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                                          
+                                          if (!error)
+                                          {
+                                              [self completionResult:typeDone];
+                                          }
+                                          else
+                                          {
+                                              NSLog(@"ERROR AT 'startWithGraphPath': %@", [error localizedDescription]);
+                                              [self completionResult:typeCanceled];
+                                          }
+                                      }];
+            }];
+        }
+            break;
+            
+        default:
+            break;
     }
 }
 
@@ -513,4 +478,5 @@ typedef enum {
         _completionBlock();
     }
 }
+
 @end

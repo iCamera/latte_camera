@@ -8,6 +8,8 @@
 
 #import "LXCellTimelineSingle.h"
 
+#import "LXAppDelegate.h"
+
 @implementation LXCellTimelineSingle
 
 @synthesize viewController;
@@ -118,9 +120,16 @@
     labelLike.text = [pic.voteCount stringValue];
     labelComment.text = [pic.commentCount stringValue];
 
-    if (pic.canVote)
-        if (!pic.isVoted)
+    LXAppDelegate* app = (LXAppDelegate*)[[UIApplication sharedApplication] delegate];
+    
+    if (pic.canVote) {
+        if (!(pic.isVoted && !app.currentUser))
             buttonLike.enabled = YES;
+    } else {
+        buttonLike.enabled = NO;
+    }
+    
+    buttonLike.selected = pic.isVoted;
     
     if (pic.canComment) {
         buttonComment.enabled = YES;
@@ -146,7 +155,7 @@
     [buttonUser addTarget:viewController action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
     [buttonPic addTarget:viewController action:@selector(showPic:) forControlEvents:UIControlEventTouchUpInside];
     [buttonInfo addTarget:viewController action:@selector(showInfo:) forControlEvents:UIControlEventTouchUpInside];
-    [buttonComment addTarget:viewController action:@selector(showComment:) forControlEvents:UIControlEventTouchUpInside];
+    [buttonComment addTarget:viewController action:@selector(showPic:) forControlEvents:UIControlEventTouchUpInside];
     [buttonLike addTarget:viewController action:@selector(submitLike:) forControlEvents:UIControlEventTouchUpInside];
     [buttonMap addTarget:viewController action:@selector(showMap:) forControlEvents:UIControlEventTouchUpInside];
     [buttonExpand addTarget:viewController action:@selector(toggleComment:) forControlEvents:UIControlEventTouchUpInside];
