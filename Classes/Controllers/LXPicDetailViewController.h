@@ -11,7 +11,6 @@
 #import "LXCellComment.h"
 #import "LXAppDelegate.h"
 #import "LXUtils.h"
-#import "LXUserPageViewController.h"
 #import "LXButtonBrown30.h"
 
 #import "LatteAPIClient.h"
@@ -24,26 +23,15 @@
 #import "MBProgressHUD.h"
 #import "UIImageView+loadProgress.h"
 #import "UIButton+AsyncImage.h"
+#import "HPGrowingTextView.h"
 
 @class LXCellComment, LXButtonBrown30;
 
-@interface LXPicDetailViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, EGORefreshTableHeaderDelegate> {
-    EGORefreshTableHeaderView *refreshHeaderView;
-    Picture *pic;
-    NSInteger picID;
-    //User *user;
-    BOOL reloading;
-    BOOL loaded;
-    NSMutableArray *comments;
-    MBProgressHUD *HUD;
-}
+@interface LXPicDetailViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, EGORefreshTableHeaderDelegate, HPGrowingTextViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *gestureTap;
-@property (strong, nonatomic) IBOutlet UIView *viewTextbox;
-@property (strong, nonatomic) IBOutlet UITextField *textComment;
-@property (strong, nonatomic) IBOutlet LXButtonBrown30 *buttonSend;
-@property (strong, nonatomic) IBOutlet UITableView *tablePic;
 @property (strong, nonatomic) IBOutlet LXButtonBrown30 *buttonEdit;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic) IBOutlet UIImageView *imagePic;
 @property (strong, nonatomic) IBOutlet UIView *viewStats;
@@ -64,9 +52,12 @@
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorComment;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollVotes;
 
+@property (strong, nonatomic) IBOutlet UIView *viewComment;
+@property (strong, nonatomic) IBOutlet HPGrowingTextView *growingComment;
+@property (strong, nonatomic) IBOutlet LXButtonBrown30 *buttonSend;
+
 - (IBAction)touchBackground:(id)sender;
 - (IBAction)touchBack:(id)sender;
-- (IBAction)changeText:(id)sender;
 - (IBAction)touchSend:(id)sender;
 - (IBAction)touchEdit:(id)sender;
 - (IBAction)touchLike:(id)sender;
@@ -76,7 +67,6 @@
 - (IBAction)showKeyboard:(id)sender;
 
 @property (strong, nonatomic) Picture *pic;
-@property (assign, nonatomic) NSInteger picID;
 
 - (void)reloadView;
 

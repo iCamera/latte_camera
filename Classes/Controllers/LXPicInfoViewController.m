@@ -51,7 +51,7 @@
     imagePic.layer.shadowRadius = 1.0f;
     imagePic.layer.shadowPath = shadowPath.CGPath;
     
-    NSString *url = [NSString stringWithFormat:@"picture/%d", picID];
+    NSString *url = [NSString stringWithFormat:@"picture/%d", _pictureID];
 
     [[LatteAPIClient sharedClient] getPath:url
                                       parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
@@ -111,10 +111,6 @@
 
 - (IBAction)touchBack:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)setPictureID:(int)aPicID {
-    picID = aPicID;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

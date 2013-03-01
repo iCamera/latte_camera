@@ -54,6 +54,13 @@
         [self setValue:value forKey:@"descriptionText"];
     } else if ([key isEqualToString:@"can_edit"]) {
         [self setValue:value forKey:@"canEdit"];
+    } else if ([key isEqualToString:@"is_voted"]) {
+        [self setValue:value forKey:@"_isVoted"];
+    } else if ([key isEqualToString:@"vote_count"]) {
+        [self setValue:value forKey:@"_voteCount"];
+    } else if ([key isEqualToString:@"can_vote"]) {
+        [self setValue:value forKey:@"_canVote"];
+
     } else {
         [super setValue:value forUndefinedKey:key];
     }

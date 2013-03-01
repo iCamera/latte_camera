@@ -17,12 +17,14 @@
 #import "EGORefreshTableHeaderView.h"
 #import "LXCellTimelineSingle.h"
 #import "LXCellTimelineMulti.h"
-#import "LXUserPageViewController.h"
+#import "LXGalleryViewController.h"
 
-#define kTableTimeline 1
-#define kTableGrid 2
+typedef enum {
+    kWelcomeTableTimeline,
+    kWelcomeTableGrid,
+} WelcomeTableMode;
 
-@interface LXWelcomeViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,EGORefreshTableHeaderDelegate> {
+@interface LXWelcomeViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,EGORefreshTableHeaderDelegate, LXGalleryViewControllerDataSource> {
     NSMutableArray *feeds;
     int pagephoto;
     BOOL loadEnded;

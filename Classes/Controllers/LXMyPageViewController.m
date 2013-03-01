@@ -8,30 +8,67 @@
 
 #import "LXMyPageViewController.h"
 
+#import "LXAppDelegate.h"
+#import "LatteAPIClient.h"
+#import "UIImageView+AFNetworking.h"
+#import "LXPicDetailViewController.h"
+#import "LXCellFriend.h"
+#import "LXUtils.h"
+#import "LXCellComment.h"
+#import "UIButton+AsyncImage.h"
+#import "LXSettingViewController.h"
+#import "LXPicInfoViewController.h"
+#import "LXPicMapViewController.h"
+#import "LXButtonBrown30.h"
+#import "Feed.h"
+#import "User.h"
+#import "Picture.h"
+#import "UIActionSheet+ButtonState.h"
+#import "LXCellTimelineSingle.h"
+#import "LXCellTimelineMulti.h"
+#import "LXRootBuilder.h"
+
+#import "LXViewHeaderMypage.h"
+#import "LXViewHeaderUserPage.h"
+
 @interface LXMyPageViewController ()
 
 @end
 
-@implementation LXMyPageViewController
-@synthesize buttonVoteCount;
-@synthesize buttonPicCount;
-@synthesize buttonFriendCount;
-@synthesize buttonFollowCount;
-@synthesize buttonTimelineAll;
-@synthesize buttonTimelineFollow;
-@synthesize buttonTimelineFriend;
-@synthesize buttonTimelineMe;
+@implementation LXMyPageViewController  {
+    NSMutableSet *showSet;
+    NSArray *showField;
+    NSDictionary *userDict;
+    NSInteger daysInMonth;
+    
+    MypageTableMode tableMode;
+    MypagePhotoMode photoMode;
+    NSArray *allTab;
+    BOOL reloading;
+    BOOL endedTimeline;
+    BOOL endedPic;
+    BOOL endedVoted;
+    BOOL isMypage;
+    
+    int pagePic;
+    int pageVote;
+    NSMutableArray *feeds;
+    NSMutableArray *pictures;
+    NSMutableArray *votes;
+    NSMutableArray *friends;
+    NSMutableArray *followings;
+    NSMutableArray *lxFeeds;
+    NSMutableDictionary *currentMonthPics;
+    NSDate *currentMonth;
+    EGORefreshTableHeaderView *refreshHeaderView;
+    MBProgressHUD *HUD;
+    
+    LXViewHeaderMypage *viewHeaderMypage;
+    LXViewHeaderUserPage *viewHeaderUserpage;
+}
 
-@synthesize buttonProfilePic;
-@synthesize viewStats;
-@synthesize buttonNavLeft;
-@synthesize labelNickname;
+
 @synthesize loadIndicator;
-
-@synthesize labelTitleFav;
-@synthesize labelTitlePicCount;
-@synthesize labelTitleFriends;
-@synthesize labelTitleVote;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -42,9 +79,11 @@
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithCoder:aDecoder];
+
+- (id)init {
+    self = [super init];
     
+    if (self) {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTimeline:) name:@"LoggedIn" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive:) name:@"BecomeActive" object:nil];
     
@@ -57,26 +96,8 @@
                                              selector:@selector(readNotify:)
                                                  name:@"ReadNotify"
                                                object:nil];
-    tableMode = kTableTimeline;
-    timelineMode = kListAll;
-    endedPic = false;
-    endedTimeline = false;
-    endedVoted = false;
-    toggleSection = [[NSMutableDictionary alloc] init];
-    pictures = [[NSMutableArray alloc] init];
-    votes = [[NSMutableArray alloc] init];
-    isEmpty = false;
-    pagePic = 0;
-    pageVote = 0;
+    }
     return self;
-}
-
-- (void)receivedPushNotify:(id)sender {
-    [buttonNavLeft setImage:[UIImage imageNamed:@"icon_info_on.png"] forState:UIControlStateNormal];
-}
-
-- (void)readNotify:(id)sender {
-    [buttonNavLeft setImage:[UIImage imageNamed:@"icon_info.png"] forState:UIControlStateNormal];
 }
 
 
@@ -84,12 +105,52 @@
 {
     [super viewDidLoad];
     
-    if ([UIApplication sharedApplication].applicationIconBadgeNumber > 0) {
-        [buttonNavLeft setImage:[UIImage imageNamed:@"icon_info_on.png"] forState:UIControlStateNormal];
-    }
+    showSet = [NSMutableSet setWithObjects:@"gender", @"residence", @"age", @"birthdate", @"bloodtype", @"occupation", @"introduction", @"hobby", nil];
     
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    [app.tracker sendView:@"Mypage Screen"];
+    tableMode = kTablePhoto;
+    endedPic = false;
+    endedTimeline = false;
+    endedVoted = false;
+    pictures = [[NSMutableArray alloc] init];
+    votes = [[NSMutableArray alloc] init];
+    
+    pagePic = 0;
+    pageVote = 0;
+    currentMonth = [NSDate date];
+    
+    LXAppDelegate* app = [LXAppDelegate currentDelegate];
+    self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 120)];
+    self.tableView.tableHeaderView.clipsToBounds = YES;
+    
+    if (_user == nil) {
+        if (app.currentUser == nil) {
+            return;
+        } else {
+            _user = app.currentUser;
+            viewHeaderMypage = [[LXViewHeaderMypage alloc] init];
+            viewHeaderMypage.user = _user;
+            viewHeaderMypage.parent = self;
+            [self.tableView.tableHeaderView addSubview:viewHeaderMypage.view];
+            [self addChildViewController:viewHeaderMypage];
+            [viewHeaderMypage didMoveToParentViewController:self];
+            [app.tracker sendView:@"Mypage Screen"];
+            
+            photoMode = kPhotoTimeline;
+            isMypage = true;
+        }
+    } else {
+        viewHeaderUserpage = [[LXViewHeaderUserPage alloc] init];
+        [self.tableView.tableHeaderView addSubview:viewHeaderUserpage.view];
+        [self addChildViewController:viewHeaderUserpage];
+        [viewHeaderUserpage didMoveToParentViewController:self];
+        viewHeaderUserpage.user = _user;
+        viewHeaderUserpage.parent = self;
+        
+        [app.tracker sendView:@"User Screen"];
+        
+        photoMode = kPhotoMyphoto;
+        isMypage = false;
+    }
     
     HUD = [[MBProgressHUD alloc] initWithView:self.tableView];
     [self.tableView addSubview:HUD];
@@ -99,50 +160,11 @@
     HUD.margin = 10.f;
     HUD.yOffset = 150.f;
     
-    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:buttonProfilePic.bounds];
-    buttonProfilePic.layer.masksToBounds = NO;
-    buttonProfilePic.layer.shadowColor = [UIColor blackColor].CGColor;
-    buttonProfilePic.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
-    buttonProfilePic.layer.shadowOpacity = 1.0f;
-    buttonProfilePic.layer.shadowRadius = 1.0f;
-    buttonProfilePic.layer.shadowPath = shadowPath.CGPath;
-    
-    buttonProfilePic.layer.cornerRadius = 5;
-    buttonProfilePic.clipsToBounds = YES;
-    
-    
-    CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = CGRectMake(0, 108, 320, 10);
-    gradient.colors = [NSArray arrayWithObjects:
-                       (id)[[UIColor clearColor] CGColor],
-                       (id)[[[UIColor blackColor] colorWithAlphaComponent:0.2f] CGColor],
-                       nil];
-    [viewStats.layer insertSublayer:gradient atIndex:0];
-    
     refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
     refreshHeaderView.delegate = self;
     [self.tableView addSubview:refreshHeaderView];
     
-    
-    self.viewStats.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
-    self.tableView.backgroundColor = [UIColor whiteColor];
-    
-    //Init sidebar
-    UIPanGestureRecognizer *navigationBarPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:app.revealController action:@selector(revealGesture:)];
-    [self.navigationController.navigationBar addGestureRecognizer:navigationBarPanGestureRecognizer];
-    [buttonNavLeft addTarget:app.revealController action:@selector(revealLeft:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    allTab = [NSArray arrayWithObjects:
-              buttonFriendCount,
-              buttonFollowCount,
-              buttonPicCount,
-              buttonVoteCount,
-              buttonTimelineAll,
-              buttonTimelineFollow,
-              buttonTimelineFriend,
-              buttonTimelineMe,
-              nil];
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     
     [self reloadView];
 }
@@ -151,20 +173,39 @@
     [HUD show:YES];
     [loadIndicator startAnimating];
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    [[LatteAPIClient sharedClient] getPath:@"user/me/timeline"
+    LatteTimeline timelineKind;
+    switch (photoMode) {
+        case kPhotoTimeline:
+            timelineKind = kTimelineAll;
+            break;
+        case kPhotoFollowing:
+            timelineKind = kTimelineFollowing;
+            break;
+        case kPhotoFriends:
+            timelineKind = kTimelineFriends;
+            break;
+    }
+    
+    NSString *url;
+    if (isMypage)
+        url = @"user/me/timeline";
+    else
+        url = [NSString stringWithFormat:@"user/%d/timeline", [_user.userId integerValue]];
+    [[LatteAPIClient sharedClient] getPath:url
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:
                                              [app getToken], @"token",
-                                             [NSNumber numberWithInteger:timelineMode], @"listtype",
+                                             [NSNumber numberWithInteger:timelineKind], @"listtype",
                                              nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        feeds = [Feed mutableArrayFromDictionary:JSON
                                                                         withKey:@"feeds"];
-                                       isEmpty = feeds.count == 0;
+                                       
                                        [self.tableView reloadData];
                                        [self doneLoadingTableViewData];
                                        [loadIndicator stopAnimating];
                                        [HUD hide:YES];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       [self.tableView reloadData];
                                        [loadIndicator stopAnimating];
                                        TFLog(@"Something went wrong (Timeline)");
                                        [HUD hide:YES];
@@ -174,29 +215,18 @@
 - (void)reloadProfile {
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
-    [[LatteAPIClient sharedClient] getPath:@"user/me"
+    NSString *url = [NSString stringWithFormat:@"user/%d", [_user.userId integerValue]];
+    [[LatteAPIClient sharedClient] getPath:url
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       User *user = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
+                                       userDict = [JSON objectForKey:@"user"];
+                                       User *user = [User instanceFromDictionary:userDict];
                                        app.currentUser = user;
+                                       viewHeaderMypage.user = user;
                                        
-                                       [buttonProfilePic loadBackground:user.profilePicture placeholderImage:@"user.gif"];
-                                       
-                                       CATransition *animation = [CATransition animation];
-                                       animation.duration = 1.0;
-                                       animation.type = kCATransitionFade;
-                                       animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-                                       [labelNickname.layer addAnimation:animation forKey:@"changeTextTransition"];
-                                       [buttonFriendCount.titleLabel.layer addAnimation:animation forKey:@"changeTextTransition"];
-                                       [buttonVoteCount.titleLabel.layer addAnimation:animation forKey:@"changeTextTransition"];
-                                       [buttonPicCount.titleLabel.layer addAnimation:animation forKey:@"changeTextTransition"];
-                                       [buttonFollowCount.titleLabel.layer addAnimation:animation forKey:@"changeTextTransition"];
-
-                                       labelNickname.text = user.name;
-                                       [buttonFriendCount setTitle:[user.countFriends stringValue] forState:UIControlStateNormal];
-                                       [buttonVoteCount setTitle:[user.voteCount stringValue] forState:UIControlStateNormal];
-                                       [buttonPicCount setTitle:[user.countPictures stringValue] forState:UIControlStateNormal];
-                                       [buttonFollowCount setTitle:[user.countFollows stringValue] forState:UIControlStateNormal];
+                                       NSSet *allField = [NSSet setWithArray:[userDict allKeys]];
+                                       [showSet intersectSet:allField];
+                                       showField = [showSet allObjects];
                                        
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        TFLog(@"Something went wrong (Profile)");
@@ -213,17 +243,18 @@
     NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
                            [app getToken], @"token",
                            [NSNumber numberWithInt:pagePic + 1], @"page",
-                           [NSNumber numberWithInt:40], @"limit",
+                           [NSNumber numberWithInt:30], @"limit",
                            nil];
+    NSString *url = [NSString stringWithFormat:@"picture/user/%d", [_user.userId integerValue]];
     
-    [[LatteAPIClient sharedClient] getPath:@"picture/user/me"
+    [[LatteAPIClient sharedClient] getPath:url
                                 parameters: param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        pictures = [Picture mutableArrayFromDictionary:JSON
                                                                                       withKey:@"pictures"];
                                        
                                        endedPic = pictures.count == 0;
-                                       isEmpty = pictures.count == 0;
+                                       
                                        [self.tableView reloadData];
                                        [self doneLoadingTableViewData];
                                        
@@ -244,10 +275,11 @@
     NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
         [app getToken], @"token",
         [NSNumber numberWithInt:pagePic + 1], @"page",
-        [NSNumber numberWithInt:40], @"limit",
+        [NSNumber numberWithInt:30], @"limit",
         nil];
 
-    [[LatteAPIClient sharedClient] getPath:@"picture/user/me"
+    NSString *url = [NSString stringWithFormat:@"picture/user/%d", [_user.userId integerValue]];
+    [[LatteAPIClient sharedClient] getPath:url
                                 parameters: param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        NSArray *newPics = [Picture mutableArrayFromDictionary:JSON
@@ -259,7 +291,7 @@
                                        
                                        
                                        [pictures addObjectsFromArray:newPics];
-                                       isEmpty = pictures.count == 0;
+                                       
                                        NSInteger newRow = [self tableView:self.tableView numberOfRowsInSection:0];
                                        for (NSInteger i = oldRow; i < newRow; i++) {
                                            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]]
@@ -279,115 +311,42 @@
                                    }];
 }
 
-- (void)reloadFriends {
+- (void)reloadFollower {
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
-    [[LatteAPIClient sharedClient] getPath:@"user/me/friend"
+    NSString *url = [NSString stringWithFormat:@"user/%d/follower", [_user.userId integerValue]];
+    [[LatteAPIClient sharedClient] getPath:url
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        friends = [User mutableArrayFromDictionary:JSON
-                                                                          withKey:@"friends"];
-                                       isEmpty = friends.count == 0;
+                                                                          withKey:@"followers"];
+                                       
                                        [self doneLoadingTableViewData];
                                        [self.tableView reloadData];
                                        
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       TFLog(@"Something went wrong (Friendlist)");
+                                       TFLog(@"Something went wrong (Follower)");
                                        [self doneLoadingTableViewData];
+                                       [self.tableView reloadData];
                                    }];
 }
 
 - (void)reloadFollowings {
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
-    [[LatteAPIClient sharedClient] getPath:@"user/me/following"
+    NSString *url = [NSString stringWithFormat:@"user/%d/following", [_user.userId integerValue]];
+    [[LatteAPIClient sharedClient] getPath:url
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        followings = [User mutableArrayFromDictionary:JSON
                                                                              withKey:@"following"];
-                                       isEmpty = followings.count == 0;
+                                       
                                        [self doneLoadingTableViewData];
                                        [self.tableView reloadData];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       TFLog(@"Something went wrong (Friendlist)");
+                                       TFLog(@"Something went wrong (Reload Following)");
                                        [self doneLoadingTableViewData];
-                                   }];
-}
-
-- (void)reloadVoted {
-    endedVoted = false;
-    pageVote = 0;
-    
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    [loadIndicator startAnimating];
-    
-    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
-                           [app getToken], @"token",
-                           [NSNumber numberWithInt:pageVote + 1], @"page",
-                           [NSNumber numberWithInt:40], @"limit",
-                           nil];
-    
-    [[LatteAPIClient sharedClient] getPath:@"picture/user/interesting/me"
-                                parameters: param
-                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       votes = [Picture mutableArrayFromDictionary:JSON
-                                                                                       withKey:@"pictures"];
-                                       endedVoted = votes.count == 0;
-                                       isEmpty = votes.count == 0;
-                                       
                                        [self.tableView reloadData];
-                                       
-                                       [self doneLoadingTableViewData];
-                                       
-                                       pageVote += 1;
-                                       [loadIndicator stopAnimating];
-                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       TFLog(@"Something went wrong (Photolist)");
-                                       [self doneLoadingTableViewData];
-                                       
-                                       [loadIndicator stopAnimating];
-                                   }];
-}
-
-- (void)loadMoreVotes {
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    [loadIndicator startAnimating];
-    
-    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
-                           [app getToken], @"token",
-                           [NSNumber numberWithInt:pageVote + 1], @"page",
-                           [NSNumber numberWithInt:40], @"limit",
-                           nil];
-    
-    [[LatteAPIClient sharedClient] getPath:@"picture/user/interesting/me"
-                                parameters: param
-                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       NSArray *newVotes = [Picture mutableArrayFromDictionary:JSON
-                                                                           withKey:@"pictures"];
-                                       endedVoted = newVotes.count == 0;
-                                       
-                                       NSInteger oldRow = [self tableView:self.tableView numberOfRowsInSection:0];
-                                       [self.tableView beginUpdates];
-                                       [votes addObjectsFromArray:newVotes];
-
-                                       isEmpty = votes.count == 0;
-                                       NSInteger newRow = [self tableView:self.tableView numberOfRowsInSection:0];
-                                       for (NSInteger i = oldRow; i < newRow; i++) {
-                                           [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]]
-                                                                 withRowAnimation:UITableViewRowAnimationAutomatic];
-                                       }
-                                       
-                                       [self.tableView endUpdates];
-                                       
-                                       [self doneLoadingTableViewData];
-                                       
-                                       pageVote += 1;
-                                       [loadIndicator stopAnimating];
-                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       TFLog(@"Something went wrong (Photolist)");
-                                       [self doneLoadingTableViewData];
-                                       
-                                       [loadIndicator stopAnimating];
                                    }];
 }
 
@@ -400,20 +359,19 @@
     [self reloadProfile];
     
     switch (tableMode) {
-        case kTableTimeline:
-            [self reloadTimeline];
+        case kTablePhoto:
+            if (photoMode == kPhotoMyphoto)
+                [self reloadPicList];
+            else if (photoMode == kPhotoCalendar)
+                [self reloadCalendar];
+            else
+                [self reloadTimeline];
             break;
         case kTableFollowings:
             [self reloadFollowings];
             break;
-        case kTablePicList:
-            [self reloadPicList];
-            break;
-        case kTableFriends:
-            [self reloadFriends];
-            break;
-        case kTableVoted:
-            [self reloadVoted];
+        case kTableFollower:
+            [self reloadFollower];
             break;
         default:
             break;
@@ -421,45 +379,79 @@
 }
 
 - (void)loadMore {
-    if (tableMode == kTableTimeline) {
-        [loadIndicator startAnimating];
-        Feed *feed = feeds.lastObject;
-        
-        LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-        [[LatteAPIClient sharedClient] getPath:@"user/me/timeline"
-                                    parameters: [NSDictionary dictionaryWithObjectsAndKeys:
-                                                 [app getToken], @"token",
-                                                 [NSNumber numberWithInteger:timelineMode], @"listtype",
-                                                 feed.feedID, @"last_id",
-                                                 nil]
-                                       success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                           NSMutableArray *newFeed = [Feed mutableArrayFromDictionary:JSON
-                                                                                              withKey:@"feeds"];
+    [loadIndicator startAnimating];
+    Feed *feed = feeds.lastObject;
+    
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    NSString *url;
+    if (isMypage)
+        url = @"user/me/timeline";
+    else
+        url = [NSString stringWithFormat:@"user/%d/timeline", [_user.userId integerValue]];
+    
+    [[LatteAPIClient sharedClient] getPath: url
+                                parameters: [NSDictionary dictionaryWithObjectsAndKeys:
+                                             [app getToken], @"token",
+                                             [NSNumber numberWithInteger:photoMode], @"listtype",
+                                             feed.feedID, @"last_id",
+                                             nil]
+                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       NSMutableArray *newFeed = [Feed mutableArrayFromDictionary:JSON
+                                                                                          withKey:@"feeds"];
+                                       
+                                       
+                                       if (newFeed.count == 0) {
+                                           endedTimeline = true;
+                                       }
+                                       else {
+                                           NSInteger oldRow = [self tableView:self.tableView numberOfRowsInSection:0];
+                                           [self.tableView beginUpdates];
+                                           [feeds addObjectsFromArray:newFeed];
+                                           NSInteger newRow = [self tableView:self.tableView numberOfRowsInSection:0];
+                                           for (NSInteger i = oldRow; i < newRow; i++) {
+                                               [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]]
+                                                                     withRowAnimation:UITableViewRowAnimationAutomatic];
+                                           }
+                                           
+                                           [self.tableView endUpdates];
+                                       }
+                                       
+                                       [loadIndicator stopAnimating];
+                                       [self doneLoadingTableViewData];
+                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       TFLog(@"Something went wrong (Timeline)");
+                                       [loadIndicator stopAnimating];
+                                   }];
+}
 
-                                           
-                                           if (newFeed.count == 0) {
-                                               endedTimeline = true;
-                                           }
-                                           else {
-                                               NSInteger oldRow = [self tableView:self.tableView numberOfRowsInSection:0];
-                                               [self.tableView beginUpdates];
-                                               [feeds addObjectsFromArray:newFeed];
-                                               NSInteger newRow = [self tableView:self.tableView numberOfRowsInSection:0];
-                                               for (NSInteger i = oldRow; i < newRow; i++) {
-                                                   [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]]
-                                                                   withRowAnimation:UITableViewRowAnimationAutomatic];
-                                               }
-                                               
-                                               [self.tableView endUpdates];
-                                           }
-                                           
-                                           [loadIndicator stopAnimating];
-                                           [self doneLoadingTableViewData];
-                                       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                           TFLog(@"Something went wrong (Timeline)");
-                                           [loadIndicator stopAnimating];
-                                       }];
-    }
+- (void)reloadCalendar {
+    LXAppDelegate* app = (LXAppDelegate*)[[UIApplication sharedApplication] delegate];
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyyMM"];
+    
+    NSString* urlPhotos = [NSString stringWithFormat:@"picture/album/by_month/%@/%d", [dateFormat stringFromDate:currentMonth], [_user.userId integerValue]];
+    
+    [[LatteAPIClient sharedClient] getPath:urlPhotos
+                                parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       NSMutableArray *pics = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
+                                       currentMonthPics = [[NSMutableDictionary alloc]init];
+                                       NSDateFormatter *dayFormat = [[NSDateFormatter alloc] init];
+                                       [dayFormat setDateFormat:@"dd"];
+                                       
+                                       for (Picture *pic in pics) {
+                                           NSString* key = [dayFormat stringFromDate:pic.createdAt];
+                                           [currentMonthPics setObject:pic forKey:key];
+                                       }
+                                       
+                                       [self.tableView reloadData];
+                                       
+                                       [self doneLoadingTableViewData];
+                                       
+                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       TFLog(@"Something went wrong (User - Calendar)");
+                                       
+                                   }];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -467,90 +459,78 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (isEmpty)
-        return 0;
-    
-    if (tableMode == kTableTimeline) {
-        return feeds.count;
+    switch (tableMode) {
+        case kTablePhoto:
+            if (photoMode == kPhotoMyphoto) {
+                return (pictures.count/3) + (pictures.count%3>0?1:0);
+            } else if (photoMode == kPhotoCalendar) {
+                return 1;
+            }
+            else {
+                return feeds.count;
+            }
+        case kTableFollowings:
+            return followings.count;
+        case kTableFollower:
+            return friends.count;
+        case kTableProfile:
+            return [showField count];
     }
-    else if (tableMode == kTablePicList) {
-        return (pictures.count/4) + (pictures.count%4>0?1:0);
-    }
-    else if (tableMode == kTableVoted) {
-        return (votes.count/4) + (votes.count%4>0?1:0);
-    }
-    else if (tableMode == kTableFollowings) {
-        return followings.count;
-    }
-    else if (tableMode == kTableFriends) {
-        return friends.count;
-    } else
-        return 0;
+    return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableMode == kTableTimeline)
+    if (tableMode == kTablePhoto)
     {
-        Feed *feed = feeds[indexPath.row];
-        if (feed.targets.count > 1) {
-            return 202.0 + 42.0 + 12.0;
-        } else if (feed.targets.count == 1) {
-            Picture *pic = feed.targets[0];
-            CGFloat feedHeight = [LXUtils heightFromWidth:308.0 width:[pic.width floatValue] height:[pic.height floatValue]] + 85.0 + 6.0 + 6.0;
-            
-            if (pic.comments.count > 0) {
-                
-                for (NSInteger i = 0; i < pic.comments.count; i++) {
-                    if ([toggleSection objectForKey:[NSString stringWithFormat:@"%d", [feed.feedID integerValue]]] == nil)
-                        if (i >= 3)
-                            break;
-                    
-                    Comment* comment = pic.comments[i];
-                    CGSize commentSize = [comment.descriptionText sizeWithFont:[UIFont fontWithName:@"AvenirNextCondensed-Regular" size:11]
-                                                             constrainedToSize:CGSizeMake(255.0f, MAXFLOAT)
-                                                                 lineBreakMode:NSLineBreakByWordWrapping];
-                    feedHeight += MAX(commentSize.height + 24.0, 36.0);
-                }
-            }
-            
-            if (pic.comments.count > 3)
-                feedHeight += 25.0;
-            
-            return feedHeight;
-        } else
-            return 1;
-    } else if ((tableMode == kTableVoted) || (tableMode == kTablePicList)) {
-        return 78 + (indexPath.row==0?3:0);
+        if (photoMode == kPhotoMyphoto) {
+            return 104 + (indexPath.row==0?3:0);
+        } else if (photoMode == kPhotoCalendar) {
+            NSCalendar *calendar = [NSCalendar currentCalendar];
+            NSRange days = [calendar rangeOfUnit:NSDayCalendarUnit
+                                          inUnit:NSMonthCalendarUnit
+                                         forDate:currentMonth];
+            daysInMonth = days.length;
+            return (daysInMonth/5 + (daysInMonth%5>0?1:0)) * 63;
+
+        } else {
+            Feed *feed = feeds[indexPath.row];
+            if (feed.targets.count > 1) {
+                return 202.0 + 42.0 + 12.0;
+            } else if (feed.targets.count == 1) {
+                Picture *pic = feed.targets[0];
+                CGFloat feedHeight = [LXUtils heightFromWidth:308.0 width:[pic.width floatValue] height:[pic.height floatValue]] + 3+6+30+6+6+31+3;
+                return feedHeight;
+            } else
+                return 1;
+        }
+    } else if (tableMode == kTableProfile) {
+        return 30;
     }
     else
         return 42;
 }
 
-- (UIView *)createComment:(Comment *)comment {
-    UIView *view = [[UIView alloc] init];
-    UIButton *picUser = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 25, 25)];
-    UILabel *labelUser = [[UILabel alloc] initWithFrame:CGRectMake(35, 5, 200, 20)];
-    UILabel *labelComment = [[UILabel alloc] initWithFrame:CGRectMake(35, 25, 200, 20)];
-    
-    labelComment.text = comment.descriptionText;
-    labelUser.text = comment.user.name;
-    [picUser loadBackground:comment.user.profilePicture];
-    
-    [view addSubview:picUser];
-    [view addSubview:labelUser];
-    [view addSubview:labelComment];
-    return view;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (isEmpty)
-        return 200;
-    
-    return 0;
+- (BOOL)checkEmpty {
+    BOOL isEmpty = false;
+    switch (tableMode) {
+        case kTableFollower:
+            isEmpty = friends.count == 0;
+            break;
+        case kTableFollowings:
+            isEmpty = followings.count == 0;
+        case kTablePhoto:
+            if (photoMode == kPhotoMyphoto)
+                isEmpty = pictures.count == 0;
+            else if (photoMode != kPhotoCalendar)
+                isEmpty = feeds.count == 0;
+        default:
+            break;
+    }
+    return isEmpty;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (isEmpty) {
+    if ([self checkEmpty]) {
         UIView *emptyView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 200)];
         UIImageView *emptyImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nopict.png"]];
         //    UILabel *label = [[UILabel alloc] initWithFrame:(CGRect)]
@@ -559,201 +539,362 @@
         return emptyView;
     }
     
+    if ((tableMode == kTablePhoto) && (photoMode == kPhotoCalendar)) {
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.8];
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, 100, 30)];
+        label.textAlignment = NSTextAlignmentCenter;
+        
+        UIImageView *imagePrev = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow_left2.png"]];
+        imagePrev.frame = CGRectMake(5, 16, 5, 8);
+        UIImageView *imageNext = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow_right2.png"]];
+        imageNext.frame = CGRectMake(310, 16, 5, 8);
+        
+        UIButton *prev = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 60, 30)];
+        UIButton *next = [[UIButton alloc] initWithFrame:CGRectMake(255, 5, 60, 30)];
+        [prev addTarget:self action:@selector(prevMonth:) forControlEvents:UIControlEventTouchUpInside];
+        [next addTarget:self action:@selector(nextMonth:) forControlEvents:UIControlEventTouchUpInside];
+        [prev setTitle:@"PREV" forState:UIControlStateNormal];
+        [next setTitle:@"NEXT" forState:UIControlStateNormal];
+        prev.titleLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Medium" size:16];
+        next.titleLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Medium" size:16];
+        [prev setTitleColor:[UIColor colorWithRed:101.0/255.0	green:90.0/255.0 blue:56.0/255.0 alpha:1] forState:UIControlStateNormal];
+        [next setTitleColor:[UIColor colorWithRed:101.0/255.0	green:90.0/255.0 blue:56.0/255.0 alpha:1] forState:UIControlStateNormal];
+        
+        label.center = CGPointMake(160, 20);
+        
+        
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        [dateFormat setDateFormat:@"yyyy/MM"];
+        label.text = [dateFormat stringFromDate:currentMonth];
+        label.textColor = [UIColor colorWithRed:101.0/255.0	green:90.0/255.0 blue:56.0/255.0 alpha:1];
+        label.backgroundColor = [UIColor clearColor];
+        [label setFont:[UIFont fontWithName:@"AvenirNextCondensed-Medium" size:20]];
+        [view addSubview:prev];
+        [view addSubview:next];
+        [view addSubview:label];
+        [view addSubview:imagePrev];
+        [view addSubview:imageNext];
+        return view;
+    } else if (tableMode == kTableProfile) {
+        UIView *view = [[UIView alloc] init];
+        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(6, 5, 309, 1)];
+        line.backgroundColor = [UIColor lightGrayColor];
+        [view addSubview:line];
+        return view;
+    }
     return nil;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableMode == kTableTimeline)
-    {
-        Feed *feed = [feeds objectAtIndex:indexPath.row];
-        if (feed.targets.count == 1)
-        {
-            LXCellTimelineSingle *cell = [tableView dequeueReusableCellWithIdentifier:@"Single"];
-            if (cell == nil) {
-                cell = [[LXCellTimelineSingle alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Single"];
-            }
-            
-            if ([toggleSection objectForKey:[NSString stringWithFormat:@"%d", [feed.feedID integerValue]]] != nil)
-                cell.isExpanded = true;
-            else
-                cell.isExpanded = false;
-            
-            cell.viewController = self;
-            cell.feed = feed;
-            
-            return cell;
-        } else {
-            LXCellTimelineMulti *cell = [tableView dequeueReusableCellWithIdentifier:@"Multi"];
-            if (cell == nil) {
-                cell = [[LXCellTimelineMulti alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Multi"];
-            }
-            
-            cell.showControl = true;
-            cell.viewController = self;
-            cell.feed = feed;
-            return cell;
-        }
-    }
-    else if ((tableMode == kTableVoted) || (tableMode == kTablePicList)) {
-        UITableViewCell *cellPic = [[UITableViewCell alloc] init];
-        for (int i = 0; i < 4; ++i)
-        {
-            NSInteger index = indexPath.row*4+i;
-            
-            Picture *pic;
-            if (tableMode == kTableVoted) {
-                if (index >= votes.count)
-                    break;
-                pic = [votes objectAtIndex:index];
-            }
-            if (tableMode == kTablePicList) {
-                if (index >= pictures.count)
-                    break;
-                pic = [pictures objectAtIndex:index];
-            }
-            
-            
-            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(6+(i*78), indexPath.row==0?6:3, 72, 72)];
+- (void)nextMonth:(id)sender {
+    NSDateComponents* dateComponents = [[NSDateComponents alloc]init];
+    [dateComponents setMonth:1];
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+    currentMonth = [calendar dateByAddingComponents:dateComponents toDate:currentMonth options:0];
+    [self reloadCalendar];
+}
 
-            [button loadBackground:pic.urlSquare];
-            button.layer.borderColor = [[UIColor whiteColor] CGColor];
-            button.layer.borderWidth = 3;
-            
-            UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:button.bounds];
-            button.layer.masksToBounds = NO;
-            button.layer.shadowColor = [UIColor blackColor].CGColor;
-            button.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-            button.layer.shadowOpacity = 0.5f;
-            button.layer.shadowRadius = 1.5f;
-            button.layer.shadowPath = shadowPath.CGPath;
-            
-            button.tag = [pic.pictureId integerValue];
-            [button addTarget:self action:@selector(showPic:) forControlEvents:UIControlEventTouchUpInside];
-            [cellPic addSubview:button];
-            
+- (void)prevMonth:(id)sender {
+    NSDateComponents* dateComponents = [[NSDateComponents alloc]init];
+    [dateComponents setMonth:-1];
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+    currentMonth = [calendar dateByAddingComponents:dateComponents toDate:currentMonth options:0];
+    [self reloadCalendar];
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if ([self checkEmpty])
+        return 200;
+    if ((tableMode == kTablePhoto) && (photoMode == kPhotoCalendar)) {
+        return 40;
+    } else if (tableMode == kTableProfile)
+        return 6;
+    return 0;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (tableMode) {
+        case kTableFollower:
+        case kTableFollowings: {
+            LXCellFriend* cellUser;
+            User *user;
+            cellUser = [tableView dequeueReusableCellWithIdentifier:@"User"];
+            if (tableMode == kTimelineFriends) {
+                user = [friends objectAtIndex:indexPath.row];
+            } else if (tableMode == kTableFollowings) {
+                user = [followings objectAtIndex:indexPath.row];
+            }
+            [cellUser setUser:user];
+            cellUser.backgroundView = [[UIView alloc] initWithFrame:cellUser.bounds];
+            UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 42, 320, 1)];
+            line.backgroundColor = [UIColor colorWithRed:188.0/255.0 green:184.0/255.0 blue:169.0/255.0 alpha:1];
+            [cellUser addSubview:line];
+            return cellUser;
         }
-        cellPic.backgroundView = [[UIView alloc] initWithFrame:cellPic.bounds];
-        
-        return cellPic;
-    }
-    else {
-        LXCellFriend* cellUser;
-        User *user;
-        if (tableMode == kTableFriends) {
-            cellUser = [tableView dequeueReusableCellWithIdentifier:@"Friend"];
-            user = [friends objectAtIndex:indexPath.row];
-        } else if (tableMode == kTableFollowings) {
-            cellUser = [tableView dequeueReusableCellWithIdentifier:@"Following"];
-            user = [followings objectAtIndex:indexPath.row];
+            break;
+        case kTablePhoto:    {
+            if (photoMode == kPhotoMyphoto) {
+                UITableViewCell *cellPic = [[UITableViewCell alloc] init];
+                for (int i = 0; i < 3; ++i)
+                {
+                    NSInteger index = indexPath.row*3+i;
+                    
+                    Picture *pic;
+                    if (index >= pictures.count)
+                        break;
+                    pic = [pictures objectAtIndex:index];
+                    
+                    
+                    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(6 + 104*i, (indexPath.row==0?6:3),98, 98)];
+                    
+                    [button loadBackground:pic.urlSquare];
+                    button.layer.borderColor = [[UIColor whiteColor] CGColor];
+                    button.layer.borderWidth = 3;
+                    
+                    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:button.bounds];
+                    button.layer.masksToBounds = NO;
+                    button.layer.shadowColor = [UIColor blackColor].CGColor;
+                    button.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+                    button.layer.shadowOpacity = 0.5f;
+                    button.layer.shadowRadius = 1.5f;
+                    button.layer.shadowPath = shadowPath.CGPath;
+                    
+                    button.tag = index;
+                    [button addTarget:self action:@selector(showPic:) forControlEvents:UIControlEventTouchUpInside];
+                    [cellPic addSubview:button];
+                    
+                }
+                cellPic.backgroundView = [[UIView alloc] initWithFrame:cellPic.bounds];
+                
+                return cellPic;
+            } else if (photoMode == kPhotoCalendar) {
+                UITableViewCell *cell = [[UITableViewCell alloc] init];
+                
+                for (int i = 0; i < daysInMonth; i++) {
+                    NSInteger row = i/5;
+                    NSInteger col = i%5;
+                    
+                    NSString *key = [NSString stringWithFormat:@"%2d", i];
+                    Picture *pic = [currentMonthPics objectForKey:key];
+                    [cell addSubview:[self viewForCalendarPic:pic atRow:row atColumn:col cellIndex:i]];
+                }
+                return cell;
+            }
+            else {
+                Feed *feed = [feeds objectAtIndex:indexPath.row];
+                if (feed.targets.count == 1)
+                {
+                    LXCellTimelineSingle *cell = [tableView dequeueReusableCellWithIdentifier:@"Single"];
+                    if (cell == nil) {
+                        cell = [[LXCellTimelineSingle alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Single"];
+                    }
+                    
+                    cell.viewController = self;
+                    cell.feed = feed;
+                    cell.buttonUser.tag = indexPath.row;
+                    
+                    return cell;
+                } else {
+                    LXCellTimelineMulti *cell = [tableView dequeueReusableCellWithIdentifier:@"Multi"];
+                    if (cell == nil) {
+                        cell = [[LXCellTimelineMulti alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Multi"];
+                    }
+                    
+                    cell.showControl = true;
+                    cell.viewController = self;
+                    cell.feed = feed;
+                    cell.buttonUser.tag = indexPath.row;
+                    
+                    return cell;
+                }
+                
+            }
         }
-        
-        [cellUser setUser:user];
-        cellUser.buttonUser.tag = [user.userId integerValue];
-        [cellUser.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
-        cellUser.backgroundView = [[UIView alloc] initWithFrame:cellUser.bounds];
-        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 42, 320, 1)];
-        line.backgroundColor = [UIColor colorWithRed:188.0/255.0 green:184.0/255.0 blue:169.0/255.0 alpha:1];
-        [cellUser addSubview:line];
-        return cellUser;
+            break;
+        case kTableProfile:
+        {
+            static NSString *CellIdentifier = @"Profile";
+            LXCellDataField *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            if (cell == nil) {
+                cell = [[LXCellDataField alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            }
+            
+            NSString* strKey = [showField objectAtIndex:indexPath.row];
+            if ([strKey isEqualToString:@"gender"]) {
+                cell.labelField.text = NSLocalizedString(@"gender", @"性別");
+            } else if ([strKey isEqualToString:@"residence"]) {
+                cell.labelField.text = NSLocalizedString(@"current_residence", @"現住所");
+            } else if ([strKey isEqualToString:@"hometown"]) {
+                cell.labelField.text = NSLocalizedString(@"hometown", @"出身地");
+            } else if ([strKey isEqualToString:@"age"]) {
+                cell.labelField.text = NSLocalizedString(@"age", @"年齢");
+            } else if ([strKey isEqualToString:@"birthdate"]) {
+                cell.labelField.text = NSLocalizedString(@"birthdate", @"誕生日");
+            } else if ([strKey isEqualToString:@"bloodtype"]) {
+                cell.labelField.text = NSLocalizedString(@"bloodtype", @"血液型");
+            } else if ([strKey isEqualToString:@"occupation"]) {
+                cell.labelField.text = NSLocalizedString(@"occupation", @"職業");
+            } else if ([strKey isEqualToString:@"hobby"]) {
+                cell.labelField.text = NSLocalizedString(@"hobby", @"趣味");
+            } else if ([strKey isEqualToString:@"introduction"]) {
+                cell.labelField.text = NSLocalizedString(@"introduction", @"自己紹介");
+            }
+            
+            if ([strKey isEqualToString:@"gender"]) {
+                switch ([[userDict objectForKey:strKey] integerValue]) {
+                    case 1:
+                        cell.labelDetail.text = NSLocalizedString(@"male", @"男性");
+                        break;
+                    case 2:
+                        cell.labelDetail.text = NSLocalizedString(@"female", @"女性");
+                        break;
+                }
+            } else {
+                cell.labelDetail.text = [userDict objectForKey:strKey];
+            }
+            
+            
+            return cell;
+        }
+            break;
     }
 }
+
+- (UIView *)viewForCalendarPic:(Picture *)pic atRow:(NSInteger)row atColumn:(NSInteger)col cellIndex:(NSInteger)cellIndex {
+    UIView *viewDate = [[UIView alloc] initWithFrame:CGRectMake(col*63, row*63, 61, 61)];
+    
+    UIImageView *imageLabel = [[UIImageView alloc] init];
+    UILabel *labelBig = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 15)];
+    UILabel *labelSmall = [[UILabel alloc] init];
+    labelSmall.backgroundColor = [UIColor clearColor];
+    labelSmall.backgroundColor = [UIColor clearColor];
+    labelSmall.textAlignment = NSTextAlignmentCenter;
+    labelBig.backgroundColor = [UIColor clearColor];
+    labelBig.textAlignment = NSTextAlignmentCenter;
+    
+    [labelBig setFont:[UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:15]];
+    labelBig.text = [NSString stringWithFormat:@"%d", cellIndex+1];
+    labelSmall.text = [NSString stringWithFormat:@"%d", cellIndex+1];
+    [labelSmall setFont:[UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:11]];
+    labelSmall.textColor = [UIColor whiteColor];
+    
+    if (cellIndex < 9) {
+        imageLabel.frame = CGRectMake(10, 0, 15, 20);
+        labelSmall.frame =  CGRectMake(5, 4, 16, 11);
+        [imageLabel setImage:[UIImage imageNamed:@"deco_calender.png"]];
+    } else {
+        imageLabel.frame = CGRectMake(10, 0, 22, 20);
+        labelSmall.frame =  CGRectMake(8, 4, 20, 11);
+        [imageLabel setImage:[UIImage imageNamed:@"deco_calender_wide.png"]];
+    }
+    
+    UIView *border = [[UIView alloc] initWithFrame:CGRectMake(5, 3, 58, 58)];
+    border.backgroundColor = [UIColor colorWithRed:188.0/255.0 green:184.0/255.0 blue:169.0/255.0 alpha:1];
+    UIView *bg = [[UIView alloc] initWithFrame:CGRectMake(2, 2, 54, 54)];
+    bg.backgroundColor = [UIColor colorWithRed:228.0/255.0 green:226.0/255.0 blue:220.0/255.0 alpha:1];
+    
+    [labelBig setCenter:bg.center];
+    [labelBig setFont:[UIFont fontWithName:@"Baskerville-Bold" size:14]];
+    labelBig.textColor = [UIColor colorWithRed:187.0/255.0 green:184.0/255.0 blue:169.0/255.0 alpha:1];
+    
+    [border addSubview:bg];
+    [viewDate addSubview:border];
+    
+    if (pic != nil) {
+        [viewDate addSubview:imageLabel];
+        [viewDate addSubview:labelSmall];
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(1, 1, 52, 52)];
+        [button loadBackground:pic.urlSquare];
+        button.tag = cellIndex;
+        [button addTarget:self action:@selector(showPhotoFromCalendar:) forControlEvents:UIControlEventTouchUpInside];
+        [bg addSubview:button];
+    } else {
+        [border addSubview:labelBig];
+    }
+    
+    return viewDate;
+}
+
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)switchTimeline:(int)mode {
-    tableMode = kTableTimeline;
-    if (timelineMode != mode) {
-        timelineMode = mode;
+- (void)switchTimeline:(MypagePhotoMode)mode {
+    if (photoMode != mode) {
+        photoMode = mode;
         [self reloadTimeline];
     } else
         [self.tableView reloadData];
     
 }
 
-- (IBAction)touchTab:(UIButton *)sender {
-    for (UIButton *button in allTab) {
-        button.enabled = YES;
-    }
-    labelTitleFav.highlighted = NO;
-    labelTitlePicCount.highlighted = NO;
-    labelTitleFriends.highlighted = NO;
-    labelTitleVote.highlighted = NO;
-    
-    sender.enabled = NO;
-    switch (sender.tag) {
-        case 1:
-            labelTitleVote.highlighted = YES;
-            tableMode = kTableVoted;
-            if (votes.count == 0){
-                [self reloadVoted];
-            }else
+- (void)expandHeader {
+    UIView *viewHeader = self.tableView.tableHeaderView;
+    viewHeader.frame = CGRectMake(0, 0, 320, 128);
+    self.tableView.tableHeaderView = viewHeader;
+}
+
+- (void)collapseHeader {
+    UIView *viewHeader = self.tableView.tableHeaderView;
+    viewHeader.frame = CGRectMake(0, 0, 320, 85);
+    self.tableView.tableHeaderView = viewHeader;
+}
+
+- (void)touchTab:(MypageTableMode)mode {
+    tableMode = mode;
+    switch (mode) {
+        case kTablePhoto:
+            [self.tableView reloadData];
+            break;
+        case kTableProfile:
+            [self.tableView reloadData];
+            break;
+        case kTableFollower:
+            if (friends == nil)
+                [self reloadFollower];
+            else
                 [self.tableView reloadData];
             break;
-        case 2:
-            labelTitlePicCount.highlighted = YES;
-            tableMode = kTablePicList;
+        case kTableFollowings:
+            if (followings == nil)
+                [self reloadFollowings];
+            else
+                [self.tableView reloadData];
+
+            break;
+    }
+}
+
+- (void)touchPhoto:(MypagePhotoMode)mode {
+    switch (mode) {
+        case kPhotoMyphoto:
+            photoMode = mode;
             if (pictures.count == 0) {
                 [self reloadPicList];
             } else
                 [self.tableView reloadData];
             break;
-        case 3:
-            labelTitleFriends.highlighted = YES;
-            tableMode = kTableFriends;
-            if (friends == nil) {
-                [self reloadFriends];
-            } else
-                [self.tableView reloadData];
+        case kPhotoCalendar:
+            photoMode = mode;
+            [self reloadCalendar];
             break;
-        case 4:
-            labelTitleFav.highlighted = YES;
-            tableMode = kTableFollowings;
-            if (followings == nil) {
-                [self reloadFollowings];
-            } else
-                [self.tableView reloadData];
-            break;
-        case 5:
-            [self switchTimeline:kListAll];
-            break;
-        case 6:
-            [self switchTimeline:kListMe];
-            break;
-        case 7:
-            [self switchTimeline:kListFriend];
-            break;
-        case 8:
-            [self switchTimeline:kListFollow];
-            break;
+        case kPhotoFollowing:
+        case kPhotoFriends:
+        case kPhotoTimeline:
+            [self switchTimeline:mode];
     }
 }
 
-- (IBAction)touchSetting:(id)sender {
-    Class JSONSerialization = [QRootElement JSONParserClass];
-    NSAssert(JSONSerialization != NULL, @"No JSON serializer available!");
-    
-    NSError *jsonParsingError = nil;
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"lattesetting" ofType:@"json"];
-    NSDictionary *data = [JSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:filePath] options:0 error:&jsonParsingError];
-    
-    QRootElement *root = [[LXRootBuilder new]buildWithObject:data];
-    if (data != nil) {
-        [root bindToObject:data];
-    }
-    LXSettingViewController* viewSetting = [[LXSettingViewController alloc] initWithRoot:root];
-    
-    [self.navigationController pushViewController:viewSetting animated:YES];
-}
-
-- (IBAction)touchSetProfilePic:(id)sender {
+- (void)touchSetProfilePic {
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"change_profile_pic", @"プロフィール")
                                                        delegate:self
                                               cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
                                          destructiveButtonTitle:NSLocalizedString(@"remove_profile_pic", @"削除する")
-                                              otherButtonTitles:NSLocalizedString(@"select_profile_pic", @"写真を選択する"), NSLocalizedString(@"my_profile", @"自分のプロフィール"), nil];
+                                              otherButtonTitles:NSLocalizedString(@"select_profile_pic", @"写真を選択する"), nil];
     [sheet showFromTabBar:self.tabBarController.tabBar];
 }
 
@@ -765,13 +906,6 @@
         case 1:
             [self pickPhoto];
             break;
-        case 2: {
-            LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-            UIButton *tmp = [[UIButton alloc] init];
-            tmp.tag = [app.currentUser.userId integerValue];
-            [self showUser:tmp];
-            break;
-        }
         default:
             break;
     }
@@ -792,7 +926,7 @@
                                  parameters:[NSDictionary dictionaryWithObjectsAndKeys:
                                              [app getToken], @"token", nil]
                                     success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                        [buttonProfilePic setBackgroundImage:[UIImage imageNamed:@"user.gif"] forState:UIControlStateNormal];
+                                        [viewHeaderMypage.buttonProfilePic setBackgroundImage:[UIImage imageNamed:@"user.gif"] forState:UIControlStateNormal];
                                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                         TFLog(@"Something went wrong (Delete profile pic)");
                                     }];
@@ -886,46 +1020,126 @@
 
 
 - (void)showInfo:(UIButton*)sender {
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Gallery"
                                                              bundle:nil];
     LXPicInfoViewController *viewPicInfo = [mainStoryboard instantiateViewControllerWithIdentifier:@"PictureInfo"];
     [viewPicInfo setPictureID:sender.tag];
     [self.navigationController pushViewController:viewPicInfo animated:YES];
 }
 
-- (void)showPic:(UIButton*)sender {
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                             bundle:nil];
-    LXPicDetailViewController *viewPicDetail = [mainStoryboard instantiateViewControllerWithIdentifier:@"PictureDetail"];
-    
-    viewPicDetail.pic = [self picFromPicID:sender.tag];
-    viewPicDetail.picID = sender.tag;
+- (void)showPic:(UIButton*)sender {    
+    UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
+                                                           bundle:nil];
+    UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
+    LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
+    viewGallery.delegate = self;
+    switch (photoMode) {
+        case kPhotoMyphoto:
+            viewGallery.picture = pictures[sender.tag];
+            break;
+        case kPhotoFollowing:
+        case kPhotoTimeline:
+        case kPhotoFriends:
+            viewGallery.picture = [self picFromPicID:sender.tag];
+            break;
+        case kPhotoCalendar:
+            break;
+        default:
+            break;
+    }
 
-    [self.navigationController pushViewController:viewPicDetail animated:YES];
+    [self presentViewController:navGalerry animated:YES completion:nil];
+
 }
 
+- (NSMutableArray*)flatPictureArray {
+    NSMutableArray *ret = [[NSMutableArray alloc] init];
+    for (Feed *feed in feeds) {
+        for (Picture *picture in feed.targets) {
+            [ret addObject:picture];
+        }
+    }
+    return ret;
+}
+
+- (Picture *)pictureAfterPicture:(Picture *)picture {
+    switch (photoMode) {
+        case kPhotoMyphoto: {
+            NSUInteger current = [pictures indexOfObject:picture];
+            if (current < pictures.count-1)
+                return pictures[current+1];
+            break;
+        }
+        case kPhotoFollowing:
+        case kPhotoFriends:
+        case kPhotoTimeline: {
+            NSArray *flatPictures = [self flatPictureArray];
+            NSUInteger current = [flatPictures indexOfObject:picture];
+            if (current < flatPictures.count-1)
+                return flatPictures[current+1];
+            break;
+        };
+    }
+    return nil;
+}
+
+- (Picture *)pictureBeforePicture:(Picture *)picture {    
+    switch (photoMode) {
+        case kPhotoMyphoto: {
+            NSUInteger current = [pictures indexOfObject:picture];
+            if (current > 0)
+                return pictures[current-1];
+            break;
+        }
+        case kPhotoFollowing:
+        case kPhotoFriends:
+        case kPhotoTimeline: {
+            NSArray *flatPictures = [self flatPictureArray];
+            NSUInteger current = [flatPictures indexOfObject:picture];
+            if (current > 0)
+                return flatPictures[current-1];
+            break;
+        }
+    }
+    return nil;
+}
+
+
 - (void)showComment:(UIButton*)sender {
-    Feed *feed = [self feedFromPicID:sender.tag];
     Picture *pic = [self picFromPicID:sender.tag];
     
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Gallery"
                                                              bundle:nil];
-    LXPicCommentViewController *viewPicComment = [mainStoryboard instantiateViewControllerWithIdentifier:@"PictureComment"];
-    [viewPicComment setPic:pic withUser:feed.user withParent:self];
+    LXPicDetailViewController *viewPicComment = [mainStoryboard instantiateViewControllerWithIdentifier:@"PictureDetail"];
+    viewPicComment.pic = pic;
     [self.navigationController pushViewController:viewPicComment animated:YES];
 }
 
 - (void)showUser:(UIButton*)sender {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
-    LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
-    [viewUserPage setUserID:sender.tag];
+    LXMyPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    switch (tableMode) {
+        case kTableFollower:
+            
+            break;
+        case kTableFollowings:
+            viewUserPage.user = followings[sender.tag];
+            break;
+        case kTablePhoto: {
+            Feed *feed = feeds[sender.tag];
+            viewUserPage.user = feed.user;
+            break;
+        }
+        default:
+            break;
+    }
     [self.navigationController pushViewController:viewUserPage animated:YES];
 
 }
 
 - (void)showMap:(UIButton*)sender {
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Gallery"
                                                              bundle:nil];
     LXPicMapViewController *viewPicMap = [mainStoryboard instantiateViewControllerWithIdentifier:@"PictureMap"];
     
@@ -936,81 +1150,10 @@
     [self.navigationController pushViewController:viewPicMap animated:YES];
 }
 
-- (void)updatePhotoVoteCount:(UIButton*)sender increase:(BOOL)increase {
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    if (!app.currentUser)
-        sender.enabled = NO;
-    else {
-        sender.selected = !sender.selected;
-    }
-    
-    Feed *feed = [self feedFromPicID:sender.tag];
-    Picture *pic = [self picFromPicID:sender.tag];
-    pic.isVoted = increase;
-    if (feed.targets.count > 1) {
-        NSInteger likeCount = [sender.titleLabel.text integerValue];
-        NSNumber *num = [NSNumber numberWithInteger:likeCount + (increase?1:-1)];
-        [sender setTitle:[num stringValue] forState:UIControlStateNormal];
-    } else {
-        pic.voteCount = [NSNumber numberWithInteger:[pic.voteCount integerValue] + (increase?1:-1)];
-        
-        long row = [feeds indexOfObject:feed];
-        
-        NSArray *rowIndexes = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:row inSection:0]];
-        [self.tableView reloadRowsAtIndexPaths:rowIndexes
-                              withRowAnimation:UITableViewRowAnimationAutomatic];
-    }
-}
-
 - (void)submitLike:(UIButton*)sender {
-    [self updatePhotoVoteCount:sender increase:!sender.selected];
-    
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
-                           [app getToken], @"token",
-                           @"1", @"vote_type",
-                           nil];
-    
-    NSString *url = [NSString stringWithFormat:@"picture/%d/vote_post", sender.tag];
-    [[LatteAPIClient sharedClient] postPath:url
-                                 parameters:param
-                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                        TFLog(@"Submited like");
-                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
-                                                                                        message:error.localizedDescription
-                                                                                       delegate:nil
-                                                                              cancelButtonTitle:NSLocalizedString(@"close", "Close")
-                                                                              otherButtonTitles:nil];
-                                        [alert show];
-                                        TFLog(@"Something went wrong (Vote)");
-                                    }];
+    Picture *pic = [self picFromPicID:sender.tag];
+    [LXUtils toggleLike:sender ofPicture:pic];
 }
-
-- (void)toggleComment:(UIButton*)sender {
-    Feed *feed = [self feedFromPicID:sender.tag];
-    
-    NSString *key = [NSString stringWithFormat:@"%d", [feed.feedID integerValue]];
-    NSNumber *check = [NSNumber numberWithBool:TRUE];
-    if ([toggleSection objectForKey:key] == nil) {
-        [toggleSection setObject:check forKey:key];
-        
-        NSInteger row = [feeds indexOfObject:feed];
-        NSIndexPath *path = [NSIndexPath indexPathForRow:row inSection:0];
-        CGRect rect = [self.tableView rectForRowAtIndexPath:path];
-        Picture *pic = feed.targets[0];
-        NSInteger picHeight = [LXUtils heightFromWidth:30.0 width:[pic.width floatValue] height:[pic.height floatValue]];
-        rect.origin.y += 85.0 + picHeight + 200;
-        [self.tableView setContentOffset:rect.origin animated:YES];
-    } else {
-        [toggleSection removeObjectForKey:key];
-    }
-    
-    NSInteger row = [feeds indexOfObject:feed];
-    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:row inSection:0]]
-                          withRowAnimation:UITableViewRowAnimationAutomatic];
-}
-
 
 - (void)reloadTableViewDataSource{
     reloading = YES;
@@ -1044,23 +1187,17 @@
     
     //Load more
     switch (tableMode) {
-        case kTableTimeline:
-            if (endedTimeline)
+        case kTablePhoto:
+            if (photoMode == kPhotoMyphoto) {
+                if (endedPic)
+                    return;
+            } if (photoMode == kPhotoCalendar) {
+                return;
+            } else if (endedTimeline)
                 return;
             break;
-        case kTableFriends:
+        default:
             return;
-            break;
-        case kTableFollowings:
-            return;
-            break;
-        case kTableVoted:
-            if (endedVoted)
-                return;
-            break;
-        case kTablePicList:
-            if (endedPic)
-                return;
             break;
     }
     
@@ -1074,20 +1211,10 @@
     float reload_distance = -100;
     if(y > h + reload_distance) {
         if (!loadIndicator.isAnimating) {
-            switch (tableMode) {
-                case kTableTimeline:
-                    [self loadMore];
-                    break;
-                case kTablePicList:
-                    [self loadMorePicList];
-                    break;
-                case kTableVoted:
-                    [self loadMoreVotes];
-                    break;
-                default:
-                    break;
-            }
-        
+            if (photoMode == kPhotoMyphoto)
+                [self loadMorePicList];
+            else
+                [self loadMore];
         }
     }
 }
@@ -1127,12 +1254,4 @@
     return nil;
 }
 
-
-- (void)viewDidUnload {
-    [self setLabelTitleVote:nil];
-    [self setLabelTitlePicCount:nil];
-    [self setLabelTitleFriends:nil];
-    [self setLabelTitleFav:nil];
-    [super viewDidUnload];
-}
 @end

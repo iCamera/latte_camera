@@ -8,6 +8,7 @@
 
 #import "LXWelcomeViewController.h"
 #import "LXAppDelegate.h"
+#import "LXMyPageViewController.h"
 
 @interface LXWelcomeViewController ()
 @end
@@ -65,7 +66,7 @@
         
         loadEnded = false;
         pagephoto = 1;
-        tableMode = kTableGrid;
+        tableMode = kWelcomeTableGrid;
     }
     
     return self;
@@ -118,12 +119,6 @@
     if ([app getToken].length == 0) {
         viewLogin.hidden = false;
     }
-    navigationBarPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:app.revealController action:@selector(revealGesture:)];
-    [self.navigationController.navigationBar addGestureRecognizer:navigationBarPanGestureRecognizer];
-    navigationBarPanGestureRecognizer.enabled = false;
-
-    [self.buttonLeftMenu addTarget:app.revealController action:@selector(revealLeft:) forControlEvents:UIControlEventTouchUpInside];
-    [self.buttonNavRight addTarget:self action:@selector(loginPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     if (app.currentUser != nil) {
         [self receiveLoggedIn:nil];
@@ -194,17 +189,15 @@
                                    }];
 }
 
-#pragma mark - SSCollectionViewDataSource
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (tableMode == kTableTimeline)
+    if (tableMode == kWelcomeTableTimeline)
         return feeds.count;
     else
-        return feeds.count/3;
+        return feeds.count/3 + (feeds.count%3>0?1:0);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableMode == kTableTimeline) {
+    if (tableMode == kWelcomeTableTimeline) {
         Feed *feed = feeds[indexPath.row];
         if (feed.targets.count == 1) {
             LXCellTimelineSingle *cell = [tableView dequeueReusableCellWithIdentifier:@"Single"];
@@ -275,7 +268,7 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableMode == kTableTimeline) {
+    if (tableMode == kWelcomeTableTimeline) {
         Feed *feed = feeds[indexPath.row];
         if (feed.targets.count > 1) {
             return 239;
@@ -290,33 +283,76 @@
 }
 
 - (void)showPic:(UIButton*)sender {
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+//    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+//                                                             bundle:nil];
+//    LXPicDetailViewController *viewPicDetail = [mainStoryboard instantiateViewControllerWithIdentifier:@"PictureDetail"];
+//    viewPicDetail.pic = [self picFromPicID:sender.tag];
+//    [self.navigationController pushViewController:viewPicDetail animated:YES];
+    
+    UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                              bundle:nil];
-    LXPicDetailViewController *viewPicDetail = [mainStoryboard instantiateViewControllerWithIdentifier:@"PictureDetail"];
-    viewPicDetail.pic = [self picFromPicID:sender.tag];
-    [self.navigationController pushViewController:viewPicDetail animated:YES];
+    UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
+    LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
+    viewGallery.delegate = self;
+    viewGallery.picture = [LXUtils picFromPicID:sender.tag of:feeds];
+    [self presentViewController:navGalerry animated:YES completion:nil];
+}
+
+- (NSMutableArray*)flatPictureArray {
+    NSMutableArray *ret = [[NSMutableArray alloc] init];
+    for (Feed *feed in feeds) {
+        for (Picture *picture in feed.targets) {
+            [ret addObject:picture];
+        }
+    }
+    return ret;
+}
+
+
+- (Picture *)pictureAfterPicture:(Picture *)picture {
+    if (tableMode == kWelcomeTableGrid) {
+        Feed *feed = [LXUtils feedFromPicID:[picture.pictureId longValue] of:feeds];
+        NSUInteger current = [feeds indexOfObject:feed];
+        if (current == feeds.count-1) {
+            return nil;
+        }
+        Feed *feedNext = feeds[current+1];
+        return feedNext.targets[0];
+    } else if (tableMode == kWelcomeTableTimeline) {
+        NSArray *flatPictures = [self flatPictureArray];
+        NSUInteger current = [flatPictures indexOfObject:picture];
+        if (current < flatPictures.count-1)
+            return flatPictures[current+1];
+    }
+    return nil;
+}
+
+- (Picture *)pictureBeforePicture:(Picture *)picture {
+    if (tableMode == kWelcomeTableGrid) {
+        Feed *feed = [LXUtils feedFromPicID:[picture.pictureId longValue] of:feeds];
+        NSUInteger current = [feeds indexOfObject:feed];
+        if (current == 0) {
+            return nil;
+        }
+        Feed *feedPrev = feeds[current-1];
+        return feedPrev.targets[0];
+    } else if (tableMode == kWelcomeTableTimeline) {
+        NSArray *flatPictures = [self flatPictureArray];
+        NSUInteger current = [flatPictures indexOfObject:picture];
+        if (current > 0)
+            return flatPictures[current-1];
+    }
+    return nil;
 }
 
 - (void)showUser:(UIButton*)sender {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
-    LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
-    [viewUserPage setUserID:sender.tag];
+    LXMyPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+//    [viewUserPage setUserID:sender.tag];
     [self.navigationController pushViewController:viewUserPage animated:YES];
 }
 
-- (Picture *)picFromPicID:(long)picID {
-    for (Feed *feed in feeds) {
-        if ([feed.model integerValue] == 1) {
-            for (Picture *pic in feed.targets) {
-                if ([pic.pictureId integerValue] == picID) {
-                    return pic;
-                }
-            }
-        }
-    }
-    return nil;
-}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSUInteger)section {
     return 60.0f;
@@ -362,10 +398,10 @@
     
     switch (sender.tag) {
         case 0:
-            tableMode = kTableGrid;
+            tableMode = kWelcomeTableGrid;
             break;
         case 1:
-            tableMode = kTableTimeline;
+            tableMode = kWelcomeTableTimeline;
             break;
         default:
             break;

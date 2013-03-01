@@ -20,6 +20,8 @@
     }
     
     UIImageView *image = [[UIImageView alloc] initWithFrame:self.bounds];
+    image.layer.cornerRadius = self.layer.cornerRadius;
+    image.clipsToBounds = YES;
     image.userInteractionEnabled = NO;
     image.exclusiveTouch = NO;
     

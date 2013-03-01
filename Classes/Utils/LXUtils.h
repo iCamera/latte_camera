@@ -9,8 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <ImageIO/ImageIO.h>
 
-#import "User.h"
-
+@class Feed, Picture, User;
 
 @interface LXUtils : NSObject
 
@@ -20,5 +19,9 @@
 + (NSDictionary *)getGPSDictionaryForLocation:(CLLocation *)location;
 + (NSString *)dateToString:(NSDate*)aDate;
 + (NSString *)stringFromNotify:(NSDictionary *)notify;
++ (CGSize)newSizeOfPicture:(Picture *)picture withWidth:(CGFloat)width;
++ (Picture *)picFromPicID:(long)picID of:(NSArray *)feeds;
++ (Feed *)feedFromPicID:(long)picID of:(NSArray *)feeds;
++ (void)toggleLike:(UIButton*)sender ofPicture:(Picture*)pic;
 
 @end

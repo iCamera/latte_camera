@@ -28,8 +28,6 @@
 
 @synthesize isFollowing;
 @synthesize isFriend;
-@synthesize requestToMe;
-@synthesize requestToUser;
 
 @synthesize notifyAccepts;
 @synthesize mailAccepts;
@@ -106,6 +104,8 @@
         [self setValue:value forKey:@"profilePicture"];
     } else if ([key isEqualToString:@"vote_count"]) {
         [self setValue:value forKey:@"voteCount"];
+    } else if ([key isEqualToString:@"page_view"]) {
+        [self setValue:value forKey:@"_pageView"];
     } else if ([key isEqualToString:@"is_following"]) {
         [self setValue:value forKey:@"isFollowing"];
     } else if ([key isEqualToString:@"is_friend"]) {

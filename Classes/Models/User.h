@@ -52,8 +52,6 @@
     //Classmethod
     BOOL isFollowing;
     BOOL isFriend;
-    NSNumber *requestToMe;
-    NSNumber *requestToUser;
     
     UserMailAccept *mailAccepts;
     UserPushAccept *notifyAccepts;
@@ -82,11 +80,10 @@
 @property (nonatomic, copy) NSNumber *pictureStatus;
 @property (nonatomic, copy) NSString *profilePicture;
 @property (nonatomic, copy) NSNumber *voteCount;
+@property (nonatomic, copy) NSNumber *pageView;
 
 @property (nonatomic, assign) BOOL isFollowing;
 @property (nonatomic, assign) BOOL isFriend;
-@property (nonatomic, copy) NSNumber *requestToMe;
-@property (nonatomic, copy) NSNumber *requestToUser;
 
 @property (nonatomic, strong) UserMailAccept *mailAccepts;
 @property (nonatomic, strong) UserPushAccept *notifyAccepts;

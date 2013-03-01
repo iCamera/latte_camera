@@ -14,8 +14,9 @@
 #import "LatteAPIClient.h"
 #import "LXPicDetailViewController.h"
 #import "EGORefreshTableHeaderView.h"
+#import "LXGalleryViewController.h"
 
-@interface LXRankingViewController : UITableViewController <EGORefreshTableHeaderDelegate> {
+@interface LXRankingViewController : UITableViewController <EGORefreshTableHeaderDelegate, LXGalleryViewControllerDataSource> {
     BOOL loadEnded;
     NSString* ranktype;
     NSInteger rankpage;

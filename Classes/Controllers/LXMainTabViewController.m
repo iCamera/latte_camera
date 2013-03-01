@@ -10,12 +10,17 @@
 #import "LXAppDelegate.h"
 #import "LXAboutViewController.h"
 #import "TestFlight.h"
+#import "LXUserNavButton.h"
+#import "LXMyPageViewController.h"
 
 @interface LXMainTabViewController ()
 
 @end
 
-@implementation LXMainTabViewController
+@implementation LXMainTabViewController {
+    UIView *viewCamera;
+    BOOL isFirst;
+}
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -38,16 +43,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(receiveLoggedOut:)
                                                  name:@"LoggedOut"
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showTab:)
-                                                 name:@"TabbarShow"
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(hideTab:)
-                                                 name:@"TabbarHide"
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -125,7 +120,35 @@
     [viewCamera addSubview:labelCamera];
     [self.view addSubview:viewCamera];
     
-    // Re-style tabbar item
+
+    self.tabBar.selectionIndicatorImage = [UIImage imageNamed:@"bg_bottom_on.png"];
+    self.tabBar.backgroundImage = [UIImage imageNamed: @"bg_bottom.png"];
+    
+    // add the drop shadow
+    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:self.tabBar.bounds];
+    self.tabBar.layer.masksToBounds = NO;
+    self.tabBar.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.tabBar.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+    self.tabBar.layer.shadowOpacity = 0.8f;
+    self.tabBar.layer.shadowRadius = 2.5f;
+    self.tabBar.layer.shadowPath = shadowPath.CGPath;
+    
+    LXAppDelegate* app = [LXAppDelegate currentDelegate];
+    if (app.currentUser != nil) {
+        [self receiveLoggedIn:nil];
+    } else {
+        [self setGuest];
+    }
+    
+    LXUserNavButton *viewNav = [[LXUserNavButton alloc] init];
+    viewNav.view.frame = CGRectMake(200, 0, 100, 42);
+    [viewNav.buttonSetting addTarget:self action:@selector(showSetting:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:viewNav.view];
+}
+
+- (void)setViewControllers:(NSArray *)viewControllers {
+    [super setViewControllers:viewControllers];
+    
     for(UIViewController *tab in self.viewControllers) {
         NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
         UIFont *font;
@@ -140,26 +163,15 @@
                                     [NSValue valueWithCGSize:CGSizeMake(0, 1)], UITextAttributeTextShadowOffset,
                                     [UIColor blackColor], UITextAttributeTextShadowColor,
                                     nil];
-
+        
         [tab.tabBarItem setTitleTextAttributes:attributes
                                       forState:UIControlStateNormal];
     }
-    self.tabBar.selectionIndicatorImage = [UIImage imageNamed:@"bg_bottom_on.png"];
-    self.tabBar.backgroundImage = [UIImage imageNamed: @"bg_bottom.png"];
-    
-    // add the drop shadow
-    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:self.tabBar.bounds];
-    self.tabBar.layer.masksToBounds = NO;
-    self.tabBar.layer.shadowColor = [UIColor blackColor].CGColor;
-    self.tabBar.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-    self.tabBar.layer.shadowOpacity = 0.8f;
-    self.tabBar.layer.shadowRadius = 2.5f;
-    self.tabBar.layer.shadowPath = shadowPath.CGPath;
-    
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    if (app.currentUser != nil) {
-        [self receiveLoggedIn:nil];
-    }
+}
+
+- (void)showSetting:(id)sender {
+    UIStoryboard* storySetting = [UIStoryboard storyboardWithName:@"Setting" bundle:nil];
+    [self presentModalViewController:[storySetting instantiateInitialViewController] animated:YES];
 }
 
 
@@ -192,17 +204,31 @@
     //[self setTabBarHidden:YES];
 }
 
-- (void)receiveLoggedIn:(NSNotification *) notification
-{
-    [[self.tabBar.items objectAtIndex:3] setEnabled:YES];
-    [[self.tabBar.items objectAtIndex:4] setEnabled:YES];
-    self.selectedIndex = 4;
+- (void)setGuest {
+    UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    UIViewController *viewLogin = [storyMain instantiateViewControllerWithIdentifier:@"LoginModal"];
+    
+    NSMutableArray *arrayViews = [NSMutableArray arrayWithArray:self.viewControllers];
+    arrayViews[4] = viewLogin;
+    self.viewControllers = arrayViews;
 }
 
-- (void)receiveLoggedOut:(NSNotification *) notification
-{
-    [[self.tabBar.items objectAtIndex:3] setEnabled:NO];
-    [[self.tabBar.items objectAtIndex:4] setEnabled:NO];
+- (void)setUser {
+    UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    UIViewController *viewMypage = [storyMain instantiateViewControllerWithIdentifier:@"MyPage"];
+    
+    NSMutableArray *arrayViews = [NSMutableArray arrayWithArray:self.viewControllers];
+    arrayViews[4] = viewMypage;
+    self.viewControllers = arrayViews;
+}
+
+- (void)receiveLoggedIn:(NSNotification *) notification {
+    [self setUser];
+}
+
+- (void)receiveLoggedOut:(NSNotification *) notification {
+    [self setGuest];
+
 }
 
 - (void)showUser:(NSNotification *)notify {
@@ -210,9 +236,9 @@
     UINavigationController *nav = (id)self.selectedViewController;
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
-    LXUserPageViewController *viewUser = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    LXMyPageViewController *viewUser = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
     User *user = notify.object;
-    [viewUser setUserID:[user.userId integerValue]];
+    viewUser.user = user;
     [nav pushViewController:viewUser animated:YES];
 }
 
@@ -228,74 +254,12 @@
     [nav pushViewController:viewPic animated:YES];
 }
 
-
-- (BOOL)isTabBarHidden {
-	CGRect viewFrame = self.view.frame;
-	CGRect tabBarFrame = self.tabBar.frame;
-	return tabBarFrame.origin.y >= viewFrame.size.height;
-}
-
-
-- (void)setTabBarHidden:(BOOL)hidden {
-	[self setTabBarHidden:hidden animated:NO];
-}
-
-
-- (void)setTabBarHidden:(BOOL)hidden animated:(BOOL)animated {
-	BOOL isHidden = self.tabBarHidden;
-	if(hidden == isHidden)
-		return;
-	UIView *transitionView = [[[self.view.subviews reverseObjectEnumerator] allObjects] lastObject];
-	if(transitionView == nil) {
-		TFLog(@"could not get the container view!");
-		return;
-	}
-	CGRect viewFrame = self.view.frame;
-	CGRect tabBarFrame = self.tabBar.frame;
-    CGRect cameraFrame = viewCamera.frame;
-	CGRect containerFrame = transitionView.frame;
-	
-	containerFrame.size.height = viewFrame.size.height - (hidden ? 0 : tabBarFrame.size.height);
-    tabBarFrame.origin.y = viewFrame.size.height - (hidden ? (tabBarFrame.size.height - cameraFrame.size.height) : tabBarFrame.size.height);
-    cameraFrame.origin.y = viewFrame.size.height - (hidden ? 0 : cameraFrame.size.height);
-    if (hidden) {
-        transitionView.frame = containerFrame;
-        [UIView animateWithDuration:kAnimationDuration
-                         animations:^{
-                             self.tabBar.frame = tabBarFrame;
-                             viewCamera.frame = cameraFrame;
-                         }
-         ];
-    } else {
-        [UIView animateWithDuration:kAnimationDuration
-                         animations:^{
-                             self.tabBar.frame = tabBarFrame;
-                             viewCamera.frame = cameraFrame;
-                         }
-                         completion:^(BOOL finished) {
-                             transitionView.frame = containerFrame;
-                         }
-         ];
-    }
-    
-}
-
 - (void)showAbout:(id)sender {
 //    [TestFlight openFeedbackView];
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
     LXAboutViewController *viewAbout = [mainStoryboard instantiateViewControllerWithIdentifier:@"About"];
     [self presentViewController:viewAbout animated:YES completion:nil];
-}
-
-- (void)showTab:(NSNotification *) notification
-{
-    [self setTabBarHidden:FALSE];
-}
-
-- (void)hideTab:(NSNotification *) notification
-{
-    [self setTabBarHidden:TRUE];
 }
 
 @end

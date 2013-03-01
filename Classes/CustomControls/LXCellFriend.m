@@ -7,9 +7,10 @@
 //
 
 #import "LXCellFriend.h"
+#import "UIImageView+loadProgress.h"
 
 @implementation LXCellFriend
-@synthesize buttonUser;
+@synthesize imageUser;
 @synthesize labelName;
 @synthesize labelIntro;
 
@@ -30,9 +31,9 @@
 }
 
 - (void)setUser:(User *)user {
-    [buttonUser loadBackground:user.profilePicture placeholderImage:@"user.gif"];
-    buttonUser.layer.cornerRadius = 3;
-    buttonUser.clipsToBounds = YES;
+    imageUser.layer.cornerRadius = 3;
+    imageUser.clipsToBounds = YES;
+    [imageUser loadProgess:user.profilePicture];
     labelIntro.text = user.introduction;
     labelName.text = user.name;
 }

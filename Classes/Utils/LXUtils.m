@@ -9,8 +9,79 @@
 #import "LXUtils.h"
 #import <Foundation/Foundation.h>
 
+#import "User.h"
+#import "Picture.h"
+#import "Feed.h"
+
+#import "LXAppDelegate.h"
 
 @implementation LXUtils
+
+
++ (void)toggleLike:(UIButton*)sender ofPicture:(Picture*)pic {
+    LXAppDelegate* app = [LXAppDelegate currentDelegate];
+    if (!app.currentUser)
+        sender.enabled = NO;
+    else {
+        sender.selected = !sender.selected;
+    }
+    
+    BOOL increase = !sender.selected;
+    pic.isVoted = increase;
+    pic.voteCount = [NSNumber numberWithInteger:[pic.voteCount integerValue] + (increase?1:-1)];
+    NSInteger likeCount = [sender.titleLabel.text integerValue];
+    NSNumber *num = [NSNumber numberWithInteger:likeCount + (increase?1:-1)];
+    [sender setTitle:[num stringValue] forState:UIControlStateNormal];
+    
+    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
+                           [app getToken], @"token",
+                           @"1", @"vote_type",
+                           nil];
+    
+    NSString *url = [NSString stringWithFormat:@"picture/%d/vote_post", [pic.pictureId integerValue]];
+    [[LatteAPIClient sharedClient] postPath:url
+                                 parameters:param
+                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                        TFLog(@"Submited like");
+                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                        message:error.localizedDescription
+                                                                                       delegate:nil
+                                                                              cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                              otherButtonTitles:nil];
+                                        [alert show];
+                                        TFLog(@"Something went wrong (Vote)");
+                                    }];
+}
+
++ (Picture *)picFromPicID:(long)picID of:(NSArray *)feeds {
+    for (Feed *feed in feeds) {
+        if ([feed.model integerValue] == 1) {
+            for (Picture *pic in feed.targets) {
+                if ([pic.pictureId integerValue] == picID) {
+                    return pic;
+                }
+            }
+        }
+    }
+    return nil;
+}
+
++ (Feed *)feedFromPicID:(long)picID of:(NSArray *)feeds {
+    for (Feed *feed in feeds) {
+        for (Picture *pic in feed.targets) {
+            if ([pic.pictureId integerValue] == picID) {
+                return feed;
+            }
+        }
+    }
+    return nil;
+}
+
++ (CGSize)newSizeOfPicture:(Picture*)picture withWidth:(CGFloat)width {
+    return CGSizeMake(width, width*[picture.height floatValue]/[picture.width floatValue]);
+}
+
 
 + (NSString *)stringFromNotify:(NSDictionary *)notify {
     NSString * notifyString = @"";

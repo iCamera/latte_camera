@@ -12,7 +12,6 @@
 #import "LXCellFriendRequest.h"
 #import "LXCellNotify.h"
 #import "UIButton+AsyncImage.h"
-#import "LXUserPageViewController.h"
 #import "LXPicDetailViewController.h"
 #import "EGORefreshTableHeaderView.h"
 #import "User.h"

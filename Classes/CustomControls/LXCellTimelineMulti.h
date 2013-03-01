@@ -21,6 +21,7 @@
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollPic;
 @property (strong, nonatomic) IBOutlet UILabel *labelTitle;
 @property (strong, nonatomic) IBOutlet UILabel *labelUserDate;
+@property (strong, nonatomic) IBOutlet UIView *viewBackground;
 
 @property (strong, nonatomic) Feed *feed;
 @property (strong, nonatomic) UIViewController *viewController;

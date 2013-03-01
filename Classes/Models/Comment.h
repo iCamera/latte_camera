@@ -16,10 +16,13 @@
 }
 
 @property (nonatomic, copy) NSNumber *commentId;
+@property (nonatomic, copy) NSNumber *voteCount;
 @property (nonatomic, copy) NSDate *createdAt;
 @property (nonatomic, copy) NSString *descriptionText;
 @property (nonatomic, assign) BOOL hidden;
 @property (nonatomic, assign) BOOL canEdit;
+@property (nonatomic, assign) BOOL canVote;
+@property (nonatomic, assign) BOOL isVoted;
 @property (nonatomic, strong) User *user;
 
 + (Comment *)instanceFromDictionary:(NSDictionary *)aDictionary;

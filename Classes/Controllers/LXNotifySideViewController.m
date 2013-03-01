@@ -355,8 +355,6 @@
             [[NSNotificationCenter defaultCenter]
              postNotificationName:@"ShowPic"
              object:pic];
-            LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-            [app.revealController performSelector:@selector(revealRight:) withObject:self];
         }
     } else {
         User* user;
@@ -381,9 +379,6 @@
         [[NSNotificationCenter defaultCenter]
          postNotificationName:@"ShowUser"
          object:user];
-        LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-        [app.revealController performSelector:@selector(revealRight:) withObject:self];
-
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

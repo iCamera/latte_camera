@@ -15,8 +15,9 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonComment;
 @property (strong, nonatomic) IBOutlet UIButton *buttonImage;
 @property (strong, nonatomic) IBOutlet UIButton *buttonVote;
+@property (strong, nonatomic) IBOutlet UILabel *labelView;
 
-@property (strong, nonatomic) IBOutlet Picture *pic;
+@property (strong, nonatomic) Picture *pic;
 @property (weak, nonatomic) id parent;
 @property (assign, nonatomic) BOOL showButton;
 

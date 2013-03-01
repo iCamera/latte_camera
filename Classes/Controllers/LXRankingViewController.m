@@ -107,14 +107,6 @@
     refreshHeaderView.delegate = self;
     [self.tableView addSubview:refreshHeaderView];
 
-    navigationBarPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:app.revealController action:@selector(revealGesture:)];
-    [self.navigationController.navigationBar addGestureRecognizer:navigationBarPanGestureRecognizer];
-    if (app.currentUser)
-        navigationBarPanGestureRecognizer.enabled = true;
-    else
-        navigationBarPanGestureRecognizer.enabled = false;
-    [buttonNavLeft addTarget:app.revealController action:@selector(revealLeft:) forControlEvents:UIControlEventTouchUpInside];
-
     [self loadRanking];
     
     if (app.currentUser != nil) {
@@ -370,12 +362,29 @@
 }
 
 - (void)didSelectPic:(UIButton*)buttonImage {
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                             bundle:nil];
-    LXPicDetailViewController *viewPicDetail = [mainStoryboard instantiateViewControllerWithIdentifier:@"PictureDetail"];
-    viewPicDetail.pic = [[pics filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:[NSString stringWithFormat:@"pictureId == %d", buttonImage.tag]]] lastObject];
-    [self.navigationController pushViewController:viewPicDetail animated:YES];
+    UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
+                                                           bundle:nil];
+    UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
+    LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
+    viewGallery.delegate = self;
+    viewGallery.picture = [[pics filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:[NSString stringWithFormat:@"pictureId == %d", buttonImage.tag]]] lastObject];
+    [self presentViewController:navGalerry animated:YES completion:nil];    
 }
+
+- (Picture *)pictureAfterPicture:(Picture *)picture {
+    NSUInteger current = [pics indexOfObject:picture];
+    if (current < pics.count-1)
+        return pics[current+1];
+    return nil;
+}
+
+- (Picture *)pictureBeforePicture:(Picture *)picture {
+    NSUInteger current = [pics indexOfObject:picture];
+    if (current > 0)
+        return pics[current-1];
+    return nil;
+}
+
 
 - (void)receiveLoggedIn:(NSNotification *) notification {
     navigationBarPanGestureRecognizer.enabled = true;

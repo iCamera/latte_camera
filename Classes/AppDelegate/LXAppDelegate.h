@@ -7,19 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LXUIRevealController.h"
 #import "LXMainTabViewController.h"
 #import "FacebookSDK.h"
 #import "TestFlight.h"
 #import "GAI.h"
-
+#import "LXSidePanelController.h"
 
 @class User;
 
 #define APPDELEGATE (AppDelegate *)[UIApplication sharedApplication].delegate
 
 @interface LXAppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate> {
-    LXUIRevealController* revealController;
+    LXSidePanelController *revealController;
     NSString *apns;
     UINavigationController *viewCamera;
     id<GAITracker> tracker;
@@ -27,7 +26,7 @@
 }
 
 @property(nonatomic, retain) id<GAITracker> tracker;
-@property (strong, nonatomic) LXUIRevealController *revealController;
+//@property (strong, nonatomic) LXUIRevealController *revealController;
 
 @property (strong, nonatomic) User *currentUser;
 @property (strong, nonatomic) NSString *apns;
@@ -43,5 +42,7 @@ extern NSString *const FBSessionStateChangedNotification;
 - (void)setToken:(NSString*)token;
 - (void)updateUserAPNS;
 - (void)toogleCamera;
+
++ (LXAppDelegate*)currentDelegate;
 
 @end

@@ -9,18 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "LXLoginViewController.h"
 #import "LXCameraViewController.h"
-#import "LXUserPageViewController.h"
 #import "LXPicDetailViewController.h"
 #import "User.h"
 #import "Picture.h"
 
 #define kAnimationDuration .3
 
-@interface LXMainTabViewController : UITabBarController<LXImagePickerDelegate> {
-    UIView *viewCamera;
-    BOOL isFirst;
-}
-
-@property (nonatomic, getter=isTabBarHidden) BOOL tabBarHidden;
+@interface LXMainTabViewController : UITabBarController<LXImagePickerDelegate>
 
 @end

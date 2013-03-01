@@ -19,6 +19,7 @@
 @synthesize buttonComment;
 @synthesize buttonImage;
 @synthesize buttonVote;
+@synthesize labelView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,8 +35,6 @@
     [super viewDidLoad];
     [buttonImage loadBackground:_pic.urlSquare];
     
-    buttonImage.layer.borderColor = [[UIColor whiteColor] CGColor];
-    buttonImage.layer.borderWidth = 3;
     UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:buttonImage.bounds];
     buttonImage.layer.masksToBounds = NO;
     buttonImage.layer.shadowColor = [UIColor blackColor].CGColor;
@@ -62,6 +61,7 @@
     buttonComment.tag = [_pic.pictureId integerValue];
     buttonImage.tag = [_pic.pictureId integerValue];
     buttonVote.tag = [_pic.pictureId integerValue];
+    labelView.text = [_pic.pageviews stringValue];
     
     [buttonImage addTarget:_parent action:@selector(showPic:) forControlEvents:UIControlEventTouchUpInside];
     [buttonComment addTarget:_parent action:@selector(showComment:) forControlEvents:UIControlEventTouchUpInside];
@@ -79,4 +79,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewDidUnload {
+    [self setLabelView:nil];
+    [super viewDidUnload];
+}
 @end

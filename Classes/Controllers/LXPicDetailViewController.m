@@ -8,21 +8,25 @@
 
 #import "LXPicDetailViewController.h"
 
+#import "LXMyPageViewController.h"
 
 @interface LXPicDetailViewController ()
 @end
 
-@implementation LXPicDetailViewController
+@implementation LXPicDetailViewController {
+    EGORefreshTableHeaderView *refreshHeaderView;
+    Picture *pic;
+    BOOL reloading;
+    BOOL loaded;
+    NSMutableArray *comments;
+    NSMutableArray *voters;
+    MBProgressHUD *HUD;
+}
 
-@synthesize picID;
 @synthesize gestureTap;
-@synthesize viewTextbox;
-@synthesize textComment;
-@synthesize buttonSend;
+
 @synthesize buttonEdit;
-@synthesize tablePic;
 @synthesize pic;
-//@synthesize user;
 
 @synthesize labelTitle;
 @synthesize labelDate;
@@ -42,6 +46,9 @@
 @synthesize indicatorComment;
 @synthesize scrollVotes;
 @synthesize labelDesc;
+@synthesize viewComment;
+@synthesize growingComment;
+@synthesize buttonSend;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -60,38 +67,41 @@
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     [app.tracker sendView:@"Picture Detail Screen"];
     
-    // Style
-    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:viewTextbox.bounds];
-    viewTextbox.layer.masksToBounds = NO;
-    viewTextbox.layer.shadowColor = [UIColor blackColor].CGColor;
-    viewTextbox.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-    viewTextbox.layer.shadowOpacity = 0.5f;
-    viewTextbox.layer.shadowRadius = 2.5f;
-    viewTextbox.layer.shadowPath = shadowPath.CGPath;
+
+    growingComment.delegate = self;
+
+
+//    viewComment.internalTextView.delegate = self;
+//    textComment.leftView = paddingView;
+//    textComment.leftViewMode = UITextFieldViewModeAlways;
     
-    UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
-    textComment.leftView = paddingView;
-    textComment.leftViewMode = UITextFieldViewModeAlways;
+    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:self.view.bounds];
+    self.view.layer.masksToBounds = NO;
+    self.view.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.view.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+    self.view.layer.shadowOpacity = 0.5f;
+    self.view.layer.shadowRadius = 2.5f;
+    self.view.layer.shadowPath = shadowPath.CGPath;
     
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];
     
-    refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tablePic.bounds.size.height, self.view.frame.size.width, self.tablePic.bounds.size.height)];
+    refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
     refreshHeaderView.delegate = self;
-    [self.tablePic addSubview:refreshHeaderView];
+    [self.tableView addSubview:refreshHeaderView];
     
     if (app.currentUser != nil) {
-        UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, viewTextbox.frame.size.height, 0.0);
-        tablePic.scrollIndicatorInsets = contentInsets;
+        UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, viewComment.frame.size.height, 0.0);
+        self.tableView.scrollIndicatorInsets = contentInsets;
 
         // Edit Swipe
         UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipedHorizontal)];
         swipe.direction = UISwipeGestureRecognizerDirectionRight | UISwipeGestureRecognizerDirectionLeft;
-        [tablePic addGestureRecognizer:swipe];
+        [self.tableView addGestureRecognizer:swipe];
 
     } else {
-        viewTextbox.hidden = true;
+        viewComment.hidden = true;
     }
     
     
@@ -102,19 +112,19 @@
 }
 
 - (void)swipedHorizontal {
-    [tablePic setEditing:!tablePic.editing animated:YES];
+    [self.tableView setEditing:!self.tableView.editing animated:YES];
 }
 
 - (void)reloadView {
     LXAppDelegate* app = (LXAppDelegate*)[[UIApplication sharedApplication] delegate];
     if (app.currentUser != nil) {
-        textComment.enabled = true;
+//        textComment.enabled = true;
     }
     
     [indicatorComment startAnimating];
     
     
-    NSString *url = [NSString stringWithFormat:@"picture/%d", pic!=nil?[pic.pictureId integerValue]:picID];
+    NSString *url = [NSString stringWithFormat:@"picture/%d", [pic.pictureId integerValue]];
     [[LatteAPIClient sharedClient] getPath:url
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -145,34 +155,24 @@
                                        
                                        labelAccess.text = [pic.pageviews stringValue];
                                        if (pic.canVote) {
-                                       if (!(pic.isVoted && !app.currentUser))
-                                           buttonLike.enabled = YES;
+                                           if (!(pic.isVoted && !app.currentUser))
+                                               buttonLike.enabled = YES;
                                        }
-
+                                       
                                        buttonLike.selected = pic.isVoted;
                                        
                                        if (pic.canComment) {
                                            buttonComment.enabled = YES;
                                        }
                                        
-                                       [tablePic reloadData];
+                                       [self.tableView reloadData];
                                        
                                        LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
                                        if (app.currentUser != nil) {
-                                           UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, viewTextbox.frame.size.height, 0.0);
-                                           tablePic.contentInset = contentInsets;
+                                           UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, viewComment.frame.size.height, 0.0);
+                                           self.tableView.contentInset = contentInsets;
                                        }
-                                       [indicatorComment stopAnimating];
-                                       
-                                       // Increase counter
-                                       NSString *url = [NSString stringWithFormat:@"picture/counter/%d/%d",
-                                                        [pic.pictureId integerValue],
-                                                        [user.userId integerValue]];
-                                       
-                                       [[LatteAPIClient sharedClient] getPath:url
-                                                                   parameters:[NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"]
-                                                                      success:nil
-                                                                      failure:nil];
+                                       [indicatorComment stopAnimating];                                       
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        [indicatorComment stopAnimating];
                                        
@@ -215,7 +215,7 @@
     
     viewSubPic.frame = frameSubPic;
     
-    CGRect frameHeader = tablePic.tableHeaderView.frame;
+    CGRect frameHeader = self.tableView.tableHeaderView.frame;
     frameHeader.size.height = frameSubPic.size.height + 25 + 14;
     
     if (pic.isOwner && ([pic.voteCount integerValue] > 0)) {
@@ -226,12 +226,12 @@
     }
     
     viewSubBg.frame = frameHeader;
-    tablePic.tableHeaderView.frame = frameHeader;
+    self.tableView.tableHeaderView.frame = frameHeader;
     
     // Hack, to refresh header height
-    tablePic.tableHeaderView = tablePic.tableHeaderView;
+    self.tableView.tableHeaderView = self.tableView.tableHeaderView;
     
-    [tablePic setNeedsLayout];
+    [self.tableView setNeedsLayout];
     [viewSubBg setNeedsDisplay];
     [viewSubPic setNeedsDisplay];
     
@@ -240,7 +240,7 @@
     // Do any additional setup after loading the view from its nib.
     if (pic.title.length > 0)
         labelTitle.text = pic.title;
-        
+    
     labelDate.text = [LXUtils timeDeltaFromNow:pic.createdAt];
     labelLike.text = [pic.voteCount stringValue];
     labelComment.text = [pic.commentCount stringValue];
@@ -269,7 +269,7 @@
     
     if (pic.isOwner && ([pic.voteCount integerValue] > 0)) {
         scrollVotes.hidden = NO;
-        NSString *url = [NSString stringWithFormat:@"picture/%d/votes", pic!=nil?[pic.pictureId integerValue]:picID];
+        NSString *url = [NSString stringWithFormat:@"picture/%d/votes", [pic.pictureId integerValue]];
         LXAppDelegate* app = (LXAppDelegate*)[[UIApplication sharedApplication] delegate];
         
         [[LatteAPIClient sharedClient] getPath:url
@@ -282,17 +282,17 @@
                                            
                                            NSInteger guestVoteCount = [pic.voteCount integerValue] - votes.count;
                                            NSInteger userVoteCount = 0;
-                                           
+                                           voters = [[NSMutableArray alloc] init];
                                            for (User *voteUser in votes) {
                                                if ([voteUser.userId integerValue] != 0) {
                                                    UIButton *buttonVotedUser = [[UIButton alloc] initWithFrame:CGRectMake(5+45*userVoteCount, 0, 40, 40)];
-                                                   [buttonVotedUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
+                                                   [buttonVotedUser addTarget:self action:@selector(showVoter:) forControlEvents:UIControlEventTouchUpInside];
                                                    buttonVotedUser.layer.cornerRadius = 5;
                                                    buttonVotedUser.clipsToBounds = YES;
-                                                   buttonVotedUser.tag = [voteUser.userId integerValue];
+                                                   buttonVotedUser.tag = userVoteCount;
                                                    [buttonVotedUser loadBackground:voteUser.profilePicture placeholderImage:@"user.gif"];
                                                    [scrollVotes addSubview:buttonVotedUser];
-
+                                                   [voters addObject:voteUser];
                                                    userVoteCount++;
                                                } else
                                                    guestVoteCount++;
@@ -328,16 +328,14 @@
 
 - (void)viewDidUnload
 {
-    [self setViewTextbox:nil];
-    [self setTextComment:nil];
-    [self setButtonSend:nil];
     [self setGestureTap:nil];
-    [self setTablePic:nil];
     [self setViewSubBg:nil];
     [self setViewSubPic:nil];
     [self setIndicatorComment:nil];
     [self setScrollVotes:nil];
     [self setLabelDesc:nil];
+    [self setTableView:nil];
+    [self setViewComment:nil];
     [super viewDidUnload];
 }
 
@@ -399,7 +397,7 @@
     [cellComment setComment:comment];
     
     if (!comment.user.isUnregister) {
-        cellComment.buttonUser.tag = [comment.user.userId longValue];
+        cellComment.buttonUser.tag = indexPath.row;
         [cellComment.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
     }
     
@@ -409,10 +407,20 @@
 - (IBAction)showUser:(UIButton *)sender {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
-    LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
-    [viewUserPage setUserID:sender.tag];
+    LXMyPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    Comment *comment = comments[sender.tag];
+    viewUserPage.user = comment.user;
     [self.navigationController pushViewController:viewUserPage animated:YES];
 }
+
+- (IBAction)showVoter:(UIButton *)sender {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    LXMyPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    viewUserPage.user = voters[sender.tag];
+    [self.navigationController pushViewController:viewUserPage animated:YES];
+}
+
 
 - (IBAction)showInfo:(UIButton *)sender {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
@@ -432,67 +440,67 @@
 }
 
 - (IBAction)showKeyboard:(id)sender {
-    [textComment becomeFirstResponder];
+    [viewComment resignFirstResponder];
 }
 
 
 
 - (void)keyboardWillShow:(NSNotification *)notification
 {
-    [self.tablePic addGestureRecognizer:gestureTap];
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationCurve:[[[notification userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
-    [UIView setAnimationDuration:[[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue]];
+    [self.tableView addGestureRecognizer:gestureTap];
     
     // Step 1: Get the size of the keyboard.
     CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    
+    CGRect containerFrame = viewComment.frame;
+    containerFrame.origin.y = self.view.bounds.size.height - (keyboardSize.height + containerFrame.size.height);
 
     
     // Step 2: Adjust the bottom content inset of your scroll view by the keyboard height.
-    UIEdgeInsets scrollInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height + viewTextbox.frame.size.height, 0.0);
-    tablePic.contentInset = scrollInsets;
-    tablePic.scrollIndicatorInsets = scrollInsets;
+    UIEdgeInsets scrollInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height + viewComment.frame.size.height, 0.0);
+    self.tableView.contentInset = scrollInsets;
+    self.tableView.scrollIndicatorInsets = scrollInsets;
     
     
- 
-    viewTextbox.frame = CGRectMake(0,
-                                   self.view.frame.size.height-keyboardSize.height-viewTextbox.frame.size.height,
-                                   viewTextbox.frame.size.width,
-                                   viewTextbox.frame.size.height);
+    CGPoint scrollPoint = CGPointMake(0.0, self.tableView.contentOffset.y + keyboardSize.height);
     
-    
-    CGPoint scrollPoint = CGPointMake(0.0, tablePic.contentOffset.y + keyboardSize.height);
-    [tablePic setContentOffset:scrollPoint];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationCurve:[[[notification userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
+    [UIView setAnimationDuration:[[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue]];
+
+    viewComment.frame = containerFrame;
+    [self.tableView setContentOffset:scrollPoint];
     
     [UIView commitAnimations];
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification
 {
-    [self.tablePic removeGestureRecognizer:gestureTap];
+    [self.tableView removeGestureRecognizer:gestureTap];
+    
+    CGRect containerFrame = viewComment.frame;
+    containerFrame.origin.y = self.view.bounds.size.height - containerFrame.size.height;
+    
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationCurve:[[[notification userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
     [UIView setAnimationDuration:[[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue]];
     
-    UIEdgeInsets scrollInsets = UIEdgeInsetsMake(0.0, 0.0, viewTextbox.frame.size.height, 0.0);
-    tablePic.contentInset = scrollInsets;
-    tablePic.scrollIndicatorInsets = scrollInsets;
+    UIEdgeInsets scrollInsets = UIEdgeInsetsMake(0.0, 0.0, viewComment.frame.size.height, 0.0);
+    self.tableView.contentInset = scrollInsets;
+    self.tableView.scrollIndicatorInsets = scrollInsets;
 
-    viewTextbox.frame = CGRectMake(0,
-                                   self.view.frame.size.height-viewTextbox.frame.size.height,
-                                   viewTextbox.frame.size.width,
-                                   viewTextbox.frame.size.height);
+    viewComment.frame = containerFrame;
         
     [UIView commitAnimations];
 }
 
 - (BOOL)sendComment {
-    if (textComment.text.length < 3000) {
+    if (growingComment.text.length < 3000) {
         // Submit comment
         LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
         NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
                                [app getToken], @"token",
-                               textComment.text, @"description", nil];
+                               growingComment.text, @"description", nil];
         
         NSString *url = [NSString stringWithFormat:@"picture/%d/comment_post", [pic.pictureId integerValue]];
         
@@ -502,8 +510,8 @@
                                             Comment *comment = [Comment instanceFromDictionary:[JSON objectForKey:@"comment"]];
                                             [comments addObject:comment];
                                             NSIndexPath *path = [NSIndexPath indexPathForRow:comments.count-1 inSection:0];
-                                            [tablePic insertRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationRight];
-                                            [tablePic scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                                            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationRight];
+                                            [self.tableView scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionTop animated:YES];
                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                             TFLog(@"Something went wrong (Comment)");
                                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
@@ -514,25 +522,35 @@
                                             [alert show];
                                         }];
         
-        textComment.text = @"";
+        growingComment.text = @"";
         buttonSend.enabled = false;
-        [self.textComment resignFirstResponder];
+        [growingComment resignFirstResponder];
         return TRUE;
     } else {
         return FALSE;
     }
 }
 
+- (void)growingTextViewDidChange:(HPGrowingTextView *)growingTextView {
+    buttonSend.enabled = growingTextView.text.length > 0;
+}
+
+- (void)growingTextView:(HPGrowingTextView *)growingTextView willChangeHeight:(float)height
+{
+    float diff = (growingTextView.frame.size.height - height);
+    
+	CGRect r = viewComment.frame;
+    r.size.height -= diff;
+    r.origin.y += diff;
+	viewComment.frame = r;
+}
+
 - (IBAction)touchBackground:(id)sender {
-    [self.textComment resignFirstResponder];
+    [growingComment resignFirstResponder];
 }
 
 - (IBAction)touchBack:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (IBAction)changeText:(id)sender {
-    buttonSend.enabled = textComment.text.length > 0;
 }
 
 - (IBAction)touchSend:(id)sender {
@@ -579,10 +597,6 @@
                                           }];
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    return [self sendComment];
-}
 
 - (void)reloadTableViewDataSource{
     reloading = YES;
@@ -590,7 +604,7 @@
 
 - (void)doneLoadingTableViewData{
     reloading = NO;
-    [refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tablePic];
+    [refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 }
 
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
@@ -629,7 +643,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         Comment* comment = comments[indexPath.row];
         [comments removeObject:comment];
-        [tablePic deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         
         LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
         
@@ -641,7 +655,7 @@
                                             labelLike.text = [vote_count stringValue];
                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                             [comments insertObject:comment atIndex:indexPath.row];
-                                            [tablePic insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                                            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
                                         }];
     }
 }

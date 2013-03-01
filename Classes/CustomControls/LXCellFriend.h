@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIButton+AsyncImage.h"
 #import "User.h"
 
 @interface LXCellFriend : UITableViewCell
-@property (strong, nonatomic) IBOutlet UIButton *buttonUser;
+@property (strong, nonatomic) IBOutlet UIImageView *imageUser;
 @property (strong, nonatomic) IBOutlet UILabel *labelName;
 @property (strong, nonatomic) IBOutlet UILabel *labelIntro;
 

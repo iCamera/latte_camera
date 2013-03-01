@@ -21,13 +21,13 @@
     NSArray *keyExif;
     NSMutableArray *sections;
     Picture *pic;
-    int picID;
 }
 
 @property (strong, nonatomic) IBOutlet UILabel *labelTitle;
 @property (strong, nonatomic) IBOutlet UIImageView *imagePic;
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
 
+@property (assign, nonatomic) NSUInteger pictureID;
+
 - (IBAction)touchBack:(id)sender;
-- (void)setPictureID:(int)aPicID;
 @end

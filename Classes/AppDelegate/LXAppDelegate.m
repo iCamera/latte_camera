@@ -8,19 +8,21 @@
 
 #import "LXAppDelegate.h"
 #import "LXNotifySideViewController.h"
-#import "LXUIRevealController.h"
 #import "LatteAPIClient.h"
 
 @implementation LXAppDelegate
 
 @synthesize currentUser;
 @synthesize apns;
-@synthesize revealController;
 @synthesize window;
 @synthesize viewCamera;
 @synthesize tracker;
 
 NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSessionStateChangedNotification";
+
++ (LXAppDelegate*)currentDelegate {
+    return (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+}
 
 - (BOOL)application:(UIApplication *)application
              openURL:(NSURL *)url
@@ -134,14 +136,12 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
         [[UIApplication sharedApplication] setStatusBarHidden:NO];
         UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                                  bundle:nil];
-        LXMainTabViewController *viewMainTab = [mainStoryboard instantiateViewControllerWithIdentifier:@"MainTab"];
-        LXNotifySideViewController *leftViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"LeftSide"];
         
-        revealController = [[LXUIRevealController alloc]initWithFrontViewController:viewMainTab
-                                                                 leftViewController:leftViewController
-                                                                rightViewController:nil];
-        
-        window.rootViewController = revealController;
+        LXSidePanelController *controllerSide = [[LXSidePanelController alloc] init];
+        controllerSide.centerPanel = [mainStoryboard instantiateViewControllerWithIdentifier:@"MainTab"];
+        controllerSide.leftPanel = [mainStoryboard instantiateViewControllerWithIdentifier:@"LeftSide"];
+
+        window.rootViewController = controllerSide;
         [window makeKeyAndVisible];
     }
 }
