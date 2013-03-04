@@ -110,6 +110,11 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
     
     viewCamera = (id)window.rootViewController;
     
+    NSDictionary *remoteNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+
+    if (remoteNotification) {
+    }
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(readNotify:) name:@"ReadNotify" object:nil];
     
     return YES;

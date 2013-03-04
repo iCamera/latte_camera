@@ -8,6 +8,7 @@
 
 #import "LXViewHeaderUserPage.h"
 #import "UIImageView+loadProgress.h"
+#import "LXAppDelegate.h"
 
 @interface LXViewHeaderUserPage ()
 
@@ -20,6 +21,11 @@
 @synthesize viewStatsButton;
 @synthesize labelNickname;
 @synthesize buttonPhotoCount;
+@synthesize buttonFollower;
+@synthesize buttonTableFollowing;
+@synthesize labelLikes;
+@synthesize labelView;
+@synthesize buttonFollow;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -52,11 +58,24 @@
 }
 
 - (void)setUser:(User *)user {
+    _user = user;
+    
     labelNickname.text = user.name;
     [buttonPhotoCount setTitle:[user.countPictures stringValue] forState:UIControlStateNormal];
+    [buttonFollower setTitle:[user.countFollowers stringValue] forState:UIControlStateNormal];
+    [buttonTableFollowing setTitle:[user.countFollows stringValue] forState:UIControlStateNormal];
+    
+    labelLikes.text = [user.voteCount stringValue];
+    labelView.text = [user.pageViews stringValue];
     
     if (user.profilePicture != nil)
         [imageUser setImageWithURL:[NSURL URLWithString:user.profilePicture]];
+
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    if (app.currentUser != nil && ![user.userId isEqualToNumber:app.currentUser.userId]) {
+        buttonFollow.enabled = true;
+        buttonFollow.selected = user.isFollowing;
+    }
 }
 
 - (IBAction)touchTab:(UIButton *)sender {
@@ -87,6 +106,31 @@
             [_parent touchPhoto:kPhotoCalendar];
             break;
     }
+}
+
+- (IBAction)toggleFollow:(UIButton *)sender {
+    sender.selected = !sender.selected;
+    _user.isFollowing = sender.selected;
+    NSString *url;
+    
+    LXAppDelegate* app = [LXAppDelegate currentDelegate];
+    
+    if (_user.isFollowing) {
+        url = [NSString stringWithFormat:@"user/follow/%d", [_user.userId integerValue]];
+
+    } else {
+        url = [NSString stringWithFormat:@"user/unfollow/%d", [_user.userId integerValue]];
+    }
+    
+    [[LatteAPIClient sharedClient] postPath:url
+                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                    success:nil
+                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                        sender.selected = !sender.selected;
+                                        _user.isFollowing = sender.selected;
+                                        TFLog(@"Something went wrong (User - follow)");
+                                    }];
+
 }
 
 - (void)didReceiveMemoryWarning

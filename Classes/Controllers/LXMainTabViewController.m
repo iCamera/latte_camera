@@ -44,16 +44,6 @@
                                              selector:@selector(receiveLoggedOut:)
                                                  name:@"LoggedOut"
                                                object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showUser:)
-                                                 name:@"ShowUser"
-                                               object:nil];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showPic:)
-                                                 name:@"ShowPic"
-                                               object:nil];
 
     isFirst = true;
     return self;
@@ -135,15 +125,17 @@
     
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
     if (app.currentUser != nil) {
-        [self receiveLoggedIn:nil];
+        [self setUser];
     } else {
         [self setGuest];
     }
     
     LXUserNavButton *viewNav = [[LXUserNavButton alloc] init];
-    viewNav.view.frame = CGRectMake(200, 0, 100, 42);
+    viewNav.view.frame = CGRectMake(200, 0, 100, 60);
     [viewNav.buttonSetting addTarget:self action:@selector(showSetting:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:viewNav.view];
+    [self addChildViewController:viewNav];
+    [viewNav didMoveToParentViewController:self];
 }
 
 - (void)setViewControllers:(NSArray *)viewControllers {
@@ -184,12 +176,6 @@
     [picker performSegueWithIdentifier:@"Edit" sender:info];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [[UIApplication sharedApplication] setStatusBarHidden:NO];
-    
-    [super viewWillAppear:animated];
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -200,13 +186,10 @@
     [super viewDidUnload];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    //[self setTabBarHidden:YES];
-}
 
 - (void)setGuest {
-    UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    UIViewController *viewLogin = [storyMain instantiateViewControllerWithIdentifier:@"LoginModal"];
+    UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"Authentication" bundle:nil];
+    UIViewController *viewLogin = [storyMain instantiateInitialViewController];
     
     NSMutableArray *arrayViews = [NSMutableArray arrayWithArray:self.viewControllers];
     arrayViews[4] = viewLogin;
@@ -240,26 +223,6 @@
     User *user = notify.object;
     viewUser.user = user;
     [nav pushViewController:viewUser animated:YES];
-}
-
-
-- (void)showPic:(NSNotification *)notify {
-    self.selectedIndex = 4;
-    UINavigationController *nav = (id)self.selectedViewController;
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                             bundle:nil];
-    LXPicDetailViewController *viewPic = [mainStoryboard instantiateViewControllerWithIdentifier:@"PictureDetail"];
-    Picture *pic = notify.object;
-    viewPic.pic = pic;
-    [nav pushViewController:viewPic animated:YES];
-}
-
-- (void)showAbout:(id)sender {
-//    [TestFlight openFeedbackView];
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                             bundle:nil];
-    LXAboutViewController *viewAbout = [mainStoryboard instantiateViewControllerWithIdentifier:@"About"];
-    [self presentViewController:viewAbout animated:YES completion:nil];
 }
 
 @end

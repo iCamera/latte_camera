@@ -30,24 +30,18 @@
 @interface LXPicDetailViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, EGORefreshTableHeaderDelegate, HPGrowingTextViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *gestureTap;
-@property (strong, nonatomic) IBOutlet LXButtonBrown30 *buttonEdit;
+@property (strong, nonatomic) IBOutlet UIButton *buttonEdit;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic) IBOutlet UIImageView *imagePic;
-@property (strong, nonatomic) IBOutlet UIView *viewStats;
-@property (strong, nonatomic) IBOutlet UILabel *labelTitle;
 @property (strong, nonatomic) IBOutlet UILabel *labelAccess;
-@property (strong, nonatomic) IBOutlet UILabel *labelComment;
-@property (strong, nonatomic) IBOutlet UILabel *labelLike;
 @property (strong, nonatomic) IBOutlet UILabel *labelAuthor;
 @property (strong, nonatomic) IBOutlet UILabel *labelDate;
 @property (strong, nonatomic) IBOutlet UILabel *labelDesc;
 @property (strong, nonatomic) IBOutlet UIButton *buttonLike;
 @property (strong, nonatomic) IBOutlet UIButton *buttonUser;
-@property (strong, nonatomic) IBOutlet UIButton *buttonComment;
 @property (strong, nonatomic) IBOutlet UIButton *buttonInfo;
 @property (strong, nonatomic) IBOutlet UIButton *buttonMap;
-@property (strong, nonatomic) IBOutlet UIView *viewSubBg;
 @property (strong, nonatomic) IBOutlet UIView *viewSubPic;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorComment;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollVotes;
@@ -59,12 +53,8 @@
 - (IBAction)touchBackground:(id)sender;
 - (IBAction)touchBack:(id)sender;
 - (IBAction)touchSend:(id)sender;
-- (IBAction)touchEdit:(id)sender;
-- (IBAction)touchLike:(id)sender;
-- (IBAction)showUser:(UIButton *)sender;
-- (IBAction)showInfo:(UIButton *)sender;
-- (IBAction)showMap:(UIButton *)sender;
-- (IBAction)showKeyboard:(id)sender;
+- (IBAction)touchLike:(UIButton *)sender;
+- (IBAction)showOwner:(id)sender;
 
 @property (strong, nonatomic) Picture *pic;
 

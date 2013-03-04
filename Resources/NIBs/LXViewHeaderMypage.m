@@ -72,9 +72,9 @@
     
     labelNickname.text = user.name;
     labelLikes.text = [user.voteCount stringValue];
-    labelView.text = [user.pageView stringValue];
-    [buttonFriendCount setTitle:[user.countFriends stringValue] forState:UIControlStateNormal];
+    labelView.text = [user.pageViews stringValue];
     [buttonPicCount setTitle:[user.countPictures stringValue] forState:UIControlStateNormal];
+    [buttonFriendCount setTitle:[user.countFollowers stringValue] forState:UIControlStateNormal];
     [buttonFollowCount setTitle:[user.countFollows stringValue] forState:UIControlStateNormal];
 }
 

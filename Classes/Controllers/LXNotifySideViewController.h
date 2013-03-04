@@ -17,21 +17,23 @@
 #import "User.h"
 #import "Picture.h"
 
+typedef enum {
+    kNotifyTargetPhoto = 10,
+    k = 12,
+    kTimelineFollowing = 13,
+} LatteTimeline;
+
 @interface LXNotifySideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, EGORefreshTableHeaderDelegate> {
     NSMutableArray *notifies;
-    NSMutableArray *requests;
-    NSMutableArray *ignores;
     NSMutableArray *fbfriends;
     
-    int tableMode;
     int page;
     int limit;
     EGORefreshTableHeaderView *refreshHeaderView;
     BOOL reloading;
 }
 
-@property (strong, nonatomic) IBOutlet UISegmentedControl *segmentTab;
+
 @property (strong, nonatomic) IBOutlet UITableView *tableNotify;
-- (IBAction)touchTab:(id)sender;
 
 @end

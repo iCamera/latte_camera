@@ -82,6 +82,8 @@
         [self setValue:value forKey:@"bloodType"];
     } else if ([key isEqualToString:@"count_follows"]) {
         [self setValue:value forKey:@"countFollows"];
+    } else if ([key isEqualToString:@"count_followers"]) {
+        [self setValue:value forKey:@"_countFollowers"];
     } else if ([key isEqualToString:@"count_friends"]) {
         [self setValue:value forKey:@"countFriends"];
     } else if ([key isEqualToString:@"count_pictures"]) {
@@ -104,12 +106,14 @@
         [self setValue:value forKey:@"profilePicture"];
     } else if ([key isEqualToString:@"vote_count"]) {
         [self setValue:value forKey:@"voteCount"];
-    } else if ([key isEqualToString:@"page_view"]) {
-        [self setValue:value forKey:@"_pageView"];
+    } else if ([key isEqualToString:@"page_views"]) {
+        [self setValue:value forKey:@"_pageViews"];
     } else if ([key isEqualToString:@"is_following"]) {
         [self setValue:value forKey:@"isFollowing"];
     } else if ([key isEqualToString:@"is_friend"]) {
         [self setValue:value forKey:@"isFriend"];
+    } else if ([key isEqualToString:@"stealth_mode"]) {
+        [self setValue:value forKey:@"_stealthMode"];
     } else if ([key isEqualToString:@"request_to_me"]) {
         [self setValue:value forKey:@"requestToMe"];
     } else if ([key isEqualToString:@"request_to_user"]) {
@@ -146,6 +150,8 @@
         [self setValue:value forKey:@"comment"];
     } else if ([key isEqualToString:@"vote"]) {
         [self setValue:value forKey:@"vote"];
+    } else if ([key isEqualToString:@"follow"]) {
+        [self setValue:value forKey:@"_follow"];
     }
     else {
         [super setValue:value forUndefinedKey:key];
@@ -166,7 +172,6 @@
     }
     
     [self setValuesForKeysWithDictionary:aDictionary];
-    
 }
 
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key {
@@ -175,6 +180,8 @@
         [self setValue:value forKey:@"_comment"];
     } else if ([key isEqualToString:@"vote"]) {
         [self setValue:value forKey:@"vote"];
+    } else if ([key isEqualToString:@"follow"]) {
+        [self setValue:value forKey:@"_follow"];
     }
     else {
         [super setValue:value forUndefinedKey:key];

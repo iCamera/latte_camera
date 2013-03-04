@@ -16,6 +16,7 @@
 @implementation LXPicDetailViewController {
     EGORefreshTableHeaderView *refreshHeaderView;
     Picture *pic;
+    User *user;
     BOOL reloading;
     BOOL loaded;
     NSMutableArray *comments;
@@ -27,21 +28,14 @@
 
 @synthesize buttonEdit;
 @synthesize pic;
-
-@synthesize labelTitle;
 @synthesize labelDate;
 @synthesize imagePic;
 @synthesize labelAccess;
-@synthesize labelLike;
 @synthesize labelAuthor;
 @synthesize buttonLike;
 @synthesize buttonUser;
-@synthesize labelComment;
-@synthesize viewStats;
-@synthesize buttonComment;
 @synthesize buttonInfo;
 @synthesize buttonMap;
-@synthesize viewSubBg;
 @synthesize viewSubPic;
 @synthesize indicatorComment;
 @synthesize scrollVotes;
@@ -128,8 +122,7 @@
     [[LatteAPIClient sharedClient] getPath:url
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       User *user = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
-                                       
+                                       user = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
                                        
                                        comments = [Comment mutableArrayFromDictionary:JSON withKey:@"comments"];
                                        
@@ -138,7 +131,6 @@
                                        
                                        
                                        //Addition data
-                                       buttonUser.tag = [user.userId integerValue];
                                        [buttonUser loadBackground:user.profilePicture placeholderImage:@"user.gif"];
                                        labelAuthor.text = user.name;
                                        
@@ -160,10 +152,6 @@
                                        }
                                        
                                        buttonLike.selected = pic.isVoted;
-                                       
-                                       if (pic.canComment) {
-                                           buttonComment.enabled = YES;
-                                       }
                                        
                                        [self.tableView reloadData];
                                        
@@ -195,7 +183,7 @@
     CGRect frameSubPic;
     frameSubPic.origin = CGPointMake(0, 0);
     frameSubPic.size.width = 320;
-    frameSubPic.size.height = newheight + 52;
+    frameSubPic.size.height = newheight + 52 + 31;
 
     CGRect frameDesc;
     if (pic.descriptionText.length > 0) {
@@ -209,9 +197,6 @@
         labelDesc.hidden = false;
     }
     
-    CGRect frameStats = viewStats.frame;
-    frameStats.origin.y = frameSubPic.size.height + 6;
-    viewStats.frame = frameStats;
     
     viewSubPic.frame = frameSubPic;
     
@@ -225,25 +210,22 @@
         frameHeader.size.height += 50;
     }
     
-    viewSubBg.frame = frameHeader;
+
     self.tableView.tableHeaderView.frame = frameHeader;
     
     // Hack, to refresh header height
     self.tableView.tableHeaderView = self.tableView.tableHeaderView;
     
     [self.tableView setNeedsLayout];
-    [viewSubBg setNeedsDisplay];
+
     [viewSubPic setNeedsDisplay];
     
     // ------------------------------ SET DATA
     
     // Do any additional setup after loading the view from its nib.
-    if (pic.title.length > 0)
-        labelTitle.text = pic.title;
     
     labelDate.text = [LXUtils timeDeltaFromNow:pic.createdAt];
-    labelLike.text = [pic.voteCount stringValue];
-    labelComment.text = [pic.commentCount stringValue];
+    [buttonLike setTitle:[pic.voteCount stringValue] forState:UIControlStateNormal];
     
     if ((pic.latitude != nil) && (pic.longitude != nil)) {
         buttonMap.enabled = YES;
@@ -329,7 +311,7 @@
 - (void)viewDidUnload
 {
     [self setGestureTap:nil];
-    [self setViewSubBg:nil];
+
     [self setViewSubPic:nil];
     [self setIndicatorComment:nil];
     [self setScrollVotes:nil];
@@ -343,29 +325,6 @@
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    if (![self.navigationController.viewControllers[self.navigationController.viewControllers.count-2] isKindOfClass:[LXPicDetailViewController class]]) {
-        [[NSNotificationCenter defaultCenter]
-         postNotificationName:@"TabbarHide"
-         object:self];
-    }
-    
-    [super viewWillAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    if (![self.navigationController.viewControllers[self.navigationController.viewControllers.count-1] isKindOfClass:[LXPicDetailViewController class]]) {
-        [[NSNotificationCenter defaultCenter]
-         postNotificationName:@"TabbarShow"
-         object:self];
-    }
-    
-    [super viewWillDisappear:animated];
-}
-
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     Comment *comment = [comments objectAtIndex:indexPath.row];
@@ -398,13 +357,15 @@
     
     if (!comment.user.isUnregister) {
         cellComment.buttonUser.tag = indexPath.row;
+        cellComment.buttonLike.tag = indexPath.row;
         [cellComment.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
+        [cellComment.buttonLike addTarget:self action:@selector(submitLikeComment:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     return cellComment;
 }
 
-- (IBAction)showUser:(UIButton *)sender {
+- (void)showUser:(UIButton *)sender {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
     LXMyPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
@@ -413,37 +374,13 @@
     [self.navigationController pushViewController:viewUserPage animated:YES];
 }
 
-- (IBAction)showVoter:(UIButton *)sender {
+- (void)showVoter:(UIButton *)sender {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
     LXMyPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
     viewUserPage.user = voters[sender.tag];
     [self.navigationController pushViewController:viewUserPage animated:YES];
 }
-
-
-- (IBAction)showInfo:(UIButton *)sender {
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                             bundle:nil];
-    LXPicInfoViewController *viewPicInfo = [mainStoryboard instantiateViewControllerWithIdentifier:@"PictureInfo"];
-    [viewPicInfo setPictureID:[pic.pictureId integerValue]];
-    [self.navigationController pushViewController:viewPicInfo animated:YES];
-}
-
-- (IBAction)showMap:(UIButton *)sender {
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                             bundle:nil];
-    LXPicMapViewController *viewPicMap = [mainStoryboard instantiateViewControllerWithIdentifier:@"PictureMap"];
-    [viewPicMap setPointWithLongitude:[pic.longitude floatValue] andLatitude:[pic.latitude floatValue]];
-    
-    [self.navigationController pushViewController:viewPicMap animated:YES];
-}
-
-- (IBAction)showKeyboard:(id)sender {
-    [viewComment resignFirstResponder];
-}
-
-
 
 - (void)keyboardWillShow:(NSNotification *)notification
 {
@@ -492,6 +429,47 @@
     viewComment.frame = containerFrame;
         
     [UIView commitAnimations];
+}
+
+- (void)toggleLikeComment:(UIButton*)sender {
+    LXAppDelegate* app = [LXAppDelegate currentDelegate];
+    if (!app.currentUser) {
+        sender.enabled = NO;
+    }
+    Comment *comment = comments[sender.tag];
+    
+    comment.isVoted = !comment.isVoted;
+    BOOL increase = comment.isVoted;
+    sender.selected = comment.isVoted;
+    
+    comment.voteCount = [NSNumber numberWithInteger:[comment.voteCount integerValue] + (increase?1:-1)];
+
+    NSInteger likeCount = [sender.titleLabel.text integerValue];
+    NSNumber *num = [NSNumber numberWithInteger:likeCount + (increase?1:-1)];
+    [sender setTitle:[num stringValue] forState:UIControlStateNormal];
+    
+    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                  @"1", @"vote_type",
+                                  nil];
+    if (app.currentUser != nil) {
+        [param setObject:[app getToken] forKey:@"token"];
+    }
+    
+    
+    NSString *url = [NSString stringWithFormat:@"picture/%d/vote_post", [comment.commentId integerValue]];
+    [[LatteAPIClient sharedClient] postPath:url
+                                 parameters:param
+                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                        TFLog(@"Submited like");
+                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                        message:error.localizedDescription
+                                                                                       delegate:nil
+                                                                              cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                              otherButtonTitles:nil];
+                                        [alert show];
+                                        TFLog(@"Something went wrong (Vote)");
+                                    }];
 }
 
 - (BOOL)sendComment {
@@ -557,44 +535,30 @@
     [self sendComment];
 }
 
-- (IBAction)touchEdit:(id)sender {
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                             bundle:nil];
-    
-    LXPicEditViewController *viewEditPic = [mainStoryboard instantiateViewControllerWithIdentifier:@"PicEdit"];
-    viewEditPic.picture = pic;
-    [self.navigationController pushViewController:viewEditPic animated:YES];
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"PicEdit"]) {
+        LXPicEditViewController *viewEditPic = segue.destinationViewController;
+        viewEditPic.picture = pic;
+    } else if ([segue.identifier isEqualToString:@"Map"]) {
+        LXPicMapViewController *viewMap = (LXPicMapViewController*)segue.destinationViewController;
+        [viewMap setPointWithLongitude:[pic.longitude floatValue] andLatitude:[pic.latitude floatValue]];
+    } else if ([segue.identifier isEqualToString:@"DetailInfo"]) {
+        LXPicInfoViewController *viewInfo = (LXPicInfoViewController*)segue.destinationViewController;
+        viewInfo.pictureID = [pic.pictureId integerValue];
+    }
 }
 
-- (IBAction)touchLike:(id)sender {
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
-                           [app getToken], @"token",
-                           @"1", @"vote_type",
-                           nil];
-    
-    if (!app.currentUser)
-        buttonLike.enabled = NO;
-    else {
-        buttonLike.selected = !buttonLike.selected;
-        NSNumber *vote_count = [NSNumber numberWithInt:[labelLike.text integerValue] + (buttonLike.selected?1:-1) ];
-        labelLike.text = [vote_count stringValue];
-    }
-    
-    NSString *url = [NSString stringWithFormat:@"picture/%d/vote_post", [pic.pictureId integerValue]];
-    [[LatteAPIClient sharedClient] postPath:url
-                                       parameters:param
-                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                              
-                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                              TFLog(@"Something went wrong (Vote)");
-                                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
-                                                                                              message:error.localizedDescription
-                                                                                             delegate:nil
-                                                                                    cancelButtonTitle:NSLocalizedString(@"close", "Close")
-                                                                                    otherButtonTitles:nil];
-                                              [alert show];
-                                          }];
+- (IBAction)touchLike:(UIButton *)sender {
+    [LXUtils toggleLike:sender ofPicture:pic];
+}
+
+- (IBAction)showOwner:(id)sender {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    LXMyPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    viewUserPage.user = user;
+    [self.navigationController pushViewController:viewUserPage animated:YES];
+
 }
 
 
@@ -650,10 +614,8 @@
         NSString *url = [NSString stringWithFormat:@"picture/comment/%d/delete", [comment.commentId integerValue]];
         [[LatteAPIClient sharedClient] postPath:url
                                      parameters:[NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"]
-                                        success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                            NSNumber *vote_count = [NSNumber numberWithInt:[labelLike.text integerValue] + 1 ];
-                                            labelLike.text = [vote_count stringValue];
-                                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                        success:nil
+                                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                             [comments insertObject:comment atIndex:indexPath.row];
                                             [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
                                         }];

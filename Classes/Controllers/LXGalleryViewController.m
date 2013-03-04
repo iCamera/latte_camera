@@ -63,12 +63,14 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     [super viewWillAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
     [super viewWillDisappear:animated];
 }
@@ -97,7 +99,9 @@
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed {
-    [self setPicture];
+    if (completed) {
+        [self setPicture];
+    }
 }
 
 - (void)setPicture {
@@ -105,17 +109,19 @@
     Picture *currentPicture = currentInfo.picture;
     
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
+
+    buttonLike.enabled = NO;
     if (currentPicture.canVote) {
         if (!(currentPicture.isVoted && !app.currentUser))
             buttonLike.enabled = YES;
     }
+    buttonLike.selected = currentPicture.isVoted;
     
     if ((currentPicture.latitude != nil) && (currentPicture.longitude != nil)) {
         buttonMap.enabled = YES;
+    } else {
+        buttonMap.enabled = NO;
     }
-
-    
-    buttonLike.selected = currentPicture.isVoted;
     
     [buttonComment setTitle:[currentPicture.commentCount stringValue] forState:UIControlStateNormal];
     [buttonLike setTitle:[currentPicture.voteCount stringValue] forState:UIControlStateNormal];
@@ -146,7 +152,6 @@
         LXPicMapViewController *viewMap = (LXPicMapViewController*)segue.destinationViewController;
         [viewMap setPointWithLongitude:[currentPicture.longitude floatValue] andLatitude:[currentPicture.latitude floatValue]];
     }
-
 }
 
 - (void)didReceiveMemoryWarning

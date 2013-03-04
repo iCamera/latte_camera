@@ -18,7 +18,6 @@
 
 @synthesize imagePic;
 @synthesize textDesc;
-@synthesize textTitle;
 @synthesize gestureTap;
 @synthesize switchGPS;
 @synthesize labelStatus;
@@ -69,7 +68,6 @@
     if (_picture != nil) {
         [imagePic setImageWithURL:[NSURL URLWithString:_picture.urlSquare]];
         textDesc.text = _picture.descriptionText;
-        textTitle.text = _picture.title;
         imageStatus = [_picture.status integerValue];
         buttonDelete.hidden = false;
         [self setStatusLabel];
@@ -199,7 +197,6 @@
 }
 
 - (IBAction)touchPost:(id)sender {
-    [textTitle resignFirstResponder];
     [textDesc resignFirstResponder];
     if (_picture != nil) {
         [self updatePic];
@@ -216,7 +213,6 @@
 }
 
 - (IBAction)touchBackground:(id)sender {
-    [textTitle resignFirstResponder];
     [textDesc resignFirstResponder];
 }
 
@@ -252,7 +248,6 @@
     NSString *url = [NSString stringWithFormat:@"picture/%d/edit", [_picture.pictureId integerValue]];
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             [app getToken], @"token",
-                            textTitle.text, @"name",
                             textDesc.text, @"comment",
                             [NSNumber numberWithInteger:imageStatus], @"status", nil];
     
@@ -300,8 +295,7 @@
     
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             [app getToken], @"token",
-                            [textTitle.text copy], @"name",
-                            [textDesc.text copy], @"comment",
+                            textDesc.text, @"comment",
                             [NSNumber numberWithInteger:imageStatus], @"picture_status",
                             nil];
     
@@ -356,7 +350,7 @@
                                      type:@"multipart/form-data"];
                 
                 // NB: Our status must be passed as part of the multipart form data
-                NSString *status = textTitle.text;
+                NSString *status = textDesc.text;
                 
                 //  Add the data of the status as parameter "status"
                 [request addMultiPartData:[status dataUsingEncoding:NSUTF8StringEncoding]
@@ -414,4 +408,8 @@
 
 }
 
+- (void)viewDidUnload {
+    [self setTextDesc:nil];
+    [super viewDidUnload];
+}
 @end

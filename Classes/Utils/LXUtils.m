@@ -20,23 +20,26 @@
 
 + (void)toggleLike:(UIButton*)sender ofPicture:(Picture*)pic {
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
-    if (!app.currentUser)
+    if (!app.currentUser) {
         sender.enabled = NO;
-    else {
-        sender.selected = !sender.selected;
     }
     
-    BOOL increase = !sender.selected;
-    pic.isVoted = increase;
+    pic.isVoted = !pic.isVoted;
+    BOOL increase = pic.isVoted;
+    sender.selected = pic.isVoted;
+
     pic.voteCount = [NSNumber numberWithInteger:[pic.voteCount integerValue] + (increase?1:-1)];
     NSInteger likeCount = [sender.titleLabel.text integerValue];
     NSNumber *num = [NSNumber numberWithInteger:likeCount + (increase?1:-1)];
     [sender setTitle:[num stringValue] forState:UIControlStateNormal];
     
-    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
-                           [app getToken], @"token",
+    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                            @"1", @"vote_type",
                            nil];
+    if (app.currentUser != nil) {
+        [param setObject:[app getToken] forKey:@"token"];
+    }
+    
     
     NSString *url = [NSString stringWithFormat:@"picture/%d/vote_post", [pic.pictureId integerValue]];
     [[LatteAPIClient sharedClient] postPath:url

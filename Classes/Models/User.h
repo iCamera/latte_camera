@@ -8,6 +8,7 @@
 
 @property (nonatomic, assign) BOOL comment;
 @property (nonatomic, assign) BOOL vote;
+@property (nonatomic, assign) BOOL follow;
 - (void)setAttributesFromDictionary:(NSDictionary *)aDictionary;
 
 @end
@@ -19,6 +20,7 @@
 
 @property (nonatomic, assign) BOOL comment;
 @property (nonatomic, assign) BOOL vote;
+@property (nonatomic, assign) BOOL follow;
 - (void)setAttributesFromDictionary:(NSDictionary *)aDictionary;
 
 @end
@@ -63,6 +65,7 @@
 @property (nonatomic, copy) NSNumber *birthyearPublic;
 @property (nonatomic, copy) NSString *bloodType;
 @property (nonatomic, copy) NSNumber *countFollows;
+@property (nonatomic, copy) NSNumber *countFollowers;
 @property (nonatomic, copy) NSNumber *countFriends;
 @property (nonatomic, copy) NSNumber *countPictures;
 @property (nonatomic, copy) NSString *currentResidence;
@@ -80,10 +83,12 @@
 @property (nonatomic, copy) NSNumber *pictureStatus;
 @property (nonatomic, copy) NSString *profilePicture;
 @property (nonatomic, copy) NSNumber *voteCount;
-@property (nonatomic, copy) NSNumber *pageView;
+@property (nonatomic, copy) NSNumber *pageViews;
 
 @property (nonatomic, assign) BOOL isFollowing;
 @property (nonatomic, assign) BOOL isFriend;
+
+@property (nonatomic, assign) BOOL stealthMode;
 
 @property (nonatomic, strong) UserMailAccept *mailAccepts;
 @property (nonatomic, strong) UserPushAccept *notifyAccepts;

@@ -32,7 +32,6 @@
 }
 
 - (void)setComment:(Comment *)comment {
-    
     textComment.text = comment.descriptionText;
     if (comment.user.isUnregister) {
         labelAuthor.text = NSLocalizedString(@"guest", @"ゲスト");

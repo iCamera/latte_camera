@@ -13,7 +13,6 @@
 @implementation LXCellTimelineSingle
 
 @synthesize viewController;
-@synthesize feed;
 
 @synthesize labelTitle;
 @synthesize labelUser;
@@ -26,8 +25,6 @@
 @synthesize buttonMap;
 @synthesize buttonLike;
 @synthesize viewBackground;
-
-@synthesize isExpanded;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -45,8 +42,7 @@
     // Configure the view for the selected state
 }
 
-- (void)setFeed:(Feed *)aFeed {
-    feed = aFeed;
+- (void)setFeed:(Feed *)feed {
     Picture *pic = feed.targets[0];
     CGRect frame = buttonPic.frame;
     frame.size.height = [LXUtils heightFromWidth:308.0 width:[pic.width floatValue] height:[pic.height floatValue]];
@@ -89,14 +85,7 @@
         buttonMap.enabled = YES;
     }
     
-    UIBezierPath *shadowPathUser = [UIBezierPath bezierPathWithRect:buttonUser.bounds];
-    buttonUser.layer.masksToBounds = NO;
-    buttonUser.layer.shadowColor = [UIColor blackColor].CGColor;
-    buttonUser.layer.shadowOffset = CGSizeMake(0.0, 0.0);
-    buttonUser.layer.shadowOpacity = 0.5f;
-    buttonUser.layer.shadowRadius = 1.5f;
-    buttonUser.layer.shadowPath = shadowPathUser.CGPath;
-    buttonUser.layer.cornerRadius = 3.0;
+    
 
     [buttonUser loadBackground:feed.user.profilePicture placeholderImage:@"user.gif"];
 
@@ -114,7 +103,14 @@
 }
 
 - (void)drawRect:(CGRect)rect {
-    [super drawRect:rect];
+    UIBezierPath *shadowPathUser = [UIBezierPath bezierPathWithRect:buttonUser.bounds];
+    buttonUser.layer.masksToBounds = NO;
+    buttonUser.layer.shadowColor = [UIColor blackColor].CGColor;
+    buttonUser.layer.shadowOffset = CGSizeMake(0.0, 0.0);
+    buttonUser.layer.shadowOpacity = 0.5f;
+    buttonUser.layer.shadowRadius = 1.5f;
+    buttonUser.layer.shadowPath = shadowPathUser.CGPath;
+    buttonUser.layer.cornerRadius = 3.0;
     
     UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:viewBackground.bounds];
     viewBackground.layer.masksToBounds = NO;
@@ -123,5 +119,7 @@
     viewBackground.layer.shadowOpacity = 0.5f;
     viewBackground.layer.shadowRadius = 1.5f;
     viewBackground.layer.shadowPath = shadowPath.CGPath;
+    
+        [super drawRect:rect];
 }
 @end

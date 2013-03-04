@@ -16,7 +16,6 @@
 @interface LXCellTimelineSingle : UITableViewCell<UITableViewDataSource, UITableViewDelegate> {
     UIViewController *viewController;
     BOOL isExpanded;
-    Feed *feed;
 }
 @property (strong, nonatomic) IBOutlet UILabel *labelTitle;
 @property (strong, nonatomic) IBOutlet UILabel *labelUser;
@@ -29,9 +28,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *labelAccess;
 @property (strong, nonatomic) IBOutlet UIView *viewBackground;
 
-@property (strong, nonatomic) IBOutlet UIViewController *viewController;
-
+@property (strong, nonatomic) UIViewController *viewController;
 @property (strong, nonatomic) Feed *feed;
-@property (assign) BOOL isExpanded;
 
 @end

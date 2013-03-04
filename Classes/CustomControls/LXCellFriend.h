@@ -13,7 +13,8 @@
 @property (strong, nonatomic) IBOutlet UIImageView *imageUser;
 @property (strong, nonatomic) IBOutlet UILabel *labelName;
 @property (strong, nonatomic) IBOutlet UILabel *labelIntro;
+@property (strong, nonatomic) IBOutlet UIView *viewBackground;
 
-- (void)setUser:(User*)user;
+@property (strong, nonatomic) User *user;
 
 @end

@@ -35,8 +35,6 @@ typedef enum {
 }
 
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
-@property (strong, nonatomic) IBOutlet LXButtonBrown30 *buttonLeftMenu;
-@property (strong, nonatomic) IBOutlet LXButtonBrown30 *buttonNavRight;
 @property (strong, nonatomic) IBOutlet UIButton *buttonGrid;
 @property (strong, nonatomic) IBOutlet UIButton *buttonTimeline;
 @property (strong, nonatomic) IBOutlet UITableView *tablePic;

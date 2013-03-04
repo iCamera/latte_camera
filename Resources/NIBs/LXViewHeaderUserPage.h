@@ -24,10 +24,13 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonPhotoCount;
 @property (strong, nonatomic) IBOutlet UILabel *labelNickname;
 @property (strong, nonatomic) IBOutlet UIView *viewStatsButton;
+@property (strong, nonatomic) IBOutlet UILabel *labelLikes;
+@property (strong, nonatomic) IBOutlet UILabel *labelView;
 
 @property (strong, nonatomic) User* user;
 @property (strong, nonatomic) LXMyPageViewController* parent;
 
 - (IBAction)touchTab:(UIButton *)sender;
+- (IBAction)toggleFollow:(UIButton *)sender;
 
 @end

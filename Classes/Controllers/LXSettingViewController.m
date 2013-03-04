@@ -66,10 +66,7 @@
         
         ((QDateTimeInlineElement *)[self.root elementWithKey:@"birthday"]).dateValue = [dateFormat dateFromString:[userDict objectForKey:@"birthdate"]];
         
-        ((QBooleanElement *)[self.root elementWithKey:@"push_notify_comment"]).boolValue = user.notifyAccepts.comment;
-        ((QBooleanElement *)[self.root elementWithKey:@"push_notify_vote"]).boolValue = user.notifyAccepts.vote;
-        ((QBooleanElement *)[self.root elementWithKey:@"mail_comment"]).boolValue = user.mailAccepts.comment;
-        ((QBooleanElement *)[self.root elementWithKey:@"mail_vote"]).boolValue = user.mailAccepts.vote;
+        ((QBooleanElement *)[self.root elementWithKey:@"stealth_mode"]).boolValue = user.stealthMode;
         
         [self.quickDialogTableView reloadData];
         
@@ -134,28 +131,6 @@
 
 - (void)handleLogout:(QButtonElement *) button {
     [HUD show:YES];
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    [[LatteAPIClient sharedClient] postPath:@"user/logout"
-                                 parameters:[NSDictionary dictionaryWithObjectsAndKeys:
-                                             [app getToken], @"token", nil]
-                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                        [app setToken:@""];
-                                        app.currentUser = nil;
-                                        self.tabBarController.selectedIndex = 0;
-                                        
-                                        [[NSNotificationCenter defaultCenter] postNotificationName:@"LoggedOut" object:self];
-                                        [self.navigationController popViewControllerAnimated:YES];
-                                        [HUD hide:YES];
-                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        [HUD hide:YES];
-                                        
-                                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
-                                                                                        message:error.localizedDescription
-                                                                                       delegate:nil
-                                                                              cancelButtonTitle:NSLocalizedString(@"close", "Close")
-                                                                              otherButtonTitles:nil];
-                                        [alert show];
-                                    }];
 }
 
 - (void)updateNow {
@@ -167,7 +142,7 @@
     [self.root fetchValueIntoObject:dict];
 
     NSString *msg = @"Values:";
-    for (NSString *aKey in dict){
+    for (NSString *aKey in dict) {
         msg = [msg stringByAppendingFormat:@"\n- %@: %@", aKey, [dict objectForKey:aKey]];
         
         if ([aKey isEqualToString:@"birthday"]) {
@@ -239,13 +214,75 @@
     newController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonBack];
 }
 
--(void)handleUpdate:(QRadioElement *)element {
-    [self updateNow];
+-(void)handleUpdateRadio:(QRadioElement *)element {
+    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithObject:element.selectedValue
+                                                                    forKey:element.key];
+    [self submitUpdate:param];
+}
+
+-(void)handleUpdateEntry:(QEntryElement *)element {
+    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithObject:element.textValue
+                                                                    forKey:element.key];
+    [self submitUpdate:param];
+}
+
+-(void)handleUpdateBool:(QBooleanElement *)element {
+    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithObject:[NSNumber numberWithBool:element.boolValue]
+                                                                    forKey:element.key];
+    [self submitUpdate:param];
 }
 
 
-- (void)QEntryDidEndEditingElement:(QEntryElement *)element andCell:(QEntryTableViewCell *)cell {
-    [self updateNow];
+-(void)submitUpdate:(NSMutableDictionary*)dict {
+    LXAppDelegate* app = [LXAppDelegate currentDelegate];
+    [dict setObject:[app getToken] forKey:@"token"];
+    
+    [[LatteAPIClient sharedClient] postPath:@"user/me/update"
+                                 parameters: dict
+                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                        if ([[JSON objectForKey:@"status"] integerValue] == 0) {
+                                            NSString *error = @"";
+                                            NSDictionary *errors = [JSON objectForKey:@"errors"];
+                                            for (NSString *tmp in [JSON objectForKey:@"errors"]) {
+                                                error = [error stringByAppendingFormat:@"\n%@", [errors objectForKey:tmp]];
+                                            }
+                                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"エラー" message:error delegate:self cancelButtonTitle:@"YES!" otherButtonTitles:nil];
+                                            [alert show];
+                                        }
+                                        
+                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                        message:error.localizedDescription
+                                                                                       delegate:nil
+                                                                              cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                              otherButtonTitles:nil];
+                                        [alert show];
+                                    }];
+}
+
+
+
+- (void)QEntryDidEndEditingElement:(QDateTimeInlineElement *)element andCell:(QEntryTableViewCell *)cell {
+    if ([element.key isEqualToString:@"birthday"]) {
+        NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
+        
+        NSDate *date = element.dateValue;
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        
+        [dateFormat setDateFormat:@"yyyy"];
+        NSString *year = [dateFormat stringFromDate:date];
+        [param setObject:year forKey:@"birthday_year"];
+        
+        [dateFormat setDateFormat:@"MM"];
+        NSString *month = [dateFormat stringFromDate:date];
+        [param setObject:month forKey:@"birthday_month"];
+        
+        [dateFormat setDateFormat:@"dd"];
+        NSString *day = [dateFormat stringFromDate:date];
+        [param setObject:day forKey:@"birthday_day"];
+        
+        [self submitUpdate:param];
+    }
 }
 
 @end

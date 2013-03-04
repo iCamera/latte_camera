@@ -35,15 +35,6 @@
 }
 
 - (void)setFeed:(Feed *)feed {
-    UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:buttonUser.bounds];
-    buttonUser.layer.masksToBounds = NO;
-    buttonUser.layer.shadowColor = [UIColor blackColor].CGColor;
-    buttonUser.layer.shadowOffset = CGSizeMake(0.0, 0.0);
-    buttonUser.layer.shadowOpacity = 0.5f;
-    buttonUser.layer.shadowRadius = 1.5f;
-    buttonUser.layer.shadowPath = shadowPathPic.CGPath;
-    buttonUser.layer.cornerRadius = 3.0;
-    
     [buttonUser loadBackground:feed.user.profilePicture placeholderImage:@"user.gif"];
     
     for(UIView *subview in [scrollPic subviews]) {
@@ -64,7 +55,6 @@
     }
     scrollPic.contentOffset = CGPointZero;
     scrollPic.contentSize = size;
-    scrollPic.clipsToBounds = NO;
     
     labelTitle.text = feed.user.name;
     labelUserDate.text = [LXUtils timeDeltaFromNow:feed.updatedAt];
@@ -73,8 +63,6 @@
 }
 
 - (void)drawRect:(CGRect)rect {
-    [super drawRect:rect];
-    
     UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:viewBackground.bounds];
     viewBackground.layer.masksToBounds = NO;
     viewBackground.layer.shadowColor = [UIColor blackColor].CGColor;
@@ -82,6 +70,17 @@
     viewBackground.layer.shadowOpacity = 0.5f;
     viewBackground.layer.shadowRadius = 3.0f;
     viewBackground.layer.shadowPath = shadowPath.CGPath;
+    
+    UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:buttonUser.bounds];
+    buttonUser.layer.masksToBounds = NO;
+    buttonUser.layer.shadowColor = [UIColor blackColor].CGColor;
+    buttonUser.layer.shadowOffset = CGSizeMake(0.0, 0.0);
+    buttonUser.layer.shadowOpacity = 0.5f;
+    buttonUser.layer.shadowRadius = 1.5f;
+    buttonUser.layer.shadowPath = shadowPathPic.CGPath;
+    buttonUser.layer.cornerRadius = 3.0;
+    
+    [super drawRect:rect];
 }
 
 @end

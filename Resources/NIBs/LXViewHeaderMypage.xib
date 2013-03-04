@@ -394,7 +394,7 @@
 							<object class="IBUILabel" id="315472438">
 								<reference key="NSNextResponder" ref="204479673"/>
 								<int key="NSvFlags">1316</int>
-								<string key="NSFrame">{{225, 8}, {42, 16}}</string>
+								<string key="NSFrame">{{227, 9}, {40, 16}}</string>
 								<reference key="NSSuperview" ref="204479673"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="540945589"/>
@@ -407,6 +407,11 @@
 								<string key="IBUIText">---</string>
 								<reference key="IBUITextColor" ref="672817145"/>
 								<nil key="IBUIHighlightedColor"/>
+								<object class="NSColor" key="IBUIShadowColor">
+									<int key="NSColorSpace">2</int>
+									<bytes key="NSRGB">MC4zOTYwNzg0Njc0IDAuMzUyOTQxMTg1MiAwLjIxOTYwNzg1OTgAA</bytes>
+								</object>
+								<string key="IBUIShadowOffset">{0, 1}</string>
 								<int key="IBUIBaselineAdjustment">0</int>
 								<int key="IBUITextAlignment">1</int>
 								<reference key="IBUIFontDescription" ref="804754629"/>
@@ -416,7 +421,7 @@
 							<object class="IBUILabel" id="952123392">
 								<reference key="NSNextResponder" ref="204479673"/>
 								<int key="NSvFlags">1316</int>
-								<string key="NSFrame">{{269, 8}, {42, 16}}</string>
+								<string key="NSFrame">{{271, 9}, {38, 16}}</string>
 								<reference key="NSSuperview" ref="204479673"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="406197711"/>
@@ -429,6 +434,11 @@
 								<string key="IBUIText">---</string>
 								<reference key="IBUITextColor" ref="672817145"/>
 								<nil key="IBUIHighlightedColor"/>
+								<object class="NSColor" key="IBUIShadowColor">
+									<int key="NSColorSpace">2</int>
+									<bytes key="NSRGB">MC4zOTYwNzg0Njc0IDAuMzUyOTQxMTg1MiAwLjIxOTYwNzg1OTgAA</bytes>
+								</object>
+								<string key="IBUIShadowOffset">{0, 1}</string>
 								<int key="IBUIBaselineAdjustment">0</int>
 								<int key="IBUITextAlignment">1</int>
 								<reference key="IBUIFontDescription" ref="804754629"/>
@@ -482,7 +492,7 @@
 						<reference key="IBUINormalTitleColor" ref="679939845"/>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">icon_timeline_m.png</string>
+							<string key="NSResourceName">icon_timeline_m_off.png</string>
 						</object>
 						<object class="NSCustomResource" key="IBUIDisabledBackgroundImage">
 							<string key="NSClassName">NSImage</string>
@@ -601,7 +611,7 @@
 						<reference key="IBUINormalTitleColor" ref="679939845"/>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">icon_calender.png</string>
+							<string key="NSResourceName">icon_calender_m_off.png</string>
 						</object>
 						<object class="NSCustomResource" key="IBUIDisabledBackgroundImage">
 							<string key="NSClassName">NSImage</string>
@@ -1086,19 +1096,19 @@
 				<reference key="5.IBUserGuides" ref="0"/>
 				<boolean value="NO" key="5.showNotes"/>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="3" key="6.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="0.0" key="6.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<reference key="6.IBUserGuides" ref="0"/>
 				<boolean value="NO" key="6.showNotes"/>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="3" key="7.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="0.0" key="7.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<reference key="7.IBUserGuides" ref="0"/>
 				<boolean value="NO" key="7.showNotes"/>
 				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="3" key="8.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="0.0" key="8.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<reference key="8.IBUserGuides" ref="0"/>
 				<boolean value="NO" key="8.showNotes"/>
 				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="3" key="9.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="0.0" key="9.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<reference key="9.IBUserGuides" ref="0"/>
 				<boolean value="NO" key="9.showNotes"/>
 			</dictionary>
@@ -1220,12 +1230,12 @@
 			<string key="bg_views.png">{65, 31}</string>
 			<string key="bg_views_green.png">{50, 25}</string>
 			<string key="follow_mutual.png">{29, 15}</string>
-			<string key="icon_calender.png">{15, 15}</string>
+			<string key="icon_calender_m_off.png">{15, 15}</string>
 			<string key="icon_follow_s.png">{14, 12}</string>
 			<string key="icon_follower_s.png">{14, 12}</string>
 			<string key="icon_photo_s.png">{12, 10}</string>
 			<string key="icon_profile_s.png">{12, 12}</string>
-			<string key="icon_timeline_m.png">{15, 15}</string>
+			<string key="icon_timeline_m_off.png">{15, 15}</string>
 			<string key="menu5_center.png">{62, 42}</string>
 			<string key="menu5_center_on.png">{62, 42}</string>
 			<string key="menu5_left.png">{68, 42}</string>

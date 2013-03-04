@@ -15,8 +15,6 @@
 
 @implementation LXWelcomeViewController
 
-@synthesize buttonLeftMenu;
-@synthesize buttonNavRight;
 @synthesize tablePic;
 @synthesize viewHeader;
 @synthesize buttonGrid;
@@ -43,25 +41,12 @@
                                                  selector:@selector(receiveLoggedIn:)
                                                      name:@"LoggedIn"
                                                    object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(receiveLoggedOut:)
-                                                     name:@"LoggedOut"
-                                                   object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(receivedPushNotify:)
-                                                     name:@"ReceivedPushNotify"
-                                                   object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(readNotify:)
-                                                     name:@"ReadNotify"
-                                                   object:nil];
-        
+                
+
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(becomeActive:)
-                                                     name:@"BecomeActive" object:nil];
+                                                     name:@"BecomeActive"
+                                                   object:nil];
         
         
         loadEnded = false;
@@ -76,35 +61,15 @@
     [self reloadView];
 }
 
-- (void)receivedPushNotify:(id)sender {
-    [buttonLeftMenu setImage:[UIImage imageNamed:@"icon_info_on.png"] forState:UIControlStateNormal];
-}
-
-- (void)readNotify:(id)sender {
-    [buttonLeftMenu setImage:[UIImage imageNamed:@"icon_info.png"] forState:UIControlStateNormal];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    if ([UIApplication sharedApplication].applicationIconBadgeNumber > 0) {
-        [buttonLeftMenu setImage:[UIImage imageNamed:@"icon_info_on.png"] forState:UIControlStateNormal];
-    }
+
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     [app.tracker sendView:@"Welcome Screen"];
     
-    viewHeader.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
-    viewBack.layer.cornerRadius = 5;
-    
-    CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = CGRectMake(0, 40, 320, 10);
-    gradient.colors = [NSArray arrayWithObjects:
-                       (id)[[UIColor clearColor] CGColor],
-                       (id)[[[UIColor blackColor] colorWithAlphaComponent:0.2f] CGColor],
-                       nil];
-    [viewHeader.layer insertSublayer:gradient atIndex:0];
+    tablePic.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     
     tablePic.frame = CGRectMake(0, 0, 320, self.view.frame.size.height-44);
     
@@ -135,8 +100,16 @@
     loadEnded = false;
     pagephoto = 1;
     [indicator startAnimating];
+    
+    LXAppDelegate* app = [LXAppDelegate currentDelegate];
+    
+    NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
+    if (app.currentUser != nil) {
+        [param setObject:[app getToken] forKey:@"token"];
+    }
+    
     [[LatteAPIClient sharedClient] getPath:@"user/everyone/timeline"
-                                parameters:nil
+                                parameters:param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        feeds = [Feed mutableArrayFromDictionary:JSON withKey:@"feeds"];
                                        
@@ -271,24 +244,18 @@
     if (tableMode == kWelcomeTableTimeline) {
         Feed *feed = feeds[indexPath.row];
         if (feed.targets.count > 1) {
-            return 239;
+            return 244;
         } else if (feed.targets.count == 1) {
             Picture *pic = feed.targets[0];
-            CGFloat picHeight = [LXUtils heightFromWidth:308 width:[pic.width floatValue] height:[pic.height floatValue]];
-            return picHeight + 49;
+            CGFloat feedHeight = [LXUtils heightFromWidth:308.0 width:[pic.width floatValue] height:[pic.height floatValue]] + 3+6+30+6+6+31+3;
+            return feedHeight;
         } else
             return 1;
     } else
         return 104 + (indexPath.row==0?3:0);
 }
 
-- (void)showPic:(UIButton*)sender {
-//    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-//                                                             bundle:nil];
-//    LXPicDetailViewController *viewPicDetail = [mainStoryboard instantiateViewControllerWithIdentifier:@"PictureDetail"];
-//    viewPicDetail.pic = [self picFromPicID:sender.tag];
-//    [self.navigationController pushViewController:viewPicDetail animated:YES];
-    
+- (void)showPic:(UIButton*)sender {    
     UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                              bundle:nil];
     UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
@@ -372,19 +339,7 @@
 }
 
 - (void)receiveLoggedIn:(NSNotification *) notification {
-    navigationBarPanGestureRecognizer.enabled = true;
-    
-    buttonLeftMenu.hidden = false;
-    buttonNavRight.hidden = true;
-    
     [self hideLoginPanel];
-}
-
-- (void)receiveLoggedOut:(NSNotification *) notification {
-    navigationBarPanGestureRecognizer.enabled = false;
-    
-    buttonLeftMenu.hidden = true;
-    buttonNavRight.hidden = false;
 }
 
 - (void)loginPressed:(id)sender {
@@ -402,8 +357,6 @@
             break;
         case 1:
             tableMode = kWelcomeTableTimeline;
-            break;
-        default:
             break;
     }
     [tablePic reloadData];
@@ -487,8 +440,6 @@
 }
 
 - (void)viewDidUnload {
-    [self setButtonLeftMenu:nil];
-    [self setButtonNavRight:nil];
     [self setTablePic:nil];
     [self setButtonGrid:nil];
     [self setButtonTimeline:nil];

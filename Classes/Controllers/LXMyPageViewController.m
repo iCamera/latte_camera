@@ -16,7 +16,6 @@
 #import "LXUtils.h"
 #import "LXCellComment.h"
 #import "UIButton+AsyncImage.h"
-#import "LXSettingViewController.h"
 #import "LXPicInfoViewController.h"
 #import "LXPicMapViewController.h"
 #import "LXButtonBrown30.h"
@@ -54,10 +53,8 @@
     int pageVote;
     NSMutableArray *feeds;
     NSMutableArray *pictures;
-    NSMutableArray *votes;
-    NSMutableArray *friends;
+    NSMutableArray *followers;
     NSMutableArray *followings;
-    NSMutableArray *lxFeeds;
     NSMutableDictionary *currentMonthPics;
     NSDate *currentMonth;
     EGORefreshTableHeaderView *refreshHeaderView;
@@ -112,7 +109,6 @@
     endedTimeline = false;
     endedVoted = false;
     pictures = [[NSMutableArray alloc] init];
-    votes = [[NSMutableArray alloc] init];
     
     pagePic = 0;
     pageVote = 0;
@@ -150,6 +146,15 @@
         
         photoMode = kPhotoMyphoto;
         isMypage = false;
+        
+        // Increase count
+        NSString *url = [NSString stringWithFormat:@"user/counter/%d",[_user.userId integerValue]];
+        
+        [[LatteAPIClient sharedClient] getPath:url
+                                    parameters:[NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"]
+                                       success:nil
+                                       failure:nil];
+
     }
     
     HUD = [[MBProgressHUD alloc] initWithView:self.tableView];
@@ -221,14 +226,25 @@
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        userDict = [JSON objectForKey:@"user"];
                                        User *user = [User instanceFromDictionary:userDict];
-                                       app.currentUser = user;
-                                       viewHeaderMypage.user = user;
+                                       
+                                       if (isMypage) {
+                                           app.currentUser = user;
+                                           viewHeaderMypage.user = user;
+                                       } else {
+                                           viewHeaderUserpage.user = user;
+                                       }
                                        
                                        NSSet *allField = [NSSet setWithArray:[userDict allKeys]];
                                        [showSet intersectSet:allField];
                                        showField = [showSet allObjects];
                                        
+                                       if (tableMode == kTableProfile) {
+                                           [self doneLoadingTableViewData];
+                                           [self.tableView reloadData];
+                                       }
+                                       
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       [self doneLoadingTableViewData];
                                        TFLog(@"Something went wrong (Profile)");
                                    }];
 }
@@ -318,7 +334,7 @@
     [[LatteAPIClient sharedClient] getPath:url
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       friends = [User mutableArrayFromDictionary:JSON
+                                       followers = [User mutableArrayFromDictionary:JSON
                                                                           withKey:@"followers"];
                                        
                                        [self doneLoadingTableViewData];
@@ -389,10 +405,23 @@
     else
         url = [NSString stringWithFormat:@"user/%d/timeline", [_user.userId integerValue]];
     
+    LatteTimeline timelineKind;
+    switch (photoMode) {
+        case kPhotoTimeline:
+            timelineKind = kTimelineAll;
+            break;
+        case kPhotoFollowing:
+            timelineKind = kTimelineFollowing;
+            break;
+        case kPhotoFriends:
+            timelineKind = kTimelineFriends;
+            break;
+    }
+    
     [[LatteAPIClient sharedClient] getPath: url
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:
                                              [app getToken], @"token",
-                                             [NSNumber numberWithInteger:photoMode], @"listtype",
+                                             [NSNumber numberWithInteger:timelineKind], @"listtype",
                                              feed.feedID, @"last_id",
                                              nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -472,7 +501,7 @@
         case kTableFollowings:
             return followings.count;
         case kTableFollower:
-            return friends.count;
+            return followers.count;
         case kTableProfile:
             return [showField count];
     }
@@ -495,7 +524,7 @@
         } else {
             Feed *feed = feeds[indexPath.row];
             if (feed.targets.count > 1) {
-                return 202.0 + 42.0 + 12.0;
+                return 244;
             } else if (feed.targets.count == 1) {
                 Picture *pic = feed.targets[0];
                 CGFloat feedHeight = [LXUtils heightFromWidth:308.0 width:[pic.width floatValue] height:[pic.height floatValue]] + 3+6+30+6+6+31+3;
@@ -514,16 +543,16 @@
     BOOL isEmpty = false;
     switch (tableMode) {
         case kTableFollower:
-            isEmpty = friends.count == 0;
+            isEmpty = followers.count == 0;
             break;
         case kTableFollowings:
             isEmpty = followings.count == 0;
+            break;
         case kTablePhoto:
             if (photoMode == kPhotoMyphoto)
                 isEmpty = pictures.count == 0;
             else if (photoMode != kPhotoCalendar)
                 isEmpty = feeds.count == 0;
-        default:
             break;
     }
     return isEmpty;
@@ -621,16 +650,13 @@
             LXCellFriend* cellUser;
             User *user;
             cellUser = [tableView dequeueReusableCellWithIdentifier:@"User"];
-            if (tableMode == kTimelineFriends) {
-                user = [friends objectAtIndex:indexPath.row];
+            if (tableMode == kTableFollower) {
+                user = followers[indexPath.row];
             } else if (tableMode == kTableFollowings) {
-                user = [followings objectAtIndex:indexPath.row];
+                user = followings[indexPath.row];
             }
-            [cellUser setUser:user];
-            cellUser.backgroundView = [[UIView alloc] initWithFrame:cellUser.bounds];
-            UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 42, 320, 1)];
-            line.backgroundColor = [UIColor colorWithRed:188.0/255.0 green:184.0/255.0 blue:169.0/255.0 alpha:1];
-            [cellUser addSubview:line];
+            cellUser.user = user;
+            
             return cellUser;
         }
             break;
@@ -808,7 +834,7 @@
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(1, 1, 52, 52)];
         [button loadBackground:pic.urlSquare];
         button.tag = cellIndex;
-        [button addTarget:self action:@selector(showPhotoFromCalendar:) forControlEvents:UIControlEventTouchUpInside];
+        [button addTarget:self action:@selector(showPic:) forControlEvents:UIControlEventTouchUpInside];
         [bg addSubview:button];
     } else {
         [border addSubview:labelBig];
@@ -854,7 +880,7 @@
             [self.tableView reloadData];
             break;
         case kTableFollower:
-            if (friends == nil)
+            if (followers == nil)
                 [self reloadFollower];
             else
                 [self.tableView reloadData];
@@ -1043,6 +1069,7 @@
             viewGallery.picture = [self picFromPicID:sender.tag];
             break;
         case kPhotoCalendar:
+            viewGallery.picture = [currentMonthPics objectForKey:[NSString stringWithFormat:@"%2d", sender.tag]];
             break;
         default:
             break;
@@ -1050,6 +1077,23 @@
 
     [self presentViewController:navGalerry animated:YES completion:nil];
 
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    LXMyPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    switch (tableMode) {
+        case kTableFollower:
+            viewUserPage.user = followers[indexPath.row];
+            break;
+        case kTableFollowings:
+            viewUserPage.user = followings[indexPath.row];
+            break;
+        default:
+            return;
+    }
+    [self.navigationController pushViewController:viewUserPage animated:YES];
 }
 
 - (NSMutableArray*)flatPictureArray {
@@ -1079,6 +1123,8 @@
                 return flatPictures[current+1];
             break;
         };
+        case kPhotoCalendar:
+            break;
     }
     return nil;
 }
@@ -1100,6 +1146,8 @@
                 return flatPictures[current-1];
             break;
         }
+        case kPhotoCalendar:
+            break;
     }
     return nil;
 }

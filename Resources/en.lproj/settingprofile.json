@@ -1,0 +1,18 @@
+{
+    "grouped": true,
+    "title": "Setting",
+    "controllerName": "luxeysSettingViewController",
+    "sections": [
+        { "title":"PROFILE SETTINGS", "elements":[
+                { "type":"QEntryElement", "key":"name", "title":"Username", "Placeholder":"Username", "bind":"textValue:name", "controllerAction":"handleUpdateEntry:"},
+                { "type":"QRadioElement", "key":"gender", "title":"Gender", "items":["Male", "Female"], "values":[1, 2], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QDateTimeInlineElement", "key":"birthday", "title":"Birthday"},
+                { "type":"QEntryElement", "key":"current_residence", "title":"Current Address", "Placeholder":"Current Address", "bind":"textValue:current_residence", "controllerAction":"handleUpdateEntry:"},
+                { "type":"QEntryElement", "key":"hometown", "title":"Hometown", "Placeholder":"Hometown", "bind":"textValue:hometown", "controllerAction":"handleUpdateEntry:"},
+                { "type":"QEntryElement", "key":"occupation", "title":"Occupation", "Placeholder":"Occupation", "bind":"textValue:occupation", "controllerAction":"handleUpdateEntry:"},
+                { "type":"QEntryElement", "key":"introduction", "title":"Introduction", "bind":"textValue:introduction", "controllerAction":"handleUpdateEntry:"},
+                { "type":"QEntryElement", "key":"hobby", "title":"Hobby", "bind":"textValue:hobby", "controllerAction":"handleUpdateEntry:"}
+            ]
+        }
+    ]
+}
