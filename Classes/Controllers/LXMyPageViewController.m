@@ -878,7 +878,10 @@
 }
 
 - (void)becomeActive:(NSNotification *) notification {
-    [self reloadView];
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    if (app.currentUser != nil) {
+        [self reloadView];
+    }
 }
 
 

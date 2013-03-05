@@ -242,7 +242,6 @@
 		889072EC16770EBB0013DF7A /* UIImageView+loadProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890728E16770EBB0013DF7A /* UIImageView+loadProgress.m */; };
 		889072ED16770EBB0013DF7A /* FilterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890729116770EBB0013DF7A /* FilterManager.m */; };
 		889072F116770EBB0013DF7A /* LatteAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890729916770EBB0013DF7A /* LatteAPIClient.m */; };
-		889072F216770EBB0013DF7A /* LXFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890729B16770EBB0013DF7A /* LXFilter.m */; };
 		889072F316770EBB0013DF7A /* LXFilterBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890729D16770EBB0013DF7A /* LXFilterBlur.m */; };
 		889072F416770EBB0013DF7A /* LXFilterFish.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890729F16770EBB0013DF7A /* LXFilterFish.m */; };
 		889072F516770EBB0013DF7A /* LXFilterMono.m in Sources */ = {isa = PBXBuildFile; fileRef = 889072A116770EBB0013DF7A /* LXFilterMono.m */; };
@@ -271,6 +270,7 @@
 		88A9576916BFC2A2003649E8 /* LXStillCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A9576816BFC2A2003649E8 /* LXStillCamera.m */; };
 		88A9576C16BFCFED003649E8 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A9576B16BFCFED003649E8 /* EGORefreshTableHeaderView.m */; };
 		88A9576F16BFD406003649E8 /* LXRootBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A9576E16BFD406003649E8 /* LXRootBuilder.m */; };
+		88A9D4EF16E4F63F0085279E /* LXFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A9D4EE16E4F63F0085279E /* LXFilter.m */; };
 		88AB7E1D16BB755F00040C00 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AB7E1B16BB755E00040C00 /* CFNetwork.framework */; };
 		88AB7E1E16BB755F00040C00 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AB7E1C16BB755F00040C00 /* StoreKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		88B08D4415D369EC003CB0D3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B08D4315D369EC003CB0D3 /* Security.framework */; };
@@ -1129,8 +1129,6 @@
 		8890729116770EBB0013DF7A /* FilterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterManager.m; sourceTree = "<group>"; };
 		8890729816770EBB0013DF7A /* LatteAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LatteAPIClient.h; sourceTree = "<group>"; };
 		8890729916770EBB0013DF7A /* LatteAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LatteAPIClient.m; sourceTree = "<group>"; };
-		8890729A16770EBB0013DF7A /* LXFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFilter.h; sourceTree = "<group>"; };
-		8890729B16770EBB0013DF7A /* LXFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFilter.m; sourceTree = "<group>"; };
 		8890729C16770EBB0013DF7A /* LXFilterBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFilterBlur.h; sourceTree = "<group>"; };
 		8890729D16770EBB0013DF7A /* LXFilterBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFilterBlur.m; sourceTree = "<group>"; };
 		8890729E16770EBB0013DF7A /* LXFilterFish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFilterFish.h; sourceTree = "<group>"; };
@@ -1176,6 +1174,8 @@
 		88A9576B16BFCFED003649E8 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		88A9576D16BFD406003649E8 /* LXRootBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXRootBuilder.h; sourceTree = "<group>"; };
 		88A9576E16BFD406003649E8 /* LXRootBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXRootBuilder.m; sourceTree = "<group>"; };
+		88A9D4ED16E4F63F0085279E /* LXFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFilter.h; sourceTree = "<group>"; };
+		88A9D4EE16E4F63F0085279E /* LXFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFilter.m; sourceTree = "<group>"; };
 		88AB7E1B16BB755E00040C00 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		88AB7E1C16BB755F00040C00 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		88B08D4315D369EC003CB0D3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -2199,6 +2199,8 @@
 		8890728F16770EBB0013DF7A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				88A9D4ED16E4F63F0085279E /* LXFilter.h */,
+				88A9D4EE16E4F63F0085279E /* LXFilter.m */,
 				8890729016770EBB0013DF7A /* FilterManager.h */,
 				8890729116770EBB0013DF7A /* FilterManager.m */,
 				88079F8D16B6933900420AC3 /* GPUImagePicture+updateImage.h */,
@@ -2215,8 +2217,6 @@
 				88E1CE2B16B8BC910040ADBD /* LXEffect5.m */,
 				88508CAA16CB9CED0026DE1E /* LXEffect8.h */,
 				88508CAB16CB9CED0026DE1E /* LXEffect8.m */,
-				8890729A16770EBB0013DF7A /* LXFilter.h */,
-				8890729B16770EBB0013DF7A /* LXFilter.m */,
 				8890729C16770EBB0013DF7A /* LXFilterBlur.h */,
 				8890729D16770EBB0013DF7A /* LXFilterBlur.m */,
 				886C639F16816CC20007D952 /* LXFilterDetail.h */,
@@ -3904,7 +3904,6 @@
 				889072EC16770EBB0013DF7A /* UIImageView+loadProgress.m in Sources */,
 				889072ED16770EBB0013DF7A /* FilterManager.m in Sources */,
 				889072F116770EBB0013DF7A /* LatteAPIClient.m in Sources */,
-				889072F216770EBB0013DF7A /* LXFilter.m in Sources */,
 				889072F316770EBB0013DF7A /* LXFilterBlur.m in Sources */,
 				889072F416770EBB0013DF7A /* LXFilterFish.m in Sources */,
 				889072F516770EBB0013DF7A /* LXFilterMono.m in Sources */,
@@ -3942,6 +3941,7 @@
 				88508CAC16CB9CED0026DE1E /* LXEffect8.m in Sources */,
 				88508CB416CB9EEF0026DE1E /* LXEffect9.m in Sources */,
 				88508CB916CBA2E90026DE1E /* LXEffect10.m in Sources */,
+				88A9D4EF16E4F63F0085279E /* LXFilter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

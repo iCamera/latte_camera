@@ -156,11 +156,13 @@
     
     deviceHardware = [[UIDeviceHardware alloc] init];
     
+    UIBezierPath *shadowPathCamera = [UIBezierPath bezierPathWithRect:viewCameraWraper.bounds];
     viewCameraWraper.layer.masksToBounds = NO;
     viewCameraWraper.layer.shadowColor = [UIColor blackColor].CGColor;
     viewCameraWraper.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
     viewCameraWraper.layer.shadowOpacity = 1.0;
     viewCameraWraper.layer.shadowRadius = 5.0;
+    viewCameraWraper.layer.shadowPath = shadowPathCamera.CGPath;
     
     isSaved = true;
     viewDraw.delegate = self;
@@ -667,7 +669,9 @@
     // Save last GPS and Orientation
     [locationManager stopUpdatingLocation];
     
+    [videoCamera pauseCameraCapture];
     [videoCamera capturePhotoAsSampleBufferWithCompletionHandler:^(CMSampleBufferRef imageSampleBuffer, NSError *error) {
+        [videoCamera resumeCameraCapture];
         if (error) {
             TFLog(error.description);
         } else {
@@ -697,7 +701,7 @@
             
             [self initPreviewPic];
             [self switchEditImage];
-            [self resizeCameraViewWithAnimation:NO];
+            [self resizeCameraViewWithAnimation:YES];
             [self preparePipe];
             [self applyFilterSetting];
             [self processImage];
@@ -1189,12 +1193,8 @@
         }
     }
     
-    if ([[deviceHardware platform] rangeOfString:@"iPhone5"].location != NSNotFound) {
-        CABasicAnimation *theAnimation = [CABasicAnimation animationWithKeyPath:@"shadowPath"];
-        theAnimation.duration = 0.3;
-        theAnimation.toValue = [UIBezierPath bezierPathWithRect:frame];
-        [viewCameraWraper.layer addAnimation:theAnimation forKey:@"animateShadowPath"];
-    }
+    viewCameraWraper.layer.shadowRadius = 0;
+    viewCameraWraper.layer.shadowPath = nil;
 
     [UIView animateWithDuration:animation?0.3:0 animations:^{
         viewFocusControl.frame = frameBokeh;
@@ -1206,9 +1206,11 @@
         viewTopBar.frame = frameTopBar;
         viewCanvas.frame = frameCanvas;
         viewBlendControl.frame = frameBlend;
+
     } completion:^(BOOL finished) {
-        
-        
+        viewCameraWraper.layer.shadowRadius = 5.0;
+        UIBezierPath *shadowPathCamera = [UIBezierPath bezierPathWithRect:viewCameraWraper.bounds];
+        viewCameraWraper.layer.shadowPath = shadowPathCamera.CGPath;
     }];
 }
 
@@ -1394,21 +1396,20 @@
 }
 
 - (void)initPreviewPic {
+    [previewFilter removeAllTargets];
     for (NSInteger i = 0; i < effectNum; i++) {
         GPUImageView *effectView = effectPreview[i];
-        [previewFilter removeAllTargets];
         
         GPUImageFilter *effectSmallPreview = [FilterManager getEffect:i];
         if (effectSmallPreview != nil) {
-            [effectSmallPreview removeAllTargets];
             [previewFilter addTarget:effectSmallPreview];
             [effectSmallPreview addTarget:effectView];
         } else {
             [previewFilter addTarget:effectView];
         }
         
-        [previewFilter processImage];
     }
+    [previewFilter processImage];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(NSDictionary *)info {
