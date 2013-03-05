@@ -913,10 +913,6 @@
     CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:imageOrientation];
     NSData *jpeg = UIImageJPEGRepresentation([UIImage imageWithCGImage:cgImageFromBytes], 0.9);
     CGImageRelease(cgImageFromBytes);
-    [picture removeAllTargets];
-    
-    // Return to preview mode
-    [self preparePipe];
     
     // Prepare meta data
     if (imageMeta == nil) {
@@ -996,6 +992,10 @@
                 [HUD hide:YES afterDelay:3];
             });
         }
+        
+        // Return to preview mode
+        [picture removeAllTargets];
+        [self preparePipe];
     }];
 }
 
