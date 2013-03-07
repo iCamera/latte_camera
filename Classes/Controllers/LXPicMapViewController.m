@@ -12,7 +12,9 @@
 
 @end
 
-@implementation LXPicMapViewController
+@implementation LXPicMapViewController {
+    PicturePin *pin;
+}
 
 @synthesize mapPic;
 
@@ -34,12 +36,18 @@
     [[[MKMapItem alloc] initWithPlacemark:mark] openInMapsWithLaunchOptions:nil];
 }
 
--(void)setPointWithLongitude:(CGFloat)aLongitude andLatitude:(CGFloat)aLatitude {
+- (void)setPicture:(Picture *)picture {
     CLLocationCoordinate2D location;
-    location.latitude = aLatitude;
-    location.longitude = aLongitude;
+    location.latitude = [picture.latitude floatValue];
+    location.longitude = [picture.longitude floatValue];
     
     pin = [[PicturePin alloc] initWithCoordinate:location];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+    [super viewWillAppear:animated];
 }
 
 - (void)viewDidLoad
@@ -49,8 +57,7 @@
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     [app.tracker sendView:@"Picture Map Screen"];
     
-    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(pin.coordinate, 0.5*METERS_PER_MILE, 0.5*METERS_PER_MILE);
-    
+    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(pin.coordinate, 0.5*METERS_PER_MILE, 0.5*METERS_PER_MILE);    
     MKCoordinateRegion adjustedRegion = [mapPic regionThatFits:viewRegion];
     
     [mapPic addAnnotation:pin];
@@ -63,17 +70,6 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    if ([self.navigationController.viewControllers[self.navigationController.viewControllers.count-1] isKindOfClass:[LXPicDetailViewController class]]) {
-        [[NSNotificationCenter defaultCenter]
-         postNotificationName:@"TabbarHide"
-         object:self];
-    }
-    
-    [super viewWillDisappear:animated];
 }
 
 @end

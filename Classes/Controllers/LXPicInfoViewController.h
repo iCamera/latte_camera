@@ -14,20 +14,9 @@
 #import "LXPicDetailViewController.h"
 #import "Picture.h"
 
-@interface LXPicInfoViewController : UITableViewController {
-    NSDictionary *exif;
-    NSDictionary *picDict;
-    NSArray *keyBasic;
-    NSArray *keyExif;
-    NSMutableArray *sections;
-    Picture *pic;
-}
+@interface LXPicInfoViewController : UITableViewController
 
-@property (strong, nonatomic) IBOutlet UILabel *labelTitle;
-@property (strong, nonatomic) IBOutlet UIImageView *imagePic;
-@property (strong, nonatomic) IBOutlet UIView *viewHeader;
-
-@property (assign, nonatomic) NSUInteger pictureID;
+@property (strong, nonatomic) Picture *picture;
 
 - (IBAction)touchBack:(id)sender;
 @end

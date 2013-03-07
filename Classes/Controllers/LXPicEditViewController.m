@@ -61,27 +61,29 @@
     if (_picture == nil) {
         share.imageData = _imageData;
         share.imagePreview = _preview;
-    }
-}
 
-- (void)viewWillAppear:(BOOL)animated {
-    if (_picture != nil) {
         [imagePic setImageWithURL:[NSURL URLWithString:_picture.urlSquare]];
         textDesc.text = _picture.descriptionText;
         imageStatus = [_picture.status integerValue];
         buttonDelete.hidden = false;
-        [self setStatusLabel];
     } else {
         LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-
-        [imagePic setImage:_preview];
+        imagePic.image = _preview;
         imageStatus = [app.currentUser.pictureStatus integerValue];
-        [self setStatusLabel];
     }
-    
-    self.navigationController.navigationBarHidden = NO;
-    
+    [self setStatusLabel];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
     [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+    [super viewWillDisappear:animated];
 }
 
 - (void)setStatusLabel {
@@ -184,10 +186,7 @@
                                          parameters: params
                                             success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                                 [HUD hide:YES];
-                                                
-                                                UIViewController *parent = self.navigationController.viewControllers[self.navigationController.viewControllers.count-3];
-                                                [parent performSelector:@selector(reloadView)];
-                                                [self.navigationController popToViewController:parent animated:YES];
+                                                [self.navigationController popViewControllerAnimated:YES];
                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                 [HUD hide:YES];
                                                 TFLog(@"Something went wrong (Login)");
@@ -256,8 +255,8 @@
                                     success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                         [HUD hide:YES];
                                         
-                                        LXPicDetailViewController *parent = self.navigationController.viewControllers[self.navigationController.viewControllers.count-2];
-                                        [parent reloadView];
+                                        _picture.descriptionText = textDesc.text;
+                                        _picture.status = [NSNumber numberWithInteger:imageStatus];
                                         
                                         [self.navigationController popViewControllerAnimated:YES];
                                         
@@ -306,76 +305,6 @@
     [cameraView uploadData];
     
     [self performSelector:@selector(backToCamera) withObject:nil];
-}
-
-
-
-- (void)uploadTwitter {
-    // Create an account store object.
-	ACAccountStore *accountStore = [[ACAccountStore alloc] init];
-	
-	// Create an account type that ensures Twitter accounts are retrieved.
-    ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-	
-	// Request access from the user to use their Twitter accounts.
-    [accountStore requestAccessToAccountsWithType:accountType withCompletionHandler:^(BOOL granted, NSError *error) {
-        if(granted) {
-			// Get the list of Twitter accounts.
-            NSArray *accountsArray = [accountStore accountsWithAccountType:accountType];
-			
-			// For the sake of brevity, we'll assume there is only one Twitter account present.
-			// You would ideally ask the user which account they want to tweet from, if there is more than one Twitter account present.
-			if ([accountsArray count] > 0) {
-				// Grab the initial Twitter account to tweet from.
-				ACAccount *twitterAccount = [accountsArray objectAtIndex:0];
-				
-				NSURL *url =
-                [NSURL URLWithString:
-                 @"https://upload.twitter.com/1/statuses/update_with_media.json"];
-                
-                //  Create a POST request for the target endpoint
-                TWRequest *request =
-                [[TWRequest alloc] initWithURL:url
-                                    parameters:nil
-                                 requestMethod:TWRequestMethodPOST];
-                
-                //  self.accounts is an array of all available accounts;
-                //  we use the first one for simplicity
-                [request setAccount:twitterAccount];
-                
-                //  Add the data of the image with the
-                //  correct parameter name, "media[]"
-                [request addMultiPartData:_imageData
-                                 withName:@"media[]"
-                                     type:@"multipart/form-data"];
-                
-                // NB: Our status must be passed as part of the multipart form data
-                NSString *status = textDesc.text;
-                
-                //  Add the data of the status as parameter "status"
-                [request addMultiPartData:[status dataUsingEncoding:NSUTF8StringEncoding]
-                                 withName:@"status"
-                                     type:@"multipart/form-data"];
-                
-                //  Perform the request.
-                //    Note that -[performRequestWithHandler] may be called on any thread,
-                //    so you should explicitly dispatch any UI operations to the main thread
-                [request performRequestWithHandler:
-                 ^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
-                     NSDictionary *dict = 
-                     (NSDictionary *)[NSJSONSerialization 
-                                      JSONObjectWithData:responseData options:0 error:nil];
-                     
-                     // Log the result
-                     NSLog(@"%@", dict);
-                     
-                     dispatch_async(dispatch_get_main_queue(), ^{
-                         // perform an action that updates the UI...
-                     });
-                 }];
-			}
-        }
-	}];
 }
 
 

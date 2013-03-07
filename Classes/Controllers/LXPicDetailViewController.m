@@ -64,18 +64,17 @@
 
     growingComment.delegate = self;
 
-
 //    viewComment.internalTextView.delegate = self;
 //    textComment.leftView = paddingView;
 //    textComment.leftViewMode = UITextFieldViewModeAlways;
     
     UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:self.view.bounds];
-    self.view.layer.masksToBounds = NO;
-    self.view.layer.shadowColor = [UIColor blackColor].CGColor;
-    self.view.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-    self.view.layer.shadowOpacity = 0.5f;
-    self.view.layer.shadowRadius = 2.5f;
-    self.view.layer.shadowPath = shadowPath.CGPath;
+    viewComment.layer.masksToBounds = NO;
+    viewComment.layer.shadowColor = [UIColor blackColor].CGColor;
+    viewComment.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+    viewComment.layer.shadowOpacity = 0.5f;
+    viewComment.layer.shadowRadius = 2.5f;
+    viewComment.layer.shadowPath = shadowPath.CGPath;
     
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
@@ -541,10 +540,10 @@
         viewEditPic.picture = pic;
     } else if ([segue.identifier isEqualToString:@"Map"]) {
         LXPicMapViewController *viewMap = (LXPicMapViewController*)segue.destinationViewController;
-        [viewMap setPointWithLongitude:[pic.longitude floatValue] andLatitude:[pic.latitude floatValue]];
+        viewMap.picture = pic;
     } else if ([segue.identifier isEqualToString:@"DetailInfo"]) {
         LXPicInfoViewController *viewInfo = (LXPicInfoViewController*)segue.destinationViewController;
-        viewInfo.pictureID = [pic.pictureId integerValue];
+        viewInfo.picture = pic;
     }
 }
 

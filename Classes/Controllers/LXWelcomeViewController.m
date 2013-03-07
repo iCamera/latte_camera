@@ -9,6 +9,9 @@
 #import "LXWelcomeViewController.h"
 #import "LXAppDelegate.h"
 #import "LXMyPageViewController.h"
+#import "LXPicInfoViewController.h"
+#import "LXPicCommentViewController.h"
+#import "LXPicMapViewController.h"
 
 @interface LXWelcomeViewController ()
 @end
@@ -181,6 +184,7 @@
             
             cell.viewController = self;
             cell.feed = feed;
+            cell.buttonUser.tag = indexPath.row;
 
             return cell;
         } else {
@@ -190,9 +194,9 @@
                                                       reuseIdentifier:@"Multi"];
             }
             
-            cell.showControl = false;
             cell.viewController = self;
             cell.feed = feed;
+            cell.buttonUser.tag = indexPath.row;
             
             return cell;
         }
@@ -261,9 +265,48 @@
     UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
     LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
     viewGallery.delegate = self;
+    Feed *feed = [LXUtils feedFromPicID:sender.tag of:feeds];
+    viewGallery.user = feed.user;
     viewGallery.picture = [LXUtils picFromPicID:sender.tag of:feeds];
     [self presentViewController:navGalerry animated:YES completion:nil];
 }
+
+- (void)showInfo:(UIButton*)sender {
+    UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
+                                                           bundle:nil];
+    LXPicInfoViewController *viewPicInfo = [storyGallery instantiateViewControllerWithIdentifier:@"Info"];
+    Picture *picture = [LXUtils picFromPicID:sender.tag of:feeds];
+    viewPicInfo.picture = picture;
+    [self.navigationController pushViewController:viewPicInfo animated:YES];
+}
+
+- (void)showComment:(UIButton*)sender {
+    UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
+                                                           bundle:nil];
+    LXPicCommentViewController *viewPicDetail = [storyGallery instantiateViewControllerWithIdentifier:@"Comment"];
+    Picture *picture = [LXUtils picFromPicID:sender.tag of:feeds];
+    viewPicDetail.picture = picture;
+    [self.navigationController pushViewController:viewPicDetail animated:YES];
+}
+
+- (void)showMap:(UIButton*)sender {
+    UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
+                                                           bundle:nil];
+    LXPicMapViewController *viewPicMap = [storyGallery instantiateViewControllerWithIdentifier:@"Map"];
+    Picture *picture = [LXUtils picFromPicID:sender.tag of:feeds];
+    viewPicMap.picture = picture;
+    [self.navigationController pushViewController:viewPicMap animated:YES];
+}
+
+- (void)showUser:(UIButton*)sender {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    LXMyPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    Feed *feed = feeds[sender.tag];
+    viewUserPage.user = feed.user;
+    [self.navigationController pushViewController:viewUserPage animated:YES];
+}
+
 
 - (NSMutableArray*)flatPictureArray {
     NSMutableArray *ret = [[NSMutableArray alloc] init];
@@ -276,7 +319,7 @@
 }
 
 
-- (Picture *)pictureAfterPicture:(Picture *)picture {
+- (NSDictionary *)pictureAfterPicture:(Picture *)picture {
     if (tableMode == kWelcomeTableGrid) {
         Feed *feed = [LXUtils feedFromPicID:[picture.pictureId longValue] of:feeds];
         NSUInteger current = [feeds indexOfObject:feed];
@@ -284,17 +327,28 @@
             return nil;
         }
         Feed *feedNext = feeds[current+1];
-        return feedNext.targets[0];
+        NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
+                             feedNext.targets[0], @"picture",
+                             feedNext.user, @"user",
+                             nil];
+        return ret;
     } else if (tableMode == kWelcomeTableTimeline) {
         NSArray *flatPictures = [self flatPictureArray];
         NSUInteger current = [flatPictures indexOfObject:picture];
-        if (current < flatPictures.count-1)
-            return flatPictures[current+1];
+        if (current < flatPictures.count-1) {
+            Picture *nextPic = flatPictures[current+1];
+            Feed* feed = [LXUtils feedFromPicID:[picture.pictureId integerValue] of:feeds];
+            NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 nextPic,  @"picture",
+                                 feed.user, @"user",
+                                 nil];
+            return ret;
+        }
     }
     return nil;
 }
 
-- (Picture *)pictureBeforePicture:(Picture *)picture {
+- (NSDictionary *)pictureBeforePicture:(Picture *)picture {
     if (tableMode == kWelcomeTableGrid) {
         Feed *feed = [LXUtils feedFromPicID:[picture.pictureId longValue] of:feeds];
         NSUInteger current = [feeds indexOfObject:feed];
@@ -302,22 +356,26 @@
             return nil;
         }
         Feed *feedPrev = feeds[current-1];
-        return feedPrev.targets[0];
+        NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
+                             feedPrev.targets[0], @"picture",
+                             feedPrev.user, @"user",
+                             nil];
+        return ret;
     } else if (tableMode == kWelcomeTableTimeline) {
         NSArray *flatPictures = [self flatPictureArray];
         NSUInteger current = [flatPictures indexOfObject:picture];
-        if (current > 0)
-            return flatPictures[current-1];
+        if (current > 0) {
+            Picture *prevPic = flatPictures[current-1];
+            Feed* feed = [LXUtils feedFromPicID:[prevPic.pictureId integerValue] of:feeds];
+            NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 prevPic,  @"picture",
+                                 feed.user, @"user",
+                                 nil];
+
+            return ret;
+        }
     }
     return nil;
-}
-
-- (void)showUser:(UIButton*)sender {
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                             bundle:nil];
-    LXMyPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
-//    [viewUserPage setUserID:sender.tag];
-    [self.navigationController pushViewController:viewUserPage animated:YES];
 }
 
 
@@ -343,7 +401,7 @@
 }
 
 - (void)loginPressed:(id)sender {
-    [self performSegueWithIdentifier:@"Login" sender:self];
+    self.navigationController.tabBarController.selectedIndex = 4;
 }
 
 - (IBAction)touchTab:(UIButton*)sender {
@@ -378,7 +436,7 @@
 }
 
 - (IBAction)touchLogin:(id)sender {
-    [self performSegueWithIdentifier:@"Login" sender:nil];
+    self.navigationController.tabBarController.selectedIndex = 4;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {

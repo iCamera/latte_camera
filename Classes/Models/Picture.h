@@ -32,7 +32,6 @@
     NSNumber *status;
     NSDictionary *exif;
     NSArray *tags;
-    User *user;
 }
 
 @property (nonatomic, assign) BOOL canComment;

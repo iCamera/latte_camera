@@ -26,6 +26,4 @@
 @property (strong, nonatomic) Feed *feed;
 @property (strong, nonatomic) UIViewController *viewController;
 
-@property (assign, nonatomic) BOOL showControl;
-
 @end

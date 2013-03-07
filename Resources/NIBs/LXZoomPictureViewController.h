@@ -8,9 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@class Picture;
+@class Picture, User;
 @interface LXZoomPictureViewController : UIViewController<UIScrollViewDelegate>
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollPicture;
+@property (strong, nonatomic) IBOutlet UILabel *labelNickname;
+@property (strong, nonatomic) IBOutlet UIButton *buttonUser;
+@property (strong, nonatomic) IBOutlet UIImageView *imageZoom;
+
 @property (strong, nonatomic) Picture *picture;
+@property (strong, nonatomic) User *user;
+- (IBAction)tapZoom:(UITapGestureRecognizer *)sender;
 
 @end

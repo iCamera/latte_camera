@@ -11,6 +11,8 @@
 
 @class Feed, Picture, User;
 
+#define kGlobalAnimationSpeed 0.25
+
 @interface LXUtils : NSObject
 
 + (NSInteger)heightFromWidth:(CGFloat)newwidth width:(CGFloat)width height:(CGFloat)height;
@@ -23,5 +25,6 @@
 + (Picture *)picFromPicID:(long)picID of:(NSArray *)feeds;
 + (Feed *)feedFromPicID:(long)picID of:(NSArray *)feeds;
 + (void)toggleLike:(UIButton*)sender ofPicture:(Picture*)pic;
++ (void)globalShadow:(UIView*)view;
 
 @end

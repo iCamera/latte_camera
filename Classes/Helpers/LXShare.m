@@ -88,118 +88,46 @@ typedef enum {
     
     // share to twitter
     // esto lo hago solo si la version del sistema es menor al 6.0
-    if (SYSTEM_VERSION_LESS_THAN(@"6.0"))
+    
+    SLComposeViewController *socialComposer = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+    
+    // IMAGE
+    if (imageData != nil)
+        [socialComposer addImage:[UIImage imageWithData:imageData]];
+    
+    // TEXT
+    if (text != nil)
     {
-        TWTweetComposeViewController *tweetVC = [[TWTweetComposeViewController alloc] init];
+        // URL AND TWEETCC
+        // creo el formato del texto a twittear
+        NSString *format    = @"“%@”";
+        if (self.tweetCC != nil)
+            format          = [format stringByAppendingFormat:@" %@", tweetCC];
         
-        // IMAGE
-        if (imageData != nil)
-            [tweetVC addImage:[UIImage imageWithData:imageData]];
         
         // TEXT
-        if (text != nil)
+        NSUInteger idx      = self.text.length;
+        // le quito todos los espacios que tenga el texto al principio y al final
+        while([text hasPrefix:@" "])
+            text = [text substringFromIndex:1];
+        while([text hasSuffix:@" "])
         {
-            // URL AND TWEETCC
-            // creo el formato del texto a twittear
-            NSString *format    = @"“%@”";
-            if (tweetCC != nil)
-                format          = [format stringByAppendingFormat:@" %@", tweetCC];
-            
-            // TEXT
-            NSUInteger idx      = text.length;
-            // le quito todos los espacios que tenga el texto al principio y al final
-            while([text hasPrefix:@" "])
-                text = [text substringFromIndex:1];
-            while([text hasSuffix:@" "])
+            idx       = idx-1;
+            text = [text substringToIndex:idx];
+        }
+        // creo el mensaje
+        NSString *message   = [NSString stringWithFormat:format, [NSString stringWithFormat:@"%@…", [text substringToIndex:idx]]];
+        
+        
+        // if the message is bigger than 140 characters, then cut the message
+        while (![socialComposer setInitialText:message])
+        {
+            idx -= 5;
+            if (idx > 5)
             {
-                idx       = idx-1;
-                text = [text substringToIndex:idx];
-            }
-            
-            
-            // creo el mensaje
-            NSString *message   = [NSString stringWithFormat:format, [NSString stringWithFormat:@"%@…", [text substringToIndex:idx]]];
-            
-            // if the message is bigger than 140 characters, then cut the message
-            while (![tweetVC setInitialText:message])
-            {
-                idx -= 5;
-                if (idx > 5)
-                {
-                    message = [NSString stringWithFormat:format, [NSString stringWithFormat:@"%@…", [text substringToIndex:idx]]];
-                }
+                message = [NSString stringWithFormat:format, [NSString stringWithFormat:@"%@…", [text substringToIndex:idx]]];
             }
         }
-        
-        
-        //if (self.title != nil)
-        //[tweetVC setTitle:self.title];
-        //if (self.text != nil)
-        //[tweetVC setInitialText:self.text];
-        //if (self.url != nil)
-        //[tweetVC addURL:self.url];
-        
-        [tweetVC setCompletionHandler:^(TWTweetComposeViewControllerResult result){
-            switch (result) {
-                case TWTweetComposeViewControllerResultCancelled:
-                    [self completionResult:typeCanceled];
-                    
-                    break;
-                case TWTweetComposeViewControllerResultDone:
-                    [self completionResult:typeDone];
-                    
-                    break;
-                default:
-                    [self completionResult:typeFailed];
-                    break;
-            }
-        }];
-        
-        [_controller presentModalViewController:tweetVC animated:YES];
-    }
-    else
-    {
-        SLComposeViewController *socialComposer = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
-        
-        // IMAGE
-        if (imageData != nil)
-            [socialComposer addImage:[UIImage imageWithData:imageData]];
-        
-        // TEXT
-        if (text != nil)
-        {
-            // URL AND TWEETCC
-            // creo el formato del texto a twittear
-            NSString *format    = @"“%@”";
-            if (self.tweetCC != nil)
-                format          = [format stringByAppendingFormat:@" %@", tweetCC];
-            
-            
-            // TEXT
-            NSUInteger idx      = self.text.length;
-            // le quito todos los espacios que tenga el texto al principio y al final
-            while([text hasPrefix:@" "])
-                text = [text substringFromIndex:1];
-            while([text hasSuffix:@" "])
-            {
-                idx       = idx-1;
-                text = [text substringToIndex:idx];
-            }
-            // creo el mensaje
-            NSString *message   = [NSString stringWithFormat:format, [NSString stringWithFormat:@"%@…", [text substringToIndex:idx]]];
-            
-            
-            // if the message is bigger than 140 characters, then cut the message
-            while (![socialComposer setInitialText:message])
-            {
-                idx -= 5;
-                if (idx > 5)
-                {
-                    message = [NSString stringWithFormat:format, [NSString stringWithFormat:@"%@…", [text substringToIndex:idx]]];
-                }
-            }
-        }        
-        
         
         /*if (self.title != nil)
          [socialComposer setTitle:self.title];
@@ -209,7 +137,7 @@ typedef enum {
          [socialComposer addURL:self.url];
          if (self.image != nil)
          [socialComposer addImage:self.image];*/
-
+        
         [socialComposer setCompletionHandler:^(SLComposeViewControllerResult result){
             [_controller dismissViewControllerAnimated:YES completion:nil];
             
@@ -344,7 +272,7 @@ typedef enum {
             break;
     }
     
-    [mailController dismissModalViewControllerAnimated:YES];
+    [mailController dismissViewControllerAnimated:YES completion:nil];
 }
 
 // Convenience method to perform some action that requires the "publish_actions" permissions.

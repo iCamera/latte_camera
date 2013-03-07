@@ -8,10 +8,83 @@
 
 #import "LXCameraViewController.h"
 #import "LXAppDelegate.h"
+#import "ALAssetsLibrary+CustomPhotoAlbum.h"
 
 #define kAccelerometerFrequency        10.0 //Hz
 
-@interface LXCameraViewController ()
+@interface LXCameraViewController ()  {
+    LXStillCamera *videoCamera;
+    GPUImageSharpenFilter *filterSharpen;
+    LXFilterPipe *pipe;
+    LXFilterDetail *filter;
+    LXFilterDOF *filterDOF;
+    LXFilterFish *filterFish;
+    GPUImageAlphaBlendFilter *filterText;
+    GPUImageCropFilter *blendCrop;
+    GPUImagePinchDistortionFilter *filterDistord;
+    GPUImageFilter *effect;
+    LXFilterScreenBlend *screenBlend;
+    GPUImageAlphaBlendFilter *filterIntensity;
+    UIDeviceHardware *deviceHardware;
+    
+    GPUImagePicture *previewFilter;
+    GPUImagePicture *pictureBlend;
+    GPUImageRawDataInput *pictureDOF;
+    GPUImageUIElement *uiElement;
+    
+    UIView *uiWrap;
+    UILabel *timeLabel;
+    
+    CGSize picSize;
+    CGSize previewUISize;
+    CGSize blendSize;
+    
+    UIActionSheet *sheet;
+    UIImagePickerController *imagePicker;
+    NSMutableDictionary *imageMeta;
+    NSTimer *timer;
+    NSInteger timerCount;
+    CGSize keyboardSize;
+    CGPoint posText;
+    CGFloat mCurrentScale;
+    CGFloat mLastScale;
+    NSInteger uploadState;
+    
+    BOOL isEditing;
+    BOOL isSaved;
+    BOOL isKeyboard;
+    BOOL isWatingToUpload;
+    BOOL isFixedAspectBlend;
+    BOOL isBackCamera;
+    
+    NSInteger currentEffect;
+    NSInteger currentLens;
+    NSInteger currentTimer;
+    NSString *currentFont;
+    NSString *currentText;
+    NSInteger currentMask;
+    NSInteger currentBlend;
+    NSInteger effectNum;
+    NSMutableArray *effectPreview;
+    
+    NSLayoutConstraint *cameraAspect;
+    NSInteger timerMode;
+    CLLocationManager *locationManager;
+    CLLocation *bestEffortAtLocation;
+    UIImageOrientation imageOrientation;
+    UIInterfaceOrientation uiOrientation;
+    UIInterfaceOrientation orientationLast;
+    MBProgressHUD *HUD;
+    
+    NSData *savedData;
+    UIImage *savedPreview;
+    UIImage *capturedImage;
+    NSInteger currentTab;
+    
+    LXShare *laSharekit;
+    
+    MBRoundProgressView *viewRoundProgess;
+}
 
 @end
 
@@ -187,7 +260,7 @@
     // Setup filter
     uiWrap = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 480, 640)];
     timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 600, 600)];
-    timeLabel.textAlignment = UITextAlignmentCenter;
+    timeLabel.textAlignment = NSTextAlignmentCenter;
     timeLabel.backgroundColor = [UIColor clearColor];
     timeLabel.textColor = [UIColor whiteColor];
     timeLabel.shadowColor = [UIColor blackColor];
@@ -687,6 +760,25 @@
                 [imageMeta setObject:location forKey:(NSString *)kCGImagePropertyGPSDictionary];
             }
             
+            // Create formatted date
+            NSMutableDictionary *dictForEXIF = [imageMeta objectForKey:(NSString *)kCGImagePropertyExifDictionary];
+            NSMutableDictionary *dictForTIFF = [imageMeta objectForKey:(NSString *)kCGImagePropertyTIFFDictionary];
+            if (dictForTIFF == nil) {
+                dictForTIFF = [[NSMutableDictionary alloc] init];
+            }
+            if (dictForEXIF == nil) {
+                dictForEXIF = [[NSMutableDictionary alloc] init];
+            }
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
+            NSString *stringDate = [formatter stringFromDate:[NSDate date]];
+            
+            [dictForEXIF setObject:stringDate forKey:(NSString *)kCGImagePropertyExifDateTimeDigitized];
+            [dictForEXIF setObject:stringDate forKey:(NSString *)kCGImagePropertyExifDateTimeOriginal];
+            [dictForTIFF setObject:stringDate forKey:(NSString *)kCGImagePropertyTIFFDateTime];
+            [imageMeta setObject:dictForEXIF forKey:(NSString *)kCGImagePropertyExifDictionary];
+            [imageMeta setObject:dictForTIFF forKey:(NSString *)kCGImagePropertyTIFFDictionary];
+            
             // Save GPS & Correct orientation
             
             capturedImage = [UIImage imageWithData:jpeg];
@@ -972,6 +1064,10 @@
     
     [library writeImageDataToSavedPhotosAlbum:savedData metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
         if (!error) {
+            [library addAssetURL:assetURL toAlbum:@"Latte camera" withCompletionBlock:^(NSError *error) {
+                TFLog(error.localizedDescription);
+            }];
+            
             dispatch_async(dispatch_get_main_queue(), ^{
                 HUD.mode = MBProgressHUDModeText;
                 HUD.labelText = NSLocalizedString(@"saved_photo", @"Saved to Camera Roll") ;
@@ -1399,7 +1495,6 @@
     [previewFilter removeAllTargets];
     for (NSInteger i = 0; i < effectNum; i++) {
         GPUImageView *effectView = effectPreview[i];
-        
         GPUImageFilter *effectSmallPreview = [FilterManager getEffect:i];
         if (effectSmallPreview != nil) {
             [previewFilter addTarget:effectSmallPreview];
@@ -1407,7 +1502,6 @@
         } else {
             [previewFilter addTarget:effectView];
         }
-        
     }
     [previewFilter processImage];
 }

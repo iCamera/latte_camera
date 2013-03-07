@@ -13,7 +13,17 @@
 
 @end
 
-@implementation LXRankingViewController
+@implementation LXRankingViewController {
+    BOOL loadEnded;
+    NSString* ranktype;
+    NSInteger rankpage;
+    NSMutableArray *pics;
+    BOOL reloading;
+    EGORefreshTableHeaderView *refreshHeaderView;
+    UIPanGestureRecognizer *navigationBarPanGestureRecognizer;
+    MBProgressHUD *HUD;
+}
+
 @synthesize buttonDaily;
 @synthesize buttonWeekly;
 @synthesize buttonMonthly;
@@ -371,17 +381,25 @@
     [self presentViewController:navGalerry animated:YES completion:nil];    
 }
 
-- (Picture *)pictureAfterPicture:(Picture *)picture {
+- (NSDictionary *)pictureAfterPicture:(Picture *)picture {
     NSUInteger current = [pics indexOfObject:picture];
-    if (current < pics.count-1)
-        return pics[current+1];
+    if (current < pics.count-1) {
+        NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
+                             pics[current+1],  @"picture",
+                             nil];
+        return ret;
+    }
     return nil;
 }
 
-- (Picture *)pictureBeforePicture:(Picture *)picture {
+- (NSDictionary *)pictureBeforePicture:(Picture *)picture {
     NSUInteger current = [pics indexOfObject:picture];
-    if (current > 0)
-        return pics[current-1];
+    if (current > 0) {
+        NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
+                             pics[current-1],  @"picture",
+                             nil];
+        return ret;
+    }
     return nil;
 }
 

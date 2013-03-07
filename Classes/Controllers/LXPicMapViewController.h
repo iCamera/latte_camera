@@ -11,17 +11,16 @@
 #import <CoreLocation/CoreLocation.h>
 #import "PicturePin.h"
 #import "LXPicDetailViewController.h"
+#import "Picture.h"
 
 #define METERS_PER_MILE 1609.344
 
-@interface LXPicMapViewController : UIViewController <MKMapViewDelegate> {
-    PicturePin *pin;
-}
+@interface LXPicMapViewController : UIViewController <MKMapViewDelegate>
 
 @property (strong, nonatomic) IBOutlet MKMapView *mapPic;
 - (IBAction)touchBack:(id)sender;
 - (IBAction)touchApp:(id)sender;
 
--(void)setPointWithLongitude:(CGFloat)aLongitude andLatitude:(CGFloat)aLatitude;
+@property (strong, nonatomic) Picture *picture;
 
 @end

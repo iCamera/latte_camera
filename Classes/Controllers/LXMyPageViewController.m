@@ -11,7 +11,7 @@
 #import "LXAppDelegate.h"
 #import "LatteAPIClient.h"
 #import "UIImageView+AFNetworking.h"
-#import "LXPicDetailViewController.h"
+#import "LXPicCommentViewController.h"
 #import "LXCellFriend.h"
 #import "LXUtils.h"
 #import "LXCellComment.h"
@@ -118,12 +118,15 @@
     self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 120)];
     self.tableView.tableHeaderView.clipsToBounds = YES;
     
+    UIStoryboard *storyComponent = [UIStoryboard storyboardWithName:@"Component"
+                                                             bundle:nil];
+    
     if (_user == nil) {
         if (app.currentUser == nil) {
             return;
         } else {
             _user = app.currentUser;
-            viewHeaderMypage = [[LXViewHeaderMypage alloc] init];
+            viewHeaderMypage = [storyComponent instantiateViewControllerWithIdentifier:@"HeaderMypage"];
             viewHeaderMypage.user = _user;
             viewHeaderMypage.parent = self;
             [self.tableView.tableHeaderView addSubview:viewHeaderMypage.view];
@@ -135,7 +138,7 @@
             isMypage = true;
         }
     } else {
-        viewHeaderUserpage = [[LXViewHeaderUserPage alloc] init];
+        viewHeaderUserpage = [storyComponent instantiateViewControllerWithIdentifier:@"HeaderUserpPage"];
         [self.tableView.tableHeaderView addSubview:viewHeaderUserpage.view];
         [self addChildViewController:viewHeaderUserpage];
         [viewHeaderUserpage didMoveToParentViewController:self];
@@ -728,7 +731,6 @@
                         cell = [[LXCellTimelineMulti alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Multi"];
                     }
                     
-                    cell.showControl = true;
                     cell.viewController = self;
                     cell.feed = feed;
                     cell.buttonUser.tag = indexPath.row;
@@ -1046,10 +1048,11 @@
 
 
 - (void)showInfo:(UIButton*)sender {
+    Picture *picture = [LXUtils picFromPicID:sender.tag of:feeds];
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Gallery"
                                                              bundle:nil];
-    LXPicInfoViewController *viewPicInfo = [mainStoryboard instantiateViewControllerWithIdentifier:@"PictureInfo"];
-    [viewPicInfo setPictureID:sender.tag];
+    LXPicInfoViewController *viewPicInfo = [mainStoryboard instantiateViewControllerWithIdentifier:@"Info"];
+    viewPicInfo.picture = picture;
     [self.navigationController pushViewController:viewPicInfo animated:YES];
 }
 
@@ -1062,14 +1065,19 @@
     switch (photoMode) {
         case kPhotoMyphoto:
             viewGallery.picture = pictures[sender.tag];
+            viewGallery.user = _user;
             break;
         case kPhotoFollowing:
         case kPhotoTimeline:
-        case kPhotoFriends:
+        case kPhotoFriends: {
+            Feed *feed = [LXUtils feedFromPicID:sender.tag of:feeds];
+            viewGallery.user = feed.user;
             viewGallery.picture = [self picFromPicID:sender.tag];
             break;
+        }
         case kPhotoCalendar:
             viewGallery.picture = [currentMonthPics objectForKey:[NSString stringWithFormat:@"%2d", sender.tag]];
+            viewGallery.user = _user;
             break;
         default:
             break;
@@ -1106,12 +1114,17 @@
     return ret;
 }
 
-- (Picture *)pictureAfterPicture:(Picture *)picture {
+- (NSDictionary *)pictureAfterPicture:(Picture *)picture {
     switch (photoMode) {
         case kPhotoMyphoto: {
             NSUInteger current = [pictures indexOfObject:picture];
-            if (current < pictures.count-1)
-                return pictures[current+1];
+            if (current < pictures.count-1) {
+                NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
+                                     pictures[current+1], @"picture",
+                                     _user, @"user",
+                                     nil];
+                return ret;
+            }
             break;
         }
         case kPhotoFollowing:
@@ -1119,8 +1132,16 @@
         case kPhotoTimeline: {
             NSArray *flatPictures = [self flatPictureArray];
             NSUInteger current = [flatPictures indexOfObject:picture];
-            if (current < flatPictures.count-1)
-                return flatPictures[current+1];
+            
+            if (current < flatPictures.count-1) {
+                Picture *nextPic = flatPictures[current+1];
+                Feed* feed = [LXUtils feedFromPicID:[picture.pictureId integerValue] of:feeds];
+                NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
+                                     nextPic, @"picture",
+                                     feed.user, @"user",
+                                     nil];
+                return ret;
+            }
             break;
         };
         case kPhotoCalendar:
@@ -1129,12 +1150,17 @@
     return nil;
 }
 
-- (Picture *)pictureBeforePicture:(Picture *)picture {    
+- (NSDictionary *)pictureBeforePicture:(Picture *)picture {    
     switch (photoMode) {
         case kPhotoMyphoto: {
             NSUInteger current = [pictures indexOfObject:picture];
-            if (current > 0)
-                return pictures[current-1];
+            if (current > 0) {
+                NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
+                                     pictures[current-1], @"picture",
+                                     _user, @"user",
+                                     nil];
+                return ret;
+            }
             break;
         }
         case kPhotoFollowing:
@@ -1142,8 +1168,16 @@
         case kPhotoTimeline: {
             NSArray *flatPictures = [self flatPictureArray];
             NSUInteger current = [flatPictures indexOfObject:picture];
-            if (current > 0)
-                return flatPictures[current-1];
+            if (current > 0) {
+                Picture *prevPic = flatPictures[current-1];
+                Feed* feed = [LXUtils feedFromPicID:[picture.pictureId integerValue] of:feeds];
+                NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
+                                     prevPic,  @"picture",
+                                     feed.user, @"user",
+                                     nil];
+                return ret;
+            }
+
             break;
         }
         case kPhotoCalendar:
@@ -1158,8 +1192,8 @@
     
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Gallery"
                                                              bundle:nil];
-    LXPicDetailViewController *viewPicComment = [mainStoryboard instantiateViewControllerWithIdentifier:@"PictureDetail"];
-    viewPicComment.pic = pic;
+    LXPicCommentViewController *viewPicComment = [mainStoryboard instantiateViewControllerWithIdentifier:@"Comment"];
+    viewPicComment.picture = pic;
     [self.navigationController pushViewController:viewPicComment animated:YES];
 }
 
@@ -1189,11 +1223,11 @@
 - (void)showMap:(UIButton*)sender {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Gallery"
                                                              bundle:nil];
-    LXPicMapViewController *viewPicMap = [mainStoryboard instantiateViewControllerWithIdentifier:@"PictureMap"];
+    LXPicMapViewController *viewPicMap = [mainStoryboard instantiateViewControllerWithIdentifier:@"Map"];
     
     Feed *feed = [self feedFromPicID:sender.tag];
     Picture *pic = feed.targets[0];
-    [viewPicMap setPointWithLongitude:[pic.longitude floatValue] andLatitude:[pic.latitude floatValue]];
+    viewPicMap.picture = pic;
     
     [self.navigationController pushViewController:viewPicMap animated:YES];
 }

@@ -15,7 +15,6 @@
 @synthesize labelTitle;
 @synthesize labelUserDate;
 @synthesize viewController;
-@synthesize showControl;
 @synthesize viewBackground;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -42,12 +41,14 @@
     }
     
     CGSize size = CGSizeMake(6, 190);
+    UIStoryboard *storyComponent = [UIStoryboard storyboardWithName:@"Component"
+                                                             bundle:nil];
     for (Picture *pic in feed.targets) {
-        LXTimelineMultiItemViewController *viewPic = [[LXTimelineMultiItemViewController alloc] init];
+        
+        LXTimelineMultiItemViewController *viewPic = [storyComponent instantiateViewControllerWithIdentifier:@"TimlineMultiPhoto"];
         
         viewPic.pic = pic;
         viewPic.parent = viewController;
-        viewPic.showButton = showControl;
         viewPic.view.frame = CGRectMake(size.width, 0, 190, 190);
         [scrollPic addSubview:viewPic.view];
         

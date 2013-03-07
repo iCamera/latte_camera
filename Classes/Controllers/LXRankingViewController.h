@@ -16,16 +16,7 @@
 #import "EGORefreshTableHeaderView.h"
 #import "LXGalleryViewController.h"
 
-@interface LXRankingViewController : UITableViewController <EGORefreshTableHeaderDelegate, LXGalleryViewControllerDataSource> {
-    BOOL loadEnded;
-    NSString* ranktype;
-    NSInteger rankpage;
-    NSMutableArray *pics;
-    BOOL reloading;
-    EGORefreshTableHeaderView *refreshHeaderView;
-    UIPanGestureRecognizer *navigationBarPanGestureRecognizer;
-    MBProgressHUD *HUD;
-}
+@interface LXRankingViewController : UITableViewController <EGORefreshTableHeaderDelegate, LXGalleryViewControllerDataSource>
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonDaily;
 @property (strong, nonatomic) IBOutlet UIButton *buttonWeekly;

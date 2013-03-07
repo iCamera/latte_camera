@@ -29,40 +29,42 @@
 #import "LXFilterPipe.h"
 #import "LXStillCamera.h"
 
-#define kTimerNone       0
-#define kTimer5s         1
-#define kTimer10s        2
-#define kTimerContinuous 3
-
-#define kTabPreview 0
-#define kTabEffect 1
-#define kTabBokeh 2
-#define kTabBasic 3
-#define kTabLens 4
-#define kTabText 5
-#define kTabBlend 6
-
-#define kMaskBlurNone 5
-#define kMaskBlurWeak 6
-#define kMaskBlurNormal 7
-#define kMaskBlurStrong 8
-
-#define kBlendNone 0
-#define kBlendWeak 1
-#define kBlendNormal 2
-#define kBlendStrong 3
-
-#define kUploadOK 0
-#define kUploadProgress 1
-#define kUploadFail 2
+typedef enum {
+    kTimerNone = 0,
+    kTimer5s = 1,
+    kTimer10s = 2,
+    kTimerContinuous = 3,
+} CameraTimer;
 
 typedef enum {
-    kEffect1,
-    kEffect2,
-    kEffect3,
-    kEffect4,
-    kEffect5
-} EffectType;
+    kTabPreview = 0,
+    kTabEffect = 1,
+    kTabBokeh = 2,
+    kTabBasic = 3,
+    kTabLens = 4,
+    kTabText = 5,
+    kTabBlend = 6,
+} EffectTab;
+
+typedef enum {
+    kMaskBlurNone = 5,
+    kMaskBlurWeak = 6,
+    kMaskBlurNormal = 7,
+    kMaskBlurStrong = 8,
+} TypeDefMask;
+
+typedef enum {
+    kBlendNone = 0,
+    kBlendWeak = 1,
+    kBlendNormal = 2,
+    kBlendStrong = 3,
+} TypeDefBlend;
+
+typedef enum {
+    kUploadOK,
+    kUploadProgress,
+    kUploadFail,
+} TypeDefUploadStatus;
 
 @class LXCameraViewController;
 
@@ -72,79 +74,7 @@ typedef enum {
 - (void)imagePickerControllerDidCancel:(LXCameraViewController *)picker;
 @end
 
-@interface LXCameraViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, UIScrollViewDelegate, UIAccelerometerDelegate, LXDrawViewDelegate, UIAlertViewDelegate, UITextFieldDelegate> {
-    LXStillCamera *videoCamera;
-    GPUImageSharpenFilter *filterSharpen;
-    LXFilterPipe *pipe;
-    LXFilterDetail *filter;
-    LXFilterDOF *filterDOF;
-    LXFilterFish *filterFish;
-    GPUImageAlphaBlendFilter *filterText;
-    GPUImageCropFilter *blendCrop;
-    GPUImagePinchDistortionFilter *filterDistord;
-    GPUImageFilter *effect;
-    LXFilterScreenBlend *screenBlend;
-    GPUImageAlphaBlendFilter *filterIntensity;
-    UIDeviceHardware *deviceHardware;
-    
-    GPUImagePicture *previewFilter;
-    GPUImagePicture *pictureBlend;
-    GPUImageRawDataInput *pictureDOF;
-    GPUImageUIElement *uiElement;
-
-    UIView *uiWrap;
-    UILabel *timeLabel;
-
-    CGSize picSize;
-    CGSize previewUISize;
-    CGSize blendSize;
-    
-    UIActionSheet *sheet;
-    UIImagePickerController *imagePicker;
-    NSMutableDictionary *imageMeta;
-    NSTimer *timer;
-    NSInteger timerCount;
-    CGSize keyboardSize;
-    CGPoint posText;
-    CGFloat mCurrentScale;
-    CGFloat mLastScale;
-    NSInteger uploadState;
-
-    BOOL isEditing;
-    BOOL isSaved;
-    BOOL isKeyboard;
-    BOOL isWatingToUpload;
-    BOOL isFixedAspectBlend;
-    BOOL isBackCamera;
-
-    NSInteger currentEffect;
-    NSInteger currentLens;
-    NSInteger currentTimer;
-    NSString *currentFont;
-    NSString *currentText;
-    NSInteger currentMask;
-    NSInteger currentBlend;
-    NSInteger effectNum;
-    NSMutableArray *effectPreview;
-    
-    NSLayoutConstraint *cameraAspect;
-    NSInteger timerMode;
-    CLLocationManager *locationManager;
-    CLLocation *bestEffortAtLocation;
-    UIImageOrientation imageOrientation;
-    UIInterfaceOrientation uiOrientation;
-    UIInterfaceOrientation orientationLast;
-    MBProgressHUD *HUD;
-    
-    NSData *savedData;
-    UIImage *savedPreview;
-    UIImage *capturedImage;
-    NSInteger currentTab;
-    
-    LXShare *laSharekit;
-    
-    MBRoundProgressView *viewRoundProgess;
-}
+@interface LXCameraViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, UIScrollViewDelegate, UIAccelerometerDelegate, LXDrawViewDelegate, UIAlertViewDelegate, UITextFieldDelegate>
 @property (weak, nonatomic) id <LXImagePickerDelegate> delegate;
 
 @property (strong, nonatomic) IBOutlet UIView *viewBottomBar;

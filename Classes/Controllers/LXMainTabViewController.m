@@ -12,6 +12,7 @@
 #import "TestFlight.h"
 #import "LXUserNavButton.h"
 #import "LXMyPageViewController.h"
+#import "LXNavMypageController.h"
 
 @interface LXMainTabViewController ()
 
@@ -136,10 +137,6 @@
     [self.view addSubview:viewNav.view];
     [self addChildViewController:viewNav];
     [viewNav didMoveToParentViewController:self];
-}
-
-- (void)setViewControllers:(NSArray *)viewControllers {
-    [super setViewControllers:viewControllers];
     
     for(UIViewController *tab in self.viewControllers) {
         NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
@@ -163,7 +160,8 @@
 
 - (void)showSetting:(id)sender {
     UIStoryboard* storySetting = [UIStoryboard storyboardWithName:@"Setting" bundle:nil];
-    [self presentModalViewController:[storySetting instantiateInitialViewController] animated:YES];
+    [self presentViewController:[storySetting instantiateInitialViewController] animated:YES completion:nil];
+
 }
 
 
@@ -188,21 +186,19 @@
 
 
 - (void)setGuest {
+    LXNavMypageController *navMypage = self.viewControllers[4];
+    navMypage.tabBarItem.image = [UIImage imageNamed:@"icon_login.png"];    
     UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"Authentication" bundle:nil];
-    UIViewController *viewLogin = [storyMain instantiateInitialViewController];
-    
-    NSMutableArray *arrayViews = [NSMutableArray arrayWithArray:self.viewControllers];
-    arrayViews[4] = viewLogin;
-    self.viewControllers = arrayViews;
+    UIViewController *viewLogin = [storyMain instantiateViewControllerWithIdentifier:@"Login"];
+    navMypage.viewControllers = [NSArray arrayWithObject:viewLogin];
 }
 
 - (void)setUser {
+    LXNavMypageController *navMypage = self.viewControllers[4];
+    navMypage.tabBarItem.image = [UIImage imageNamed:@"icon_mypage.png"];
     UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    UIViewController *viewMypage = [storyMain instantiateViewControllerWithIdentifier:@"MyPage"];
-    
-    NSMutableArray *arrayViews = [NSMutableArray arrayWithArray:self.viewControllers];
-    arrayViews[4] = viewMypage;
-    self.viewControllers = arrayViews;
+    UIViewController *viewMypage = [storyMain instantiateViewControllerWithIdentifier:@"UserPage"];
+    navMypage.viewControllers = [NSArray arrayWithObject:viewMypage];
 }
 
 - (void)receiveLoggedIn:(NSNotification *) notification {

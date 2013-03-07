@@ -11,11 +11,13 @@
 @interface LXPicInfoViewController ()
 @end
 
-@implementation LXPicInfoViewController
-
-@synthesize labelTitle;
-@synthesize imagePic;
-@synthesize viewHeader;
+@implementation LXPicInfoViewController {
+    NSDictionary *exif;
+    NSDictionary *picDict;
+    NSArray *keyBasic;
+    NSArray *keyExif;
+    NSMutableArray *sections;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,82 +31,51 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+}
+
+- (void)setPicture:(Picture *)picture {
+    _picture = picture;
+    // Do any additional setup after loading the view.
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     [app.tracker sendView:@"Picture Info Screen"];
     
-    viewHeader.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
-    CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = CGRectMake(0, 32, 320, 10);
-    gradient.colors = [NSArray arrayWithObjects:
-                       (id)[[UIColor clearColor] CGColor],
-                       (id)[[[UIColor blackColor] colorWithAlphaComponent:0.2f] CGColor],
-                       nil];
-    [viewHeader.layer insertSublayer:gradient atIndex:0];
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     
-
-    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:imagePic.bounds];
-    imagePic.layer.masksToBounds = NO;
-    imagePic.layer.shadowColor = [UIColor blackColor].CGColor;
-    imagePic.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
-    imagePic.layer.shadowOpacity = 1.0f;
-    imagePic.layer.shadowRadius = 1.0f;
-    imagePic.layer.shadowPath = shadowPath.CGPath;
+    NSString *url = [NSString stringWithFormat:@"picture/%d", [_picture.pictureId integerValue]];
     
-    NSString *url = [NSString stringWithFormat:@"picture/%d", _pictureID];
-
     [[LatteAPIClient sharedClient] getPath:url
-                                      parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
-                                         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                             picDict = [JSON objectForKey:@"picture"];
-                                             pic = [Picture instanceFromDictionary:picDict];
-                                             
-                                             [imagePic setImageWithURL:[NSURL URLWithString:pic.urlSquare]];
-                                             
-                                             NSMutableSet *keyBasicSet = [NSMutableSet setWithObjects:@"taken_at", @"created_at", @"tags", nil];
-                                             NSSet *allField = [NSSet setWithArray:[picDict allKeys]];
-                                             [keyBasicSet intersectSet:allField];
-                                             keyBasic = [keyBasicSet allObjects];
-                                             
-                                             sections = [[NSMutableArray alloc] init];
-                                             [sections addObject:keyBasic];
-                                             exif = [picDict objectForKey:@"exif"];
-                                             if (exif.count > 0) {
-                                                 [sections addObject:exif];
-                                                 keyExif = [exif allKeys];
-                                             }
-                                             
-                                             if (pic.title.length > 0)
-                                                 labelTitle.text = pic.title;
-                                             
-                                             [self.tableView reloadData];
-                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
-                                                                                             message:error.localizedDescription
-                                                                                            delegate:nil
-                                                                                   cancelButtonTitle:NSLocalizedString(@"close", "Close")
-                                                                                   otherButtonTitles:nil];
-                                             [alert show];
-                                         }];
-    
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    if ([self.navigationController.viewControllers[self.navigationController.viewControllers.count-1] isKindOfClass:[LXPicDetailViewController class]]) {
-        [[NSNotificationCenter defaultCenter]
-         postNotificationName:@"TabbarHide"
-         object:self];
-    }
-    
-    [super viewWillDisappear:animated];
+                                parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       picDict = [JSON objectForKey:@"picture"];
+                                       _picture = [Picture instanceFromDictionary:picDict];
+                                       
+                                       NSMutableSet *keyBasicSet = [NSMutableSet setWithObjects:@"taken_at", @"created_at", @"tags", nil];
+                                       NSSet *allField = [NSSet setWithArray:[picDict allKeys]];
+                                       [keyBasicSet intersectSet:allField];
+                                       keyBasic = [keyBasicSet allObjects];
+                                       
+                                       sections = [[NSMutableArray alloc] init];
+                                       [sections addObject:keyBasic];
+                                       exif = [picDict objectForKey:@"exif"];
+                                       if (exif.count > 0) {
+                                           [sections addObject:exif];
+                                           keyExif = [exif allKeys];
+                                       }
+                                       
+                                       [self.tableView reloadData];
+                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       TFLog(@"Something went wrong - Picture Info");
+                                       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                       message:error.localizedDescription
+                                                                                      delegate:nil
+                                                                             cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                             otherButtonTitles:nil];
+                                       [alert show];
+                                   }];
 }
 
 - (void)viewDidUnload
 {
-    [self setLabelTitle:nil];
-    [self setImagePic:nil];
-    [self setViewHeader:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -133,11 +104,11 @@
         NSString *key = [keyBasic objectAtIndex:indexPath.row];
         if ([key isEqualToString:@"taken_at"]) {
             cell.labelField.text = NSLocalizedString(@"taken_date", @"撮影月日") ;
-            cell.labelDetail.text = [LXUtils dateToString:pic.takenAt];
+            cell.labelDetail.text = [LXUtils dateToString:_picture.takenAt];
         }
         if ([[keyBasic objectAtIndex:indexPath.row] isEqualToString:@"created_at"]) {
             cell.labelField.text = NSLocalizedString(@"uploaded_date", @"追加月日");
-            cell.labelDetail.text = [LXUtils dateToString:pic.createdAt];
+            cell.labelDetail.text = [LXUtils dateToString:_picture.createdAt];
         }
         if ([[keyBasic objectAtIndex:indexPath.row] isEqualToString:@"tags"]) {
             cell.labelField.text = NSLocalizedString(@"tags", @"タグ");
@@ -176,6 +147,7 @@
     title.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:12];
     title.textColor = [UIColor colorWithRed:101.0/255.0 green:90.0/255.0 blue:56.0/255.0 alpha:1];
     title.text = [self tableView:tableView titleForHeaderInSection:section];
+    title.backgroundColor = [UIColor clearColor];
     [view addSubview:title];
     
     return view;

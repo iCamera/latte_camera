@@ -19,6 +19,5 @@
 
 @property (strong, nonatomic) Picture *pic;
 @property (weak, nonatomic) id parent;
-@property (assign, nonatomic) BOOL showButton;
 
 @end

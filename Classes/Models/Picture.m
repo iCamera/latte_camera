@@ -64,11 +64,6 @@
             self.comments = myMembers;
 
         }
-
-    } else if ([key isEqualToString:@"user"]) {
-        if ([value isKindOfClass:[NSDictionary class]]) {
-            user = [User instanceFromDictionary:value];
-        }
     } else if ([key isEqualToString:@"created_at"]) {
         self.createdAt = [LXUtils dateFromJSON:value];
     } else if ([key isEqualToString:@"taken_at"]) {

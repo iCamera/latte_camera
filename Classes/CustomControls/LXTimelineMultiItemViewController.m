@@ -67,8 +67,8 @@
     [buttonComment addTarget:_parent action:@selector(showComment:) forControlEvents:UIControlEventTouchUpInside];
     [buttonVote addTarget:_parent action:@selector(submitLike:) forControlEvents:UIControlEventTouchUpInside];
     
-    buttonComment.hidden = !_showButton;
-    buttonVote.hidden = !_showButton;
+//    buttonComment.hidden = !_showButton;
+//    buttonVote.hidden = !_showButton;
 
     // Do any additional setup after loading the view from its nib.
 }

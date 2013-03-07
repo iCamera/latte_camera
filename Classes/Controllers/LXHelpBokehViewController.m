@@ -44,6 +44,6 @@
 }
 
 - (IBAction)touchClose:(id)sender {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 @end

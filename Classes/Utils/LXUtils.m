@@ -17,6 +17,16 @@
 
 @implementation LXUtils
 
++ (void)globalShadow:(UIView*)view {
+    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:view.bounds];
+    view.layer.masksToBounds = NO;
+    view.layer.shadowColor = [UIColor blackColor].CGColor;
+    view.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+    view.layer.shadowOpacity = 0.25;
+    view.layer.shadowRadius = 3.0;
+    view.layer.shadowPath = shadowPath.CGPath;
+}
+
 
 + (void)toggleLike:(UIButton*)sender ofPicture:(Picture*)pic {
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
