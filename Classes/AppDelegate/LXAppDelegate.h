@@ -20,9 +20,7 @@
 @interface LXAppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate> {
     LXSidePanelController *revealController;
     NSString *apns;
-    UINavigationController *viewCamera;
     id<GAITracker> tracker;
-    AFHTTPRequestOperation *operation;
 }
 
 @property(nonatomic, retain) id<GAITracker> tracker;
@@ -30,7 +28,6 @@
 
 @property (strong, nonatomic) User *currentUser;
 @property (strong, nonatomic) NSString *apns;
-@property (strong, nonatomic) UINavigationController *viewCamera;
 
 extern NSString *const FBSessionStateChangedNotification;
 
@@ -41,7 +38,7 @@ extern NSString *const FBSessionStateChangedNotification;
 - (void)logOut;
 - (void)setToken:(NSString*)token;
 - (void)updateUserAPNS;
-- (void)toogleCamera;
+//- (void)toogleCamera;
 
 + (LXAppDelegate*)currentDelegate;
 

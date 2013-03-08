@@ -27,6 +27,7 @@
     NSString *urlMedium;
     NSString *urlSmall;
     NSString *urlSquare;
+    NSString *urlOrg;
     NSNumber *voteCount;
     NSNumber *width;
     NSNumber *status;
@@ -56,6 +57,7 @@
 @property (nonatomic, copy) NSString *urlMedium;
 @property (nonatomic, copy) NSString *urlSmall;
 @property (nonatomic, copy) NSString *urlSquare;
+@property (nonatomic, copy) NSString *urlOrg;
 @property (nonatomic, copy) NSNumber *voteCount;
 @property (nonatomic, copy) NSNumber *width;
 @property (nonatomic, copy) NSNumber *status;

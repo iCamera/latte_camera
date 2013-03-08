@@ -158,6 +158,11 @@
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
+    [super viewWillAppear:animated];
+}
+
 - (void)showSetting:(id)sender {
     UIStoryboard* storySetting = [UIStoryboard storyboardWithName:@"Setting" bundle:nil];
     [self presentViewController:[storySetting instantiateInitialViewController] animated:YES completion:nil];
@@ -166,8 +171,8 @@
 
 
 - (void)cameraView:(id)sender {
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    [app toogleCamera];
+    UIStoryboard* storySetting = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
+    [self presentViewController:[storySetting instantiateInitialViewController] animated:YES completion:nil];
 }
 
 - (void)imagePickerController:(LXCameraViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info {

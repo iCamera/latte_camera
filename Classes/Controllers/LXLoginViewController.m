@@ -153,7 +153,7 @@
     ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
 	
 	// Request access from the user to use their Twitter accounts.
-    [accountStore requestAccessToAccountsWithType:accountType withCompletionHandler:^(BOOL granted, NSError *error) {
+    [accountStore requestAccessToAccountsWithType:accountType options:nil completion:^(BOOL granted, NSError *error) {
         if(granted) {
 			// Get the list of Twitter accounts.
             NSArray *accountsArray = [accountStore accountsWithAccountType:accountType];
@@ -176,7 +176,6 @@
             }
         }
 	}];
-
 }
 
 - (void)processLogin:(NSDictionary *)JSON {

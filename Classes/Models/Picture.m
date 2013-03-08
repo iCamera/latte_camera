@@ -20,6 +20,7 @@
 @synthesize takenAt;
 @synthesize pictureId;
 @synthesize title;
+@synthesize urlOrg;
 @synthesize urlLarge;
 @synthesize urlMedium;
 @synthesize urlSmall;
@@ -102,6 +103,8 @@
         [self setValue:value forKey:@"pictureId"];
     } else if ([key isEqualToString:@"user_id"]) {
         [self setValue:value forKey:@"userId"];
+    } else if ([key isEqualToString:@"url_org"]) {
+        [self setValue:value forKey:@"urlOrg"];
     } else if ([key isEqualToString:@"url_large"]) {
         [self setValue:value forKey:@"urlLarge"];
     } else if ([key isEqualToString:@"url_medium"]) {

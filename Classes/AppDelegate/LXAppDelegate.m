@@ -15,7 +15,6 @@
 @synthesize currentUser;
 @synthesize apns;
 @synthesize window;
-@synthesize viewCamera;
 @synthesize tracker;
 
 NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSessionStateChangedNotification";
@@ -107,8 +106,7 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
     // Clear notify but save badge
     [self clearNotification];
     [FBSession openActiveSessionWithAllowLoginUI:NO];
-    
-    viewCamera = (id)window.rootViewController;
+
     
     NSDictionary *remoteNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
 
@@ -117,6 +115,17 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(readNotify:) name:@"ReadNotify" object:nil];
     
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    
+    LXSidePanelController *controllerSide = [[LXSidePanelController alloc] init];
+    controllerSide.centerPanel = [mainStoryboard instantiateViewControllerWithIdentifier:@"MainTab"];
+    controllerSide.leftPanel = [mainStoryboard instantiateViewControllerWithIdentifier:@"LeftSide"];
+    
+    window.rootViewController = controllerSide;
+    [window makeKeyAndVisible];
+    
     return YES;
 }
 
@@ -124,7 +133,7 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 }
 
-- (void)toogleCamera {
+/*- (void)toogleCamera {
     if (window.rootViewController != viewCamera) {
         [[UIApplication sharedApplication] setStatusBarHidden:YES];
         window.rootViewController = viewCamera;
@@ -149,7 +158,7 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
         window.rootViewController = controllerSide;
         [window makeKeyAndVisible];
     }
-}
+}*/
 
 - (void)updateUserAPNS {
     [[LatteAPIClient sharedClient] postPath:@"user/me/update"
@@ -245,8 +254,8 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
      postNotificationName:@"ResignActive"
      object:self];
     
-    LXCameraViewController *tmp = viewCamera.viewControllers[0];
-    [tmp.videoCamera pauseCameraCapture];
+//    LXCameraViewController *tmp = viewCamera.viewControllers[0];
+//    [tmp.videoCamera pauseCameraCapture];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -257,16 +266,16 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    LXCameraViewController *tmp = viewCamera.viewControllers[0];
-    [tmp.videoCamera resumeCameraCapture];
+//    LXCameraViewController *tmp = viewCamera.viewControllers[0];
+//    [tmp.videoCamera resumeCameraCapture];
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    LXCameraViewController *tmp = viewCamera.viewControllers[0];
-    [tmp.videoCamera resumeCameraCapture];
+//    LXCameraViewController *tmp = viewCamera.viewControllers[0];
+//    [tmp.videoCamera resumeCameraCapture];
     [FBSession.activeSession handleDidBecomeActive];
     
     [self clearNotification];

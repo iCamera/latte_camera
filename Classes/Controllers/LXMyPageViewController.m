@@ -964,19 +964,19 @@
 - (void)pickPhoto {
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
-    LXCameraViewController *viewCapture = ((UINavigationController*)app.viewCamera).viewControllers[0];
-    viewCapture.delegate = self;
-    [app toogleCamera];
+//    LXCameraViewController *viewCapture = ((UINavigationController*)app.viewCamera).viewControllers[0];
+//    viewCapture.delegate = self;
+//    [app toogleCamera];
 }
 
 - (void)imagePickerController:(LXCameraViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info {
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    UINavigationController* navCamera = (id)app.viewCamera;
-    LXCameraViewController *viewCapture = navCamera.viewControllers[0];
-    [navCamera popToRootViewControllerAnimated:NO];
-    [viewCapture switchCamera];
-    viewCapture.delegate = nil;
-    [app toogleCamera];
+//    UINavigationController* navCamera = (id)app.viewCamera;
+//    LXCameraViewController *viewCapture = navCamera.viewControllers[0];
+//    [navCamera popToRootViewControllerAnimated:NO];
+//    [viewCapture switchCamera];
+//    viewCapture.delegate = nil;
+//    [app toogleCamera];
 
     
     MBProgressHUD *progessHUD = [[MBProgressHUD alloc] initWithView:picker.view];
@@ -1135,7 +1135,7 @@
             
             if (current < flatPictures.count-1) {
                 Picture *nextPic = flatPictures[current+1];
-                Feed* feed = [LXUtils feedFromPicID:[picture.pictureId integerValue] of:feeds];
+                Feed* feed = [LXUtils feedFromPicID:[nextPic.pictureId integerValue] of:feeds];
                 NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
                                      nextPic, @"picture",
                                      feed.user, @"user",
@@ -1170,7 +1170,7 @@
             NSUInteger current = [flatPictures indexOfObject:picture];
             if (current > 0) {
                 Picture *prevPic = flatPictures[current-1];
-                Feed* feed = [LXUtils feedFromPicID:[picture.pictureId integerValue] of:feeds];
+                Feed* feed = [LXUtils feedFromPicID:[prevPic.pictureId integerValue] of:feeds];
                 NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
                                      prevPic,  @"picture",
                                      feed.user, @"user",
@@ -1299,6 +1299,10 @@
                 [self loadMore];
         }
     }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{

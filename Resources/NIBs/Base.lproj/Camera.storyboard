@@ -5,10 +5,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
+        <!--Nav Gallery View Controller-->
         <scene sceneID="VJh-m3-gUj">
             <objects>
-                <navigationController definesPresentationContext="YES" id="zt6-HI-rL4" sceneMemberID="viewController">
+                <navigationController definesPresentationContext="YES" modalTransitionStyle="crossDissolve" id="zt6-HI-rL4" customClass="LXNavGalleryViewController" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="QIN-94-go3" customClass="LXNavBar">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1305,6 +1305,9 @@
         </class>
         <class className="LXNavBar" superclassName="UINavigationBar">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavBar.h"/>
+        </class>
+        <class className="LXNavGalleryViewController" superclassName="UINavigationController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavGalleryViewController.h"/>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

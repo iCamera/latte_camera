@@ -11,7 +11,8 @@
 #import "HPGrowingTextView.h"
 #import "LXButtonBrown30.h"
 
-@interface LXPicCommentViewController : UITableViewController<HPGrowingTextViewDelegate>
+#import "SideSwipeTableViewController.h"
+@interface LXPicCommentViewController : SideSwipeTableViewController<HPGrowingTextViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
 @property (strong, nonatomic) IBOutlet HPGrowingTextView *growingComment;

@@ -9,7 +9,6 @@
         <scene sceneID="faj-gH-Wwd">
             <objects>
                 <tabBarController storyboardIdentifier="MainTab" definesPresentationContext="YES" id="Ydg-c4-h7a" customClass="LXMainTabViewController" sceneMemberID="viewController">
-                    <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="Oj2-Jc-Hxy">
                         <rect key="frame" x="129" y="330" width="163" height="49"/>
@@ -355,6 +354,35 @@
             </objects>
             <point key="canvasLocation" x="-272" y="1835"/>
         </scene>
+        <!--Table View Controller-->
+        <scene sceneID="fJn-rM-2Cw">
+            <objects>
+                <tableViewController id="8cY-YT-sYC" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="L5H-CA-ogw">
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="NcY-Vc-p5U">
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="8cY-YT-sYC" id="DN7-xT-3Ns"/>
+                            <outlet property="delegate" destination="8cY-YT-sYC" id="aRb-32-kxq"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bJa-Q6-f9W" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1704" y="1195"/>
+        </scene>
         <!--Navigation Controller - Search-->
         <scene sceneID="ko1-zf-11d">
             <objects>
@@ -371,22 +399,63 @@
             </objects>
             <point key="canvasLocation" x="-1170" y="1236"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Search View Controller-->
         <scene sceneID="Def-pZ-mYx">
             <objects>
-                <tableViewController id="oup-QU-2wo" sceneMemberID="viewController">
+                <tableViewController id="oup-QU-2wo" customClass="LXSearchViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="6zW-xw-jVs">
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.69411764710000001" green="0.6705882353" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="POL-ZM-7ga">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="129"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="98"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" id="EZB-ec-0Rc">
+                                    <rect key="frame" x="6" y="39" width="308" height="49"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" clearButtonMode="whileEditing" id="nMY-bS-9B4">
+                                            <rect key="frame" x="6" y="6" width="296" height="35"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                </view>
+                                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="4e4-Vc-2K1">
+                                    <rect key="frame" x="3" y="6" width="157" height="33"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                    <state key="normal" image="icon_phot_m_white.png" backgroundImage="tab2_off.png">
+                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="disabled" image="icon_phot_m.png" backgroundImage="tab2_on.png"/>
+                                    <state key="highlighted">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="nue-dm-wqX">
+                                    <rect key="frame" x="160" y="6" width="157" height="33"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                    <state key="normal" image="icon_friend_m_white.png" backgroundImage="tab2_off.png">
+                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="disabled" image="icon_friend_m.png" backgroundImage="tab2_on.png"/>
+                                    <state key="highlighted">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="yZ6-CQ-Shg">
-                                <rect key="frame" x="0.0" y="151" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="120" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -402,6 +471,8 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="2hN-W4-E2Z"/>
                     <connections>
+                        <outlet property="textKeyword" destination="nMY-bS-9B4" id="6lC-UP-Pvt"/>
+                        <outlet property="viewSearchBox" destination="EZB-ec-0Rc" id="23q-gO-2tE"/>
                         <segue destination="WmZ-e1-knK" kind="push" identifier="FriendSearch" id="pyE-JY-i5B"/>
                         <segue destination="Hea-mo-ou6" kind="push" identifier="ShowTag" id="Z4t-Jz-nB3"/>
                     </connections>
@@ -1402,7 +1473,7 @@
         <image name="bg_rank2.png" width="20" height="21"/>
         <image name="bg_rank3-9.png" width="20" height="21"/>
         <image name="bg_rank3.png" width="20" height="21"/>
-        <image name="bg_views.png" width="65" height="31"/>
+        <image name="bg_views.png" width="50" height="25"/>
         <image name="br_usermenu_center_on.png" width="100" height="35"/>
         <image name="br_usermenu_right_on.png" width="100" height="35"/>
         <image name="bt_help.png" width="110" height="30"/>
@@ -1414,11 +1485,15 @@
         <image name="icon_calender.png" width="15" height="15"/>
         <image name="icon_comment2.png" width="10" height="10"/>
         <image name="icon_escape2.png" width="15" height="15"/>
+        <image name="icon_friend_m.png" width="19" height="14"/>
+        <image name="icon_friend_m_white.png" width="19" height="14"/>
         <image name="icon_home.png" width="20" height="21"/>
         <image name="icon_iine_s.png" width="12" height="12"/>
         <image name="icon_login.png" width="13" height="16"/>
         <image name="icon_map_s.png" width="12" height="15"/>
         <image name="icon_mypage.png" width="20" height="21"/>
+        <image name="icon_phot_m.png" width="15" height="12"/>
+        <image name="icon_phot_m_white.png" width="15" height="12"/>
         <image name="icon_plus_s.png" width="11" height="11"/>
         <image name="icon_rank.png" width="20" height="21"/>
         <image name="icon_search_l.png" width="20" height="20"/>
@@ -1432,141 +1507,10 @@
         <image name="menu_grid_off.png" width="155" height="43"/>
         <image name="menu_timeline.png" width="155" height="43"/>
         <image name="menu_timeline_off.png" width="155" height="43"/>
+        <image name="tab2_off.png" width="151" height="30"/>
+        <image name="tab2_on.png" width="157" height="33"/>
         <image name="user.gif" width="100" height="100"/>
     </resources>
-    <classes>
-        <class className="LXButtonBrown30" superclassName="UIButton">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonBrown30.h"/>
-        </class>
-        <class className="LXCellDataField" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellDataField.h"/>
-            <relationships>
-                <relationship kind="outlet" name="labelDetail" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelField" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="LXCellFriend" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellFriend.h"/>
-            <relationships>
-                <relationship kind="outlet" name="imageUser" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="labelIntro" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelName" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="viewBackground" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="LXCellFriendRequest" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellFriendRequest.h"/>
-            <relationships>
-                <relationship kind="outlet" name="buttonAdd" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonIgnore" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="imageUser" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="userIntro" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="userName" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="LXCellNotify" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellNotify.h"/>
-            <relationships>
-                <relationship kind="outlet" name="labelDate" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelNotify" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="viewImage" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="LXCellRankLv1" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellRankLv1.h"/>
-            <relationships>
-                <relationship kind="outlet" name="buttonPic1" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="LXCellRankLv2" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellRankLv2.h"/>
-            <relationships>
-                <relationship kind="outlet" name="buttonPic2" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonPic3" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonPic4" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="imageBg1" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="imageBg2" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="label1st" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="label2nd" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="label3rd" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="LXCellTimelineMulti" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellTimelineMulti.h"/>
-            <relationships>
-                <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="labelTitle" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelUserDate" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="scrollPic" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="viewBackground" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="LXCellTimelineSingle" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellTimelineSingle.h"/>
-            <relationships>
-                <relationship kind="outlet" name="buttonComment" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonInfo" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonLike" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonMap" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonPic" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="labelAccess" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelTitle" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelUser" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="viewBackground" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="LXMainTabViewController" superclassName="UITabBarController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXMainTabViewController.h"/>
-        </class>
-        <class className="LXMyPageViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXMyPageViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="loadIndicator" candidateClass="UIActivityIndicatorView"/>
-            </relationships>
-        </class>
-        <class className="LXNavBar" superclassName="UINavigationBar">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavBar.h"/>
-        </class>
-        <class className="LXNavMypageController" superclassName="UINavigationController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavMypageController.h"/>
-        </class>
-        <class className="LXNotifySideViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNotifySideViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="tableNotify" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="LXRankingViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXRankingViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="touchTab:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonDaily" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonMonthly" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonNavLeft" candidateClass="LXButtonBrown30"/>
-                <relationship kind="outlet" name="buttonWeekly" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="loadIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="viewTab" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="LXWelcomeViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXWelcomeViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="loginPressed:"/>
-                <relationship kind="action" name="touchCloseLogin:"/>
-                <relationship kind="action" name="touchLogin:"/>
-                <relationship kind="action" name="touchReg:"/>
-                <relationship kind="action" name="touchTab:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonGrid" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonTimeline" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="indicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="tablePic" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="viewBack" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewHeader" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewLogin" candidateClass="UIView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

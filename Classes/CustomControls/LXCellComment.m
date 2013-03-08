@@ -7,6 +7,7 @@
 //
 
 #import "LXCellComment.h"
+#import "LXAppDelegate.h"
 
 @implementation LXCellComment
 @synthesize textComment;
@@ -14,6 +15,7 @@
 @synthesize labelDate;
 @synthesize buttonUser;
 @synthesize viewBack;
+@synthesize buttonLike;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -39,23 +41,47 @@
         [buttonUser loadBackground:comment.user.profilePicture placeholderImage:@"user.gif"];
         labelAuthor.text = comment.user.name;
     }
-    labelDate.text = [LXUtils timeDeltaFromNow:comment.createdAt];
+    CGSize labelSize = [textComment.text sizeWithFont:[UIFont fontWithName:@"AvenirNextCondensed-Regular" size:12.0]
+                                    constrainedToSize:CGSizeMake(255.0f, MAXFLOAT)
+                                        lineBreakMode:NSLineBreakByWordWrapping];
     
-    CGSize labelSize = [textComment.text sizeWithFont:[UIFont fontWithName:@"AvenirNextCondensed-Regular" size:11]
-                              constrainedToSize:CGSizeMake(255.0f, MAXFLOAT)
-                                  lineBreakMode:NSLineBreakByWordWrapping];
+    labelDate.text = [LXUtils timeDeltaFromNow:comment.createdAt];
+    CGRect frameDate = labelDate.frame;
+    frameDate.size = [labelDate.text sizeWithFont:[UIFont fontWithName:@"AvenirNextCondensed-Regular" size:12.0]
+                                  constrainedToSize:CGSizeMake(MAXFLOAT, MAXFLOAT)
+                                      lineBreakMode:NSLineBreakByWordWrapping];
+    
+    CGRect frameLike = buttonLike.frame;
+    frameDate.origin.y = frameLike.origin.y = labelSize.height + 22;
+    frameLike.origin.x = frameDate.size.width + 47;
+    
+    labelDate.frame = frameDate;
+    buttonLike.frame = frameLike;
+   
     CGRect frame = textComment.frame;
     frame.size = labelSize;
     textComment.frame = frame;
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    if (app.currentUser != nil) {
+        buttonLike.hidden = [comment.user.userId integerValue] == [app.currentUser.userId integerValue];
+        buttonLike.selected = comment.isVoted;
+        buttonLike.enabled = true;
+    }
+    else {
+        buttonLike.hidden = false;
+        buttonLike.selected = true;
+        buttonLike.enabled = !comment.isVoted;
+    }
+}
+
+
+- (void)drawRect:(CGRect)rect {
+    [super drawRect:rect];
     
     buttonUser.layer.cornerRadius = 3;
     buttonUser.clipsToBounds = YES;
     viewBack.layer.cornerRadius = 3;
     viewBack.clipsToBounds = YES;
-}
-
-- (void)detect {
-    TFLog(@"Detected");
 }
 
 @end

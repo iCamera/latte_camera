@@ -11,13 +11,15 @@
 #import "LXCellComment.h"
 #import "LXAppDelegate.h"
 #import "LXMyPageViewController.h"
+#import "SideSwipeTableViewCell.h"
 
 @interface LXPicCommentViewController ()
 
 @end
 
 @implementation LXPicCommentViewController {
-    UIGestureRecognizer *gestureTap;
+    UITapGestureRecognizer *gestureTap;
+    NSInteger heightHeader;
 }
 
 @synthesize viewHeader;
@@ -35,18 +37,18 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-//    self.tableView.tableHeaderView = nil;
     growingComment.delegate = self;
-    
-    gestureTap = [[UIGestureRecognizer alloc] initWithTarget:self action:@selector(touchBackground:)];
+    [super viewDidLoad];
+        
+    gestureTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchBackground:)];
+    [self.tableView addGestureRecognizer:gestureTap];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
+     self.sideSwipeView = [[UIView alloc] initWithFrame:CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.rowHeight)];
 }
 
 - (void)growingTextViewDidChange:(HPGrowingTextView *)growingTextView {
@@ -55,7 +57,16 @@
 
 - (void)growingTextView:(HPGrowingTextView *)growingTextView willChangeHeight:(float)height
 {
+    float diff = (growingTextView.frame.size.height - height);
+    
+	CGRect r = viewHeader.frame;
+    r.size.height -= diff;
+    r.origin.y += diff;
+    viewHeader.frame = r;
+
+    [self.tableView beginUpdates];
     self.tableView.tableHeaderView = viewHeader;
+    [self.tableView endUpdates];
 }
 
 
@@ -70,7 +81,7 @@
     if (!app.currentUser) {
         sender.enabled = NO;
     }
-    Comment *comment = _comments[sender.tag];
+    Comment *comment = _comments[_comments.count - sender.tag - 1];
     
     comment.isVoted = !comment.isVoted;
     BOOL increase = comment.isVoted;
@@ -121,7 +132,7 @@
                                         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                             Comment *comment = [Comment instanceFromDictionary:[JSON objectForKey:@"comment"]];
                                             [_comments addObject:comment];
-                                            NSIndexPath *path = [NSIndexPath indexPathForRow:_comments.count-1 inSection:0];
+                                            NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:0];
                                             [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationRight];
                                             [self.tableView scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionTop animated:YES];
                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -155,21 +166,14 @@
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
     LXMyPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
-    Comment *comment = _comments[sender.tag];
+    Comment *comment = _comments[_comments.count - sender.tag - 1];
     viewUserPage.user = comment.user;
     [self.navigationController pushViewController:viewUserPage animated:YES];
 }
 
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    Comment *comment = _comments[indexPath.row];
-    return ([comment.user.userId integerValue] == [app.currentUser.userId integerValue]) || _picture.isOwner;
-}
-
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        Comment* comment = _comments[indexPath.row];
+        Comment* comment = _comments[_comments.count - indexPath.row - 1];
         [_comments removeObject:comment];
         [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         
@@ -209,26 +213,28 @@
                                                              reuseIdentifier:@"Comment"];
     }
     
-    Comment *comment = _comments[indexPath.row];
-    [cellComment setComment:comment];
+    Comment *comment = _comments[_comments.count - indexPath.row - 1];
+    
+    cellComment.comment = comment;
     
     if (!comment.user.isUnregister) {
         cellComment.buttonUser.tag = indexPath.row;
         cellComment.buttonLike.tag = indexPath.row;
         [cellComment.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
-        [cellComment.buttonLike addTarget:self action:@selector(submitLikeComment:) forControlEvents:UIControlEventTouchUpInside];
+        [cellComment.buttonLike addTarget:self action:@selector(toggleLikeComment:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     return cellComment;
 }
 
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-//    return viewHeader;
-//}
-//
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-//    return 45;
-//}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    Comment *comment = _comments[_comments.count - indexPath.row - 1];
+    NSString *strComment = comment.descriptionText;
+    CGSize labelSize = [strComment sizeWithFont:[UIFont fontWithName:@"AvenirNextCondensed-Regular" size:11]
+                              constrainedToSize:CGSizeMake(255.0f, MAXFLOAT)
+                                  lineBreakMode:NSLineBreakByWordWrapping];
+    return MAX(labelSize.height + 45, 42);
+}
 
 #pragma mark - Table view delegate
 

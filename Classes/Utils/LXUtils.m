@@ -22,9 +22,14 @@
     view.layer.masksToBounds = NO;
     view.layer.shadowColor = [UIColor blackColor].CGColor;
     view.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-    view.layer.shadowOpacity = 0.25;
+    view.layer.shadowOpacity = 0.3;
     view.layer.shadowRadius = 3.0;
     view.layer.shadowPath = shadowPath.CGPath;
+}
+
++ (void)globalRoundShadow:(UIView*)view {
+    view.layer.cornerRadius = 5;
+    view.clipsToBounds = YES;
 }
 
 

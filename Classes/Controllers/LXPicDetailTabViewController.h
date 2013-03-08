@@ -20,4 +20,6 @@
 
 @property (assign, nonatomic) NSInteger tab;
 
+- (void)updateContent;
+
 @end

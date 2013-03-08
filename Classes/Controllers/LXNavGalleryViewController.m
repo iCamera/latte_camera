@@ -43,7 +43,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
+//    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
     [super viewWillDisappear:animated];
 }
 

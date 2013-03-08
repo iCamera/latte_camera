@@ -847,8 +847,7 @@
         alert.tag = 2;
         [alert show];
     } else {
-        LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-        [app toogleCamera];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
@@ -1572,7 +1571,7 @@
         case 2:
             if (buttonIndex == 1) {
                 LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-                [app toogleCamera];
+//                [app toogleCamera];
             }
             break;
         case 3: //Retry upload

@@ -21,7 +21,6 @@
 
 @implementation LXPicDetailTabViewController {
     LXVoteViewController *viewVote;
-    LXPicMapViewController *viewMap;
     LXPicInfoViewController *viewInfo;
 }
 
@@ -41,20 +40,37 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     currentTab = 2;
-//    scrollTab.contentOffset = CGPointMake(320, 0);
-//    scrollTab.contentSize = CGSizeMake(960, 480);
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    scrollTab.contentSize = CGSizeMake(960, screenRect.size.height);
+    scrollTab.contentOffset = CGPointMake(320, 0);
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+- (void)updateContent {
+    CGPoint frameOrigin = self.view.frame.origin;
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat height = screenRect.size.height - frameOrigin.y;
+    if (height == 0) {
+        return;
+    }
+    CGRect frameVote = viewVote.view.frame;
+    CGRect frameComment = _viewComment.view.frame;
+    CGRect frameInfo = viewInfo.view.frame;
     
+    frameVote.size.height = height;
+    frameComment.size.height = height;
+    frameInfo.size.height = height;
     
+    [UIView animateWithDuration:kGlobalAnimationSpeed
+                     animations:^{
+                         viewVote.view.frame = frameVote;
+                         _viewComment.view.frame = frameComment;
+                         viewInfo.view.frame = frameInfo;
+                     }];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -89,7 +105,7 @@
 
 - (void)setTab:(NSInteger)tab {
     currentTab = tab;
-    [scrollTab setContentOffset:CGPointMake((tab-1)*320, 0) animated:YES];
+    [scrollTab  setContentOffset:CGPointMake((tab-1)*320, 0) animated:YES];
 }
 
 @end

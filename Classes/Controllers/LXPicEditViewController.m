@@ -58,15 +58,15 @@
     [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];
     
-    if (_picture == nil) {
-        share.imageData = _imageData;
-        share.imagePreview = _preview;
-
+    if (_picture != nil) {
         [imagePic setImageWithURL:[NSURL URLWithString:_picture.urlSquare]];
         textDesc.text = _picture.descriptionText;
         imageStatus = [_picture.status integerValue];
         buttonDelete.hidden = false;
     } else {
+        share.imageData = _imageData;
+        share.imagePreview = _preview;
+        
         LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
         imagePic.image = _preview;
         imageStatus = [app.currentUser.pictureStatus integerValue];
@@ -274,12 +274,12 @@
 }
 
 - (void)backToCamera {
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    UINavigationController *navCamera = (UINavigationController*)app.viewCamera;
-    
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    LXCameraViewController *cameraView = (LXCameraViewController*)navCamera.viewControllers[0];
-    [cameraView switchCamera];
+//    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+//    UINavigationController *navCamera = (UINavigationController*)app.viewCamera;
+//    
+//    [self.navigationController popToRootViewControllerAnimated:YES];
+//    LXCameraViewController *cameraView = (LXCameraViewController*)navCamera.viewControllers[0];
+//    [cameraView switchCamera];
 }
 
 - (void)saveImage {
@@ -299,10 +299,10 @@
                             nil];
     
     
-    UINavigationController *navCamera = (UINavigationController*)app.viewCamera;
-    LXCameraViewController *cameraView = (LXCameraViewController*)navCamera.viewControllers[0];
-    cameraView.dictUpload = params;
-    [cameraView uploadData];
+//    UINavigationController *navCamera = (UINavigationController*)app.viewCamera;
+//    LXCameraViewController *cameraView = (LXCameraViewController*)navCamera.viewControllers[0];
+//    cameraView.dictUpload = params;
+//    [cameraView uploadData];
     
     [self performSelector:@selector(backToCamera) withObject:nil];
 }

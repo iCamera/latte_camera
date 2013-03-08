@@ -615,43 +615,6 @@ We improve our services to the best of our ability,but please understand that no
         <image name="icon_mail_l.jpg" width="22" height="16"/>
         <image name="icon_mail_l_off.jpg" width="22" height="16"/>
     </resources>
-    <classes>
-        <class className="LXAboutViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXAboutViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="touchClose:"/>
-                <relationship kind="action" name="touchSend:"/>
-                <relationship kind="outlet" name="textForm" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="LXButtonBrown30" superclassName="UIButton">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonBrown30.h"/>
-        </class>
-        <class className="LXButtonNormal" superclassName="UIButton">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonNormal.h"/>
-        </class>
-        <class className="LXNavBar" superclassName="UINavigationBar">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavBar.h"/>
-        </class>
-        <class className="LXSettingNotifyViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXSettingNotifyViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="toggleNotify:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonMailComment" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonMailFollow" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonMailLike" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonPushComment" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonPushFollow" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonPushLike" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="LXSettingRootViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXSettingRootViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="touchClose:"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

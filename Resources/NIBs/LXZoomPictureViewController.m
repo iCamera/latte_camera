@@ -8,6 +8,7 @@
 
 #import "LXZoomPictureViewController.h"
 #import "UIImageView+loadProgress.h"
+#import "UIImageView+AFNetworking.h"
 #import "UIButton+AsyncImage.h"
 #import "Picture.h"
 
@@ -15,12 +16,18 @@
 
 @end
 
-@implementation LXZoomPictureViewController
+@implementation LXZoomPictureViewController {
+    NSMutableArray* zoomLevel;
+    
+    BOOL loadedOrg;
+    BOOL loadedLarge;
+    CGFloat actualScale;
+    NSInteger currentZoom;
+}
 
 @synthesize scrollPicture;
-@synthesize labelNickname;
 @synthesize imageZoom;
-@synthesize buttonUser;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -39,12 +46,31 @@
     imageZoom.frame = frame;
     imageZoom.center = self.view.center;
     scrollPicture.contentSize = frame.size;
-    scrollPicture.maximumZoomScale = 3.0;
-    [imageZoom loadProgess:_picture.urlMedium];
     
-    labelNickname.text = _user.name;
-    [buttonUser loadBackground:_user.profilePicture placeholderImage:@"user.gif"];
-    // Do any additional setup after loading the view from its nib.
+    CGFloat orgWidth = [_picture.width floatValue];
+    CGFloat orgHeight = [_picture.height floatValue];
+    
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    CGFloat screenHeight = screenRect.size.height;
+    
+    actualScale = MAX(orgWidth/screenWidth, orgHeight/screenHeight)*2.0;
+
+    [imageZoom loadProgess:_picture.urlMedium];
+
+    zoomLevel = [[NSMutableArray alloc]init];
+    
+    [zoomLevel addObject:[NSNumber numberWithFloat:1.0]];
+    [zoomLevel addObject:[NSNumber numberWithFloat:2.0]];
+    scrollPicture.maximumZoomScale = 4.0;
+    if (actualScale > 2.0 && _picture.urlOrg != nil) {
+        [zoomLevel addObject:[NSNumber numberWithFloat:actualScale]];
+        scrollPicture.maximumZoomScale = actualScale*2.0;
+    }
+    
+    loadedLarge = false;
+    loadedOrg = false;
+    currentZoom = 0;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -64,6 +90,17 @@
     
     subView.center = CGPointMake(scrollView.contentSize.width * 0.5 + offsetX,
                                  scrollView.contentSize.height * 0.5 + offsetY);
+    
+    
+    if (scrollView.zoomScale >= 2.0 && !loadedLarge) {
+        loadedLarge = true;
+        [imageZoom setImageWithURL:[NSURL URLWithString:_picture.urlLarge] placeholderImage:imageZoom.image];
+    } else if (scrollView.zoomScale >= 4.0 && !loadedOrg && actualScale >= 4.0) {
+        loadedOrg = true;
+        if (_picture.urlOrg) {
+            [imageZoom setImageWithURL:[NSURL URLWithString:_picture.urlOrg] placeholderImage:imageZoom.image];
+        }
+    }
 }
 
 -(UIView *) viewForZoomingInScrollView:(UIScrollView *)scrollView {
@@ -81,10 +118,13 @@
     [super viewDidUnload];
 }
 - (IBAction)tapZoom:(UITapGestureRecognizer *)sender {
-    if(scrollPicture.zoomScale > scrollPicture.minimumZoomScale)
-        [scrollPicture setZoomScale:scrollPicture.minimumZoomScale animated:YES];
-    else
-        [self zoomToPoint:[sender locationInView:scrollPicture] withScale:scrollPicture.maximumZoomScale animated:YES];
+    currentZoom += 1;
+    if (currentZoom == zoomLevel.count) {
+        currentZoom = 0;
+    }
+    CGFloat scale = [(NSNumber *)zoomLevel[currentZoom] floatValue];
+    [self zoomToPoint:[sender locationInView:imageZoom] withScale:scale animated:YES];
+    
 }
 
 - (void)zoomToPoint:(CGPoint)zoomPoint withScale: (CGFloat)scale animated: (BOOL)animated

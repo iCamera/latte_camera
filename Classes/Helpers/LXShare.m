@@ -27,7 +27,6 @@ typedef enum {
 }typeResult;
 
 @implementation LXShare {
-    NSString *title;
     NSString *text;
     NSData *imageData;
     UIImage *imagePreview;
@@ -38,7 +37,7 @@ typedef enum {
 @synthesize text;
 @synthesize imagePreview;
 @synthesize imageData;
-@synthesize title;
+@synthesize url;
 @synthesize tweetCC;
 
 // EMAIL
@@ -50,8 +49,8 @@ typedef enum {
         
         MFMailComposeViewController* controllerMail = [[MFMailComposeViewController alloc] init];
         controllerMail.mailComposeDelegate = self;
-        if (title)
-            [controllerMail setSubject:title];
+
+        //[controllerMail setSubject:title];
         
         //Create a string with HTML formatting for the email body
         NSMutableString *emailBody = [[NSMutableString alloc] initWithString:@"<html><body>"];
@@ -95,6 +94,11 @@ typedef enum {
     if (imageData != nil)
         [socialComposer addImage:[UIImage imageWithData:imageData]];
     
+    // URL
+    if (url != nil) {
+        [socialComposer addURL:[NSURL URLWithString:url]];
+    }
+    
     // TEXT
     if (text != nil)
     {
@@ -108,6 +112,7 @@ typedef enum {
         // TEXT
         NSUInteger idx      = self.text.length;
         // le quito todos los espacios que tenga el texto al principio y al final
+
         while([text hasPrefix:@" "])
             text = [text substringFromIndex:1];
         while([text hasSuffix:@" "])
@@ -128,15 +133,6 @@ typedef enum {
                 message = [NSString stringWithFormat:format, [NSString stringWithFormat:@"%@…", [text substringToIndex:idx]]];
             }
         }
-        
-        /*if (self.title != nil)
-         [socialComposer setTitle:self.title];
-         if (self.text != nil)
-         [socialComposer setInitialText:self.text];
-         if (self.url != nil)
-         [socialComposer addURL:self.url];
-         if (self.image != nil)
-         [socialComposer addImage:self.image];*/
         
         [socialComposer setCompletionHandler:^(SLComposeViewControllerResult result){
             [_controller dismissViewControllerAnimated:YES completion:nil];
@@ -218,7 +214,7 @@ typedef enum {
                 NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                                imageData, @"source",
                                                composeViewController.text, @"message",
-                                               title, @"caption",
+                                               text, @"caption",
                                                nil];
                 [FBRequestConnection startWithGraphPath:@"me/photos"
                                              parameters:params

@@ -15,8 +15,8 @@
 #import "LXPicInfoViewController.h"
 #import "LXPicMapViewController.h"
 #import "LXPicEditViewController.h"
-
-#import "DAKeyboardControl.h"
+#import "LXMyPageViewController.h"
+#import "LXShare.h"
 
 
 @interface LXGalleryViewController ()
@@ -29,6 +29,7 @@
     LXZoomPictureViewController *currentInfo;
     NSInteger currentTab;
     UITapGestureRecognizer *tapPage;
+    UITapGestureRecognizer *tapDouble;
     NSMutableArray *currentComments;
 }
 
@@ -36,11 +37,14 @@
 @synthesize buttonLike;
 @synthesize buttonMap;
 @synthesize viewTab;
-@synthesize viewContainerTab;
+@synthesize labelDesc;
 @synthesize buttonEdit;
+@synthesize labelNickname;
+@synthesize buttonUser;
+@synthesize labelView;
+@synthesize viewInfoTop;
+@synthesize viewDesc;
 
-@synthesize constraintViewTab;
-@synthesize constraintViewContainer;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -58,6 +62,18 @@
     pageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
                                                      navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
                                                                    options:nil];
+    
+    UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
+                                                           bundle:nil];
+    viewPicTab = [storyGallery instantiateViewControllerWithIdentifier:@"DetailScroll"];
+    CGRect frameTab = [[UIScreen mainScreen] bounds];
+    frameTab.origin.y = frameTab.size.height;
+    viewPicTab.picture = _picture;
+    viewPicTab.view.frame = frameTab;
+    [self.view insertSubview:viewPicTab.view atIndex:1]; // Above description
+    [self addChildViewController:viewPicTab];
+    [viewPicTab didMoveToParentViewController:self];
+    
     pageController.dataSource = self;
     pageController.delegate = self;
     CGRect frame = self.view.bounds;
@@ -65,7 +81,12 @@
     pageController.view.frame = frame;
 
     tapPage = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapScrollImage:)];
+    tapDouble = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapZoom:)];
+    tapDouble.numberOfTapsRequired = 2;
+    [tapPage requireGestureRecognizerToFail:tapDouble];
+    
     [pageController.view addGestureRecognizer:tapPage];
+    [pageController.view addGestureRecognizer:tapDouble];
     
     LXZoomPictureViewController *init = [[LXZoomPictureViewController alloc] init];
 
@@ -85,29 +106,31 @@
 
     [self setPicture];
     
-    currentTab = 1;
+    currentTab = 2;
+    
+    buttonUser.layer.cornerRadius = 5;
+    buttonUser.clipsToBounds = YES;
     
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];
 }
 
+- (void)tapZoom:(UITapGestureRecognizer*)sender {
+    [currentInfo performSelector:@selector(tapZoom:) withObject:sender];
+}
+
 - (void)keyboardWillShow:(NSNotification *)notification
 {
     CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
     
-    if (constraintViewContainer.constant < keyboardSize.height) {
-        constraintViewTab.constant = -keyboardSize.height-42; //42 = comment box height
-        constraintViewContainer.constant = keyboardSize.height+42;
-        
+    if (screenRect.size.height - viewTab.frame.origin.y - 100 < keyboardSize.height) {
+        [self setTabHeight:keyboardSize.height + 100];
         [UIView beginAnimations:nil context:NULL];
         [UIView setAnimationCurve:[[[notification userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
         [UIView setAnimationDuration:[[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue]];
         
-        [self.view setNeedsUpdateConstraints];
-        [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
-            [self.view layoutIfNeeded];
-        }];
         
         [UIView commitAnimations];
     }
@@ -121,7 +144,24 @@
 - (void)tapScrollImage:(UITapGestureRecognizer*)sender {
     if ([self isShowingContainer]) {
         [self toggleFrame];
+    } else {
+        [self toggleInfo];
     }
+}
+
+- (void)toggleInfo {
+    [UIView animateWithDuration:kGlobalAnimationSpeed
+                     animations:^{
+                         if (viewTab.alpha == 1) {
+                             viewTab.alpha = 0;
+                             viewInfoTop.alpha = 0;
+                             viewDesc.alpha = 0;
+                         } else {
+                             viewTab.alpha = 1;
+                             viewInfoTop.alpha = 1;
+                             viewDesc.alpha = 1;
+                         }
+                     }];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -137,10 +177,7 @@
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"Tab"]) {
-        viewPicTab = segue.destinationViewController;
-        viewPicTab.picture = _picture;
-    } else if ([segue.identifier isEqualToString:@"Map"]) {
+    if ([segue.identifier isEqualToString:@"Map"]) {
         LXPicMapViewController *viewMap = segue.destinationViewController;
         viewMap.picture = _picture;
     } else if ([segue.identifier isEqualToString:@"Edit"]) {
@@ -186,11 +223,40 @@
     if ([self isShowingContainer]) {
         [self toggleFrame];
     }
+    [UIView animateWithDuration:kGlobalAnimationSpeed
+                     animations:^{
+                         viewDesc.alpha = 0;
+                     }];
 }
 
 - (void)setPicture {
     currentInfo = pageController.viewControllers[0];
     _picture = currentInfo.picture;
+    _user = currentInfo.user;
+    
+    if (_picture.descriptionText.length > 0) {
+        CGSize size = [_picture.descriptionText sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0] constrainedToSize:CGSizeMake(308, 999)];
+        CGRect frame = labelDesc.frame;
+        frame.size = size;
+        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        CGRect frameDesc = CGRectMake(0, screenRect.size.height-frame.size.height-12-31, 320, frame.size.height + 12);
+        [UIView animateWithDuration:kGlobalAnimationSpeed
+                              delay:0
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             viewDesc.alpha = 1;
+                             labelDesc.frame = frame;
+                             viewDesc.frame = frameDesc;
+                             labelDesc.text = _picture.descriptionText;
+                         }
+                         completion:nil];
+    } else {
+
+    }
+    
+    labelNickname.text = _user.name;
+    labelView.text = [NSString stringWithFormat:@"%d views", [_picture.pageviews integerValue]];
+    [buttonUser loadBackground:_user.profilePicture placeholderImage:@"user.gif"];
     
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
 
@@ -223,11 +289,14 @@
     [[LatteAPIClient sharedClient] getPath:urlDetail
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       
-                                       _user = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
+                                       if (_user == nil) {
+                                           _user = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
+                                           labelNickname.text = _user.name;
+                                           [buttonUser loadBackground:_user.profilePicture placeholderImage:@"user.gif"];
+                                       }
+
                                        currentComments = [Comment mutableArrayFromDictionary:JSON withKey:@"comments"];
                                        viewPicTab.comments = currentComments;
-                                       currentInfo.user = _user;
                                        
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        TFLog(@"Something went wrong PicDetail Gallery");
@@ -254,54 +323,136 @@
 - (IBAction)toggleLike:(UIButton *)sender {
     if (_picture.isOwner)
         return;
-    [LXUtils toggleLike:sender ofPicture:currentInfo.picture];
+    [LXUtils toggleLike:sender ofPicture:_picture];
 }
 
 - (IBAction)switchTab:(UIButton *)sender {
+    if (sender.tag == 1) { //Vote button
+        if (!_picture.isOwner)
+            return;
+    }
+    
     if (![self isShowingContainer]) {
         [self toggleFrame];
+        if (currentTab != sender.tag) {
+            currentTab = sender.tag;
+            viewPicTab.tab = sender.tag;   
+        }
     } else {
         if (sender.tag == currentTab) {
             [self toggleFrame];
-            return;
+        } else {
+            viewPicTab.tab = sender.tag;
+            currentTab = sender.tag;
         }
     }
-    
-    currentTab = sender.tag;
-    if (sender.tag == 1)
-        if (!_picture.isOwner)
-            return;
-    viewPicTab.tab = sender.tag;
 }
 
 - (IBAction)dragTab:(UIPanGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateBegan || sender.state == UIGestureRecognizerStateChanged) {
         CGPoint translatedPoint = [sender translationInView:self.view];
-        constraintViewTab.constant += translatedPoint.y;
-        constraintViewContainer.constant -= translatedPoint.y;
+        
+        CGRect frameTab = viewTab.frame;
+        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        
+        frameTab.origin.y += translatedPoint.y;
+        if (frameTab.origin.y < 0) {
+            frameTab.origin.y = 0;
+        }
+        if (frameTab.origin.y + frameTab.size.height > screenRect.size.height) {
+            frameTab.origin.y = screenRect.size.height - frameTab.size.height;
+        }
+        
+        CGRect frameContainer = viewPicTab.view.frame;
+        frameContainer.origin.y = frameTab.origin.y + frameTab.size.height;
+        
+        viewTab.frame = frameTab;
+        viewPicTab.view.frame = frameContainer;
+        
+        [viewPicTab updateContent];
+        
         [sender setTranslation:CGPointZero inView:self.view];
     }
 }
 
-- (void)toggleFrame {
-    if (![self isShowingContainer]) {
-        constraintViewTab.constant -= 200;
-        constraintViewContainer.constant += 200;
-    } else {
-        constraintViewTab.constant = 0;
-        constraintViewContainer.constant = 0;
-        [viewPicTab.viewComment.growingComment resignFirstResponder];
-    }
-    [self.view setNeedsUpdateConstraints];
+- (void)setTabHeight:(CGFloat)height {
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGRect frameTab = viewTab.frame;
+    frameTab.origin = CGPointMake(0, screenRect.size.height - height - viewTab.frame.size.height);
+    CGRect frameContainer = viewPicTab.view.frame;
+    frameContainer.origin.y = screenRect.size.height - height;
     
     [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
-        [self.view layoutIfNeeded];
+        viewTab.frame = frameTab;
+        viewPicTab.view.frame = frameContainer;
+    } completion:^(BOOL finished) {
+        [viewPicTab updateContent];
     }];
+    
+    
+}
 
+- (IBAction)touchUser:(UIButton *)sender {
+    if (_user == nil) {
+        return;
+    }
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    LXMyPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    viewUserPage.user = _user;
+    [self.navigationController pushViewController:viewUserPage animated:YES];
+    
+}
+
+- (IBAction)touchShare:(id)sender {
+    RDActionSheet *actionSheet = [[RDActionSheet alloc] initWithCancelButtonTitle:NSLocalizedString(@"Cancel", @"")
+                                                               primaryButtonTitle:nil
+                                                           destructiveButtonTitle:nil
+                                                                otherButtonTitles:@"Email", @"Twitter", @"Facebook", nil];
+    LXShare *lxShare = [[LXShare alloc] init];
+    actionSheet.callbackBlock = ^(RDActionSheetResult result, NSInteger buttonIndex)
+    {
+        switch (result) {
+            case RDActionSheetButtonResultSelected: {
+                lxShare.text = _picture.urlMedium;
+                
+                switch (buttonIndex) {
+                    case 0: // email
+                        [lxShare emailIt];
+                        break;
+                    case 1: // twitter
+                        [lxShare tweet];
+                        break;
+                    case 2: // facebook
+                        [lxShare facebookPost];
+                        break;
+                    default:
+                        break;
+                }
+            }
+                break;
+            case RDActionSheetResultResultCancelled:
+                NSLog(@"Sheet cancelled");
+        }
+    };
+    
+    [actionSheet showFrom:self.view];
+}
+
+- (void)toggleFrame {
+    if (![self isShowingContainer]) {
+        [self setTabHeight:200];
+    } else {
+        [self setTabHeight:0];
+        [viewPicTab.viewComment.growingComment resignFirstResponder];
+    }
 }
 
 - (BOOL)isShowingContainer {
-    return constraintViewTab.constant != 0;
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGRect frameTab = viewTab.frame;
+
+    return screenRect.size.height - frameTab.origin.y - frameTab.size.height > 0;
 }
 
 @end

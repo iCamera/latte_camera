@@ -337,7 +337,7 @@
         NSUInteger current = [flatPictures indexOfObject:picture];
         if (current < flatPictures.count-1) {
             Picture *nextPic = flatPictures[current+1];
-            Feed* feed = [LXUtils feedFromPicID:[picture.pictureId integerValue] of:feeds];
+            Feed* feed = [LXUtils feedFromPicID:[nextPic.pictureId integerValue] of:feeds];
             NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
                                  nextPic,  @"picture",
                                  feed.user, @"user",

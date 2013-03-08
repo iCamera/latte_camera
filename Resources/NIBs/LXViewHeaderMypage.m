@@ -39,13 +39,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:viewStats.bounds];
-    viewStats.layer.masksToBounds = NO;
-    viewStats.layer.shadowColor = [UIColor blackColor].CGColor;
-    viewStats.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-    viewStats.layer.shadowOpacity = 0.5f;
-    viewStats.layer.shadowRadius = 2.0;
-    viewStats.layer.shadowPath = shadowPath.CGPath;
+    [LXUtils globalShadow:viewStats];
     viewStats.layer.cornerRadius = 5.0;
     
     buttonProfilePic.layer.cornerRadius = 5;

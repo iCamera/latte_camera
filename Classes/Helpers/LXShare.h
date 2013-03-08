@@ -24,11 +24,12 @@ typedef void (^MyCompletionBlock)();
 - (void) setCompletionSaved:(MyCompletionBlock)blockSaved;
 
 @property (nonatomic, weak) id controller;
-@property (nonatomic, retain) NSString *title;
-@property (nonatomic, retain) NSString *text;
-@property (nonatomic, retain) NSData *imageData;
-@property (nonatomic, retain) UIImage *imagePreview;
-@property (nonatomic, retain) NSString *tweetCC;
+
+@property (nonatomic, strong) NSString *text;
+@property (nonatomic, strong) NSString *url;
+@property (nonatomic, strong) NSData *imageData;
+@property (nonatomic, strong) UIImage *imagePreview;
+@property (nonatomic, strong) NSString *tweetCC;
 
 - (void)facebookPost;
 - (void)emailIt;
