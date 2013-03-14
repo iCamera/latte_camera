@@ -57,6 +57,8 @@ typedef enum {
         //Add some text to it however you want
         if (text)
             [emailBody appendString:[NSString stringWithFormat:@"<p>%@</p>", text]];
+        if (url)
+            [emailBody appendString:[NSString stringWithFormat:@"<p>%@</p>", url]];
         
         //close the HTML formatting
         [emailBody appendString:@"</body></html>"];
@@ -98,62 +100,57 @@ typedef enum {
     if (url != nil) {
         [socialComposer addURL:[NSURL URLWithString:url]];
     }
+    // creo el formato del texto a twittear
+    NSString *format    = @"“%@”";
+    if (self.tweetCC != nil)
+        format          = [format stringByAppendingFormat:@" %@", tweetCC];
+    
     
     // TEXT
-    if (text != nil)
+    NSUInteger idx      = self.text.length;
+    // le quito todos los espacios que tenga el texto al principio y al final
+    
+    while([text hasPrefix:@" "])
+        text = [text substringFromIndex:1];
+    while([text hasSuffix:@" "])
     {
-        // URL AND TWEETCC
-        // creo el formato del texto a twittear
-        NSString *format    = @"“%@”";
-        if (self.tweetCC != nil)
-            format          = [format stringByAppendingFormat:@" %@", tweetCC];
-        
-        
-        // TEXT
-        NSUInteger idx      = self.text.length;
-        // le quito todos los espacios que tenga el texto al principio y al final
-
-        while([text hasPrefix:@" "])
-            text = [text substringFromIndex:1];
-        while([text hasSuffix:@" "])
-        {
-            idx       = idx-1;
-            text = [text substringToIndex:idx];
-        }
-        // creo el mensaje
-        NSString *message   = [NSString stringWithFormat:format, [NSString stringWithFormat:@"%@…", [text substringToIndex:idx]]];
-        
-        
-        // if the message is bigger than 140 characters, then cut the message
-        while (![socialComposer setInitialText:message])
-        {
-            idx -= 5;
-            if (idx > 5)
-            {
-                message = [NSString stringWithFormat:format, [NSString stringWithFormat:@"%@…", [text substringToIndex:idx]]];
-            }
-        }
-        
-        [socialComposer setCompletionHandler:^(SLComposeViewControllerResult result){
-            [_controller dismissViewControllerAnimated:YES completion:nil];
-            
-            switch (result) {
-                case SLComposeViewControllerResultCancelled:
-                    [self completionResult:typeCanceled];
-                    
-                    break;
-                case SLComposeViewControllerResultDone:
-                    [self completionResult:typeDone];
-                    
-                    break;
-                default:
-                    [self completionResult:typeFailed];
-                    break;
-            }
-        }];
-        
-        [_controller presentModalViewController:socialComposer animated:YES];
+        idx       = idx-1;
+        text = [text substringToIndex:idx];
     }
+    // creo el mensaje
+    NSString *message   = [NSString stringWithFormat:format, [NSString stringWithFormat:@"%@…", [text substringToIndex:idx]]];
+    
+    
+    // if the message is bigger than 140 characters, then cut the message
+    while (![socialComposer setInitialText:message])
+    {
+        idx -= 5;
+        if (idx > 5)
+        {
+            message = [NSString stringWithFormat:format, [NSString stringWithFormat:@"%@…", [text substringToIndex:idx]]];
+        }
+    }
+    
+    [socialComposer setCompletionHandler:^(SLComposeViewControllerResult result){
+        [_controller dismissViewControllerAnimated:YES completion:nil];
+        
+        switch (result) {
+            case SLComposeViewControllerResultCancelled:
+                [self completionResult:typeCanceled];
+                
+                break;
+            case SLComposeViewControllerResultDone:
+                [self completionResult:typeDone];
+                
+                break;
+            default:
+                [self completionResult:typeFailed];
+                break;
+        }
+    }];
+    
+    [_controller presentModalViewController:socialComposer animated:YES];
+    
 }
 
 - (void) facebookPost
@@ -165,10 +162,14 @@ typedef enum {
         if (FBSession.activeSession.isOpen)
         {
             // if it is available to us, we will post using the native dialog
+            NSURL *fbURL;
+            if (url) {
+                fbURL = [NSURL URLWithString:url];
+            }
             BOOL displayedNativeDialog = [FBNativeDialogs presentShareDialogModallyFrom:_controller
                                                                             initialText:text
                                                                                   image:imagePreview
-                                                                                    url:nil
+                                                                                    url:fbURL
                                                                                 handler:nil];
             
             // si no presenta caja de dialogo nativo del sistema, presento una propia

@@ -66,19 +66,45 @@
     
     if (indexPath.section == 0) {
         
-        NSString *filePath;
+        QRootElement *root;
         switch (indexPath.row) {
-            case 0:
-                filePath = [[NSBundle mainBundle] pathForResource:@"settingprofile" ofType:@"json"];
+            case 0: {
+                NSString *filePath = [[NSBundle mainBundle] pathForResource:@"settingprofile" ofType:@"json"];
+
+                NSDictionary *data = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:filePath] options:0 error:nil];
+                
+                NSMutableDictionary *countriesDict = [[NSMutableDictionary alloc] init];
+                NSLocale *locale = [NSLocale currentLocale];
+                
+                NSArray *countryArray = [NSLocale ISOCountryCodes];
+                for (NSString *countryCode in countryArray)
+                {
+                    NSString *displayNameString = [locale displayNameForKey:NSLocaleCountryCode value:countryCode];
+                    [countriesDict setObject:countryCode forKey:displayNameString];
+                }
+                
+                root = [[LXRootBuilder new]buildWithObject:data];
+                [root bindToObject:data];
+                QSection *section = root.sections[0];
+                QRadioElement *eleCountry = [[QRadioElement alloc] initWithDict:countriesDict selected:0 title:@"Country"];
+                eleCountry.key = @"nationality";
+                eleCountry.controllerAction = @"handleUpdateRadio:";                
+                
+                [section addElement:eleCountry];
                 break;
+            }
             case 1:
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/user/setting"]];
                 [tableView deselectRowAtIndexPath:indexPath animated:YES];
                 return;
                 break;
-            case 2:
-                filePath = [[NSBundle mainBundle] pathForResource:@"settingprivacy" ofType:@"json"];
+            case 2: {
+                NSString *filePath = [[NSBundle mainBundle] pathForResource:@"settingprivacy" ofType:@"json"];
+                NSDictionary *data = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:filePath] options:0 error:nil];
+                root = [[LXRootBuilder new]buildWithObject:data];
+                [root bindToObject:data];
                 break;
+            }
             case 3:
                 [self performSegueWithIdentifier:@"Notification" sender:self];
                 return;
@@ -86,17 +112,7 @@
                 break;
         }
         
-        Class JSONSerialization = [QRootElement JSONParserClass];
-        NSAssert(JSONSerialization != NULL, @"No JSON serializer available!");
         
-        NSError *jsonParsingError = nil;
-        
-        NSDictionary *data = [JSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:filePath] options:0 error:&jsonParsingError];
-        QRootElement *root = [[LXRootBuilder new]buildWithObject:data];
-        
-        if (data != nil) {
-            [root bindToObject:data];
-        }
         LXSettingViewController* viewSetting = [[LXSettingViewController alloc] initWithRoot:root];
         
         [self.navigationController pushViewController:viewSetting animated:YES];

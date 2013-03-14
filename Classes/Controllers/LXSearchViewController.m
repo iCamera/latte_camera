@@ -8,15 +8,29 @@
 
 #import "LXSearchViewController.h"
 #import "LXUtils.h"
+#import "LXCellGrid.h"
+#import "LatteAPIClient.h"
+#import "LXAppDelegate.h"
+
+typedef enum {
+    kSearchPhoto,
+    kSearchFriend,
+} SearchMode;
 
 @interface LXSearchViewController ()
 
 @end
 
-@implementation LXSearchViewController
+@implementation LXSearchViewController {
+    NSMutableArray *pictures;
+    SearchMode tableMode;
+}
 
 @synthesize viewSearchBox;
 @synthesize textKeyword;
+@synthesize buttonSearchPeople;
+@synthesize buttonSearchPhoto;
+@synthesize activityLoad;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -31,21 +45,27 @@
 {
     [super viewDidLoad];
     
+    textKeyword.layer.borderWidth = 1;
+    textKeyword.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    textKeyword.layer.cornerRadius = 5;
+    
+    UIImageView *imageSearch = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 35, 35)];
+    imageSearch.contentMode = UIViewContentModeCenter;
+    imageSearch.image = [UIImage imageNamed:@"icon_search_m.png"];
+    textKeyword.leftView = imageSearch;
+    textKeyword.leftViewMode = UITextFieldViewModeAlways;
+    
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     [LXUtils globalShadow:viewSearchBox];
     
     CAShapeLayer * maskLayer = [CAShapeLayer layer];
     maskLayer.path = [UIBezierPath bezierPathWithRoundedRect:viewSearchBox.bounds byRoundingCorners: UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: (CGSize){5.0, 5.0}].CGPath;
-    viewSearchBox.layer.cornerRadius = 5.0;
+    viewSearchBox.layer.mask = maskLayer;
+    //viewSearchBox.layer.cornerRadius = 5.0;
     
     UITapGestureRecognizer *gestureTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchBackground:)];
     [self.tableView addGestureRecognizer:gestureTap];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    tableMode = kSearchPhoto;
 }
 
 - (void)touchBackground:(id)sender {
@@ -62,78 +82,122 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    if (tableMode == kSearchPhoto) {
+        return (pictures.count/3) + (pictures.count%3>0?1:0);
+    } else
+        return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    if (tableMode == kSearchPhoto) {
+        static NSString *CellIdentifier = @"Grid";
+        LXCellGrid *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell.viewController = self;
+        [cell setPictures:pictures forRow:indexPath.row];
+        return cell;
+    } else {
+        return [tableView dequeueReusableCellWithIdentifier:@"FacebookSearch" forIndexPath:indexPath];
+    }
+}
+
+- (void)showPic:(UIButton*)sender {
+    UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
+                                                           bundle:nil];
+    UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
+    LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
+    viewGallery.delegate = self;
     
-    // Configure the cell...
+    viewGallery.picture = pictures[sender.tag];
     
-    return cell;
+    [self presentViewController:navGalerry animated:YES completion:nil];
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (NSDictionary *)pictureAfterPicture:(Picture *)picture {
+    NSUInteger current = [pictures indexOfObject:picture];
+    if (current == pictures.count-1) {
+        return nil;
+    }
+    Picture *picNext = pictures[current+1];
+    NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
+                         picNext, @"picture",
+                         nil];
+    return ret;
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+- (NSDictionary *)pictureBeforePicture:(Picture *)picture {
+    NSUInteger current = [pictures indexOfObject:picture];
+    if (current == 0) {
+        return nil;
+    }
+    Picture *picPrev = pictures[current-1];
+    NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
+                         picPrev, @"picture",
+                         nil];
+    return ret;
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (tableMode == kSearchPhoto) {
+        return 104;
+    } else {
+        return 30;
+    }
 }
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+- (IBAction)touchTab:(UIButton *)sender {
+    buttonSearchPhoto.enabled = true;
+    buttonSearchPeople.enabled = true;
+    
+    sender.enabled = false;
+    textKeyword.text = @"";
+    
+    switch (sender.tag) {
+        case 1:
+            tableMode = kSearchPhoto;
+            break;
+        case 2:
+            tableMode = kSearchFriend;
+            break;
+        default:
+            break;
+    }
+    
+    [self.tableView reloadData];
+}
+
+- (IBAction)textChanged:(id)sender {
+    if (textKeyword.text.length > 2) {
+        NSString *url = [NSString stringWithFormat:@"picture/tag/%@", textKeyword.text];
+        LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+        NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
+                               [app getToken], @"token", nil];
+        [activityLoad startAnimating];
+        [[LatteAPIClient sharedClient] getPath:url
+                                     parameters:param
+                                        success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                            
+                                            pictures = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
+                                            [self.tableView reloadData];
+                                            [activityLoad stopAnimating];
+                                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                            TFLog(@"Something went wrong Tag");
+                                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                            message:error.localizedDescription
+                                                                                           delegate:nil
+                                                                                  cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                                  otherButtonTitles:nil];
+                                            [alert show];
+                                            [activityLoad stopAnimating];
+                                        }];
+    }
 }
 
 @end

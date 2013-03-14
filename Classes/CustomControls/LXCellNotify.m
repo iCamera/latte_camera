@@ -8,6 +8,7 @@
 
 #import "LXCellNotify.h"
 #import "UIImageView+AFNetworking.h"
+#import "UIImageView+loadProgress.h"
 
 @implementation LXCellNotify
 
@@ -39,19 +40,40 @@
     labelNotify.text = [LXUtils stringFromNotify:notify];
     
     CGRect frame = labelNotify.frame;
-    CGSize labelSize = [labelNotify.text sizeWithFont:[UIFont fontWithName:@"AvenirNextCondensed-Regular" size:11]
-                                     constrainedToSize:CGSizeMake(180.0, MAXFLOAT)
+    CGSize labelSize = [labelNotify.text sizeWithFont:labelNotify.font
+                                     constrainedToSize:CGSizeMake(230, MAXFLOAT)
                                          lineBreakMode:NSLineBreakByWordWrapping];
     frame.size.height = labelSize.height;
     labelNotify.frame = frame;
+    
     if (target) {
-        Picture *pic = [Picture instanceFromDictionary:target];
-        [viewImage setImageWithURL:[NSURL URLWithString:pic.urlSquare]];
-        // viewImage.layer.cornerRadius = 3;
-        // viewImage.clipsToBounds = YES;
+        NotifyTarget notifyTarget = [[notify objectForKey:@"target_model"] integerValue];
+        switch (notifyTarget) {
+            case kNotifyTargetPicture: {
+                Picture *pic = [Picture instanceFromDictionary:target];
+                [viewImage setImageWithURL:[NSURL URLWithString:pic.urlSquare]];
+                break;
+            }
+            case kNotifyTargetUser: {
+                User *user = [User instanceFromDictionary:target];
+                [viewImage setImageWithURL:[NSURL URLWithString:user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
+                break;
+            }
+            case kNotifyTargetComment:
+                break;
+            default:
+                break;
+        }
     }
     self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg_menu.png"]];
     [self setSelectedBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg_menu_on.png"]]];
+}
+
+- (void)drawRect:(CGRect)rect {
+    viewImage.layer.cornerRadius = 3;
+    viewImage.clipsToBounds = YES;
+    
+    [super drawRect:rect];
 }
 
 @end

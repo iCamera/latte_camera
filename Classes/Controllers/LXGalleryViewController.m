@@ -17,6 +17,9 @@
 #import "LXPicEditViewController.h"
 #import "LXMyPageViewController.h"
 #import "LXShare.h"
+#import "UIButton+AsyncImage.h"
+#import "Comment.h"
+#import "LXTagViewController.h"
 
 
 @interface LXGalleryViewController ()
@@ -26,11 +29,11 @@
 @implementation LXGalleryViewController {
     UIPageViewController *pageController;
     LXPicDetailTabViewController *viewPicTab;
-    LXZoomPictureViewController *currentInfo;
     NSInteger currentTab;
     UITapGestureRecognizer *tapPage;
     UITapGestureRecognizer *tapDouble;
     NSMutableArray *currentComments;
+    LXShare *lxShare;
 }
 
 @synthesize buttonComment;
@@ -44,6 +47,8 @@
 @synthesize labelView;
 @synthesize viewInfoTop;
 @synthesize viewDesc;
+@synthesize labelComment;
+@synthesize labelLike;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -58,6 +63,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (_picture.pictureId == nil)
+        return;
 
     pageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
                                                      navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
@@ -68,7 +76,7 @@
     viewPicTab = [storyGallery instantiateViewControllerWithIdentifier:@"DetailScroll"];
     CGRect frameTab = [[UIScreen mainScreen] bounds];
     frameTab.origin.y = frameTab.size.height;
-    viewPicTab.picture = _picture;
+
     viewPicTab.view.frame = frameTab;
     [self.view insertSubview:viewPicTab.view atIndex:1]; // Above description
     [self addChildViewController:viewPicTab];
@@ -77,7 +85,7 @@
     pageController.dataSource = self;
     pageController.delegate = self;
     CGRect frame = self.view.bounds;
-    frame.size.height -= 31;
+    frame.size.height -= 35;
     pageController.view.frame = frame;
 
     tapPage = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapScrollImage:)];
@@ -103,6 +111,44 @@
     [self addChildViewController:pageController];
     [self.view insertSubview:pageController.view atIndex:0];
     [pageController didMoveToParentViewController:self];
+    
+    labelDesc = [[STTweetLabel alloc] initWithFrame:CGRectMake(6, 6, 308, 0)];
+    labelDesc.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0];
+    labelDesc.textColor = [UIColor whiteColor];
+    labelDesc.colorAccount = [UIColor whiteColor];
+    
+    STLinkCallbackBlock callbackBlock = ^(STLinkActionType actionType, NSString *link) {
+        
+        NSString *displayString = NULL;
+        
+        // determine what the user clicked on
+        switch (actionType) {
+                
+                // if the user clicked on an account (@_max_k)
+            case STLinkActionTypeAccount:
+                displayString = [NSString stringWithFormat:@"Twitter account:\n%@", link];
+                break;
+                
+                // if the user clicked on a hashtag (#thisisreallycool)
+            case STLinkActionTypeHashtag: {
+                displayString = [NSString stringWithFormat:@"Twitter hashtag:\n%@", link];
+                
+                UIStoryboard *storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                                       bundle:nil];
+                LXTagViewController *viewTag = [storyMain instantiateViewControllerWithIdentifier:@"Tag"];
+                viewTag.keyword = [link substringFromIndex:1];
+                [self.navigationController pushViewController:viewTag animated:YES];
+
+                break;
+            }
+                // if the user clicked on a website (http://github.com/SebastienThiebaud)
+            case STLinkActionTypeWebsite:
+                displayString = [NSString stringWithFormat:@"Website:\n%@", link];
+                break;
+        }
+    };
+    [labelDesc setCallbackBlock:callbackBlock];
+    [viewDesc addSubview:labelDesc];
 
     [self setPicture];
     
@@ -114,10 +160,16 @@
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];
+    
+    lxShare = [[LXShare alloc] init];
+    
+    lxShare.controller = self;
+    
 }
 
 - (void)tapZoom:(UITapGestureRecognizer*)sender {
-    [currentInfo performSelector:@selector(tapZoom:) withObject:sender];
+    LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
+    [currentPage performSelector:@selector(tapZoom:) withObject:sender];
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification
@@ -177,12 +229,14 @@
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
+    
     if ([segue.identifier isEqualToString:@"Map"]) {
         LXPicMapViewController *viewMap = segue.destinationViewController;
-        viewMap.picture = _picture;
+        viewMap.picture = currentPage.picture;
     } else if ([segue.identifier isEqualToString:@"Edit"]) {
         LXPicEditViewController *viewEdit = segue.destinationViewController;
-        viewEdit.picture = _picture;
+        viewEdit.picture = currentPage.picture;
     }
 }
 
@@ -211,7 +265,6 @@
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed {
     if (completed) {
         [self setPicture];
-        viewPicTab.picture = _picture;
     }
     
     [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
@@ -230,16 +283,18 @@
 }
 
 - (void)setPicture {
-    currentInfo = pageController.viewControllers[0];
-    _picture = currentInfo.picture;
-    _user = currentInfo.user;
+    LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
     
-    if (_picture.descriptionText.length > 0) {
-        CGSize size = [_picture.descriptionText sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0] constrainedToSize:CGSizeMake(308, 999)];
+    viewPicTab.picture = currentPage.picture;
+    
+    if (currentPage.picture.descriptionText.length > 0) {
+        CGSize size = [currentPage.picture.descriptionText sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0]
+                                                      constrainedToSize:CGSizeMake(308, CGFLOAT_MAX)
+                                                          lineBreakMode:labelDesc.lineBreakMode];
         CGRect frame = labelDesc.frame;
-        frame.size = size;
+        frame.size.height = size.height;
         CGRect screenRect = [[UIScreen mainScreen] bounds];
-        CGRect frameDesc = CGRectMake(0, screenRect.size.height-frame.size.height-12-31, 320, frame.size.height + 12);
+        CGRect frameDesc = CGRectMake(0, screenRect.size.height-frame.size.height-12-35, 320, frame.size.height + 12);
         [UIView animateWithDuration:kGlobalAnimationSpeed
                               delay:0
                             options:UIViewAnimationOptionCurveEaseInOut
@@ -247,56 +302,58 @@
                              viewDesc.alpha = 1;
                              labelDesc.frame = frame;
                              viewDesc.frame = frameDesc;
-                             labelDesc.text = _picture.descriptionText;
+                             
+                             [labelDesc setText:currentPage.picture.descriptionText];
                          }
                          completion:nil];
     } else {
 
     }
     
-    labelNickname.text = _user.name;
-    labelView.text = [NSString stringWithFormat:@"%d views", [_picture.pageviews integerValue]];
-    [buttonUser loadBackground:_user.profilePicture placeholderImage:@"user.gif"];
+    labelNickname.text = currentPage.user.name;
+    labelView.text = [NSString stringWithFormat:@"%d views", [currentPage.picture.pageviews integerValue]];
+    [buttonUser loadBackground:currentPage.user.profilePicture placeholderImage:@"user.gif"];
     
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
 
     buttonLike.enabled = NO;
-    if (!(_picture.isVoted && !app.currentUser))
+    if (!(currentPage.picture.isVoted && !app.currentUser))
         buttonLike.enabled = YES;
-    buttonLike.selected = _picture.isVoted;
+    buttonLike.selected = currentPage.picture.isVoted;
     
-    if ((_picture.latitude != nil) && (_picture.longitude != nil)) {
+    if ((currentPage.picture.latitude != nil) && (currentPage.picture.longitude != nil)) {
         buttonMap.enabled = YES;
     } else {
         buttonMap.enabled = NO;
     }
     
-    [buttonComment setTitle:[_picture.commentCount stringValue] forState:UIControlStateNormal];
-    [buttonLike setTitle:[_picture.voteCount stringValue] forState:UIControlStateNormal];
+    labelComment.text = [currentPage.picture.commentCount stringValue];
+    labelLike.text = [currentPage.picture.voteCount stringValue];
     
     // Increase counter
     NSString *urlCounter = [NSString stringWithFormat:@"picture/counter/%d/%d",
-                     [_picture.pictureId integerValue],
-                     [_picture.userId integerValue]];
+                     [currentPage.picture.pictureId integerValue],
+                     [currentPage.picture.userId integerValue]];
     
     [[LatteAPIClient sharedClient] getPath:urlCounter
                                 parameters:[NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"]
                                    success:nil
                                    failure:nil];
-    buttonEdit.hidden = !_picture.isOwner;
+    buttonEdit.hidden = !currentPage.picture.isOwner;
     
-    NSString *urlDetail = [NSString stringWithFormat:@"picture/%d", [_picture.pictureId integerValue]];
+    NSString *urlDetail = [NSString stringWithFormat:@"picture/%d", [currentPage.picture.pictureId integerValue]];
     [[LatteAPIClient sharedClient] getPath:urlDetail
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       if (_user == nil) {
-                                           _user = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
-                                           labelNickname.text = _user.name;
-                                           [buttonUser loadBackground:_user.profilePicture placeholderImage:@"user.gif"];
+                                       if (currentPage.user == nil) {
+                                           currentPage.user = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
+                                           labelNickname.text = currentPage.user.name;
+                                           [buttonUser loadBackground:currentPage.user.profilePicture placeholderImage:@"user.gif"];
                                        }
 
                                        currentComments = [Comment mutableArrayFromDictionary:JSON withKey:@"comments"];
                                        viewPicTab.comments = currentComments;
+                                       viewPicTab.picDict = JSON;
                                        
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        TFLog(@"Something went wrong PicDetail Gallery");
@@ -321,14 +378,16 @@
 }
 
 - (IBAction)toggleLike:(UIButton *)sender {
-    if (_picture.isOwner)
+    LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
+    if (currentPage.picture.isOwner)
         return;
-    [LXUtils toggleLike:sender ofPicture:_picture];
+    [LXUtils toggleLike:sender ofPicture:currentPage.picture setCount:labelLike];
 }
 
 - (IBAction)switchTab:(UIButton *)sender {
+    LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
     if (sender.tag == 1) { //Vote button
-        if (!_picture.isOwner)
+        if (!currentPage.picture.isOwner)
             return;
     }
     
@@ -393,28 +452,31 @@
 }
 
 - (IBAction)touchUser:(UIButton *)sender {
-    if (_user == nil) {
+    LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
+    if (currentPage.user == nil) {
         return;
     }
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
     LXMyPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
-    viewUserPage.user = _user;
+    viewUserPage.user = currentPage.user;
     [self.navigationController pushViewController:viewUserPage animated:YES];
     
 }
 
 - (IBAction)touchShare:(id)sender {
+    LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
     RDActionSheet *actionSheet = [[RDActionSheet alloc] initWithCancelButtonTitle:NSLocalizedString(@"Cancel", @"")
                                                                primaryButtonTitle:nil
                                                            destructiveButtonTitle:nil
                                                                 otherButtonTitles:@"Email", @"Twitter", @"Facebook", nil];
-    LXShare *lxShare = [[LXShare alloc] init];
+
     actionSheet.callbackBlock = ^(RDActionSheetResult result, NSInteger buttonIndex)
     {
         switch (result) {
             case RDActionSheetButtonResultSelected: {
-                lxShare.text = _picture.urlMedium;
+                lxShare.url = currentPage.picture.urlWeb;
+                lxShare.text = @"";
                 
                 switch (buttonIndex) {
                     case 0: // email

@@ -61,12 +61,16 @@
         NSArray *gender = [NSArray arrayWithObjects:@"1", @"2", nil];
         ((QRadioElement *)[self.root elementWithKey:@"gender"]).selected = [gender indexOfObject:[[userDict objectForKey:@"gender"] stringValue]];
         
+        ((QRadioElement *)[self.root elementWithKey:@"nationality"]).selectedValue = user.nationality;
+        
         NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
         [dateFormat setDateFormat:@"yyyy-MM-dd"];
         
         ((QDateTimeInlineElement *)[self.root elementWithKey:@"birthday"]).dateValue = [dateFormat dateFromString:[userDict objectForKey:@"birthdate"]];
         
         ((QBooleanElement *)[self.root elementWithKey:@"stealth_mode"]).boolValue = user.stealthMode;
+        ((QBooleanElement *)[self.root elementWithKey:@"default_show_exif"]).boolValue = user.defaultShowEXIF;
+        ((QBooleanElement *)[self.root elementWithKey:@"default_show_gps"]).boolValue = user.defaultShowGPS;
         
         [self.quickDialogTableView reloadData];
         
@@ -110,16 +114,16 @@
         cell.detailTextLabel.textColor = [UIColor colorWithRed:0.39 green:0.36 blue:0.23 alpha:1.0000];
         cell.textField.textColor = [UIColor colorWithRed:0.39 green:0.36 blue:0.23 alpha:1.0000];
 
-        cell.textLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:14];
-        cell.detailTextLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:14];
-        cell.textField.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:14];
+        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
+        cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
+        cell.textField.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
     }
     if ([element isKindOfClass:[QRadioItemElement class]] || [element isKindOfClass:[QBooleanElement class]]) {
-        cell.textLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:16];
-        cell.detailTextLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:16];
+        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
+        cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
     }
     if ([element isKindOfClass:[QButtonElement class]]) {
-        cell.textLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Medium" size:16];
+        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Regular" size:16];
         cell.textLabel.textColor = [UIColor grayColor];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleGray;
@@ -197,7 +201,7 @@
     }
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, 30)];
-    title.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:16];
+    title.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
     title.textColor = [UIColor colorWithRed:101.0/255.0 green:90.0/255.0 blue:56.0/255.0 alpha:1];
     title.text = section.title;
     [view addSubview:title];

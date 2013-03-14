@@ -17,6 +17,7 @@
 @synthesize labelTitle;
 @synthesize labelUser;
 @synthesize labelAccess;
+@synthesize labelLike;
 @synthesize buttonPic;
 @synthesize buttonUser;
 
@@ -43,6 +44,8 @@
 }
 
 - (void)setFeed:(Feed *)feed {
+    _feed = feed;
+    
     Picture *pic = feed.targets[0];
     CGRect frame = buttonPic.frame;
     frame.size.height = [LXUtils heightFromWidth:308.0 width:[pic.width floatValue] height:[pic.height floatValue]];
@@ -63,18 +66,14 @@
     buttonComment.tag = [pic.pictureId integerValue];
     
     [buttonComment setTitle:[pic.commentCount stringValue] forState:UIControlStateNormal];
-    [buttonLike setTitle:[pic.voteCount stringValue] forState:UIControlStateNormal];
+    labelLike.text = [pic.voteCount stringValue];
     labelAccess.text = [pic.pageviews stringValue];
 
     LXAppDelegate* app = (LXAppDelegate*)[[UIApplication sharedApplication] delegate];
     
-    if (pic.canVote) {
-        if (!(pic.isVoted && !app.currentUser))
-            buttonLike.enabled = YES;
-    } else {
-        buttonLike.enabled = NO;
-    }
-    
+    buttonLike.enabled = NO;
+    if (!(pic.isVoted && !app.currentUser))
+        buttonLike.enabled = YES;
     buttonLike.selected = pic.isVoted;
     
     if (pic.canComment) {
@@ -86,7 +85,6 @@
     }
     
     
-
     [buttonUser loadBackground:feed.user.profilePicture placeholderImage:@"user.gif"];
 
     labelTitle.text = feed.user.name;
@@ -98,8 +96,19 @@
     [buttonPic addTarget:viewController action:@selector(showPic:) forControlEvents:UIControlEventTouchUpInside];
     [buttonInfo addTarget:viewController action:@selector(showInfo:) forControlEvents:UIControlEventTouchUpInside];
     [buttonComment addTarget:viewController action:@selector(showComment:) forControlEvents:UIControlEventTouchUpInside];
-    [buttonLike addTarget:viewController action:@selector(submitLike:) forControlEvents:UIControlEventTouchUpInside];
+    
     [buttonMap addTarget:viewController action:@selector(showMap:) forControlEvents:UIControlEventTouchUpInside];
+    
+    if (pic.isOwner) {
+        [buttonLike addTarget:viewController action:@selector(showLike:) forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        [buttonLike addTarget:self action:@selector(submitLike:) forControlEvents:UIControlEventTouchUpInside];
+    }
+}
+
+- (void)submitLike:(id)sender {
+    Picture *pic = _feed.targets[0];
+    [LXUtils toggleLike:buttonLike ofPicture:pic setCount:labelLike];
 }
 
 - (void)drawRect:(CGRect)rect {

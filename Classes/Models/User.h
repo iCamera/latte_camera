@@ -82,6 +82,7 @@
 @property (nonatomic, copy) NSString *occupation;
 @property (nonatomic, copy) NSNumber *pictureStatus;
 @property (nonatomic, copy) NSString *profilePicture;
+@property (nonatomic, copy) NSString *nationality;
 @property (nonatomic, copy) NSNumber *voteCount;
 @property (nonatomic, copy) NSNumber *pageViews;
 
@@ -89,6 +90,8 @@
 @property (nonatomic, assign) BOOL isFriend;
 
 @property (nonatomic, assign) BOOL stealthMode;
+@property (nonatomic, assign) BOOL defaultShowGPS;
+@property (nonatomic, assign) BOOL defaultShowEXIF;
 
 @property (nonatomic, strong) UserMailAccept *mailAccepts;
 @property (nonatomic, strong) UserPushAccept *notifyAccepts;

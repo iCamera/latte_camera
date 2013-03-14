@@ -3,7 +3,7 @@
     "title": "Setting",
     "controllerName": "luxeysSettingViewController",
     "sections": [
-        { "title":"PROFILE SETTINGS", "elements":[
+        { "title":"PROFILE SETTINGS", "key":"profile", "elements":[
                 { "type":"QEntryElement", "key":"name", "title":"Username", "Placeholder":"Username", "bind":"textValue:name", "controllerAction":"handleUpdateEntry:"},
                 { "type":"QRadioElement", "key":"gender", "title":"Gender", "items":["Male", "Female"], "values":[1, 2], "controllerAction":"handleUpdateRadio:"},
                 { "type":"QDateTimeInlineElement", "key":"birthday", "title":"Birthday"},

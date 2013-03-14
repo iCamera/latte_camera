@@ -44,7 +44,7 @@
 
 		UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, frame.size.height - 30.0f, self.frame.size.width, 20.0f)];
 		label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		label.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:12];
+		label.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12];
 		label.textColor = textColor;
 //		label.shadowColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
 //		label.shadowOffset = CGSizeMake(0.0f, 1.0f);
@@ -55,7 +55,7 @@
 		
 		label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, frame.size.height - 48.0f, self.frame.size.width, 20.0f)];
 		label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		label.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:13];;
+		label.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13];;
 		label.textColor = textColor;
 //		label.shadowColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
 //		label.shadowOffset = CGSizeMake(0.0f, 1.0f);

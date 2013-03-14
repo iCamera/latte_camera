@@ -10,7 +10,9 @@
                 { "type":"QRadioElement", "key":"hometown_public", "title":"Hometown", "items":["Me only", "Friends only", "Members only", "Everyone"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
                 { "type":"QRadioElement", "key":"birthyear_public", "title":"Age", "items":["Me only", "Friends only", "Members only", "Everyone"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
                 { "type":"QRadioElement", "key":"birthdate_public", "title":"Birthday", "items":["Me only", "Friends only", "Members only", "Everyone"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QBooleanElement", "key":"stealth_mode", "title":"Stealth mode", "boolValue":0, "controllerAction":"handleUpdateBool:"}
+                { "type":"QBooleanElement", "key":"stealth_mode", "title":"Stealth mode", "boolValue":0, "controllerAction":"handleUpdateBool:"},
+                { "type":"QBooleanElement", "key":"default_show_exif", "title":"Show EXIF information", "boolValue":0, "controllerAction":"handleUpdateBool:"},
+                { "type":"QBooleanElement", "key":"default_show_gps", "title":"Show location information", "boolValue":0, "controllerAction":"handleUpdateBool:"}
             ]
         }
     ]

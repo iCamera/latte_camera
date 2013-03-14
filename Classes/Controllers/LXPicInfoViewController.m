@@ -19,6 +19,8 @@
     NSMutableArray *sections;
 }
 
+@synthesize activityLoad;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -63,7 +65,10 @@
                                        }
                                        
                                        [self.tableView reloadData];
+                                       [activityLoad stopAnimating];
+
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       [activityLoad stopAnimating];
                                        TFLog(@"Something went wrong - Picture Info");
                                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
                                                                                        message:error.localizedDescription
@@ -144,7 +149,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *view = [[UIView alloc] init];
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, 30)];
-    title.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:12];
+    title.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12];
     title.textColor = [UIColor colorWithRed:101.0/255.0 green:90.0/255.0 blue:56.0/255.0 alpha:1];
     title.text = [self tableView:tableView titleForHeaderInSection:section];
     title.backgroundColor = [UIColor clearColor];

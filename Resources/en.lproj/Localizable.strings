@@ -94,17 +94,11 @@
 
 "guest" = "Guest ";
 
-"notify_commented" = "commented on your photo";
+"notify_commented" = "%@ commented on your photo";
 
-"notify_liked" = "liked your photo";
+"notify_like_photo" = "%@ likes your photo";
 
-"remove_friend" = "Remove friend";
-
-"approve_friend" = "Approve";
-
-"pending_request" = "Pending request";
-
-"add_friend" = "Add friend";
+"notify_like_comment" = "%@ likes your comment: %@";
 
 "unfollow" = "Unfollow";
 
@@ -154,14 +148,6 @@
 
 "no_title" = "No title";
 
-"apns_new_vote" = "%@ liked your photo";
-
-"apns_new_vote_guest" = "Guest liked your photo";
-
-"apns_new_comment" = "%@ commented on your photo";
-
-"apns_new_comment_guest" = "Guest commented on your photo";
-
 "saved_photo" = "Saved to Camera Roll";
 
 "cannot_save_photo" = "Cannot save to Camera Roll";
@@ -172,6 +158,20 @@
 
 "retry_upload" = "Retry";
 
-"apns_friend_request" = "You received a friend request from %@";
+"nationality" = "Nationality";
 
-"apns_friend_accept" = "You are now friends with %@!";
+"apns_new_vote" = "%@ liked your photo";
+
+"apns_new_vote_guest" = "Guest liked your photo";
+
+"apns_new_comment_vote" = "%@ liked your comment: %@";
+
+"apns_new_comment_vote_guest" = "Guest likes your comment: %@";
+
+"apns_new_comment" = "%@ commented on your photo:%@";
+
+"apns_user_tag_in_photo" = "%@ tagged you in a photo";
+
+"apns_user_tag_in_comment" = "%@ tagged you in a comment: %@";
+
+"apns_user_follow" = "You are now being followed by %@";

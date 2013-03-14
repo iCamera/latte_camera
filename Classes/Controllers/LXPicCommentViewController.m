@@ -11,7 +11,8 @@
 #import "LXCellComment.h"
 #import "LXAppDelegate.h"
 #import "LXMyPageViewController.h"
-#import "SideSwipeTableViewCell.h"
+//#import "SideSwipeTableViewCell.h"
+#import "LXCommentControllViewController.h"
 
 @interface LXPicCommentViewController ()
 
@@ -25,6 +26,7 @@
 @synthesize viewHeader;
 @synthesize growingComment;
 @synthesize buttonSend;
+@synthesize activityLoad;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -41,14 +43,53 @@
     [super viewDidLoad];
         
     gestureTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchBackground:)];
-    [self.tableView addGestureRecognizer:gestureTap];
+    
+    
+    growingComment.layer.borderWidth = 1;
+    growingComment.layer.borderColor = [UIColor grayColor].CGColor;
+    growingComment.layer.cornerRadius = 5;
+    growingComment.layer.masksToBounds = YES;
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-     self.sideSwipeView = [[UIView alloc] initWithFrame:CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.rowHeight)];
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Component"
+                                                             bundle:nil];
+    UIViewController *viewCommentControl = [mainStoryboard instantiateViewControllerWithIdentifier:@"Comment"];
+    viewCommentControl.view.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.rowHeight);
+    
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    
+    if (app.currentUser != nil) {
+        // Edit Swipe
+        UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipedHorizontal)];
+        swipe.direction = UISwipeGestureRecognizerDirectionRight | UISwipeGestureRecognizerDirectionLeft;
+        [self.tableView addGestureRecognizer:swipe];
+        
+    } else {
+        self.tableView.tableHeaderView = nil;
+    }
+    
+//    self.sideSwipeView = viewCommentControl.view;
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
+    [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    [self.tableView addGestureRecognizer:gestureTap];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    [self.tableView removeGestureRecognizer:gestureTap];
+}
+
+- (void)swipedHorizontal {
+    [self.tableView setEditing:!self.tableView.editing animated:YES];
 }
 
 - (void)growingTextViewDidChange:(HPGrowingTextView *)growingTextView {
@@ -73,48 +114,7 @@
 - (void)setComments:(NSMutableArray *)comments {
     _comments = comments;
     [self.tableView reloadData];
-}
-
-
-- (void)toggleLikeComment:(UIButton*)sender {
-    LXAppDelegate* app = [LXAppDelegate currentDelegate];
-    if (!app.currentUser) {
-        sender.enabled = NO;
-    }
-    Comment *comment = _comments[_comments.count - sender.tag - 1];
-    
-    comment.isVoted = !comment.isVoted;
-    BOOL increase = comment.isVoted;
-    sender.selected = comment.isVoted;
-    
-    comment.voteCount = [NSNumber numberWithInteger:[comment.voteCount integerValue] + (increase?1:-1)];
-    
-    NSInteger likeCount = [sender.titleLabel.text integerValue];
-    NSNumber *num = [NSNumber numberWithInteger:likeCount + (increase?1:-1)];
-    [sender setTitle:[num stringValue] forState:UIControlStateNormal];
-    
-    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                  @"1", @"vote_type",
-                                  nil];
-    if (app.currentUser != nil) {
-        [param setObject:[app getToken] forKey:@"token"];
-    }
-    
-    
-    NSString *url = [NSString stringWithFormat:@"picture/%d/vote_post", [comment.commentId integerValue]];
-    [[LatteAPIClient sharedClient] postPath:url
-                                 parameters:param
-                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                        TFLog(@"Submited like");
-                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
-                                                                                        message:error.localizedDescription
-                                                                                       delegate:nil
-                                                                              cancelButtonTitle:NSLocalizedString(@"close", "Close")
-                                                                              otherButtonTitles:nil];
-                                        [alert show];
-                                        TFLog(@"Something went wrong (Vote)");
-                                    }];
+    [activityLoad stopAnimating];
 }
 
 - (BOOL)sendComment {
@@ -206,13 +206,8 @@
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    LXCellComment* cellComment = [tableView dequeueReusableCellWithIdentifier:@"Comment"];
-    
-    if (nil == cellComment) {
-        cellComment = (LXCellComment*)[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                             reuseIdentifier:@"Comment"];
-    }
-    
+    LXCellComment* cellComment = [tableView dequeueReusableCellWithIdentifier:@"Comment" forIndexPath:indexPath];
+        
     Comment *comment = _comments[_comments.count - indexPath.row - 1];
     
     cellComment.comment = comment;
@@ -221,7 +216,6 @@
         cellComment.buttonUser.tag = indexPath.row;
         cellComment.buttonLike.tag = indexPath.row;
         [cellComment.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
-        [cellComment.buttonLike addTarget:self action:@selector(toggleLikeComment:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     return cellComment;
@@ -230,12 +224,18 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     Comment *comment = _comments[_comments.count - indexPath.row - 1];
     NSString *strComment = comment.descriptionText;
-    CGSize labelSize = [strComment sizeWithFont:[UIFont fontWithName:@"AvenirNextCondensed-Regular" size:11]
+    CGSize labelSize = [strComment sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12]
                               constrainedToSize:CGSizeMake(255.0f, MAXFLOAT)
                                   lineBreakMode:NSLineBreakByWordWrapping];
     return MAX(labelSize.height + 45, 42);
 }
 
 #pragma mark - Table view delegate
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    Comment* comment = _comments[_comments.count - indexPath.row - 1];
+    return ([comment.user.userId integerValue] == [app.currentUser.userId integerValue]) || _picture.isOwner;
+}
 
 @end

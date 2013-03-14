@@ -15,7 +15,7 @@
 @property (strong, nonatomic) LXPicCommentViewController *viewComment;
 
 @property (strong, nonatomic) Picture *picture;
-//@property (strong, nonatomic) User *user;
+@property (strong, nonatomic) NSDictionary *picDict;
 @property (strong, nonatomic) NSMutableArray *comments;
 
 @property (assign, nonatomic) NSInteger tab;

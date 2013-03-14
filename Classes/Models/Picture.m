@@ -119,6 +119,12 @@
         [self setValue:value forKey:@"exif"];
     } else if ([key isEqualToString:@"status"]) {
         [self setValue:value forKey:@"status"];
+    } else if ([key isEqualToString:@"show_gps"]) {
+        [self setValue:value forKey:@"_showGPS"];
+    } else if ([key isEqualToString:@"show_exif"]) {
+        [self setValue:value forKey:@"_showEXIF"];
+    } else if ([key isEqualToString:@"url_absolute"]) {
+        [self setValue:value forKey:@"_urlWeb"];
     } else {
         [super setValue:value forUndefinedKey:key];
     }

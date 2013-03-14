@@ -12,11 +12,26 @@
 #import "LXPicInfoViewController.h"
 #import "LXPicCommentViewController.h"
 #import "LXPicMapViewController.h"
+#import "LXVoteViewController.h"
+#import "LXCellGrid.h"
+
+typedef enum {
+    kWelcomeTableTimeline,
+    kWelcomeTableGrid,
+} WelcomeTableMode;
 
 @interface LXWelcomeViewController ()
 @end
 
-@implementation LXWelcomeViewController
+@implementation LXWelcomeViewController {
+    NSMutableArray *feeds;
+    int pagephoto;
+    BOOL loadEnded;
+    BOOL reloading;
+    EGORefreshTableHeaderView *refreshHeaderView;
+    UIPanGestureRecognizer *navigationBarPanGestureRecognizer;
+    WelcomeTableMode tableMode;
+}
 
 @synthesize tablePic;
 @synthesize viewHeader;
@@ -45,12 +60,6 @@
                                                      name:@"LoggedIn"
                                                    object:nil];
                 
-
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(becomeActive:)
-                                                     name:@"BecomeActive"
-                                                   object:nil];
-        
         
         loadEnded = false;
         pagephoto = 1;
@@ -83,6 +92,9 @@
     [self reloadView];
     
     [viewLogin removeFromSuperview];
+    viewLogin.layer.cornerRadius = 5;
+    viewLogin.layer.masksToBounds = YES;
+    
     [self.navigationController.view addSubview:viewLogin];
     if ([app getToken].length == 0) {
         viewLogin.hidden = false;
@@ -107,9 +119,7 @@
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
     
     NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
-    if (app.currentUser != nil) {
-        [param setObject:[app getToken] forKey:@"token"];
-    }
+    [param setObject:[app getToken] forKey:@"token"];
     
     [[LatteAPIClient sharedClient] getPath:@"user/everyone/timeline"
                                 parameters:param
@@ -133,10 +143,14 @@
 
 - (void)loadMore {
     [indicator startAnimating];
+    LXAppDelegate* app = [LXAppDelegate currentDelegate];
+    NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
+    [param setObject:[app getToken] forKey:@"token"];
+    
+    [param setObject:[NSNumber numberWithInt:pagephoto+1] forKey:@"page"];
     
     [[LatteAPIClient sharedClient] getPath:@"user/everyone/timeline"
-                                parameters: [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:pagephoto+1]
-                                                                        forKey:@"page"]
+                                parameters: param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        
                                        pagephoto += 1;
@@ -176,7 +190,7 @@
     if (tableMode == kWelcomeTableTimeline) {
         Feed *feed = feeds[indexPath.row];
         if (feed.targets.count == 1) {
-            LXCellTimelineSingle *cell = [tableView dequeueReusableCellWithIdentifier:@"Single"];
+            LXCellTimelineSingle *cell = [tableView dequeueReusableCellWithIdentifier:@"Single" forIndexPath:indexPath];
             if (nil == cell) {
                 cell = [[LXCellTimelineSingle alloc] initWithStyle:UITableViewCellStyleDefault
                                                    reuseIdentifier:@"Single"];
@@ -188,7 +202,7 @@
 
             return cell;
         } else {
-            LXCellTimelineMulti *cell = [tableView dequeueReusableCellWithIdentifier:@"Multi"];
+            LXCellTimelineMulti *cell = [tableView dequeueReusableCellWithIdentifier:@"Multi" forIndexPath:indexPath];
             if (nil == cell) {
                 cell = [[LXCellTimelineMulti alloc] initWithStyle:UITableViewCellStyleDefault
                                                       reuseIdentifier:@"Multi"];
@@ -202,43 +216,16 @@
         }
     
     } else {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Grid"];
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Grid"];
-        }
-        
-        for(UIView *subview in [cell subviews]) {
-            [subview removeFromSuperview];
-        }
-        
-        for (int i=0; i < 3; i++) {
-            NSInteger idx = indexPath.row*3 + i;
-            if (idx < feeds.count) {
-                
-                UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(6 + 104*i, (indexPath.row==0?6:3),98, 98)];
-                Feed *feed = feeds[idx];
-                
-                if (feed.targets.count > 0) {
-                    Picture *pic = feed.targets[0];
-                    
-                    button.layer.borderColor = [[UIColor whiteColor] CGColor];
-                    button.layer.borderWidth = 3;
-                    UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:button.bounds];
-                    button.layer.masksToBounds = NO;
-                    button.layer.shadowColor = [UIColor blackColor].CGColor;
-                    button.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-                    button.layer.shadowOpacity = 0.5f;
-                    button.layer.shadowRadius = 1.5f;
-                    button.layer.shadowPath = shadowPathPic.CGPath;
-                    button.tag = [pic.pictureId integerValue];
-                    
-                    [button loadBackground:pic.urlSquare];
-                    [button addTarget:self action:@selector(showPic:) forControlEvents:UIControlEventTouchUpInside];
-                    [cell addSubview:button];
-                }
+        LXCellGrid *cell = [tableView dequeueReusableCellWithIdentifier:@"Grid" forIndexPath:indexPath];
+    
+        NSMutableArray *pictures = [[NSMutableArray alloc] init];
+        for (Feed *feed in feeds) {
+            if (feed.targets.count > 0) {
+                [pictures addObject:feed.targets[0]];
             }
         }
-        cell.clipsToBounds = false;
+        cell.viewController = self;
+        [cell setPictures:pictures forRow:indexPath.row];
         return cell;
     }
 }
@@ -259,15 +246,25 @@
         return 104 + (indexPath.row==0?3:0);
 }
 
-- (void)showPic:(UIButton*)sender {    
+- (void)showPic:(UIButton*)sender {
     UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                              bundle:nil];
     UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
     LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
     viewGallery.delegate = self;
-    Feed *feed = [LXUtils feedFromPicID:sender.tag of:feeds];
-    viewGallery.user = feed.user;
-    viewGallery.picture = [LXUtils picFromPicID:sender.tag of:feeds];
+    
+    if (tableMode == kWelcomeTableTimeline) {
+        Feed *feed = [LXUtils feedFromPicID:sender.tag of:feeds];
+        Picture *picture = [LXUtils picFromPicID:sender.tag of:feeds];
+        viewGallery.user = feed.user;
+        viewGallery.picture = picture;
+    } else {
+        Feed *feed = feeds[sender.tag];
+        Picture *picture = feed.targets[0];
+        viewGallery.user = feed.user;
+        viewGallery.picture = picture;
+    }
+    
     [self presentViewController:navGalerry animated:YES completion:nil];
 }
 
@@ -280,12 +277,41 @@
     [self.navigationController pushViewController:viewPicInfo animated:YES];
 }
 
+- (void)showLike:(UIButton*)sender {
+    UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
+                                                           bundle:nil];
+    LXVoteViewController *viewVote = [storyGallery instantiateViewControllerWithIdentifier:@"Vote"];
+    Picture *picture = [LXUtils picFromPicID:sender.tag of:feeds];
+    viewVote.picture = picture;
+    [self.navigationController pushViewController:viewVote animated:YES];
+}
+
 - (void)showComment:(UIButton*)sender {
     UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                            bundle:nil];
     LXPicCommentViewController *viewPicDetail = [storyGallery instantiateViewControllerWithIdentifier:@"Comment"];
     Picture *picture = [LXUtils picFromPicID:sender.tag of:feeds];
     viewPicDetail.picture = picture;
+    
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    NSString *urlDetail = [NSString stringWithFormat:@"picture/%d", [picture.pictureId integerValue]];
+    [[LatteAPIClient sharedClient] getPath:urlDetail
+                                parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       viewPicDetail.comments = [Comment mutableArrayFromDictionary:JSON withKey:@"comments"];
+                                       
+                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       TFLog(@"Something went wrong Pic Comment");
+                                       
+                                       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                       message:error.localizedDescription
+                                                                                      delegate:nil
+                                                                             cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                             otherButtonTitles:nil];
+                                       [alert show];
+                                   }];
+
+    
     [self.navigationController pushViewController:viewPicDetail animated:YES];
 }
 
@@ -405,9 +431,9 @@
 }
 
 - (IBAction)touchTab:(UIButton*)sender {
-    buttonGrid.enabled = true;
-    buttonTimeline.enabled = true;
-    sender.enabled = false;
+    buttonGrid.selected = false;
+    buttonTimeline.selected = false;
+    sender.selected = true;
     
     switch (sender.tag) {
         case 0:
@@ -430,6 +456,7 @@
 - (IBAction)touchCloseLogin:(id)sender {
     [self hideLoginPanel];
 }
+
 
 - (IBAction)touchReg:(id)sender {
     [self performSegueWithIdentifier:@"Register" sender:nil];
@@ -475,15 +502,11 @@
 }
 
 - (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
-    
     return reloading; // should return if data source model is reloading
-    
 }
 
 - (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
-    
     return [NSDate date]; // should return date data source was last changed
-    
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{

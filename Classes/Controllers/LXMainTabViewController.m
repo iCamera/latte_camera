@@ -13,6 +13,7 @@
 #import "LXUserNavButton.h"
 #import "LXMyPageViewController.h"
 #import "LXNavMypageController.h"
+#import "LXNotifySideViewController.h"
 
 @interface LXMainTabViewController ()
 
@@ -21,6 +22,8 @@
 @implementation LXMainTabViewController {
     UIView *viewCamera;
     BOOL isFirst;
+    LXNotifySideViewController *viewNotify;
+    LXUserNavButton *viewNav;
 }
 
 
@@ -44,7 +47,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(receiveLoggedOut:)
                                                  name:@"LoggedOut"
-                                               object:nil];
+                                               object:nil];    
 
     isFirst = true;
     return self;
@@ -67,11 +70,8 @@
     UILabel *labelCamera = [[UILabel alloc] init];
     labelCamera.frame = CGRectMake(0.0, 0.0, 60, 14);
     
-    NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
-    if ([language isEqualToString:@"ja"])
-        labelCamera.font = [UIFont fontWithName:@"AvenirNextCondensed-Medium" size:9];
-    else
-        labelCamera.font = [UIFont fontWithName:@"AvenirNextCondensed-Medium" size:11];
+    labelCamera.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:9];
+
     labelCamera.text = NSLocalizedString(@"start_camera", @"写真を追加");
     labelCamera.backgroundColor = [UIColor clearColor];
     labelCamera.textColor = [UIColor whiteColor];
@@ -131,20 +131,20 @@
         [self setGuest];
     }
     
-    LXUserNavButton *viewNav = [[LXUserNavButton alloc] init];
+    viewNav = [[LXUserNavButton alloc] init];
     viewNav.view.frame = CGRectMake(200, 0, 100, 60);
     [viewNav.buttonSetting addTarget:self action:@selector(showSetting:) forControlEvents:UIControlEventTouchUpInside];
+    [viewNav.buttonNotify addTarget:self action:@selector(toggleNotify:) forControlEvents:UIControlEventTouchUpInside];
+    
     [self.view addSubview:viewNav.view];
     [self addChildViewController:viewNav];
     [viewNav didMoveToParentViewController:self];
     
     for(UIViewController *tab in self.viewControllers) {
-        NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
+        
         UIFont *font;
-        if ([language isEqualToString:@"ja"])
-            font = [UIFont fontWithName:@"AvenirNextCondensed-Medium" size:9];
-        else
-            font = [UIFont fontWithName:@"AvenirNextCondensed-Medium" size:11];
+
+        font = [UIFont fontWithName:@"HelveticaNeue-Light" size:9];
         
         NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                     font, UITextAttributeFont,
@@ -155,6 +155,29 @@
         
         [tab.tabBarItem setTitleTextAttributes:attributes
                                       forState:UIControlStateNormal];
+    }
+}
+
+- (void)toggleNotify:(id)sender {
+    if (viewNotify == nil) {
+        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+        UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+        viewNotify = [storyMain instantiateViewControllerWithIdentifier:@"Notification"];
+        viewNotify.view.frame = CGRectMake(20, 50, 280, 350);
+        viewNotify.view.alpha = 0;
+        [self.view addSubview:viewNotify.view];
+        [self addChildViewController:viewNotify];
+        [viewNotify didMoveToParentViewController:self];
+        [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
+            viewNotify.view.alpha = 1;
+        }];
+    } else {
+        [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
+            viewNotify.view.alpha = 0;
+        } completion:^(BOOL finished) {
+            [viewNotify.view removeFromSuperview];
+            viewNotify = nil;
+        }];
     }
 }
 

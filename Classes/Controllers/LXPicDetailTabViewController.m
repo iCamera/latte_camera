@@ -45,6 +45,7 @@
     scrollTab.contentOffset = CGPointMake(320, 0);
 }
 
+
 - (void)updateContent {
     CGPoint frameOrigin = self.view.frame.origin;
     CGRect screenRect = [[UIScreen mainScreen] bounds];
@@ -77,13 +78,19 @@
     
     if ([segue.identifier isEqualToString:@"Vote"]) {
         viewVote = segue.destinationViewController;
-        viewVote.picture = _picture;
+        if (_picture != nil) {
+            viewVote.picture = _picture;
+        }
     } else if ([segue.identifier isEqualToString:@"Comment"]) {
         _viewComment = segue.destinationViewController;
-        _viewComment.picture = _picture;
+        if (_picture != nil) {
+            _viewComment.picture = _picture;
+        }
     } else if ([segue.identifier isEqualToString:@"Info"]) {
         viewInfo = segue.destinationViewController;
-        viewInfo.picture = _picture;
+        if (_picture != nil) {
+            viewInfo.picture = _picture;
+        }
     }
 }
 

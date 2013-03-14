@@ -26,6 +26,10 @@
 @synthesize labelLikes;
 @synthesize labelView;
 @synthesize buttonFollow;
+@synthesize buttonCalendar;
+@synthesize buttonPhotoGrid;
+@synthesize buttonPhotoTimeline;
+@synthesize buttonProfile;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -59,6 +63,9 @@
     [buttonFollower setTitle:[user.countFollowers stringValue] forState:UIControlStateNormal];
     [buttonTableFollowing setTitle:[user.countFollows stringValue] forState:UIControlStateNormal];
     
+    buttonTableFollowing.enabled = [user.countFollows integerValue] > 0;
+    buttonFollower.enabled = [user.countFollowers integerValue] > 0;
+    
     labelLikes.text = [user.voteCount stringValue];
     labelView.text = [user.pageViews stringValue];
     
@@ -72,34 +79,55 @@
     }
 }
 
+- (void)resetPhotoButton {
+    buttonPhotoGrid.selected = false;
+    buttonPhotoTimeline.selected = false;
+    buttonCalendar.selected = false;
+}
+
+- (void)resetTabButton {
+    buttonProfile.selected = false;
+    buttonTableFollowing.selected = false;
+    buttonFollower.selected = false;
+    buttonPhotoCount.selected = false;
+}
+
 - (IBAction)touchTab:(UIButton *)sender {
     switch (sender.tag) {
         case 1:
+            [self resetTabButton];
             [_parent collapseHeader];
             [_parent touchTab:kTableProfile];
             break;
         case 2:
+            [self resetTabButton];
             [_parent expandHeader];
             [_parent touchTab:kTablePhoto];
             break;
         case 3:
+            [self resetTabButton];
             [_parent collapseHeader];
             [_parent touchTab:kTableFollowings];
             break;
         case 4:
+            [self resetTabButton];
             [_parent collapseHeader];
             [_parent touchTab:kTableFollower];
             break;
         case 6:
+            [self resetPhotoButton];
             [_parent touchPhoto:kPhotoMyphoto];
             break;
         case 7:
+            [self resetPhotoButton];
             [_parent touchPhoto:kPhotoTimeline];
             break;
         case 8:
+            [self resetPhotoButton];
             [_parent touchPhoto:kPhotoCalendar];
             break;
     }
+    sender.selected = true;
 }
 
 - (IBAction)toggleFollow:(UIButton *)sender {

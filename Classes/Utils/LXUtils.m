@@ -12,6 +12,7 @@
 #import "User.h"
 #import "Picture.h"
 #import "Feed.h"
+#import "Comment.h"
 
 #import "LXAppDelegate.h"
 
@@ -32,22 +33,27 @@
     view.clipsToBounds = YES;
 }
 
-
 + (void)toggleLike:(UIButton*)sender ofPicture:(Picture*)pic {
+    [LXUtils toggleLike:sender ofPicture:pic setCount:nil];
+}
+
++ (void)toggleLike:(UIButton*)sender ofPicture:(Picture*)pic setCount:(UILabel*)labelCount {
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
     if (!app.currentUser) {
         sender.enabled = NO;
     }
     
     pic.isVoted = !pic.isVoted;
-    BOOL increase = pic.isVoted;
     sender.selected = pic.isVoted;
+    
+    BOOL increase = pic.isVoted;
 
     pic.voteCount = [NSNumber numberWithInteger:[pic.voteCount integerValue] + (increase?1:-1)];
-    NSInteger likeCount = [sender.titleLabel.text integerValue];
-    NSNumber *num = [NSNumber numberWithInteger:likeCount + (increase?1:-1)];
-    [sender setTitle:[num stringValue] forState:UIControlStateNormal];
-    
+    if (labelCount != nil) {
+        labelCount.text = [pic.voteCount stringValue];
+    } else {
+        [sender setTitle:[pic.voteCount stringValue] forState:UIControlStateNormal];
+    }
     NSMutableDictionary *param = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                            @"1", @"vote_type",
                            nil];
@@ -102,34 +108,56 @@
 
 
 + (NSString *)stringFromNotify:(NSDictionary *)notify {
-    NSString * notifyString = @"";
+    NSString * stringUsers = @"";
     NSMutableArray *users = [User mutableArrayFromDictionary:notify withKey:@"users"];
-    BOOL first = true;
-    for (User *user in users) {
-        if (first)
-            first = false;
-        else
-            notifyString= [notifyString stringByAppendingString:NSLocalizedString(@"and", @"と")];
+
+    for (int i = 0; i < users.count; i++) {
+        User* user = users[i];
+        if (i > 0)
+            stringUsers= [stringUsers stringByAppendingString:NSLocalizedString(@"and", @"と")];
         
         if (user.name != nil) {
-            notifyString = [notifyString stringByAppendingString:user.name];
-            notifyString = [notifyString stringByAppendingString:NSLocalizedString(@"subfix", @"さん") ];
+            stringUsers = [stringUsers stringByAppendingString:user.name];
         } else {
-            notifyString = [notifyString stringByAppendingString:NSLocalizedString(@"guest", @"ゲスト") ];
+            stringUsers = [stringUsers stringByAppendingString:NSLocalizedString(@"guest", @"ゲスト") ];
+        }
+        
+        if (i < users.count-1) {
+            stringUsers = [stringUsers stringByAppendingString:NSLocalizedString(@"subfix", @"さん") ];
         }
     }
     
-    switch ([[notify objectForKey:@"kind"] integerValue]) {
-        case 1: // Comment
-            notifyString = [notifyString stringByAppendingString:NSLocalizedString(@"notify_commented", @"が、あなたの写真にコメントしました。")];
+    NSString * notifyString;
+    NotifyKind notifyKind = [[notify objectForKey:@"kind"] integerValue];
+    switch (notifyKind) {
+        case kNotifyKindComment: {
+            notifyString = [NSString stringWithFormat:NSLocalizedString(@"notify_commented", @"が、あなたの写真にコメントしました。"), stringUsers];
             break;
-        case 2: // Vote
-            notifyString = [notifyString stringByAppendingString:NSLocalizedString(@"notify_liked", @"が、あなたの写真を「いいね！」と評価しました。")];
+        }
+        case kNotifyKindLike: {
+            NotifyTarget notifyTarget = [[notify objectForKey:@"target_model"] integerValue];
+            switch (notifyTarget) {
+                case kNotifyTargetComment: {
+                    Comment *comment = [Comment instanceFromDictionary:[notify objectForKey:@"target"]];
+                    notifyString = [NSString stringWithFormat:NSLocalizedString(@"notify_like_comment", @"が、あなたのコメントを「いいね！」と評価しました。"), stringUsers, comment.descriptionText];
+                    break;
+                }
+                case kNotifyTargetPicture:
+                    notifyString = [NSString stringWithFormat:NSLocalizedString(@"notify_like_photo", @"が、あなたの写真を「いいね！」と評価しました。"), stringUsers];
+                    break;
+                default:
+                    break;
+            }
             break;
-        case 10: // target update
-            notifyString = [notifyString stringByAppendingString:@" target update"];
+        }
+        case kNotifyKindFollow: // target update
+        {
+            User *user = [User instanceFromDictionary:[notify objectForKey:@"target"]];
+            notifyString = [NSString stringWithFormat:NSLocalizedString(@"apns_user_follow", @""), user.name];
             break;
+        }
         default:
+            notifyString = @"target update";
             break;
     }
     return notifyString;

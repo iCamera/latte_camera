@@ -63,6 +63,9 @@
 @property (nonatomic, copy) NSNumber *status;
 @property (nonatomic, copy) NSDictionary *exif;
 @property (nonatomic, copy) NSArray *tags;
+@property (nonatomic, assign) BOOL showGPS;
+@property (nonatomic, assign) BOOL showEXIF;
+@property (nonatomic, copy) NSString *urlWeb;
 
 + (Picture *)instanceFromDictionary:(NSDictionary *)aDictionary;
 - (void)setAttributesFromDictionary:(NSDictionary *)aDictionary;

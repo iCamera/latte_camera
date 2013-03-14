@@ -7,6 +7,7 @@
 //
 
 #import "LXPicMapViewController.h"
+#import "LXAppDelegate.h"
 
 @interface LXPicMapViewController ()
 

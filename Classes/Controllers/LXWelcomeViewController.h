@@ -12,27 +12,13 @@
 #import "Feed.h"
 #import "Picture.h"
 #import "LatteAPIClient.h"
-#import "LXPicDetailViewController.h"
 #import "LXAppDelegate.h"
 #import "EGORefreshTableHeaderView.h"
 #import "LXCellTimelineSingle.h"
 #import "LXCellTimelineMulti.h"
 #import "LXGalleryViewController.h"
 
-typedef enum {
-    kWelcomeTableTimeline,
-    kWelcomeTableGrid,
-} WelcomeTableMode;
-
-@interface LXWelcomeViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,EGORefreshTableHeaderDelegate, LXGalleryViewControllerDataSource> {
-    NSMutableArray *feeds;
-    int pagephoto;
-    BOOL loadEnded;
-    BOOL reloading;
-    EGORefreshTableHeaderView *refreshHeaderView;
-    UIPanGestureRecognizer *navigationBarPanGestureRecognizer;
-    NSInteger tableMode;
-}
+@interface LXWelcomeViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,EGORefreshTableHeaderDelegate, LXGalleryViewControllerDataSource>
 
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
 @property (strong, nonatomic) IBOutlet UIButton *buttonGrid;

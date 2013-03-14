@@ -27,6 +27,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonInfo;
 @property (strong, nonatomic) IBOutlet UILabel *labelAccess;
 @property (strong, nonatomic) IBOutlet UIView *viewBackground;
+@property (strong, nonatomic) IBOutlet UILabel *labelLike;
 
 @property (strong, nonatomic) UIViewController *viewController;
 @property (strong, nonatomic) Feed *feed;

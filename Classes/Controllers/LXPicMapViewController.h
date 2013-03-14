@@ -10,7 +10,6 @@
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "PicturePin.h"
-#import "LXPicDetailViewController.h"
 #import "Picture.h"
 
 #define METERS_PER_MILE 1609.344

@@ -114,10 +114,12 @@
         [self setValue:value forKey:@"isFriend"];
     } else if ([key isEqualToString:@"stealth_mode"]) {
         [self setValue:value forKey:@"_stealthMode"];
-    } else if ([key isEqualToString:@"request_to_me"]) {
-        [self setValue:value forKey:@"requestToMe"];
-    } else if ([key isEqualToString:@"request_to_user"]) {
-        [self setValue:value forKey:@"requestToUser"];
+    } else if ([key isEqualToString:@"default_show_gps"]) {
+        [self setValue:value forKey:@"_defaultShowGPS"];
+    } else if ([key isEqualToString:@"default_show_exif"]) {
+        [self setValue:value forKey:@"_defaultShowEXIF"];
+    } else if ([key isEqualToString:@"nationality"]) {
+        [self setValue:value forKey:@"_nationality"];
     }
     
     else {

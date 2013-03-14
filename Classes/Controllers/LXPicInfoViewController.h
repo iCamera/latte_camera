@@ -11,12 +11,12 @@
 #import "LatteAPIClient.h"
 #import "UIImageView+AFNetworking.h"
 #import "LXAppDelegate.h"
-#import "LXPicDetailViewController.h"
 #import "Picture.h"
 
 @interface LXPicInfoViewController : UITableViewController
 
 @property (strong, nonatomic) Picture *picture;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityLoad;
 
 - (IBAction)touchBack:(id)sender;
 @end

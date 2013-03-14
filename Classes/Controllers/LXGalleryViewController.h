@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "STTweetLabel.h"
 
 @class Picture, User;
 
@@ -23,14 +24,16 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonLike;
 @property (strong, nonatomic) IBOutlet UIButton *buttonComment;
 @property (strong, nonatomic) IBOutlet UIButton *buttonMap;
-@property (strong, nonatomic) IBOutlet UIView *viewTab;
 @property (strong, nonatomic) IBOutlet UIButton *buttonEdit;
-@property (strong, nonatomic) IBOutlet UILabel *labelNickname;
 @property (strong, nonatomic) IBOutlet UIButton *buttonUser;
-@property (strong, nonatomic) IBOutlet UILabel *labelView;
+@property (strong, nonatomic) IBOutlet UIView *viewTab;
 @property (strong, nonatomic) IBOutlet UIView *viewInfoTop;
-@property (strong, nonatomic) IBOutlet UILabel *labelDesc;
 @property (strong, nonatomic) IBOutlet UIView *viewDesc;
+@property (strong, nonatomic) IBOutlet UILabel *labelNickname;
+@property (strong, nonatomic) STTweetLabel *labelDesc;
+@property (strong, nonatomic) IBOutlet UILabel *labelView;
+@property (strong, nonatomic) IBOutlet UILabel *labelLike;
+@property (strong, nonatomic) IBOutlet UILabel *labelComment;
 
 @property (strong, nonatomic) Picture* picture;
 @property (strong, nonatomic) User* user;

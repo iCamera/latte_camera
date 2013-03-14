@@ -26,6 +26,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *imagePic;
 @property (strong, nonatomic) IBOutlet UITextView *textDesc;
 @property (strong, nonatomic) IBOutlet UISwitch *switchGPS;
+@property (strong, nonatomic) IBOutlet UISwitch *switchEXIF;
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *gestureTap;
 @property (strong, nonatomic) IBOutlet UILabel *labelStatus;
 @property (strong, nonatomic) IBOutlet UIView *viewDelete;

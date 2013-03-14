@@ -13,8 +13,6 @@
 #import "MBProgressHUD.h"
 #import "LXCameraViewController.h"
 
-@class User;
-
 typedef enum {
     kTableProfile,
     kTablePhoto,
@@ -30,13 +28,7 @@ typedef enum {
     kPhotoCalendar,
 } MypagePhotoMode;
 
-typedef enum {
-    kTimelineAll = 10,
-    kTimelineFriends = 12,
-    kTimelineFollowing = 13,
-} LatteTimeline;
-
-#define kModelPicture 1
+@class User;
 
 @interface LXMyPageViewController : UITableViewController <EGORefreshTableHeaderDelegate, MBProgressHUDDelegate, UIActionSheetDelegate, LXImagePickerDelegate, LXGalleryViewControllerDataSource>
 
@@ -48,7 +40,6 @@ typedef enum {
 - (void)touchPhoto:(MypagePhotoMode)mode;
 
 - (void)touchSetProfilePic;
-- (Feed *)feedFromPicID:(long)picID;
 - (void)expandHeader;
 - (void)collapseHeader;
 

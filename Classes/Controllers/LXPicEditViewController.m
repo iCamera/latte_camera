@@ -8,7 +8,6 @@
 
 #import "LXPicEditViewController.h"
 #import "LXAppDelegate.h"
-#import "LXPicDetailViewController.h"
 
 @interface LXPicEditViewController ()
 
@@ -20,6 +19,7 @@
 @synthesize textDesc;
 @synthesize gestureTap;
 @synthesize switchGPS;
+@synthesize switchEXIF;
 @synthesize labelStatus;
 @synthesize buttonDelete;
 @synthesize viewDelete;
@@ -62,6 +62,8 @@
         [imagePic setImageWithURL:[NSURL URLWithString:_picture.urlSquare]];
         textDesc.text = _picture.descriptionText;
         imageStatus = [_picture.status integerValue];
+        switchGPS.on = _picture.showGPS;
+        switchEXIF.on = _picture.showEXIF;
         buttonDelete.hidden = false;
     } else {
         share.imageData = _imageData;
@@ -248,7 +250,13 @@
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             [app getToken], @"token",
                             textDesc.text, @"comment",
+                            [NSNumber numberWithBool:switchEXIF.on], @"show_exif",
+                            [NSNumber numberWithBool:switchGPS.on], @"show_gps",
                             [NSNumber numberWithInteger:imageStatus], @"status", nil];
+    _picture.descriptionText = textDesc.text;
+    _picture.status = [NSNumber numberWithInteger:imageStatus];
+    _picture.showEXIF = switchEXIF.on;
+    _picture.showGPS = switchGPS.on;
     
     [[LatteAPIClient sharedClient] postPath:url
                                  parameters: params
@@ -295,6 +303,8 @@
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             [app getToken], @"token",
                             textDesc.text, @"comment",
+                            [NSNumber numberWithBool:switchEXIF.on], @"show_exif",
+                            [NSNumber numberWithBool:switchGPS.on], @"show_gps",
                             [NSNumber numberWithInteger:imageStatus], @"picture_status",
                             nil];
     
@@ -319,7 +329,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, 30)];
-    title.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:16];
+    title.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
     title.textColor = [UIColor colorWithRed:101.0/255.0 green:90.0/255.0 blue:56.0/255.0 alpha:1];
     title.text = [self tableView:tableView titleForHeaderInSection:section];
     [view addSubview:title];

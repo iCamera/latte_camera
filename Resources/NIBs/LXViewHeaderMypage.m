@@ -25,6 +25,11 @@
 @synthesize buttonPicCount;
 @synthesize buttonFollowCount;
 @synthesize buttonFriendCount;
+@synthesize buttonTimelineAll;
+@synthesize buttonTimelineCalendar;
+@synthesize buttonTimelineFollow;
+@synthesize buttonTimelineFriend;
+@synthesize buttonTimelineMe;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -70,6 +75,9 @@
     [buttonPicCount setTitle:[user.countPictures stringValue] forState:UIControlStateNormal];
     [buttonFriendCount setTitle:[user.countFollowers stringValue] forState:UIControlStateNormal];
     [buttonFollowCount setTitle:[user.countFollows stringValue] forState:UIControlStateNormal];
+    
+    buttonFollowCount.enabled = [user.countFollows integerValue] > 0;
+    buttonFriendCount.enabled = [user.countFollowers integerValue] > 0;
 }
 
 - (void)didReceiveMemoryWarning
@@ -81,6 +89,14 @@
 - (void)viewDidUnload {
     [self setButtonTimelineCalendar:nil];
     [super viewDidUnload];
+}
+
+- (void)resetTimelineButton {
+    buttonTimelineAll.selected = false;
+    buttonTimelineCalendar.selected = false;
+    buttonTimelineFollow.selected = false;
+    buttonTimelineFriend.selected = false;
+    buttonTimelineMe.selected = false;
 }
 
 - (IBAction)touchTab:(UIButton *)sender {
@@ -102,21 +118,27 @@
             [_parent touchTab:kTableFollower];
             break;
         case 5:
+            [self resetTimelineButton];
             [_parent touchPhoto:kPhotoTimeline];
             break;
         case 6:
+            [self resetTimelineButton];
             [_parent touchPhoto:kPhotoFriends];
             break;
         case 7:
+            [self resetTimelineButton];
             [_parent touchPhoto:kPhotoFollowing];
             break;
         case 8:
+            [self resetTimelineButton];
             [_parent touchPhoto:kPhotoMyphoto];
             break;
         case 9:
+            [self resetTimelineButton];
             [_parent touchPhoto:kPhotoCalendar];
             break;
     }
+    sender.selected = true;
 }
 
 - (IBAction)touchSetProfilePic:(id)sender {

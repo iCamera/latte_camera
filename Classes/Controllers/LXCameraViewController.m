@@ -301,7 +301,7 @@
         labelEffect.textColor = [UIColor whiteColor];
         labelEffect.shadowColor = [UIColor blackColor];
         labelEffect.shadowOffset = CGSizeMake(0.0, 1.0);
-        labelEffect.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:11];
+        labelEffect.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:11];
         labelEffect.userInteractionEnabled = NO;
         UIButton *buttonEffect = [[UIButton alloc] initWithFrame:CGRectMake(5+75*i, 0, 70, 70)];
         GPUImageView *effectView = [[GPUImageView alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
@@ -388,7 +388,7 @@
         UILabel *labelBlend = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 10)];
         labelBlend.backgroundColor = [UIColor clearColor];
         labelBlend.textColor = [UIColor whiteColor];
-        labelBlend.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:9];
+        labelBlend.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:9];
         UIButton *buttonBlend = [[UIButton alloc] initWithFrame:CGRectMake(5+55*i, 5, 50, 50)];
         labelBlend.center = CGPointMake(buttonBlend.center.x, 63);
         labelBlend.textAlignment = NSTextAlignmentCenter;

@@ -28,6 +28,7 @@
 
 @property (strong, nonatomic) User *currentUser;
 @property (strong, nonatomic) NSString *apns;
+@property (strong, nonatomic) LXMainTabViewController *viewMainTab;
 
 extern NSString *const FBSessionStateChangedNotification;
 

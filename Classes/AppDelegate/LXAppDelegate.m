@@ -113,15 +113,13 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
     if (remoteNotification) {
     }
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(readNotify:) name:@"ReadNotify" object:nil];
-    
-    [[UIApplication sharedApplication] setStatusBarHidden:NO];
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
     
     LXSidePanelController *controllerSide = [[LXSidePanelController alloc] init];
-    controllerSide.centerPanel = [mainStoryboard instantiateViewControllerWithIdentifier:@"MainTab"];
-    controllerSide.leftPanel = [mainStoryboard instantiateViewControllerWithIdentifier:@"LeftSide"];
+    _viewMainTab = [mainStoryboard instantiateViewControllerWithIdentifier:@"MainTab"];
+    controllerSide.centerPanel = _viewMainTab;
+//    controllerSide.leftPanel = [mainStoryboard instantiateViewControllerWithIdentifier:@"LeftSide"];
     
     window.rootViewController = controllerSide;
     [window makeKeyAndVisible];
@@ -129,36 +127,6 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
     return YES;
 }
 
-- (void)readNotify:(id)sender {
-    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-}
-
-/*- (void)toogleCamera {
-    if (window.rootViewController != viewCamera) {
-        [[UIApplication sharedApplication] setStatusBarHidden:YES];
-        window.rootViewController = viewCamera;
-        [window makeKeyAndVisible];
-        LXCameraViewController *tmp = viewCamera.viewControllers[0];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-            [tmp.videoCamera startCameraCapture];
-        });
-    }
-    else if (revealController != nil) {
-        window.rootViewController = revealController;
-        [window makeKeyAndVisible];
-    } else {
-        [[UIApplication sharedApplication] setStatusBarHidden:NO];
-        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                                 bundle:nil];
-        
-        LXSidePanelController *controllerSide = [[LXSidePanelController alloc] init];
-        controllerSide.centerPanel = [mainStoryboard instantiateViewControllerWithIdentifier:@"MainTab"];
-        controllerSide.leftPanel = [mainStoryboard instantiateViewControllerWithIdentifier:@"LeftSide"];
-
-        window.rootViewController = controllerSide;
-        [window makeKeyAndVisible];
-    }
-}*/
 
 - (void)updateUserAPNS {
     [[LatteAPIClient sharedClient] postPath:@"user/me/update"
@@ -235,7 +203,7 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ReceivedPushNotify" object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ReceivedPushNotify" object:userInfo];
     
 //    NSDictionary *aps = [userInfo objectForKey:@"aps"];
 //    NSDictionary *alert = [aps objectForKey:@"alert"];

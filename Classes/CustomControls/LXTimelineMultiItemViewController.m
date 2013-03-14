@@ -51,10 +51,10 @@
     
     LXAppDelegate* app = (LXAppDelegate*)[[UIApplication sharedApplication] delegate];
     
-    if (_pic.canVote) {
-        if (!(_pic.isVoted && !app.currentUser))
-            buttonVote.enabled = YES;
-    }
+    buttonVote.enabled = NO;
+    if (!(_pic.isVoted && !app.currentUser))
+        buttonVote.enabled = YES;
+    buttonVote.selected = _pic.isVoted;
     
     buttonVote.selected = _pic.isVoted;
     
@@ -65,7 +65,15 @@
     
     [buttonImage addTarget:_parent action:@selector(showPic:) forControlEvents:UIControlEventTouchUpInside];
     [buttonComment addTarget:_parent action:@selector(showComment:) forControlEvents:UIControlEventTouchUpInside];
-    [buttonVote addTarget:_parent action:@selector(submitLike:) forControlEvents:UIControlEventTouchUpInside];
+    
+    if (_pic.isOwner) {
+        if ([_pic.voteCount integerValue] == 0) {
+            buttonVote.enabled = false;
+        }
+        [buttonVote addTarget:_parent action:@selector(showLike:) forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        [buttonVote addTarget:_parent action:@selector(submitLike:) forControlEvents:UIControlEventTouchUpInside];
+    }
     
 //    buttonComment.hidden = !_showButton;
 //    buttonVote.hidden = !_showButton;

@@ -11,6 +11,19 @@
 
 @class Feed, Picture, User;
 
+typedef enum {
+    kNotifyKindComment = 1,
+    kNotifyKindLike = 2,
+    kNotifyKindFollow = 3,
+    kNotifyKindTargetUpdate = 10,
+} NotifyKind;
+
+typedef enum {
+    kNotifyTargetPicture = 1,
+    kNotifyTargetUser = 2,
+    kNotifyTargetComment = 41,
+} NotifyTarget;
+
 #define kGlobalAnimationSpeed 0.25
 
 @interface LXUtils : NSObject
@@ -25,6 +38,7 @@
 + (Picture *)picFromPicID:(long)picID of:(NSArray *)feeds;
 + (Feed *)feedFromPicID:(long)picID of:(NSArray *)feeds;
 + (void)toggleLike:(UIButton*)sender ofPicture:(Picture*)pic;
++ (void)toggleLike:(UIButton*)sender ofPicture:(Picture*)pic setCount:(UILabel*)labelCount;
 + (void)globalShadow:(UIView*)view;
 
 @end

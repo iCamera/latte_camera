@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "LXLoginViewController.h"
 #import "LXCameraViewController.h"
-#import "LXPicDetailViewController.h"
 #import "User.h"
 #import "Picture.h"
 

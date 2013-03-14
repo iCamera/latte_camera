@@ -15,6 +15,8 @@
 
 @implementation LXUserNavButton
 
+@synthesize labelCount;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -27,7 +29,27 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.notifyCount = [UIApplication sharedApplication].applicationIconBadgeNumber;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receivePushNotify:)
+                                                 name:@"ReceivedPushNotify"
+                                               object:nil];
+    labelCount.layer.cornerRadius = 5.0;
+    labelCount.layer.masksToBounds = YES;
+    
     // Do any additional setup after loading the view from its nib.
+}
+
+- (void)receivePushNotify:(NSNotification*)notify {
+    NSDictionary *userInfo = notify.object;
+    if ([userInfo objectForKey:@"aps"]) {
+        NSDictionary *aps = [userInfo objectForKey:@"aps"];
+        if ([aps objectForKey:@"badge"]) {
+            NSNumber *count = [aps objectForKey:@"badge"];
+            self.notifyCount = [count integerValue];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -36,12 +58,11 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)touchNotify:(id)sender {
+- (void)setNotifyCount:(NSInteger)notifyCount {
+    labelCount.hidden = notifyCount == 0;
+    labelCount.text = [NSString stringWithFormat:@"%d", notifyCount];
 }
 
-- (IBAction)touchSetting:(id)sender {
-
-}
 - (void)viewDidUnload {
     [self setButtonNotify:nil];
     [self setButtonSetting:nil];

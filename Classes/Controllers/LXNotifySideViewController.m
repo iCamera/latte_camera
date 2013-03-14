@@ -8,14 +8,31 @@
 
 #import "LXNotifySideViewController.h"
 
+#import "LXAppDelegate.h"
+#import "LatteAPIClient.h"
+#import "LXCellFriendRequest.h"
+#import "LXCellNotify.h"
+#import "UIButton+AsyncImage.h"
 #import "LXGalleryViewController.h"
+#import "LXMyPageViewController.h"
+#import "Comment.h"
+#import "User.h"
+#import "Picture.h"
 
 @interface LXNotifySideViewController ()
 
 @end
 
-@implementation LXNotifySideViewController
+@implementation LXNotifySideViewController {
+    NSMutableArray *notifies;
+    
+    int page;
+    int limit;
+    EGORefreshTableHeaderView *refreshHeaderView;
+    BOOL reloading;
+}
 @synthesize tableNotify;
+@synthesize activityLoad;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -47,26 +64,11 @@
     page = 1;
     limit = 12;
 
-    
     // Do any additional setup after loading the view from its nib.
     refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - tableNotify.bounds.size.height, tableNotify.frame.size.width, tableNotify.bounds.size.height)];
     refreshHeaderView.delegate = self;
     [tableNotify addSubview:refreshHeaderView];
-    
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(sessionStateChanged:)
-     name:FBSessionStateChangedNotification
-     object:nil];
-    
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    if (app.currentUser != nil) {
-        [self receiveLoggedIn:nil];
-        
-        if (FBSession.activeSession.isOpen) {
-            [self loadFacebokFriend];
-        }
-    }
+    [self reloadView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -101,6 +103,7 @@
                                              notifies = [NSMutableArray arrayWithArray:[JSON objectForKey:@"notifies"]];
                                              [tableNotify reloadData];
                                              [self doneLoadingTableViewData];
+                                             [activityLoad stopAnimating];
                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                              TFLog(@"Something went wrong (Notify)");
                                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
@@ -110,47 +113,8 @@
                                                                                    otherButtonTitles:nil];
                                              [alert show];
                                              [self doneLoadingTableViewData];
+                                             [activityLoad stopAnimating];
                                          }];
-}
-
-
-- (void)loadFacebokFriend {
-    FBSession *fbsession = FBSession.activeSession;
-    
-    FBRequest *fbrequest = [[FBRequest alloc]initWithSession:fbsession
-                                                   graphPath:@"me/friends"
-                                                  parameters:[NSDictionary dictionaryWithObject:@"id,name,installed" forKey:@"fields"]
-                                                  HTTPMethod:@"GET"];
-    [fbrequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-        NSMutableArray *tmp = [[NSMutableArray alloc]init];
-        for (NSDictionary* friend in [(NSDictionary*)result objectForKey:@"data"]) {
-            if ([friend objectForKey:@"installed"] != nil) {
-                [tmp addObject:[friend objectForKey:@"id"]];
-            }
-        }
-        
-        if (tmp.count > 0) {
-            LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-            [[LatteAPIClient sharedClient] getPath:@"user/friends/facebook_unadded_friend"
-                                        parameters: [NSDictionary dictionaryWithObjectsAndKeys:
-                                                     [app getToken], @"token",
-                                                     [tmp componentsJoinedByString:@","], @"fbids",
-                                                     nil]
-                                           success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                               fbfriends = [User mutableArrayFromDictionary:JSON withKey:@"users"];
-                                           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                               TFLog(@"Something went wrong (FB Friends)");
-                                           }];
-        }
-    }];
-}
-
-- (void)sessionStateChanged:(NSNotification*)notification {
-    if (FBSession.activeSession.isOpen) {
-        [self loadFacebokFriend];
-    } else {
-        fbfriends = nil;
-    }
 }
 
 
@@ -170,15 +134,39 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *notify = notifies[indexPath.row];
-    
-    Picture *pic = [Picture instanceFromDictionary:[notify objectForKey:@"target"]];
-    
-    UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
-                                                           bundle:nil];
-    UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
-    LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
-    viewGallery.picture = pic;
-    [self presentViewController:navGalerry animated:YES completion:nil];
+    NotifyTarget notifyTarget = [[notify objectForKey:@"target_model"] integerValue];
+    switch (notifyTarget) {
+        case kNotifyTargetComment: {
+            Comment *comment = [Comment instanceFromDictionary:[notify objectForKey:@"target"]];
+            break;
+        }
+        case kNotifyTargetPicture: {
+            Picture *pic = [Picture instanceFromDictionary:[notify objectForKey:@"target"]];
+            
+            UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
+                                                                   bundle:nil];
+            UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
+            LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
+            viewGallery.picture = pic;
+            [self presentViewController:navGalerry animated:YES completion:nil];
+            break;
+        }
+        case kNotifyTargetUser: {
+            LXAppDelegate *app = [LXAppDelegate currentDelegate];
+            UINavigationController *currentNav = (UINavigationController*)app.viewMainTab.selectedViewController;
+            User *user = [User instanceFromDictionary:[notify objectForKey:@"target"]];
+            
+            UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                                   bundle:nil];
+            LXMyPageViewController  *viewMypage = [storyGallery instantiateViewControllerWithIdentifier:@"UserPage"];
+            viewMypage.user = user;
+            [currentNav pushViewController:viewMypage animated:YES];
+            
+            break;
+        }
+        default:
+            break;
+    }
 
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -187,8 +175,8 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *stringNotify = [LXUtils stringFromNotify:notifies[indexPath.row]];
     
-    CGSize labelSize = [stringNotify sizeWithFont:[UIFont fontWithName:@"AvenirNextCondensed-Regular" size:11]
-                                constrainedToSize:CGSizeMake(180.0, MAXFLOAT)
+    CGSize labelSize = [stringNotify sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:11]
+                                constrainedToSize:CGSizeMake(230.0, MAXFLOAT)
                                     lineBreakMode:NSLineBreakByWordWrapping];
     
     return labelSize.height + 26;

@@ -69,7 +69,7 @@
                                                labelGuestVote.backgroundColor = [UIColor clearColor];
                                                labelGuestVote.textColor = [UIColor colorWithRed:187.0/255.0 green:184.0/255.0 blue:169.0/255.0 alpha:1];
                                                labelGuestVote.textAlignment = NSTextAlignmentCenter;
-                                               labelGuestVote.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:20];
+                                               labelGuestVote.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:20];
                                                labelGuestVote.text = [NSString stringWithFormat:@"+%d", guestVoteCount];
                                            } else {
 
