@@ -31,6 +31,7 @@
 #import "LXViewHeaderMypage.h"
 #import "LXViewHeaderUserPage.h"
 #import "LXCellGrid.h"
+#import "LXButtonBack.h"
 
 typedef enum {
     kTimelineAll = 10,
@@ -130,6 +131,7 @@ typedef enum {
             photoMode = kPhotoTimeline;
             isMypage = true;
         }
+        self.navigationItem.leftBarButtonItem = nil;
     } else {
         viewHeaderUserpage = [storyComponent instantiateViewControllerWithIdentifier:@"HeaderUserpPage"];
         [self.tableView.tableHeaderView addSubview:viewHeaderUserpage.view];
@@ -150,7 +152,11 @@ typedef enum {
                                     parameters:[NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"]
                                        success:nil
                                        failure:nil];
-
+        
+        //setup back button
+        UIBarButtonItem *navLeftItem = self.navigationItem.leftBarButtonItem;
+        LXButtonBack *buttonBack = (LXButtonBack*)navLeftItem.customView;
+        [buttonBack addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     HUD = [[MBProgressHUD alloc] initWithView:self.tableView];
@@ -508,7 +514,7 @@ typedef enum {
     if (tableMode == kTablePhoto)
     {
         if (photoMode == kPhotoMyphoto) {
-            return 104 + (indexPath.row==0?3:0);
+            return 104;
         } else if (photoMode == kPhotoCalendar) {
             NSCalendar *calendar = [NSCalendar currentCalendar];
             NSRange days = [calendar rangeOfUnit:NSDayCalendarUnit
@@ -830,13 +836,13 @@ typedef enum {
 
 - (void)expandHeader {
     UIView *viewHeader = self.tableView.tableHeaderView;
-    viewHeader.frame = CGRectMake(0, 0, 320, 128);
+    viewHeader.frame = CGRectMake(0, 0, 320, 120);
     self.tableView.tableHeaderView = viewHeader;
 }
 
 - (void)collapseHeader {
     UIView *viewHeader = self.tableView.tableHeaderView;
-    viewHeader.frame = CGRectMake(0, 0, 320, 85);
+    viewHeader.frame = CGRectMake(0, 0, 320, 82);
     self.tableView.tableHeaderView = viewHeader;
 }
 
@@ -1039,7 +1045,10 @@ typedef enum {
         case kPhotoTimeline:
         case kPhotoFriends: {
             Feed *feed = [LXUtils feedFromPicID:sender.tag of:feeds];
-            viewGallery.user = feed.user;
+            if (isMypage)
+                viewGallery.user = feed.user;
+            else
+                viewGallery.user = _user;
             viewGallery.picture = [LXUtils picFromPicID:sender.tag of:feeds];
             break;
         }

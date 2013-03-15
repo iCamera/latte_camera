@@ -12,14 +12,10 @@
 @end
 
 @implementation LXPicInfoViewController {
-    NSDictionary *exif;
-    NSDictionary *picDict;
-    NSArray *keyBasic;
+    NSMutableArray *keyBasic;
     NSArray *keyExif;
-    NSMutableArray *sections;
+    NSInteger sections;
 }
-
-@synthesize activityLoad;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,6 +29,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
 }
 
 - (void)setPicture:(Picture *)picture {
@@ -41,42 +39,25 @@
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     [app.tracker sendView:@"Picture Info Screen"];
     
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
+    keyBasic = [[NSMutableArray alloc] init];
+    if (picture.takenAt) {
+        [keyBasic addObject:@"taken_at"];
+    }
+    if (picture.createdAt) {
+        [keyBasic addObject:@"created_at"];
+    }
+    if (picture.tags) {
+        [keyBasic addObject:@"tags"];
+    }
     
-    NSString *url = [NSString stringWithFormat:@"picture/%d", [_picture.pictureId integerValue]];
+    sections = 1;
     
-    [[LatteAPIClient sharedClient] getPath:url
-                                parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
-                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       picDict = [JSON objectForKey:@"picture"];
-                                       _picture = [Picture instanceFromDictionary:picDict];
-                                       
-                                       NSMutableSet *keyBasicSet = [NSMutableSet setWithObjects:@"taken_at", @"created_at", @"tags", nil];
-                                       NSSet *allField = [NSSet setWithArray:[picDict allKeys]];
-                                       [keyBasicSet intersectSet:allField];
-                                       keyBasic = [keyBasicSet allObjects];
-                                       
-                                       sections = [[NSMutableArray alloc] init];
-                                       [sections addObject:keyBasic];
-                                       exif = [picDict objectForKey:@"exif"];
-                                       if (exif.count > 0) {
-                                           [sections addObject:exif];
-                                           keyExif = [exif allKeys];
-                                       }
-                                       
-                                       [self.tableView reloadData];
-                                       [activityLoad stopAnimating];
-
-                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       [activityLoad stopAnimating];
-                                       TFLog(@"Something went wrong - Picture Info");
-                                       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
-                                                                                       message:error.localizedDescription
-                                                                                      delegate:nil
-                                                                             cancelButtonTitle:NSLocalizedString(@"close", "Close")
-                                                                             otherButtonTitles:nil];
-                                       [alert show];
-                                   }];
+    if (picture.exif.count > 0) {
+        sections += 1;
+        keyExif = [picture.exif allKeys];
+    }
+    
+    [self.tableView reloadData];
 }
 
 - (void)viewDidUnload
@@ -103,7 +84,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    LXCellDataField *cell = [tableView dequeueReusableCellWithIdentifier:@"Profile"];
+    LXCellDataField *cell = [tableView dequeueReusableCellWithIdentifier:@"Profile" forIndexPath:indexPath];
     if (indexPath.section == 0)
     {        
         NSString *key = [keyBasic objectAtIndex:indexPath.row];
@@ -117,13 +98,12 @@
         }
         if ([[keyBasic objectAtIndex:indexPath.row] isEqualToString:@"tags"]) {
             cell.labelField.text = NSLocalizedString(@"tags", @"タグ");
-            NSArray *tags = [picDict objectForKey:[keyBasic objectAtIndex:indexPath.row]];
-            cell.labelDetail.text = [tags componentsJoinedByString:@", "];
+            cell.labelDetail.text = [_picture.tags componentsJoinedByString:@", "];
         }
     }
     if (indexPath.section == 1) {
         cell.labelField.text = [keyExif objectAtIndex:indexPath.row];
-        cell.labelDetail.text = [exif objectForKey:[keyExif objectAtIndex:indexPath.row]];
+        cell.labelDetail.text = [_picture.exif objectForKey:[keyExif objectAtIndex:indexPath.row]];
     }
     
     return cell;
@@ -143,7 +123,7 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [sections count];
+    return sections;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {

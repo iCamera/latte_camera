@@ -12,6 +12,8 @@
 
 @interface LXCollectionCellUser : UICollectionViewCell
 @property (strong, nonatomic) IBOutlet UIImageView *imageUser;
+@property (strong, nonatomic) IBOutlet UILabel *labelName;
+@property (strong, nonatomic) IBOutlet UIView *labelCover;
 
 @property (strong, nonatomic) User *user;
 

@@ -11,6 +11,7 @@
 #import "LXCellGrid.h"
 #import "LatteAPIClient.h"
 #import "LXAppDelegate.h"
+#import "LXButtonBack.h"
 
 typedef enum {
     kSearchPhoto,
@@ -66,6 +67,11 @@ typedef enum {
     UITapGestureRecognizer *gestureTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchBackground:)];
     [self.tableView addGestureRecognizer:gestureTap];
     tableMode = kSearchPhoto;
+    
+    UIBarButtonItem *navLeftItem = self.navigationItem.leftBarButtonItem;
+    LXButtonBack *buttonBack = (LXButtonBack*)navLeftItem.customView;
+    [buttonBack addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
+
 }
 
 - (void)touchBackground:(id)sender {

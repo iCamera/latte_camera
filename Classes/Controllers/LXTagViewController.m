@@ -11,6 +11,7 @@
 #import "LatteAPIClient.h"
 #import "LXCellGrid.h"
 #import "LXGalleryViewController.h"
+#import "LXButtonBack.h"
 
 @interface LXTagViewController ()
 
@@ -72,6 +73,10 @@
                                         [alert show];
                                         [activityLoad stopAnimating];
                                     }];
+    UIBarButtonItem *navLeftItem = self.navigationItem.leftBarButtonItem;
+    LXButtonBack *buttonBack = (LXButtonBack*)navLeftItem.customView;
+    [buttonBack addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
+
 }
 
 - (void)didReceiveMemoryWarning

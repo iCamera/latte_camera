@@ -58,8 +58,11 @@
     [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];
     
+    imagePic.layer.cornerRadius = 7;
+    imagePic.layer.masksToBounds = YES;
+    
     if (_picture != nil) {
-        [imagePic setImageWithURL:[NSURL URLWithString:_picture.urlSquare]];
+        [imagePic setImageWithURL:[NSURL URLWithString:_picture.urlMedium]];
         textDesc.text = _picture.descriptionText;
         imageStatus = [_picture.status integerValue];
         switchGPS.on = _picture.showGPS;

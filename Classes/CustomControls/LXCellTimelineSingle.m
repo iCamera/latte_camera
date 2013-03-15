@@ -10,7 +10,9 @@
 
 #import "LXAppDelegate.h"
 
-@implementation LXCellTimelineSingle
+@implementation LXCellTimelineSingle {
+    LXShare *lxShare;
+}
 
 @synthesize viewController;
 
@@ -26,6 +28,7 @@
 @synthesize buttonMap;
 @synthesize buttonLike;
 @synthesize viewBackground;
+@synthesize buttonShare;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -104,11 +107,56 @@
     } else {
         [buttonLike addTarget:self action:@selector(submitLike:) forControlEvents:UIControlEventTouchUpInside];
     }
+    
+    [buttonShare addTarget:self action:@selector(sharePic:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)submitLike:(id)sender {
     Picture *pic = _feed.targets[0];
     [LXUtils toggleLike:buttonLike ofPicture:pic setCount:labelLike];
+}
+
+- (void)sharePic:(id)sender {
+    Picture *pic = _feed.targets[0];
+    
+    RDActionSheet *actionSheet = [[RDActionSheet alloc] initWithCancelButtonTitle:NSLocalizedString(@"Cancel", @"")
+                                                               primaryButtonTitle:nil
+                                                           destructiveButtonTitle:nil
+                                                                otherButtonTitles:@"Email", @"Twitter", @"Facebook", nil];
+    
+    actionSheet.callbackBlock = ^(RDActionSheetResult result, NSInteger buttonIndex)
+    {
+        switch (result) {
+                
+            case RDActionSheetButtonResultSelected: {
+                lxShare = [[LXShare alloc] init];
+                lxShare.controller = viewController;
+                
+                lxShare.url = pic.urlWeb;
+                lxShare.text = @"Latte";
+                
+                switch (buttonIndex) {
+                    case 0: // email
+                        [lxShare emailIt];
+                        break;
+                    case 1: // twitter
+                        [lxShare tweet];
+                        break;
+                    case 2: // facebook
+                        [lxShare facebookPost];
+                        break;
+                    default:
+                        break;
+                }
+            }
+                break;
+            case RDActionSheetResultResultCancelled:
+                NSLog(@"Sheet cancelled");
+        }
+    };
+    
+    [actionSheet showFrom:viewController.navigationController.tabBarController.view];
+
 }
 
 - (void)drawRect:(CGRect)rect {

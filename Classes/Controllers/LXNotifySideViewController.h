@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "EGORefreshTableHeaderView.h"
+#import "LXMainTabViewController.h"
 
 
 @interface LXNotifySideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, EGORefreshTableHeaderDelegate>
@@ -16,6 +17,6 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *tableNotify;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityLoad;
-
+@property (strong, nonatomic) LXMainTabViewController *parent;
 
 @end

@@ -27,7 +27,6 @@ typedef enum {
     NSMutableArray *days;
     NSInteger rankLayout;
     BOOL reloading;
-    EGORefreshTableHeaderView *refreshHeaderView;
     MBProgressHUD *HUD;
 }
 
@@ -36,7 +35,6 @@ typedef enum {
 @synthesize buttonCalendar;
 @synthesize viewTab;
 @synthesize loadIndicator;
-@synthesize buttonNavLeft;
 @synthesize buttonDaily;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -78,17 +76,17 @@ typedef enum {
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     
-    refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
-    refreshHeaderView.delegate = self;
-    [self.tableView addSubview:refreshHeaderView];
-    
     [self loadCalendar];
 }
 
 - (void)becomeActive:(id)sender {
-    [self reloadTableViewDataSource];
     rankpage = 1;
-    [self loadRanking];
+    if (rankLayout == kLayoutNormal) {
+        [self loadRanking];
+    } else {
+        [self loadCalendar];
+    }
+
 }
 
 
@@ -102,17 +100,54 @@ typedef enum {
     [[LatteAPIClient sharedClient] getPath:url
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       days = [JSON objectForKey:@"days"];
+                                       days = [NSMutableArray arrayWithArray:[JSON objectForKey:@"days"]];
+                                       pics = [self flatPictureArray];
+                                       
                                        rankLayout = kLayoutCalendar;
                                        
                                        [self.tableView reloadData];
-                                       [self doneLoadingTableViewData];
                                        [loadIndicator stopAnimating];
                                        [HUD hide:YES];
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        TFLog(@"Something went wrong (Ranking)");
-                                       [self doneLoadingTableViewData];
+                                       [loadIndicator stopAnimating];
+                                       [HUD hide:YES];
+                                       loadEnded = true;
+                                   }
+     ];
+}
+
+- (void)loadMoreCalendar {
+    rankpage += 1;
+    NSString* url = [NSString stringWithFormat:@"picture/ranking/calendar/%d", rankpage];
+    
+    [loadIndicator startAnimating];
+    [HUD show:YES];
+    loadEnded = false;
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    [[LatteAPIClient sharedClient] getPath:url
+                                parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       [loadIndicator stopAnimating];
+                                       [HUD hide:YES];
+                                       
+                                       NSArray *newDays = [JSON objectForKey:@"days"];
+                                       if (newDays.count == 0) {
+                                           loadEnded = true;
+                                       }
+                                       else {
+                                           NSInteger index = days.count-1;
+                                           [days addObjectsFromArray:newDays];
+                                           pics = [self flatPictureArray];
+                                           [self.tableView insertSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(index, newDays.count)] withRowAnimation:UITableViewRowAnimationNone];
+                                       }
+                                       
+
+
+                                   }
+                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       TFLog(@"Something went wrong (Ranking)");
                                        [loadIndicator stopAnimating];
                                        [HUD hide:YES];
                                        loadEnded = true;
@@ -134,14 +169,11 @@ typedef enum {
                                        pics = [Picture mutableArrayFromDictionary:JSON withKey:@"pics"];
                                        rankLayout = kLayoutNormal;
                                        [self.tableView reloadData];
-                                       
-                                       [self doneLoadingTableViewData];
                                        [loadIndicator stopAnimating];
                                        [HUD hide:YES];
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        TFLog(@"Something went wrong (Ranking)");
-                                       [self doneLoadingTableViewData];
                                        [loadIndicator stopAnimating];
                                        [HUD hide:YES];
                                        loadEnded = true;
@@ -149,16 +181,17 @@ typedef enum {
      ];
 }
 
-- (void)loadMore {
+- (void)loadMoreNormal {
     rankpage += 1;
     NSString* url = [NSString stringWithFormat:@"picture/ranking/%@/%d", ranktype, rankpage];
     
     [loadIndicator startAnimating];
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
-    [self.tableView beginUpdates];
+    
     [[LatteAPIClient sharedClient] getPath:url
                                 parameters:[NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       [self.tableView beginUpdates];
                                        int rowCountPrev = [self.tableView numberOfRowsInSection:0];
                                        NSArray *newPics = [JSON objectForKey:@"pics"];
                                        for (NSDictionary *pic in newPics) {
@@ -182,7 +215,6 @@ typedef enum {
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        TFLog(@"Something went wrong (Ranking)");
                                        [loadIndicator stopAnimating];
-                                       [self.tableView endUpdates];
                                    }
      ];
 }
@@ -341,11 +373,66 @@ typedef enum {
         NSDictionary *dayInfo = days[indexPath.section];
         NSArray *pictures = [Picture mutableArrayFromDictionary:dayInfo withKey:@"pictures"];
         
-        LXCellGrid *cell = [tableView dequeueReusableCellWithIdentifier:@"Grid" forIndexPath:indexPath];
-        [cell setPictures:pictures forRow:indexPath.row];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Grid" forIndexPath:indexPath];
+
+        for(UIView *subview in [cell subviews]) {
+            [subview removeFromSuperview];
+        }
+        
+        for (int i = 0; i < 3; ++i)
+        {
+            NSInteger index = indexPath.row*3+i;
+            
+            Picture *pic;
+            if (index >= pictures.count)
+                break;
+            pic = pictures[index];
+            
+            
+            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(6 + 104*i, 3, 98, 98)];
+            
+            [button loadBackground:pic.urlSquare];
+            button.layer.borderColor = [[UIColor whiteColor] CGColor];
+            button.layer.borderWidth = 3;
+            
+            UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:button.bounds];
+            button.layer.masksToBounds = NO;
+            button.layer.shadowColor = [UIColor blackColor].CGColor;
+            button.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+            button.layer.shadowOpacity = 0.5f;
+            button.layer.shadowRadius = 1.5f;
+            button.layer.shadowPath = shadowPath.CGPath;
+            
+            button.tag = [pic.pictureId integerValue];
+            [button addTarget:self action:@selector(showPic:) forControlEvents:UIControlEventTouchUpInside];
+            [cell addSubview:button];
+        }
         
         return cell;
     }
+}
+
+- (NSMutableArray*)flatPictureArray {
+    NSMutableArray *ret = [[NSMutableArray alloc] init];
+    for (NSDictionary *day in days) {
+        for (NSDictionary *pic in [day objectForKey:@"pictures"]) {
+            [ret addObject:[Picture instanceFromDictionary:pic]];
+        }
+    }
+    return ret;
+}
+
+
+- (void)showPic:(UIButton *)sender {
+    Picture *pic = [[pics filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:[NSString stringWithFormat:@"pictureId == %d", sender.tag]]] lastObject];
+    
+    UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
+                                                           bundle:nil];
+    UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
+    LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
+    viewGallery.delegate = self;
+    viewGallery.picture = pic;
+    [self presentViewController:navGalerry animated:YES completion:nil];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -364,7 +451,7 @@ typedef enum {
         label.text = [df stringFromDate:myDate];
         return label;
     } else
-        return nil;
+        return [[UIView alloc] init];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -392,8 +479,6 @@ typedef enum {
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
-    
     //Load more
     if (loadEnded)
         return;
@@ -408,7 +493,17 @@ typedef enum {
     float reload_distance = -100;
     if(y > h + reload_distance) {
         if (!loadIndicator.isAnimating) {
-            [self loadMore];
+            switch (rankLayout) {
+                case kLayoutCalendar:
+                    [self loadMoreCalendar];
+                    break;
+                case kLayoutNormal:
+                    [self loadMoreNormal];
+                    break;
+                default:
+                    break;
+            }
+
         }
     }
 }
@@ -422,6 +517,7 @@ typedef enum {
     viewGallery.picture = [[pics filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:[NSString stringWithFormat:@"pictureId == %d", buttonImage.tag]]] lastObject];
     [self presentViewController:navGalerry animated:YES completion:nil];
 }
+
 
 - (NSDictionary *)pictureAfterPicture:(Picture *)picture {
     NSUInteger current = [pics indexOfObject:picture];
@@ -444,37 +540,5 @@ typedef enum {
     }
     return nil;
 }
-
-- (void)reloadTableViewDataSource{
-    reloading = YES;
-}
-
-- (void)doneLoadingTableViewData{
-    reloading = NO;
-    [refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
-}
-
-- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
-    [self reloadTableViewDataSource];
-    rankpage = 1;
-    [self loadRanking];
-}
-
-- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
-    
-    return reloading; // should return if data source model is reloading
-    
-}
-
-- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
-    
-    return [NSDate date]; // should return date data source was last changed
-    
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    [refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
-}
-
 
 @end

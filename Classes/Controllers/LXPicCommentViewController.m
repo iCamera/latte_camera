@@ -13,6 +13,7 @@
 #import "LXMyPageViewController.h"
 //#import "SideSwipeTableViewCell.h"
 #import "LXCommentControllViewController.h"
+#import "LXButtonBack.h"
 
 @interface LXPicCommentViewController ()
 
@@ -76,6 +77,10 @@
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];
+    
+    UIBarButtonItem *navLeftItem = self.navigationItem.leftBarButtonItem;
+    LXButtonBack *buttonBack = (LXButtonBack*)navLeftItem.customView;
+    [buttonBack addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification

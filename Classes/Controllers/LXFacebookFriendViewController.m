@@ -10,6 +10,7 @@
 #import "LXAppDelegate.h"
 #import "LXCellFacebook.h"
 #import "LXMyPageViewController.h"
+#import "LXButtonBack.h"
 
 @interface LXFacebookFriendViewController ()
 
@@ -54,6 +55,10 @@
     } else {
         [app openSessionWithAllowLoginUI:YES];
     }
+    
+    UIBarButtonItem *navLeftItem = self.navigationItem.leftBarButtonItem;
+    LXButtonBack *buttonBack = (LXButtonBack*)navLeftItem.customView;
+    [buttonBack addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)loadFacebokFriend {

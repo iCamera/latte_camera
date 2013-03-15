@@ -22,6 +22,7 @@
 @implementation LXMainTabViewController {
     UIView *viewCamera;
     BOOL isFirst;
+
     LXNotifySideViewController *viewNotify;
     LXUserNavButton *viewNav;
 }
@@ -47,7 +48,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(receiveLoggedOut:)
                                                  name:@"LoggedOut"
-                                               object:nil];    
+                                               object:nil];
 
     isFirst = true;
     return self;
@@ -70,7 +71,7 @@
     UILabel *labelCamera = [[UILabel alloc] init];
     labelCamera.frame = CGRectMake(0.0, 0.0, 60, 14);
     
-    labelCamera.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:9];
+    labelCamera.font = [UIFont fontWithName:@"HelveticaNeue" size:9];
 
     labelCamera.text = NSLocalizedString(@"start_camera", @"写真を追加");
     labelCamera.backgroundColor = [UIColor clearColor];
@@ -133,6 +134,7 @@
     
     viewNav = [[LXUserNavButton alloc] init];
     viewNav.view.frame = CGRectMake(200, 0, 100, 60);
+
     [viewNav.buttonSetting addTarget:self action:@selector(showSetting:) forControlEvents:UIControlEventTouchUpInside];
     [viewNav.buttonNotify addTarget:self action:@selector(toggleNotify:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -144,7 +146,7 @@
         
         UIFont *font;
 
-        font = [UIFont fontWithName:@"HelveticaNeue-Light" size:9];
+        font = [UIFont fontWithName:@"HelveticaNeue" size:9];
         
         NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                     font, UITextAttributeFont,
@@ -156,27 +158,44 @@
         [tab.tabBarItem setTitleTextAttributes:attributes
                                       forState:UIControlStateNormal];
     }
+    
+    // Init Notify
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    viewNotify = [storyMain instantiateViewControllerWithIdentifier:@"Notification"];
+    
+    viewNotify.view.frame = CGRectMake(20, 50, 280, 350);
+    [LXUtils globalShadow:viewNotify.view];
+    viewNotify.view.layer.cornerRadius = 5.0;
+    [self addChildViewController:viewNotify];
+    [self.view addSubview:viewNotify.view];
+    [viewNotify didMoveToParentViewController:self];
+    viewNotify.view.hidden = true;
+
 }
 
 - (void)toggleNotify:(id)sender {
-    if (viewNotify == nil) {
-        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-        UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-        viewNotify = [storyMain instantiateViewControllerWithIdentifier:@"Notification"];
-        viewNotify.view.frame = CGRectMake(20, 50, 280, 350);
+    if (viewNotify.view.hidden) {
+        LXAppDelegate* app = [LXAppDelegate currentDelegate];
+
+        [[LatteAPIClient sharedClient] getPath:@"user/me/read_notify"
+                                    parameters: [NSDictionary dictionaryWithObject:[app getToken] forKey:@"token" ]
+                                       success:nil
+                                       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                           TFLog(@"Something went wrong (Notify Read)");
+                                       }];
+        
         viewNotify.view.alpha = 0;
-        [self.view addSubview:viewNotify.view];
-        [self addChildViewController:viewNotify];
-        [viewNotify didMoveToParentViewController:self];
+        viewNotify.view.hidden = false;
         [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
             viewNotify.view.alpha = 1;
         }];
     } else {
+        
         [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
             viewNotify.view.alpha = 0;
         } completion:^(BOOL finished) {
-            [viewNotify.view removeFromSuperview];
-            viewNotify = nil;
+            viewNotify.view.hidden = true;
         }];
     }
 }
@@ -235,7 +254,9 @@
 
 - (void)receiveLoggedOut:(NSNotification *) notification {
     [self setGuest];
-
+    if (viewNotify != nil) {
+        [self toggleNotify:nil];
+    }
 }
 
 - (void)showUser:(NSNotification *)notify {

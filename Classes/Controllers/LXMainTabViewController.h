@@ -16,4 +16,6 @@
 
 @interface LXMainTabViewController : UITabBarController<LXImagePickerDelegate>
 
+@property (strong, nonatomic) NSMutableArray *notifies;
+
 @end

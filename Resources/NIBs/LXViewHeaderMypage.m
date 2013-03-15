@@ -22,6 +22,7 @@
 @synthesize labelNickname;
 @synthesize labelLikes;
 @synthesize labelView;
+@synthesize buttonProfile;
 @synthesize buttonPicCount;
 @synthesize buttonFollowCount;
 @synthesize buttonFriendCount;
@@ -91,6 +92,13 @@
     [super viewDidUnload];
 }
 
+- (void)resetTabButton {
+    buttonProfile.selected = false;
+    buttonPicCount.selected = false;
+    buttonFollowCount.selected = false;
+    buttonFriendCount.selected = false;
+}
+
 - (void)resetTimelineButton {
     buttonTimelineAll.selected = false;
     buttonTimelineCalendar.selected = false;
@@ -102,18 +110,22 @@
 - (IBAction)touchTab:(UIButton *)sender {
     switch (sender.tag) {
         case 1:
+            [self resetTabButton];
             [_parent collapseHeader];
             [_parent touchTab:kTableProfile];
             break;
         case 2:
+            [self resetTabButton];
             [_parent expandHeader];
             [_parent touchTab:kTablePhoto];
             break;
         case 3:
+            [self resetTabButton];
             [_parent collapseHeader];
             [_parent touchTab:kTableFollowings];
             break;
         case 4:
+            [self resetTabButton];
             [_parent collapseHeader];
             [_parent touchTab:kTableFollower];
             break;

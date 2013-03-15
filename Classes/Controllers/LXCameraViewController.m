@@ -56,6 +56,7 @@
     BOOL isWatingToUpload;
     BOOL isFixedAspectBlend;
     BOOL isBackCamera;
+    BOOL isPicFromCamera;
     
     NSInteger currentEffect;
     NSInteger currentLens;
@@ -207,20 +208,6 @@
     // LAShare
     laSharekit = [[LXShare alloc] init];
     laSharekit.controller = self;
-    
-    // COMPLETION BLOCKS
-    [laSharekit setCompletionDone:^{
-        TFLog(@"Share OK");
-    }];
-    [laSharekit setCompletionCanceled:^{
-        TFLog(@"Share Canceled");
-    }];
-    [laSharekit setCompletionFailed:^{
-        TFLog(@"Share Failed");
-    }];
-    [laSharekit setCompletionSaved:^{
-        TFLog(@"Share Saved");
-    }];
     
     isKeyboard = NO;
     
@@ -791,6 +778,7 @@
             
             previewFilter = [[GPUImagePicture alloc] initWithImage:previewPic];
             
+            isPicFromCamera = true;
             [self initPreviewPic];
             [self switchEditImage];
             [self resizeCameraViewWithAnimation:YES];
@@ -895,15 +883,11 @@
     [HUD show:NO];
     [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [self getFinalImage:^{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                buttonYes.enabled = true;
-                [[UIApplication sharedApplication] endIgnoringInteractionEvents];
-                [self processSavedData];
-            });
-        }];
-    });
+    [self getFinalImage:^{
+        buttonYes.enabled = true;
+        [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+        [self processSavedData];
+    }];
 }
 
 - (void)receiveLoggedIn:(NSNotification *)notification
@@ -918,7 +902,11 @@
     
     if (app.currentUser != nil) {
         if (_delegate == nil) {
-            [self performSegueWithIdentifier:@"Edit" sender:nil];
+            LXPicEditViewController *controllerPicEdit = [[UIStoryboard storyboardWithName:@"Gallery"
+                                                                            bundle: nil] instantiateViewControllerWithIdentifier:@"PicEdit"];
+            controllerPicEdit.imageData = savedData;
+            controllerPicEdit.preview = savedPreview;
+            [self.navigationController pushViewController:controllerPicEdit animated:YES];
         } else {
             NSDictionary *info = [[NSDictionary alloc] initWithObjectsAndKeys:
                                   savedData, @"data",
@@ -936,6 +924,7 @@
         {
             switch (result) {
                 case RDActionSheetButtonResultSelected: {
+                    laSharekit.text = @"";
                     laSharekit.imageData = savedData;
                     laSharekit.imagePreview = savedPreview;
                     
@@ -950,8 +939,8 @@
                             [laSharekit facebookPost];
                             break;
                         case 3: {
-                            UINavigationController *modalLogin = [[UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                                                            bundle: nil] instantiateViewControllerWithIdentifier:@"LoginModal"];
+                            UINavigationController *modalLogin = [[UIStoryboard storyboardWithName:@"Authentication"
+                                                                                            bundle: nil] instantiateInitialViewController];
                             [self presentViewController:modalLogin animated:YES completion:^{
                                 isWatingToUpload = YES;
                             }];
@@ -976,11 +965,40 @@
 - (void)getFinalImage:(void(^)())block {
     if (isSaved) {
         block();
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [HUD hide:YES];
-        });
+        
+        [HUD hide:YES];
         return;
     }
+    
+    // Prepare meta data
+    if (imageMeta == nil) {
+        imageMeta = [[NSMutableDictionary alloc] init];
+    }
+    // Add App Info
+    NSMutableDictionary *dictForTIFF = [imageMeta objectForKey:(NSString *)kCGImagePropertyTIFFDictionary];
+    if (dictForTIFF == nil) {
+        dictForTIFF = [[NSMutableDictionary alloc] init];
+    }
+    [dictForTIFF setObject:@"Latte camera" forKey:(NSString *)kCGImagePropertyTIFFSoftware];
+    [imageMeta setObject:dictForTIFF forKey:(NSString *)kCGImagePropertyTIFFDictionary];
+    
+    // If this is new photo save original pic first, and then process
+    if (isPicFromCamera) {
+        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+        [library writeImageToSavedPhotosAlbum:capturedImage.CGImage metadata:imageMeta completionBlock:^(NSURL *assetURL, NSError *error) {
+            [self processRawAndSave:^{
+                block();
+            }];
+        }];
+    } else {
+        [self processRawAndSave:^{
+            block();
+        }];
+    }
+}
+
+- (void)processRawAndSave:(void(^)())block {
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     
     CGImageRef cgImagePreviewFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:imageOrientation];
     savedPreview = [UIImage imageWithCGImage:cgImagePreviewFromBytes];
@@ -1005,22 +1023,8 @@
     NSData *jpeg = UIImageJPEGRepresentation([UIImage imageWithCGImage:cgImageFromBytes], 0.9);
     CGImageRelease(cgImageFromBytes);
     
-    // Prepare meta data
-    if (imageMeta == nil) {
-        imageMeta = [[NSMutableDictionary alloc] init];
-    }
     
-    // Add App Info
-    NSMutableDictionary *dictForTIFF = [imageMeta objectForKey:(NSString *)kCGImagePropertyTIFFDictionary];
-    if (dictForTIFF == nil) {
-        dictForTIFF = [[NSMutableDictionary alloc] init];
-    }
-    
-    [dictForTIFF setObject:@"Latte camera" forKey:(NSString *)kCGImagePropertyTIFFSoftware];
-    
-    [imageMeta setObject:dictForTIFF forKey:(NSString *)kCGImagePropertyTIFFDictionary];
-    
-    
+    // Write EXIF to NSData
     CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)jpeg, NULL);
     
     CFStringRef UTI = CGImageSourceGetType(source); //this is the type of image (e.g., public.jpeg)
@@ -1059,33 +1063,27 @@
     // Save now
     block();
     
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-    
     [library writeImageDataToSavedPhotosAlbum:savedData metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
         if (!error) {
-            [library addAssetURL:assetURL toAlbum:@"Latte camera" withCompletionBlock:^(NSError *error) {
-                TFLog(error.localizedDescription);
-            }];
+//            [library addAssetURL:assetURL toAlbum:@"Latte camera" withCompletionBlock:^(NSError *error) {
+//                TFLog(error.localizedDescription);
+//            }];
+            HUD.mode = MBProgressHUDModeText;
+            HUD.labelText = NSLocalizedString(@"saved_photo", @"Saved to Camera Roll") ;
+            HUD.margin = 10.f;
+            HUD.yOffset = 150.f;
+            HUD.removeFromSuperViewOnHide = YES;
+            HUD.dimBackground = NO;
+            [HUD hide:YES afterDelay:2];
             
-            dispatch_async(dispatch_get_main_queue(), ^{
-                HUD.mode = MBProgressHUDModeText;
-                HUD.labelText = NSLocalizedString(@"saved_photo", @"Saved to Camera Roll") ;
-                HUD.margin = 10.f;
-                HUD.yOffset = 150.f;
-                HUD.removeFromSuperViewOnHide = YES;
-                HUD.dimBackground = NO;
-                [HUD hide:YES afterDelay:2];
-            });
         } else {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                HUD.mode = MBProgressHUDModeText;
-                HUD.labelText = NSLocalizedString(@"cannot_save_photo", @"Cannot save to Camera Roll") ;
-                HUD.margin = 10.f;
-                HUD.yOffset = 150.f;
-                HUD.removeFromSuperViewOnHide = YES;
-                HUD.dimBackground = NO;
-                [HUD hide:YES afterDelay:3];
-            });
+            HUD.mode = MBProgressHUDModeText;
+            HUD.labelText = NSLocalizedString(@"cannot_save_photo", @"Cannot save to Camera Roll") ;
+            HUD.margin = 10.f;
+            HUD.yOffset = 150.f;
+            HUD.removeFromSuperViewOnHide = YES;
+            HUD.dimBackground = NO;
+            [HUD hide:YES afterDelay:3];
         }
         
         // Return to preview mode
@@ -1288,7 +1286,7 @@
         }
     }
     
-    viewCameraWraper.layer.shadowRadius = 0;
+//    viewCameraWraper.layer.shadowRadius = 5.0;
     viewCameraWraper.layer.shadowPath = nil;
 
     [UIView animateWithDuration:animation?0.3:0 animations:^{
@@ -1344,7 +1342,7 @@
         UIImage *previewPic = [LXCameraViewController imageWithImage:capturedImage scaledToSize:previewUISize];
         
         previewFilter = [[GPUImagePicture alloc] initWithImage:previewPic];
-        
+        isPicFromCamera = false;
         [self initPreviewPic];
         [self switchEditImage];
         
@@ -1506,11 +1504,6 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(NSDictionary *)info {
-    if ([segue.identifier isEqualToString:@"Edit"]) {
-        LXPicEditViewController *controllerPicEdit = segue.destinationViewController;
-        controllerPicEdit.imageData = savedData;
-        controllerPicEdit.preview = savedPreview;
-    }
     if ([segue.identifier isEqualToString:@"HelpBokeh"]) {
         
     }

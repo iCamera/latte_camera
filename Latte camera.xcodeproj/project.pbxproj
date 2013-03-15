@@ -126,6 +126,7 @@
 		880E35B016A7F7150097B97F /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 880E35AC16A7F7150097B97F /* release_notes.md */; };
 		8818860916F17B61009A9266 /* LXCommentControllViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8818860816F17B60009A9266 /* LXCommentControllViewController.m */; };
 		8818861116F1F039009A9266 /* LXCellSearchUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8818861016F1F039009A9266 /* LXCellSearchUser.m */; };
+		8818861316F30BEA009A9266 /* mymenu.png in Resources */ = {isa = PBXBuildFile; fileRef = 8818861216F30BEA009A9266 /* mymenu.png */; };
 		8820D82E16634D7000DBBFF9 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8820D82D16634D7000DBBFF9 /* CoreImage.framework */; };
 		882E14A516EF0BF100839B92 /* LXFacebookFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 882E14A416EF0BF100839B92 /* LXFacebookFriendViewController.m */; };
 		882E14AD16EF0FDE00839B92 /* LXCellFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 882E14AC16EF0FDE00839B92 /* LXCellFacebook.m */; };
@@ -1082,6 +1083,7 @@
 		8818860816F17B60009A9266 /* LXCommentControllViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCommentControllViewController.m; sourceTree = "<group>"; };
 		8818860F16F1F039009A9266 /* LXCellSearchUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCellSearchUser.h; sourceTree = "<group>"; };
 		8818861016F1F039009A9266 /* LXCellSearchUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCellSearchUser.m; sourceTree = "<group>"; };
+		8818861216F30BEA009A9266 /* mymenu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mymenu.png; sourceTree = "<group>"; };
 		8820D82D16634D7000DBBFF9 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		882E14A316EF0BF100839B92 /* LXFacebookFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFacebookFriendViewController.h; sourceTree = "<group>"; };
 		882E14A416EF0BF100839B92 /* LXFacebookFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFacebookFriendViewController.m; sourceTree = "<group>"; };
@@ -2923,6 +2925,7 @@
 		88FE3FAB166C93D6004DCE53 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				8818861216F30BEA009A9266 /* mymenu.png */,
 				88FE3FAC166C93D6004DCE53 /* 37x-Checkmark.png */,
 				88FE3FAD166C93D6004DCE53 /* 37x-Checkmark@2x.png */,
 				88FE3FAE166C93D6004DCE53 /* arrow_left.png */,
@@ -4416,6 +4419,7 @@
 				882E14BA16F0142000839B92 /* menu4_left_off@2x.png in Resources */,
 				882E14BB16F0142000839B92 /* menu4_right_off.png in Resources */,
 				882E14BC16F0142000839B92 /* menu4_right_off@2x.png in Resources */,
+				8818861316F30BEA009A9266 /* mymenu.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

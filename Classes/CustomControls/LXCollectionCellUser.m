@@ -13,6 +13,8 @@
 @implementation LXCollectionCellUser
 
 @synthesize imageUser;
+@synthesize labelName;
+@synthesize labelCover;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -28,12 +30,17 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
+    [LXUtils globalShadow:self];
+    self.layer.cornerRadius = 5.0;
+    labelCover.layer.cornerRadius = 5.0;
+    labelCover.layer.masksToBounds = YES;
     [super drawRect:rect];
-    [LXUtils globalShadow:imageUser];
 }
 
 - (void)setUser:(User *)user {
+    imageUser.image = [UIImage imageNamed:@"user.gif"];
     [imageUser loadProgess:user.profilePicture];
+    labelName.text = user.name;
 }
 
 

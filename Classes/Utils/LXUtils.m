@@ -23,8 +23,8 @@
     view.layer.masksToBounds = NO;
     view.layer.shadowColor = [UIColor blackColor].CGColor;
     view.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-    view.layer.shadowOpacity = 0.3;
-    view.layer.shadowRadius = 3.0;
+    view.layer.shadowOpacity = 0.5;
+    view.layer.shadowRadius = 1.5;
     view.layer.shadowPath = shadowPath.CGPath;
 }
 

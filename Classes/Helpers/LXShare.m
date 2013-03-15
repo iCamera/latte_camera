@@ -100,37 +100,15 @@ typedef enum {
     if (url != nil) {
         [socialComposer addURL:[NSURL URLWithString:url]];
     }
-    // creo el formato del texto a twittear
-    NSString *format    = @"“%@”";
-    if (self.tweetCC != nil)
-        format          = [format stringByAppendingFormat:@" %@", tweetCC];
     
     
-    // TEXT
-    NSUInteger idx      = self.text.length;
-    // le quito todos los espacios que tenga el texto al principio y al final
-    
-    while([text hasPrefix:@" "])
-        text = [text substringFromIndex:1];
-    while([text hasSuffix:@" "])
-    {
-        idx       = idx-1;
-        text = [text substringToIndex:idx];
+    NSString *message = [NSString stringWithString:text];
+    if (message) {
+        [socialComposer setInitialText:message];
     }
-    // creo el mensaje
-    NSString *message   = [NSString stringWithFormat:format, [NSString stringWithFormat:@"%@…", [text substringToIndex:idx]]];
     
     
     // if the message is bigger than 140 characters, then cut the message
-    while (![socialComposer setInitialText:message])
-    {
-        idx -= 5;
-        if (idx > 5)
-        {
-            message = [NSString stringWithFormat:format, [NSString stringWithFormat:@"%@…", [text substringToIndex:idx]]];
-        }
-    }
-    
     [socialComposer setCompletionHandler:^(SLComposeViewControllerResult result){
         [_controller dismissViewControllerAnimated:YES completion:nil];
         
@@ -176,8 +154,11 @@ typedef enum {
             if (!displayedNativeDialog)
             {
                 REComposeViewController *composeViewController = [[REComposeViewController alloc] init];
-                composeViewController.hasAttachment = YES;
-                composeViewController.attachmentImage = imagePreview;
+                if (imagePreview) {
+                    composeViewController.hasAttachment = YES;
+                    composeViewController.attachmentImage = imagePreview;
+                }
+
                 composeViewController.text = text;
                 
                 // Service name
@@ -212,12 +193,22 @@ typedef enum {
             [self performPublishAction:^{
                 
                 // paso los parametros para mandar al feed del usuario
-                NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                               imageData, @"source",
-                                               composeViewController.text, @"message",
-                                               text, @"caption",
-                                               nil];
-                [FBRequestConnection startWithGraphPath:@"me/photos"
+                NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+                
+                if (text) {
+                    [params setObject:text forKey:@"caption"];
+                }
+                if (imageData) {
+                    [params setObject:imageData forKey:@"source"];
+                }
+                if (composeViewController.text) {
+                    [params setObject:composeViewController.text forKey:@"message"];
+                }
+                if (url) {
+                    [params setObject:url forKey:@"link"];
+                }
+                
+                [FBRequestConnection startWithGraphPath:@"me/feed"
                                              parameters:params
                                              HTTPMethod:@"POST"
                                       completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {

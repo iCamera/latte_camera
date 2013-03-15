@@ -53,17 +53,8 @@ typedef enum {
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     
-    if (self)
-    {
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(receiveLoggedIn:)
-                                                     name:@"LoggedIn"
-                                                   object:nil];
-                
-        
-        loadEnded = false;
-        pagephoto = 1;
-        tableMode = kWelcomeTableGrid;
+    if (self) {
+
     }
     
     return self;
@@ -76,7 +67,19 @@ typedef enum {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(becomeActive:)
+                                                 name:@"BecomeActive" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveLoggedIn:)
+                                                 name:@"LoggedIn"
+                                               object:nil];
+    
+    loadEnded = false;
+    pagephoto = 1;
+    tableMode = kWelcomeTableGrid;
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     [app.tracker sendView:@"Welcome Screen"];
@@ -88,8 +91,6 @@ typedef enum {
     refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - tablePic.bounds.size.height, self.view.frame.size.width, tablePic.bounds.size.height)];
     refreshHeaderView.delegate = self;
     [tablePic addSubview:refreshHeaderView];
-    
-    [self reloadView];
     
     [viewLogin removeFromSuperview];
     viewLogin.layer.cornerRadius = 5;
@@ -243,7 +244,7 @@ typedef enum {
         } else
             return 1;
     } else
-        return 104 + (indexPath.row==0?3:0);
+        return 104;
 }
 
 - (void)showPic:(UIButton*)sender {

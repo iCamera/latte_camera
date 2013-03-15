@@ -34,6 +34,7 @@
     UITapGestureRecognizer *tapDouble;
     NSMutableArray *currentComments;
     LXShare *lxShare;
+    BOOL loadedInfo;
 }
 
 @synthesize buttonComment;
@@ -157,10 +158,6 @@
     buttonUser.layer.cornerRadius = 5;
     buttonUser.clipsToBounds = YES;
     
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
-    [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];
-    
     lxShare = [[LXShare alloc] init];
     
     lxShare.controller = self;
@@ -223,9 +220,22 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
+    [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];
+    
     [self.navigationController setNavigationBarHidden:YES animated:animated];
+    [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [nc removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    
     [super viewWillDisappear:animated];
 }
+
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -283,9 +293,8 @@
 }
 
 - (void)setPicture {
+    loadedInfo = false;
     LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
-    
-    viewPicTab.picture = currentPage.picture;
     
     if (currentPage.picture.descriptionText.length > 0) {
         CGSize size = [currentPage.picture.descriptionText sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0]
@@ -310,9 +319,18 @@
 
     }
     
-    labelNickname.text = currentPage.user.name;
+    viewPicTab.picture = currentPage.picture;
+    viewPicTab.viewComment.comments = nil;
+    
+    
+    if (currentPage.user == nil) {
+        [self loadInfo];
+    } else {
+        labelNickname.text = currentPage.user.name;
+        [buttonUser loadBackground:currentPage.user.profilePicture placeholderImage:@"user.gif"];
+    }
+    
     labelView.text = [NSString stringWithFormat:@"%d views", [currentPage.picture.pageviews integerValue]];
-    [buttonUser loadBackground:currentPage.user.profilePicture placeholderImage:@"user.gif"];
     
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
 
@@ -340,31 +358,6 @@
                                    success:nil
                                    failure:nil];
     buttonEdit.hidden = !currentPage.picture.isOwner;
-    
-    NSString *urlDetail = [NSString stringWithFormat:@"picture/%d", [currentPage.picture.pictureId integerValue]];
-    [[LatteAPIClient sharedClient] getPath:urlDetail
-                                parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
-                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       if (currentPage.user == nil) {
-                                           currentPage.user = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
-                                           labelNickname.text = currentPage.user.name;
-                                           [buttonUser loadBackground:currentPage.user.profilePicture placeholderImage:@"user.gif"];
-                                       }
-
-                                       currentComments = [Comment mutableArrayFromDictionary:JSON withKey:@"comments"];
-                                       viewPicTab.comments = currentComments;
-                                       viewPicTab.picDict = JSON;
-                                       
-                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       TFLog(@"Something went wrong PicDetail Gallery");
-                                       
-                                       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
-                                                                                       message:error.localizedDescription
-                                                                                      delegate:nil
-                                                                             cancelButtonTitle:NSLocalizedString(@"close", "Close")
-                                                                             otherButtonTitles:nil];
-                                       [alert show];
-                                   }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -448,7 +441,46 @@
         [viewPicTab updateContent];
     }];
     
+    // Start loading extra info if rollup tab
+    if (!loadedInfo) {
+        [self loadInfo];
+    }
+}
+
+- (void)loadInfo {
+    loadedInfo = true;
+    LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
     
+    viewPicTab.picture = currentPage.picture;
+    viewPicTab.viewVote.picture = currentPage.picture;
+    if (viewPicTab.picture.comments) {
+        viewPicTab.viewComment.comments = viewPicTab.picture.comments;
+    } else {
+        NSString *urlDetail = [NSString stringWithFormat:@"picture/%d", [currentPage.picture.pictureId integerValue]];
+        [viewPicTab.viewComment.activityLoad startAnimating];
+        [[LatteAPIClient sharedClient] getPath:urlDetail
+                                    parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                       success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                           if (currentPage.user == nil) {
+                                               currentPage.user = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
+                                               labelNickname.text = currentPage.user.name;
+                                               [buttonUser loadBackground:currentPage.user.profilePicture placeholderImage:@"user.gif"];
+                                           }
+                                           
+                                           currentComments = [Comment mutableArrayFromDictionary:JSON withKey:@"comments"];
+                                           viewPicTab.viewComment.comments = currentComments;
+                                       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                           TFLog(@"Something went wrong PicDetail Gallery");
+                                           
+                                           UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                           message:error.localizedDescription
+                                                                                          delegate:nil
+                                                                                 cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                                 otherButtonTitles:nil];
+                                           [alert show];
+                                       }];
+    }
 }
 
 - (IBAction)touchUser:(UIButton *)sender {
@@ -476,7 +508,7 @@
         switch (result) {
             case RDActionSheetButtonResultSelected: {
                 lxShare.url = currentPage.picture.urlWeb;
-                lxShare.text = @"";
+                lxShare.text = @"Latte";
                 
                 switch (buttonIndex) {
                     case 0: // email

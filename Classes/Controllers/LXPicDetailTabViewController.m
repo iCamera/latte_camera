@@ -9,7 +9,6 @@
 #import "LXPicDetailTabViewController.h"
 
 #import "LXPicInfoViewController.h"
-#import "LXVoteViewController.h"
 #import "LXPicCommentViewController.h"
 
 
@@ -20,7 +19,6 @@
 @end
 
 @implementation LXPicDetailTabViewController {
-    LXVoteViewController *viewVote;
     LXPicInfoViewController *viewInfo;
 }
 
@@ -53,7 +51,7 @@
     if (height == 0) {
         return;
     }
-    CGRect frameVote = viewVote.view.frame;
+    CGRect frameVote = _viewVote.view.frame;
     CGRect frameComment = _viewComment.view.frame;
     CGRect frameInfo = viewInfo.view.frame;
     
@@ -63,7 +61,7 @@
     
     [UIView animateWithDuration:kGlobalAnimationSpeed
                      animations:^{
-                         viewVote.view.frame = frameVote;
+                         _viewVote.view.frame = frameVote;
                          _viewComment.view.frame = frameComment;
                          viewInfo.view.frame = frameInfo;
                      }];
@@ -75,17 +73,10 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
     if ([segue.identifier isEqualToString:@"Vote"]) {
-        viewVote = segue.destinationViewController;
-        if (_picture != nil) {
-            viewVote.picture = _picture;
-        }
+        _viewVote = segue.destinationViewController;
     } else if ([segue.identifier isEqualToString:@"Comment"]) {
         _viewComment = segue.destinationViewController;
-        if (_picture != nil) {
-            _viewComment.picture = _picture;
-        }
     } else if ([segue.identifier isEqualToString:@"Info"]) {
         viewInfo = segue.destinationViewController;
         if (_picture != nil) {
@@ -96,7 +87,6 @@
 
 - (void)setPicture:(Picture *)picture {
     _picture = picture;
-    viewVote.picture = picture;
     _viewComment.picture = picture;
     viewInfo.picture = picture;
     
@@ -104,10 +94,6 @@
     if (!_picture.isOwner && currentTab == 1) {
         [self setTab:2];
     }
-}
-
-- (void)setComments:(NSMutableArray *)comments {
-    _viewComment.comments = comments;
 }
 
 - (void)setTab:(NSInteger)tab {

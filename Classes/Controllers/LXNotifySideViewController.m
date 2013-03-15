@@ -30,6 +30,7 @@
     int limit;
     EGORefreshTableHeaderView *refreshHeaderView;
     BOOL reloading;
+    BOOL loadEnded;
 }
 @synthesize tableNotify;
 @synthesize activityLoad;
@@ -64,11 +65,17 @@
     page = 1;
     limit = 12;
 
+    tableNotify.layer.cornerRadius = 5.0;
+    tableNotify.layer.masksToBounds = YES;
+    
     // Do any additional setup after loading the view from its nib.
     refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - tableNotify.bounds.size.height, tableNotify.frame.size.width, tableNotify.bounds.size.height)];
     refreshHeaderView.delegate = self;
     [tableNotify addSubview:refreshHeaderView];
-    [self reloadView];
+    loadEnded = false;
+    page = 1;
+    limit = 30;
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -90,17 +97,29 @@
 }
 
 - (void)reloadView {
-    [self reloadNotify];
+    page = 0;
+    [self loadNotify];
 }
 
-- (void)reloadNotify {
+- (void)loadNotify {
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    page += 1;
+    [activityLoad startAnimating];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                           [app getToken], @"token",
+                           [NSNumber numberWithInt:page], @"page",
+                           [NSNumber numberWithInt:limit], @"limit",
+                           nil];
+
     [[LatteAPIClient sharedClient] getPath:@"user/me/notify"
-                                      parameters: [NSDictionary dictionaryWithObjectsAndKeys:
-                                                   [app getToken], @"token",
-                                                   nil]
+                                      parameters: params
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                             notifies = [NSMutableArray arrayWithArray:[JSON objectForKey:@"notifies"]];
+                                             if (page == 1) {
+                                                 notifies = [NSMutableArray arrayWithArray:[JSON objectForKey:@"notifies"]];
+                                             } else {
+                                                 [notifies addObjectsFromArray:[JSON objectForKey:@"notifies"]];
+                                             }
+                                             
                                              [tableNotify reloadData];
                                              [self doneLoadingTableViewData];
                                              [activityLoad stopAnimating];
@@ -119,14 +138,12 @@
 
 
 - (void)receiveLoggedIn:(NSNotification *) notification {
-    notifies = nil;
     [self reloadView];
 }
 
 - (void)becomeActive:(NSNotification *) notification {
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    if (app.currentUser != nil) {
-        notifies = nil;
+    LXAppDelegate* app = [LXAppDelegate currentDelegate];
+    if (app.currentUser) {
         [self reloadView];
     }
 }
@@ -182,6 +199,27 @@
     return labelSize.height + 26;
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
+    [refreshHeaderView egoRefreshScrollViewDidScroll:aScrollView];
+    
+    if (loadEnded)
+        return;
+    CGPoint offset = aScrollView.contentOffset;
+    CGRect bounds = aScrollView.bounds;
+    CGSize size = aScrollView.contentSize;
+    UIEdgeInsets inset = aScrollView.contentInset;
+    float y = offset.y + bounds.size.height - inset.bottom;
+    float h = size.height;
+    
+    float reload_distance = -100;
+    if(y > h + reload_distance) {
+        if (!activityLoad.isAnimating) {
+            [self loadNotify];
+        }
+    }
+}
+
+
 - (void)reloadTableViewDataSource{
 	//  should be calling your tableviews data source model to reload
 	//  put here just for demo
@@ -205,10 +243,6 @@
 
 - (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
 	return [NSDate date]; // should return date data source was last changed
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-	[refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{

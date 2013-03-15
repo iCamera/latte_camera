@@ -19,6 +19,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *labelLikes;
 @property (strong, nonatomic) IBOutlet UILabel *labelView;
 
+@property (strong, nonatomic) IBOutlet UIButton *buttonProfile;
 @property (strong, nonatomic) IBOutlet UIButton *buttonPicCount;
 @property (strong, nonatomic) IBOutlet UIButton *buttonFriendCount;
 @property (strong, nonatomic) IBOutlet UIButton *buttonFollowCount;

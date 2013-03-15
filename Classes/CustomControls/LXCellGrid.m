@@ -43,7 +43,7 @@
         pic = pictures[index];
         
         
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(6 + 104*i, (row==0?6:3),98, 98)];
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(6 + 104*i, 3, 98, 98)];
         
         [button loadBackground:pic.urlSquare];
         button.layer.borderColor = [[UIColor whiteColor] CGColor];

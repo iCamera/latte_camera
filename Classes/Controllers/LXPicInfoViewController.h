@@ -16,7 +16,6 @@
 @interface LXPicInfoViewController : UITableViewController
 
 @property (strong, nonatomic) Picture *picture;
-@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityLoad;
 
 - (IBAction)touchBack:(id)sender;
 @end

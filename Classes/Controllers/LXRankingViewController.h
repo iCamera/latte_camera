@@ -12,11 +12,10 @@
 #import "UIButton+AsyncImage.h"
 #import "LXUtils.h"
 #import "LatteAPIClient.h"
-#import "EGORefreshTableHeaderView.h"
 #import "LXGalleryViewController.h"
 #import "LXButtonBrown30.h"
 
-@interface LXRankingViewController : UITableViewController <EGORefreshTableHeaderDelegate, LXGalleryViewControllerDataSource>
+@interface LXRankingViewController : UITableViewController <LXGalleryViewControllerDataSource>
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonDaily;
 @property (strong, nonatomic) IBOutlet UIButton *buttonWeekly;
@@ -24,10 +23,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonCalendar;
 @property (strong, nonatomic) IBOutlet UIView *viewTab;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadIndicator;
-@property (strong, nonatomic) IBOutlet LXButtonBrown30 *buttonNavLeft;
 
 - (IBAction)touchTab:(UIButton*)sender;
-
-- (void)loadRanking;
-- (void)loadMore;
 @end
