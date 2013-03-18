@@ -187,5 +187,5 @@ typedef enum {
 - (IBAction)touchUploadStatus:(id)sender;
 
 - (void)switchCamera;
-- (void)uploadData;
+
 @end

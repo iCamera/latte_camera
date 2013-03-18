@@ -86,6 +86,10 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (section == 0) {
+        LXAppDelegate *app = [LXAppDelegate currentDelegate];
+        return app.uploader.count;
+    }
     return notifies.count;
 }
 
@@ -141,6 +145,11 @@
     [self reloadView];
 }
 
+- (void)receiveLoggedOut:(NSNotification *)notification {
+    notifies = nil;
+    [tableNotify reloadData];
+}
+
 - (void)becomeActive:(NSNotification *) notification {
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
     if (app.currentUser) {
@@ -190,6 +199,9 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        return 20;
+    }
     NSString *stringNotify = [LXUtils stringFromNotify:notifies[indexPath.row]];
     
     CGSize labelSize = [stringNotify sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:11]

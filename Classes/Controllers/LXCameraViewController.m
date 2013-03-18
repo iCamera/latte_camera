@@ -9,6 +9,7 @@
 #import "LXCameraViewController.h"
 #import "LXAppDelegate.h"
 #import "ALAssetsLibrary+CustomPhotoAlbum.h"
+#import "LXUploadObject.h"
 
 #define kAccelerometerFrequency        10.0 //Hz
 
@@ -83,6 +84,7 @@
     NSInteger currentTab;
     
     LXShare *laSharekit;
+    LXUploadObject *currentUploader;
     
     MBRoundProgressView *viewRoundProgess;
 }
@@ -241,6 +243,9 @@
     [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];
     [nc addObserver:self selector:@selector(receiveLoggedIn:) name:@"LoggedIn" object:nil];
+    [nc addObserver:self selector:@selector(uploaderSuccess:) name:@"LXUploaderSuccess" object:nil];
+    [nc addObserver:self selector:@selector(uploaderFail:) name:@"LXUploaderFail" object:nil];
+    [nc addObserver:self selector:@selector(uploaderProgress:) name:@"LXUploaderProgress" object:nil];
     
     scrollProcess.contentSize = CGSizeMake(384, 50);
 	// Do any additional setup after loading the view.
@@ -411,6 +416,43 @@
         [videoCamera startCameraCapture];
     });
 }
+
+- (void)uploaderSuccess:(NSNotification *)notification {
+    currentUploader = nil;
+    uploadState = kUploadOK;
+    
+    [UIView animateWithDuration:0.3
+                          delay:0.0
+                        options:UIViewAnimationCurveEaseInOut
+                     animations:^{
+                         buttonUploadStatus.alpha = 0.0;
+                     } completion:^(BOOL finished) {
+                         buttonUploadStatus.hidden = true;
+                     }];
+}
+
+- (void)uploaderFail:(NSNotification *)notification {
+    uploadState = kUploadFail;
+    viewRoundProgess.hidden = true;
+    [buttonUploadStatus setImage:[UIImage imageNamed:@"bt_info.png"]
+                        forState:UIControlStateNormal];
+    currentUploader = notification.object;
+}
+
+
+- (void)uploaderProgress:(NSNotification *)notification {
+    uploadState = kUploadProgress;
+    viewRoundProgess.hidden = false;
+    buttonUploadStatus.hidden = false;
+    buttonUploadStatus.alpha = 0.75;
+    
+    [buttonUploadStatus setImage:nil
+                        forState:UIControlStateNormal];
+    
+    LXUploadObject *uploader = notification.object;
+    viewRoundProgess.progress = uploader.percent;
+}
+
 
 - (void)keyboardWillShow:(NSNotification *)notification
 {
@@ -1569,7 +1611,7 @@
             break;
         case 3: //Retry upload
             if (buttonIndex == 1) {
-                [self uploadData];
+                [currentUploader upload];
             }
         default:
             break;
@@ -2032,59 +2074,4 @@
     return YES;
 }
 
-- (void)uploadData {
-    void (^createForm)(id<AFMultipartFormData>) = ^(id<AFMultipartFormData> formData) {
-        [formData appendPartWithFileData:savedData
-                                    name:@"file"
-                                fileName:@"latte.jpg"
-                                mimeType:@"image/jpeg"];
-    };
-    
-    NSURLRequest *request = [[LatteAPIClient sharedClient] multipartFormRequestWithMethod:@"POST"
-                                                                                     path:@"picture/upload"
-                                                                               parameters:_dictUpload
-                                                                constructingBodyWithBlock:createForm];
-    
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    
-    void (^successUpload)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
-        TFLog(@"Upload done");
-        
-        uploadState = kUploadOK;
-        
-        [UIView animateWithDuration:0.3
-                              delay:0.0
-                            options:UIViewAnimationCurveEaseInOut
-                         animations:^{
-                             buttonUploadStatus.alpha = 0.0;
-                         } completion:^(BOOL finished) {
-                             buttonUploadStatus.hidden = true;
-                         }];
-    };
-    
-    void (^failUpload)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
-        TFLog(@"Upload fail");
-        uploadState = kUploadFail;
-        viewRoundProgess.hidden = true;
-        [buttonUploadStatus setImage:[UIImage imageNamed:@"bt_info.png"]
-                            forState:UIControlStateNormal];
-    };
-    
-    [operation setCompletionBlockWithSuccess: successUpload failure: failUpload];
-    
-    [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
-        viewRoundProgess.progress = (float)totalBytesWritten/(float)totalBytesExpectedToWrite;
-    }];
-    
-    uploadState = kUploadProgress;
-    viewRoundProgess.hidden = false;
-    buttonUploadStatus.hidden = false;
-    buttonUploadStatus.alpha = 0.75;
-    viewRoundProgess.progress = 0.0;
-    [buttonUploadStatus setImage:nil
-                        forState:UIControlStateNormal];
-
-    
-    [operation start];
-}
 @end

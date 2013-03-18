@@ -116,7 +116,6 @@
     labelDesc = [[STTweetLabel alloc] initWithFrame:CGRectMake(6, 6, 308, 0)];
     labelDesc.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0];
     labelDesc.textColor = [UIColor whiteColor];
-    labelDesc.colorAccount = [UIColor whiteColor];
     
     STLinkCallbackBlock callbackBlock = ^(STLinkActionType actionType, NSString *link) {
         

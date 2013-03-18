@@ -465,6 +465,7 @@
 		88B08D4415D369EC003CB0D3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B08D4315D369EC003CB0D3 /* Security.framework */; };
 		88B37BEE16E710DD00AB682C /* LXPicCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B37BED16E710DD00AB682C /* LXPicCommentViewController.m */; };
 		88B37BF616E719B700AB682C /* LXVoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B37BF516E719B700AB682C /* LXVoteViewController.m */; };
+		88B3A3AB16F39951002A6BDA /* LXUploadObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B3A3AA16F39951002A6BDA /* LXUploadObject.m */; };
 		88B47B3415DE522F00FD9C72 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B47B2015DE522F00FD9C72 /* AFHTTPClient.m */; };
 		88B47B3515DE522F00FD9C72 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B47B2215DE522F00FD9C72 /* AFHTTPRequestOperation.m */; };
 		88B47B3615DE522F00FD9C72 /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B47B2415DE522F00FD9C72 /* AFImageRequestOperation.m */; };
@@ -1520,6 +1521,8 @@
 		88B37BED16E710DD00AB682C /* LXPicCommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXPicCommentViewController.m; sourceTree = "<group>"; };
 		88B37BF416E719B700AB682C /* LXVoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXVoteViewController.h; sourceTree = "<group>"; };
 		88B37BF516E719B700AB682C /* LXVoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXVoteViewController.m; sourceTree = "<group>"; };
+		88B3A3A916F39951002A6BDA /* LXUploadObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXUploadObject.h; sourceTree = "<group>"; };
+		88B3A3AA16F39951002A6BDA /* LXUploadObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXUploadObject.m; sourceTree = "<group>"; };
 		88B47B1F15DE522F00FD9C72 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		88B47B2015DE522F00FD9C72 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
 		88B47B2115DE522F00FD9C72 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -2570,6 +2573,8 @@
 				88508CB816CBA2E90026DE1E /* LXEffect10.m */,
 				88AA5E4116DF167D0041164F /* LXSidePanelController.h */,
 				88AA5E4216DF167D0041164F /* LXSidePanelController.m */,
+				88B3A3A916F39951002A6BDA /* LXUploadObject.h */,
+				88B3A3AA16F39951002A6BDA /* LXUploadObject.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -4542,6 +4547,7 @@
 				882E14C216F09B4C00839B92 /* LXTagViewController.m in Sources */,
 				8818860916F17B61009A9266 /* LXCommentControllViewController.m in Sources */,
 				8818861116F1F039009A9266 /* LXCellSearchUser.m in Sources */,
+				88B3A3AB16F39951002A6BDA /* LXUploadObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

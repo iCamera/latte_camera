@@ -107,6 +107,7 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
     [self clearNotification];
     [FBSession openActiveSessionWithAllowLoginUI:NO];
 
+    _uploader = [[NSMutableArray alloc] init];
     
     NSDictionary *remoteNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
 
@@ -119,7 +120,6 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
     LXSidePanelController *controllerSide = [[LXSidePanelController alloc] init];
     _viewMainTab = [mainStoryboard instantiateViewControllerWithIdentifier:@"MainTab"];
     controllerSide.centerPanel = _viewMainTab;
-//    controllerSide.leftPanel = [mainStoryboard instantiateViewControllerWithIdentifier:@"LeftSide"];
     
     window.rootViewController = controllerSide;
     [window makeKeyAndVisible];

@@ -8,6 +8,7 @@
 
 #import "LXPicEditViewController.h"
 #import "LXAppDelegate.h"
+#import "LXUploadObject.h"
 
 @interface LXPicEditViewController ()
 
@@ -285,12 +286,9 @@
 }
 
 - (void)backToCamera {
-//    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-//    UINavigationController *navCamera = (UINavigationController*)app.viewCamera;
-//    
-//    [self.navigationController popToRootViewControllerAnimated:YES];
-//    LXCameraViewController *cameraView = (LXCameraViewController*)navCamera.viewControllers[0];
-//    [cameraView switchCamera];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    LXCameraViewController *cameraView = (LXCameraViewController*)self.navigationController.viewControllers[0];
+    [cameraView switchCamera];
 }
 
 - (void)saveImage {
@@ -303,19 +301,15 @@
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            [app getToken], @"token",
-                            textDesc.text, @"comment",
-                            [NSNumber numberWithBool:switchEXIF.on], @"show_exif",
-                            [NSNumber numberWithBool:switchGPS.on], @"show_gps",
-                            [NSNumber numberWithInteger:imageStatus], @"picture_status",
-                            nil];
+    LXUploadObject *upload = [[LXUploadObject alloc]init];
+    upload.imageFile = _imageData;
+    upload.imagePreview = _preview;
+    upload.showEXIF = switchEXIF.on;
+    upload.showGPS = switchGPS.on;
+    upload.status = imageStatus;
     
-    
-//    UINavigationController *navCamera = (UINavigationController*)app.viewCamera;
-//    LXCameraViewController *cameraView = (LXCameraViewController*)navCamera.viewControllers[0];
-//    cameraView.dictUpload = params;
-//    [cameraView uploadData];
+    [app.uploader addObject:upload];
+    [upload upload];
     
     [self performSelector:@selector(backToCamera) withObject:nil];
 }
