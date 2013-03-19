@@ -9,6 +9,7 @@
 #import "LXPicEditViewController.h"
 #import "LXAppDelegate.h"
 #import "LXUploadObject.h"
+#import "LXCameraViewController.h"
 
 @interface LXPicEditViewController ()
 
@@ -37,6 +38,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     [app.tracker sendView:@"Picture Edit Screen"];
     
@@ -62,9 +64,13 @@
     imagePic.layer.cornerRadius = 7;
     imagePic.layer.masksToBounds = YES;
     
+    textDesc.placeholder = NSLocalizedString(@"desc_placeholder", @"");
+    
     if (_picture != nil) {
         [imagePic setImageWithURL:[NSURL URLWithString:_picture.urlMedium]];
+        
         textDesc.text = _picture.descriptionText;
+        
         imageStatus = [_picture.status integerValue];
         switchGPS.on = _picture.showGPS;
         switchEXIF.on = _picture.showEXIF;
@@ -76,6 +82,8 @@
         LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
         imagePic.image = _preview;
         imageStatus = [app.currentUser.pictureStatus integerValue];
+        switchGPS.on = app.currentUser.defaultShowGPS;
+        switchEXIF.on = app.currentUser.defaultShowEXIF;
     }
     [self setStatusLabel];
 }
@@ -192,7 +200,11 @@
                                          parameters: params
                                             success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                                 [HUD hide:YES];
-                                                [self.navigationController popViewControllerAnimated:YES];
+                                                [self.navigationController dismissViewControllerAnimated:YES completion:^{
+                                                    if ([self.navigationController.parentViewController respondsToSelector:@selector(reloadView)]) {
+                                                        [self.navigationController.parentViewController performSelector:@selector(reloadView)];
+                                                    }
+                                                }];
                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                 [HUD hide:YES];
                                                 TFLog(@"Something went wrong (Login)");
@@ -230,7 +242,7 @@
                                               otherButtonTitles:nil];
     sheet.tag = 1;
     sheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
-    [sheet showFromTabBar:self.tabBarController.tabBar];
+    [sheet showInView:self.navigationController.view];
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification
@@ -286,8 +298,9 @@
 }
 
 - (void)backToCamera {
-    [self.navigationController popToRootViewControllerAnimated:YES];
     LXCameraViewController *cameraView = (LXCameraViewController*)self.navigationController.viewControllers[0];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    
     [cameraView switchCamera];
 }
 
@@ -304,6 +317,7 @@
     LXUploadObject *upload = [[LXUploadObject alloc]init];
     upload.imageFile = _imageData;
     upload.imagePreview = _preview;
+    upload.imageDescription = textDesc.text;
     upload.showEXIF = switchEXIF.on;
     upload.showGPS = switchGPS.on;
     upload.status = imageStatus;
@@ -311,7 +325,7 @@
     [app.uploader addObject:upload];
     [upload upload];
     
-    [self performSelector:@selector(backToCamera) withObject:nil];
+    [self backToCamera];
 }
 
 

@@ -40,7 +40,14 @@
     NSDictionary *params = [NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"];
     [[LatteAPIClient sharedClient] getPath:@"user/me" parameters:params  success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
         
-        NSDictionary *userDict = [JSON objectForKey:@"user"];
+        NSMutableDictionary *userDict = [NSMutableDictionary dictionaryWithDictionary:[JSON objectForKey:@"user"]];
+        // Fixbug
+        if ([userDict objectForKey:@"current_residence"] == nil) {
+            [userDict setObject:@"" forKey:@"current_residence"];
+        }
+        if ([userDict objectForKey:@"hometown"] == nil) {
+            [userDict setObject:@"" forKey:@"hometown"];
+        }
         User* user = [User instanceFromDictionary:userDict];
         
         [self.root bindToObject:userDict];
@@ -53,13 +60,15 @@
                                @"birthyear_public",
                                @"birthdate_public", nil];
         
+
         for (NSString *aKey in permission) {
             NSArray *status = [NSArray arrayWithObjects:@"0", @"10", @"30", @"40", nil];
             ((QRadioElement *)[self.root elementWithKey:aKey]).selected = [status indexOfObject:[[userDict objectForKey:aKey] stringValue]];
         }
         
         NSArray *gender = [NSArray arrayWithObjects:@"1", @"2", nil];
-        ((QRadioElement *)[self.root elementWithKey:@"gender"]).selected = [gender indexOfObject:[[userDict objectForKey:@"gender"] stringValue]];
+        NSInteger genderIndex = [gender indexOfObject:[[userDict objectForKey:@"gender"] stringValue]];
+        ((QRadioElement *)[self.root elementWithKey:@"gender"]).selected = genderIndex;
         
         ((QRadioElement *)[self.root elementWithKey:@"nationality"]).selectedValue = user.nationality;
         
@@ -119,11 +128,11 @@
         cell.textField.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
     }
     if ([element isKindOfClass:[QRadioItemElement class]] || [element isKindOfClass:[QBooleanElement class]]) {
-        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
-        cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
+        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
+        cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
     }
     if ([element isKindOfClass:[QButtonElement class]]) {
-        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Regular" size:16];
+        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Regular" size:14];
         cell.textLabel.textColor = [UIColor grayColor];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleGray;
@@ -287,6 +296,20 @@
         
         [self submitUpdate:param];
     }
+}
+
+- (void)sectionFooterWillAppearForSection:(QSection *)section atIndex:(NSInteger)indexPath {
+    UIFont *font = [UIFont fontWithName:@"HelveticaNeue-Light" size:11];
+    CGSize size = [section.footer sizeWithFont:font constrainedToSize:CGSizeMake(300, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, size.height + 20)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 20, 300, size.height)];
+    label.font = font;
+    label.lineBreakMode = NSLineBreakByWordWrapping;
+    label.numberOfLines = 0;
+    label.backgroundColor = [UIColor clearColor];
+    label.text = section.footer;
+    [view addSubview:label];
+    section.footerView = view;
 }
 
 @end

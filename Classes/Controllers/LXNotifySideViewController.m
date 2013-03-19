@@ -10,14 +10,15 @@
 
 #import "LXAppDelegate.h"
 #import "LatteAPIClient.h"
-#import "LXCellFriendRequest.h"
 #import "LXCellNotify.h"
+#import "LXCellUpload.h"
 #import "UIButton+AsyncImage.h"
 #import "LXGalleryViewController.h"
 #import "LXMyPageViewController.h"
 #import "Comment.h"
 #import "User.h"
 #import "Picture.h"
+#import "MBProgressHUD.h"
 
 @interface LXNotifySideViewController ()
 
@@ -61,10 +62,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveLoggedIn:) name:@"LoggedIn" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive:) name:@"BecomeActive" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive:) name:@"ReceivedPushNotify" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadSuccess:) name:@"LXUploaderSuccess" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadStart:) name:@"LXUploaderStart" object:nil];
     
-    page = 1;
-    limit = 12;
-
     tableNotify.layer.cornerRadius = 5.0;
     tableNotify.layer.masksToBounds = YES;
     
@@ -73,7 +73,7 @@
     refreshHeaderView.delegate = self;
     [tableNotify addSubview:refreshHeaderView];
     loadEnded = false;
-    page = 1;
+
     limit = 30;
 
 }
@@ -84,29 +84,42 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
         LXAppDelegate *app = [LXAppDelegate currentDelegate];
         return app.uploader.count;
-    }
-    return notifies.count;
+    } else
+        return notifies.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    LXCellNotify* cellNotify = [tableView dequeueReusableCellWithIdentifier:@"Notify"];
-    NSDictionary *notify = [notifies objectAtIndex:indexPath.row];
-    [cellNotify setNotify:notify];
-    return cellNotify;
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    if (indexPath.section == 0) {
+        LXCellUpload* cellUpload = [tableView dequeueReusableCellWithIdentifier:@"Upload"];
+        cellUpload.uploader = app.uploader[indexPath.row];
+        return cellUpload;
+    } if (indexPath.section == 1) {
+        LXCellNotify* cellNotify = [tableView dequeueReusableCellWithIdentifier:@"Notify"];
+        NSDictionary *notify = [notifies objectAtIndex:indexPath.row];
+        [cellNotify setNotify:notify];
+        return cellNotify;
+    } else
+        return nil;
 }
 
 - (void)reloadView {
     page = 0;
+    loadEnded = false;
     [self loadNotify];
 }
 
 - (void)loadNotify {
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    LXAppDelegate* app = [LXAppDelegate currentDelegate];
     page += 1;
     [activityLoad startAnimating];
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -118,10 +131,15 @@
     [[LatteAPIClient sharedClient] getPath:@"user/me/notify"
                                       parameters: params
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                             NSArray *newData = [JSON objectForKey:@"notifies"];
+                                             if (newData.count == 0) {
+                                                 loadEnded = true;
+                                             }
+                                             
                                              if (page == 1) {
-                                                 notifies = [NSMutableArray arrayWithArray:[JSON objectForKey:@"notifies"]];
+                                                 notifies = [NSMutableArray arrayWithArray:newData];
                                              } else {
-                                                 [notifies addObjectsFromArray:[JSON objectForKey:@"notifies"]];
+                                                 [notifies addObjectsFromArray:newData];
                                              }
                                              
                                              [tableNotify reloadData];
@@ -140,6 +158,16 @@
                                          }];
 }
 
+- (void)uploadStart:(NSNotification *) notification {
+    [tableNotify reloadData];
+}
+
+- (void)uploadSuccess:(NSNotification *) notification {
+    LXUploadObject *uploader = notification.object;
+    LXAppDelegate* app = [LXAppDelegate currentDelegate];
+    [app.uploader removeObject:uploader];
+    [tableNotify reloadData];
+}
 
 - (void)receiveLoggedIn:(NSNotification *) notification {
     [self reloadView];
@@ -159,49 +187,92 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *notify = notifies[indexPath.row];
-    NotifyTarget notifyTarget = [[notify objectForKey:@"target_model"] integerValue];
-    switch (notifyTarget) {
-        case kNotifyTargetComment: {
-            Comment *comment = [Comment instanceFromDictionary:[notify objectForKey:@"target"]];
-            break;
-        }
-        case kNotifyTargetPicture: {
-            Picture *pic = [Picture instanceFromDictionary:[notify objectForKey:@"target"]];
-            
-            UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
-                                                                   bundle:nil];
-            UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
-            LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
-            viewGallery.picture = pic;
-            [self presentViewController:navGalerry animated:YES completion:nil];
-            break;
-        }
-        case kNotifyTargetUser: {
-            LXAppDelegate *app = [LXAppDelegate currentDelegate];
-            UINavigationController *currentNav = (UINavigationController*)app.viewMainTab.selectedViewController;
-            User *user = [User instanceFromDictionary:[notify objectForKey:@"target"]];
-            
-            UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                                   bundle:nil];
-            LXMyPageViewController  *viewMypage = [storyGallery instantiateViewControllerWithIdentifier:@"UserPage"];
-            viewMypage.user = user;
-            [currentNav pushViewController:viewMypage animated:YES];
-            
-            break;
-        }
-        default:
-            break;
-    }
+    if (indexPath.section == 1) {
+        
+        NSDictionary *notify = notifies[indexPath.row];
+        NotifyTarget notifyTarget = [[notify objectForKey:@"target_model"] integerValue];
+        switch (notifyTarget) {
+            case kNotifyTargetComment: {
+                Comment *comment = [Comment instanceFromDictionary:[notify objectForKey:@"target"]];
+                
+                if (comment.pictureId != nil) {
+                    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+                    NSString *urlDetail = [NSString stringWithFormat:@"picture/%d", [comment.pictureId integerValue]];
+                    MBProgressHUD *hud = [[MBProgressHUD alloc]initWithView:_parent.view];
+                    [_parent.view addSubview:hud];
+                    hud.mode = MBProgressHUDModeIndeterminate;
+                    [hud show:YES];
 
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+                    [[LatteAPIClient sharedClient] getPath:urlDetail
+                                                parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                                       [hud hide:YES];
+                                                       
+                                                       
+                                                       UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
+                                                                                                              bundle:nil];
+                                                       UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
+                                                       LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
+                                                       
+                                                       viewGallery.user = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
+                                                       viewGallery.picture = [Picture instanceFromDictionary:[JSON objectForKey:@"picture"]];
+                                                       
+                                                       
+                                                       [self presentViewController:navGalerry animated:YES completion:nil];
+                                                       
+                                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                       [hud hide:YES];
+                                                       TFLog(@"Something went wrong Notify Gallery");
+                                                       
+                                                       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                                       message:error.localizedDescription
+                                                                                                      delegate:nil
+                                                                                             cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                                             otherButtonTitles:nil];
+                                                       [alert show];
+                                                   }];
+                }
+                
+                break;
+            }
+            case kNotifyTargetPicture: {
+                Picture *pic = [Picture instanceFromDictionary:[notify objectForKey:@"target"]];
+                
+                UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
+                                                                       bundle:nil];
+                UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
+                LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
+                viewGallery.picture = pic;
+                [self presentViewController:navGalerry animated:YES completion:nil];
+                break;
+            }
+            case kNotifyTargetUser: {
+                LXAppDelegate *app = [LXAppDelegate currentDelegate];
+                UINavigationController *currentNav = (UINavigationController*)app.viewMainTab.selectedViewController;
+                User *user = [User instanceFromDictionary:[notify objectForKey:@"target"]];
+                
+                UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                                       bundle:nil];
+                LXMyPageViewController  *viewMypage = [storyGallery instantiateViewControllerWithIdentifier:@"UserPage"];
+                viewMypage.user = user;
+                [currentNav pushViewController:viewMypage animated:YES];
+                
+                break;
+            }
+            default:
+                break;
+        }
+        
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        return 20;
+        return 42;
     }
+    
     NSString *stringNotify = [LXUtils stringFromNotify:notifies[indexPath.row]];
     
     CGSize labelSize = [stringNotify sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:11]
@@ -232,6 +303,38 @@
 }
 
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *view = [[UIView alloc] init];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 260, 30)];
+    label.text = [self tableView:tableView titleForHeaderInSection:section];
+    label.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:14];
+    label.shadowOffset = CGSizeMake(0, 1);
+    label.textColor = [UIColor whiteColor];
+    label.shadowColor = [UIColor blackColor];
+    label.backgroundColor = [UIColor clearColor];
+    view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bt_menu_title.png"]];
+    [view addSubview:label];
+    return view;
+}
+
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    switch (section) {
+        case 0:
+            return NSLocalizedString(@"upload_status", @"");
+            break;
+        case 1:
+            return NSLocalizedString(@"notification", @"");
+            break;
+        default:
+            break;
+    }
+    return nil;
+}
+
+
+
 - (void)reloadTableViewDataSource{
 	//  should be calling your tableviews data source model to reload
 	//  put here just for demo
@@ -259,6 +362,10 @@
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
 	[refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 30;
 }
 
 

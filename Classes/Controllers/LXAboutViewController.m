@@ -9,6 +9,7 @@
 #import "LXAboutViewController.h"
 #import "LatteAPIClient.h"
 #import "TestFlight.h"
+#import "LXButtonBack.h"
 
 @interface LXAboutViewController ()
 
@@ -34,6 +35,11 @@
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     [app.tracker sendView:@"About Screen"];
 	// Do any additional setup after loading the view.
+    
+    //setup back button
+    UIBarButtonItem *navLeftItem = self.navigationItem.leftBarButtonItem;
+    LXButtonBack *buttonBack = (LXButtonBack*)navLeftItem.customView;
+    [buttonBack addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)didReceiveMemoryWarning

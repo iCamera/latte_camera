@@ -8,6 +8,7 @@
 
 #import "LXUserNavButton.h"
 #import "LXAppDelegate.h"
+#import "LatteAPIClient.h"
 
 @interface LXUserNavButton ()
 

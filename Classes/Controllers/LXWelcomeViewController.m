@@ -14,6 +14,7 @@
 #import "LXPicMapViewController.h"
 #import "LXVoteViewController.h"
 #import "LXCellGrid.h"
+#import "Comment.h"
 
 typedef enum {
     kWelcomeTableTimeline,

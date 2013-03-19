@@ -51,13 +51,11 @@ typedef enum {
     NSDictionary *userDict;
     NSInteger daysInMonth;
     
-    MypageTableMode tableMode;
     MypagePhotoMode photoMode;
     NSArray *allTab;
     BOOL reloading;
     BOOL endedTimeline;
     BOOL endedPic;
-    BOOL endedVoted;
     BOOL isMypage;
     
     int pagePic;
@@ -77,12 +75,21 @@ typedef enum {
 
 
 @synthesize loadIndicator;
+@synthesize tableMode;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+    }
+    return self;
+}
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        tableMode = 0;
     }
     return self;
 }
@@ -98,11 +105,12 @@ typedef enum {
     
     showSet = [NSMutableSet setWithObjects:@"gender", @"residence", @"age", @"birthdate", @"bloodtype", @"occupation", @"introduction", @"hobby", @"nationality", nil];
     
-    tableMode = kTablePhoto;
+    if (tableMode == 0) {
+        tableMode = kTablePhoto;
+    }
+
     endedPic = false;
     endedTimeline = false;
-    endedVoted = false;
-    pictures = [[NSMutableArray alloc] init];
     
     pagePic = 0;
     pageVote = 0;
@@ -191,6 +199,9 @@ typedef enum {
         case kPhotoFriends:
             timelineKind = kTimelineFriends;
             break;
+        case kPhotoCalendar:
+        case kPhotoMyphoto:
+            return;
     }
     
     NSString *url;
@@ -198,6 +209,7 @@ typedef enum {
         url = @"user/me/timeline";
     else
         url = [NSString stringWithFormat:@"user/%d/timeline", [_user.userId integerValue]];
+    
     [[LatteAPIClient sharedClient] getPath:url
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:
                                              [app getToken], @"token",
@@ -371,7 +383,6 @@ typedef enum {
 
 - (void)reloadView {
     endedTimeline = false;
-    endedVoted = false;
     endedPic = false;
 
     [self reloadProfile];
@@ -418,6 +429,9 @@ typedef enum {
         case kPhotoFriends:
             timelineKind = kTimelineFriends;
             break;
+        case kPhotoCalendar:
+        case kPhotoMyphoto:
+            return;
     }
     
     [[LatteAPIClient sharedClient] getPath: url
@@ -556,6 +570,8 @@ typedef enum {
             else if (photoMode != kPhotoCalendar)
                 isEmpty = feeds.count == 0;
             break;
+        case kTableProfile:
+            return isEmpty;
     }
     return isEmpty;
 }
@@ -928,7 +944,7 @@ typedef enum {
                                  parameters:[NSDictionary dictionaryWithObjectsAndKeys:
                                              [app getToken], @"token", nil]
                                     success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                        [viewHeaderMypage.buttonProfilePic setBackgroundImage:[UIImage imageNamed:@"user.gif"] forState:UIControlStateNormal];
+                                        [viewHeaderMypage.buttonProfilePic loadBackground:@"" placeholderImage:@"user.gif"];
                                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                         TFLog(@"Something went wrong (Delete profile pic)");
                                     }];
@@ -936,22 +952,16 @@ typedef enum {
 }
 
 - (void)pickPhoto {
-//    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    UIStoryboard* storySetting = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
+    UINavigationController *navCamera = [storySetting instantiateInitialViewController];
+    LXCameraViewController *controllerCamera = navCamera.viewControllers[0];
+    controllerCamera.delegate = self;
     
-//    LXCameraViewController *viewCapture = ((UINavigationController*)app.viewCamera).viewControllers[0];
-//    viewCapture.delegate = self;
-//    [app toogleCamera];
+    [self presentViewController:navCamera animated:YES completion:nil];
 }
 
 - (void)imagePickerController:(LXCameraViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info {
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-//    UINavigationController* navCamera = (id)app.viewCamera;
-//    LXCameraViewController *viewCapture = navCamera.viewControllers[0];
-//    [navCamera popToRootViewControllerAnimated:NO];
-//    [viewCapture switchCamera];
-//    viewCapture.delegate = nil;
-//    [app toogleCamera];
-
     
     MBProgressHUD *progessHUD = [[MBProgressHUD alloc] initWithView:picker.view];
     [picker.view addSubview:progessHUD];
@@ -1111,7 +1121,7 @@ typedef enum {
             NSUInteger current = [flatPictures indexOfObject:picture];
             
             if (current < flatPictures.count-1) {
-                Picture *nextPic = flatPictures[current+1];
+                Picture *nextPic = [flatPictures objectAtIndex:current+1];
                 Feed* feed = [LXUtils feedFromPicID:[nextPic.pictureId integerValue] of:feeds];
                 NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
                                      nextPic, @"picture",
@@ -1146,7 +1156,7 @@ typedef enum {
             NSArray *flatPictures = [self flatPictureArray];
             NSUInteger current = [flatPictures indexOfObject:picture];
             if (current > 0) {
-                Picture *prevPic = flatPictures[current-1];
+                Picture *prevPic = [flatPictures objectAtIndex:current-1];
                 Feed* feed = [LXUtils feedFromPicID:[prevPic.pictureId integerValue] of:feeds];
                 NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
                                      prevPic,  @"picture",

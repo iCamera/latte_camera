@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="cpi-oe-1tO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12C3103" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="cpi-oe-1tO">
     <dependencies>
         <deployment version="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
@@ -35,7 +35,7 @@
                                             <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
                                         <state key="disabled" title="Liked"/>
-                                        <state key="selected" title="Unlike"/>
+                                        <state key="selected" title="Like" image="icon_iine_s_on.png"/>
                                         <connections>
                                             <action selector="switchTab:" destination="IuH-xf-ibI" eventType="touchUpInside" id="2Qa-iu-Oga"/>
                                             <action selector="toggleLike:" destination="IuH-xf-ibI" eventType="touchUpInside" id="ReV-4R-xUa"/>
@@ -47,7 +47,7 @@
                                         <color key="backgroundColor" red="0.87843137250000003" green="0.87450980389999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                                         <inset key="imageEdgeInsets" minX="72" minY="0.0" maxX="5" maxY="0.0"/>
-                                        <state key="normal" title="Comment" image="icon_comment2.png">
+                                        <state key="normal" title="Comment" image="icon_comment_s.png">
                                             <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                             <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
@@ -675,7 +675,7 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <color key="separatorColor" red="0.73725490199999999" green="0.72156862749999995" blue="0.66274509800000003" alpha="1" colorSpace="calibratedRGB"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="nht-dt-cUR">
-                            <rect key="frame" x="0.0" y="573" width="320" height="63"/>
+                            <rect key="frame" x="0.0" y="632" width="320" height="63"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="qDo-Im-f02">
@@ -699,15 +699,15 @@
                         <sections>
                             <tableViewSection id="xuu-l0-gZk">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="141" id="yDj-v1-EBS">
-                                        <rect key="frame" x="0.0" y="10" width="320" height="142"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="200" id="yDj-v1-EBS">
+                                        <rect key="frame" x="0.0" y="10" width="320" height="201"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="1" width="300" height="140"/>
+                                            <rect key="frame" x="10" y="1" width="300" height="199"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" id="Drg-vc-LUr">
-                                                    <rect key="frame" x="0.0" y="0.0" width="300" height="140"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="300" height="199"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -718,24 +718,24 @@
                             <tableViewSection id="aGL-4f-OVV">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="79" id="pDD-lo-7Db">
-                                        <rect key="frame" x="0.0" y="172" width="320" height="80"/>
+                                        <rect key="frame" x="0.0" y="231" width="320" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="300" height="78"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="yDO-u2-pKx">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="yDO-u2-pKx" customClass="LXTextView">
                                                     <rect key="frame" x="7" y="2" width="280" height="69"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" keyboardType=""/>
                                                 </textView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="sey-3i-UsY">
-                                        <rect key="frame" x="0.0" y="252" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="311" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -758,7 +758,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="BoQ-e1-egx">
-                                        <rect key="frame" x="0.0" y="296" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="355" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
@@ -779,7 +779,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="aHO-DB-r6E">
-                                        <rect key="frame" x="0.0" y="340" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="399" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
@@ -804,7 +804,7 @@
                             <tableViewSection headerTitle="SHARE" id="2t8-JW-Cbd">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="311-MP-pdQ">
-                                        <rect key="frame" x="0.0" y="430" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="489" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="280" height="43"/>
@@ -821,7 +821,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="TsY-LS-l6Y">
-                                        <rect key="frame" x="0.0" y="475" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="534" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -838,7 +838,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="IT1-cf-7Qa">
-                                        <rect key="frame" x="0.0" y="519" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="578" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -945,14 +945,148 @@
         <image name="bt_send.png" width="100" height="30"/>
         <image name="bt_send_on.png" width="100" height="30"/>
         <image name="icon_close.png" width="20" height="20"/>
-        <image name="icon_comment2.png" width="10" height="10"/>
+        <image name="icon_comment_s.png" width="12" height="12"/>
         <image name="icon_iine_s.png" width="12" height="12"/>
+        <image name="icon_iine_s_on.png" width="12" height="12"/>
         <image name="icon_iine_ss.png" width="10" height="10"/>
         <image name="icon_map_s.png" width="12" height="15"/>
         <image name="icon_plus_s.png" width="11" height="11"/>
         <image name="icon_setting_m_ocher.png" width="15" height="15"/>
         <image name="user.gif" width="100" height="100"/>
     </resources>
+    <classes>
+        <class className="HPGrowingTextView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HPGrowingTextView.h"/>
+        </class>
+        <class className="LXButtonBack" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonBack.h"/>
+        </class>
+        <class className="LXButtonBrown30" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonBrown30.h"/>
+        </class>
+        <class className="LXCellComment" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellComment.h"/>
+            <relationships>
+                <relationship kind="outlet" name="buttonLike" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="imageLike" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="labelAuthor" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelDate" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelLike" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="textComment" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="viewBack" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXCellDataField" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellDataField.h"/>
+            <relationships>
+                <relationship kind="outlet" name="labelDetail" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelField" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="LXCollectionCellUser" superclassName="UICollectionViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCollectionCellUser.h"/>
+            <relationships>
+                <relationship kind="outlet" name="imageUser" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="labelCover" candidateClass="UIView"/>
+                <relationship kind="outlet" name="labelName" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="LXGalleryViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXGalleryViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="dragTab:" candidateClass="UIPanGestureRecognizer"/>
+                <relationship kind="action" name="switchTab:" candidateClass="UIButton"/>
+                <relationship kind="action" name="toggleLike:" candidateClass="UIButton"/>
+                <relationship kind="action" name="touchClose:"/>
+                <relationship kind="action" name="touchShare:"/>
+                <relationship kind="action" name="touchUser:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonComment" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonEdit" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonLike" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonMap" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="labelComment" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelLike" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelNickname" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelView" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="viewDesc" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewInfoTop" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewTab" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXNavBar" superclassName="UINavigationBar">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavBar.h"/>
+        </class>
+        <class className="LXNavGalleryViewController" superclassName="UINavigationController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavGalleryViewController.h"/>
+        </class>
+        <class className="LXPicCommentViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicCommentViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="touchSend:"/>
+                <relationship kind="outlet" name="activityLoad" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="buttonSend" candidateClass="LXButtonBrown30"/>
+                <relationship kind="outlet" name="growingComment" candidateClass="HPGrowingTextView"/>
+                <relationship kind="outlet" name="viewHeader" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXPicDetailTabViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicDetailTabViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="scrollTab" candidateClass="UIScrollView"/>
+            </relationships>
+        </class>
+        <class className="LXPicEditViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicEditViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="touchBack:"/>
+                <relationship kind="action" name="touchBackground:"/>
+                <relationship kind="action" name="touchDelete:"/>
+                <relationship kind="action" name="touchPost:"/>
+                <relationship kind="outlet" name="buttonDelete" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="gestureTap" candidateClass="UITapGestureRecognizer"/>
+                <relationship kind="outlet" name="imagePic" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="labelStatus" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="switchEXIF" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="switchGPS" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="textDesc" candidateClass="LXTextView"/>
+                <relationship kind="outlet" name="viewDelete" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXPicInfoViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicInfoViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="touchBack:"/>
+            </relationships>
+        </class>
+        <class className="LXPicMapViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicMapViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="touchApp:"/>
+                <relationship kind="action" name="touchBack:"/>
+                <relationship kind="outlet" name="mapPic" candidateClass="MKMapView"/>
+            </relationships>
+        </class>
+        <class className="LXTextView" superclassName="UITextView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXTextView.h"/>
+        </class>
+        <class className="LXVoteViewController" superclassName="UICollectionViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXVoteViewController.h"/>
+        </class>
+        <class className="UICollectionReusableView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>
+        </class>
+        <class className="UICollectionViewCell" superclassName="UICollectionReusableView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewCell.h"/>
+        </class>
+        <class className="UICollectionViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewController.h"/>
+        </class>
+        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

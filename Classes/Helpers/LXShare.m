@@ -298,7 +298,7 @@ typedef enum {
                                             completionHandler:^(FBSession *session,
                                                                 FBSessionState state,
                                                                 NSError *error) {
-                                                if (!error)
+                                                if (state == FBSessionStateOpen)
                                                 {
                                                     [self facebookPost];
                                                 }

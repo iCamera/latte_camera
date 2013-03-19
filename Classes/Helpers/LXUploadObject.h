@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum {
+    kUploadStateProgress,
+    kUploadStateSuccess,
+    kUploadStateFail,
+} UploadState;
+
 @class  LXUploadObject;
 
 @protocol LXUploadObjectDelegate <NSObject>
@@ -27,6 +33,7 @@
 @property (assign, nonatomic) BOOL showGPS;
 @property (assign, nonatomic) NSInteger status;
 @property (readonly, nonatomic) float percent;
+@property (readonly, nonatomic) UploadState uploadState;
 
 @property (weak, nonatomic) id<LXUploadObjectDelegate> delegate;
 

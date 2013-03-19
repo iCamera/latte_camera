@@ -15,6 +15,7 @@
 #import "Comment.h"
 
 #import "LXAppDelegate.h"
+#import "LatteAPIClient.h"
 
 @implementation LXUtils
 

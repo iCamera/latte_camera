@@ -11,6 +11,7 @@
 #import "LatteAPIClient.h"
 #import "LXAppDelegate.h"
 #import "User.h"
+#import "LXButtonBack.h"
 
 @interface LXSettingNotifyViewController ()
 
@@ -75,6 +76,11 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    //setup back button
+    UIBarButtonItem *navLeftItem = self.navigationItem.leftBarButtonItem;
+    LXButtonBack *buttonBack = (LXButtonBack*)navLeftItem.customView;
+    [buttonBack addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)didReceiveMemoryWarning

@@ -12,6 +12,8 @@
 #import "LatteAPIClient.h"
 #import "LXAppDelegate.h"
 #import "LXButtonBack.h"
+#import "LXCellSearchUser.h"
+#import "Picture.h"
 
 typedef enum {
     kSearchPhoto,
@@ -24,6 +26,7 @@ typedef enum {
 
 @implementation LXSearchViewController {
     NSMutableArray *pictures;
+    NSMutableArray *users;
     SearchMode tableMode;
 }
 
@@ -95,8 +98,16 @@ typedef enum {
 {
     if (tableMode == kSearchPhoto) {
         return (pictures.count/3) + (pictures.count%3>0?1:0);
-    } else
-        return 1;
+    } else {
+        NSInteger ret = users.count;
+        LXAppDelegate* app = [LXAppDelegate currentDelegate];
+        if (app.currentUser != nil) {
+            if (users.count == 0) {
+                ret += 1;
+            }
+        }
+        return ret;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -108,7 +119,15 @@ typedef enum {
         [cell setPictures:pictures forRow:indexPath.row];
         return cell;
     } else {
-        return [tableView dequeueReusableCellWithIdentifier:@"FacebookSearch" forIndexPath:indexPath];
+        if (users.count == 0) {
+            return [tableView dequeueReusableCellWithIdentifier:@"FacebookSearch" forIndexPath:indexPath];
+        } else {
+            LXCellSearchUser *cell = [tableView dequeueReusableCellWithIdentifier:@"User" forIndexPath:indexPath];
+            cell.parentNav = self.navigationController;
+            cell.user = users[indexPath.row];
+            return cell;
+        }
+        
     }
 }
 
@@ -152,7 +171,11 @@ typedef enum {
     if (tableMode == kSearchPhoto) {
         return 104;
     } else {
-        return 30;
+        if (users.count == 0) {
+            return 40;
+        } else {
+            return 79;
+        }
     }
 }
 
@@ -181,15 +204,17 @@ typedef enum {
 
 - (IBAction)textChanged:(id)sender {
     if (textKeyword.text.length > 2) {
+        [activityLoad startAnimating];
+        
+        if (tableMode == kSearchPhoto) {
         NSString *url = [NSString stringWithFormat:@"picture/tag/%@", textKeyword.text];
         LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
         NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
                                [app getToken], @"token", nil];
-        [activityLoad startAnimating];
+        
         [[LatteAPIClient sharedClient] getPath:url
                                      parameters:param
                                         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                            
                                             pictures = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
                                             [self.tableView reloadData];
                                             [activityLoad stopAnimating];
@@ -203,6 +228,30 @@ typedef enum {
                                             [alert show];
                                             [activityLoad stopAnimating];
                                         }];
+        } else if (tableMode == kSearchFriend) {
+            NSString *url = [NSString stringWithFormat:@"user/search"];
+            LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+            NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   [app getToken], @"token",
+                                   textKeyword.text, @"nick", nil];
+            
+            [[LatteAPIClient sharedClient] getPath:url
+                                        parameters:param
+                                           success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                               users = [User mutableArrayFromDictionary:JSON withKey:@"users"];
+                                               [self.tableView reloadData];
+                                               [activityLoad stopAnimating];
+                                           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                               TFLog(@"Something went wrong Tag");
+                                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                               message:error.localizedDescription
+                                                                                              delegate:nil
+                                                                                     cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                                     otherButtonTitles:nil];
+                                               [alert show];
+                                               [activityLoad stopAnimating];
+                                           }];
+        }
     }
 }
 

@@ -25,6 +25,8 @@
 @property (nonatomic, assign) BOOL isVoted;
 @property (nonatomic, strong) User *user;
 
+@property (nonatomic, copy) NSNumber *pictureId;
+
 + (Comment *)instanceFromDictionary:(NSDictionary *)aDictionary;
 - (void)setAttributesFromDictionary:(NSDictionary *)aDictionary;
 

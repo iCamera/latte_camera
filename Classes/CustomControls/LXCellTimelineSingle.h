@@ -8,10 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "Feed.h"
-#import "Picture.h"
-#import "UIButton+AsyncImage.h"
-#import "Comment.h"
-#import "LXCellComment.h"
 
 @interface LXCellTimelineSingle : UITableViewCell<UITableViewDataSource, UITableViewDelegate> {
     UIViewController *viewController;

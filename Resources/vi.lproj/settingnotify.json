@@ -1,0 +1,17 @@
+{
+    "grouped": true,
+    "title": "Thiết lập",
+    "controllerName": "luxeysSettingViewController",
+    "sections": [
+        { "title":"Thông báo trực tiếp", "elements":[
+                { "type":"QBooleanElement", "key":"push_notify_comment", "title":"Comment", "boolValue":0, "controllerAction":"handleUpdateBool:"},
+                { "type":"QBooleanElement", "key":"push_notify_vote", "title":"Rating", "boolValue":0, "controllerAction":"handleUpdateBool:"}
+            ]
+        },
+        { "title":"Thông báo bằng eMail", "elements":[
+                { "type":"QBooleanElement", "key":"mail_comment", "title":"Comment", "boolValue":0, "controllerAction":"handleUpdateBool:"},
+                { "type":"QBooleanElement", "key":"mail_vote", "title":"Rating", "boolValue":0, "controllerAction":"handleUpdateBool:"}
+            ]
+        }
+    ]
+}

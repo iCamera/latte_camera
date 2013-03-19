@@ -10,6 +10,7 @@
 #import "LXAppDelegate.h"
 #import "ALAssetsLibrary+CustomPhotoAlbum.h"
 #import "LXUploadObject.h"
+#import "UIDeviceHardware.h"
 
 #define kAccelerometerFrequency        10.0 //Hz
 
@@ -26,7 +27,6 @@
     GPUImageFilter *effect;
     LXFilterScreenBlend *screenBlend;
     GPUImageAlphaBlendFilter *filterIntensity;
-    UIDeviceHardware *deviceHardware;
     
     GPUImagePicture *previewFilter;
     GPUImagePicture *pictureBlend;
@@ -41,7 +41,7 @@
     CGSize blendSize;
     
     UIActionSheet *sheet;
-    UIImagePickerController *imagePicker;
+    
     NSMutableDictionary *imageMeta;
     NSTimer *timer;
     NSInteger timerCount;
@@ -49,7 +49,6 @@
     CGPoint posText;
     CGFloat mCurrentScale;
     CGFloat mLastScale;
-    NSInteger uploadState;
     
     BOOL isEditing;
     BOOL isSaved;
@@ -174,6 +173,8 @@
 
 @synthesize buttonUploadStatus;
 
+@synthesize delegate;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -216,8 +217,6 @@
     UIImage *imageCanvas = [[UIImage imageNamed:@"bg_canvas.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(8, 8, 8, 8)];
     viewCanvas.image = imageCanvas;
     
-    deviceHardware = [[UIDeviceHardware alloc] init];
-    
     UIBezierPath *shadowPathCamera = [UIBezierPath bezierPathWithRect:viewCameraWraper.bounds];
     viewCameraWraper.layer.masksToBounds = NO;
     viewCameraWraper.layer.shadowColor = [UIColor blackColor].CGColor;
@@ -233,7 +232,6 @@
     currentEffect = 0;
     currentLens = 0;
     currentTimer = kTimerNone;
-    uploadState = kUploadOK;
     
     HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:HUD];
@@ -271,11 +269,6 @@
     //    uiElement = [[GPUImageUIElement alloc] initWithView:uiWrap];
     videoCamera = [[LXStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionBack];
     [videoCamera setOutputImageOrientation:UIInterfaceOrientationPortrait];
-    
-    imagePicker = [[UIImagePickerController alloc]init];
-    [imagePicker.navigationBar setBackgroundImage:[UIImage imageNamed: @"bg_head.png"] forBarMetrics:UIBarMetricsDefault];
-    
-    imagePicker.delegate = (id)self;
     
     // GPS Info
     locationManager = [[CLLocationManager alloc] init];
@@ -419,7 +412,6 @@
 
 - (void)uploaderSuccess:(NSNotification *)notification {
     currentUploader = nil;
-    uploadState = kUploadOK;
     
     [UIView animateWithDuration:0.3
                           delay:0.0
@@ -432,7 +424,6 @@
 }
 
 - (void)uploaderFail:(NSNotification *)notification {
-    uploadState = kUploadFail;
     viewRoundProgess.hidden = true;
     [buttonUploadStatus setImage:[UIImage imageNamed:@"bt_info.png"]
                         forState:UIControlStateNormal];
@@ -441,7 +432,6 @@
 
 
 - (void)uploaderProgress:(NSNotification *)notification {
-    uploadState = kUploadProgress;
     viewRoundProgess.hidden = false;
     buttonUploadStatus.hidden = false;
     buttonUploadStatus.alpha = 0.75;
@@ -766,8 +756,6 @@
 }
 
 - (void)capturePhotoAsync {
-    buttonCapture.enabled = false;
-    
     // Save last GPS and Orientation
     [locationManager stopUpdatingLocation];
     
@@ -802,9 +790,13 @@
             [formatter setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
             NSString *stringDate = [formatter stringFromDate:[NSDate date]];
             
+            UIDeviceHardware *hardware = [[UIDeviceHardware alloc] init];
+            
             [dictForEXIF setObject:stringDate forKey:(NSString *)kCGImagePropertyExifDateTimeDigitized];
             [dictForEXIF setObject:stringDate forKey:(NSString *)kCGImagePropertyExifDateTimeOriginal];
             [dictForTIFF setObject:stringDate forKey:(NSString *)kCGImagePropertyTIFFDateTime];
+            [dictForTIFF setObject:@"Apple" forKey:(NSString *)kCGImagePropertyTIFFMake];
+            [dictForTIFF setObject:hardware.platformString forKey:(NSString *)kCGImagePropertyTIFFModel];
             [imageMeta setObject:dictForEXIF forKey:(NSString *)kCGImagePropertyExifDictionary];
             [imageMeta setObject:dictForTIFF forKey:(NSString *)kCGImagePropertyTIFFDictionary];
             
@@ -864,6 +856,10 @@
         [videoCamera stopCameraCapture];
     }
     
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc]init];
+    imagePicker.delegate = self;
+    [imagePicker.navigationBar setBackgroundImage:[UIImage imageNamed: @"bg_head.png"] forBarMetrics:UIBarMetricsDefault];
+    
     [self presentViewController:imagePicker animated:NO completion:nil];
 }
 
@@ -883,6 +879,7 @@
 
 - (IBAction)capture:(id)sender {
     buttonPick.hidden = true;
+    buttonCapture.enabled = false;
     if (currentTimer == kTimerNone) {
         [self capturePhotoAsync];
     } else {
@@ -943,7 +940,7 @@
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
     if (app.currentUser != nil) {
-        if (_delegate == nil) {
+        if (delegate == nil) {
             LXPicEditViewController *controllerPicEdit = [[UIStoryboard storyboardWithName:@"Gallery"
                                                                             bundle: nil] instantiateViewControllerWithIdentifier:@"PicEdit"];
             controllerPicEdit.imageData = savedData;
@@ -954,7 +951,8 @@
                                   savedData, @"data",
                                   savedPreview, @"preview",
                                   nil];
-            [_delegate imagePickerController:self didFinishPickingMediaWithData:info];
+            [delegate imagePickerController:self didFinishPickingMediaWithData:info];
+            [self dismissViewControllerAnimated:YES completion:nil];
         }
     } else {
         RDActionSheet *actionSheet = [[RDActionSheet alloc] initWithCancelButtonTitle:NSLocalizedString(@"Cancel", @"")
@@ -1078,7 +1076,7 @@
     
     if(!destination) {
         NSLog(@"***Could not create image destination ***");
-    }
+    } else {
     
     //add the image contained in the image source to the destination, overidding the old metadata with our modified metadata
     CGImageDestinationAddImageFromSource(destination,source,0, (__bridge CFDictionaryRef) imageMeta);
@@ -1100,6 +1098,7 @@
     //cleanup
     
     CFRelease(destination);
+    }
     CFRelease(source);
     
     // Save now
@@ -1234,7 +1233,7 @@
     CGRect frameLens = viewLensControl.frame;
     CGRect frameTopBar = viewTopBar.frame;
     CGRect frameText = viewTextControl.frame;
-    CGRect frameCanvas = viewCanvas.frame;
+    CGRect frameCanvas;
     CGRect frameBlend = viewBlendControl.frame;
     
     
@@ -1388,7 +1387,7 @@
         [self initPreviewPic];
         [self switchEditImage];
         
-        [imagePicker dismissViewControllerAnimated:NO completion:nil];
+        [picker dismissViewControllerAnimated:NO completion:nil];
         
         [self resizeCameraViewWithAnimation:NO];
         [self preparePipe];
@@ -1605,8 +1604,7 @@
             break;
         case 2:
             if (buttonIndex == 1) {
-                LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-//                [app toogleCamera];
+                [self.navigationController dismissViewControllerAnimated:YES completion:nil];
             }
             break;
         case 3: //Retry upload
@@ -1815,10 +1813,10 @@
 }
 
 - (IBAction)touchUploadStatus:(id)sender {
-    switch (uploadState) {
-        case kUploadOK:
+    switch (currentUploader.uploadState) {
+        case kUploadStateSuccess:
             break;
-        case kUploadFail:
+        case kUploadStateFail:
         {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"Error")
                                                             message:NSLocalizedString(@"cannot_upload", @"")
@@ -1829,7 +1827,7 @@
             [alert show];
         }
             break;
-        case kUploadProgress:
+        case kUploadStateProgress:
         {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
                                                             message:NSLocalizedString(@"uploading", @"Uploading :)")

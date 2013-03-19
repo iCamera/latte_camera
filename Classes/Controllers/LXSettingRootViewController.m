@@ -10,6 +10,7 @@
 #import "LXSettingViewController.h"
 #import "LXAppDelegate.h"
 #import "LXRootBuilder.h"
+#import "LatteAPIClient.h"
 
 @interface LXSettingRootViewController ()
 
@@ -86,7 +87,7 @@
                 root = [[LXRootBuilder new]buildWithObject:data];
                 [root bindToObject:data];
                 QSection *section = root.sections[0];
-                QRadioElement *eleCountry = [[QRadioElement alloc] initWithDict:countriesDict selected:0 title:@"Country"];
+                QRadioElement *eleCountry = [[QRadioElement alloc] initWithDict:countriesDict selected:0 title:NSLocalizedString(@"nationality", @"Nationality")];
                 eleCountry.key = @"nationality";
                 eleCountry.controllerAction = @"handleUpdateRadio:";                
                 

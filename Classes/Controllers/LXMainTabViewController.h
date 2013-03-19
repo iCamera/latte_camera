@@ -7,14 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LXLoginViewController.h"
-#import "LXCameraViewController.h"
-#import "User.h"
-#import "Picture.h"
 
 #define kAnimationDuration .3
 
-@interface LXMainTabViewController : UITabBarController<LXImagePickerDelegate>
+@interface LXMainTabViewController : UITabBarController<UINavigationControllerDelegate>
 
 @property (strong, nonatomic) NSMutableArray *notifies;
 

@@ -6,6 +6,10 @@
 //  Copyright (c) 2012 LUXEYS. All rights reserved.
 //
 
+#import "LXLoginViewController.h"
+#import "User.h"
+#import "Picture.h"
+#import "LXCameraViewController.h"
 #import "LXMainTabViewController.h"
 #import "LXAppDelegate.h"
 #import "LXAboutViewController.h"
@@ -133,7 +137,7 @@
     }
     
     viewNav = [[LXUserNavButton alloc] init];
-    viewNav.view.frame = CGRectMake(200, 0, 100, 60);
+    viewNav.view.frame = CGRectMake(212, 0, 100, 60);
 
     [viewNav.buttonSetting addTarget:self action:@selector(showSetting:) forControlEvents:UIControlEventTouchUpInside];
     [viewNav.buttonNotify addTarget:self action:@selector(toggleNotify:) forControlEvents:UIControlEventTouchUpInside];
@@ -160,13 +164,13 @@
     }
     
     // Init Notify
-    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     viewNotify = [storyMain instantiateViewControllerWithIdentifier:@"Notification"];
     
     viewNotify.view.frame = CGRectMake(20, 50, 280, 350);
-    [LXUtils globalShadow:viewNotify.view];
+//    [LXUtils globalShadow:viewNotify.view];
     viewNotify.view.layer.cornerRadius = 5.0;
+    viewNotify.parent = self;
     [self addChildViewController:viewNotify];
     [self.view addSubview:viewNotify.view];
     [viewNotify didMoveToParentViewController:self];
@@ -176,9 +180,11 @@
 
 - (void)toggleNotify:(id)sender {
     if (viewNotify.view.hidden) {
+        viewNav.notifyCount = 0;
+        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
         LXAppDelegate* app = [LXAppDelegate currentDelegate];
 
-        [[LatteAPIClient sharedClient] getPath:@"user/me/read_notify"
+        [[LatteAPIClient sharedClient] postPath:@"user/me/read_notify"
                                     parameters: [NSDictionary dictionaryWithObject:[app getToken] forKey:@"token" ]
                                        success:nil
                                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -254,7 +260,7 @@
 
 - (void)receiveLoggedOut:(NSNotification *) notification {
     [self setGuest];
-    if (viewNotify != nil) {
+    if (!viewNotify.view.hidden) {
         [self toggleNotify:nil];
     }
 }
@@ -268,6 +274,25 @@
     User *user = notify.object;
     viewUser.user = user;
     [nav pushViewController:viewUser animated:YES];
+}
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    UIButton *buttonTittle = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 30)];
+    buttonTittle.titleLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:22];
+    buttonTittle.titleLabel.shadowOffset = CGSizeMake(0, 1.0);
+    buttonTittle.titleLabel.shadowColor = [UIColor colorWithRed:0.4 green:0.36 blue:0.21 alpha:1];
+    [buttonTittle setTitle:@"Latte" forState:UIControlStateNormal];
+    [buttonTittle addTarget:self action:@selector(touchTitle:) forControlEvents:UIControlEventTouchUpInside];
+    viewController.navigationItem.titleView = buttonTittle;
+}
+
+- (void)touchTitle:(id)sender {
+    LXAppDelegate* app = [LXAppDelegate currentDelegate];
+    if (app.currentUser != nil) {
+        self.selectedIndex = 4;
+    } else {
+        self.selectedIndex = 0;
+    }
 }
 
 @end

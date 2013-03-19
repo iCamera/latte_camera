@@ -14,10 +14,10 @@
 #import "LXCameraViewController.h"
 
 typedef enum {
-    kTableProfile,
-    kTablePhoto,
-    kTableFollower,
-    kTableFollowings,
+    kTableProfile = 1,
+    kTablePhoto = 2,
+    kTableFollower = 3,
+    kTableFollowings = 4,
 } MypageTableMode;
 
 typedef enum {
@@ -35,6 +35,7 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadIndicator;
 
 @property (strong, nonatomic) User *user;
+@property (assign, nonatomic) MypageTableMode tableMode;
 
 - (void)touchTab:(MypageTableMode)mode;
 - (void)touchPhoto:(MypagePhotoMode)mode;
@@ -42,5 +43,6 @@ typedef enum {
 - (void)touchSetProfilePic;
 - (void)expandHeader;
 - (void)collapseHeader;
+- (void)reloadView;
 
 @end

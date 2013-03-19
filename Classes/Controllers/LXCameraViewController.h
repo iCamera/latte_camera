@@ -60,12 +60,6 @@ typedef enum {
     kBlendStrong = 3,
 } TypeDefBlend;
 
-typedef enum {
-    kUploadOK,
-    kUploadProgress,
-    kUploadFail,
-} TypeDefUploadStatus;
-
 @class LXCameraViewController;
 
 @protocol LXImagePickerDelegate <NSObject>
@@ -74,7 +68,7 @@ typedef enum {
 - (void)imagePickerControllerDidCancel:(LXCameraViewController *)picker;
 @end
 
-@interface LXCameraViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, UIScrollViewDelegate, UIAccelerometerDelegate, LXDrawViewDelegate, UIAlertViewDelegate, UITextFieldDelegate>
+@interface LXCameraViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, UIScrollViewDelegate, UIAccelerometerDelegate, LXDrawViewDelegate, UIAlertViewDelegate, UITextFieldDelegate, UINavigationControllerDelegate>
 @property (weak, nonatomic) id <LXImagePickerDelegate> delegate;
 
 @property (strong, nonatomic) IBOutlet UIView *viewBottomBar;

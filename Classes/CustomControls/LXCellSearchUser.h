@@ -18,10 +18,17 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonFollowing;
 @property (strong, nonatomic) IBOutlet UIButton *buttonFollower;
 @property (strong, nonatomic) IBOutlet UIButton *buttonFollow;
+@property (strong, nonatomic) IBOutlet UIView *viewStats;
+@property (strong, nonatomic) IBOutlet UIView *viewStatsButton;
+@property (strong, nonatomic) IBOutlet UILabel *labelName;
 
-@property (weak, nonatomic) id delegate;
+@property (weak, nonatomic) UINavigationController *parentNav;
 @property (strong, nonatomic) User *user;
-- (IBAction)touchUser:(id)sender;
+
 - (IBAction)toggleFollow:(UIButton *)sender;
+- (IBAction)touchProfile:(id)sender;
+- (IBAction)touchPhoto:(id)sender;
+- (IBAction)touchFollowing:(id)sender;
+- (IBAction)touchFollower:(id)sender;
 
 @end

@@ -1,0 +1,18 @@
+{
+    "grouped": true,
+    "title": "Thiết lập",
+    "controllerName": "luxeysSettingViewController",
+    "sections": [
+        { "title":"HỒ SƠ CÁ NHÂN", "key":"profile", "elements":[
+                { "type":"QEntryElement", "key":"name", "title":"Tài khoản", "placeholder":"Tài khoản", "bind":"textValue:name", "controllerAction":"handleUpdateEntry:"},
+                { "type":"QRadioElement", "key":"gender", "title":"Giới tính", "items":["Nam", "Nữ"], "values":[1, 2], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QDateTimeInlineElement", "key":"birthday", "title":"Ngày sinh"},
+                { "type":"QEntryElement", "key":"current_residence", "title":"Nơi ở", "placeholder":"Nơi ở", "bind":"textValue:current_residence", "controllerAction":"handleUpdateEntry:"},
+                { "type":"QEntryElement", "key":"hometown", "title":"Nơi sinh", "placeholder":"Nơi sinh", "bind":"textValue:hometown", "controllerAction":"handleUpdateEntry:"},
+                { "type":"QEntryElement", "key":"occupation", "title":"Nghề nghiệp", "placeholder":"Nghề nghiệp", "bind":"textValue:occupation", "controllerAction":"handleUpdateEntry:"},
+                { "type":"QEntryElement", "key":"introduction", "title":"Giới thiệu", "bind":"textValue:introduction", "controllerAction":"handleUpdateEntry:"},
+                { "type":"QEntryElement", "key":"hobby", "title":"Sở thích", "bind":"textValue:hobby", "controllerAction":"handleUpdateEntry:"}
+            ]
+        }
+    ]
+}

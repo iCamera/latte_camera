@@ -12,8 +12,7 @@
 #import "TestFlight.h"
 #import "GAI.h"
 #import "LXSidePanelController.h"
-
-@class User;
+#import "User.h"
 
 #define APPDELEGATE (AppDelegate *)[UIApplication sharedApplication].delegate
 

@@ -116,8 +116,10 @@
             break;
         case 2:
             [self resetTabButton];
+            [self resetTimelineButton];
+            buttonTimelineMe.selected = true;
             [_parent expandHeader];
-            [_parent touchTab:kTablePhoto];
+            [_parent touchPhoto:kPhotoMyphoto];
             break;
         case 3:
             [self resetTabButton];

@@ -9,6 +9,15 @@
 #import "LXRankingViewController.h"
 #import "LXAppDelegate.h"
 #import "LXCellGrid.h"
+#import "MBProgressHUD.h"
+#import "Picture.h"
+#import "LXCellRankLv1.h"
+#import "LXCellRankLv2.h"
+#import "UIButton+AsyncImage.h"
+#import "LXUtils.h"
+#import "LatteAPIClient.h"
+#import "LXButtonBrown30.h"
+
 
 typedef enum {
     kLayoutNormal,
@@ -56,7 +65,7 @@ typedef enum {
                                                  name:@"BecomeActive" object:nil];
     
     loadEnded = FALSE;
-    ranktype = @"calendar";
+    ranktype = @"daily";
     rankpage = 1;
     
     
@@ -71,22 +80,25 @@ typedef enum {
     HUD.margin = 10.f;
     HUD.yOffset = 150.f;
     
-    rankLayout = kLayoutCalendar;
+    rankLayout = kLayoutNormal;
     
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
+    viewTab.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     
-    [self loadCalendar];
+    [self reloadView];
 }
 
 - (void)becomeActive:(id)sender {
+    [self reloadView];
+}
+
+- (void)reloadView {
     rankpage = 1;
     if (rankLayout == kLayoutNormal) {
         [self loadRanking];
     } else {
         [self loadCalendar];
     }
-
 }
 
 
@@ -108,6 +120,7 @@ typedef enum {
                                        [self.tableView reloadData];
                                        [loadIndicator stopAnimating];
                                        [HUD hide:YES];
+                                       self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back2.png"]];
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        TFLog(@"Something went wrong (Ranking)");
@@ -171,6 +184,7 @@ typedef enum {
                                        [self.tableView reloadData];
                                        [loadIndicator stopAnimating];
                                        [HUD hide:YES];
+                                       self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        TFLog(@"Something went wrong (Ranking)");
@@ -437,10 +451,14 @@ typedef enum {
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (rankLayout == kLayoutCalendar) {
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
-        label.textAlignment = NSTextAlignmentCenter;
-        label.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.7];
-        label.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:18];
+        UIView *viewHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
+        UIImageView *imageRank = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 26, 26)];
+        imageRank.contentMode = UIViewContentModeCenter;
+        imageRank.image = [UIImage imageNamed:@"icon_rank_m_white.png"];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(27, 0, 293, 30)];
+        viewHeader.backgroundColor = [UIColor colorWithRed:101.0/255.0 green:91.0/255.0 blue:58.0/255 alpha:0.75];
+        label.backgroundColor = [UIColor clearColor];
+        label.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:16];
         label.textColor = [UIColor whiteColor];
         
         NSDictionary *dayInfo = days[section];
@@ -449,7 +467,10 @@ typedef enum {
         NSDate *myDate = [df dateFromString:[dayInfo objectForKey:@"day"]];
         [df setDateFormat:@"yyyy/MM/dd"];
         label.text = [df stringFromDate:myDate];
-        return label;
+        
+        [viewHeader addSubview:label];
+        [viewHeader addSubview:imageRank];
+        return viewHeader;
     } else
         return [[UIView alloc] init];
 }

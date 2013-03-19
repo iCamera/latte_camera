@@ -12,6 +12,8 @@
 #import "LXCellGrid.h"
 #import "LXGalleryViewController.h"
 #import "LXButtonBack.h"
+#import "LXUtils.h"
+#import "Picture.h"
 
 @interface LXTagViewController ()
 

@@ -33,5 +33,6 @@
 - (IBAction)touchCloseLogin:(id)sender;
 - (IBAction)touchReg:(id)sender;
 - (IBAction)touchLogin:(id)sender;
+- (void)reloadView;
 
 @end

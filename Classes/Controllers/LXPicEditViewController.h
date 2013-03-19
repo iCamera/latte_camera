@@ -16,6 +16,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "AFHTTPClient.h"
 #import "LXShare.h"
+#import "LXTextView.h"
 
 @interface LXPicEditViewController : UITableViewController <UIActionSheetDelegate> {
     NSInteger imageStatus;    
@@ -24,7 +25,7 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonDelete;
 @property (strong, nonatomic) IBOutlet UIImageView *imagePic;
-@property (strong, nonatomic) IBOutlet UITextView *textDesc;
+@property (strong, nonatomic) IBOutlet LXTextView *textDesc;
 @property (strong, nonatomic) IBOutlet UISwitch *switchGPS;
 @property (strong, nonatomic) IBOutlet UISwitch *switchEXIF;
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *gestureTap;

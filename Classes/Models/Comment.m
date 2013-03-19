@@ -60,7 +60,8 @@
         [self setValue:value forKey:@"_voteCount"];
     } else if ([key isEqualToString:@"can_vote"]) {
         [self setValue:value forKey:@"_canVote"];
-
+    } else if ([key isEqualToString:@"picture_id"]) {
+        [self setValue:value forKey:@"_pictureId"];
     } else {
         [super setValue:value forUndefinedKey:key];
     }

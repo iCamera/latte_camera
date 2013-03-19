@@ -42,11 +42,13 @@
     void (^successUpload)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
         [_delegate uploader:self success:responseObject];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderSuccess" object:self];
+        _uploadState = kUploadStateSuccess;
     };
     
     void (^failUpload)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
         [_delegate uploader:self fail:error];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderFail" object:self];
+        _uploadState = kUploadStateFail;
     };
     
     [operation setCompletionBlockWithSuccess: successUpload
@@ -56,8 +58,10 @@
         _percent = (float)totalBytesWritten/(float)totalBytesExpectedToWrite;
         [_delegate uploader:self progress:_percent];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderProgress" object:self];
+        _uploadState = kUploadStateProgress;
     }];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderStart" object:self];
     [operation start];
 }
 

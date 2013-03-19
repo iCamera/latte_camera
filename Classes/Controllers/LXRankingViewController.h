@@ -7,13 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LXCellRankLv1.h"
-#import "LXCellRankLv2.h"
-#import "UIButton+AsyncImage.h"
-#import "LXUtils.h"
-#import "LatteAPIClient.h"
+
 #import "LXGalleryViewController.h"
-#import "LXButtonBrown30.h"
 
 @interface LXRankingViewController : UITableViewController <LXGalleryViewControllerDataSource>
 
@@ -25,4 +20,5 @@
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadIndicator;
 
 - (IBAction)touchTab:(UIButton*)sender;
+- (void)reloadView;
 @end
