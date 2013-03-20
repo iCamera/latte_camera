@@ -276,7 +276,7 @@
     NSString *stringNotify = [LXUtils stringFromNotify:notifies[indexPath.row]];
     
     CGSize labelSize = [stringNotify sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:11]
-                                constrainedToSize:CGSizeMake(230.0, MAXFLOAT)
+                                constrainedToSize:CGSizeMake(215.0, MAXFLOAT)
                                     lineBreakMode:NSLineBreakByWordWrapping];
     
     return labelSize.height + 26;

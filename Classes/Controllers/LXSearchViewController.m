@@ -30,11 +30,11 @@ typedef enum {
     SearchMode tableMode;
 }
 
-@synthesize viewSearchBox;
 @synthesize textKeyword;
 @synthesize buttonSearchPeople;
 @synthesize buttonSearchPhoto;
 @synthesize activityLoad;
+@synthesize buttonSearch;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -60,13 +60,7 @@ typedef enum {
     textKeyword.leftViewMode = UITextFieldViewModeAlways;
     
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
-    [LXUtils globalShadow:viewSearchBox];
-    
-    CAShapeLayer * maskLayer = [CAShapeLayer layer];
-    maskLayer.path = [UIBezierPath bezierPathWithRoundedRect:viewSearchBox.bounds byRoundingCorners: UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: (CGSize){5.0, 5.0}].CGPath;
-    viewSearchBox.layer.mask = maskLayer;
-    //viewSearchBox.layer.cornerRadius = 5.0;
-    
+
     UITapGestureRecognizer *gestureTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchBackground:)];
     [self.tableView addGestureRecognizer:gestureTap];
     tableMode = kSearchPhoto;
@@ -203,56 +197,57 @@ typedef enum {
 }
 
 - (IBAction)textChanged:(id)sender {
-    if (textKeyword.text.length > 2) {
-        [activityLoad startAnimating];
-        
-        if (tableMode == kSearchPhoto) {
+    [activityLoad startAnimating];
+    
+    if (tableMode == kSearchPhoto) {
         NSString *url = [NSString stringWithFormat:@"picture/tag/%@", textKeyword.text];
         LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
         NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
                                [app getToken], @"token", nil];
         
         [[LatteAPIClient sharedClient] getPath:url
-                                     parameters:param
-                                        success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                            pictures = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
-                                            [self.tableView reloadData];
-                                            [activityLoad stopAnimating];
-                                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                            TFLog(@"Something went wrong Tag");
-                                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
-                                                                                            message:error.localizedDescription
-                                                                                           delegate:nil
-                                                                                  cancelButtonTitle:NSLocalizedString(@"close", "Close")
-                                                                                  otherButtonTitles:nil];
-                                            [alert show];
-                                            [activityLoad stopAnimating];
-                                        }];
-        } else if (tableMode == kSearchFriend) {
-            NSString *url = [NSString stringWithFormat:@"user/search"];
-            LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-            NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
-                                   [app getToken], @"token",
-                                   textKeyword.text, @"nick", nil];
-            
-            [[LatteAPIClient sharedClient] getPath:url
-                                        parameters:param
-                                           success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                               users = [User mutableArrayFromDictionary:JSON withKey:@"users"];
-                                               [self.tableView reloadData];
-                                               [activityLoad stopAnimating];
-                                           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                               TFLog(@"Something went wrong Tag");
-                                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
-                                                                                               message:error.localizedDescription
-                                                                                              delegate:nil
-                                                                                     cancelButtonTitle:NSLocalizedString(@"close", "Close")
-                                                                                     otherButtonTitles:nil];
-                                               [alert show];
-                                               [activityLoad stopAnimating];
-                                           }];
-        }
+                                    parameters:param
+                                       success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                           pictures = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
+                                           [self.tableView reloadData];
+                                           [activityLoad stopAnimating];
+                                       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                           TFLog(@"Something went wrong Tag");
+                                           UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                           message:error.localizedDescription
+                                                                                          delegate:nil
+                                                                                 cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                                 otherButtonTitles:nil];
+                                           [alert show];
+                                           [activityLoad stopAnimating];
+                                       }];
+    } else if (tableMode == kSearchFriend) {
+        NSString *url = [NSString stringWithFormat:@"user/search"];
+        LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+        NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
+                               [app getToken], @"token",
+                               textKeyword.text, @"nick", nil];
+        
+        [[LatteAPIClient sharedClient] getPath:url
+                                    parameters:param
+                                       success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                           users = [User mutableArrayFromDictionary:JSON withKey:@"users"];
+                                           [self.tableView reloadData];
+                                           [activityLoad stopAnimating];
+                                       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                           TFLog(@"Something went wrong Tag");
+                                           UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                           message:error.localizedDescription
+                                                                                          delegate:nil
+                                                                                 cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                                 otherButtonTitles:nil];
+                                           [alert show];
+                                           [activityLoad stopAnimating];
+                                       }];
     }
 }
 
+- (IBAction)editChanged:(id)sender {
+    buttonSearch.enabled = textKeyword.text.length > 0;
+}
 @end

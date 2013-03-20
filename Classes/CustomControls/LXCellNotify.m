@@ -41,7 +41,7 @@
     
     CGRect frame = labelNotify.frame;
     CGSize labelSize = [labelNotify.text sizeWithFont:labelNotify.font
-                                     constrainedToSize:CGSizeMake(215, MAXFLOAT)
+                                     constrainedToSize:CGSizeMake(215.0, MAXFLOAT)
                                          lineBreakMode:NSLineBreakByWordWrapping];
     frame.size.height = labelSize.height;
     labelNotify.frame = frame;

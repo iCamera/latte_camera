@@ -119,10 +119,10 @@
         [self.navigationController pushViewController:viewSetting animated:YES];
     } else if (indexPath.section == 1) {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    } else if (indexPath.section == 3) {
+    } else if (indexPath.section == 2) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/company/policy"]];
         
-    } else if (indexPath.section == 4) {
+    } else if (indexPath.section == 3) {
         LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
         
         [[LatteAPIClient sharedClient] postPath:@"user/logout"
@@ -149,9 +149,9 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
     if (app.currentUser == nil)
-        return 4;
+        return 3;
     else
-        return 5;
+        return 4;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {

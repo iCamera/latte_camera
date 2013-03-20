@@ -142,7 +142,6 @@ typedef enum {
     [[LatteAPIClient sharedClient] getPath:url
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       [loadIndicator stopAnimating];
                                        [HUD hide:YES];
                                        
                                        NSArray *newDays = [JSON objectForKey:@"days"];
@@ -150,14 +149,12 @@ typedef enum {
                                            loadEnded = true;
                                        }
                                        else {
-                                           NSInteger index = days.count-1;
                                            [days addObjectsFromArray:newDays];
                                            pics = [self flatPictureArray];
-                                           [self.tableView insertSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(index, newDays.count)] withRowAnimation:UITableViewRowAnimationNone];
+                                           [self.tableView reloadData];
                                        }
                                        
-
-
+                                       [loadIndicator stopAnimating];
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        TFLog(@"Something went wrong (Ranking)");

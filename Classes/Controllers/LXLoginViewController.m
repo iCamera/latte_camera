@@ -68,11 +68,9 @@
                                             // Clear FBsession to be sure
                                             [FBSession.activeSession closeAndClearTokenInformation];
                                         }];
-//        [self.authButton setTitle:@"Logout" forState:UIControlStateNormal];
     } else {
         [HUD hide:YES];
         TFLog(@"Unopen fb");
-//        [self.authButton setTitle:@"Login" forState:UIControlStateNormal];
     }
 }
 

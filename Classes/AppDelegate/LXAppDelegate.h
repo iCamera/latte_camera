@@ -12,6 +12,7 @@
 #import "TestFlight.h"
 #import "GAI.h"
 #import "LXSidePanelController.h"
+#import "LXCameraViewController.h"
 #import "User.h"
 
 #define APPDELEGATE (AppDelegate *)[UIApplication sharedApplication].delegate
@@ -28,6 +29,8 @@
 @property (strong, nonatomic) User *currentUser;
 @property (strong, nonatomic) NSString *apns;
 @property (strong, nonatomic) LXMainTabViewController *viewMainTab;
+@property (weak, nonatomic) LXCameraViewController *controllerCamera;
+
 @property (strong, nonatomic) NSMutableArray *uploader;
 
 extern NSString *const FBSessionStateChangedNotification;

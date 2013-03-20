@@ -33,6 +33,7 @@
 }
 
 - (void)setUser:(User *)user {
+    imageUser.image = [UIImage imageNamed:@"user.gif"];
     [imageUser loadProgess:user.profilePicture];
     labelIntro.text = user.introduction;
     labelName.text = user.name;

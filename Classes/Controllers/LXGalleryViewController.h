@@ -9,6 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "STTweetLabel.h"
 
+typedef enum {
+    kGalleryTabNone = 0,
+    kGalleryTabVote = 1,
+    kGalleryTabComment = 2,
+    kGalleryTabInfo = 3,
+} GalleryTab;
+
 @class Picture, User;
 
 @protocol LXGalleryViewControllerDataSource <NSObject>
@@ -37,6 +44,8 @@
 
 @property (strong, nonatomic) Picture* picture;
 @property (strong, nonatomic) User* user;
+
+@property (assign, nonatomic) GalleryTab currentTab;;
 
 - (IBAction)touchClose:(id)sender;
 - (IBAction)toggleLike:(UIButton *)sender;

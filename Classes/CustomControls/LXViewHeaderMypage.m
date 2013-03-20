@@ -119,6 +119,7 @@
             [self resetTimelineButton];
             buttonTimelineMe.selected = true;
             [_parent expandHeader];
+            _parent.tableMode = kTablePhoto;
             [_parent touchPhoto:kPhotoMyphoto];
             break;
         case 3:

@@ -29,7 +29,6 @@
 @implementation LXGalleryViewController {
     UIPageViewController *pageController;
     LXPicDetailTabViewController *viewPicTab;
-    NSInteger currentTab;
     UITapGestureRecognizer *tapPage;
     UITapGestureRecognizer *tapDouble;
     NSMutableArray *currentComments;
@@ -57,6 +56,14 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+    }
+    return self;
+}
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        _currentTab = kGalleryTabComment;
     }
     return self;
 }
@@ -152,8 +159,6 @@
 
     [self setPicture];
     
-    currentTab = 2;
-    
     buttonUser.layer.cornerRadius = 5;
     buttonUser.clipsToBounds = YES;
     
@@ -161,6 +166,29 @@
     
     lxShare.controller = self;
     
+}
+
+- (void)setCurrentTab:(GalleryTab)currentTab {
+    LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
+    if (currentTab == kGalleryTabVote) { //Vote button
+        if (!currentPage.picture.isOwner)
+            return;
+    }
+    
+    if (![self isShowingContainer]) {
+        [self toggleFrame];
+        if (_currentTab != currentTab) {
+            _currentTab = currentTab;
+            viewPicTab.tab = currentTab;
+        }
+    } else {
+        if (currentTab == _currentTab) {
+            [self toggleFrame];
+        } else {
+            viewPicTab.tab = currentTab;
+            _currentTab = currentTab;
+        }
+    }
 }
 
 - (void)tapZoom:(UITapGestureRecognizer*)sender {
@@ -377,25 +405,18 @@
 }
 
 - (IBAction)switchTab:(UIButton *)sender {
-    LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
-    if (sender.tag == 1) { //Vote button
-        if (!currentPage.picture.isOwner)
-            return;
-    }
-    
-    if (![self isShowingContainer]) {
-        [self toggleFrame];
-        if (currentTab != sender.tag) {
-            currentTab = sender.tag;
-            viewPicTab.tab = sender.tag;   
-        }
-    } else {
-        if (sender.tag == currentTab) {
-            [self toggleFrame];
-        } else {
-            viewPicTab.tab = sender.tag;
-            currentTab = sender.tag;
-        }
+    switch (sender.tag) {
+        case 1:
+            self.currentTab = kGalleryTabVote;
+            break;
+        case 2:
+            self.currentTab = kGalleryTabComment;
+            break;
+        case 3:
+            self.currentTab = kGalleryTabInfo;
+            break;
+        default:
+            break;
     }
 }
 

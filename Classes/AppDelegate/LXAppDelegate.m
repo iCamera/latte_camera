@@ -218,12 +218,8 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-    [[NSNotificationCenter defaultCenter]
-     postNotificationName:@"ResignActive"
-     object:self];
     
-//    LXCameraViewController *tmp = viewCamera.viewControllers[0];
-//    [tmp.videoCamera pauseCameraCapture];
+    [_controllerCamera.videoCamera pauseCameraCapture];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -234,24 +230,19 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-//    LXCameraViewController *tmp = viewCamera.viewControllers[0];
-//    [tmp.videoCamera resumeCameraCapture];
+    
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-//    LXCameraViewController *tmp = viewCamera.viewControllers[0];
-//    [tmp.videoCamera resumeCameraCapture];
+    [_controllerCamera.videoCamera resumeCameraCapture];
     [FBSession.activeSession handleDidBecomeActive];
     
     [self clearNotification];
 
     [[NSNotificationCenter defaultCenter] postNotificationName:@"BecomeActive" object:self];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshNotify" object:self];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshFriendRequest" object:self];
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface._revealLeftAnimationWithDuration
 }
 
 - (void)clearNotification {

@@ -479,6 +479,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
     self.navigationController.navigationBarHidden = YES;
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    app.controllerCamera = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -498,6 +500,9 @@
     });
     
     [super viewWillDisappear:animated];
+    
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    app.controllerCamera = nil;
 }
 
 - (void)preparePipe {

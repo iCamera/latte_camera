@@ -1032,15 +1032,10 @@ typedef enum {
 
 
 - (void)showInfo:(UIButton*)sender {
-    Picture *picture = [LXUtils picFromPicID:sender.tag of:feeds];
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Gallery"
-                                                             bundle:nil];
-    LXPicInfoViewController *viewPicInfo = [mainStoryboard instantiateViewControllerWithIdentifier:@"Info"];
-    viewPicInfo.picture = picture;
-    [self.navigationController pushViewController:viewPicInfo animated:YES];
+    [self showPic:sender withTab:kGalleryTabInfo];
 }
 
-- (void)showPic:(UIButton*)sender {    
+- (void)showPic:(UIButton*)sender withTab:(GalleryTab)tab {
     UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                            bundle:nil];
     UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
@@ -1069,9 +1064,23 @@ typedef enum {
         default:
             break;
     }
+    
+    [self presentViewController:navGalerry animated:YES completion:^{
+        switch (tab) {
+            case kGalleryTabComment:
+            case kGalleryTabInfo:
+            case kGalleryTabVote:
+                viewGallery.currentTab = tab;
+                break;
+            default:
+                break;
+        }
+    }];
 
-    [self presentViewController:navGalerry animated:YES completion:nil];
+}
 
+- (void)showPic:(UIButton*)sender {
+    [self showPic:sender withTab:kGalleryTabNone];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -1174,43 +1183,12 @@ typedef enum {
 }
 
 - (void)showLike:(UIButton*)sender {
-    UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
-                                                           bundle:nil];
-    LXVoteViewController *viewVote = [storyGallery instantiateViewControllerWithIdentifier:@"Vote"];
-    Picture *picture = [LXUtils picFromPicID:sender.tag of:feeds];
-    viewVote.picture = picture;
-    [self.navigationController pushViewController:viewVote animated:YES];
+    [self showPic:sender withTab:kGalleryTabVote];
 }
 
 
 - (void)showComment:(UIButton*)sender {
-    Picture *pic = [LXUtils picFromPicID:sender.tag of:feeds];
-    
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Gallery"
-                                                             bundle:nil];
-    LXPicCommentViewController *viewPicComment = [mainStoryboard instantiateViewControllerWithIdentifier:@"Comment"];
-    viewPicComment.picture = pic;
-    
-
-    LXAppDelegate *app = [LXAppDelegate currentDelegate];
-    NSString *urlDetail = [NSString stringWithFormat:@"picture/%d", [pic.pictureId integerValue]];
-    [[LatteAPIClient sharedClient] getPath:urlDetail
-                                parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
-                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       viewPicComment.comments = [Comment mutableArrayFromDictionary:JSON withKey:@"comments"];
-                                       
-                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       TFLog(@"Something went wrong Pic Comment");
-                                       
-                                       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
-                                                                                       message:error.localizedDescription
-                                                                                      delegate:nil
-                                                                             cancelButtonTitle:NSLocalizedString(@"close", "Close")
-                                                                             otherButtonTitles:nil];
-                                       [alert show];
-                                   }];
-    
-    [self.navigationController pushViewController:viewPicComment animated:YES];
+    [self showPic:sender withTab:kGalleryTabComment];
 }
 
 - (void)showUser:(UIButton*)sender {
