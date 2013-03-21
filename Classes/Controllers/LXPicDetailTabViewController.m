@@ -43,30 +43,6 @@
     scrollTab.contentOffset = CGPointMake(320, 0);
 }
 
-
-- (void)updateContent {
-    CGPoint frameOrigin = self.view.frame.origin;
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    CGFloat height = screenRect.size.height - frameOrigin.y;
-    if (height == 0) {
-        return;
-    }
-    CGRect frameVote = _viewVote.view.frame;
-    CGRect frameComment = _viewComment.view.frame;
-    CGRect frameInfo = viewInfo.view.frame;
-    
-    frameVote.size.height = height;
-    frameComment.size.height = height;
-    frameInfo.size.height = height;
-    
-    [UIView animateWithDuration:kGlobalAnimationSpeed
-                     animations:^{
-                         _viewVote.view.frame = frameVote;
-                         _viewComment.view.frame = frameComment;
-                         viewInfo.view.frame = frameInfo;
-                     }];
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -79,6 +55,7 @@
         _viewComment = segue.destinationViewController;
     } else if ([segue.identifier isEqualToString:@"Info"]) {
         viewInfo = segue.destinationViewController;
+        viewInfo.parent = _parent;
         if (_picture != nil) {
             viewInfo.picture = _picture;
         }

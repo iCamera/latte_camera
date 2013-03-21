@@ -403,6 +403,11 @@
 		8884E55616AD582800DCBAC7 /* icon_ok2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8884E54A16AD582800DCBAC7 /* icon_ok2.png */; };
 		8884E55716AD582800DCBAC7 /* icon_photo_select2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8884E54B16AD582800DCBAC7 /* icon_photo_select2.png */; };
 		8884E55816AD582800DCBAC7 /* icon_reset.png in Resources */ = {isa = PBXBuildFile; fileRef = 8884E54C16AD582800DCBAC7 /* icon_reset.png */; };
+		888F64AD16FAB84E00ED74BB /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 888F64AB16FAB84E00ED74BB /* logo.png */; };
+		888F64AE16FAB84E00ED74BB /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 888F64AC16FAB84E00ED74BB /* logo@2x.png */; };
+		888F64B616FAD74500ED74BB /* LXPicDumbTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 888F64B516FAD74500ED74BB /* LXPicDumbTabViewController.m */; };
+		888F64B916FAD8D800ED74BB /* LXCellTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 888F64B816FAD8D800ED74BB /* LXCellTag.m */; };
+		888F64BC16FB2BB500ED74BB /* LXCellInfoTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 888F64BB16FB2BB500ED74BB /* LXCellInfoTag.m */; };
 		889072BC16770EBB0013DF7A /* LXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890722E16770EBB0013DF7A /* LXAppDelegate.m */; };
 		889072BD16770EBB0013DF7A /* LXCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890723116770EBB0013DF7A /* LXCameraViewController.m */; };
 		889072C016770EBB0013DF7A /* LXLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890723716770EBB0013DF7A /* LXLoginViewController.m */; };
@@ -1447,6 +1452,14 @@
 		8884E54A16AD582800DCBAC7 /* icon_ok2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_ok2.png; sourceTree = "<group>"; };
 		8884E54B16AD582800DCBAC7 /* icon_photo_select2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_photo_select2.png; sourceTree = "<group>"; };
 		8884E54C16AD582800DCBAC7 /* icon_reset.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_reset.png; sourceTree = "<group>"; };
+		888F64AB16FAB84E00ED74BB /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		888F64AC16FAB84E00ED74BB /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
+		888F64B416FAD74400ED74BB /* LXPicDumbTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXPicDumbTabViewController.h; sourceTree = "<group>"; };
+		888F64B516FAD74500ED74BB /* LXPicDumbTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXPicDumbTabViewController.m; sourceTree = "<group>"; };
+		888F64B716FAD8D800ED74BB /* LXCellTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCellTag.h; sourceTree = "<group>"; };
+		888F64B816FAD8D800ED74BB /* LXCellTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCellTag.m; sourceTree = "<group>"; };
+		888F64BA16FB2BB500ED74BB /* LXCellInfoTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCellInfoTag.h; sourceTree = "<group>"; };
+		888F64BB16FB2BB500ED74BB /* LXCellInfoTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCellInfoTag.m; sourceTree = "<group>"; };
 		8890722D16770EBB0013DF7A /* LXAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXAppDelegate.h; sourceTree = "<group>"; };
 		8890722E16770EBB0013DF7A /* LXAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXAppDelegate.m; sourceTree = "<group>"; };
 		8890723016770EBB0013DF7A /* LXCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCameraViewController.h; sourceTree = "<group>"; };
@@ -2541,6 +2554,8 @@
 				8818860816F17B60009A9266 /* LXCommentControllViewController.m */,
 				889093ED16F8714C00E98DF4 /* LXNavigationController.h */,
 				889093EE16F8714C00E98DF4 /* LXNavigationController.m */,
+				888F64B416FAD74400ED74BB /* LXPicDumbTabViewController.h */,
+				888F64B516FAD74500ED74BB /* LXPicDumbTabViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2614,6 +2629,10 @@
 				8824FAD816F6DD6C00357ADB /* LXCellUpload.m */,
 				889093F516F88C4600E98DF4 /* LXTextView.h */,
 				889093F616F88C4700E98DF4 /* LXTextView.m */,
+				888F64B716FAD8D800ED74BB /* LXCellTag.h */,
+				888F64B816FAD8D800ED74BB /* LXCellTag.m */,
+				888F64BA16FB2BB500ED74BB /* LXCellInfoTag.h */,
+				888F64BB16FB2BB500ED74BB /* LXCellInfoTag.m */,
 			);
 			path = CustomControls;
 			sourceTree = "<group>";
@@ -3030,6 +3049,8 @@
 		88FE3FAB166C93D6004DCE53 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				888F64AB16FAB84E00ED74BB /* logo.png */,
+				888F64AC16FAB84E00ED74BB /* logo@2x.png */,
 				889093F816F8959400E98DF4 /* follow_mutual_m_off.png */,
 				889093F916F8959400E98DF4 /* follow_mutual_m_off@2x.png */,
 				889093FA16F8959400E98DF4 /* follow_mutual_m.png */,
@@ -4547,6 +4568,8 @@
 				889093FD16F8959400E98DF4 /* follow_mutual_m_off@2x.png in Resources */,
 				889093FE16F8959400E98DF4 /* follow_mutual_m.png in Resources */,
 				889093FF16F8959400E98DF4 /* follow_mutual_m@2x.png in Resources */,
+				888F64AD16FAB84E00ED74BB /* logo.png in Resources */,
+				888F64AE16FAB84E00ED74BB /* logo@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4689,6 +4712,9 @@
 				8824FB0B16F72A6E00357ADB /* LXZoomPictureViewController.m in Sources */,
 				889093EF16F8714C00E98DF4 /* LXNavigationController.m in Sources */,
 				889093F716F88C4700E98DF4 /* LXTextView.m in Sources */,
+				888F64B616FAD74500ED74BB /* LXPicDumbTabViewController.m in Sources */,
+				888F64B916FAD8D800ED74BB /* LXCellTag.m in Sources */,
+				888F64BC16FB2BB500ED74BB /* LXCellInfoTag.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -23,12 +23,18 @@
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
+    NSMutableArray *tagsPolish = [[NSMutableArray alloc] init];
+    for (NSString *tag in _tags)
+        if (tag.length > 0)
+            [tagsPolish addObject:tag];
+    
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             [app getToken], @"token",
                             _imageDescription, @"comment",
                             [NSNumber numberWithBool:_showEXIF], @"show_exif",
                             [NSNumber numberWithBool:_showGPS], @"show_gps",
                             [NSNumber numberWithInteger:_status], @"picture_status",
+                            [tagsPolish componentsJoinedByString:@","], @"tags",
                             nil];
 
     

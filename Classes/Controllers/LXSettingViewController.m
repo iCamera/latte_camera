@@ -280,21 +280,23 @@
         NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
         
         NSDate *date = element.dateValue;
-        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-        
-        [dateFormat setDateFormat:@"yyyy"];
-        NSString *year = [dateFormat stringFromDate:date];
-        [param setObject:year forKey:@"birthday_year"];
-        
-        [dateFormat setDateFormat:@"MM"];
-        NSString *month = [dateFormat stringFromDate:date];
-        [param setObject:month forKey:@"birthday_month"];
-        
-        [dateFormat setDateFormat:@"dd"];
-        NSString *day = [dateFormat stringFromDate:date];
-        [param setObject:day forKey:@"birthday_day"];
-        
-        [self submitUpdate:param];
+        if (date != nil) {
+            NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+            
+            [dateFormat setDateFormat:@"yyyy"];
+            NSString *year = [dateFormat stringFromDate:date];
+            [param setObject:year forKey:@"birthday_year"];
+            
+            [dateFormat setDateFormat:@"MM"];
+            NSString *month = [dateFormat stringFromDate:date];
+            [param setObject:month forKey:@"birthday_month"];
+            
+            [dateFormat setDateFormat:@"dd"];
+            NSString *day = [dateFormat stringFromDate:date];
+            [param setObject:day forKey:@"birthday_day"];
+            
+            [self submitUpdate:param];
+        }
     }
 }
 

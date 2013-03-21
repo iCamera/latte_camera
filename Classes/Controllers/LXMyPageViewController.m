@@ -32,6 +32,7 @@
 #import "LXViewHeaderUserPage.h"
 #import "LXCellGrid.h"
 #import "LXButtonBack.h"
+#import "LXCellDataField.h"
 
 typedef enum {
     kTimelineAll = 10,
@@ -65,6 +66,7 @@ typedef enum {
     NSMutableArray *followers;
     NSMutableArray *followings;
     NSMutableDictionary *currentMonthPics;
+    NSMutableArray *currentMonthPicsFlat;
     NSDate *currentMonth;
     EGORefreshTableHeaderView *refreshHeaderView;
     MBProgressHUD *HUD;
@@ -479,12 +481,12 @@ typedef enum {
     [[LatteAPIClient sharedClient] getPath:urlPhotos
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       NSMutableArray *pics = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
+                                       currentMonthPicsFlat = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
                                        currentMonthPics = [[NSMutableDictionary alloc]init];
                                        NSDateFormatter *dayFormat = [[NSDateFormatter alloc] init];
                                        [dayFormat setDateFormat:@"dd"];
                                        
-                                       for (Picture *pic in pics) {
+                                       for (Picture *pic in currentMonthPicsFlat) {
                                            NSString* key = [dayFormat stringFromDate:pic.createdAt];
                                            [currentMonthPics setObject:pic forKey:key];
                                        }
@@ -1140,8 +1142,17 @@ typedef enum {
             }
             break;
         };
-        case kPhotoCalendar:
+        case kPhotoCalendar:{
+            NSUInteger current = [currentMonthPicsFlat indexOfObject:picture];
+            if (current < currentMonthPicsFlat.count-1) {
+                NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
+                                     currentMonthPicsFlat[current+1], @"picture",
+                                     _user, @"user",
+                                     nil];
+                return ret;
+            }
             break;
+        }
     }
     return nil;
 }
@@ -1176,8 +1187,17 @@ typedef enum {
 
             break;
         }
-        case kPhotoCalendar:
+        case kPhotoCalendar: {
+            NSUInteger current = [currentMonthPicsFlat indexOfObject:picture];
+            if (current > 0) {
+                NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
+                                     currentMonthPicsFlat[current-1], @"picture",
+                                     _user, @"user",
+                                     nil];
+                return ret;
+            }
             break;
+        }
     }
     return nil;
 }

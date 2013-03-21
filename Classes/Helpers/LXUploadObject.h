@@ -29,6 +29,7 @@ typedef enum {
 @property (strong, nonatomic) UIImage *imagePreview;
 @property (strong, nonatomic) NSData *imageFile;
 @property (strong, nonatomic) NSString *imageDescription;
+@property (strong, nonatomic) NSMutableArray *tags;
 @property (assign, nonatomic) BOOL showEXIF;
 @property (assign, nonatomic) BOOL showGPS;
 @property (assign, nonatomic) NSInteger status;

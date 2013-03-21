@@ -29,15 +29,6 @@
 @synthesize buttonSend;
 @synthesize activityLoad;
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     growingComment.delegate = self;
@@ -67,13 +58,16 @@
         // Edit Swipe
         UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipedHorizontal)];
         swipe.direction = UISwipeGestureRecognizerDirectionRight | UISwipeGestureRecognizerDirectionLeft;
-        [self.tableView addGestureRecognizer:swipe];
+        [_tableView addGestureRecognizer:swipe];
+        UIEdgeInsets padding = UIEdgeInsetsMake(0, 0, 45, 0);
+        _tableView.contentInset = padding;
+        _tableView.scrollIndicatorInsets = padding;
+        
         
     } else {
-        self.tableView.tableHeaderView = nil;
+        viewHeader.hidden = true;
     }
     
-//    self.sideSwipeView = viewCommentControl.view;
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];
@@ -81,16 +75,78 @@
     UIBarButtonItem *navLeftItem = self.navigationItem.leftBarButtonItem;
     LXButtonBack *buttonBack = (LXButtonBack*)navLeftItem.customView;
     [buttonBack addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
+    [LXUtils globalShadow:viewHeader];
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification
 {
     [self.tableView addGestureRecognizer:gestureTap];
+    
+    // get keyboard size and loctaion
+	CGRect keyboardBounds;
+    [[notification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
+    NSNumber *duration = [notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSNumber *curve = [notification.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+    
+    // Need to translate the bounds to account for rotation.
+    keyboardBounds = [self.view convertRect:keyboardBounds toView:nil];
+    
+	// get a rect for the textView frame
+	CGRect containerFrame = viewHeader.frame;
+    
+    UIEdgeInsets padding = UIEdgeInsetsMake(0, 0, keyboardBounds.size.height + 45, 0);
+    
+    containerFrame.origin.y = self.view.bounds.size.height - (keyboardBounds.size.height + containerFrame.size.height);
+	// animations settings
+	[UIView beginAnimations:nil context:NULL];
+	[UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationDuration:[duration doubleValue]];
+    [UIView setAnimationCurve:[curve intValue]];
+	
+	// set views with new info
+	viewHeader.frame = containerFrame;
+    _tableView.contentInset = padding;
+    _tableView.scrollIndicatorInsets = padding;
+	
+	// commit animations
+	[UIView commitAnimations];
+
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification
 {
     [self.tableView removeGestureRecognizer:gestureTap];
+    
+    NSNumber *duration = [notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSNumber *curve = [notification.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+	
+	// get a rect for the textView frame
+	CGRect containerFrame = viewHeader.frame;
+    containerFrame.origin.y = self.view.bounds.size.height - containerFrame.size.height;
+    
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    
+    UIEdgeInsets padding;
+    if (app.currentUser != nil) {
+        padding = UIEdgeInsetsMake(0, 0, 45, 0);
+    } else {
+        padding = UIEdgeInsetsMake(0, 0, 0, 0);
+    }
+	
+	// animations settings
+	[UIView beginAnimations:nil context:NULL];
+	[UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationDuration:[duration doubleValue]];
+    [UIView setAnimationCurve:[curve intValue]];
+    
+	// set views with new info
+	viewHeader.frame = containerFrame;
+    
+    _tableView.contentInset = padding;
+    _tableView.scrollIndicatorInsets = padding;
+	
+	// commit animations
+	[UIView commitAnimations];
 }
 
 - (void)swipedHorizontal {
@@ -109,10 +165,6 @@
     r.size.height -= diff;
     r.origin.y += diff;
     viewHeader.frame = r;
-
-    [self.tableView beginUpdates];
-    self.tableView.tableHeaderView = viewHeader;
-    [self.tableView endUpdates];
 }
 
 
@@ -171,14 +223,14 @@
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
     LXMyPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
-    Comment *comment = _comments[_comments.count - sender.tag - 1];
+    Comment *comment = _comments[sender.tag];
     viewUserPage.user = comment.user;
     [self.navigationController pushViewController:viewUserPage animated:YES];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        Comment* comment = _comments[_comments.count - indexPath.row - 1];
+        Comment* comment = _comments[indexPath.row];
         [_comments removeObject:comment];
         [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         
@@ -213,7 +265,7 @@
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LXCellComment* cellComment = [tableView dequeueReusableCellWithIdentifier:@"Comment" forIndexPath:indexPath];
         
-    Comment *comment = _comments[_comments.count - indexPath.row - 1];
+    Comment *comment = _comments[indexPath.row];
     
     cellComment.comment = comment;
     
@@ -227,7 +279,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Comment *comment = _comments[_comments.count - indexPath.row - 1];
+    Comment *comment = _comments[indexPath.row];
     NSString *strComment = comment.descriptionText;
     CGSize labelSize = [strComment sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12]
                               constrainedToSize:CGSizeMake(255.0f, MAXFLOAT)
@@ -239,7 +291,7 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    Comment* comment = _comments[_comments.count - indexPath.row - 1];
+    Comment* comment = _comments[indexPath.row];
     return ([comment.user.userId integerValue] == [app.currentUser.userId integerValue]) || _picture.isOwner;
 }
 

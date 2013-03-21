@@ -84,6 +84,7 @@ typedef enum {
     
     // Do any additional setup after loading the view.
     viewTab.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     
     [self reloadView];
 }

@@ -5,7 +5,7 @@
     "sections": [
         { "title":"プロフィール設定", "key":"profile", "elements":[
                 { "type":"QEntryElement", "key":"name", "title":"ニックネーム", "placeholder":"ニックネーム", "bind":"textValue:name", "controllerAction":"handleUpdateEntry:"},
-                { "type":"QRadioElement", "key":"性別", "title":"性別", "items":["男性", "女性"], "values":[1, 2], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QRadioElement", "key":"gender", "title":"性別", "items":["男性", "女性"], "values":[1, 2], "controllerAction":"handleUpdateRadio:"},
                 { "type":"QDateTimeInlineElement", "key":"birthday", "title":"生年月日"},
                 { "type":"QEntryElement", "key":"current_residence", "title":"現住所", "placeholder":"現住所", "bind":"textValue:current_residence", "controllerAction":"handleUpdateEntry:"},
                 { "type":"QEntryElement", "key":"hometown", "title":"出身地", "placeholder":"出身地", "bind":"textValue:hometown", "controllerAction":"handleUpdateEntry:"},

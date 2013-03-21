@@ -18,10 +18,7 @@
 #import "LXShare.h"
 #import "LXTextView.h"
 
-@interface LXPicEditViewController : UITableViewController <UIActionSheetDelegate> {
-    NSInteger imageStatus;    
-    LXShare *share;
-}
+@interface LXPicEditViewController : UITableViewController <UIActionSheetDelegate>
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonDelete;
 @property (strong, nonatomic) IBOutlet UIImageView *imagePic;
@@ -31,10 +28,12 @@
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *gestureTap;
 @property (strong, nonatomic) IBOutlet UILabel *labelStatus;
 @property (strong, nonatomic) IBOutlet UIView *viewDelete;
+@property (strong, nonatomic) IBOutlet UILabel *labelTag;
 
 @property (strong, nonatomic) Picture *picture;
 @property (strong, nonatomic) UIImage *preview;
 @property (strong, nonatomic) NSData *imageData;
+
 
 - (IBAction)touchPost:(id)sender;
 - (IBAction)touchBack:(id)sender;

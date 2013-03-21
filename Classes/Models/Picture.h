@@ -4,7 +4,6 @@
 #import "LXUtils.h"
 
 @interface Picture : ModelObject {
-
     BOOL canComment;
     BOOL canVote;
     BOOL canEdit;
@@ -32,7 +31,7 @@
     NSNumber *width;
     NSNumber *status;
     NSDictionary *exif;
-    NSArray *tags;
+    NSMutableArray *tags;
 }
 
 @property (nonatomic, assign) BOOL canComment;
@@ -62,7 +61,7 @@
 @property (nonatomic, copy) NSNumber *width;
 @property (nonatomic, copy) NSNumber *status;
 @property (nonatomic, copy) NSDictionary *exif;
-@property (nonatomic, copy) NSArray *tags;
+@property (nonatomic, copy) NSMutableArray *tags;
 @property (nonatomic, assign) BOOL showGPS;
 @property (nonatomic, assign) BOOL showEXIF;
 @property (nonatomic, copy) NSString *urlWeb;

@@ -167,7 +167,9 @@
     UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     viewNotify = [storyMain instantiateViewControllerWithIdentifier:@"Notification"];
     
-    viewNotify.view.frame = CGRectMake(20, 50, 280, 350);
+    CGRect screen = [[UIScreen mainScreen] bounds];
+    
+    viewNotify.view.frame = CGRectMake(20, 50, 280, screen.size.height - 115);
 //    [LXUtils globalShadow:viewNotify.view];
     viewNotify.view.layer.cornerRadius = 5.0;
     viewNotify.parent = self;
@@ -278,10 +280,9 @@
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     UIButton *buttonTittle = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 30)];
-    buttonTittle.titleLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:22];
-    buttonTittle.titleLabel.shadowOffset = CGSizeMake(0, 1.0);
-    buttonTittle.titleLabel.shadowColor = [UIColor colorWithRed:0.4 green:0.36 blue:0.21 alpha:1];
-    [buttonTittle setTitle:@"Latte" forState:UIControlStateNormal];
+    [buttonTittle setImage:[UIImage imageNamed:@"logo.png"] forState:UIControlStateNormal];
+    buttonTittle.showsTouchWhenHighlighted = true;
+    buttonTittle.adjustsImageWhenHighlighted = false;
     [buttonTittle addTarget:self action:@selector(touchTitle:) forControlEvents:UIControlEventTouchUpInside];
     viewController.navigationItem.titleView = buttonTittle;
 }

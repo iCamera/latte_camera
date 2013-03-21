@@ -82,6 +82,7 @@
     UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                            bundle:nil];
     viewPicTab = [storyGallery instantiateViewControllerWithIdentifier:@"DetailScroll"];
+    viewPicTab.parent = self;
     CGRect frameTab = [[UIScreen mainScreen] bounds];
     frameTab.origin.y = frameTab.size.height;
 
@@ -441,7 +442,7 @@
         viewTab.frame = frameTab;
         viewPicTab.view.frame = frameContainer;
         
-        [viewPicTab updateContent];
+//        [viewPicTab updateContent];
         
         [sender setTranslation:CGPointZero inView:self.view];
     }
@@ -458,7 +459,7 @@
         viewTab.frame = frameTab;
         viewPicTab.view.frame = frameContainer;
     } completion:^(BOOL finished) {
-        [viewPicTab updateContent];
+//        [viewPicTab updateContent];
     }];
     
     // Start loading extra info if rollup tab
@@ -555,7 +556,7 @@
 
 - (void)toggleFrame {
     if (![self isShowingContainer]) {
-        [self setTabHeight:200];
+        [self setTabHeight:320];
     } else {
         [self setTabHeight:0];
         [viewPicTab.viewComment.growingComment resignFirstResponder];

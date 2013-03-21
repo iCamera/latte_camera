@@ -56,23 +56,23 @@
 
         if ([value isKindOfClass:[NSArray class]]) {
 
-            NSMutableArray *myMembers = [NSMutableArray arrayWithCapacity:[value count]];
+            NSMutableArray *myMembers = [[NSMutableArray alloc] init];
             for (id valueMember in value) {
                 Comment *populatedMember = [Comment instanceFromDictionary:valueMember];
                 [myMembers addObject:populatedMember];
             }
 
-            self.comments = myMembers;
-
+            comments = myMembers;
         }
     } else if ([key isEqualToString:@"created_at"]) {
         self.createdAt = [LXUtils dateFromJSON:value];
     } else if ([key isEqualToString:@"taken_at"]) {
         self.takenAt = [LXUtils dateFromJSON:value];
     } else if ([key isEqualToString:@"tags"]) {
-        self.tags = [NSArray arrayWithArray:value];
-    }
-    else {
+        if ([value isKindOfClass:[NSArray class]]) {
+            tags = [NSMutableArray arrayWithArray:value];
+        }
+    } else {
         [super setValue:value forKey:key];
     }
 

@@ -12,7 +12,7 @@
 #import "LXButtonBrown30.h"
 
 //#import "SideSwipeTableViewController.h"
-@interface LXPicCommentViewController : UITableViewController<HPGrowingTextViewDelegate>
+@interface LXPicCommentViewController : UIViewController<HPGrowingTextViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
 @property (strong, nonatomic) IBOutlet HPGrowingTextView *growingComment;
@@ -20,5 +20,6 @@
 - (IBAction)touchSend:(id)sender;
 @property (strong, nonatomic) Picture *picture;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityLoad;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *comments;
 @end

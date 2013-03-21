@@ -7,6 +7,11 @@
 //
 
 #import "LXPicInfoViewController.h"
+#import "LXCellInfoTag.h"
+#import "LXCellDataField.h"
+#import "LatteAPIClient.h"
+#import "UIImageView+AFNetworking.h"
+#import "LXAppDelegate.h"
 
 @interface LXPicInfoViewController ()
 @end
@@ -84,9 +89,17 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0)
+        if ([[keyBasic objectAtIndex:indexPath.row] isEqualToString:@"tags"]) {
+            LXCellInfoTag *cellTag = [tableView dequeueReusableCellWithIdentifier:@"Tag" forIndexPath:indexPath];
+            cellTag.tags = _picture.tags;
+            cellTag.parent = _parent;
+            return cellTag;
+        }
+    
     LXCellDataField *cell = [tableView dequeueReusableCellWithIdentifier:@"Profile" forIndexPath:indexPath];
     if (indexPath.section == 0)
-    {        
+    {
         NSString *key = [keyBasic objectAtIndex:indexPath.row];
         if ([key isEqualToString:@"taken_at"]) {
             cell.labelField.text = NSLocalizedString(@"taken_date", @"撮影月日") ;
@@ -95,10 +108,6 @@
         if ([[keyBasic objectAtIndex:indexPath.row] isEqualToString:@"created_at"]) {
             cell.labelField.text = NSLocalizedString(@"uploaded_date", @"追加月日");
             cell.labelDetail.text = [LXUtils dateToString:_picture.createdAt];
-        }
-        if ([[keyBasic objectAtIndex:indexPath.row] isEqualToString:@"tags"]) {
-            cell.labelField.text = NSLocalizedString(@"tags", @"タグ");
-            cell.labelDetail.text = [_picture.tags componentsJoinedByString:@", "];
         }
     }
     if (indexPath.section == 1) {
@@ -111,6 +120,9 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0)
+        if ([[keyBasic objectAtIndex:indexPath.row] isEqualToString:@"tags"])
+            return 40;
     return 30;
 }
 

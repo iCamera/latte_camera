@@ -7,14 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LXCellDataField.h"
-#import "LatteAPIClient.h"
-#import "UIImageView+AFNetworking.h"
-#import "LXAppDelegate.h"
 #import "Picture.h"
+#import "LXGalleryViewController.h"
 
 @interface LXPicInfoViewController : UITableViewController
 
+@property (strong, nonatomic) LXGalleryViewController *parent;
 @property (strong, nonatomic) Picture *picture;
 
 - (IBAction)touchBack:(id)sender;

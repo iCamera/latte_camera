@@ -10,12 +10,17 @@
 #import "LXAppDelegate.h"
 #import "LXUploadObject.h"
 #import "LXCameraViewController.h"
+#import "LXPicDumbTabViewController.h"
 
 @interface LXPicEditViewController ()
 
 @end
 
-@implementation LXPicEditViewController
+@implementation LXPicEditViewController {
+    NSInteger imageStatus;
+    LXShare *share;
+    NSMutableArray *tags;
+}
 
 @synthesize imagePic;
 @synthesize textDesc;
@@ -25,6 +30,7 @@
 @synthesize labelStatus;
 @synthesize buttonDelete;
 @synthesize viewDelete;
+@synthesize labelTag;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -74,6 +80,7 @@
         imageStatus = [_picture.status integerValue];
         switchGPS.on = _picture.showGPS;
         switchEXIF.on = _picture.showEXIF;
+        tags = _picture.tags;
         buttonDelete.hidden = false;
     } else {
         share.imageData = _imageData;
@@ -84,6 +91,7 @@
         imageStatus = [app.currentUser.pictureStatus integerValue];
         switchGPS.on = app.currentUser.defaultShowGPS;
         switchEXIF.on = app.currentUser.defaultShowEXIF;
+        tags = [[NSMutableArray alloc]init];
     }
     [self setStatusLabel];
 }
@@ -92,12 +100,6 @@
 {
     [self.navigationController setNavigationBarHidden:NO animated:animated];
     [super viewWillAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [self.navigationController setNavigationBarHidden:YES animated:animated];
-    [super viewWillDisappear:animated];
 }
 
 - (void)setStatusLabel {
@@ -129,7 +131,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if ((indexPath.section == 1) && (indexPath.row == 1))
+    if ((indexPath.section == 1) && (indexPath.row == 2))
     {
         UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"privacy_setting", @"公開設定")
                                                            delegate:self
@@ -213,6 +215,13 @@
     }
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"Tag"]) {
+        LXPicDumbTabViewController *controllerTag = segue.destinationViewController;
+        controllerTag.tags = tags;
+    }
+}
+
 - (IBAction)touchPost:(id)sender {
     [textDesc resignFirstResponder];
     if (_picture != nil) {
@@ -223,9 +232,6 @@
 }
 
 - (IBAction)touchBack:(id)sender {
-    _imageData = nil;
-    _preview = nil;
-    _picture = nil;
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -263,12 +269,18 @@
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
     NSString *url = [NSString stringWithFormat:@"picture/%d/edit", [_picture.pictureId integerValue]];
+    NSMutableArray *tagsPolish = [[NSMutableArray alloc] init];
+    for (NSString *tag in tags)
+        if (tag.length > 0)
+            [tagsPolish addObject:tag];
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             [app getToken], @"token",
                             textDesc.text, @"comment",
                             [NSNumber numberWithBool:switchEXIF.on], @"show_exif",
                             [NSNumber numberWithBool:switchGPS.on], @"show_gps",
-                            [NSNumber numberWithInteger:imageStatus], @"status", nil];
+                            [NSNumber numberWithInteger:imageStatus], @"status",
+                            [tagsPolish componentsJoinedByString:@","], @"tags",
+                            nil];
     _picture.descriptionText = textDesc.text;
     _picture.status = [NSNumber numberWithInteger:imageStatus];
     _picture.showEXIF = switchEXIF.on;
@@ -320,6 +332,7 @@
     upload.imageDescription = textDesc.text;
     upload.showEXIF = switchEXIF.on;
     upload.showGPS = switchGPS.on;
+    upload.tags = tags;
     upload.status = imageStatus;
     
     [app.uploader addObject:upload];
