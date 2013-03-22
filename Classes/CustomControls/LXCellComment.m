@@ -18,6 +18,7 @@
 @synthesize buttonLike;
 @synthesize labelLike;
 @synthesize imageLike;
+@synthesize imageNationality;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -59,6 +60,8 @@
         buttonLike.enabled = !comment.isVoted;
     }
     [buttonLike addTarget:self action:@selector(toggleLikeComment:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [LXUtils setNationalityOfUser:comment.user forImage:imageNationality nextToLabel:labelAuthor];
     
     [self relayout];
 }

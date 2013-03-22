@@ -86,6 +86,11 @@ typedef enum {
     viewTab.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     
+    //setup left button
+    UIBarButtonItem *navLeftItem = self.navigationItem.leftBarButtonItem;
+    UIButton *buttonSide = (UIButton*)navLeftItem.customView;
+    [buttonSide addTarget:app.controllerSide action:@selector(toggleLeftPanel:) forControlEvents:UIControlEventTouchUpInside];
+    
     [self reloadView];
 }
 

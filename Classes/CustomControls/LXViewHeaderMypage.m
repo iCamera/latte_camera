@@ -31,6 +31,7 @@
 @synthesize buttonTimelineFollow;
 @synthesize buttonTimelineFriend;
 @synthesize buttonTimelineMe;
+@synthesize imageNationality;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -79,6 +80,7 @@
     
     buttonFollowCount.enabled = [user.countFollows integerValue] > 0;
     buttonFriendCount.enabled = [user.countFollowers integerValue] > 0;
+    [LXUtils setNationalityOfUser:user forImage:imageNationality nextToLabel:labelNickname];
 }
 
 - (void)didReceiveMemoryWarning

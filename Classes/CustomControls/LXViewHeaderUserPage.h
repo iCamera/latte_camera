@@ -26,6 +26,7 @@
 @property (strong, nonatomic) IBOutlet UIView *viewStatsButton;
 @property (strong, nonatomic) IBOutlet UILabel *labelLikes;
 @property (strong, nonatomic) IBOutlet UILabel *labelView;
+@property (strong, nonatomic) IBOutlet UIImageView *imageNationality;
 
 @property (strong, nonatomic) User* user;
 @property (strong, nonatomic) LXMyPageViewController* parent;

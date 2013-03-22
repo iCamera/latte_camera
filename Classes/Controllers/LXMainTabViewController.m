@@ -137,7 +137,7 @@
     }
     
     viewNav = [[LXUserNavButton alloc] init];
-    viewNav.view.frame = CGRectMake(212, 0, 100, 60);
+    viewNav.view.frame = CGRectMake(210, 0, 110, 60);
 
     [viewNav.buttonSetting addTarget:self action:@selector(showSetting:) forControlEvents:UIControlEventTouchUpInside];
     [viewNav.buttonNotify addTarget:self action:@selector(toggleNotify:) forControlEvents:UIControlEventTouchUpInside];
@@ -167,11 +167,7 @@
     UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     viewNotify = [storyMain instantiateViewControllerWithIdentifier:@"Notification"];
     
-    CGRect screen = [[UIScreen mainScreen] bounds];
-    
-    viewNotify.view.frame = CGRectMake(20, 50, 280, screen.size.height - 115);
-//    [LXUtils globalShadow:viewNotify.view];
-    viewNotify.view.layer.cornerRadius = 5.0;
+    viewNotify.view.frame = self.view.bounds;
     viewNotify.parent = self;
     [self addChildViewController:viewNotify];
     [self.view addSubview:viewNotify.view];
@@ -245,6 +241,13 @@
     navMypage.tabBarItem.image = [UIImage imageNamed:@"icon_login.png"];    
     UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"Authentication" bundle:nil];
     UIViewController *viewLogin = [storyMain instantiateViewControllerWithIdentifier:@"Login"];
+    
+    //setup left button
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    UIBarButtonItem *navLeftItem = viewLogin.navigationItem.leftBarButtonItem;
+    UIButton *buttonSide = (UIButton*)navLeftItem.customView;
+    [buttonSide addTarget:app.controllerSide action:@selector(toggleLeftPanel:) forControlEvents:UIControlEventTouchUpInside];
+    
     navMypage.viewControllers = [NSArray arrayWithObject:viewLogin];
 }
 

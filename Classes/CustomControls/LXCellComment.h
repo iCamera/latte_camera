@@ -22,6 +22,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonLike;
 @property (strong, nonatomic) IBOutlet UILabel *labelLike;
 @property (strong, nonatomic) IBOutlet UIImageView *imageLike;
+@property (strong, nonatomic) IBOutlet UIImageView *imageNationality;
 
 @property (strong, nonatomic) Comment *comment;
 

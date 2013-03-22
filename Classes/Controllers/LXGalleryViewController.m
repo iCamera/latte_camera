@@ -49,6 +49,7 @@
 @synthesize viewDesc;
 @synthesize labelComment;
 @synthesize labelLike;
+@synthesize imageNationality;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -74,6 +75,7 @@
     
     if (_picture.pictureId == nil)
         return;
+    
 
     pageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
                                                      navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
@@ -167,6 +169,8 @@
     
     lxShare.controller = self;
     
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    [app.tracker sendView:@"Gallery Screen"];
 }
 
 - (void)setCurrentTab:(GalleryTab)currentTab {
@@ -355,6 +359,7 @@
         [self loadInfo];
     } else {
         labelNickname.text = currentPage.user.name;
+        [LXUtils setNationalityOfUser:currentPage.user forImage:imageNationality nextToLabel:labelNickname];
         [buttonUser loadBackground:currentPage.user.profilePicture placeholderImage:@"user.gif"];
     }
     
@@ -487,6 +492,7 @@
                                                currentPage.user = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
                                                labelNickname.text = currentPage.user.name;
                                                [buttonUser loadBackground:currentPage.user.profilePicture placeholderImage:@"user.gif"];
+                                               [LXUtils setNationalityOfUser:currentPage.user forImage:imageNationality nextToLabel:labelNickname];
                                            }
                                            
                                            currentComments = [Comment mutableArrayFromDictionary:JSON withKey:@"comments"];

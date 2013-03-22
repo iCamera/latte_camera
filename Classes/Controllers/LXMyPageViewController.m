@@ -141,7 +141,13 @@ typedef enum {
             photoMode = kPhotoTimeline;
             isMypage = true;
         }
-        self.navigationItem.leftBarButtonItem = nil;
+        
+        
+        //setup left button
+        UIBarButtonItem *navLeftItem = self.navigationItem.leftBarButtonItem;
+        UIButton *buttonSide = (UIButton*)navLeftItem.customView;
+        [buttonSide addTarget:app.controllerSide action:@selector(toggleLeftPanel:) forControlEvents:UIControlEventTouchUpInside];
+        
     } else {
         viewHeaderUserpage = [storyComponent instantiateViewControllerWithIdentifier:@"HeaderUserpPage"];
         [self.tableView.tableHeaderView addSubview:viewHeaderUserpage.view];
@@ -164,8 +170,9 @@ typedef enum {
                                        failure:nil];
         
         //setup back button
-        UIBarButtonItem *navLeftItem = self.navigationItem.leftBarButtonItem;
-        LXButtonBack *buttonBack = (LXButtonBack*)navLeftItem.customView;
+        LXButtonBack *buttonBack = [[LXButtonBack alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
+        [buttonBack setTitle:NSLocalizedString(@"back", @"BACK") forState:UIControlStateNormal];
+        self.navigationItem.leftBarButtonItem.customView = buttonBack;
         [buttonBack addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
     }
     

@@ -65,9 +65,13 @@ typedef enum {
     [self.tableView addGestureRecognizer:gestureTap];
     tableMode = kSearchPhoto;
     
+    //setup left button
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
     UIBarButtonItem *navLeftItem = self.navigationItem.leftBarButtonItem;
-    LXButtonBack *buttonBack = (LXButtonBack*)navLeftItem.customView;
-    [buttonBack addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
+    UIButton *buttonSide = (UIButton*)navLeftItem.customView;
+    [buttonSide addTarget:app.controllerSide action:@selector(toggleLeftPanel:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [app.tracker sendView:@"Search Screen"];
 
 }
 

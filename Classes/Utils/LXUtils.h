@@ -40,5 +40,6 @@ typedef enum {
 + (void)toggleLike:(UIButton*)sender ofPicture:(Picture*)pic;
 + (void)toggleLike:(UIButton*)sender ofPicture:(Picture*)pic setCount:(UILabel*)labelCount;
 + (void)globalShadow:(UIView*)view;
++ (void)setNationalityOfUser:(User *)user forImage:(UIImageView*)imageNationality nextToLabel:(UILabel*)label;
 
 @end

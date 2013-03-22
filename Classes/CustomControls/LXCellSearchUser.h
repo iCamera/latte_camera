@@ -21,6 +21,7 @@
 @property (strong, nonatomic) IBOutlet UIView *viewStats;
 @property (strong, nonatomic) IBOutlet UIView *viewStatsButton;
 @property (strong, nonatomic) IBOutlet UILabel *labelName;
+@property (strong, nonatomic) IBOutlet UIImageView *imageNationality;
 
 @property (weak, nonatomic) UINavigationController *parentNav;
 @property (strong, nonatomic) User *user;

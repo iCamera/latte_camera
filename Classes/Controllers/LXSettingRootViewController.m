@@ -38,6 +38,9 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    [app.tracker sendView:@"Setting Screen"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -133,7 +136,12 @@
                                             app.currentUser = nil;
                                             self.tabBarController.selectedIndex = 0;
                                             [self dismissViewControllerAnimated:YES completion:nil];
+                                            
                                             [[NSNotificationCenter defaultCenter] postNotificationName:@"LoggedOut" object:self];
+                                            
+                                            UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                                                                     bundle:nil];
+                                            app.controllerSide.leftPanel = [mainStoryboard instantiateViewControllerWithIdentifier:@"LeftGuest"];
                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
                                                                                             message:error.localizedDescription

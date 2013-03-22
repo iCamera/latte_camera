@@ -372,4 +372,11 @@
 - (void)viewDidUnload {
     [super viewDidUnload];
 }
+- (IBAction)touchBackground:(id)sender {
+    [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
+        self.view.alpha = 0;
+    } completion:^(BOOL finished) {
+        self.view.hidden = true;
+    }];
+}
 @end

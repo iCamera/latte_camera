@@ -30,6 +30,7 @@
 @synthesize buttonPhotoGrid;
 @synthesize buttonPhotoTimeline;
 @synthesize buttonProfile;
+@synthesize imageNationality;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -77,6 +78,7 @@
         buttonFollow.enabled = true;
         buttonFollow.selected = user.isFollowing;
     }
+    [LXUtils setNationalityOfUser:user forImage:imageNationality nextToLabel:labelNickname];
 }
 
 - (void)resetPhotoButton {

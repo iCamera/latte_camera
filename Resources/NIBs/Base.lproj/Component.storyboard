@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12C3103" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="sJV-Ct-FIR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="sJV-Ct-FIR">
     <dependencies>
         <deployment version="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
@@ -192,6 +192,10 @@
                                         <color key="shadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                         <size key="shadowOffset" width="0.0" height="1"/>
                                     </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="qWY-fu-H4F">
+                                        <rect key="frame" x="146" y="17" width="16" height="11"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="---" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3il-hY-An8">
                                         <rect key="frame" x="267" y="8" width="40" height="14"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -237,6 +241,7 @@
                         <outlet property="buttonPhotoTimeline" destination="O6A-Zl-Nye" id="UJf-pk-TU5"/>
                         <outlet property="buttonProfile" destination="OYF-cc-FHD" id="xPi-nl-lgf"/>
                         <outlet property="buttonTableFollowing" destination="4qb-Xd-lYv" id="uHo-gP-VPe"/>
+                        <outlet property="imageNationality" destination="qWY-fu-H4F" id="Jrq-UU-fNE"/>
                         <outlet property="imageUser" destination="Zpk-Fl-G91" id="mgS-p7-deR"/>
                         <outlet property="labelLikes" destination="SYX-L0-pvS" id="nHi-jO-0s0"/>
                         <outlet property="labelNickname" destination="gYb-UY-UQ3" id="KUL-zZ-aKj"/>
@@ -541,6 +546,10 @@
                                         <color key="shadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                         <size key="shadowOffset" width="0.0" height="1"/>
                                     </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="pwe-Nx-iVB">
+                                        <rect key="frame" x="146" y="15" width="16" height="11"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -658,6 +667,7 @@
                         <outlet property="buttonTimelineFollow" destination="dqN-pq-yz4" id="fCA-jy-a0Y"/>
                         <outlet property="buttonTimelineFriend" destination="oFO-O3-liV" id="56L-85-WIi"/>
                         <outlet property="buttonTimelineMe" destination="wri-Z4-x7i" id="bp4-bb-Ncm"/>
+                        <outlet property="imageNationality" destination="pwe-Nx-iVB" id="w92-zs-QJo"/>
                         <outlet property="labelLikes" destination="ZPS-Et-BCl" id="aWq-Uy-Z4e"/>
                         <outlet property="labelNickname" destination="Dqp-ZP-AJl" id="OmW-M5-MjV"/>
                         <outlet property="labelView" destination="sMZ-qC-2OO" id="3cd-dw-wKk"/>
@@ -737,6 +747,7 @@
                 <relationship kind="outlet" name="buttonTimelineFollow" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonTimelineFriend" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonTimelineMe" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="imageNationality" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="labelLikes" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="labelNickname" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="labelView" candidateClass="UILabel"/>
@@ -757,6 +768,7 @@
                 <relationship kind="outlet" name="buttonPhotoTimeline" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonProfile" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonTableFollowing" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="imageNationality" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="imageUser" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="labelLikes" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="labelNickname" candidateClass="UILabel"/>

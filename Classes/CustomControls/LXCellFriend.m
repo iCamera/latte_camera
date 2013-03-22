@@ -15,6 +15,7 @@
 @synthesize labelName;
 @synthesize labelIntro;
 @synthesize viewBackground;
+@synthesize imageNationality;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -37,6 +38,7 @@
     [imageUser loadProgess:user.profilePicture];
     labelIntro.text = user.introduction;
     labelName.text = user.name;
+    [LXUtils setNationalityOfUser:user forImage:imageNationality nextToLabel:labelName];
 }
 
 - (void)drawRect:(CGRect)rect {

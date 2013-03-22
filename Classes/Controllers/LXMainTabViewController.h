@@ -14,4 +14,6 @@
 
 @property (strong, nonatomic) NSMutableArray *notifies;
 
+- (void)showSetting:(id)sender;
+
 @end

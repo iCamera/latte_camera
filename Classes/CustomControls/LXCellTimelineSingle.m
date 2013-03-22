@@ -34,6 +34,7 @@
 @synthesize buttonLike;
 @synthesize viewBackground;
 @synthesize buttonShare;
+@synthesize imageNationality;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -114,6 +115,8 @@
     }
     
     [buttonShare addTarget:self action:@selector(sharePic:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [LXUtils setNationalityOfUser:feed.user forImage:imageNationality nextToLabel:labelTitle];
 }
 
 - (void)submitLike:(id)sender {

@@ -19,6 +19,20 @@
 
 @implementation LXUtils
 
++ (void)setNationalityOfUser:(User *)user forImage:(UIImageView*)imageNationality nextToLabel:(UILabel*)label {
+    if (user.nationality.length > 0) {
+        NSString *filename = [NSString stringWithFormat:@"%@.png", [user.nationality lowercaseString]];
+        imageNationality.image = [UIImage imageNamed:filename];
+        imageNationality.hidden = false;
+        CGRect frame = imageNationality.frame;
+        CGSize size = [label.text sizeWithFont:label.font];
+        frame.origin.x = label.frame.origin.x + size.width + 5;
+        imageNationality.frame = frame;
+    } else {
+        imageNationality.hidden = true;
+    }
+}
+
 + (void)globalShadow:(UIView*)view {
     UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:view.bounds];
     view.layer.masksToBounds = NO;

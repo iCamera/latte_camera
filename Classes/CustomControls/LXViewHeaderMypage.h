@@ -28,6 +28,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonTimelineFriend;
 @property (strong, nonatomic) IBOutlet UIButton *buttonTimelineFollow;
 @property (strong, nonatomic) IBOutlet UIButton *buttonTimelineCalendar;
+@property (strong, nonatomic) IBOutlet UIImageView *imageNationality;
 
 @property (strong, nonatomic) User* user;
 @property (strong, nonatomic) LXMyPageViewController* parent;

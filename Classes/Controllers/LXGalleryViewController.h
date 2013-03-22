@@ -41,6 +41,7 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UILabel *labelView;
 @property (strong, nonatomic) IBOutlet UILabel *labelLike;
 @property (strong, nonatomic) IBOutlet UILabel *labelComment;
+@property (strong, nonatomic) IBOutlet UIImageView *imageNationality;
 
 @property (strong, nonatomic) Picture* picture;
 @property (strong, nonatomic) User* user;

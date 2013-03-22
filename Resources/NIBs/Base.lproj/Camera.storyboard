@@ -1025,7 +1025,7 @@
                         <outlet property="viewTimer" destination="aDS-ai-Jir" id="aOv-Fb-ArC"/>
                         <outlet property="viewTopBar" destination="5gH-Jh-hXY" id="R3T-cH-lgj"/>
                         <outlet property="viewTopBar35" destination="oyh-wm-SK5" id="vxg-29-J6P"/>
-                        <segue destination="uhc-3M-eRB" kind="modal" identifier="HelpBokeh" id="xQX-OL-oKr"/>
+                        <segue destination="uhc-3M-eRB" kind="modal" identifier="HelpBokeh" modalTransitionStyle="crossDissolve" id="xQX-OL-oKr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="30a-ma-qn8" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1064,7 +1064,7 @@
         <!--Help Bokeh View Controller-->
         <scene sceneID="nK4-BP-gzm">
             <objects>
-                <viewController storyboardIdentifier="HelpBokeh" id="uhc-3M-eRB" customClass="LXHelpBokehViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HelpBokeh" modalTransitionStyle="crossDissolve" id="uhc-3M-eRB" customClass="LXHelpBokehViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SE6-95-jLW">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

@@ -16,6 +16,7 @@
 @synthesize labelUserDate;
 @synthesize viewController;
 @synthesize viewBackground;
+@synthesize imageNationality;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -59,6 +60,9 @@
     
     labelTitle.text = feed.user.name;
     labelUserDate.text = [LXUtils timeDeltaFromNow:feed.updatedAt];
+    
+    
+    [LXUtils setNationalityOfUser:feed.user forImage:imageNationality nextToLabel:labelTitle];
 
     [buttonUser addTarget:viewController action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
 }

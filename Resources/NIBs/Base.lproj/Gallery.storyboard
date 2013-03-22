@@ -185,6 +185,10 @@
                                             <segue destination="ghy-6n-Ga3" kind="push" identifier="Edit" id="Z9I-3C-5IQ"/>
                                         </connections>
                                     </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="Ns6-ul-0Wp">
+                                        <rect key="frame" x="71" y="11" width="16" height="11"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
                             </view>
@@ -198,6 +202,7 @@
                         <outlet property="buttonLike" destination="aai-dv-xYK" id="w1A-MS-Kg7"/>
                         <outlet property="buttonMap" destination="qvQ-ah-OKj" id="Lk5-7n-WtG"/>
                         <outlet property="buttonUser" destination="MX3-d9-HyP" id="7Xh-er-cha"/>
+                        <outlet property="imageNationality" destination="Ns6-ul-0Wp" id="eXW-qw-Pmz"/>
                         <outlet property="labelComment" destination="C1l-wW-5fB" id="nFG-mN-oQy"/>
                         <outlet property="labelLike" destination="YRf-Qi-Bof" id="MRx-Ds-70H"/>
                         <outlet property="labelNickname" destination="S7J-P5-R5U" id="3JX-Bu-Shv"/>
@@ -574,6 +579,10 @@
                                                             <rect key="frame" x="128" y="37" width="10" height="10"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="E2z-bN-F6K">
+                                                            <rect key="frame" x="128" y="7" width="16" height="11"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </view>
@@ -584,6 +593,7 @@
                                             <outlet property="buttonLike" destination="rxu-4E-T7t" id="qal-Ce-LvK"/>
                                             <outlet property="buttonUser" destination="v4G-Ph-f9B" id="WYh-us-dbE"/>
                                             <outlet property="imageLike" destination="iIi-OS-MeM" id="ulN-Le-vJo"/>
+                                            <outlet property="imageNationality" destination="E2z-bN-F6K" id="JsK-iB-6Yn"/>
                                             <outlet property="labelAuthor" destination="NAs-Sm-ZHd" id="H6r-Ka-LZR"/>
                                             <outlet property="labelDate" destination="jtV-Fy-boJ" id="YYJ-rr-yuD"/>
                                             <outlet property="labelLike" destination="qDc-eX-qJc" id="3lI-v3-Umz"/>
@@ -1032,6 +1042,7 @@
                 <relationship kind="outlet" name="buttonLike" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="imageLike" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="imageNationality" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="labelAuthor" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="labelDate" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="labelLike" candidateClass="UILabel"/>
@@ -1080,6 +1091,7 @@
                 <relationship kind="outlet" name="buttonLike" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonMap" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="imageNationality" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="labelComment" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="labelLike" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="labelNickname" candidateClass="UILabel"/>

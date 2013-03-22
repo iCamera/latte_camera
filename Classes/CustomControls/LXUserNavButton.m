@@ -9,6 +9,7 @@
 #import "LXUserNavButton.h"
 #import "LXAppDelegate.h"
 #import "LatteAPIClient.h"
+#import "LXAppDelegate.h"
 
 @interface LXUserNavButton ()
 
@@ -121,4 +122,6 @@
     [self setButtonSetting:nil];
     [super viewDidUnload];
 }
+
+
 @end

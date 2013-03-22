@@ -25,6 +25,7 @@
 @property (strong, nonatomic) IBOutlet UIView *viewBackground;
 @property (strong, nonatomic) IBOutlet UILabel *labelLike;
 @property (strong, nonatomic) IBOutlet UIButton *buttonShare;
+@property (strong, nonatomic) IBOutlet UIImageView *imageNationality;
 
 @property (strong, nonatomic) UIViewController *viewController;
 @property (strong, nonatomic) Feed *feed;

@@ -24,7 +24,7 @@
 }
 
 @property(nonatomic, retain) id<GAITracker> tracker;
-//@property (strong, nonatomic) LXUIRevealController *revealController;
+@property(strong, nonatomic) LXSidePanelController *controllerSide;
 
 @property (strong, nonatomic) User *currentUser;
 @property (strong, nonatomic) NSString *apns;

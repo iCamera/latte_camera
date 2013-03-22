@@ -24,6 +24,7 @@
 @synthesize viewStats;
 @synthesize viewStatsButton;
 @synthesize labelName;
+@synthesize imageNationality;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -77,6 +78,8 @@
         buttonFollow.enabled = true;
         buttonFollow.selected = user.isFollowing;
     }
+    
+    [LXUtils setNationalityOfUser:user forImage:imageNationality nextToLabel:labelName];
 }
 
 - (IBAction)toggleFollow:(UIButton *)sender {
