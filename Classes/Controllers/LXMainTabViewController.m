@@ -242,13 +242,12 @@
     UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"Authentication" bundle:nil];
     UIViewController *viewLogin = [storyMain instantiateViewControllerWithIdentifier:@"Login"];
     
-    //setup left button
-    LXAppDelegate *app = [LXAppDelegate currentDelegate];
-    UIBarButtonItem *navLeftItem = viewLogin.navigationItem.leftBarButtonItem;
-    UIButton *buttonSide = (UIButton*)navLeftItem.customView;
-    [buttonSide addTarget:app.controllerSide action:@selector(toggleLeftPanel:) forControlEvents:UIControlEventTouchUpInside];
-    
     navMypage.viewControllers = [NSArray arrayWithObject:viewLogin];
+    
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    app.controllerSide.leftPanel = [mainStoryboard instantiateViewControllerWithIdentifier:@"LeftGuest"];
 }
 
 - (void)setUser {
@@ -257,10 +256,16 @@
     UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     UIViewController *viewMypage = [storyMain instantiateViewControllerWithIdentifier:@"UserPage"];
     navMypage.viewControllers = [NSArray arrayWithObject:viewMypage];
+    
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    app.controllerSide.leftPanel = [mainStoryboard instantiateViewControllerWithIdentifier:@"LeftUser"];
 }
 
 - (void)receiveLoggedIn:(NSNotification *) notification {
     [self setUser];
+    
 }
 
 - (void)receiveLoggedOut:(NSNotification *) notification {

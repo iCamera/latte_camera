@@ -58,7 +58,7 @@
     
     NSString *url = [NSString stringWithFormat:@"picture/tag/%@", _keyword];
     
-    [[LatteAPIClient sharedClient] postPath:url
+    [[LatteAPIClient sharedClient] getPath:url
                                  parameters:param
                                     success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
 

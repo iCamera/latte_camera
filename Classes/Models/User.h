@@ -92,6 +92,7 @@
 @property (nonatomic, assign) BOOL stealthMode;
 @property (nonatomic, assign) BOOL defaultShowGPS;
 @property (nonatomic, assign) BOOL defaultShowEXIF;
+@property (nonatomic, assign) BOOL defaultShowTakenAt;
 
 @property (nonatomic, strong) UserMailAccept *mailAccepts;
 @property (nonatomic, strong) UserPushAccept *notifyAccepts;

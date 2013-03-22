@@ -31,6 +31,7 @@
 @synthesize buttonDelete;
 @synthesize viewDelete;
 @synthesize labelTag;
+@synthesize switchTakenAt;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -80,6 +81,7 @@
         imageStatus = [_picture.status integerValue];
         switchGPS.on = _picture.showGPS;
         switchEXIF.on = _picture.showEXIF;
+        switchTakenAt.on = _picture.showTakenAt;
         tags = _picture.tags;
         buttonDelete.hidden = false;
     } else {
@@ -91,6 +93,7 @@
         imageStatus = [app.currentUser.pictureStatus integerValue];
         switchGPS.on = app.currentUser.defaultShowGPS;
         switchEXIF.on = app.currentUser.defaultShowEXIF;
+        switchTakenAt.on = app.currentUser.defaultShowTakenAt;
         tags = [[NSMutableArray alloc]init];
     }
     [self setStatusLabel];
@@ -278,6 +281,7 @@
                             textDesc.text, @"comment",
                             [NSNumber numberWithBool:switchEXIF.on], @"show_exif",
                             [NSNumber numberWithBool:switchGPS.on], @"show_gps",
+                            [NSNumber numberWithBool:switchTakenAt.on], @"show_taken_at",
                             [NSNumber numberWithInteger:imageStatus], @"status",
                             [tagsPolish componentsJoinedByString:@","], @"tags",
                             nil];
@@ -332,6 +336,7 @@
     upload.imageDescription = textDesc.text;
     upload.showEXIF = switchEXIF.on;
     upload.showGPS = switchGPS.on;
+    upload.showTakenAt = switchTakenAt.on;
     upload.tags = tags;
     upload.status = imageStatus;
     

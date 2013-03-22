@@ -74,10 +74,6 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
                                            [[NSNotificationCenter defaultCenter]
                                             postNotificationName:@"LoggedIn"
                                             object:self];
-                                           
-                                           UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                                                                    bundle:nil];
-                                           _controllerSide.leftPanel = [mainStoryboard instantiateViewControllerWithIdentifier:@"LeftUser"];
                                        }
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        TFLog(@"Something went wrong (Login check)");
@@ -124,7 +120,6 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
     _controllerSide = [[LXSidePanelController alloc] init];
     _viewMainTab = [mainStoryboard instantiateViewControllerWithIdentifier:@"MainTab"];
     _controllerSide.centerPanel = _viewMainTab;
-    _controllerSide.leftPanel = [mainStoryboard instantiateViewControllerWithIdentifier:@"LeftGuest"];
     
     window.rootViewController = _controllerSide;
     [window makeKeyAndVisible];

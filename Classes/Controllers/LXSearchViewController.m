@@ -201,6 +201,7 @@ typedef enum {
 }
 
 - (IBAction)textChanged:(id)sender {
+    [textKeyword resignFirstResponder];
     [activityLoad startAnimating];
     
     if (tableMode == kSearchPhoto) {

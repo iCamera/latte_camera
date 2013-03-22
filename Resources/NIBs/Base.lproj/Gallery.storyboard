@@ -300,6 +300,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="r2l-nB-Hee">
+                            <rect key="frame" x="0.0" y="127" width="320" height="58"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="J93-mb-cAf" customClass="LXButtonBrown30">
+                                    <rect key="frame" x="111" y="14" width="98" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
+                                    <state key="normal" title="報告">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="highlighted">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="touchReport:" destination="1Vb-iL-LK1" eventType="touchUpInside" id="A6R-8a-CfK"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="Profile" textLabel="aU5-j0-RuP" detailTextLabel="LyS-qT-zkE" rowHeight="30" style="IBUITableViewCellStyleValue2" id="dUK-3p-v72" customClass="LXCellDataField">
                                 <rect key="frame" x="0.0" y="46" width="320" height="31"/>
@@ -720,7 +742,7 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <color key="separatorColor" red="0.73725490199999999" green="0.72156862749999995" blue="0.66274509800000003" alpha="1" colorSpace="calibratedRGB"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="nht-dt-cUR">
-                            <rect key="frame" x="0.0" y="676" width="320" height="63"/>
+                            <rect key="frame" x="0.0" y="720" width="320" height="63"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="qDo-Im-f02">
@@ -870,12 +892,33 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="9Ml-a9-t0h">
+                                        <rect key="frame" x="0.0" y="487" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Show taken date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" id="XJj-8j-LLd">
+                                                    <rect key="frame" x="10" y="14" width="198" height="16"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="aA0-Gr-6nU">
+                                                    <rect key="frame" x="216" y="7" width="79" height="27"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </switch>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="SHARE" id="2t8-JW-Cbd">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="311-MP-pdQ">
-                                        <rect key="frame" x="0.0" y="533" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="577" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="280" height="43"/>
@@ -892,7 +935,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="TsY-LS-l6Y">
-                                        <rect key="frame" x="0.0" y="578" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="622" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -909,7 +952,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="IT1-cf-7Qa">
-                                        <rect key="frame" x="0.0" y="622" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="666" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -980,6 +1023,7 @@
                         <outlet property="labelTag" destination="gM3-aX-JaO" id="D1A-8W-JeZ"/>
                         <outlet property="switchEXIF" destination="wB9-nr-dGh" id="oKO-8F-Ijz"/>
                         <outlet property="switchGPS" destination="qiN-jW-kbZ" id="i1h-DZ-Oo5"/>
+                        <outlet property="switchTakenAt" destination="aA0-Gr-6nU" id="irg-RR-mI2"/>
                         <outlet property="textDesc" destination="yDO-u2-pKx" id="h5M-aw-TOx"/>
                         <outlet property="viewDelete" destination="nht-dt-cUR" id="wIf-h3-g00"/>
                     </connections>
@@ -1141,6 +1185,7 @@
                 <relationship kind="outlet" name="labelTag" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="switchEXIF" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="switchGPS" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="switchTakenAt" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="textDesc" candidateClass="LXTextView"/>
                 <relationship kind="outlet" name="viewDelete" candidateClass="UIView"/>
             </relationships>
@@ -1149,6 +1194,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicInfoViewController.h"/>
             <relationships>
                 <relationship kind="action" name="touchBack:"/>
+                <relationship kind="action" name="touchReport:"/>
             </relationships>
         </class>
         <class className="LXPicMapViewController" superclassName="UIViewController">

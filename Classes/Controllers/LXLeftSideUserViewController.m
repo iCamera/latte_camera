@@ -40,6 +40,8 @@
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
     labelUsername.text = app.currentUser.name;
     [imageProfilepic loadProgess:app.currentUser.profilePicture];
+    imageProfilepic.layer.cornerRadius = 5.0;
+    imageProfilepic.layer.masksToBounds = YES;
     
 }
 
@@ -79,16 +81,37 @@
         case 0:
             app.viewMainTab.selectedIndex = 4;
             break;
-        case 1:
-            
+        case 1: {
+            app.viewMainTab.selectedIndex = 4;
+            UINavigationController *nav = (UINavigationController*)app.viewMainTab.selectedViewController;
+            UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+            [nav pushViewController:[storyMain instantiateViewControllerWithIdentifier:@"Liked"] animated:YES];
             break;
+        }
         case 2:
             [app.viewMainTab showSetting:nil];
             break;
-        case 3:
+        case 3: {
+            LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
             
+            [[LatteAPIClient sharedClient] postPath:@"user/logout"
+                                         parameters:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                     [app getToken], @"token", nil]
+                                            success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                                [app setToken:@""];
+                                                app.currentUser = nil;
+                                               
+                                                [[NSNotificationCenter defaultCenter] postNotificationName:@"LoggedOut" object:self];
+                                            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                                message:error.localizedDescription
+                                                                                               delegate:nil
+                                                                                      cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                                      otherButtonTitles:nil];
+                                                [alert show];
+                                            }];
             break;
-
+        }
         default:
             break;
     }

@@ -10,10 +10,11 @@
 #import "Picture.h"
 #import "LXGalleryViewController.h"
 
-@interface LXPicInfoViewController : UITableViewController
+@interface LXPicInfoViewController : UITableViewController<UIAlertViewDelegate>
 
 @property (strong, nonatomic) LXGalleryViewController *parent;
 @property (strong, nonatomic) Picture *picture;
+- (IBAction)touchReport:(id)sender;
 
 - (IBAction)touchBack:(id)sender;
 @end

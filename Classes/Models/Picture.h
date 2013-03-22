@@ -64,6 +64,7 @@
 @property (nonatomic, copy) NSMutableArray *tags;
 @property (nonatomic, assign) BOOL showGPS;
 @property (nonatomic, assign) BOOL showEXIF;
+@property (nonatomic, assign) BOOL showTakenAt;
 @property (nonatomic, copy) NSString *urlWeb;
 
 + (Picture *)instanceFromDictionary:(NSDictionary *)aDictionary;

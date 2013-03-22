@@ -33,6 +33,7 @@
                             _imageDescription, @"comment",
                             [NSNumber numberWithBool:_showEXIF], @"show_exif",
                             [NSNumber numberWithBool:_showGPS], @"show_gps",
+                            [NSNumber numberWithBool:_showTakenAt], @"show_taken_at",
                             [NSNumber numberWithInteger:_status], @"picture_status",
                             [tagsPolish componentsJoinedByString:@","], @"tags",
                             nil];

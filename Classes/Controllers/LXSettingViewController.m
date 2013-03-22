@@ -58,7 +58,8 @@
                                @"current_residence_public",
                                @"hometown_public",
                                @"birthyear_public",
-                               @"birthdate_public", nil];
+                               @"birthdate_public",
+                               @"nationality_public", nil];
         
 
         for (NSString *aKey in permission) {
@@ -80,6 +81,7 @@
         ((QBooleanElement *)[self.root elementWithKey:@"stealth_mode"]).boolValue = user.stealthMode;
         ((QBooleanElement *)[self.root elementWithKey:@"default_show_exif"]).boolValue = user.defaultShowEXIF;
         ((QBooleanElement *)[self.root elementWithKey:@"default_show_gps"]).boolValue = user.defaultShowGPS;
+        ((QBooleanElement *)[self.root elementWithKey:@"default_show_taken_at"]).boolValue = user.defaultShowTakenAt;
         
         [self.quickDialogTableView reloadData];
         

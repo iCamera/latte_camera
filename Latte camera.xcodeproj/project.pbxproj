@@ -487,6 +487,7 @@
 		886E540116FC1C8A00629D76 /* za.png in Resources */ = {isa = PBXBuildFile; fileRef = 886E530A16FC1C8A00629D76 /* za.png */; };
 		886E540216FC1C8A00629D76 /* zm.png in Resources */ = {isa = PBXBuildFile; fileRef = 886E530B16FC1C8A00629D76 /* zm.png */; };
 		886E540316FC1C8A00629D76 /* zw.png in Resources */ = {isa = PBXBuildFile; fileRef = 886E530C16FC1C8A00629D76 /* zw.png */; };
+		886E540B16FC469B00629D76 /* LXLikedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 886E540A16FC469B00629D76 /* LXLikedViewController.m */; };
 		8874DB2E16E75F5700FDF60B /* LXCollectionCellUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8874DB2D16E75F5700FDF60B /* LXCollectionCellUser.m */; };
 		8874DBC316E8BF3600FDF60B /* LXNavMypageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8874DBC216E8BF3500FDF60B /* LXNavMypageController.m */; };
 		8874DBD216E8C58200FDF60B /* LXNavGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8874DBD116E8C58200FDF60B /* LXNavGalleryViewController.m */; };
@@ -1807,6 +1808,8 @@
 		886E530A16FC1C8A00629D76 /* za.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = za.png; sourceTree = "<group>"; };
 		886E530B16FC1C8A00629D76 /* zm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zm.png; sourceTree = "<group>"; };
 		886E530C16FC1C8A00629D76 /* zw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zw.png; sourceTree = "<group>"; };
+		886E540916FC469A00629D76 /* LXLikedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXLikedViewController.h; sourceTree = "<group>"; };
+		886E540A16FC469B00629D76 /* LXLikedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXLikedViewController.m; sourceTree = "<group>"; };
 		8874DB2C16E75F5700FDF60B /* LXCollectionCellUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCollectionCellUser.h; sourceTree = "<group>"; };
 		8874DB2D16E75F5700FDF60B /* LXCollectionCellUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCollectionCellUser.m; sourceTree = "<group>"; };
 		8874DB9116E8A4CB00FDF60B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -3338,6 +3341,8 @@
 		8890722F16770EBB0013DF7A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				886E540916FC469A00629D76 /* LXLikedViewController.h */,
+				886E540A16FC469B00629D76 /* LXLikedViewController.m */,
 				880E35A616A7BECA0097B97F /* LXAboutViewController.h */,
 				880E35A716A7BECA0097B97F /* LXAboutViewController.m */,
 				8890723016770EBB0013DF7A /* LXCameraViewController.h */,
@@ -5891,6 +5896,7 @@
 				888F64BC16FB2BB500ED74BB /* LXCellInfoTag.m in Sources */,
 				888F651316FBFB8F00ED74BB /* LXLeftSideUserViewController.m in Sources */,
 				888F651616FC09E100ED74BB /* LXLeftGuestViewController.m in Sources */,
+				886E540B16FC469B00629D76 /* LXLikedViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

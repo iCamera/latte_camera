@@ -12,6 +12,8 @@
 #import "LatteAPIClient.h"
 #import "UIImageView+AFNetworking.h"
 #import "LXAppDelegate.h"
+#import "AFNetworking.h"
+#import "LatteAPIClient.h"
 
 @interface LXPicInfoViewController ()
 @end
@@ -69,6 +71,28 @@
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
+}
+
+- (IBAction)touchReport:(id)sender {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"report", @"")
+                                                    message:NSLocalizedString(@"report_confirm", @"")
+                                                   delegate:self
+                                          cancelButtonTitle:NSLocalizedString(@"cancel", @"")
+                                          otherButtonTitles:NSLocalizedString(@"report", @"report"), nil];
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        NSString *path = [NSString stringWithFormat:@"user/report_abuse/%@/%d", @"picture", [_picture.pictureId integerValue]];
+        
+        [[LatteAPIClient sharedClient] postPath:path
+                                     parameters:nil
+                                        success:nil
+                                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                            NSLog(@"[HTTPClient Error]: %@", error.localizedDescription);
+                                        }];
+    }
 }
 
 - (IBAction)touchBack:(id)sender {

@@ -123,6 +123,8 @@
         [self setValue:value forKey:@"_showGPS"];
     } else if ([key isEqualToString:@"show_exif"]) {
         [self setValue:value forKey:@"_showEXIF"];
+    } else if ([key isEqualToString:@"show_taken_at"]) {
+        [self setValue:value forKey:@"_showTakenAt"];
     } else if ([key isEqualToString:@"url_absolute"]) {
         [self setValue:value forKey:@"_urlWeb"];
     } else {

@@ -32,6 +32,7 @@ typedef enum {
 @property (strong, nonatomic) NSMutableArray *tags;
 @property (assign, nonatomic) BOOL showEXIF;
 @property (assign, nonatomic) BOOL showGPS;
+@property (assign, nonatomic) BOOL showTakenAt;
 @property (assign, nonatomic) NSInteger status;
 @property (readonly, nonatomic) float percent;
 @property (readonly, nonatomic) UploadState uploadState;

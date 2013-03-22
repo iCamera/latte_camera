@@ -118,6 +118,8 @@
         [self setValue:value forKey:@"_defaultShowGPS"];
     } else if ([key isEqualToString:@"default_show_exif"]) {
         [self setValue:value forKey:@"_defaultShowEXIF"];
+    } else if ([key isEqualToString:@"default_show_taken_at"]) {
+        [self setValue:value forKey:@"_defaultShowTakenAt"];
     } else if ([key isEqualToString:@"nationality"]) {
         [self setValue:value forKey:@"_nationality"];
     }
