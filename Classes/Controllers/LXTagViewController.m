@@ -54,11 +54,10 @@
 
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
-                           [app getToken], @"token", nil];
+                           [app getToken], @"token",
+                           _keyword, @"keyword", nil];
     
-    NSString *url = [NSString stringWithFormat:@"picture/tag/%@", _keyword];
-    
-    [[LatteAPIClient sharedClient] getPath:url
+    [[LatteAPIClient sharedClient] getPath:@"picture/tag"
                                  parameters:param
                                     success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
 

@@ -163,7 +163,7 @@
 
 - (NSDictionary *)pictureAfterPicture:(Picture *)picture {
     NSUInteger current = [pictures indexOfObject:picture];
-    if (current == pictures.count-1) {
+    if (current == NSNotFound || current == pictures.count-1) {
         return nil;
     }
     Picture *picNext = pictures[current+1];
@@ -175,7 +175,7 @@
 
 - (NSDictionary *)pictureBeforePicture:(Picture *)picture {
     NSUInteger current = [pictures indexOfObject:picture];
-    if (current == 0) {
+    if (current == NSNotFound || current == 0) {
         return nil;
     }
     Picture *picPrev = pictures[current-1];

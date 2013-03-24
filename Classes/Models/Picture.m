@@ -29,7 +29,7 @@
 @synthesize width;
 @synthesize exif;
 @synthesize userId;
-@synthesize tags;
+@synthesize tagsOld;
 @synthesize status;
 @synthesize isOwner;
 
@@ -70,7 +70,7 @@
         self.takenAt = [LXUtils dateFromJSON:value];
     } else if ([key isEqualToString:@"tags"]) {
         if ([value isKindOfClass:[NSArray class]]) {
-            tags = [NSMutableArray arrayWithArray:value];
+            self.tagsOld = [NSMutableArray arrayWithArray:value];
         }
     } else {
         [super setValue:value forKey:key];

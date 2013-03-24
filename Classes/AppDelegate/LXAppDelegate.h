@@ -42,7 +42,6 @@ extern NSString *const FBSessionStateChangedNotification;
 - (void)logOut;
 - (void)setToken:(NSString*)token;
 - (void)updateUserAPNS;
-//- (void)toogleCamera;
 
 + (LXAppDelegate*)currentDelegate;
 

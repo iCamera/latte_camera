@@ -108,6 +108,9 @@
     
     [buttonMap addTarget:viewController action:@selector(showMap:) forControlEvents:UIControlEventTouchUpInside];
     
+    [buttonLike removeTarget:nil
+                       action:NULL
+             forControlEvents:UIControlEventAllEvents];
     if (pic.isOwner) {
         [buttonLike addTarget:viewController action:@selector(showLike:) forControlEvents:UIControlEventTouchUpInside];
     } else {

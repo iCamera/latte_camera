@@ -53,7 +53,7 @@
     if (picture.createdAt) {
         [keyBasic addObject:@"created_at"];
     }
-    if (picture.tags) {
+    if (picture.tagsOld.count > 0) {
         [keyBasic addObject:@"tags"];
     }
     
@@ -116,7 +116,7 @@
     if (indexPath.section == 0)
         if ([[keyBasic objectAtIndex:indexPath.row] isEqualToString:@"tags"]) {
             LXCellInfoTag *cellTag = [tableView dequeueReusableCellWithIdentifier:@"Tag" forIndexPath:indexPath];
-            cellTag.tags = _picture.tags;
+            cellTag.tags = _picture.tagsOld;
             cellTag.parent = _parent;
             return cellTag;
         }

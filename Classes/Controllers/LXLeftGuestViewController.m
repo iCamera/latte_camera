@@ -9,12 +9,15 @@
 #import "LXLeftGuestViewController.h"
 #import "LXAppDelegate.h"
 #import "LXAboutViewController.h"
+#import "LXShare.h"
 
 @interface LXLeftGuestViewController ()
 
 @end
 
-@implementation LXLeftGuestViewController
+@implementation LXLeftGuestViewController {
+    LXShare *lxShare;
+}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -88,7 +91,13 @@
                 [nav pushViewController:controllerAbout animated:YES];
                 break;
             }
-            case 1:
+            case 1: {
+                lxShare = [[LXShare alloc] init];
+                lxShare.controller = self;
+                [lxShare inviteFriend];
+                break;
+            }
+            case 2:
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/company/policy"]];
                 break;
             default:

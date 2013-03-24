@@ -227,6 +227,11 @@ typedef enum {
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        feeds = [Feed mutableArrayFromDictionary:JSON
                                                                         withKey:@"feeds"];
+                                       if (!isMypage) {
+                                           for (Feed *feed in feeds) {
+                                               feed.user = _user;
+                                           }
+                                       }
                                        
                                        [self.tableView reloadData];
                                        [self doneLoadingTableViewData];
@@ -452,7 +457,11 @@ typedef enum {
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        NSMutableArray *newFeed = [Feed mutableArrayFromDictionary:JSON
                                                                                           withKey:@"feeds"];
-                                       
+                                       if (!isMypage) {
+                                           for (Feed *feed in newFeed) {
+                                               feed.user = _user;
+                                           }
+                                       }
                                        
                                        if (newFeed.count == 0) {
                                            endedTimeline = true;
@@ -1123,7 +1132,7 @@ typedef enum {
     switch (photoMode) {
         case kPhotoMyphoto: {
             NSUInteger current = [pictures indexOfObject:picture];
-            if (current < pictures.count-1) {
+            if (current != NSNotFound && current < pictures.count-1) {
                 NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
                                      pictures[current+1], @"picture",
                                      _user, @"user",
@@ -1138,7 +1147,7 @@ typedef enum {
             NSArray *flatPictures = [self flatPictureArray];
             NSUInteger current = [flatPictures indexOfObject:picture];
             
-            if (current < flatPictures.count-1) {
+            if (current != NSNotFound && current < flatPictures.count-1) {
                 Picture *nextPic = [flatPictures objectAtIndex:current+1];
                 Feed* feed = [LXUtils feedFromPicID:[nextPic.pictureId integerValue] of:feeds];
                 NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -1150,8 +1159,8 @@ typedef enum {
             break;
         };
         case kPhotoCalendar:{
-            NSUInteger current = [currentMonthPicsFlat indexOfObject:picture];
-            if (current < currentMonthPicsFlat.count-1) {
+            NSInteger current = [currentMonthPicsFlat indexOfObject:picture];
+            if (current != NSNotFound && current < currentMonthPicsFlat.count-1) {
                 NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
                                      currentMonthPicsFlat[current+1], @"picture",
                                      _user, @"user",
@@ -1168,7 +1177,7 @@ typedef enum {
     switch (photoMode) {
         case kPhotoMyphoto: {
             NSUInteger current = [pictures indexOfObject:picture];
-            if (current > 0) {
+            if (current != NSNotFound && current > 0) {
                 NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
                                      pictures[current-1], @"picture",
                                      _user, @"user",
@@ -1181,8 +1190,8 @@ typedef enum {
         case kPhotoFriends:
         case kPhotoTimeline: {
             NSArray *flatPictures = [self flatPictureArray];
-            NSUInteger current = [flatPictures indexOfObject:picture];
-            if (current > 0) {
+            NSInteger current = [flatPictures indexOfObject:picture];
+            if (current != NSNotFound && current > 0) {
                 Picture *prevPic = [flatPictures objectAtIndex:current-1];
                 Feed* feed = [LXUtils feedFromPicID:[prevPic.pictureId integerValue] of:feeds];
                 NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -1195,8 +1204,8 @@ typedef enum {
             break;
         }
         case kPhotoCalendar: {
-            NSUInteger current = [currentMonthPicsFlat indexOfObject:picture];
-            if (current > 0) {
+            NSInteger current = [currentMonthPicsFlat indexOfObject:picture];
+            if (current != NSNotFound && current > 0) {
                 NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
                                      currentMonthPicsFlat[current-1], @"picture",
                                      _user, @"user",

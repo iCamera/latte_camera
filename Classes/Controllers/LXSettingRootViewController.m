@@ -11,12 +11,16 @@
 #import "LXAppDelegate.h"
 #import "LXRootBuilder.h"
 #import "LatteAPIClient.h"
+#import "LXUtils.h"
+#import "LXShare.h"
 
 @interface LXSettingRootViewController ()
 
 @end
 
-@implementation LXSettingRootViewController
+@implementation LXSettingRootViewController {
+    LXShare *lxShare;
+}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -41,6 +45,8 @@
     
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
     [app.tracker sendView:@"Setting Screen"];
+    lxShare = [[LXShare alloc] init];
+    lxShare.controller = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -123,9 +129,10 @@
     } else if (indexPath.section == 1) {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     } else if (indexPath.section == 2) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/company/policy"]];
-        
+        [lxShare inviteFriend];
     } else if (indexPath.section == 3) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/company/policy"]];
+    } else if (indexPath.section == 4) {
         LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
         
         [[LatteAPIClient sharedClient] postPath:@"user/logout"
@@ -151,9 +158,9 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
     if (app.currentUser == nil)
-        return 3;
-    else
         return 4;
+    else
+        return 5;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {

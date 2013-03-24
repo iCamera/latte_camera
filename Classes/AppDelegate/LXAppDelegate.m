@@ -45,9 +45,11 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
     [FBSession.activeSession close];
 }
 
-//- (void) closeSession {
-//    [FBSession.activeSession closeAndClearTokenInformation];
-//}
+- (void) closeSession {
+    if (FBSession.activeSession.isOpen) {
+        [FBSession.activeSession closeAndClearTokenInformation];
+    }
+}
 
 - (void)setToken:(NSString *)token{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

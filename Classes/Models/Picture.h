@@ -31,7 +31,7 @@
     NSNumber *width;
     NSNumber *status;
     NSDictionary *exif;
-    NSMutableArray *tags;
+    NSMutableArray *tagsOld;
 }
 
 @property (nonatomic, assign) BOOL canComment;
@@ -61,7 +61,7 @@
 @property (nonatomic, copy) NSNumber *width;
 @property (nonatomic, copy) NSNumber *status;
 @property (nonatomic, copy) NSDictionary *exif;
-@property (nonatomic, copy) NSMutableArray *tags;
+@property (nonatomic, copy) NSMutableArray *tagsOld;
 @property (nonatomic, assign) BOOL showGPS;
 @property (nonatomic, assign) BOOL showEXIF;
 @property (nonatomic, assign) BOOL showTakenAt;

@@ -14,7 +14,9 @@
 
 @end
 
-@implementation LXLeftSideUserViewController
+@implementation LXLeftSideUserViewController {
+    LXShare *lxShare;
+}
 
 @synthesize labelUsername;
 @synthesize imageProfilepic;
@@ -92,6 +94,12 @@
             [app.viewMainTab showSetting:nil];
             break;
         case 3: {
+            lxShare = [[LXShare alloc] init];
+            lxShare.controller = self;
+            [lxShare inviteFriend];
+            break;
+        }
+        case 4: {
             LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
             
             [[LatteAPIClient sharedClient] postPath:@"user/logout"

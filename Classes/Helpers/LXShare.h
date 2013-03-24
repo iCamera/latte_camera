@@ -34,5 +34,6 @@ typedef void (^MyCompletionBlock)();
 - (void)facebookPost;
 - (void)emailIt;
 - (void)tweet;
+- (void)inviteFriend;
 
 @end

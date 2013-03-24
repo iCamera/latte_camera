@@ -334,7 +334,7 @@ typedef enum {
     if (tableMode == kWelcomeTableGrid) {
         Feed *feed = [LXUtils feedFromPicID:[picture.pictureId longValue] of:feeds];
         NSUInteger current = [feeds indexOfObject:feed];
-        if (current == feeds.count-1) {
+        if (current == NSNotFound || current == feeds.count-1) {
             return nil;
         }
         Feed *feedNext = feeds[current+1];
@@ -346,7 +346,7 @@ typedef enum {
     } else if (tableMode == kWelcomeTableTimeline) {
         NSArray *flatPictures = [self flatPictureArray];
         NSUInteger current = [flatPictures indexOfObject:picture];
-        if (current < flatPictures.count-1) {
+        if (current != NSNotFound && current < flatPictures.count-1) {
             Picture *nextPic = flatPictures[current+1];
             Feed* feed = [LXUtils feedFromPicID:[nextPic.pictureId integerValue] of:feeds];
             NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -363,7 +363,7 @@ typedef enum {
     if (tableMode == kWelcomeTableGrid) {
         Feed *feed = [LXUtils feedFromPicID:[picture.pictureId longValue] of:feeds];
         NSUInteger current = [feeds indexOfObject:feed];
-        if (current == 0) {
+        if (current == NSNotFound || current == 0) {
             return nil;
         }
         Feed *feedPrev = feeds[current-1];
@@ -375,7 +375,7 @@ typedef enum {
     } else if (tableMode == kWelcomeTableTimeline) {
         NSArray *flatPictures = [self flatPictureArray];
         NSUInteger current = [flatPictures indexOfObject:picture];
-        if (current > 0) {
+        if (current != NSNotFound && current > 0) {
             Picture *prevPic = flatPictures[current-1];
             Feed* feed = [LXUtils feedFromPicID:[prevPic.pictureId integerValue] of:feeds];
             NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:

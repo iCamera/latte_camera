@@ -8,6 +8,8 @@
 
 #import "LXShare.h"
 
+#import "LXAppDelegate.h"
+
 #import <Accounts/Accounts.h>
 #import <Twitter/Twitter.h>
 #import <Social/Social.h>
@@ -31,7 +33,6 @@ typedef enum {
     NSData *imageData;
     UIImage *imagePreview;
     NSString *tweetCC;
-    
 }
 
 @synthesize text;
@@ -70,7 +71,8 @@ typedef enum {
             [controllerMail addAttachmentData:imageData mimeType:@"image/png" fileName:@"image"];
         }
         
-        if (controllerMail) [_controller presentModalViewController:controllerMail animated:YES];
+        if (controllerMail)
+            [_controller presentViewController:controllerMail animated:YES completion:nil];
     }
     else
     {
@@ -127,7 +129,7 @@ typedef enum {
         }
     }];
     
-    [_controller presentModalViewController:socialComposer animated:YES];
+    [_controller presentViewController:socialComposer animated:YES completion:nil];
     
 }
 
@@ -232,6 +234,44 @@ typedef enum {
     }
 }
 
+- (void)inviteFriend {
+    if ([MFMailComposeViewController canSendMail]==YES)
+    {
+        NSAssert(_controller, @"ViewController must not be nil.");
+        
+        MFMailComposeViewController* controllerMail = [[MFMailComposeViewController alloc] init];
+        controllerMail.mailComposeDelegate = self;
+        
+        
+        [controllerMail setSubject:NSLocalizedString(@"mail_invite_subject", @"")];
+        
+        LXAppDelegate *app = [LXAppDelegate currentDelegate];
+        NSString *body;
+        if (app.currentUser != nil) {
+            body = [NSString stringWithFormat:NSLocalizedString(@"mail_invite_user", @""), app.currentUser.name, app.currentUser.userId.integerValue];
+        } else {
+            body = [NSString stringWithFormat:NSLocalizedString(@"mail_invite_guest", @"")];
+        }
+        
+        [controllerMail setMessageBody:body isHTML:NO];
+        
+        
+        if (controllerMail)
+            [_controller presentViewController:controllerMail animated:YES completion:nil];
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"Error")
+                                                        message:NSLocalizedString(@"Your device must have an email account set up", @"")
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"close", @"Close")
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    
+}
+
+
 - (void)mailComposeController:(MFMailComposeViewController*)mailController  didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error;
 {
     switch (result)
@@ -270,18 +310,18 @@ typedef enum {
     if ([FBSession.activeSession.permissions indexOfObject:@"publish_actions"] == NSNotFound)
     {
         // if we don't already have the permission, then we request it now
-        [FBSession.activeSession reauthorizeWithPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]
-                                                   defaultAudience:FBSessionDefaultAudienceEveryone
-                                                 completionHandler:^(FBSession *session, NSError *error) {
-                                                     if (!error)
-                                                     {
-                                                         action();
-                                                     }
-                                                     else
-                                                     {
-                                                         [self completionResult:typeCanceled];
-                                                     }
-                                                 }];
+        [FBSession.activeSession requestNewPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]
+                                              defaultAudience:FBSessionDefaultAudienceEveryone
+                                            completionHandler:^(FBSession *session, NSError *error) {
+                                                if (!error)
+                                                {
+                                                    action();
+                                                }
+                                                else
+                                                {
+                                                    [self completionResult:typeCanceled];
+                                                }
+                                            }];
     }
     else
     {

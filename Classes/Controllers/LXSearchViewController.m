@@ -14,6 +14,7 @@
 #import "LXButtonBack.h"
 #import "LXCellSearchUser.h"
 #import "Picture.h"
+#import "LXCellSearchConnection.h"
 
 typedef enum {
     kSearchPhoto,
@@ -118,7 +119,9 @@ typedef enum {
         return cell;
     } else {
         if (users.count == 0) {
-            return [tableView dequeueReusableCellWithIdentifier:@"FacebookSearch" forIndexPath:indexPath];
+            LXCellSearchConnection *cell = [tableView dequeueReusableCellWithIdentifier:@"FacebookSearch" forIndexPath:indexPath];
+            cell.controller = self;
+            return cell;
         } else {
             LXCellSearchUser *cell = [tableView dequeueReusableCellWithIdentifier:@"User" forIndexPath:indexPath];
             cell.parentNav = self.navigationController;
@@ -143,7 +146,7 @@ typedef enum {
 
 - (NSDictionary *)pictureAfterPicture:(Picture *)picture {
     NSUInteger current = [pictures indexOfObject:picture];
-    if (current == pictures.count-1) {
+    if (current == NSNotFound || current == pictures.count-1) {
         return nil;
     }
     Picture *picNext = pictures[current+1];
@@ -155,7 +158,7 @@ typedef enum {
 
 - (NSDictionary *)pictureBeforePicture:(Picture *)picture {
     NSUInteger current = [pictures indexOfObject:picture];
-    if (current == 0) {
+    if (current == NSNotFound || current == 0) {
         return nil;
     }
     Picture *picPrev = pictures[current-1];
@@ -170,7 +173,7 @@ typedef enum {
         return 104;
     } else {
         if (users.count == 0) {
-            return 40;
+            return 86;
         } else {
             return 79;
         }
@@ -205,12 +208,12 @@ typedef enum {
     [activityLoad startAnimating];
     
     if (tableMode == kSearchPhoto) {
-        NSString *url = [NSString stringWithFormat:@"picture/tag/%@", textKeyword.text];
         LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
         NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
-                               [app getToken], @"token", nil];
+                               [app getToken], @"token",
+                               textKeyword.text, @"keyword", nil];
         
-        [[LatteAPIClient sharedClient] getPath:url
+        [[LatteAPIClient sharedClient] getPath:@"picture/tag"
                                     parameters:param
                                        success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                            pictures = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];

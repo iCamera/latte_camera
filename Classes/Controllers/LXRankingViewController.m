@@ -544,8 +544,8 @@ typedef enum {
 
 
 - (NSDictionary *)pictureAfterPicture:(Picture *)picture {
-    NSUInteger current = [pics indexOfObject:picture];
-    if (current < pics.count-1) {
+    NSInteger current = [pics indexOfObject:picture];
+    if (current != NSNotFound && current < pics.count-1) {
         NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
                              pics[current+1],  @"picture",
                              nil];
@@ -556,7 +556,7 @@ typedef enum {
 
 - (NSDictionary *)pictureBeforePicture:(Picture *)picture {
     NSUInteger current = [pics indexOfObject:picture];
-    if (current > 0) {
+    if (current != NSNotFound && current > 0) {
         NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
                              pics[current-1],  @"picture",
                              nil];

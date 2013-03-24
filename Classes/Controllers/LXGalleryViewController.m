@@ -283,25 +283,41 @@
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(LXZoomPictureViewController *)viewController {
-    NSDictionary *nextInfo = [_delegate pictureAfterPicture:viewController.picture];
-    if (nextInfo != nil) {
-        LXZoomPictureViewController *viewZoom = [[LXZoomPictureViewController alloc] init];
-        viewZoom.picture = [nextInfo objectForKey:@"picture"];
-        viewZoom.user = [nextInfo objectForKey:@"user"];
-        return viewZoom;
-    } else
+    @try {
+        NSDictionary *nextInfo = [_delegate pictureAfterPicture:viewController.picture];
+        if (nextInfo != nil) {
+            LXZoomPictureViewController *viewZoom = [[LXZoomPictureViewController alloc] init];
+            viewZoom.picture = [nextInfo objectForKey:@"picture"];
+            viewZoom.user = [nextInfo objectForKey:@"user"];
+            return viewZoom;
+        } else
+            return nil;
+    }
+    @catch (NSException *exception) {
         return nil;
+    }
+    @finally {
+        
+    }
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(LXZoomPictureViewController *)viewController {
-    NSDictionary *prevInfo = [_delegate pictureBeforePicture:viewController.picture];
-    if (prevInfo != nil) {
-        LXZoomPictureViewController *viewZoom = [[LXZoomPictureViewController alloc] init];
-        viewZoom.picture = [prevInfo objectForKey:@"picture"];
-        viewZoom.user = [prevInfo objectForKey:@"user"];
-        return viewZoom;
-    } else
+    @try {
+        NSDictionary *prevInfo = [_delegate pictureBeforePicture:viewController.picture];
+        if (prevInfo != nil) {
+            LXZoomPictureViewController *viewZoom = [[LXZoomPictureViewController alloc] init];
+            viewZoom.picture = [prevInfo objectForKey:@"picture"];
+            viewZoom.user = [prevInfo objectForKey:@"user"];
+            return viewZoom;
+        } else
+            return nil;
+    }
+    @catch (NSException *exception) {
         return nil;
+    }
+    @finally {
+        
+    }
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed {

@@ -58,9 +58,11 @@
 - (void)sessionStateChanged:(NSNotification*)notification {
     if (FBSession.activeSession.isOpen) {
         TFLog(@"Open fb");
+        FBAccessTokenData *tokenData = FBSession.activeSession.accessTokenData;
+        
         [[LatteAPIClient sharedClient] postPath:@"user/login_facebook"
                                      parameters:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                 FBSession.activeSession.accessToken, @"facebook_token", nil]
+                                                 tokenData.accessToken, @"facebook_token", nil]
                                         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                             [self processLogin:JSON];
                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

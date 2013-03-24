@@ -290,6 +290,7 @@
     UIButton *buttonTittle = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 30)];
     [buttonTittle setImage:[UIImage imageNamed:@"logo.png"] forState:UIControlStateNormal];
     buttonTittle.showsTouchWhenHighlighted = true;
+    buttonTittle.adjustsImageWhenDisabled = false;
     buttonTittle.adjustsImageWhenHighlighted = false;
     [buttonTittle addTarget:self action:@selector(touchTitle:) forControlEvents:UIControlEventTouchUpInside];
     viewController.navigationItem.titleView = buttonTittle;
@@ -298,7 +299,12 @@
 - (void)touchTitle:(id)sender {
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
     if (app.currentUser != nil) {
-        self.selectedIndex = 4;
+        if (self.selectedIndex == 4) {
+            UINavigationController *nav = (UINavigationController*)self.viewControllers[4];
+            LXMyPageViewController *controllerMyPage = (LXMyPageViewController*)nav.viewControllers[0];
+            [controllerMyPage.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+        } else
+            self.selectedIndex = 4;
     } else {
         self.selectedIndex = 0;
     }

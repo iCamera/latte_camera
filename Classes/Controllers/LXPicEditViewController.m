@@ -82,7 +82,7 @@
         switchGPS.on = _picture.showGPS;
         switchEXIF.on = _picture.showEXIF;
         switchTakenAt.on = _picture.showTakenAt;
-        tags = _picture.tags;
+        tags = [NSMutableArray arrayWithArray:_picture.tagsOld];
         buttonDelete.hidden = false;
     } else {
         share.imageData = _imageData;

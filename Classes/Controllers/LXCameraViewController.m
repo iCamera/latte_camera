@@ -1043,99 +1043,112 @@
 }
 
 - (void)processRawAndSave:(void(^)())block {
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-    
-    CGImageRef cgImagePreviewFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:imageOrientation];
-    savedPreview = [UIImage imageWithCGImage:cgImagePreviewFromBytes];
-    CGImageRelease(cgImagePreviewFromBytes);
-    
-    GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:capturedImage];
-    
-    [self preparePipe:picture];
-    [self applyFilterSetting];
-    [(GPUImageFilter *)[pipe.filters lastObject] prepareForImageCapture];
-    
-    [picture processImage];
-    if (buttonBlendNone.enabled) {
-        [pictureBlend processImage];
-    }
-    if (buttonBlurNone.enabled) {
-        [pictureDOF processData];
-    }
-    
-    // Save to Jpeg NSData
-    CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:imageOrientation];
-    NSData *jpeg = UIImageJPEGRepresentation([UIImage imageWithCGImage:cgImageFromBytes], 0.9);
-    CGImageRelease(cgImageFromBytes);
-    
-    
-    // Write EXIF to NSData
-    CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)jpeg, NULL);
-    
-    CFStringRef UTI = CGImageSourceGetType(source); //this is the type of image (e.g., public.jpeg)
-    
-    //this will be the data CGImageDestinationRef will write into
-    NSMutableData *dest_data = [NSMutableData data];
-    
-    CGImageDestinationRef destination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)dest_data,UTI,1,NULL);
-    
-    if(!destination) {
-        NSLog(@"***Could not create image destination ***");
-    } else {
-    
-    //add the image contained in the image source to the destination, overidding the old metadata with our modified metadata
-    CGImageDestinationAddImageFromSource(destination,source,0, (__bridge CFDictionaryRef) imageMeta);
-    
-    //tell the destination to write the image data and metadata into our data object.
-    //It will return false if something goes wrong
-    BOOL success = NO;
-    success = CGImageDestinationFinalize(destination);
-    
-    if(!success) {
-        NSLog(@"***Could not create data from image destination ***");
-    }
-    
-    //now we have the data ready to go, so do whatever you want with it
-    //here we just write it to disk at the same path we were passed
-    savedData = [NSData dataWithData:dest_data];
-    isSaved = true;
-    
-    //cleanup
-    
-    CFRelease(destination);
-    }
-    CFRelease(source);
-    
-    // Save now
-    block();
-    
-    [library writeImageDataToSavedPhotosAlbum:savedData metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
-        if (!error) {
-//            [library addAssetURL:assetURL toAlbum:@"Latte camera" withCompletionBlock:^(NSError *error) {
-//                TFLog(error.localizedDescription);
-//            }];
-            HUD.mode = MBProgressHUDModeText;
-            HUD.labelText = NSLocalizedString(@"saved_photo", @"Saved to Camera Roll") ;
-            HUD.margin = 10.f;
-            HUD.yOffset = 150.f;
-            HUD.removeFromSuperViewOnHide = YES;
-            HUD.dimBackground = NO;
-            [HUD hide:YES afterDelay:2];
-            
-        } else {
-            HUD.mode = MBProgressHUDModeText;
-            HUD.labelText = NSLocalizedString(@"cannot_save_photo", @"Cannot save to Camera Roll") ;
-            HUD.margin = 10.f;
-            HUD.yOffset = 150.f;
-            HUD.removeFromSuperViewOnHide = YES;
-            HUD.dimBackground = NO;
-            [HUD hide:YES afterDelay:3];
+    @try {
+        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+        
+        CGImageRef cgImagePreviewFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:imageOrientation];
+        savedPreview = [UIImage imageWithCGImage:cgImagePreviewFromBytes];
+        CGImageRelease(cgImagePreviewFromBytes);
+        
+        GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:capturedImage];
+        
+        [self preparePipe:picture];
+        [self applyFilterSetting];
+        [(GPUImageFilter *)[pipe.filters lastObject] prepareForImageCapture];
+        
+        [picture processImage];
+        if (buttonBlendNone.enabled) {
+            [pictureBlend processImage];
+        }
+        if (buttonBlurNone.enabled) {
+            [pictureDOF processData];
         }
         
-        // Return to preview mode
-        [picture removeAllTargets];
-        [self preparePipe];
-    }];
+        // Save to Jpeg NSData
+        CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:imageOrientation];
+        NSData *jpeg = UIImageJPEGRepresentation([UIImage imageWithCGImage:cgImageFromBytes], 0.9);
+        CGImageRelease(cgImageFromBytes);
+        
+        
+        // Write EXIF to NSData
+        CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)jpeg, NULL);
+        
+        CFStringRef UTI = CGImageSourceGetType(source); //this is the type of image (e.g., public.jpeg)
+        
+        //this will be the data CGImageDestinationRef will write into
+        NSMutableData *dest_data = [NSMutableData data];
+        
+        CGImageDestinationRef destination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)dest_data,UTI,1,NULL);
+        
+        if(!destination) {
+            NSLog(@"***Could not create image destination ***");
+        } else {
+            
+            //add the image contained in the image source to the destination, overidding the old metadata with our modified metadata
+            CGImageDestinationAddImageFromSource(destination,source,0, (__bridge CFDictionaryRef) imageMeta);
+            
+            //tell the destination to write the image data and metadata into our data object.
+            //It will return false if something goes wrong
+            BOOL success = NO;
+            success = CGImageDestinationFinalize(destination);
+            
+            if(!success) {
+                NSLog(@"***Could not create data from image destination ***");
+            }
+            
+            //now we have the data ready to go, so do whatever you want with it
+            //here we just write it to disk at the same path we were passed
+            savedData = [NSData dataWithData:dest_data];
+            isSaved = true;
+            
+            //cleanup
+            
+            CFRelease(destination);
+        }
+        CFRelease(source);
+        
+        // Save now
+        block();
+        
+        [library writeImageDataToSavedPhotosAlbum:savedData metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
+            if (!error) {
+                //            [library addAssetURL:assetURL toAlbum:@"Latte camera" withCompletionBlock:^(NSError *error) {
+                //                TFLog(error.localizedDescription);
+                //            }];
+                HUD.mode = MBProgressHUDModeText;
+                HUD.labelText = NSLocalizedString(@"saved_photo", @"Saved to Camera Roll") ;
+                HUD.margin = 10.f;
+                HUD.yOffset = 150.f;
+                HUD.removeFromSuperViewOnHide = YES;
+                HUD.dimBackground = NO;
+                [HUD hide:YES afterDelay:2];
+                
+            } else {
+                HUD.mode = MBProgressHUDModeText;
+                HUD.labelText = NSLocalizedString(@"cannot_save_photo", @"Cannot save to Camera Roll") ;
+                HUD.margin = 10.f;
+                HUD.yOffset = 150.f;
+                HUD.removeFromSuperViewOnHide = YES;
+                HUD.dimBackground = NO;
+                [HUD hide:YES afterDelay:3];
+            }
+            
+            // Return to preview mode
+            [picture removeAllTargets];
+            [self preparePipe];
+        }];
+    }
+    @catch (NSException *exception) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:exception.debugDescription
+                                                       delegate:nil
+                                              cancelButtonTitle:@"Close"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    @finally {
+        
+    }
 }
 
 - (IBAction)toggleControl:(UIButton*)sender {

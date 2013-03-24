@@ -232,6 +232,7 @@
 		8866D66716EA00E000CAE6E5 /* SideSwipeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8866D66416EA00C000CAE6E5 /* SideSwipeTableViewCell.m */; };
 		8866D66816EA00E000CAE6E5 /* SideSwipeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8866D66616EA00C000CAE6E5 /* SideSwipeTableViewController.m */; };
 		8866D68816EEE66300CAE6E5 /* STTweetLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8866D67016EEE66300CAE6E5 /* STTweetLabel.m */; };
+		88673B6616FF5219007CF6BD /* LXCellSearchConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 88673B6516FF5219007CF6BD /* LXCellSearchConnection.m */; };
 		886A83AC16CB9B9A009BCA92 /* effect8curve.png in Resources */ = {isa = PBXBuildFile; fileRef = 886A83AB16CB9B9A009BCA92 /* effect8curve.png */; };
 		886B4E1D16A8004300DA4783 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 880E35AA16A7F7150097B97F /* libTestFlight.a */; };
 		886C63A116816CC20007D952 /* LXFilterDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 886C63A016816CC20007D952 /* LXFilterDetail.m */; };
@@ -1552,6 +1553,8 @@
 		8866D66616EA00C000CAE6E5 /* SideSwipeTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SideSwipeTableViewController.m; sourceTree = "<group>"; };
 		8866D66F16EEE66300CAE6E5 /* STTweetLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STTweetLabel.h; sourceTree = "<group>"; };
 		8866D67016EEE66300CAE6E5 /* STTweetLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STTweetLabel.m; sourceTree = "<group>"; };
+		88673B6416FF5219007CF6BD /* LXCellSearchConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCellSearchConnection.h; sourceTree = "<group>"; };
+		88673B6516FF5219007CF6BD /* LXCellSearchConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCellSearchConnection.m; sourceTree = "<group>"; };
 		886A83AB16CB9B9A009BCA92 /* effect8curve.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = effect8curve.png; sourceTree = "<group>"; };
 		886C639F16816CC20007D952 /* LXFilterDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFilterDetail.h; sourceTree = "<group>"; };
 		886C63A016816CC20007D952 /* LXFilterDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFilterDetail.m; sourceTree = "<group>"; };
@@ -3480,6 +3483,8 @@
 				888F64B816FAD8D800ED74BB /* LXCellTag.m */,
 				888F64BA16FB2BB500ED74BB /* LXCellInfoTag.h */,
 				888F64BB16FB2BB500ED74BB /* LXCellInfoTag.m */,
+				88673B6416FF5219007CF6BD /* LXCellSearchConnection.h */,
+				88673B6516FF5219007CF6BD /* LXCellSearchConnection.m */,
 			);
 			path = CustomControls;
 			sourceTree = "<group>";
@@ -5897,6 +5902,7 @@
 				888F651316FBFB8F00ED74BB /* LXLeftSideUserViewController.m in Sources */,
 				888F651616FC09E100ED74BB /* LXLeftGuestViewController.m in Sources */,
 				886E540B16FC469B00629D76 /* LXLikedViewController.m in Sources */,
+				88673B6616FF5219007CF6BD /* LXCellSearchConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
