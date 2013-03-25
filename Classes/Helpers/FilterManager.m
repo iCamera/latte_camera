@@ -9,7 +9,6 @@
 #import "FilterManager.h"
 
 #import "LXFilter.h"
-#import "LXFilterBlur.h"
 #import "LXFilterMono.h"
 #import "LXEffect1.h"
 #import "LXEffect2.h"

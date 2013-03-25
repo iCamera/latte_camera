@@ -10,8 +10,8 @@
                 { "type":"QEntryElement", "key":"current_residence", "title":"現住所", "placeholder":"現住所", "bind":"textValue:current_residence", "controllerAction":"handleUpdateEntry:"},
                 { "type":"QEntryElement", "key":"hometown", "title":"出身地", "placeholder":"出身地", "bind":"textValue:hometown", "controllerAction":"handleUpdateEntry:"},
                 { "type":"QEntryElement", "key":"occupation", "title":"職業", "placeholder":"職業", "bind":"textValue:occupation", "controllerAction":"handleUpdateEntry:"},
-                { "type":"QEntryElement", "key":"introduction", "title":"自己紹介", "bind":"textValue:introduction", "controllerAction":"handleUpdateEntry:"},
-                { "type":"QEntryElement", "key":"hobby", "title":"趣味", "bind":"textValue:hobby", "controllerAction":"handleUpdateEntry:"}
+                { "type":"QMultilineElement", "key":"introduction", "title":"自己紹介", "bind":"textValue:introduction", "controllerAction":"handleUpdateEntry:"},
+                { "type":"QMultilineElement", "key":"hobby", "title":"趣味", "bind":"textValue:hobby", "controllerAction":"handleUpdateEntry:"}
             ]
         }
     ]

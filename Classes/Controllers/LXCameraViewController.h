@@ -20,8 +20,6 @@
 #import "LXFilterDetail.h"
 #import "LXFilterDOF.h"
 #import "LXFilterFish.h"
-#import "LXFilterText.h"
-#import "LXFilterScreenBlend.h"
 #import "GPUImagePicture+updateImage.h"
 #import "LXShare.h"
 #import "RDActionSheet.h"
@@ -43,7 +41,6 @@ typedef enum {
     kTabBasic = 3,
     kTabLens = 4,
     kTabText = 5,
-    kTabBlend = 6,
 } EffectTab;
 
 typedef enum {
@@ -52,13 +49,6 @@ typedef enum {
     kMaskBlurNormal = 7,
     kMaskBlurStrong = 8,
 } TypeDefMask;
-
-typedef enum {
-    kBlendNone = 0,
-    kBlendWeak = 1,
-    kBlendNormal = 2,
-    kBlendStrong = 3,
-} TypeDefBlend;
 
 @class LXCameraViewController;
 
@@ -100,7 +90,6 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIView *viewBasicControl;
 @property (strong, nonatomic) IBOutlet UIView *viewTextControl;
 @property (strong, nonatomic) IBOutlet UIView *viewEffectControl;
-@property (strong, nonatomic) IBOutlet UIView *viewBlendControl;
 
 @property (strong, nonatomic) IBOutlet UIView *viewCameraWraper;
 @property (strong, nonatomic) IBOutlet LXDrawView *viewDraw;
@@ -118,11 +107,6 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIButton *buttonBlurNormal;
 @property (strong, nonatomic) IBOutlet UIButton *buttonBlurStrong;
 @property (strong, nonatomic) IBOutlet UIButton *buttonBlurNone;
-
-@property (strong, nonatomic) IBOutlet UIButton *buttonBlendNone;
-@property (strong, nonatomic) IBOutlet UIButton *buttonBlendWeak;
-@property (strong, nonatomic) IBOutlet UIButton *buttonBlendMedium;
-@property (strong, nonatomic) IBOutlet UIButton *buttonBlendStrong;
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonLensNormal;
 @property (strong, nonatomic) IBOutlet UIButton *buttonLensWide;
@@ -143,7 +127,6 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UISlider *sliderEffectIntensity;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollFont;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollProcess;
-@property (strong, nonatomic) IBOutlet UIScrollView *scrollBlend;
 @property (strong, nonatomic) IBOutlet UITextField *textText;
 @property (strong, nonatomic) IBOutlet UIButton *buttonToggleFisheye;
 @property (strong, nonatomic) IBOutlet UIView *viewShoot;
@@ -175,8 +158,6 @@ typedef enum {
 - (IBAction)textChange:(UITextField *)sender;
 - (IBAction)pinchCamera:(UIPinchGestureRecognizer *)sender;
 - (IBAction)panCamera:(UIPanGestureRecognizer *)sender;
-- (IBAction)toggleBlending:(UIButton *)sender;
-- (IBAction)setBlend:(UIButton *)sender;
 - (IBAction)toggleFisheye:(UIButton *)sender;
 - (IBAction)touchUploadStatus:(id)sender;
 

@@ -10,8 +10,8 @@
                 { "type":"QEntryElement", "key":"current_residence", "title":"Current Address", "placeholder":"Current Address", "bind":"textValue:current_residence", "controllerAction":"handleUpdateEntry:"},
                 { "type":"QEntryElement", "key":"hometown", "title":"Hometown", "placeholder":"Hometown", "bind":"textValue:hometown", "controllerAction":"handleUpdateEntry:"},
                 { "type":"QEntryElement", "key":"occupation", "title":"Occupation", "placeholder":"Occupation", "bind":"textValue:occupation", "controllerAction":"handleUpdateEntry:"},
-                { "type":"QEntryElement", "key":"introduction", "title":"Introduction", "bind":"textValue:introduction", "controllerAction":"handleUpdateEntry:"},
-                { "type":"QEntryElement", "key":"hobby", "title":"Hobby", "bind":"textValue:hobby", "controllerAction":"handleUpdateEntry:"}
+                { "type":"QMultilineElement", "key":"introduction", "title":"Introduction", "bind":"textValue:introduction", "controllerAction":"handleUpdateEntry:"},
+                { "type":"QMultilineElement", "key":"hobby", "title":"Hobby", "bind":"textValue:hobby", "controllerAction":"handleUpdateEntry:"}
             ]
         }
     ]

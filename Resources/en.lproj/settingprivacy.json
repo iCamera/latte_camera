@@ -12,15 +12,11 @@
                 { "type":"QRadioElement", "key":"nationality_public", "title":"Nationality", "items":["Me only", "Friends only", "Members only", "Everyone"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"}
             ]
         },
-        { "title":"PHOTO PRIVACY SETTINGS", "elements": [
+        { "title":"PHOTO PRIVACY SETTINGS", "footer":"- All these settings will be default.", "elements": [
                 { "type":"QRadioElement", "key":"picture_status", "title":"Photo", "items":["Me only", "Friends only", "Members only", "Everyone"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
                 { "type":"QBooleanElement", "key":"default_show_exif", "title":"Show EXIF information", "boolValue":0, "controllerAction":"handleUpdateBool:"},
                 { "type":"QBooleanElement", "key":"default_show_gps", "title":"Show location information", "boolValue":0, "controllerAction":"handleUpdateBool:"},
                 { "type":"QBooleanElement", "key":"default_show_taken_at", "title":"Show taken date", "boolValue":0, "controllerAction":"handleUpdateBool:"}
-            ]
-        },
-        { "footer":"- With stealth mode is one, your following and follower will not be displayed\n- All these settings will be default.", "elements": [
-                { "type":"QBooleanElement", "key":"stealth_mode", "title":"Stealth mode", "boolValue":0, "controllerAction":"handleUpdateBool:"}
             ]
         }
     ]

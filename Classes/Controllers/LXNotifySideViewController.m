@@ -218,7 +218,9 @@
                                                        viewGallery.picture = [Picture instanceFromDictionary:[JSON objectForKey:@"picture"]];
                                                        
                                                        
-                                                       [self presentViewController:navGalerry animated:YES completion:nil];
+                                                       [self presentViewController:navGalerry animated:YES completion:^{
+                                                           viewGallery.currentTab = kGalleryTabComment;
+                                                       }];
                                                        
                                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                        [hud hide:YES];

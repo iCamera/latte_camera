@@ -69,6 +69,8 @@
                                                   parameters:[NSDictionary dictionaryWithObject:@"id,name,installed" forKey:@"fields"]
                                                   HTTPMethod:@"GET"];
     [fbrequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        [activityLoad stopAnimating];
+        
         NSMutableArray *tmp = [[NSMutableArray alloc]init];
         for (NSDictionary* friend in [(NSDictionary*)result objectForKey:@"data"]) {
             if ([friend objectForKey:@"installed"] != nil) {
@@ -86,7 +88,6 @@
                                            success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                                fbfriends = [User mutableArrayFromDictionary:JSON withKey:@"users"];
                                                [self.tableView reloadData];
-                                               [activityLoad stopAnimating];
                                            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                TFLog(@"Something went wrong (FB Friends)");
                                            }];

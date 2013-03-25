@@ -113,8 +113,8 @@
     ((QEntryElement *)[self.root elementWithKey:@"current_residence"]).delegate = self;
     ((QEntryElement *)[self.root elementWithKey:@"hometown"]).delegate = self;
     ((QEntryElement *)[self.root elementWithKey:@"occupation"]).delegate = self;
-    ((QEntryElement *)[self.root elementWithKey:@"introduction"]).delegate = self;
-    ((QEntryElement *)[self.root elementWithKey:@"hobby"]).delegate = self;
+    ((QMultilineElement *)[self.root elementWithKey:@"introduction"]).delegate = self;
+    ((QMultilineElement *)[self.root elementWithKey:@"hobby"]).delegate = self;
     ((QDateTimeInlineElement *)[self.root elementWithKey:@"birthday"]).mode = UIDatePickerModeDate;
     ((QDateTimeInlineElement *)[self.root elementWithKey:@"birthday"]).delegate = self;
 }
@@ -299,6 +299,11 @@
             
             [self submitUpdate:param];
         }
+    }
+    if ([element.key isEqualToString:@"introduction"] || [element.key isEqualToString:@"hobby"]) {
+        NSMutableDictionary *param = [NSMutableDictionary dictionaryWithObject:element.textValue
+                                                                        forKey:element.key];
+        [self submitUpdate:param];
     }
 }
 

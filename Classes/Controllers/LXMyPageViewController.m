@@ -263,6 +263,7 @@ typedef enum {
                                        }
                                        
                                        NSSet *allField = [NSSet setWithArray:[userDict allKeys]];
+                                       
                                        [showSet intersectSet:allField];
                                        showField = [showSet allObjects];
                                        
@@ -567,7 +568,16 @@ typedef enum {
                 return 1;
         }
     } else if (tableMode == kTableProfile) {
-        return 30;
+        NSString* strKey = [showField objectAtIndex:indexPath.row];
+        
+        if ([strKey isEqualToString:@"hobby"]|| [strKey isEqualToString:@"introduction"]) {
+            CGSize size = [[userDict objectForKey:strKey] sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0]
+                                                     constrainedToSize:CGSizeMake(212.0, CGFLOAT_MAX)
+                                                         lineBreakMode:NSLineBreakByWordWrapping];
+            return size.height + 8;
+        } else {
+            return 22;
+        }
     }
     else
         return 48;
@@ -685,13 +695,25 @@ typedef enum {
         case kTableFollowings: {
             LXCellFriend* cellUser;
             User *user;
+            
             cellUser = [tableView dequeueReusableCellWithIdentifier:@"User" forIndexPath:indexPath];
-            if (tableMode == kTableFollower) {
-                user = followers[indexPath.row];
-            } else if (tableMode == kTableFollowings) {
-                user = followings[indexPath.row];
+            
+            @try {
+                if (tableMode == kTableFollower) {
+                    user = followers[indexPath.row];
+                } else if (tableMode == kTableFollowings) {
+                    user = followings[indexPath.row];
+                }
+                cellUser.user = user;
             }
-            cellUser.user = user;
+            @catch (NSException *exception) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                message:exception.debugDescription
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"Close"
+                                                      otherButtonTitles:nil];
+                [alert show];
+            }
             
             return cellUser;
         }
@@ -791,6 +813,12 @@ typedef enum {
                 cell.labelDetail.text = [userDict objectForKey:strKey];
             }
             
+            CGRect frame = cell.labelDetail.frame;
+            CGSize size = [cell.labelDetail.text sizeWithFont:cell.labelDetail.font
+                                            constrainedToSize:CGSizeMake(212.0, CGFLOAT_MAX)
+                                                lineBreakMode:NSLineBreakByWordWrapping];
+            frame.size.height = size.height;
+            cell.labelDetail.frame = frame;
             
             return cell;
         }

@@ -12,15 +12,11 @@
                 { "type":"QRadioElement", "key":"nationality_public", "title":"国籍公開", "items":["非公開", "友達（相互フォロー）まで", "会員まで", "全体"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"}
             ]
         },
-        { "title":"写真公開設定", "elements": [
+        { "title":"写真公開設定", "footer":"●　ここで設定したものがデフォルトに設定されます。", "elements": [
                 { "type":"QRadioElement", "key":"picture_status", "title":"写真", "items":["非公開", "友達（相互フォロー）まで", "会員まで", "全体"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
                 { "type":"QBooleanElement", "key":"default_show_exif", "title":"カメラ情報表示", "boolValue":0, "controllerAction":"handleUpdateBool:"},
                 { "type":"QBooleanElement", "key":"default_show_gps", "title":"位置情報表示", "boolValue":0, "controllerAction":"handleUpdateBool:"},
                 { "type":"QBooleanElement", "key":"default_show_taken_at", "title":"撮影日表示", "boolValue":0, "controllerAction":"handleUpdateBool:"}
-            ]
-        },
-        { "footer":"●　ステルスモードをオンにすると、フォローをしたこと、していることを非公開にできます。\n●　ここで設定したものがデフォルトに設定されます。", "elements": [
-                { "type":"QBooleanElement", "key":"stealth_mode", "title":"ステルスモード", "boolValue":0, "controllerAction":"handleUpdateBool:"}
             ]
         }
     ]

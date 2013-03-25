@@ -154,8 +154,6 @@
     LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
     viewGallery.delegate = self;
     
-    LXAppDelegate* app = [LXAppDelegate currentDelegate];
-    viewGallery.user = app.currentUser;
     viewGallery.picture = pictures[sender.tag];
     
     [self presentViewController:navGalerry animated:YES completion:nil];

@@ -36,11 +36,12 @@
         
     gestureTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchBackground:)];
     
-    
     growingComment.layer.borderWidth = 1;
     growingComment.layer.borderColor = [UIColor grayColor].CGColor;
     growingComment.layer.cornerRadius = 5;
     growingComment.layer.masksToBounds = YES;
+    growingComment.internalTextView.keyboardAppearance = UIKeyboardTypeTwitter;
+    growingComment.internalTextView.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -62,8 +63,6 @@
         UIEdgeInsets padding = UIEdgeInsetsMake(0, 0, 45, 0);
         _tableView.contentInset = padding;
         _tableView.scrollIndicatorInsets = padding;
-        
-        
     } else {
         viewHeader.hidden = true;
     }
@@ -189,7 +188,7 @@
                                         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                             Comment *comment = [Comment instanceFromDictionary:[JSON objectForKey:@"comment"]];
                                             [_comments addObject:comment];
-                                            NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:0];
+                                            NSIndexPath *path = [NSIndexPath indexPathForRow:_comments.count-1 inSection:0];
                                             [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationRight];
                                             [self.tableView scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionTop animated:YES];
                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

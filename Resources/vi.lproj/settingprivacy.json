@@ -12,15 +12,11 @@
                 { "type":"QRadioElement", "key":"nationality_public", "title":"Quốc tịch", "items":["Cá nhân", "Bạn bè", "Thành viên", "Công khai"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"}
             ]
         },
-        { "title":"CHÍNH SÁCH RIÊNG TƯ CHO ẢNH", "elements": [
+        { "title":"CHÍNH SÁCH RIÊNG TƯ CHO ẢNH", "footer":"- Những thiết lập ở đây sẽ trở thành mặc định lúc gửi ảnh.", "elements": [
                 { "type":"QRadioElement", "key":"picture_status", "title":"Ảnh", "items":["Cá nhân", "Bạn bè", "Thành viên", "Công khai"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
                 { "type":"QBooleanElement", "key":"default_show_exif", "title":"Hiển thị thông tin máy ảnh", "boolValue":0, "controllerAction":"handleUpdateBool:"},
                 { "type":"QBooleanElement", "key":"default_show_gps", "title":"Hiển thị thông tin định vị", "boolValue":0, "controllerAction":"handleUpdateBool:"},
                 { "type":"QBooleanElement", "key":"default_show_taken_at", "title":"Hiển thị ngày chụp", "boolValue":0, "controllerAction":"handleUpdateBool:"}
-            ]
-        },
-        { "footer":"- Với chế độ giấu mặt, bạn có thể ẩn theo đôi và người theo đuôi bạn.\n- Những thiết lập ở đây sẽ trở thành mặc định lúc gửi ảnh.", "elements": [
-                { "type":"QBooleanElement", "key":"stealth_mode", "title":"Chế độ giấu mặt", "boolValue":0, "controllerAction":"handleUpdateBool:"}
             ]
         }
     ]

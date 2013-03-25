@@ -36,6 +36,7 @@
 - (void)setNotify:(NSDictionary *)notify {
     NSDictionary *target = [notify objectForKey:@"target"];
     NSDate *updatedAt = [LXUtils dateFromJSON:[notify objectForKey:@"updated_at"]];
+    viewImage.image = [UIImage imageNamed:@"user.gif"];
     labelDate.text = [LXUtils timeDeltaFromNow:updatedAt];
     labelNotify.text = [LXUtils stringFromNotify:notify];
     
@@ -59,7 +60,14 @@
                 [viewImage setImageWithURL:[NSURL URLWithString:user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
                 break;
             }
-            case kNotifyTargetComment:
+            case kNotifyTargetComment: {
+                NSMutableArray *users = [User mutableArrayFromDictionary:notify withKey:@"users"];
+                for (User *user in users) {
+                    if (user.name != nil) {
+                        [viewImage setImageWithURL:[NSURL URLWithString:user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
+                    }
+                }
+            }
                 break;
             default:
                 break;
