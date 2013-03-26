@@ -444,7 +444,7 @@ typedef enum {
 
 
 - (IBAction)touchReg:(id)sender {
-    [self performSegueWithIdentifier:@"Register" sender:nil];
+    self.navigationController.tabBarController.selectedIndex = 4;
 }
 
 - (IBAction)touchLogin:(id)sender {
@@ -496,6 +496,11 @@ typedef enum {
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
     [refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+}
+
+- (void)submitLike:(UIButton*)sender {
+    Picture *pic = [LXUtils picFromPicID:sender.tag of:feeds];
+    [LXUtils toggleLike:sender ofPicture:pic];
 }
 
 

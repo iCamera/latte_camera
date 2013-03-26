@@ -115,14 +115,16 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark Row reordering
 // Determine whether a given row is eligible for reordering or not.
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    return indexPath.row < _tags.count;
+    return NO;
 }
 // Process the row move. This means updating the data model to correct the item indices.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath
 	  toIndexPath:(NSIndexPath *)toIndexPath {
-	NSString *item = [_tags objectAtIndex:fromIndexPath.row];
-	[_tags removeObject:item];
-	[_tags insertObject:item atIndex:toIndexPath.row];
+    if (toIndexPath.row < _tags.count && fromIndexPath.row < _tags.count) {
+        NSString *item = [_tags objectAtIndex:fromIndexPath.row];
+        [_tags removeObject:item];
+        [_tags insertObject:item atIndex:toIndexPath.row];
+    }
 }
 
 @end

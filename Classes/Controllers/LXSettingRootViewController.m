@@ -132,6 +132,7 @@
         [lxShare inviteFriend];
     } else if (indexPath.section == 3) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/company/policy"]];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
     } else if (indexPath.section == 4) {
         LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
         

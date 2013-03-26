@@ -56,7 +56,7 @@
     }
     else {
         buttonLike.hidden = false;
-        buttonLike.selected = true;
+//        buttonLike.selected = comment.isVoted;
         buttonLike.enabled = !comment.isVoted;
     }
     [buttonLike addTarget:self action:@selector(toggleLikeComment:) forControlEvents:UIControlEventTouchUpInside];
@@ -89,23 +89,22 @@
     frameDate.size.width = sizeLabelDate.width;
     pointer.x += sizeLabelDate.width + 2;
     
-    LXAppDelegate *app = [LXAppDelegate currentDelegate];
-    if (app.currentUser != nil) {
-        if ([_comment.user.userId integerValue] != [app.currentUser.userId integerValue]) {
-            frameLike.origin.x = pointer.x;
-            
-            NSString *buttonString;
-            if (buttonLike.selected) {
-                buttonString = [buttonLike titleForState:UIControlStateSelected];
-            } else if (!buttonLike.enabled) {
-                buttonString = [buttonLike titleForState:UIControlStateDisabled];
-            } else
-                buttonString = [buttonLike titleForState:UIControlStateNormal];
-            frameLike.size.width = [buttonString sizeWithFont:labelDate.font
-                                            constrainedToSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)].width + 3;
-            pointer.x += frameLike.size.width + 3;
-        }
+
+    if (!buttonLike.hidden) {
+        frameLike.origin.x = pointer.x;
+        
+        NSString *buttonString;
+        if (buttonLike.selected) {
+            buttonString = [buttonLike titleForState:UIControlStateSelected];
+        } else if (!buttonLike.enabled) {
+            buttonString = [buttonLike titleForState:UIControlStateDisabled];
+        } else
+            buttonString = [buttonLike titleForState:UIControlStateNormal];
+        frameLike.size.width = [buttonString sizeWithFont:labelDate.font
+                                        constrainedToSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)].width + 3;
+        pointer.x += frameLike.size.width + 3;
     }
+    
     frameLikeImage.origin.y = pointer.y + 2;
     frameLikeImage.origin.x = pointer.x;
     pointer.x += 10 + 3;
@@ -125,11 +124,11 @@
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
     if (!app.currentUser) {
         sender.enabled = NO;
+        sender.selected = _comment.isVoted;
     }
     
     _comment.isVoted = !_comment.isVoted;
     BOOL increase = _comment.isVoted;
-    sender.selected = _comment.isVoted;
     
     _comment.voteCount = [NSNumber numberWithInteger:[_comment.voteCount integerValue] + (increase?1:-1)];
     

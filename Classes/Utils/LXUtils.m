@@ -21,7 +21,7 @@
 
 + (void)setNationalityOfUser:(User *)user forImage:(UIImageView*)imageNationality nextToLabel:(UILabel*)label {
     if (user.nationality.length > 0) {
-        NSString *filename = [NSString stringWithFormat:@"%@.png", [user.nationality lowercaseString]];
+        NSString *filename = [NSString stringWithFormat:@"%@.png", [user.nationality uppercaseString]];
         imageNationality.image = [UIImage imageNamed:filename];
         imageNationality.hidden = false;
         CGRect frame = imageNationality.frame;

@@ -32,6 +32,9 @@
 - (void)setTags:(NSArray *)tags {
     _tags = tags;
     CGSize size = CGSizeMake(6, 40);
+    for (UIView *subview in scrollTag.subviews) {
+        [subview removeFromSuperview];
+    }
     for (NSString *tag in tags) {
         UIFont *font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
         CGSize textSize = [tag sizeWithFont:font];

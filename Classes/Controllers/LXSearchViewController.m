@@ -13,8 +13,10 @@
 #import "LXAppDelegate.h"
 #import "LXButtonBack.h"
 #import "LXCellSearchUser.h"
+#import "LXCellTags.h"
 #import "Picture.h"
 #import "LXCellSearchConnection.h"
+#import "LXTagViewController.h"
 
 typedef enum {
     kSearchPhoto,
@@ -28,6 +30,7 @@ typedef enum {
 @implementation LXSearchViewController {
     NSMutableArray *pictures;
     NSMutableArray *users;
+    NSArray *tags;
     SearchMode tableMode;
 }
 
@@ -73,7 +76,23 @@ typedef enum {
     [buttonSide addTarget:app.controllerSide action:@selector(toggleLeftPanel:) forControlEvents:UIControlEventTouchUpInside];
     
     [app.tracker sendView:@"Search Screen"];
+    
+    [self reloadTags];
+}
 
+- (void)reloadTags {
+    LXAppDelegate* app = [LXAppDelegate currentDelegate];
+    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
+                           [app getToken], @"token",
+                           textKeyword.text, @"keyword", nil];
+    [[LatteAPIClient sharedClient] getPath:@"picture/trending"
+                                parameters:param
+                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       tags = [JSON objectForKey:@"tags"];
+                                       [self.tableView reloadData];
+                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       TFLog(@"Something went wrong Tag");
+                                   }];
 }
 
 - (void)touchBackground:(id)sender {
@@ -96,7 +115,10 @@ typedef enum {
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (tableMode == kSearchPhoto) {
-        return (pictures.count/3) + (pictures.count%3>0?1:0);
+        if (pictures.count > 0)
+            return (pictures.count/3) + (pictures.count%3>0?1:0);
+        else
+            return tags.count;
     } else {
         NSInteger ret = users.count;
         LXAppDelegate* app = [LXAppDelegate currentDelegate];
@@ -112,11 +134,20 @@ typedef enum {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableMode == kSearchPhoto) {
-        static NSString *CellIdentifier = @"Grid";
-        LXCellGrid *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-        cell.viewController = self;
-        [cell setPictures:pictures forRow:indexPath.row];
-        return cell;
+        if (pictures.count > 0) {
+            static NSString *CellIdentifier = @"Grid";
+            LXCellGrid *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+            cell.viewController = self;
+            [cell setPictures:pictures forRow:indexPath.row];
+            return cell;
+        } else {
+            static NSString *CellIdentifier = @"Tags";
+            LXCellTags *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+            [cell.buttonTag setTitle:tags[indexPath.row] forState:UIControlStateNormal];
+            [cell.buttonTag addTarget:self action:@selector(showTag:) forControlEvents:UIControlEventTouchUpInside];
+            cell.buttonTag.tag = indexPath.row;
+            return cell;
+        }
     } else {
         if (users.count == 0) {
             LXCellSearchConnection *cell = [tableView dequeueReusableCellWithIdentifier:@"FacebookSearch" forIndexPath:indexPath];
@@ -129,6 +160,17 @@ typedef enum {
             return cell;
         }
         
+    }
+}
+
+- (void)showTag:(UIButton*)sender {
+    [self performSegueWithIdentifier:@"ShowTag" sender:sender];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UIButton*)sender {
+    if ([segue.identifier isEqualToString:@"ShowTag"]) {
+        LXTagViewController *controllerTag = (LXTagViewController*)segue.destinationViewController;
+        controllerTag.keyword = tags[sender.tag];
     }
 }
 
@@ -170,7 +212,12 @@ typedef enum {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableMode == kSearchPhoto) {
-        return 104;
+        if (pictures.count > 0) {
+            return 104;
+        } else {
+            return 36;
+        }
+        
     } else {
         if (users.count == 0) {
             return 86;
