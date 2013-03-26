@@ -379,7 +379,7 @@
         [buttonUser loadBackground:currentPage.user.profilePicture placeholderImage:@"user.gif"];
     }
     
-    labelView.text = [NSString stringWithFormat:@"%d views", [currentPage.picture.pageviews integerValue]];
+    labelView.text = [NSString stringWithFormat:NSLocalizedString(@"d_views", @""), [currentPage.picture.pageviews integerValue]];
     
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
 
