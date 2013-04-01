@@ -103,11 +103,13 @@ typedef enum {
         [socialComposer addURL:[NSURL URLWithString:url]];
     }
     
-    
-    NSString *message = [NSString stringWithString:text];
-    if (message) {
-        [socialComposer setInitialText:message];
+    if (text) {
+        NSString *message = [NSString stringWithString:text];
+        if (message) {
+            [socialComposer setInitialText:message];
+        }
     }
+    
     
     
     // if the message is bigger than 140 characters, then cut the message
