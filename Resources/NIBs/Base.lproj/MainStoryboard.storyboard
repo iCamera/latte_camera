@@ -429,24 +429,7 @@
                             <outlet property="delegate" destination="WmZ-e1-knK" id="ihM-zX-NjP"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="k1H-hq-hlb">
-                        <barButtonItem key="leftBarButtonItem" style="done" id="vPh-jz-1bS">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="VeB-7O-n4H" customClass="LXButtonBack">
-                                <rect key="frame" x="5" y="7" width="60" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
-                                <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <size key="titleShadowOffset" width="0.0" height="1"/>
-                                <state key="normal" title="BACK">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="k1H-hq-hlb"/>
                     <connections>
                         <outlet property="activityLoad" destination="o2p-wl-OIy" id="adr-z8-i6N"/>
                     </connections>
@@ -507,24 +490,7 @@
                             <outlet property="delegate" destination="Hea-mo-ou6" id="ODJ-Wt-tqd"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="Siy-Pf-bZx">
-                        <barButtonItem key="leftBarButtonItem" style="done" id="uSM-nP-a65">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="aaG-tK-9Qo" customClass="LXButtonBack">
-                                <rect key="frame" x="5" y="7" width="60" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
-                                <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <size key="titleShadowOffset" width="0.0" height="1"/>
-                                <state key="normal" title="BACK">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="Siy-Pf-bZx"/>
                     <connections>
                         <outlet property="activityLoad" destination="tTQ-Zj-A8T" id="Tz9-ab-n12"/>
                         <outlet property="labelTag" destination="AoE-6z-6rV" id="pi0-OY-I0p"/>
@@ -1395,24 +1361,7 @@
                             <outlet property="delegate" destination="7yj-1F-nfZ" id="Gf4-X0-DCR"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="IPc-kH-Fn5">
-                        <barButtonItem key="leftBarButtonItem" style="done" id="cYe-bG-sSW">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="DTm-8E-4zY" customClass="LXButtonBack">
-                                <rect key="frame" x="5" y="7" width="60" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
-                                <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <size key="titleShadowOffset" width="0.0" height="1"/>
-                                <state key="normal" title="BACK">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="IPc-kH-Fn5"/>
                     <connections>
                         <outlet property="loadIndicator" destination="fox-5y-7Kq" id="uEi-ms-xA2"/>
                     </connections>
@@ -2438,9 +2387,6 @@
         <image name="user.gif" width="100" height="100"/>
     </resources>
     <classes>
-        <class className="LXButtonBack" superclassName="UIButton">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonBack.h"/>
-        </class>
         <class className="LXButtonBrown30" superclassName="UIButton">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonBrown30.h"/>
         </class>

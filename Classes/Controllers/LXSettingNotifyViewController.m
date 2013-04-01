@@ -70,17 +70,6 @@
                                               otherButtonTitles:nil];
         [alert show];
     }];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
-    //setup back button
-    UIBarButtonItem *navLeftItem = self.navigationItem.leftBarButtonItem;
-    LXButtonBack *buttonBack = (LXButtonBack*)navLeftItem.customView;
-    [buttonBack addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)didReceiveMemoryWarning

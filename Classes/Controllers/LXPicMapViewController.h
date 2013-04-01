@@ -17,8 +17,6 @@
 @interface LXPicMapViewController : UIViewController <MKMapViewDelegate>
 
 @property (strong, nonatomic) IBOutlet MKMapView *mapPic;
-- (IBAction)touchBack:(id)sender;
-- (IBAction)touchApp:(id)sender;
 
 @property (strong, nonatomic) Picture *picture;
 

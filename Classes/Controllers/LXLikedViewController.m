@@ -50,11 +50,6 @@
     refreshHeaderView.delegate = self;
     [self.tableView addSubview:refreshHeaderView];
     
-    //setup back button
-    UIBarButtonItem *navLeftItem = self.navigationItem.leftBarButtonItem;
-    LXButtonBack *buttonBack = (LXButtonBack*)navLeftItem.customView;
-    [buttonBack addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
-    
     [self reloadFav];
 
 }

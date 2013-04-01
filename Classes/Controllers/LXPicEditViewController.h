@@ -37,7 +37,6 @@
 
 
 - (IBAction)touchPost:(id)sender;
-- (IBAction)touchBack:(id)sender;
 - (IBAction)touchBackground:(id)sender;
 - (IBAction)touchDelete:(id)sender;
 

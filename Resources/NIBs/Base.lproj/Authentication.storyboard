@@ -262,27 +262,7 @@
                             <outlet property="delegate" destination="HJM-KD-2sg" id="AnM-Mq-ta9"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Latte" id="Z2S-Bj-hnJ">
-                        <barButtonItem key="leftBarButtonItem" style="done" id="ccJ-4X-wwH">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="a7U-O4-afZ" customClass="LXButtonBack">
-                                <rect key="frame" x="5" y="7" width="60" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
-                                <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <size key="titleShadowOffset" width="0.0" height="1"/>
-                                <state key="normal" title="BACK">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="touchBack:" destination="HJM-KD-2sg" eventType="touchUpInside" id="G1I-02-Ag0"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Latte" id="Z2S-Bj-hnJ"/>
                     <connections>
                         <outlet property="textMail" destination="sLO-Tu-vem" id="dmK-fV-Bk5"/>
                         <outlet property="textName" destination="GY9-pN-HhC" id="Cf2-PQ-cFQ"/>
@@ -296,7 +276,7 @@
         <!--Navigation Controller - Login-->
         <scene sceneID="cI2-Th-REi">
             <objects>
-                <navigationController storyboardIdentifier="LoginModal" definesPresentationContext="YES" id="EFt-fq-8DL" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="LoginModal" definesPresentationContext="YES" id="EFt-fq-8DL" customClass="LXNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Login" image="icon_login.png" id="9cH-yt-cfi"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="90R-k6-oCe" customClass="LXNavBar">
@@ -321,9 +301,6 @@
         <image name="icon_login.png" width="13" height="16"/>
     </resources>
     <classes>
-        <class className="LXButtonBack" superclassName="UIButton">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonBack.h"/>
-        </class>
         <class className="LXButtonNormal" superclassName="UIButton">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonNormal.h"/>
         </class>
@@ -347,6 +324,9 @@
         </class>
         <class className="LXNavBar" superclassName="UINavigationBar">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavBar.h"/>
+        </class>
+        <class className="LXNavigationController" superclassName="UINavigationController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavigationController.h"/>
         </class>
         <class className="LXRegisterViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXRegisterViewController.h"/>

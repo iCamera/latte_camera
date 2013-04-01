@@ -28,10 +28,6 @@
     return self;
 }
 
-- (IBAction)touchBack:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 - (IBAction)touchApp:(id)sender {
     MKPlacemark *mark = [[MKPlacemark alloc] initWithCoordinate:pin.coordinate addressDictionary:nil];
     [[[MKMapItem alloc] initWithPlacemark:mark] openInMapsWithLaunchOptions:nil];

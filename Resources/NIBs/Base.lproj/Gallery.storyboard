@@ -481,24 +481,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="bDs-D2-cPu">
-                        <barButtonItem key="leftBarButtonItem" style="done" id="Win-YT-jqi">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="MTi-bX-uqd" customClass="LXButtonBack">
-                                <rect key="frame" x="5" y="7" width="60" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
-                                <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <size key="titleShadowOffset" width="0.0" height="1"/>
-                                <state key="normal" title="BACK">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="touchBack:" destination="59n-9u-wT7" eventType="touchUpInside" id="77N-hf-vCa"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="bDs-D2-cPu"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="mapPic" destination="9Ih-x9-5Dk" id="nKg-Jh-8uA"/>
@@ -706,27 +689,7 @@
                             <outlet property="delegate" destination="FVi-JD-j3D" id="Idd-Jf-52s"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="VGA-R6-8GE">
-                        <barButtonItem key="leftBarButtonItem" style="done" id="GnN-1u-ej0">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Rgw-Kn-rrt" customClass="LXButtonBack">
-                                <rect key="frame" x="5" y="7" width="60" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
-                                <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <size key="titleShadowOffset" width="0.0" height="1"/>
-                                <state key="normal" title="BACK">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="touchBack:" destination="ghy-6n-Ga3" eventType="touchUpInside" id="2Vm-AO-oOo"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="VGA-R6-8GE"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pgp-yC-gcb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -977,25 +940,6 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Latte" id="FxI-2W-E1d">
-                        <barButtonItem key="leftBarButtonItem" style="done" id="kBW-FK-GCD">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="c16-xf-vqa" customClass="LXButtonBack">
-                                <rect key="frame" x="5" y="7" width="60" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
-                                <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <size key="titleShadowOffset" width="0.0" height="1"/>
-                                <state key="normal" title="BACK">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="touchBack:" destination="ghy-6n-Ga3" eventType="touchUpInside" id="pw4-8Z-6bt"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="done" id="uJo-l1-etQ">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="y9J-Aa-5mW">
                                 <rect key="frame" x="225" y="7" width="90" height="30"/>
@@ -1034,23 +978,6 @@
                         <action selector="touchBackground:" destination="ghy-6n-Ga3" id="6iQ-Zp-vRl"/>
                     </connections>
                 </tapGestureRecognizer>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="U5m-3l-pZy" customClass="LXButtonBack">
-                    <rect key="frame" x="0.0" y="0.0" width="60" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
-                    <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    <size key="titleShadowOffset" width="0.0" height="1"/>
-                    <state key="normal" title="BACK">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="titleShadowColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                    </state>
-                    <state key="highlighted">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="touchBack:" destination="1Vb-iL-LK1" eventType="touchUpInside" id="rjM-g9-B3e"/>
-                    </connections>
-                </button>
             </objects>
             <point key="canvasLocation" x="-3123" y="-2001"/>
         </scene>
@@ -1073,9 +1000,6 @@
     <classes>
         <class className="HPGrowingTextView" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/HPGrowingTextView.h"/>
-        </class>
-        <class className="LXButtonBack" superclassName="UIButton">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonBack.h"/>
         </class>
         <class className="LXButtonBrown30" superclassName="UIButton">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonBrown30.h"/>
@@ -1174,7 +1098,6 @@
         <class className="LXPicEditViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicEditViewController.h"/>
             <relationships>
-                <relationship kind="action" name="touchBack:"/>
                 <relationship kind="action" name="touchBackground:"/>
                 <relationship kind="action" name="touchDelete:"/>
                 <relationship kind="action" name="touchPost:"/>
@@ -1222,6 +1145,9 @@
         </class>
         <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
+        </class>
+        <class className="UICollectionViewLayout" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

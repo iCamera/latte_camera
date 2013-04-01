@@ -89,18 +89,9 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (IBAction)registerClick:(id)sender {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/user/register"]];
-}
-
 - (IBAction)singleTap:(id)sender {
     [self.textUser resignFirstResponder];
     [self.textPass resignFirstResponder];
-}
-
-- (IBAction)goBack:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)login:(id)sender {

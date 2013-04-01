@@ -119,35 +119,15 @@ typedef enum {
 
 - (void)reloadView {
     loadEnded = false;
-    pagephoto = 1;
-    [indicator startAnimating];
-    
-    LXAppDelegate* app = [LXAppDelegate currentDelegate];
-    
-    NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
-    [param setObject:[app getToken] forKey:@"token"];
-    
-    [[LatteAPIClient sharedClient] getPath:@"user/everyone/timeline"
-                                parameters:param
-                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       feeds = [Feed mutableArrayFromDictionary:JSON withKey:@"feeds"];
-                                       
-                                       [tablePic reloadData];
-                                       
-                                       [self doneLoadingTableViewData];
-                                       [indicator stopAnimating];
-                                       
-                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                    
-                                       [self doneLoadingTableViewData];
-                                       [indicator stopAnimating];
-                                       loadEnded = true;
-                                       
-                                       TFLog(@"Something went wrong (Welcome)");
-                                   }];
+    pagephoto = 0;
+    [self loadMore];
 }
 
 - (void)loadMore {
+    if (indicator.isAnimating) {
+        return;
+    }
+
     [indicator startAnimating];
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
     NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
@@ -158,27 +138,29 @@ typedef enum {
     [[LatteAPIClient sharedClient] getPath:@"user/everyone/timeline"
                                 parameters: param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       
                                        pagephoto += 1;
-                                       NSMutableArray *newFeeds = [Feed mutableArrayFromDictionary:JSON withKey:@"feeds"];
-                                       
-                                       if (newFeeds.count > 0) {
-                                           NSInteger oldRow = [self tableView:tablePic numberOfRowsInSection:0];
-                                           [tablePic beginUpdates];
-                                           [feeds addObjectsFromArray:newFeeds];
-                                           NSInteger newRow = [self tableView:tablePic numberOfRowsInSection:0];
-                                           for (NSInteger i = oldRow; i < newRow; i++) {
-                                               [tablePic insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]]
-                                                               withRowAnimation:UITableViewRowAnimationAutomatic];
-                                           }
-
-                                           [tablePic endUpdates];
+                                       if (pagephoto == 1) {
+                                           feeds = [Feed mutableArrayFromDictionary:JSON withKey:@"feeds"];
+                                           [tablePic reloadData];
                                        } else {
-                                           loadEnded = true;
+                                           NSMutableArray *newFeeds = [Feed mutableArrayFromDictionary:JSON withKey:@"feeds"];
+                                           
+                                           if (newFeeds.count > 0) {
+                                               NSInteger oldRow = [self tableView:tablePic numberOfRowsInSection:0];
+                                               [tablePic beginUpdates];
+                                               [feeds addObjectsFromArray:newFeeds];
+                                               NSInteger newRow = [self tableView:tablePic numberOfRowsInSection:0];
+                                               for (NSInteger i = oldRow; i < newRow; i++) {
+                                                   [tablePic insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]]
+                                                                   withRowAnimation:UITableViewRowAnimationAutomatic];
+                                               }
+                                               
+                                               [tablePic endUpdates];
+                                           } else {
+                                               loadEnded = true;
+                                           }
                                        }
-                                       
                                        [indicator stopAnimating];
-                                       
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        TFLog(@"Something went wrong (Welcome)");
                                        [indicator stopAnimating];
@@ -401,6 +383,9 @@ typedef enum {
     return view;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -438,6 +423,7 @@ typedef enum {
         viewLogin.hidden = true;
     }];
 }
+
 - (IBAction)touchCloseLogin:(id)sender {
     [self hideLoginPanel];
 }

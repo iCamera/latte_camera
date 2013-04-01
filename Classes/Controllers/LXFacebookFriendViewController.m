@@ -55,10 +55,6 @@
     } else {
         [app openSessionWithAllowLoginUI:YES];
     }
-    
-    UIBarButtonItem *navLeftItem = self.navigationItem.leftBarButtonItem;
-    LXButtonBack *buttonBack = (LXButtonBack*)navLeftItem.customView;
-    [buttonBack addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)loadFacebokFriend {

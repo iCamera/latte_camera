@@ -76,8 +76,11 @@ typedef enum {
     [buttonSide addTarget:app.controllerSide action:@selector(toggleLeftPanel:) forControlEvents:UIControlEventTouchUpInside];
     
     [app.tracker sendView:@"Search Screen"];
-    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
     [self reloadTags];
+    [super viewWillAppear:animated];
 }
 
 - (void)reloadTags {

@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LXNavGalleryViewController : UINavigationController
+@interface LXNavGalleryViewController : UINavigationController<UINavigationControllerDelegate>
 
 @end

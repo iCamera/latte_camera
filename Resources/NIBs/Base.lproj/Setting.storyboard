@@ -292,7 +292,7 @@
         <!--Navigation Controller-->
         <scene sceneID="VKt-pI-gkB">
             <objects>
-                <navigationController definesPresentationContext="YES" id="cxD-TB-4Px" sceneMemberID="viewController">
+                <navigationController definesPresentationContext="YES" id="cxD-TB-4Px" customClass="LXNavigationController" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="1J3-PY-CDA" customClass="LXNavBar">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -388,24 +388,7 @@ We improve our services to the best of our ability,but please understand that no
                             <outlet property="delegate" destination="yf1-Mj-Etk" id="Fb7-sp-Tf4"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Inquiry" id="vxy-Cf-zG3">
-                        <barButtonItem key="leftBarButtonItem" style="done" id="dBA-mc-yc0">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kZq-A3-vvb" customClass="LXButtonBack">
-                                <rect key="frame" x="5" y="7" width="60" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
-                                <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <size key="titleShadowOffset" width="0.0" height="1"/>
-                                <state key="normal" title="BACK">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Inquiry" id="vxy-Cf-zG3"/>
                     <connections>
                         <outlet property="textForm" destination="Wga-On-KEw" id="Rxk-CK-hKj"/>
                     </connections>
@@ -606,24 +589,7 @@ We improve our services to the best of our ability,but please understand that no
                             <outlet property="delegate" destination="130-si-waG" id="DX9-LN-xhu"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="OQt-UR-7Xb">
-                        <barButtonItem key="leftBarButtonItem" style="done" id="dAc-nU-dVJ">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="PYR-La-WwV" customClass="LXButtonBack">
-                                <rect key="frame" x="5" y="7" width="60" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
-                                <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <size key="titleShadowOffset" width="0.0" height="1"/>
-                                <state key="normal" title="BACK">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="OQt-UR-7Xb"/>
                     <connections>
                         <outlet property="buttonMailComment" destination="CGD-f2-egb" id="X4J-mJ-kMq"/>
                         <outlet property="buttonMailFollow" destination="uUa-uP-vik" id="w9f-4p-mT2"/>
@@ -658,9 +624,6 @@ We improve our services to the best of our ability,but please understand that no
                 <relationship kind="outlet" name="textForm" candidateClass="UITextView"/>
             </relationships>
         </class>
-        <class className="LXButtonBack" superclassName="UIButton">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonBack.h"/>
-        </class>
         <class className="LXButtonBrown30" superclassName="UIButton">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonBrown30.h"/>
         </class>
@@ -669,6 +632,9 @@ We improve our services to the best of our ability,but please understand that no
         </class>
         <class className="LXNavBar" superclassName="UINavigationBar">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavBar.h"/>
+        </class>
+        <class className="LXNavigationController" superclassName="UINavigationController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavigationController.h"/>
         </class>
         <class className="LXSettingNotifyViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXSettingNotifyViewController.h"/>

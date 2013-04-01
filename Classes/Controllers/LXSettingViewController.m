@@ -27,10 +27,6 @@
     self.resizeWhenKeyboardPresented = YES;
     
     
-    LXButtonBack *buttonBack = [[LXButtonBack alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
-    [buttonBack addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonBack];
-    
     //Logic
     HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:HUD];
@@ -219,14 +215,6 @@
     title.backgroundColor = [UIColor clearColor];
     view.backgroundColor = [UIColor clearColor];
     section.headerView = view;
-}
-
-- (void)displayViewController:(UIViewController *)newController {
-    [super displayViewController:newController];
-    
-    LXButtonBack *buttonBack = [[LXButtonBack alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
-    [buttonBack addTarget:newController.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
-    newController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonBack];
 }
 
 -(void)handleUpdateRadio:(QRadioElement *)element {

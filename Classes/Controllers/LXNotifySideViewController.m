@@ -258,7 +258,7 @@
                 LXMyPageViewController  *viewMypage = [storyGallery instantiateViewControllerWithIdentifier:@"UserPage"];
                 viewMypage.user = user;
                 [currentNav pushViewController:viewMypage animated:YES];
-                
+                [app.viewMainTab toggleNotify:nil];
                 break;
             }
             default:

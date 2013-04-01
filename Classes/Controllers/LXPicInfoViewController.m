@@ -95,10 +95,6 @@
     }
 }
 
-- (IBAction)touchBack:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);

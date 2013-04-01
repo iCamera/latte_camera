@@ -24,9 +24,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *textUser;
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapView;
 
-- (IBAction)registerClick:(id)sender;
 - (IBAction)singleTap:(id)sender;
-- (IBAction)goBack:(id)sender;
 - (IBAction)login:(id)sender;
 - (IBAction)touchForgot:(id)sender;
 - (IBAction)touchFacebook:(id)sender;

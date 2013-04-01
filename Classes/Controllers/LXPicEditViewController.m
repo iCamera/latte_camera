@@ -154,6 +154,7 @@
         else
             [sheet showInView:self.view];
     } else if (indexPath.section == 2) {
+        share.text = textDesc.text;
         switch (indexPath.row) {
             case 0:
                 [share facebookPost];
@@ -232,10 +233,6 @@
     } else {
         [self saveImage];
     }
-}
-
-- (IBAction)touchBack:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)touchBackground:(id)sender {

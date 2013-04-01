@@ -53,7 +53,7 @@
                                              selector:@selector(receiveLoggedOut:)
                                                  name:@"LoggedOut"
                                                object:nil];
-
+    
     isFirst = true;
     return self;
 }
@@ -286,15 +286,6 @@
     [nav pushViewController:viewUser animated:YES];
 }
 
-- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    UIButton *buttonTittle = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 30)];
-    [buttonTittle setImage:[UIImage imageNamed:@"logo.png"] forState:UIControlStateNormal];
-    buttonTittle.showsTouchWhenHighlighted = true;
-    buttonTittle.adjustsImageWhenDisabled = false;
-    buttonTittle.adjustsImageWhenHighlighted = false;
-    [buttonTittle addTarget:self action:@selector(touchTitle:) forControlEvents:UIControlEventTouchUpInside];
-    viewController.navigationItem.titleView = buttonTittle;
-}
 
 - (void)touchTitle:(id)sender {
     LXAppDelegate* app = [LXAppDelegate currentDelegate];

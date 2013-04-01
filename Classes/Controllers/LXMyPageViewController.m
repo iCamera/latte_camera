@@ -168,12 +168,6 @@ typedef enum {
                                     parameters:[NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"]
                                        success:nil
                                        failure:nil];
-        
-        //setup back button
-        LXButtonBack *buttonBack = [[LXButtonBack alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
-        [buttonBack setTitle:NSLocalizedString(@"back", @"BACK") forState:UIControlStateNormal];
-        self.navigationItem.leftBarButtonItem.customView = buttonBack;
-        [buttonBack addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     HUD = [[MBProgressHUD alloc] initWithView:self.tableView];
@@ -422,7 +416,7 @@ typedef enum {
     }
 }
 
-- (void)loadMore {
+- (void)loadMoreTimeline {
     [loadIndicator startAnimating];
     Feed *feed = feeds.lastObject;
     
@@ -456,6 +450,7 @@ typedef enum {
                                              feed.feedID, @"last_id",
                                              nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       
                                        NSMutableArray *newFeed = [Feed mutableArrayFromDictionary:JSON
                                                                                           withKey:@"feeds"];
                                        if (!isMypage) {
@@ -1354,7 +1349,7 @@ typedef enum {
             if (photoMode == kPhotoMyphoto)
                 [self loadMorePicList];
             else
-                [self loadMore];
+                [self loadMoreTimeline];
         }
     }
 }

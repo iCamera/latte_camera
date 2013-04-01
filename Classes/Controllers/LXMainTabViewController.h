@@ -15,5 +15,6 @@
 @property (strong, nonatomic) NSMutableArray *notifies;
 
 - (void)showSetting:(id)sender;
+- (void)toggleNotify:(id)sender;
 
 @end

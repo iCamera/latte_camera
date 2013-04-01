@@ -18,7 +18,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *textMail;
 @property (strong, nonatomic) IBOutlet UITextField *textPassword;
 @property (strong, nonatomic) IBOutlet UITextField *textName;
-- (IBAction)touchBack:(id)sender;
+
 - (IBAction)touchReg:(id)sender;
 - (IBAction)touchPolicy:(id)sender;
 

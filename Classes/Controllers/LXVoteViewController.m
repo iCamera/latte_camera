@@ -34,9 +34,6 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    UIBarButtonItem *navLeftItem = self.navigationItem.leftBarButtonItem;
-    LXButtonBack *buttonBack = (LXButtonBack*)navLeftItem.customView;
-    [buttonBack addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)didReceiveMemoryWarning
