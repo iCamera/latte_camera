@@ -25,9 +25,11 @@
     GPUImageCropFilter *blendCrop;
     GPUImagePinchDistortionFilter *filterDistord;
     GPUImageFilter *effect;
-//    GPUImageAlphaBlendFilter *filterIntensity;
+    LXFilterScreenBlend *screenBlend;
+    GPUImageAlphaBlendFilter *filterIntensity;
     
     GPUImagePicture *previewFilter;
+    GPUImagePicture *pictureBlend;
     GPUImageRawDataInput *pictureDOF;
     GPUImageUIElement *uiElement;
     
@@ -62,6 +64,7 @@
     NSString *currentFont;
     NSString *currentText;
     NSInteger currentMask;
+    NSInteger currentBlend;
     NSInteger effectNum;
     NSMutableArray *effectPreview;
     
@@ -92,6 +95,7 @@
 @synthesize videoCamera;
 @synthesize scrollEffect;
 @synthesize scrollProcess;
+@synthesize scrollBlend;
 @synthesize sliderEffectIntensity;
 @synthesize viewShoot;
 
@@ -131,6 +135,11 @@
 @synthesize buttonBlurStrong;
 @synthesize buttonBlurWeak;
 
+@synthesize buttonBlendNone;
+@synthesize buttonBlendWeak;
+@synthesize buttonBlendMedium;
+@synthesize buttonBlendStrong;
+
 @synthesize buttonLensNormal;
 @synthesize buttonLensWide;
 @synthesize buttonLensFish;
@@ -146,6 +155,7 @@
 @synthesize viewLensControl;
 @synthesize viewTextControl;
 @synthesize viewEffectControl;
+@synthesize viewBlendControl;
 
 @synthesize viewCanvas;
 
@@ -235,7 +245,7 @@
     [nc addObserver:self selector:@selector(uploaderFail:) name:@"LXUploaderFail" object:nil];
     [nc addObserver:self selector:@selector(uploaderProgress:) name:@"LXUploaderProgress" object:nil];
     
-//    scrollProcess.contentSize = CGSizeMake(384, 50);
+    scrollProcess.contentSize = CGSizeMake(384, 50);
 	// Do any additional setup after loading the view.
     // Setup filter
     uiWrap = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 480, 640)];
@@ -358,6 +368,40 @@
     }
     scrollEffect.contentSize = CGSizeMake(effectNum*75+10, 70);
     
+    
+    for (int i=0; i < 2; i++) {
+        UILabel *labelBlend = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 10)];
+        labelBlend.backgroundColor = [UIColor clearColor];
+        labelBlend.textColor = [UIColor whiteColor];
+        labelBlend.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:9];
+        UIButton *buttonBlend = [[UIButton alloc] initWithFrame:CGRectMake(5+55*i, 5, 50, 50)];
+        labelBlend.center = CGPointMake(buttonBlend.center.x, 63);
+        labelBlend.textAlignment = NSTextAlignmentCenter;
+        UIImage *preview = [UIImage imageNamed:[NSString stringWithFormat:@"blend%d.jpg", i]];
+        if (preview != nil) {
+            [buttonBlend setImage:preview forState:UIControlStateNormal];
+        } else {
+            [buttonBlend setBackgroundColor:[UIColor grayColor]];
+        }
+        
+        [buttonBlend addTarget:self action:@selector(toggleBlending:) forControlEvents:UIControlEventTouchUpInside];
+        buttonBlend.layer.cornerRadius = 5;
+        buttonBlend.clipsToBounds = YES;
+        buttonBlend.tag = i;
+        switch (i) {
+            case 0:
+                labelBlend.text = @"Lightleak";
+                break;
+            case 1:
+                labelBlend.text = @"Circle";
+                break;
+        }
+        
+        [scrollBlend addSubview:buttonBlend];
+        [scrollBlend addSubview:labelBlend];
+    }
+    scrollBlend.contentSize = CGSizeMake(2*55+10, 60);
+    
     [self resizeCameraViewWithAnimation:NO];
     [self preparePipe];
     
@@ -473,9 +517,14 @@
     filterDOF = nil;
     filterSharpen = nil;
     filterDistord = nil;
+    screenBlend = nil;
     blendCrop = nil;
+    filterIntensity = nil;
     
     if (isEditing) {
+        if (pictureBlend != nil) {
+            [pictureBlend removeAllTargets];
+        }
         if (pictureDOF != nil) {
             [pictureDOF removeAllTargets];
         }
@@ -515,24 +564,32 @@
             [pipe addFilter:filterDOF];
         }
         
+        if (buttonBlendNone.enabled) {
+            screenBlend = [[LXFilterScreenBlend alloc] init];
+            if (isFixedAspectBlend) {
+                blendCrop = [[GPUImageCropFilter alloc] init];
+            }
+            [pipe addFilter:screenBlend];
+        }
+        
         //Film
-//        NSInteger mark;
+        NSInteger mark;
         if (currentEffect != 0) {
-//            mark = pipe.filters.count-1;
+            mark = pipe.filters.count-1;
             [pipe addFilter:[FilterManager getEffect:currentEffect]];
-//            filterIntensity = [[GPUImageAlphaBlendFilter alloc] init];
-//            [pipe addFilter:filterIntensity];
+            filterIntensity = [[GPUImageAlphaBlendFilter alloc] init];
+            [pipe addFilter:filterIntensity];
         }
         
         if (textText.text.length > 0) {
             [pipe addFilter:filterText];
         }
         
-//        // AFTER THIS LINE, NO MORE ADDFILTER
-//        if (currentEffect != 0) {
-//            GPUImageFilter *tmp = pipe.filters[mark];
-//            [tmp addTarget:pipe.filters[mark+2]];
-//        }
+        // AFTER THIS LINE, NO MORE ADDFILTER
+        if (currentEffect != 0) {
+            GPUImageFilter *tmp = pipe.filters[mark];
+            [tmp addTarget:pipe.filters[mark+2]];
+        }
         
         // Two input filter has to be setup at last
         GPUImageRotationMode imageViewRotationModeIdx1 = kGPUImageNoRotation;
@@ -555,6 +612,15 @@
                     imageViewRotationModeIdx1 = kGPUImageRotateLeft;
                     break;
             }
+        }
+        
+        if (buttonBlendNone.enabled) {
+            [screenBlend setInputRotation:imageViewRotationModeIdx1 atIndex:1];
+            if (isFixedAspectBlend) {
+                [pictureBlend addTarget:blendCrop];
+                [blendCrop addTarget:screenBlend atTextureLocation:1];
+            } else
+                [pictureBlend addTarget:screenBlend atTextureLocation:1];
         }
         
         
@@ -591,7 +657,39 @@
     filterSharpen.sharpness = sliderSharpness.value;
     
     if (currentEffect != 0) {
-//        filterIntensity.mix = 1.0 - sliderEffectIntensity.value;
+        filterIntensity.mix = 1.0 - sliderEffectIntensity.value;
+    }
+    
+    if (buttonBlendNone.enabled) {
+        if (isFixedAspectBlend) {
+            CGFloat ratioWidth = blendSize.width / picSize.width;
+            CGFloat ratioHeight = blendSize.height / picSize.height;
+            CGRect crop;
+            
+            CGFloat ratio = MIN(ratioWidth, ratioHeight);
+            CGSize newSize = CGSizeMake(blendSize.width / ratio, blendSize.height / ratio);
+            if (newSize.width > picSize.width) {
+                CGFloat sub = (newSize.width - picSize.width) / newSize.width;
+                crop = CGRectMake(sub/2.0, 0.0, 1.0-sub, 1.0);
+            } else {
+                CGFloat sub = (newSize.height - picSize.height) / newSize.height;
+                crop = CGRectMake(0.0, sub/2.0, 1.0, 1.0-sub);
+            }
+            
+            blendCrop.cropRegion = crop;
+        }
+    }
+    
+    if (!buttonBlendMedium.enabled) {
+        screenBlend.mix = 0.66;
+    }
+    
+    if (!buttonBlendWeak.enabled) {
+        screenBlend.mix = 0.40;
+    }
+    
+    if (!buttonBlendStrong.enabled) {
+        screenBlend.mix = 0.90;
     }
     
     
@@ -622,6 +720,10 @@
     isSaved = false;
     buttonReset.enabled = true;
     [previewFilter processImage];
+    
+    if (buttonBlendNone.enabled) {
+        [pictureBlend processImage];
+    }
     
     if (buttonBlurNone.enabled) {
         [pictureDOF processData];
@@ -757,7 +859,6 @@
 - (IBAction)openImagePicker:(id)sender {
     if (!isEditing) {
         [locationManager stopUpdatingLocation];
-        [videoCamera stopCameraCapture];
     }
     
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc]init];
@@ -956,6 +1057,9 @@
         [(GPUImageFilter *)[pipe.filters lastObject] prepareForImageCapture];
         
         [picture processImage];
+        if (buttonBlendNone.enabled) {
+            [pictureBlend processImage];
+        }
         if (buttonBlurNone.enabled) {
             [pictureDOF processData];
         }
@@ -1098,6 +1202,13 @@
             buttonToggleLens.selected = false;
             buttonToggleBlend.selected = false;
             break;
+        case kTabBlend:
+            buttonToggleFocus.selected = false;
+            buttonToggleEffect.selected = false;
+            buttonToggleBasic.selected = false;
+            buttonToggleLens.selected = false;
+            buttonToggleText.selected = false;
+            break;
         case kTabBokeh: {
             buttonToggleEffect.selected = false;
             buttonToggleBasic.selected = false;
@@ -1141,6 +1252,8 @@
     CGRect frameTopBar = viewTopBar.frame;
     CGRect frameText = viewTextControl.frame;
     CGRect frameCanvas;
+    CGRect frameBlend = viewBlendControl.frame;
+    
     
     CGFloat posBottom;
     
@@ -1151,7 +1264,7 @@
         posBottom = 480 - 50;
     }
     
-    frameEffect.origin.y = frameBokeh.origin.y = frameBasic.origin.y = frameLens.origin.y = frameText.origin.y = posBottom;
+    frameEffect.origin.y = frameBokeh.origin.y = frameBasic.origin.y = frameLens.origin.y = frameText.origin.y = frameBlend.origin.y =  posBottom;
     
     switch (currentTab) {
         case kTabBokeh:
@@ -1171,6 +1284,9 @@
                 frameText.origin.y = posBottom - keyboardSize.height + 20;
             else
                 frameText.origin.y = posBottom - 140;
+            break;
+        case kTabBlend:
+            frameBlend.origin.y = posBottom - 110;
             break;
         case kTabPreview:
             break;
@@ -1241,6 +1357,8 @@
         viewTextControl.frame = frameText;
         viewTopBar.frame = frameTopBar;
         viewCanvas.frame = frameCanvas;
+        viewBlendControl.frame = frameBlend;
+
     } completion:^(BOOL finished) {
         viewCameraWraper.layer.shadowRadius = 5.0;
         UIBezierPath *shadowPathCamera = [UIBezierPath bezierPathWithRect:viewCameraWraper.bounds];
@@ -1376,7 +1494,9 @@
     textText.text = @"";
     currentText = @"";
     isWatingToUpload = NO;
-
+    pictureBlend = nil;
+    currentBlend = kBlendNone;
+    [self setBlendImpl:kBlendNone];
     //    isFixedAspectBlend = NO;
     
     //    uiWrap.frame = CGRectMake(0, 0, previewSize.width, previewSize.height);
@@ -1474,7 +1594,7 @@
     sliderExposure.value = 0.0;
     sliderClear.value = 0.0;
     sliderSaturation.value = 1.0;
-    sliderSharpness.value = 0.25;
+    sliderSharpness.value = 0.0;
     sliderVignette.value = 0.0;
     sliderFeather.value = 10.0;
     sliderEffectIntensity.value = 1.0;
@@ -1486,6 +1606,10 @@
     buttonLensWide.enabled = true;
     buttonLensNormal.enabled = false;
     
+    buttonBlendNone.enabled = false;
+    buttonBlendMedium.enabled = true;
+    buttonBlendStrong.enabled = true;
+    buttonBlendWeak.enabled = true;
     textText.text = @"";
     currentText = @"";
 }
@@ -1660,6 +1784,43 @@
     }
 }
 
+- (void)toggleBlending:(UIButton *)sender {
+    NSString *blendPic;
+    NSInteger blendid;
+    
+    switch (sender.tag) {
+        case 0:
+            isFixedAspectBlend = NO;
+            blendid = 1 + rand() % 71;
+            blendPic = [NSString stringWithFormat:@"leak%d.jpg", blendid];
+            break;
+        case 1:
+            isFixedAspectBlend = YES;
+            blendid = 1 + rand() % 35;
+            blendPic = [NSString stringWithFormat:@"bokehcircle-%d.jpg", blendid];
+            break;
+        default:
+            break;
+    }
+    
+    UIImage *imageBlend = [UIImage imageNamed:blendPic];
+    blendSize = imageBlend.size;
+    
+    pictureBlend = [[GPUImagePicture alloc] initWithImage:imageBlend];
+    
+    if (!buttonBlendNone.enabled) {
+        buttonBlendNone.enabled = YES;
+        buttonBlendWeak.enabled = NO;
+    }
+    
+    [self preparePipe];
+    [self applyFilterSetting];
+    [self processImage];
+}
+
+- (IBAction)setBlend:(UIButton *)sender {
+    [self setBlendImpl:sender.tag];
+}
 
 - (IBAction)toggleFisheye:(UIButton *)sender {
     sender.selected = !sender.selected;
@@ -1697,6 +1858,38 @@
         default:
             break;
     }
+}
+
+- (void)setBlendImpl:(NSInteger)tag {
+    buttonBlendNone.enabled = true;
+    buttonBlendStrong.enabled = true;
+    buttonBlendWeak.enabled = true;
+    buttonBlendMedium.enabled = true;
+    
+    switch (tag) {
+        case kBlendNone:
+            buttonBlendNone.enabled = false;
+            break;
+        case kBlendWeak:
+            buttonBlendWeak.enabled = false;
+            break;
+        case kBlendNormal:
+            buttonBlendMedium.enabled = false;
+            break;
+        case kBlendStrong:
+            buttonBlendStrong.enabled = false;
+            break;
+        default:
+            break;
+    }
+    
+    //    if ((currentBlend == kBlendNone) != (tag == kBlendNone)) {
+    [self preparePipe];
+    //    }
+    currentBlend = tag;
+    
+    [self applyFilterSetting];
+    [self processImage];
 }
 
 - (void)newText {

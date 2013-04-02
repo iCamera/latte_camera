@@ -148,37 +148,28 @@ typedef enum {
             if (url) {
                 fbURL = [NSURL URLWithString:url];
             }
-            BOOL displayedNativeDialog = [FBNativeDialogs presentShareDialogModallyFrom:_controller
-                                                                            initialText:text
-                                                                                  image:imagePreview
-                                                                                    url:fbURL
-                                                                                handler:nil];
             
-            // si no presenta caja de dialogo nativo del sistema, presento una propia
-            if (!displayedNativeDialog)
-            {
-                REComposeViewController *composeViewController = [[REComposeViewController alloc] init];
-                if (imagePreview) {
-                    composeViewController.hasAttachment = YES;
-                    composeViewController.attachmentImage = imagePreview;
-                }
-
-                composeViewController.text = text;
-                
-                // Service name
-                UILabel *titleView          = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 110, 30)];
-                titleView.font              = [UIFont boldSystemFontOfSize:17.0];
-                titleView.textAlignment     = NSTextAlignmentCenter;
-                titleView.backgroundColor   = [UIColor clearColor];
-                titleView.textColor         = [UIColor whiteColor];
-                titleView.text              = @"Facebook";
-                composeViewController.navigationItem.titleView = titleView;
-
-                composeViewController.navigationBar.tintColor = [UIColor colorWithRed:44.0/255.0 green:67.0/255.0 blue:136.0/255.0 alpha:1.0];
-                composeViewController.delegate = self;
-                
-                [_controller presentViewController:composeViewController animated:YES completion:nil];
+            REComposeViewController *composeViewController = [[REComposeViewController alloc] init];
+            if (imagePreview) {
+                composeViewController.hasAttachment = YES;
+                composeViewController.attachmentImage = imagePreview;
             }
+            
+            composeViewController.text = text;
+            
+            // Service name
+            UILabel *titleView          = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 110, 30)];
+            titleView.font              = [UIFont boldSystemFontOfSize:17.0];
+            titleView.textAlignment     = NSTextAlignmentCenter;
+            titleView.backgroundColor   = [UIColor clearColor];
+            titleView.textColor         = [UIColor whiteColor];
+            titleView.text              = @"Facebook";
+            composeViewController.navigationItem.titleView = titleView;
+            
+            composeViewController.navigationBar.tintColor = [UIColor colorWithRed:44.0/255.0 green:67.0/255.0 blue:136.0/255.0 alpha:1.0];
+            composeViewController.delegate = self;
+            
+            [_controller presentViewController:composeViewController animated:YES completion:nil];
         }
         else
         {
@@ -212,21 +203,49 @@ typedef enum {
                     [params setObject:url forKey:@"link"];
                 }
                 
-                [FBRequestConnection startWithGraphPath:@"me/feed"
-                                             parameters:params
-                                             HTTPMethod:@"POST"
-                                      completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-                                          
-                                          if (!error)
-                                          {
-                                              [self completionResult:typeDone];
-                                          }
-                                          else
-                                          {
-                                              NSLog(@"ERROR AT 'startWithGraphPath': %@", [error localizedDescription]);
-                                              [self completionResult:typeCanceled];
-                                          }
-                                      }];
+                if (imageData) {
+                    [FBRequestConnection startWithGraphPath:@"me/photos"
+                                                 parameters:params
+                                                 HTTPMethod:@"POST"
+                                          completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                                               if (!error)
+                                               {
+                                                   [self completionResult:typeDone];
+                                               }
+                                               else
+                                               {
+                                                   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                                                   message:error.localizedDescription
+                                                                                                  delegate:nil
+                                                                                         cancelButtonTitle:@"Close"
+                                                                                         otherButtonTitles:nil];
+                                                   [alert show];
+                                                   [self completionResult:typeCanceled];
+                                               }
+                                           }];
+                } else {
+                    [FBRequestConnection startWithGraphPath:@"me/feed"
+                                                 parameters:params
+                                                 HTTPMethod:@"POST"
+                                          completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                                              
+                                              if (!error)
+                                              {
+                                                  [self completionResult:typeDone];
+                                              }
+                                              else
+                                              {
+                                                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                                                  message:error.localizedDescription
+                                                                                                 delegate:nil
+                                                                                        cancelButtonTitle:@"Close"
+                                                                                        otherButtonTitles:nil];
+                                                  [alert show];
+                                                  
+                                                  [self completionResult:typeCanceled];
+                                              }
+                                          }];
+                }
             }];
         }
             break;

@@ -551,7 +551,7 @@
         switch (result) {
             case RDActionSheetButtonResultSelected: {
                 lxShare.url = currentPage.picture.urlWeb;
-                lxShare.text = @"Latte";
+                lxShare.text = currentPage.picture.urlWeb;
                 
                 switch (buttonIndex) {
                     case 0: // email

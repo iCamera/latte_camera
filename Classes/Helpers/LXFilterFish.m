@@ -75,7 +75,7 @@ NSString *const kLXFisheyeFragment = SHADER_STRING
     centerUniform = [filterProgram uniformIndex:@"center"];
     refractiveIndexUniform = [filterProgram uniformIndex:@"refractiveIndex"];
     
-    self.radius = 0.45;
+    self.radius = 0.5;
     self.center = CGPointMake(0.5, 0.5);
     self.refractiveIndex = 0.71; //default 0.71
     
@@ -99,6 +99,8 @@ NSString *const kLXFisheyeFragment = SHADER_STRING
         {
             [self setAspectRatio:(inputTextureSize.height / inputTextureSize.width)];
         }
+        CGFloat tmp = MAX(inputTextureSize.width, inputTextureSize.height) / inputTextureSize.width - 0.125;
+        [self setRadius:tmp/2.0];
     }
 }
 
