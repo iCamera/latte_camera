@@ -20,6 +20,7 @@
 #import "UIButton+AsyncImage.h"
 #import "Comment.h"
 #import "LXTagViewController.h"
+#import "RDActionSheet.h"
 
 
 @interface LXGalleryViewController ()

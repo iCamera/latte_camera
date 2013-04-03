@@ -8,10 +8,11 @@
 
 #import "GPUImageFilter+saveToLibrary.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "LXUtils.h"
 
 @implementation GPUImageFilter (saveToLibrary)
 
-void dataProviderUnlockCallback (void *info, const void *data, size_t size)
+void dataProviderUnlockCallback2 (void *info, const void *data, size_t size)
 {
     GPUImageFilter *filter = (__bridge_transfer GPUImageFilter*)info;
     
@@ -43,14 +44,21 @@ void dataProviderUnlockCallback (void *info, const void *data, size_t size)
         CVPixelBufferLockBaseAddress(renderTarget, 0);
         self.preventRendering = YES; // Locks don't seem to work, so prevent any rendering to the filter which might overwrite the pixel buffer data until done processing
         rawImagePixels = (GLubyte *)CVPixelBufferGetBaseAddress(renderTarget);
-        dataProvider = CGDataProviderCreateWithData((__bridge_retained void*)self, rawImagePixels, paddedBytesForImage, dataProviderUnlockCallback);
+        
+        dataProvider = CGDataProviderCreateWithData((__bridge_retained void*)self, rawImagePixels, paddedBytesForImage, dataProviderUnlockCallback2);
+
+
+        CGColorSpaceRef defaultRGBColorSpace = CGColorSpaceCreateDeviceRGB();
+        CGImageRef cgImageFromBytes = CGImageCreate((int)currentFBOSize.width, (int)currentFBOSize.height, 8, 32, CVPixelBufferGetBytesPerRow(renderTarget), defaultRGBColorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst, dataProvider, NULL, NO, kCGRenderingIntentDefault);
+        CGDataProviderRelease(dataProvider);
         
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-        [library writeImageToSavedPhotosAlbum:(CGImageRef)rawImagePixels metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
-            
+
+        [library writeImageToSavedPhotosAlbum:cgImageFromBytes metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
+
         }];
-        
-        CGDataProviderRelease(dataProvider);
+        CGColorSpaceRelease(defaultRGBColorSpace);
+        CGImageRelease(cgImageFromBytes);
     });
 }
 

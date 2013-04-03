@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "GPUImage.h"
-#import "FilterManager.h"
 #import "LXNavBar.h"
 #import "LXPicEditViewController.h"
 #import "LXUtils.h"
@@ -17,15 +16,6 @@
 #import "UIImage+Resize.h"
 #import "UIImage+fixOrientation.h"
 #import "MBProgressHUD.h"
-#import "LXFilterDetail.h"
-#import "LXFilterDOF.h"
-#import "LXFilterFish.h"
-#import "LXFilterScreenBlend.h"
-#import "GPUImagePicture+updateImage.h"
-#import "LXShare.h"
-#import "RDActionSheet.h"
-#import "UIDeviceHardware.h"
-#import "LXFilterPipe.h"
 #import "LXStillCamera.h"
 
 typedef enum {

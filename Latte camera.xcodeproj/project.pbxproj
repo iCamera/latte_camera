@@ -556,17 +556,11 @@
 		883278A2170173690053C8A2 /* ZW@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 883276C0170173690053C8A2 /* ZW@2x.png */; };
 		883278A51701A8A00053C8A2 /* LXCollectionViewTagsLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 883278A41701A8A00053C8A2 /* LXCollectionViewTagsLayout.m */; };
 		8835C77416E6EAED0036BF5E /* LXPicDetailTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8835C77316E6EAED0036BF5E /* LXPicDetailTabViewController.m */; };
-		8845F7E616B7CFE4003873A2 /* LXEffect1.m in Sources */ = {isa = PBXBuildFile; fileRef = 8845F7E516B7CFE4003873A2 /* LXEffect1.m */; };
 		8845F7E816B7D69E003873A2 /* effect1curve.png in Resources */ = {isa = PBXBuildFile; fileRef = 8845F7E716B7D69E003873A2 /* effect1curve.png */; };
-		8845F7EB16B7DFCE003873A2 /* LXEffect2.m in Sources */ = {isa = PBXBuildFile; fileRef = 8845F7EA16B7DFCE003873A2 /* LXEffect2.m */; };
 		8845F7ED16B7E015003873A2 /* effect2curve.png in Resources */ = {isa = PBXBuildFile; fileRef = 8845F7EC16B7E015003873A2 /* effect2curve.png */; };
-		8845F7F016B7E389003873A2 /* LXEffect3.m in Sources */ = {isa = PBXBuildFile; fileRef = 8845F7EF16B7E389003873A2 /* LXEffect3.m */; };
 		884C54D516B22EF500DA318E /* LXHelpBokehViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 884C54D416B22EF500DA318E /* LXHelpBokehViewController.m */; };
 		884FBB90163E24A3006C4359 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 884FBB8F163E24A3006C4359 /* SystemConfiguration.framework */; };
-		88508CAC16CB9CED0026DE1E /* LXEffect8.m in Sources */ = {isa = PBXBuildFile; fileRef = 88508CAB16CB9CED0026DE1E /* LXEffect8.m */; };
-		88508CB416CB9EEF0026DE1E /* LXEffect9.m in Sources */ = {isa = PBXBuildFile; fileRef = 88508CB316CB9EEF0026DE1E /* LXEffect9.m */; };
 		88508CB616CB9EFE0026DE1E /* effect9curve.png in Resources */ = {isa = PBXBuildFile; fileRef = 88508CB516CB9EFE0026DE1E /* effect9curve.png */; };
-		88508CB916CBA2E90026DE1E /* LXEffect10.m in Sources */ = {isa = PBXBuildFile; fileRef = 88508CB816CBA2E90026DE1E /* LXEffect10.m */; };
 		88508CBB16CBA2F00026DE1E /* effect10curve.png in Resources */ = {isa = PBXBuildFile; fileRef = 88508CBA16CBA2F00026DE1E /* effect10curve.png */; };
 		885C061516BB6514000820E7 /* icon_blending2.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C061416BB6514000820E7 /* icon_blending2.png */; };
 		885C061A16BB65A5000820E7 /* icon_blending2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C061916BB65A5000820E7 /* icon_blending2@2x.png */; };
@@ -600,9 +594,30 @@
 		8866D66816EA00E000CAE6E5 /* SideSwipeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8866D66616EA00C000CAE6E5 /* SideSwipeTableViewController.m */; };
 		8866D68816EEE66300CAE6E5 /* STTweetLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8866D67016EEE66300CAE6E5 /* STTweetLabel.m */; };
 		88673B6616FF5219007CF6BD /* LXCellSearchConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 88673B6516FF5219007CF6BD /* LXCellSearchConnection.m */; };
+		88675373170C274A009B5BBE /* LXImageFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 88675372170C274A009B5BBE /* LXImageFilter.m */; };
+		88675375170C305A009B5BBE /* curve1.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 88675374170C305A009B5BBE /* curve1.JPG */; };
+		88675386170C3140009B5BBE /* curve0.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 88675376170C313F009B5BBE /* curve0.JPG */; };
+		88675387170C3140009B5BBE /* curve2.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 88675377170C313F009B5BBE /* curve2.JPG */; };
+		88675388170C3140009B5BBE /* curve3.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 88675378170C313F009B5BBE /* curve3.JPG */; };
+		88675389170C3140009B5BBE /* curve4.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 88675379170C313F009B5BBE /* curve4.JPG */; };
+		8867538A170C3140009B5BBE /* curve5.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 8867537A170C313F009B5BBE /* curve5.JPG */; };
+		8867538B170C3140009B5BBE /* curve6.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 8867537B170C313F009B5BBE /* curve6.JPG */; };
+		8867538C170C3140009B5BBE /* curve7.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 8867537C170C313F009B5BBE /* curve7.JPG */; };
+		8867538D170C3140009B5BBE /* curve8.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 8867537D170C313F009B5BBE /* curve8.JPG */; };
+		8867538E170C3140009B5BBE /* curve9.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 8867537E170C3140009B5BBE /* curve9.JPG */; };
+		8867538F170C3140009B5BBE /* curve10.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 8867537F170C3140009B5BBE /* curve10.JPG */; };
+		88675390170C3140009B5BBE /* curve11.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 88675380170C3140009B5BBE /* curve11.JPG */; };
+		88675391170C3140009B5BBE /* curve12.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 88675381170C3140009B5BBE /* curve12.JPG */; };
+		88675392170C3140009B5BBE /* curve13.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 88675382170C3140009B5BBE /* curve13.JPG */; };
+		88675393170C3140009B5BBE /* curve14.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 88675383170C3140009B5BBE /* curve14.JPG */; };
+		88675394170C3140009B5BBE /* curve15.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 88675384170C3140009B5BBE /* curve15.JPG */; };
+		88675395170C3140009B5BBE /* latte.fsh in Sources */ = {isa = PBXBuildFile; fileRef = 88675385170C3140009B5BBE /* latte.fsh */; };
+		88675396170C343C009B5BBE /* latte.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 88675385170C3140009B5BBE /* latte.fsh */; };
+		88675398170C38FC009B5BBE /* curve16.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 88675397170C38FC009B5BBE /* curve16.JPG */; };
+		8867539E170C6E40009B5BBE /* lattevertex.fsh in Sources */ = {isa = PBXBuildFile; fileRef = 8867539D170C6E40009B5BBE /* lattevertex.fsh */; };
+		8867539F170C6E50009B5BBE /* lattevertex.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 8867539D170C6E40009B5BBE /* lattevertex.fsh */; };
 		886A83AC16CB9B9A009BCA92 /* effect8curve.png in Resources */ = {isa = PBXBuildFile; fileRef = 886A83AB16CB9B9A009BCA92 /* effect8curve.png */; };
 		886B4E1D16A8004300DA4783 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 880E35AA16A7F7150097B97F /* libTestFlight.a */; };
-		886C63A116816CC20007D952 /* LXFilterDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 886C63A016816CC20007D952 /* LXFilterDetail.m */; };
 		886C63A41681A68C0007D952 /* bg_canvas.png in Resources */ = {isa = PBXBuildFile; fileRef = 886C63A21681A68C0007D952 /* bg_canvas.png */; };
 		886C63A51681A68C0007D952 /* bg_canvas@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 886C63A31681A68C0007D952 /* bg_canvas@2x.png */; };
 		886C63A81681B92D0007D952 /* lattefragment.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 886C63A61681B4A20007D952 /* lattefragment.fsh */; };
@@ -845,11 +860,8 @@
 		889072E816770EBB0013DF7A /* LXDrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890728616770EBB0013DF7A /* LXDrawView.m */; };
 		889072EB16770EBB0013DF7A /* UIButton+AsyncImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890728C16770EBB0013DF7A /* UIButton+AsyncImage.m */; };
 		889072EC16770EBB0013DF7A /* UIImageView+loadProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890728E16770EBB0013DF7A /* UIImageView+loadProgress.m */; };
-		889072ED16770EBB0013DF7A /* FilterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890729116770EBB0013DF7A /* FilterManager.m */; };
 		889072F116770EBB0013DF7A /* LatteAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890729916770EBB0013DF7A /* LatteAPIClient.m */; };
-		889072F216770EBB0013DF7A /* LXFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890729B16770EBB0013DF7A /* LXFilter.m */; };
 		889072F416770EBB0013DF7A /* LXFilterFish.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890729F16770EBB0013DF7A /* LXFilterFish.m */; };
-		889072F516770EBB0013DF7A /* LXFilterMono.m in Sources */ = {isa = PBXBuildFile; fileRef = 889072A116770EBB0013DF7A /* LXFilterMono.m */; };
 		889072F616770EBB0013DF7A /* UIActionSheet+ButtonState.m in Sources */ = {isa = PBXBuildFile; fileRef = 889072A316770EBB0013DF7A /* UIActionSheet+ButtonState.m */; };
 		889072FB16770EBB0013DF7A /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 889072AE16770EBB0013DF7A /* Comment.m */; };
 		889072FC16770EBB0013DF7A /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = 889072B016770EBB0013DF7A /* Feed.m */; };
@@ -921,7 +933,6 @@
 		88D9864C15B8F97800858AD6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D9864B15B8F97800858AD6 /* CoreGraphics.framework */; };
 		88D9864E15B8F97800858AD6 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D9864D15B8F97800858AD6 /* CoreData.framework */; };
 		88D9865615B8F97800858AD6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D9865515B8F97800858AD6 /* main.m */; };
-		88E1CE2C16B8BC910040ADBD /* LXEffect5.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E1CE2B16B8BC910040ADBD /* LXEffect5.m */; };
 		88E1CE3116B8BE8E0040ADBD /* effect5curve.png in Resources */ = {isa = PBXBuildFile; fileRef = 88E1CE3016B8BE8E0040ADBD /* effect5curve.png */; };
 		88E1CE3416B8D0860040ADBD /* sample.png in Resources */ = {isa = PBXBuildFile; fileRef = 88E1CE3216B8D0860040ADBD /* sample.png */; };
 		88E1CE3516B8D0860040ADBD /* sample@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88E1CE3316B8D0860040ADBD /* sample@2x.png */; };
@@ -929,7 +940,6 @@
 		88E96B2315EDCBC200FB9CC8 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E96B2215EDCBC200FB9CC8 /* MapKit.framework */; };
 		88E96B2515EDCBC800FB9CC8 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E96B2415EDCBC800FB9CC8 /* CoreLocation.framework */; };
 		88E96B4815EDCCC100FB9CC8 /* libGPUImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E96B4315EDCCB400FB9CC8 /* libGPUImage.a */; };
-		88EDBE4E170A7330003D7B15 /* LXFilterScreenBlend.m in Sources */ = {isa = PBXBuildFile; fileRef = 88EDBE4D170A7330003D7B15 /* LXFilterScreenBlend.m */; };
 		88EDBEC3170A7EE3003D7B15 /* blend0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88EDBE55170A7EE2003D7B15 /* blend0.jpg */; };
 		88EDBEC4170A7EE3003D7B15 /* blend1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88EDBE56170A7EE2003D7B15 /* blend1.jpg */; };
 		88EDBEC5170A7EE3003D7B15 /* bokehcircle-1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88EDBE58170A7EE2003D7B15 /* bokehcircle-1.jpg */; };
@@ -2012,24 +2022,12 @@
 		883278A41701A8A00053C8A2 /* LXCollectionViewTagsLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCollectionViewTagsLayout.m; sourceTree = "<group>"; };
 		8835C77216E6EAED0036BF5E /* LXPicDetailTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXPicDetailTabViewController.h; sourceTree = "<group>"; };
 		8835C77316E6EAED0036BF5E /* LXPicDetailTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXPicDetailTabViewController.m; sourceTree = "<group>"; };
-		8845F7E416B7CFE4003873A2 /* LXEffect1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXEffect1.h; sourceTree = "<group>"; };
-		8845F7E516B7CFE4003873A2 /* LXEffect1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXEffect1.m; sourceTree = "<group>"; };
 		8845F7E716B7D69E003873A2 /* effect1curve.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = effect1curve.png; sourceTree = "<group>"; };
-		8845F7E916B7DFCD003873A2 /* LXEffect2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXEffect2.h; sourceTree = "<group>"; };
-		8845F7EA16B7DFCE003873A2 /* LXEffect2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXEffect2.m; sourceTree = "<group>"; };
 		8845F7EC16B7E015003873A2 /* effect2curve.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = effect2curve.png; sourceTree = "<group>"; };
-		8845F7EE16B7E389003873A2 /* LXEffect3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXEffect3.h; sourceTree = "<group>"; };
-		8845F7EF16B7E389003873A2 /* LXEffect3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXEffect3.m; sourceTree = "<group>"; };
 		884C54D316B22EF500DA318E /* LXHelpBokehViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHelpBokehViewController.h; sourceTree = "<group>"; };
 		884C54D416B22EF500DA318E /* LXHelpBokehViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHelpBokehViewController.m; sourceTree = "<group>"; };
 		884FBB8F163E24A3006C4359 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		88508CAA16CB9CED0026DE1E /* LXEffect8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXEffect8.h; sourceTree = "<group>"; };
-		88508CAB16CB9CED0026DE1E /* LXEffect8.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXEffect8.m; sourceTree = "<group>"; };
-		88508CB216CB9EEF0026DE1E /* LXEffect9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXEffect9.h; sourceTree = "<group>"; };
-		88508CB316CB9EEF0026DE1E /* LXEffect9.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXEffect9.m; sourceTree = "<group>"; };
 		88508CB516CB9EFE0026DE1E /* effect9curve.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = effect9curve.png; sourceTree = "<group>"; };
-		88508CB716CBA2E90026DE1E /* LXEffect10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXEffect10.h; sourceTree = "<group>"; };
-		88508CB816CBA2E90026DE1E /* LXEffect10.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXEffect10.m; sourceTree = "<group>"; };
 		88508CBA16CBA2F00026DE1E /* effect10curve.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = effect10curve.png; sourceTree = "<group>"; };
 		885C061416BB6514000820E7 /* icon_blending2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_blending2.png; sourceTree = "<group>"; };
 		885C061916BB65A5000820E7 /* icon_blending2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_blending2@2x.png"; sourceTree = "<group>"; };
@@ -2069,9 +2067,28 @@
 		8866D67016EEE66300CAE6E5 /* STTweetLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STTweetLabel.m; sourceTree = "<group>"; };
 		88673B6416FF5219007CF6BD /* LXCellSearchConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCellSearchConnection.h; sourceTree = "<group>"; };
 		88673B6516FF5219007CF6BD /* LXCellSearchConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCellSearchConnection.m; sourceTree = "<group>"; };
+		88675371170C274A009B5BBE /* LXImageFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXImageFilter.h; sourceTree = "<group>"; };
+		88675372170C274A009B5BBE /* LXImageFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXImageFilter.m; sourceTree = "<group>"; };
+		88675374170C305A009B5BBE /* curve1.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = curve1.JPG; sourceTree = "<group>"; };
+		88675376170C313F009B5BBE /* curve0.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = curve0.JPG; sourceTree = "<group>"; };
+		88675377170C313F009B5BBE /* curve2.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = curve2.JPG; sourceTree = "<group>"; };
+		88675378170C313F009B5BBE /* curve3.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = curve3.JPG; sourceTree = "<group>"; };
+		88675379170C313F009B5BBE /* curve4.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = curve4.JPG; sourceTree = "<group>"; };
+		8867537A170C313F009B5BBE /* curve5.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = curve5.JPG; sourceTree = "<group>"; };
+		8867537B170C313F009B5BBE /* curve6.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = curve6.JPG; sourceTree = "<group>"; };
+		8867537C170C313F009B5BBE /* curve7.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = curve7.JPG; sourceTree = "<group>"; };
+		8867537D170C313F009B5BBE /* curve8.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = curve8.JPG; sourceTree = "<group>"; };
+		8867537E170C3140009B5BBE /* curve9.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = curve9.JPG; sourceTree = "<group>"; };
+		8867537F170C3140009B5BBE /* curve10.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = curve10.JPG; sourceTree = "<group>"; };
+		88675380170C3140009B5BBE /* curve11.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = curve11.JPG; sourceTree = "<group>"; };
+		88675381170C3140009B5BBE /* curve12.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = curve12.JPG; sourceTree = "<group>"; };
+		88675382170C3140009B5BBE /* curve13.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = curve13.JPG; sourceTree = "<group>"; };
+		88675383170C3140009B5BBE /* curve14.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = curve14.JPG; sourceTree = "<group>"; };
+		88675384170C3140009B5BBE /* curve15.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = curve15.JPG; sourceTree = "<group>"; };
+		88675385170C3140009B5BBE /* latte.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = latte.fsh; sourceTree = "<group>"; };
+		88675397170C38FC009B5BBE /* curve16.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = curve16.JPG; sourceTree = "<group>"; };
+		8867539D170C6E40009B5BBE /* lattevertex.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lattevertex.fsh; sourceTree = "<group>"; };
 		886A83AB16CB9B9A009BCA92 /* effect8curve.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = effect8curve.png; sourceTree = "<group>"; };
-		886C639F16816CC20007D952 /* LXFilterDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFilterDetail.h; sourceTree = "<group>"; };
-		886C63A016816CC20007D952 /* LXFilterDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFilterDetail.m; sourceTree = "<group>"; };
 		886C63A21681A68C0007D952 /* bg_canvas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_canvas.png; sourceTree = "<group>"; };
 		886C63A31681A68C0007D952 /* bg_canvas@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_canvas@2x.png"; sourceTree = "<group>"; };
 		886C63A61681B4A20007D952 /* lattefragment.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lattefragment.fsh; sourceTree = "<group>"; };
@@ -2373,16 +2390,10 @@
 		8890728C16770EBB0013DF7A /* UIButton+AsyncImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+AsyncImage.m"; sourceTree = "<group>"; };
 		8890728D16770EBB0013DF7A /* UIImageView+loadProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+loadProgress.h"; sourceTree = "<group>"; };
 		8890728E16770EBB0013DF7A /* UIImageView+loadProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+loadProgress.m"; sourceTree = "<group>"; };
-		8890729016770EBB0013DF7A /* FilterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterManager.h; sourceTree = "<group>"; };
-		8890729116770EBB0013DF7A /* FilterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterManager.m; sourceTree = "<group>"; };
 		8890729816770EBB0013DF7A /* LatteAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LatteAPIClient.h; sourceTree = "<group>"; };
 		8890729916770EBB0013DF7A /* LatteAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LatteAPIClient.m; sourceTree = "<group>"; };
-		8890729A16770EBB0013DF7A /* LXFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFilter.h; sourceTree = "<group>"; };
-		8890729B16770EBB0013DF7A /* LXFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFilter.m; sourceTree = "<group>"; };
 		8890729E16770EBB0013DF7A /* LXFilterFish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFilterFish.h; sourceTree = "<group>"; };
 		8890729F16770EBB0013DF7A /* LXFilterFish.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFilterFish.m; sourceTree = "<group>"; };
-		889072A016770EBB0013DF7A /* LXFilterMono.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFilterMono.h; sourceTree = "<group>"; };
-		889072A116770EBB0013DF7A /* LXFilterMono.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFilterMono.m; sourceTree = "<group>"; };
 		889072A216770EBB0013DF7A /* UIActionSheet+ButtonState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActionSheet+ButtonState.h"; sourceTree = "<group>"; };
 		889072A316770EBB0013DF7A /* UIActionSheet+ButtonState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+ButtonState.m"; sourceTree = "<group>"; };
 		889072AD16770EBB0013DF7A /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
@@ -2491,8 +2502,6 @@
 		88D9865515B8F97800858AD6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		88D9865715B8F97800858AD6 /* Latte camera-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Latte camera-Prefix.pch"; sourceTree = "<group>"; };
 		88D9866D15B8F97800858AD6 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		88E1CE2A16B8BC910040ADBD /* LXEffect5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXEffect5.h; sourceTree = "<group>"; };
-		88E1CE2B16B8BC910040ADBD /* LXEffect5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXEffect5.m; sourceTree = "<group>"; };
 		88E1CE3016B8BE8E0040ADBD /* effect5curve.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = effect5curve.png; sourceTree = "<group>"; };
 		88E1CE3216B8D0860040ADBD /* sample.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sample.png; sourceTree = "<group>"; };
 		88E1CE3316B8D0860040ADBD /* sample@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sample@2x.png"; sourceTree = "<group>"; };
@@ -2615,8 +2624,6 @@
 		88E96B2215EDCBC200FB9CC8 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		88E96B2415EDCBC800FB9CC8 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		88E96B3915EDCCB300FB9CC8 /* GPUImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GPUImage.xcodeproj; path = Vendor/GPUImage/framework/GPUImage.xcodeproj; sourceTree = "<group>"; };
-		88EDBE4C170A7330003D7B15 /* LXFilterScreenBlend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFilterScreenBlend.h; sourceTree = "<group>"; };
-		88EDBE4D170A7330003D7B15 /* LXFilterScreenBlend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFilterScreenBlend.m; sourceTree = "<group>"; };
 		88EDBE55170A7EE2003D7B15 /* blend0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = blend0.jpg; sourceTree = "<group>"; };
 		88EDBE56170A7EE2003D7B15 /* blend1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = blend1.jpg; sourceTree = "<group>"; };
 		88EDBE58170A7EE2003D7B15 /* bokehcircle-1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bokehcircle-1.jpg"; sourceTree = "<group>"; };
@@ -3893,34 +3900,14 @@
 		8890728F16770EBB0013DF7A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				88EDBE4C170A7330003D7B15 /* LXFilterScreenBlend.h */,
-				88EDBE4D170A7330003D7B15 /* LXFilterScreenBlend.m */,
-				8890729016770EBB0013DF7A /* FilterManager.h */,
-				8890729116770EBB0013DF7A /* FilterManager.m */,
 				88079F8D16B6933900420AC3 /* GPUImagePicture+updateImage.h */,
 				88079F8E16B6933900420AC3 /* GPUImagePicture+updateImage.m */,
 				8890729816770EBB0013DF7A /* LatteAPIClient.h */,
 				8890729916770EBB0013DF7A /* LatteAPIClient.m */,
-				8845F7E416B7CFE4003873A2 /* LXEffect1.h */,
-				8845F7E516B7CFE4003873A2 /* LXEffect1.m */,
-				8845F7E916B7DFCD003873A2 /* LXEffect2.h */,
-				8845F7EA16B7DFCE003873A2 /* LXEffect2.m */,
-				8845F7EE16B7E389003873A2 /* LXEffect3.h */,
-				8845F7EF16B7E389003873A2 /* LXEffect3.m */,
-				88E1CE2A16B8BC910040ADBD /* LXEffect5.h */,
-				88E1CE2B16B8BC910040ADBD /* LXEffect5.m */,
-				88508CAA16CB9CED0026DE1E /* LXEffect8.h */,
-				88508CAB16CB9CED0026DE1E /* LXEffect8.m */,
-				8890729A16770EBB0013DF7A /* LXFilter.h */,
-				8890729B16770EBB0013DF7A /* LXFilter.m */,
-				886C639F16816CC20007D952 /* LXFilterDetail.h */,
-				886C63A016816CC20007D952 /* LXFilterDetail.m */,
 				886C63AD1682E1DA0007D952 /* LXFilterDOF.h */,
 				886C63AE1682E1DA0007D952 /* LXFilterDOF.m */,
 				8890729E16770EBB0013DF7A /* LXFilterFish.h */,
 				8890729F16770EBB0013DF7A /* LXFilterFish.m */,
-				889072A016770EBB0013DF7A /* LXFilterMono.h */,
-				889072A116770EBB0013DF7A /* LXFilterMono.m */,
 				88A9576116BFC18B003649E8 /* LXFilterPipe.h */,
 				88A9576216BFC18B003649E8 /* LXFilterPipe.m */,
 				88A9576D16BFD406003649E8 /* LXRootBuilder.h */,
@@ -3935,16 +3922,14 @@
 				889072A316770EBB0013DF7A /* UIActionSheet+ButtonState.m */,
 				885C061B16BB69B0000820E7 /* UIDeviceHardware.h */,
 				885C061C16BB69B0000820E7 /* UIDeviceHardware.m */,
-				88508CB216CB9EEF0026DE1E /* LXEffect9.h */,
-				88508CB316CB9EEF0026DE1E /* LXEffect9.m */,
-				88508CB716CBA2E90026DE1E /* LXEffect10.h */,
-				88508CB816CBA2E90026DE1E /* LXEffect10.m */,
 				88AA5E4116DF167D0041164F /* LXSidePanelController.h */,
 				88AA5E4216DF167D0041164F /* LXSidePanelController.m */,
 				88B3A3A916F39951002A6BDA /* LXUploadObject.h */,
 				88B3A3AA16F39951002A6BDA /* LXUploadObject.m */,
 				88937989170BF7C7009855B9 /* GPUImageFilter+saveToLibrary.h */,
 				8893798A170BF7C7009855B9 /* GPUImageFilter+saveToLibrary.m */,
+				88675371170C274A009B5BBE /* LXImageFilter.h */,
+				88675372170C274A009B5BBE /* LXImageFilter.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -4410,6 +4395,25 @@
 		88FE3F9F166C93D6004DCE53 /* Effect */ = {
 			isa = PBXGroup;
 			children = (
+				8867539D170C6E40009B5BBE /* lattevertex.fsh */,
+				88675397170C38FC009B5BBE /* curve16.JPG */,
+				88675376170C313F009B5BBE /* curve0.JPG */,
+				88675377170C313F009B5BBE /* curve2.JPG */,
+				88675378170C313F009B5BBE /* curve3.JPG */,
+				88675379170C313F009B5BBE /* curve4.JPG */,
+				8867537A170C313F009B5BBE /* curve5.JPG */,
+				8867537B170C313F009B5BBE /* curve6.JPG */,
+				8867537C170C313F009B5BBE /* curve7.JPG */,
+				8867537D170C313F009B5BBE /* curve8.JPG */,
+				8867537E170C3140009B5BBE /* curve9.JPG */,
+				8867537F170C3140009B5BBE /* curve10.JPG */,
+				88675380170C3140009B5BBE /* curve11.JPG */,
+				88675381170C3140009B5BBE /* curve12.JPG */,
+				88675382170C3140009B5BBE /* curve13.JPG */,
+				88675383170C3140009B5BBE /* curve14.JPG */,
+				88675384170C3140009B5BBE /* curve15.JPG */,
+				88675385170C3140009B5BBE /* latte.fsh */,
+				88675374170C305A009B5BBE /* curve1.JPG */,
 				88508CBA16CBA2F00026DE1E /* effect10curve.png */,
 				88508CB516CB9EFE0026DE1E /* effect9curve.png */,
 				886A83AB16CB9B9A009BCA92 /* effect8curve.png */,
@@ -5137,6 +5141,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8867539F170C6E50009B5BBE /* lattevertex.fsh in Resources */,
+				88675396170C343C009B5BBE /* latte.fsh in Resources */,
 				886C63AC1682E17E0007D952 /* lattedof.fsh in Resources */,
 				886C63A81681B92D0007D952 /* lattefragment.fsh in Resources */,
 				887E4095162552C20060623C /* icon.png in Resources */,
@@ -6339,6 +6345,23 @@
 				88EDBF2C170A7EE3003D7B15 /* leak71.jpg in Resources */,
 				88EDBF2D170A7EE3003D7B15 /* leak8.jpg in Resources */,
 				88EDBF2E170A7EE3003D7B15 /* leak9.jpg in Resources */,
+				88675375170C305A009B5BBE /* curve1.JPG in Resources */,
+				88675386170C3140009B5BBE /* curve0.JPG in Resources */,
+				88675387170C3140009B5BBE /* curve2.JPG in Resources */,
+				88675388170C3140009B5BBE /* curve3.JPG in Resources */,
+				88675389170C3140009B5BBE /* curve4.JPG in Resources */,
+				8867538A170C3140009B5BBE /* curve5.JPG in Resources */,
+				8867538B170C3140009B5BBE /* curve6.JPG in Resources */,
+				8867538C170C3140009B5BBE /* curve7.JPG in Resources */,
+				8867538D170C3140009B5BBE /* curve8.JPG in Resources */,
+				8867538E170C3140009B5BBE /* curve9.JPG in Resources */,
+				8867538F170C3140009B5BBE /* curve10.JPG in Resources */,
+				88675390170C3140009B5BBE /* curve11.JPG in Resources */,
+				88675391170C3140009B5BBE /* curve12.JPG in Resources */,
+				88675392170C3140009B5BBE /* curve13.JPG in Resources */,
+				88675393170C3140009B5BBE /* curve14.JPG in Resources */,
+				88675394170C3140009B5BBE /* curve15.JPG in Resources */,
+				88675398170C38FC009B5BBE /* curve16.JPG in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6411,11 +6434,8 @@
 				889072E816770EBB0013DF7A /* LXDrawView.m in Sources */,
 				889072EB16770EBB0013DF7A /* UIButton+AsyncImage.m in Sources */,
 				889072EC16770EBB0013DF7A /* UIImageView+loadProgress.m in Sources */,
-				889072ED16770EBB0013DF7A /* FilterManager.m in Sources */,
 				889072F116770EBB0013DF7A /* LatteAPIClient.m in Sources */,
-				889072F216770EBB0013DF7A /* LXFilter.m in Sources */,
 				889072F416770EBB0013DF7A /* LXFilterFish.m in Sources */,
-				889072F516770EBB0013DF7A /* LXFilterMono.m in Sources */,
 				889072F616770EBB0013DF7A /* UIActionSheet+ButtonState.m in Sources */,
 				889072FB16770EBB0013DF7A /* Comment.m in Sources */,
 				889072FC16770EBB0013DF7A /* Feed.m in Sources */,
@@ -6424,7 +6444,6 @@
 				889072FF16770EBB0013DF7A /* PicturePin.m in Sources */,
 				8890730016770EBB0013DF7A /* User.m in Sources */,
 				8890730116770EBB0013DF7A /* LXUtils.m in Sources */,
-				886C63A116816CC20007D952 /* LXFilterDetail.m in Sources */,
 				886C63AF1682E1DB0007D952 /* LXFilterDOF.m in Sources */,
 				880E35A816A7BECA0097B97F /* LXAboutViewController.m in Sources */,
 				8884E40516A8EB5700DCBAC7 /* DEComposeRuledView.m in Sources */,
@@ -6436,18 +6455,11 @@
 				8884E45916A9012E00DCBAC7 /* LXShare.m in Sources */,
 				884C54D516B22EF500DA318E /* LXHelpBokehViewController.m in Sources */,
 				88079F8F16B6933900420AC3 /* GPUImagePicture+updateImage.m in Sources */,
-				8845F7E616B7CFE4003873A2 /* LXEffect1.m in Sources */,
-				8845F7EB16B7DFCE003873A2 /* LXEffect2.m in Sources */,
-				8845F7F016B7E389003873A2 /* LXEffect3.m in Sources */,
-				88E1CE2C16B8BC910040ADBD /* LXEffect5.m in Sources */,
 				885C061D16BB69B0000820E7 /* UIDeviceHardware.m in Sources */,
 				88A9576316BFC18B003649E8 /* LXFilterPipe.m in Sources */,
 				88A9576916BFC2A2003649E8 /* LXStillCamera.m in Sources */,
 				88A9576C16BFCFED003649E8 /* EGORefreshTableHeaderView.m in Sources */,
 				88A9576F16BFD406003649E8 /* LXRootBuilder.m in Sources */,
-				88508CAC16CB9CED0026DE1E /* LXEffect8.m in Sources */,
-				88508CB416CB9EEF0026DE1E /* LXEffect9.m in Sources */,
-				88508CB916CBA2E90026DE1E /* LXEffect10.m in Sources */,
 				8883C07716DCAE85003510A1 /* JASidePanelController.m in Sources */,
 				8883C07816DCAE85003510A1 /* UIViewController+JASidePanel.m in Sources */,
 				8883C07D16DCBCE1003510A1 /* LXGalleryViewController.m in Sources */,
@@ -6487,8 +6499,10 @@
 				88673B6616FF5219007CF6BD /* LXCellSearchConnection.m in Sources */,
 				883274D9170146FA0053C8A2 /* LXCellTags.m in Sources */,
 				883278A51701A8A00053C8A2 /* LXCollectionViewTagsLayout.m in Sources */,
-				88EDBE4E170A7330003D7B15 /* LXFilterScreenBlend.m in Sources */,
 				8893798B170BF7C7009855B9 /* GPUImageFilter+saveToLibrary.m in Sources */,
+				88675373170C274A009B5BBE /* LXImageFilter.m in Sources */,
+				88675395170C3140009B5BBE /* latte.fsh in Sources */,
+				8867539E170C6E40009B5BBE /* lattevertex.fsh in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

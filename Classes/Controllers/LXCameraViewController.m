@@ -9,8 +9,18 @@
 #import "LXCameraViewController.h"
 #import "LXAppDelegate.h"
 #import "ALAssetsLibrary+CustomPhotoAlbum.h"
+#import "GPUImageFilter+saveToLibrary.h"
 #import "LXUploadObject.h"
 #import "UIDeviceHardware.h"
+#import "UIDeviceHardware.h"
+#import "LXFilterPipe.h"
+#import "LXFilterDOF.h"
+#import "LXFilterFish.h"
+#import "GPUImagePicture+updateImage.h"
+#import "LXShare.h"
+#import "RDActionSheet.h"
+#import "LXImageFilter.h"
+
 
 #define kAccelerometerFrequency        10.0 //Hz
 
@@ -18,22 +28,16 @@
     LXStillCamera *videoCamera;
     GPUImageSharpenFilter *filterSharpen;
     LXFilterPipe *pipe;
-    LXFilterDetail *filter;
-    LXFilterDOF *filterDOF;
     LXFilterFish *filterFish;
-    GPUImageCropFilter *blendCrop;
+    LXFilterDOF *filterDOF;
     GPUImagePinchDistortionFilter *filterDistord;
-    GPUImageFilter *effect;
-    LXFilterScreenBlend *screenBlend;
-    GPUImageAlphaBlendFilter *filterIntensity;
+    LXImageFilter *filterMain;
     
     GPUImagePicture *previewFilter;
-    GPUImagePicture *pictureBlend;
     GPUImageRawDataInput *pictureDOF;
     
     CGSize picSize;
     CGSize previewUISize;
-    CGSize blendSize;
     
     UIActionSheet *sheet;
     
@@ -45,17 +49,16 @@
     BOOL isSaved;
     BOOL isKeyboard;
     BOOL isWatingToUpload;
-    BOOL isFixedAspectBlend;
     BOOL isBackCamera;
     BOOL isPicFromCamera;
     
-    NSInteger currentEffect;
     NSInteger currentLens;
     NSInteger currentTimer;
     NSInteger currentMask;
     NSInteger currentBlend;
     NSInteger effectNum;
     NSMutableArray *effectPreview;
+    NSMutableArray *effectCurve;
     
     NSLayoutConstraint *cameraAspect;
     NSInteger timerMode;
@@ -213,7 +216,7 @@
     viewDraw.delegate = self;
     viewDraw.lineWidth = 10.0;
     currentTab = kTabPreview;
-    currentEffect = 0;
+    
     currentLens = 0;
     currentTimer = kTimerNone;
     
@@ -228,12 +231,12 @@
     [nc addObserver:self selector:@selector(uploaderFail:) name:@"LXUploaderFail" object:nil];
     [nc addObserver:self selector:@selector(uploaderProgress:) name:@"LXUploaderProgress" object:nil];
     
-    scrollProcess.contentSize = CGSizeMake(384, 50);
+    scrollProcess.contentSize = CGSizeMake(320, 50);
 
     pipe = [[LXFilterPipe alloc] init];
     pipe.filters = [[NSMutableArray alloc] init];
+    filterMain = [[LXImageFilter alloc] init];
     
-    filter = [[LXFilterDetail alloc] init];
     pictureDOF = [[GPUImageRawDataInput alloc] initWithBytes:nil size:CGSizeMake(0, 0)];
     
     videoCamera = [[LXStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionBack];
@@ -248,8 +251,10 @@
     
     effectNum = 17;
     effectPreview = [[NSMutableArray alloc] initWithCapacity:effectNum];
+    effectCurve = [[NSMutableArray alloc] initWithCapacity:effectNum];
     
-    for (int i=0; i < 17; i++) {
+    for (int i=0; i < effectNum; i++) {
+        [effectCurve addObject:[UIImage imageNamed:[NSString stringWithFormat:@"curve%d.JPG", i]]];
         UILabel *labelEffect = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 70, 12)];
         labelEffect.backgroundColor = [UIColor clearColor];
         labelEffect.textColor = [UIColor whiteColor];
@@ -450,157 +455,65 @@
     app.controllerCamera = nil;
 }
 
+
 - (void)preparePipe {
-    [self preparePipe:nil];
-}
 
-
-- (void)preparePipe:(GPUImageOutput *)picture {
-    filter = nil;
     filterFish = nil;
-    filterDOF = nil;
+
     filterSharpen = nil;
     filterDistord = nil;
-    screenBlend = nil;
-    blendCrop = nil;
-    filterIntensity = nil;
     
     if (isEditing) {
-        if (pictureBlend != nil) {
-            [pictureBlend removeAllTargets];
-        }
         if (pictureDOF != nil) {
             [pictureDOF removeAllTargets];
         }
+        
         [previewFilter removeAllTargets];
-        
-        if (picture != nil) {
-            [picture removeAllTargets];
-            pipe.input = picture;
-            pipe.output = nil;
-        } else {
-            pipe.input = previewFilter;
-            pipe.output = viewCamera;
-        }
-        
         [pipe removeAllFilters];
-        
-        filterSharpen = [[GPUImageSharpenFilter alloc] init];
-        [pipe addFilter:filterSharpen];
-        
-        filter = [[LXFilterDetail alloc] init];
-        [pipe addFilter:filter];
-        
-        
-        if (!buttonLensWide.enabled) {
-            filterDistord = [[GPUImagePinchDistortionFilter alloc] init];
-            [pipe addFilter:filterDistord];
-        }
-        
-        if (!buttonLensFish.enabled) {
-            filterFish = [[LXFilterFish alloc] init];
-            [pipe addFilter:filterFish];
-        }
-        
+
+        pipe.input = previewFilter;
+        pipe.output = viewCamera;
         
         if (buttonBlurNone.enabled) {
             filterDOF = [[LXFilterDOF alloc] init];
             [pipe addFilter:filterDOF];
-        }
-        
-        if (buttonBlendNone.enabled) {
-            screenBlend = [[LXFilterScreenBlend alloc] init];
-            if (isFixedAspectBlend) {
-                blendCrop = [[GPUImageCropFilter alloc] init];
-            }
-            [pipe addFilter:screenBlend];
-        }
-        
-        //Film
-        NSInteger mark;
-        if (currentEffect != 0) {
-            mark = pipe.filters.count-1;
-            [pipe addFilter:[FilterManager getEffect:currentEffect]];
-            filterIntensity = [[GPUImageAlphaBlendFilter alloc] init];
-            [pipe addFilter:filterIntensity];
-        }
-                
-        // AFTER THIS LINE, NO MORE ADDFILTER
-        if (currentEffect != 0) {
-            GPUImageFilter *tmp = pipe.filters[mark];
-            [tmp addTarget:pipe.filters[mark+2]];
-        }
-        
-        
-        if (buttonBlendNone.enabled) {
-            if (isFixedAspectBlend) {
-                [pictureBlend addTarget:blendCrop];
-                [blendCrop addTarget:screenBlend atTextureLocation:1];
-            } else
-                [pictureBlend addTarget:screenBlend atTextureLocation:1];
-        }
-        
-        
-        if (buttonBlurNone.enabled) {
             [pictureDOF addTarget:filterDOF atTextureLocation:1];
         }
+        
+        [pipe addFilter:filterMain];
+        
     } else {
-        GPUImageFilter *dummy = [[GPUImageFilter alloc] init];
         [filterFish removeAllTargets];
         pipe.input = videoCamera;
         pipe.output = viewCamera;
         [pipe removeAllFilters];
-        [pipe addFilter:dummy];
         if (buttonToggleFisheye.selected) {
             filterFish = [[LXFilterFish alloc] init];
             [pipe addFilter:filterFish];
         }
-        [dummy prepareForImageCapture];
     }
 }
 
 - (void)applyFilterSetting {
-    filter.vignfade = 0.8-sliderVignette.value;
-    filter.brightness = sliderExposure.value;
-    filter.clearness = sliderClear.value;
-    filter.saturation = sliderSaturation.value;
+    filterMain.vignfade = 0.8-sliderVignette.value;
+    filterMain.brightness = sliderExposure.value;
+    filterMain.clearness = sliderClear.value;
+    filterMain.saturation = sliderSaturation.value;
     
     filterSharpen.sharpness = sliderSharpness.value;
     
-    if (currentEffect != 0) {
-        filterIntensity.mix = 1.0 - sliderEffectIntensity.value;
-    }
-    
-    if (buttonBlendNone.enabled) {
-        if (isFixedAspectBlend) {
-            CGFloat ratioWidth = blendSize.width / picSize.width;
-            CGFloat ratioHeight = blendSize.height / picSize.height;
-            CGRect crop;
-            
-            CGFloat ratio = MIN(ratioWidth, ratioHeight);
-            CGSize newSize = CGSizeMake(blendSize.width / ratio, blendSize.height / ratio);
-            if (newSize.width > picSize.width) {
-                CGFloat sub = (newSize.width - picSize.width) / newSize.width;
-                crop = CGRectMake(sub/2.0, 0.0, 1.0-sub, 1.0);
-            } else {
-                CGFloat sub = (newSize.height - picSize.height) / newSize.height;
-                crop = CGRectMake(0.0, sub/2.0, 1.0, 1.0-sub);
-            }
-            
-            blendCrop.cropRegion = crop;
-        }
-    }
+    filterMain.toneCurveIntensity = sliderEffectIntensity.value;
     
     if (!buttonBlendMedium.enabled) {
-        screenBlend.mix = 0.66;
+        filterMain.blendIntensity = 0.66;
     }
     
     if (!buttonBlendWeak.enabled) {
-        screenBlend.mix = 0.40;
+        filterMain.blendIntensity = 0.40;
     }
     
     if (!buttonBlendStrong.enabled) {
-        screenBlend.mix = 0.90;
+        filterMain.blendIntensity = 0.90;
     }
     
     
@@ -631,11 +544,7 @@
     isSaved = false;
     buttonReset.enabled = true;
     [previewFilter processImage];
-    
-    if (buttonBlendNone.enabled) {
-        [pictureBlend processImage];
-    }
-    
+        
     if (buttonBlurNone.enabled) {
         [pictureDOF processData];
     }
@@ -643,9 +552,7 @@
 
 - (IBAction)setEffect:(id)sender {
     UIButton* buttonEffect = (UIButton*)sender;
-    currentEffect = buttonEffect.tag;
-    [self preparePipe];
-    [self applyFilterSetting];
+    filterMain.toneCurve = effectCurve[buttonEffect.tag];
     [self processImage];
 }
 
@@ -952,53 +859,47 @@
 - (void)processRawAndSave:(void(^)())block {
     
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-#ifdef DEBUG
-    [LXUtils logMemUsage];
-#endif
+
     CGImageRef cgImagePreviewFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:imageOrientation];
     savedPreview = [UIImage imageWithCGImage:cgImagePreviewFromBytes];
     CGImageRelease(cgImagePreviewFromBytes);
-#ifdef DEBUG
-    [LXUtils logMemUsage];
-#endif
+    
     [previewFilter removeAllTargets];
     [(GPUImageFilter *)[pipe.filters lastObject] prepareForImageCapture];
     
+
+    
     GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:capturedImage];
-    
-    [picture addTarget:pipe.filters[0] atTextureLocation:0];
-    
+
     GPUImageRotationMode imageViewRotationModeIdx1 = kGPUImageNoRotation;
-    
-    if (picture != nil) {
-        switch (imageOrientation) {
-            case UIImageOrientationLeft:
-                imageViewRotationModeIdx1 = kGPUImageRotateRight;
-                break;
-            case UIImageOrientationRight:
-                imageViewRotationModeIdx1 = kGPUImageRotateLeft;
-                break;
-            case UIImageOrientationDown:
-                imageViewRotationModeIdx1 = kGPUImageRotate180;
-                break;
-            case UIImageOrientationUp:
-                imageViewRotationModeIdx1 = kGPUImageNoRotation;
-                break;
-            default:
-                imageViewRotationModeIdx1 = kGPUImageRotateLeft;
-                break;
-        }
+
+    switch (imageOrientation) {
+        case UIImageOrientationLeft:
+            imageViewRotationModeIdx1 = kGPUImageRotateRight;
+            break;
+        case UIImageOrientationRight:
+            imageViewRotationModeIdx1 = kGPUImageRotateLeft;
+            break;
+        case UIImageOrientationDown:
+            imageViewRotationModeIdx1 = kGPUImageRotate180;
+            break;
+        case UIImageOrientationUp:
+            imageViewRotationModeIdx1 = kGPUImageNoRotation;
+            break;
+        default:
+            imageViewRotationModeIdx1 = kGPUImageRotateLeft;
+            break;
     }
+    filterMain.blendRotation = imageViewRotationModeIdx1;
+
+
+    [picture addTarget:pipe.filters[0] atTextureLocation:0];
     
     [[pipe.filters lastObject] removeAllTargets];
     
     [picture processImage];
-    if (buttonBlendNone.enabled) {
-        [screenBlend setInputRotation:imageViewRotationModeIdx1 atIndex:1];
-        [pictureBlend processImage];
-    }
+
     if (buttonBlurNone.enabled) {
-        [filterDOF setInputRotation:imageViewRotationModeIdx1 atIndex:1];
         [pictureDOF processData];
     }
     
@@ -1006,9 +907,6 @@
     CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:imageOrientation];
     NSData *jpeg = UIImageJPEGRepresentation([UIImage imageWithCGImage:cgImageFromBytes], 0.9);
     CGImageRelease(cgImageFromBytes);
-#ifdef DEBUG
-    [LXUtils logMemUsage];
-#endif
     
     // Write EXIF to NSData
     CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)jpeg, NULL);
@@ -1050,6 +948,8 @@
     // Save now
     block();
     
+    
+    
     [library writeImageDataToSavedPhotosAlbum:savedData metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
         if (!error) {
             HUD.mode = MBProgressHUDModeText;
@@ -1074,16 +974,7 @@
         [picture removeAllTargets];
         [[pipe.filters lastObject] addTarget:pipe.output atTextureLocation:0];
         [previewFilter addTarget:pipe.filters[0] atTextureLocation:0];
-        if (buttonBlendNone.enabled) {
-            [screenBlend setInputRotation:kGPUImageNoRotation atIndex:1];
-        }
-        if (buttonBlurNone.enabled) {
-            [filterDOF setInputRotation:kGPUImageNoRotation atIndex:1];
-        }
-        
-#ifdef DEBUG
-        [LXUtils logMemUsage];
-#endif
+        filterMain.blendRotation = kGPUImageNoRotation;
     }];
     
 }
@@ -1416,7 +1307,7 @@
     [self resetSetting];
 
     isWatingToUpload = NO;
-    pictureBlend = nil;
+
     currentBlend = kBlendNone;
     [self setBlendImpl:kBlendNone];
     //    isFixedAspectBlend = NO;
@@ -1468,13 +1359,11 @@
     [previewFilter removeAllTargets];
     for (NSInteger i = 0; i < effectNum; i++) {
         GPUImageView *effectView = effectPreview[i];
-        GPUImageFilter *effectSmallPreview = [FilterManager getEffect:i];
-        if (effectSmallPreview != nil) {
-            [previewFilter addTarget:effectSmallPreview];
-            [effectSmallPreview addTarget:effectView];
-        } else {
-            [previewFilter addTarget:effectView];
-        }
+        LXImageFilter *effectSmallPreview = [[LXImageFilter alloc] init];
+        effectSmallPreview.toneCurve = effectCurve[i];
+        [previewFilter addTarget:effectSmallPreview];
+        [effectSmallPreview addTarget:effectView];
+        
     }
     [previewFilter processImage];
 }
@@ -1515,10 +1404,12 @@
     sliderVignette.value = 0.0;
     sliderFeather.value = 10.0;
     sliderEffectIntensity.value = 1.0;
-    currentEffect = 0;
+    
+    filterMain.toneCurve = effectCurve[0];
+    filterMain.imageBlend = nil;
+    
     [self setUIMask:kMaskBlurNone];
     
-    effect = nil;
     buttonLensFish.enabled = true;
     buttonLensWide.enabled = true;
     buttonLensNormal.enabled = false;
@@ -1667,10 +1558,9 @@
 - (void)toggleBlending:(UIButton *)sender {
     NSString *blendPic;
     NSInteger blendid;
-    
+    BOOL isFixedAspectBlend = NO;
     switch (sender.tag) {
         case 0:
-            isFixedAspectBlend = NO;
             blendid = 1 + rand() % 71;
             blendPic = [NSString stringWithFormat:@"leak%d.jpg", blendid];
             break;
@@ -1684,17 +1574,35 @@
     }
     
     UIImage *imageBlend = [UIImage imageNamed:blendPic];
-    blendSize = imageBlend.size;
+    filterMain.imageBlend = [UIImage imageNamed:blendPic];
     
-    pictureBlend = [[GPUImagePicture alloc] initWithImage:imageBlend];
+    if (isFixedAspectBlend) {
+        CGSize blendSize = imageBlend.size;
+        
+        CGFloat ratioWidth = blendSize.width / picSize.width;
+        CGFloat ratioHeight = blendSize.height / picSize.height;
+        CGRect crop;
+        
+        CGFloat ratio = MIN(ratioWidth, ratioHeight);
+        CGSize newSize = CGSizeMake(blendSize.width / ratio, blendSize.height / ratio);
+        if (newSize.width > picSize.width) {
+            CGFloat sub = (newSize.width - picSize.width) / newSize.width;
+            crop = CGRectMake(sub/2.0, 0.0, 1.0-sub, 1.0);
+        } else {
+            CGFloat sub = (newSize.height - picSize.height) / newSize.height;
+            crop = CGRectMake(0.0, sub/2.0, 1.0, 1.0-sub);
+        }
+        
+        filterMain.blendRegion = crop;
+    }
     
     if (!buttonBlendNone.enabled) {
         buttonBlendNone.enabled = YES;
         buttonBlendWeak.enabled = NO;
+        filterMain.blendIntensity = 0.40;
     }
     
-    [self preparePipe];
-    [self applyFilterSetting];
+    
     [self processImage];
 }
 
@@ -1749,26 +1657,25 @@
     switch (tag) {
         case kBlendNone:
             buttonBlendNone.enabled = false;
+            filterMain.blendIntensity = 0;
             break;
         case kBlendWeak:
             buttonBlendWeak.enabled = false;
+            filterMain.blendIntensity = 0.4;
             break;
         case kBlendNormal:
             buttonBlendMedium.enabled = false;
+            filterMain.blendIntensity = 0.66;
             break;
         case kBlendStrong:
             buttonBlendStrong.enabled = false;
+            filterMain.blendIntensity = 0.90;
             break;
         default:
             break;
     }
     
-    //    if ((currentBlend == kBlendNone) != (tag == kBlendNone)) {
-    [self preparePipe];
-    //    }
     currentBlend = tag;
-    
-    [self applyFilterSetting];
     [self processImage];
 }
 
