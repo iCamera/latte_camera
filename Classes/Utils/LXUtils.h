@@ -42,4 +42,6 @@ typedef enum {
 + (void)globalShadow:(UIView*)view;
 + (void)setNationalityOfUser:(User *)user forImage:(UIImageView*)imageNationality nextToLabel:(UILabel*)label;
 
++(void)logMemUsage;
+
 @end

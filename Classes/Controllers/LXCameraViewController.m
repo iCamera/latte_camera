@@ -21,7 +21,6 @@
     LXFilterDetail *filter;
     LXFilterDOF *filterDOF;
     LXFilterFish *filterFish;
-    GPUImageAlphaBlendFilter *filterText;
     GPUImageCropFilter *blendCrop;
     GPUImagePinchDistortionFilter *filterDistord;
     GPUImageFilter *effect;
@@ -31,10 +30,6 @@
     GPUImagePicture *previewFilter;
     GPUImagePicture *pictureBlend;
     GPUImageRawDataInput *pictureDOF;
-    GPUImageUIElement *uiElement;
-    
-    UIView *uiWrap;
-    UILabel *timeLabel;
     
     CGSize picSize;
     CGSize previewUISize;
@@ -45,10 +40,6 @@
     NSMutableDictionary *imageMeta;
     NSTimer *timer;
     NSInteger timerCount;
-    CGSize keyboardSize;
-    CGPoint posText;
-    CGFloat mCurrentScale;
-    CGFloat mLastScale;
     
     BOOL isEditing;
     BOOL isSaved;
@@ -61,8 +52,6 @@
     NSInteger currentEffect;
     NSInteger currentLens;
     NSInteger currentTimer;
-    NSString *currentFont;
-    NSString *currentText;
     NSInteger currentMask;
     NSInteger currentBlend;
     NSInteger effectNum;
@@ -118,7 +107,6 @@
 @synthesize buttonSetNoTimer;
 @synthesize buttonSetTimer5s;
 @synthesize tapFocus;
-@synthesize tapCloseHelp;
 
 @synthesize buttonToggleFocus;
 @synthesize buttonToggleEffect;
@@ -147,13 +135,11 @@
 @synthesize buttonClose;
 @synthesize viewCameraWraper;
 @synthesize viewDraw;
-@synthesize scrollFont;
 @synthesize buttonToggleFisheye;
 
 @synthesize viewBasicControl;
 @synthesize viewFocusControl;
 @synthesize viewLensControl;
-@synthesize viewTextControl;
 @synthesize viewEffectControl;
 @synthesize viewBlendControl;
 
@@ -168,8 +154,6 @@
 @synthesize sliderClear;
 @synthesize sliderSaturation;
 @synthesize sliderFeather;
-
-@synthesize textText;
 
 @synthesize buttonUploadStatus;
 
@@ -238,35 +222,20 @@
     HUD.userInteractionEnabled = NO;
     
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
-    [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];
+    
     [nc addObserver:self selector:@selector(receiveLoggedIn:) name:@"LoggedIn" object:nil];
     [nc addObserver:self selector:@selector(uploaderSuccess:) name:@"LXUploaderSuccess" object:nil];
     [nc addObserver:self selector:@selector(uploaderFail:) name:@"LXUploaderFail" object:nil];
     [nc addObserver:self selector:@selector(uploaderProgress:) name:@"LXUploaderProgress" object:nil];
     
     scrollProcess.contentSize = CGSizeMake(384, 50);
-	// Do any additional setup after loading the view.
-    // Setup filter
-    uiWrap = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 480, 640)];
-    timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 600, 600)];
-    timeLabel.textAlignment = NSTextAlignmentCenter;
-    timeLabel.backgroundColor = [UIColor clearColor];
-    timeLabel.textColor = [UIColor whiteColor];
-    timeLabel.shadowColor = [UIColor blackColor];
-    timeLabel.shadowOffset = CGSizeMake(0, 1);
-    [uiWrap addSubview:timeLabel];
-    
+
     pipe = [[LXFilterPipe alloc] init];
     pipe.filters = [[NSMutableArray alloc] init];
     
     filter = [[LXFilterDetail alloc] init];
     pictureDOF = [[GPUImageRawDataInput alloc] initWithBytes:nil size:CGSizeMake(0, 0)];
-
-    filterText = [[GPUImageAlphaBlendFilter alloc] init];
-    filterText.mix = 1.0;
     
-    //    uiElement = [[GPUImageUIElement alloc] initWithView:uiWrap];
     videoCamera = [[LXStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionBack];
     [videoCamera setOutputImageOrientation:UIInterfaceOrientationPortrait];
     
@@ -443,30 +412,6 @@
     viewRoundProgess.progress = uploader.percent;
 }
 
-
-- (void)keyboardWillShow:(NSNotification *)notification
-{
-    keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-    isKeyboard = YES;
-    [self resizeCameraViewWithAnimation:YES];
-}
-
-- (void)keyboardWillHide:(NSNotification *)notification
-{
-    isKeyboard = NO;
-    [self resizeCameraViewWithAnimation:YES];
-}
-
--(BOOL)textFieldShouldReturn:(UITextField *)textField{
-    [textField resignFirstResponder];
-    return YES;
-}
-
-- (void)selectFont:(UIButton*)sender {
-    currentFont = sender.titleLabel.text;
-    [self newText];
-}
-
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
@@ -512,7 +457,6 @@
 
 - (void)preparePipe:(GPUImageOutput *)picture {
     filter = nil;
-    filterText = nil;
     filterFish = nil;
     filterDOF = nil;
     filterSharpen = nil;
@@ -580,42 +524,15 @@
             filterIntensity = [[GPUImageAlphaBlendFilter alloc] init];
             [pipe addFilter:filterIntensity];
         }
-        
-        if (textText.text.length > 0) {
-            [pipe addFilter:filterText];
-        }
-        
+                
         // AFTER THIS LINE, NO MORE ADDFILTER
         if (currentEffect != 0) {
             GPUImageFilter *tmp = pipe.filters[mark];
             [tmp addTarget:pipe.filters[mark+2]];
         }
         
-        // Two input filter has to be setup at last
-        GPUImageRotationMode imageViewRotationModeIdx1 = kGPUImageNoRotation;
-        
-        if (picture != nil) {
-            switch (imageOrientation) {
-                case UIImageOrientationLeft:
-                    imageViewRotationModeIdx1 = kGPUImageRotateRight;
-                    break;
-                case UIImageOrientationRight:
-                    imageViewRotationModeIdx1 = kGPUImageRotateLeft;
-                    break;
-                case UIImageOrientationDown:
-                    imageViewRotationModeIdx1 = kGPUImageRotate180;
-                    break;
-                case UIImageOrientationUp:
-                    imageViewRotationModeIdx1 = kGPUImageNoRotation;
-                    break;
-                default:
-                    imageViewRotationModeIdx1 = kGPUImageRotateLeft;
-                    break;
-            }
-        }
         
         if (buttonBlendNone.enabled) {
-            [screenBlend setInputRotation:imageViewRotationModeIdx1 atIndex:1];
             if (isFixedAspectBlend) {
                 [pictureBlend addTarget:blendCrop];
                 [blendCrop addTarget:screenBlend atTextureLocation:1];
@@ -625,13 +542,7 @@
         
         
         if (buttonBlurNone.enabled) {
-            [filterDOF setInputRotation:imageViewRotationModeIdx1 atIndex:1];
             [pictureDOF addTarget:filterDOF atTextureLocation:1];
-        }
-        
-        if (textText.text.length > 0) {
-            [filterText setInputRotation:imageViewRotationModeIdx1 atIndex:1];
-            [uiElement addTarget:filterText];
         }
     } else {
         GPUImageFilter *dummy = [[GPUImageFilter alloc] init];
@@ -728,10 +639,6 @@
     if (buttonBlurNone.enabled) {
         [pictureDOF processData];
     }
-    
-    //    if (currentText.length > 0) {
-    //        [uiElement update];
-    //    }
 }
 
 - (IBAction)setEffect:(id)sender {
@@ -1043,112 +950,142 @@
 }
 
 - (void)processRawAndSave:(void(^)())block {
-    @try {
-        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+#ifdef DEBUG
+    [LXUtils logMemUsage];
+#endif
+    CGImageRef cgImagePreviewFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:imageOrientation];
+    savedPreview = [UIImage imageWithCGImage:cgImagePreviewFromBytes];
+    CGImageRelease(cgImagePreviewFromBytes);
+#ifdef DEBUG
+    [LXUtils logMemUsage];
+#endif
+    [previewFilter removeAllTargets];
+    [(GPUImageFilter *)[pipe.filters lastObject] prepareForImageCapture];
+    
+    GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:capturedImage];
+    
+    [picture addTarget:pipe.filters[0] atTextureLocation:0];
+    
+    GPUImageRotationMode imageViewRotationModeIdx1 = kGPUImageNoRotation;
+    
+    if (picture != nil) {
+        switch (imageOrientation) {
+            case UIImageOrientationLeft:
+                imageViewRotationModeIdx1 = kGPUImageRotateRight;
+                break;
+            case UIImageOrientationRight:
+                imageViewRotationModeIdx1 = kGPUImageRotateLeft;
+                break;
+            case UIImageOrientationDown:
+                imageViewRotationModeIdx1 = kGPUImageRotate180;
+                break;
+            case UIImageOrientationUp:
+                imageViewRotationModeIdx1 = kGPUImageNoRotation;
+                break;
+            default:
+                imageViewRotationModeIdx1 = kGPUImageRotateLeft;
+                break;
+        }
+    }
+    
+    [[pipe.filters lastObject] removeAllTargets];
+    
+    [picture processImage];
+    if (buttonBlendNone.enabled) {
+        [screenBlend setInputRotation:imageViewRotationModeIdx1 atIndex:1];
+        [pictureBlend processImage];
+    }
+    if (buttonBlurNone.enabled) {
+        [filterDOF setInputRotation:imageViewRotationModeIdx1 atIndex:1];
+        [pictureDOF processData];
+    }
+    
+    // Save to Jpeg NSData
+    CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:imageOrientation];
+    NSData *jpeg = UIImageJPEGRepresentation([UIImage imageWithCGImage:cgImageFromBytes], 0.9);
+    CGImageRelease(cgImageFromBytes);
+#ifdef DEBUG
+    [LXUtils logMemUsage];
+#endif
+    
+    // Write EXIF to NSData
+    CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)jpeg, NULL);
+    
+    CFStringRef UTI = CGImageSourceGetType(source); //this is the type of image (e.g., public.jpeg)
+    
+    //this will be the data CGImageDestinationRef will write into
+    NSMutableData *dest_data = [NSMutableData data];
+    
+    CGImageDestinationRef destination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)dest_data,UTI,1,NULL);
+    
+    if(!destination) {
+        NSLog(@"***Could not create image destination ***");
+    } else {
         
-        CGImageRef cgImagePreviewFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:imageOrientation];
-        savedPreview = [UIImage imageWithCGImage:cgImagePreviewFromBytes];
-        CGImageRelease(cgImagePreviewFromBytes);
+        //add the image contained in the image source to the destination, overidding the old metadata with our modified metadata
+        CGImageDestinationAddImageFromSource(destination,source,0, (__bridge CFDictionaryRef) imageMeta);
         
-        GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:capturedImage];
+        //tell the destination to write the image data and metadata into our data object.
+        //It will return false if something goes wrong
+        BOOL success = NO;
+        success = CGImageDestinationFinalize(destination);
         
-        [self preparePipe:picture];
-        [self applyFilterSetting];
-        [(GPUImageFilter *)[pipe.filters lastObject] prepareForImageCapture];
+        if(!success) {
+            NSLog(@"***Could not create data from image destination ***");
+        }
         
-        [picture processImage];
+        //now we have the data ready to go, so do whatever you want with it
+        //here we just write it to disk at the same path we were passed
+        savedData = [NSData dataWithData:dest_data];
+        isSaved = true;
+        
+        //cleanup
+        
+        CFRelease(destination);
+    }
+    CFRelease(source);
+    
+    // Save now
+    block();
+    
+    [library writeImageDataToSavedPhotosAlbum:savedData metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
+        if (!error) {
+            HUD.mode = MBProgressHUDModeText;
+            HUD.labelText = NSLocalizedString(@"saved_photo", @"Saved to Camera Roll") ;
+            HUD.margin = 10.f;
+            HUD.yOffset = 150.f;
+            HUD.removeFromSuperViewOnHide = YES;
+            HUD.dimBackground = NO;
+            [HUD hide:YES afterDelay:2];
+            
+        } else {
+            HUD.mode = MBProgressHUDModeText;
+            HUD.labelText = NSLocalizedString(@"cannot_save_photo", @"Cannot save to Camera Roll") ;
+            HUD.margin = 10.f;
+            HUD.yOffset = 150.f;
+            HUD.removeFromSuperViewOnHide = YES;
+            HUD.dimBackground = NO;
+            [HUD hide:YES afterDelay:3];
+        }
+        
+        // Return to preview mode
+        [picture removeAllTargets];
+        [[pipe.filters lastObject] addTarget:pipe.output atTextureLocation:0];
+        [previewFilter addTarget:pipe.filters[0] atTextureLocation:0];
         if (buttonBlendNone.enabled) {
-            [pictureBlend processImage];
+            [screenBlend setInputRotation:kGPUImageNoRotation atIndex:1];
         }
         if (buttonBlurNone.enabled) {
-            [pictureDOF processData];
+            [filterDOF setInputRotation:kGPUImageNoRotation atIndex:1];
         }
         
-        // Save to Jpeg NSData
-        CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:imageOrientation];
-        NSData *jpeg = UIImageJPEGRepresentation([UIImage imageWithCGImage:cgImageFromBytes], 0.9);
-        CGImageRelease(cgImageFromBytes);
-        
-        
-        // Write EXIF to NSData
-        CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)jpeg, NULL);
-        
-        CFStringRef UTI = CGImageSourceGetType(source); //this is the type of image (e.g., public.jpeg)
-        
-        //this will be the data CGImageDestinationRef will write into
-        NSMutableData *dest_data = [NSMutableData data];
-        
-        CGImageDestinationRef destination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)dest_data,UTI,1,NULL);
-        
-        if(!destination) {
-            NSLog(@"***Could not create image destination ***");
-        } else {
-            
-            //add the image contained in the image source to the destination, overidding the old metadata with our modified metadata
-            CGImageDestinationAddImageFromSource(destination,source,0, (__bridge CFDictionaryRef) imageMeta);
-            
-            //tell the destination to write the image data and metadata into our data object.
-            //It will return false if something goes wrong
-            BOOL success = NO;
-            success = CGImageDestinationFinalize(destination);
-            
-            if(!success) {
-                NSLog(@"***Could not create data from image destination ***");
-            }
-            
-            //now we have the data ready to go, so do whatever you want with it
-            //here we just write it to disk at the same path we were passed
-            savedData = [NSData dataWithData:dest_data];
-            isSaved = true;
-            
-            //cleanup
-            
-            CFRelease(destination);
-        }
-        CFRelease(source);
-        
-        // Save now
-        block();
-        
-        [library writeImageDataToSavedPhotosAlbum:savedData metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
-            if (!error) {
-                //            [library addAssetURL:assetURL toAlbum:@"Latte camera" withCompletionBlock:^(NSError *error) {
-                //                TFLog(error.localizedDescription);
-                //            }];
-                HUD.mode = MBProgressHUDModeText;
-                HUD.labelText = NSLocalizedString(@"saved_photo", @"Saved to Camera Roll") ;
-                HUD.margin = 10.f;
-                HUD.yOffset = 150.f;
-                HUD.removeFromSuperViewOnHide = YES;
-                HUD.dimBackground = NO;
-                [HUD hide:YES afterDelay:2];
-                
-            } else {
-                HUD.mode = MBProgressHUDModeText;
-                HUD.labelText = NSLocalizedString(@"cannot_save_photo", @"Cannot save to Camera Roll") ;
-                HUD.margin = 10.f;
-                HUD.yOffset = 150.f;
-                HUD.removeFromSuperViewOnHide = YES;
-                HUD.dimBackground = NO;
-                [HUD hide:YES afterDelay:3];
-            }
-            
-            // Return to preview mode
-            [picture removeAllTargets];
-            [self preparePipe];
-        }];
-    }
-    @catch (NSException *exception) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                        message:exception.debugDescription
-                                                       delegate:nil
-                                              cancelButtonTitle:@"Close"
-                                              otherButtonTitles:nil];
-        [alert show];
-    }
-    @finally {
-        
-    }
+#ifdef DEBUG
+        [LXUtils logMemUsage];
+#endif
+    }];
+    
 }
 
 - (IBAction)toggleControl:(UIButton*)sender {
@@ -1250,7 +1187,6 @@
     CGRect frameBasic = viewBasicControl.frame;
     CGRect frameLens = viewLensControl.frame;
     CGRect frameTopBar = viewTopBar.frame;
-    CGRect frameText = viewTextControl.frame;
     CGRect frameCanvas;
     CGRect frameBlend = viewBlendControl.frame;
     
@@ -1264,7 +1200,7 @@
         posBottom = 480 - 50;
     }
     
-    frameEffect.origin.y = frameBokeh.origin.y = frameBasic.origin.y = frameLens.origin.y = frameText.origin.y = frameBlend.origin.y =  posBottom;
+    frameEffect.origin.y = frameBokeh.origin.y = frameBasic.origin.y = frameLens.origin.y = frameBlend.origin.y =  posBottom;
     
     switch (currentTab) {
         case kTabBokeh:
@@ -1278,12 +1214,6 @@
             break;
         case kTabBasic:
             frameBasic.origin.y = posBottom - 110;
-            break;
-        case kTabText:
-            if (isKeyboard)
-                frameText.origin.y = posBottom - keyboardSize.height + 20;
-            else
-                frameText.origin.y = posBottom - 140;
             break;
         case kTabBlend:
             frameBlend.origin.y = posBottom - 110;
@@ -1305,9 +1235,6 @@
         if (currentTab != kTabPreview) {
             if ((currentTab == kTabText) && (!isKeyboard))
                 height -= 140;
-            else if ((currentTab == kTabText) && (isKeyboard)) {
-                height -= keyboardSize.height - 20;
-            }
             else
                 height -= 110;
         }
@@ -1354,7 +1281,6 @@
         viewBasicControl.frame = frameBasic;
         viewLensControl.frame = frameLens;
         viewCameraWraper.frame = frame;
-        viewTextControl.frame = frameText;
         viewTopBar.frame = frameTopBar;
         viewCanvas.frame = frameCanvas;
         viewBlendControl.frame = frameBlend;
@@ -1452,7 +1378,6 @@
     
     buttonBlurNone.enabled = false;
     
-    [textText resignFirstResponder];
     [locationManager startUpdatingLocation];
     
     
@@ -1489,10 +1414,7 @@
 - (void)switchEditImage {
     // Reset to normal lens
     [self resetSetting];
-    currentFont = @"Arial";
-    posText = CGPointMake(0.1, 0.5);
-    textText.text = @"";
-    currentText = @"";
+
     isWatingToUpload = NO;
     pictureBlend = nil;
     currentBlend = kBlendNone;
@@ -1500,11 +1422,6 @@
     //    isFixedAspectBlend = NO;
     
     //    uiWrap.frame = CGRectMake(0, 0, previewSize.width, previewSize.height);
-    timeLabel.center = uiWrap.center;
-    
-    
-    mCurrentScale = 1.0;
-    mLastScale = 1.0;
     
     currentLens = 0;
     currentMask = kMaskBlurNone;
@@ -1610,8 +1527,6 @@
     buttonBlendMedium.enabled = true;
     buttonBlendStrong.enabled = true;
     buttonBlendWeak.enabled = true;
-    textText.text = @"";
-    currentText = @"";
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -1749,41 +1664,6 @@
     [self processImage];
 }
 
-- (IBAction)textChange:(UITextField *)sender {
-    [self newText];
-}
-
-
-- (IBAction)pinchCamera:(UIPinchGestureRecognizer *)sender {
-    if (textText.text.length > 0) {
-        mCurrentScale += [sender scale] - mLastScale;
-        mLastScale = [sender scale];
-        
-        if (sender.state == UIGestureRecognizerStateEnded)
-        {
-            mLastScale = 1.0;
-        }
-        
-        timeLabel.layer.transform = CATransform3DMakeScale(mCurrentScale, mCurrentScale, 1.0);
-        
-        //        filterText.scale = mCurrentScale-0.7;
-        [self applyFilterSetting];
-        [self processImage];
-    }
-}
-
-- (IBAction)panCamera:(UIPanGestureRecognizer *)sender {
-    if (textText.text.length > 0) {
-        CGPoint translation = [sender translationInView:viewCamera];
-        
-        CGPoint center = CGPointMake(timeLabel.center.x + translation.x, timeLabel.center.y + translation.y);
-        timeLabel.center = center;
-        
-        [self processImage];
-        [sender setTranslation:CGPointMake(0, 0) inView:viewCamera];
-    }
-}
-
 - (void)toggleBlending:(UIButton *)sender {
     NSString *blendPic;
     NSInteger blendid;
@@ -1892,18 +1772,6 @@
     [self processImage];
 }
 
-- (void)newText {
-    if (textText.text.length > 0) {
-        timeLabel.text = textText.text;
-        timeLabel.font = [UIFont fontWithName:currentFont size:100.0];
-    }
-    if ((currentText.length > 0) != (textText.text.length > 0)) {
-        [self preparePipe:NO];
-    }
-    currentText = textText.text;
-    [self applyFilterSetting];
-    [self processImage];
-}
 
 - (void)countDown:(id)sender {
     if (timerCount == 0) {

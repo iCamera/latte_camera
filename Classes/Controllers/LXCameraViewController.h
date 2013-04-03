@@ -67,7 +67,7 @@ typedef enum {
 - (void)imagePickerControllerDidCancel:(LXCameraViewController *)picker;
 @end
 
-@interface LXCameraViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, UIScrollViewDelegate, UIAccelerometerDelegate, LXDrawViewDelegate, UIAlertViewDelegate, UITextFieldDelegate, UINavigationControllerDelegate>
+@interface LXCameraViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, UIScrollViewDelegate, UIAccelerometerDelegate, LXDrawViewDelegate, UIAlertViewDelegate, UINavigationControllerDelegate>
 @property (weak, nonatomic) id <LXImagePickerDelegate> delegate;
 
 @property (strong, nonatomic) IBOutlet UIView *viewBottomBar;
@@ -89,7 +89,6 @@ typedef enum {
 
 @property (strong, nonatomic) IBOutlet UIPanGestureRecognizer *gesturePan;
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapFocus;
-@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapCloseHelp;
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonSetNoTimer;
 @property (strong, nonatomic) IBOutlet UIButton *buttonSetTimer5s;
@@ -97,7 +96,6 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIView *viewFocusControl;
 @property (strong, nonatomic) IBOutlet UIView *viewLensControl;
 @property (strong, nonatomic) IBOutlet UIView *viewBasicControl;
-@property (strong, nonatomic) IBOutlet UIView *viewTextControl;
 @property (strong, nonatomic) IBOutlet UIView *viewEffectControl;
 @property (strong, nonatomic) IBOutlet UIView *viewBlendControl;
 
@@ -140,10 +138,8 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UISlider *sliderSaturation;
 @property (strong, nonatomic) IBOutlet UISlider *sliderFeather;
 @property (strong, nonatomic) IBOutlet UISlider *sliderEffectIntensity;
-@property (strong, nonatomic) IBOutlet UIScrollView *scrollFont;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollProcess;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollBlend;
-@property (strong, nonatomic) IBOutlet UITextField *textText;
 @property (strong, nonatomic) IBOutlet UIButton *buttonToggleFisheye;
 @property (strong, nonatomic) IBOutlet UIView *viewShoot;
 @property (strong, nonatomic) IBOutlet UIButton *buttonUploadStatus;
@@ -171,9 +167,6 @@ typedef enum {
 - (IBAction)toggleGain:(UISwitch*)sender;
 - (IBAction)changePen:(UISlider *)sender;
 - (IBAction)updateFilter:(id)sender;
-- (IBAction)textChange:(UITextField *)sender;
-- (IBAction)pinchCamera:(UIPinchGestureRecognizer *)sender;
-- (IBAction)panCamera:(UIPanGestureRecognizer *)sender;
 - (IBAction)toggleFisheye:(UIButton *)sender;
 - (IBAction)setBlend:(UIButton *)sender;
 - (IBAction)touchUploadStatus:(id)sender;

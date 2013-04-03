@@ -43,8 +43,6 @@
                                         <gestureRecognizers/>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="xJy-95-QrG" appends="YES" id="dld-c5-tfJ"/>
-                                            <outletCollection property="gestureRecognizers" destination="qz4-Fk-CJs" appends="YES" id="UTZ-cS-wuW"/>
-                                            <outletCollection property="gestureRecognizers" destination="PxM-is-zRB" appends="YES" id="Y2R-aB-OjN"/>
                                         </connections>
                                     </view>
                                     <view hidden="YES" multipleTouchEnabled="YES" alpha="0.80000001192092896" contentMode="scaleToFill" id="hpW-DZ-zhc" userLabel="Subject Mask" customClass="LXDrawView">
@@ -642,29 +640,6 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.21960784310000001" green="0.19215686269999999" blue="0.1137254902" alpha="0.90000000000000002" colorSpace="deviceRGB"/>
                             </view>
-                            <view contentMode="scaleToFill" id="m9D-5d-ziR" userLabel="Text Control">
-                                <rect key="frame" x="0.0" y="430" width="320" height="140"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <subviews>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="pSD-2w-ugh">
-                                        <rect key="frame" x="0.0" y="30" width="320" height="110"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    </scrollView>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Edit text" minimumFontSize="17" id="dCU-pi-oVr">
-                                        <rect key="frame" x="10" y="0.0" width="300" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
-                                        <connections>
-                                            <action selector="textChange:" destination="IgC-G0-Nfq" eventType="editingChanged" id="3LG-Tu-NAM"/>
-                                            <outlet property="delegate" destination="IgC-G0-Nfq" id="neK-g8-Aqs"/>
-                                        </connections>
-                                    </textField>
-                                </subviews>
-                                <color key="backgroundColor" red="0.21960784310000001" green="0.19215686269999999" blue="0.1137254902" alpha="0.90000000000000002" colorSpace="deviceRGB"/>
-                            </view>
                             <view contentMode="scaleToFill" id="kjh-UH-FO0" userLabel="Effect Control">
                                 <rect key="frame" x="0.0" y="430" width="320" height="110"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -997,7 +972,6 @@
                         <outlet property="imageAutoFocus" destination="Dph-6M-o6N" id="Raq-rz-KzU"/>
                         <outlet property="scrollBlend" destination="Jqe-oV-WUx" id="yuA-R6-fqH"/>
                         <outlet property="scrollEffect" destination="EDY-bj-4DP" id="ZFj-H6-qG4"/>
-                        <outlet property="scrollFont" destination="pSD-2w-ugh" id="I2W-rB-4y6"/>
                         <outlet property="scrollProcess" destination="bgp-m6-lzX" id="lEc-Dw-VNa"/>
                         <outlet property="sliderClear" destination="NDR-PH-ubg" id="rWH-WW-del"/>
                         <outlet property="sliderEffectIntensity" destination="9Fr-lg-rCi" id="xH8-Dr-vc6"/>
@@ -1007,9 +981,7 @@
                         <outlet property="sliderSharpness" destination="Q7l-eD-IbM" id="Mdm-3C-yRR"/>
                         <outlet property="sliderVignette" destination="biM-cn-8dS" id="doL-7N-KXf"/>
                         <outlet property="switchGain" destination="ouN-2N-Jdj" id="bZd-YB-ARu"/>
-                        <outlet property="tapCloseHelp" destination="whq-WV-dAf" id="daQ-PH-hiA"/>
                         <outlet property="tapFocus" destination="xJy-95-QrG" id="xQa-S7-F8b"/>
-                        <outlet property="textText" destination="dCU-pi-oVr" id="sIX-yI-Ogk"/>
                         <outlet property="viewBasicControl" destination="Si4-ZE-zrG" id="enc-xx-htL"/>
                         <outlet property="viewBlendControl" destination="yLN-6N-gZo" id="CxB-hj-h2k"/>
                         <outlet property="viewBottomBar" destination="bsd-t5-Sua" id="Ehq-cT-14B"/>
@@ -1021,7 +993,6 @@
                         <outlet property="viewFocusControl" destination="5mh-bT-j1F" id="Wux-Av-av9"/>
                         <outlet property="viewLensControl" destination="1bf-pp-x9U" id="5g3-HD-uxM"/>
                         <outlet property="viewShoot" destination="bXE-0i-oTy" id="FKL-3p-Wgh"/>
-                        <outlet property="viewTextControl" destination="m9D-5d-ziR" id="T79-hn-vRw"/>
                         <outlet property="viewTimer" destination="aDS-ai-Jir" id="aOv-Fb-ArC"/>
                         <outlet property="viewTopBar" destination="5gH-Jh-hXY" id="R3T-cH-lgj"/>
                         <outlet property="viewTopBar35" destination="oyh-wm-SK5" id="vxg-29-J6P"/>
@@ -1041,23 +1012,6 @@
                     </connections>
                 </tapGestureRecognizer>
                 <tapGestureRecognizer enabled="NO" id="fyN-OV-Nho"/>
-                <tapGestureRecognizer enabled="NO" id="whq-WV-dAf" userLabel="Tap Gesture Recognizer Close Help">
-                    <connections>
-                        <action selector="touchCloseHelp:" destination="IgC-G0-Nfq" id="Tsx-R0-QFt"/>
-                    </connections>
-                </tapGestureRecognizer>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="qz4-Fk-CJs" userLabel="Pan Camera">
-                    <connections>
-                        <action selector="panCamera:" destination="IgC-G0-Nfq" id="4vg-lo-YA7"/>
-                        <outlet property="delegate" destination="IgC-G0-Nfq" id="FaA-go-Exv"/>
-                    </connections>
-                </panGestureRecognizer>
-                <pinchGestureRecognizer id="PxM-is-zRB" userLabel="Pinch Camera">
-                    <connections>
-                        <action selector="pinchCamera:" destination="IgC-G0-Nfq" id="L0f-tl-uja"/>
-                        <outlet property="delegate" destination="IgC-G0-Nfq" id="Sbt-0E-b3g"/>
-                    </connections>
-                </pinchGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-2424" y="-31"/>
         </scene>
@@ -1203,14 +1157,10 @@
                 <relationship kind="action" name="close:"/>
                 <relationship kind="action" name="flipCamera:"/>
                 <relationship kind="action" name="openImagePicker:"/>
-                <relationship kind="action" name="panCamera:" candidateClass="UIPanGestureRecognizer"/>
                 <relationship kind="action" name="panTarget:" candidateClass="UIPanGestureRecognizer"/>
-                <relationship kind="action" name="pinchCamera:" candidateClass="UIPinchGestureRecognizer"/>
                 <relationship kind="action" name="setBlend:" candidateClass="UIButton"/>
-                <relationship kind="action" name="setEffect:"/>
                 <relationship kind="action" name="setMask:" candidateClass="UIButton"/>
                 <relationship kind="action" name="setTimer:"/>
-                <relationship kind="action" name="textChange:" candidateClass="UITextField"/>
                 <relationship kind="action" name="toggleControl:" candidateClass="UIButton"/>
                 <relationship kind="action" name="toggleFisheye:" candidateClass="UIButton"/>
                 <relationship kind="action" name="toggleGain:" candidateClass="UISwitch"/>
@@ -1249,6 +1199,7 @@
                 <relationship kind="outlet" name="buttonToggleBasic" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonToggleBlend" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonToggleEffect" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonToggleFisheye" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonToggleFocus" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonToggleLens" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonToggleText" candidateClass="UIButton"/>
@@ -1258,7 +1209,6 @@
                 <relationship kind="outlet" name="imageAutoFocus" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="scrollBlend" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="scrollEffect" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="scrollFont" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="scrollProcess" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="sliderClear" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="sliderEffectIntensity" candidateClass="UISlider"/>
@@ -1268,9 +1218,7 @@
                 <relationship kind="outlet" name="sliderSharpness" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="sliderVignette" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="switchGain" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="tapCloseHelp" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="outlet" name="tapFocus" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="outlet" name="textText" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="viewBasicControl" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewBlendControl" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewBottomBar" candidateClass="UIView"/>
@@ -1282,7 +1230,6 @@
                 <relationship kind="outlet" name="viewFocusControl" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewLensControl" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewShoot" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewTextControl" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewTimer" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewTopBar" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewTopBar35" candidateClass="UIView"/>
