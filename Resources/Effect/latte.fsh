@@ -144,6 +144,10 @@ void main()
     // Vignette
     textureColor.rgb *= vignette();
 
+    // Saturation
+    luminance = dot(textureColor.rgb, luminanceWeighting);
+    textureColor = vec4(mix(vec3(luminance), textureColor.rgb, saturation), textureColor.a);
+
     // Overlay
     if (clearness > 0.0) {
         if (textureColor.r < 0.5) {
@@ -176,9 +180,6 @@ void main()
      
     textureColor = vec4(mix(textureColor.rgb, vec3(redCurveValue, greenCurveValue, blueCurveValue), toneIntensity), textureColor.a);
 
-    // Saturation
-    luminance = dot(textureColor.rgb, luminanceWeighting);
-    textureColor = vec4(mix(vec3(luminance), textureColor.rgb, saturation), textureColor.a);
     // End
     gl_FragColor = textureColor;
 }

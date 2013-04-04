@@ -48,6 +48,7 @@
     BOOL isWatingToUpload;
     BOOL isBackCamera;
     BOOL isPicFromCamera;
+    BOOL didBackupPic;
     
     NSInteger currentLens;
     NSInteger currentTimer;
@@ -233,6 +234,7 @@
     pipe = [[LXFilterPipe alloc] init];
     pipe.filters = [[NSMutableArray alloc] init];
     filterMain = [[LXImageFilter alloc] init];
+    filterSharpen = [[GPUImageSharpenFilter alloc] init];
     
     videoCamera = [[LXStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionBack];
     [videoCamera setOutputImageOrientation:UIInterfaceOrientationPortrait];
@@ -453,14 +455,11 @@
 
 - (void)preparePipe {
     filterFish = nil;
-    filterSharpen = nil;
     filterDistord = nil;
     
     if (isEditing) {
-        [previewFilter removeAllTargets];
-        [filterMain removeAllTargets];
         [pipe removeAllFilters];
-
+        
         pipe.input = previewFilter;
         pipe.output = viewCamera;
         
@@ -475,12 +474,9 @@
         }
         
         [pipe addFilter:filterMain];
-        
-        filterSharpen = [[GPUImageSharpenFilter alloc] init];
         [pipe addFilter:filterSharpen];
         
     } else {
-        [filterFish removeAllTargets];
         pipe.input = videoCamera;
         pipe.output = viewCamera;
         [pipe removeAllFilters];
@@ -534,6 +530,7 @@
 - (IBAction)setEffect:(id)sender {
     UIButton* buttonEffect = (UIButton*)sender;
     filterMain.toneCurve = effectCurve[buttonEffect.tag];
+    [self applyFilterSetting];
     [self processImage];
 }
 
@@ -615,11 +612,10 @@
             
             isPicFromCamera = true;
             [self resetSetting];
-            [self initPreviewPic];
+//            [self initPreviewPic];
             [self switchEditImage];
             [self resizeCameraViewWithAnimation:YES];
 
-            [self preparePipe];
             [self preparePipe];
             
             [self applyFilterSetting];
@@ -827,9 +823,10 @@
     [imageMeta setObject:dictForTIFF forKey:(NSString *)kCGImagePropertyTIFFDictionary];
     
     // If this is new photo save original pic first, and then process
-    if (isPicFromCamera) {
+    if (isPicFromCamera && !didBackupPic) {
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
         [library writeImageToSavedPhotosAlbum:capturedImage.CGImage metadata:imageMeta completionBlock:^(NSURL *assetURL, NSError *error) {
+            didBackupPic = true;
             [self processRawAndSave:^{
                 block();
             }];
@@ -851,8 +848,6 @@
     
     [previewFilter removeAllTargets];
     [(GPUImageFilter *)[pipe.filters lastObject] prepareForImageCapture];
-    
-
     
     GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:capturedImage];
 
@@ -951,9 +946,7 @@
         }
         
         // Return to preview mode
-        [picture removeAllTargets];
-        [[pipe.filters lastObject] addTarget:pipe.output atTextureLocation:0];
-        [previewFilter addTarget:pipe.filters[0] atTextureLocation:0];
+        [self preparePipe];
         filterMain.blendRotation = kGPUImageNoRotation;
     }];
     
@@ -1285,6 +1278,7 @@
 
 - (void)switchEditImage {
     isWatingToUpload = NO;
+    didBackupPic = NO;
 
     currentBlend = kBlendNone;
     [self setBlendImpl:kBlendNone];
@@ -1334,14 +1328,17 @@
 }
 
 - (void)initPreviewPic {
-    [previewFilter addTarget:filterMain];
+    [previewFilter removeAllTargets];
     for (NSInteger i = 0; i < effectNum; i++) {
-        [filterMain removeAllTargets];
+        LXImageFilter *filterSample = [[LXImageFilter alloc] init];
+        filterSample.toneCurve = effectCurve[i];
+
         GPUImageView *effectView = effectPreview[i];
-        filterMain.toneCurve = effectCurve[i];
-        [filterMain addTarget:effectView];
-        [previewFilter processImage];
+        [previewFilter addTarget:filterSample];
+        [filterSample addTarget:effectView];
     }
+    [previewFilter processImage];
+    [previewFilter removeAllTargets];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(NSDictionary *)info {
