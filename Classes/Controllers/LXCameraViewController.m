@@ -13,12 +13,11 @@
 #import "LXUploadObject.h"
 #import "UIDeviceHardware.h"
 #import "UIDeviceHardware.h"
-#import "LXFilterPipe.h"
 #import "LXFilterFish.h"
-#import "GPUImagePicture+updateImage.h"
 #import "LXShare.h"
 #import "RDActionSheet.h"
 #import "LXImageFilter.h"
+#import "LXImageLens.h"
 
 
 #define kAccelerometerFrequency        10.0 //Hz
@@ -26,15 +25,14 @@
 @interface LXCameraViewController ()  {
     LXStillCamera *videoCamera;
     GPUImageSharpenFilter *filterSharpen;
-    LXFilterPipe *pipe;
+    GPUImageFilterPipeline *pipe;
     LXFilterFish *filterFish;
-    GPUImagePinchDistortionFilter *filterDistord;
     LXImageFilter *filterMain;
+    LXImageLens *filterLens;
     
     GPUImagePicture *previewFilter;
     
     CGSize picSize;
-    CGSize previewUISize;
     
     UIActionSheet *sheet;
     
@@ -231,10 +229,9 @@
     
     scrollProcess.contentSize = CGSizeMake(320, 50);
 
-    pipe = [[LXFilterPipe alloc] init];
+    pipe = [[GPUImageFilterPipeline alloc] init];
     pipe.filters = [[NSMutableArray alloc] init];
     filterMain = [[LXImageFilter alloc] init];
-    filterSharpen = [[GPUImageSharpenFilter alloc] init];
     
     videoCamera = [[LXStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionBack];
     [videoCamera setOutputImageOrientation:UIInterfaceOrientationPortrait];
@@ -340,7 +337,7 @@
     scrollEffect.contentSize = CGSizeMake(effectNum*75+10, 70);
     
     
-    for (int i=0; i < 2; i++) {
+    for (int i=0; i < 4; i++) {
         UILabel *labelBlend = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 10)];
         labelBlend.backgroundColor = [UIColor clearColor];
         labelBlend.textColor = [UIColor whiteColor];
@@ -365,6 +362,12 @@
                 break;
             case 1:
                 labelBlend.text = @"Circle";
+                break;
+            case 2:
+                labelBlend.text = @"Lightblur";
+                break;
+            case 3:
+                labelBlend.text = @"Grain";
                 break;
         }
         
@@ -452,20 +455,31 @@
     app.controllerCamera = nil;
 }
 
-
 - (void)preparePipe {
+    [self preparePipe:nil];
+}
+
+
+- (void)preparePipe:(GPUImagePicture*)source {
     filterFish = nil;
-    filterDistord = nil;
+    filterLens = nil;
     
     if (isEditing) {
         [pipe removeAllFilters];
         
-        pipe.input = previewFilter;
-        pipe.output = viewCamera;
+        if (source != nil) {
+            pipe.input = source;
+            pipe.output = nil;
+        }
+        else {
+            [previewFilter removeAllTargets];
+            pipe.input = previewFilter;
+            pipe.output = viewCamera;
+        }
         
         if (!buttonLensWide.enabled) {
-            filterDistord = [[GPUImagePinchDistortionFilter alloc] init];
-            [pipe addFilter:filterDistord];
+            filterLens = [[LXImageLens alloc] init];
+            [pipe addFilter:filterLens];
         }
         
         if (!buttonLensFish.enabled) {
@@ -473,7 +487,10 @@
             [pipe addFilter:filterFish];
         }
         
+        [filterMain removeAllTargets];
         [pipe addFilter:filterMain];
+        
+        filterSharpen = [[GPUImageSharpenFilter alloc] init];
         [pipe addFilter:filterSharpen];
         
     } else {
@@ -509,12 +526,6 @@
         filterMain.blendIntensity = 0.90;
     }
     
-    
-    if (!buttonLensWide.enabled) {
-        filterDistord.scale = 0.3;
-        filterDistord.radius = 1.0;
-    }
-    
     if (switchGain.on)
         filterMain.gain = 2.0;
     else
@@ -527,10 +538,9 @@
     [previewFilter processImage];
 }
 
-- (IBAction)setEffect:(id)sender {
+- (void)setEffect:(id)sender {
     UIButton* buttonEffect = (UIButton*)sender;
     filterMain.toneCurve = effectCurve[buttonEffect.tag];
-    [self applyFilterSetting];
     [self processImage];
 }
 
@@ -604,23 +614,16 @@
             imageOrientation = capturedImage.imageOrientation;
             
             picSize = capturedImage.size;
-            previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:capturedImage.size.width height:capturedImage.size.height]);
+            CGSize previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:capturedImage.size.width height:capturedImage.size.height]);
             
             UIImage *previewPic = [LXCameraViewController imageWithImage:capturedImage scaledToSize:previewUISize];
+            savedPreview = previewPic;
             
             previewFilter = [[GPUImagePicture alloc] initWithImage:previewPic];
             
             isPicFromCamera = true;
-            [self resetSetting];
-//            [self initPreviewPic];
-            [self switchEditImage];
-            [self resizeCameraViewWithAnimation:YES];
 
-            [self preparePipe];
-            
-            [self applyFilterSetting];
-            [self processImage];
-            buttonReset.enabled = false;
+            [self switchEditImage];
         }
         
         buttonCapture.enabled = true;
@@ -839,17 +842,15 @@
 }
 
 - (void)processRawAndSave:(void(^)())block {
-    
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-
     CGImageRef cgImagePreviewFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:imageOrientation];
     savedPreview = [UIImage imageWithCGImage:cgImagePreviewFromBytes];
     CGImageRelease(cgImagePreviewFromBytes);
     
-    [previewFilter removeAllTargets];
-    [(GPUImageFilter *)[pipe.filters lastObject] prepareForImageCapture];
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     
     GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:capturedImage];
+    [self preparePipe:picture];
+    [self applyFilterSetting];
 
     GPUImageRotationMode imageViewRotationModeIdx1 = kGPUImageNoRotation;
 
@@ -872,15 +873,14 @@
     }
     filterMain.blendRotation = imageViewRotationModeIdx1;
 
-    [picture addTarget:pipe.filters[0] atTextureLocation:0];
-    
-    [[pipe.filters lastObject] removeAllTargets];
+    [(GPUImageFilter *)[pipe.filters lastObject] prepareForImageCapture];
     
     [picture processImage];
     
     // Save to Jpeg NSData
     CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:imageOrientation];
-    NSData *jpeg = UIImageJPEGRepresentation([UIImage imageWithCGImage:cgImageFromBytes], 0.9);
+    UIImage *outputImage = [UIImage imageWithCGImage:cgImageFromBytes];
+    NSData *jpeg = UIImageJPEGRepresentation(outputImage, 0.9);
     CGImageRelease(cgImageFromBytes);
     
     // Write EXIF to NSData
@@ -947,6 +947,8 @@
         
         // Return to preview mode
         [self preparePipe];
+        [self applyFilterSetting];
+        [self processImage];
         filterMain.blendRotation = kGPUImageNoRotation;
     }];
     
@@ -1177,6 +1179,8 @@
     
     ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset)
     {
+        [picker dismissViewControllerAnimated:NO completion:nil];
+        
         bestEffortAtLocation = nil;
         imageMeta = [NSMutableDictionary dictionaryWithDictionary:myasset.defaultRepresentation.metadata];
         
@@ -1186,23 +1190,14 @@
         picSize = capturedImage.size;
         
         //
-        previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:capturedImage.size.width height:capturedImage.size.height]);
-        
+        CGSize previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:capturedImage.size.width height:capturedImage.size.height]);
         UIImage *previewPic = [LXCameraViewController imageWithImage:capturedImage scaledToSize:previewUISize];
+        savedPreview = previewPic;
         
         previewFilter = [[GPUImagePicture alloc] initWithImage:previewPic];
         isPicFromCamera = false;
-        [self resetSetting];
-        [self initPreviewPic];
+
         [self switchEditImage];
-        
-        [picker dismissViewControllerAnimated:NO completion:nil];
-        
-        [self resizeCameraViewWithAnimation:NO];
-        [self preparePipe];
-        [self applyFilterSetting];
-        [self processImage];
-        buttonReset.enabled = false;
     };
     
     //
@@ -1277,6 +1272,9 @@
 }
 
 - (void)switchEditImage {
+    [self resetSetting];
+    [self initPreviewPic];
+
     isWatingToUpload = NO;
     didBackupPic = NO;
 
@@ -1325,6 +1323,18 @@
     
     buttonReset.hidden = false;
     currentTab = kTabEffect;
+    
+    buttonReset.enabled = false;
+    
+    [self resizeCameraViewWithAnimation:YES];
+    [self preparePipe];
+    [self applyFilterSetting];
+    [self processImage];
+    
+    //Hacky
+    [self preparePipe];
+    [self applyFilterSetting];
+    [self processImage];
 }
 
 - (void)initPreviewPic {
@@ -1338,7 +1348,6 @@
         [filterSample addTarget:effectView];
     }
     [previewFilter processImage];
-    [previewFilter removeAllTargets];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(NSDictionary *)info {
@@ -1548,6 +1557,18 @@
             blendid = 1 + rand() % 35;
             blendPic = [NSString stringWithFormat:@"bokehcircle-%d.jpg", blendid];
             break;
+        case 2:
+            isFixedAspectBlend = YES;
+            blendid = 1 + rand() % 25;
+            blendPic = [NSString stringWithFormat:@"lightblur-%d.JPG", blendid];
+            break;
+
+        case 3:
+            isFixedAspectBlend = YES;
+            blendid = 1 + rand() % 4;
+            blendPic = [NSString stringWithFormat:@"print%d.jpg", blendid];
+            break;
+
         default:
             break;
     }

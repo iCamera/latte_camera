@@ -178,6 +178,7 @@ typedef enum {
 }
 
 - (void)composeViewController:(REComposeViewController *)composeViewController didFinishWithResult:(REComposeResult)result {
+    [composeViewController dismissViewControllerAnimated:YES completion:nil];
     switch (result)
     {
         case REComposeResultCancelled:
@@ -204,25 +205,22 @@ typedef enum {
                 }
                 
                 if (imageData) {
-                    [FBRequestConnection startWithGraphPath:@"me/photos"
-                                                 parameters:params
-                                                 HTTPMethod:@"POST"
-                                          completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-                                               if (!error)
-                                               {
-                                                   [self completionResult:typeDone];
-                                               }
-                                               else
-                                               {
-                                                   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                                                   message:error.localizedDescription
-                                                                                                  delegate:nil
-                                                                                         cancelButtonTitle:@"Close"
-                                                                                         otherButtonTitles:nil];
-                                                   [alert show];
-                                                   [self completionResult:typeCanceled];
-                                               }
-                                           }];
+                    [FBRequestConnection startForUploadPhoto:[UIImage imageWithData:imageData] completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                        if (!error)
+                        {
+                            [self completionResult:typeDone];
+                        }
+                        else
+                        {
+                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                            message:error.localizedDescription
+                                                                           delegate:nil
+                                                                  cancelButtonTitle:@"Close"
+                                                                  otherButtonTitles:nil];
+                            [alert show];
+                            [self completionResult:typeCanceled];
+                        }
+                    }];
                 } else {
                     [FBRequestConnection startWithGraphPath:@"me/feed"
                                                  parameters:params

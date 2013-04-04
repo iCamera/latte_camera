@@ -99,7 +99,7 @@ NSString *const kLXFisheyeFragment = SHADER_STRING
         {
             [self setAspectRatio:(inputTextureSize.height / inputTextureSize.width)];
         }
-        CGFloat tmp = MAX(inputTextureSize.width, inputTextureSize.height) / inputTextureSize.width - 0.125;
+        CGFloat tmp = MAX(inputTextureSize.width, inputTextureSize.height) / inputTextureSize.width - 0.075;
         [self setRadius:tmp/2.0];
     }
 }
