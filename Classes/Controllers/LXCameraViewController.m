@@ -14,7 +14,6 @@
 #import "UIDeviceHardware.h"
 #import "UIDeviceHardware.h"
 #import "LXFilterPipe.h"
-#import "LXFilterDOF.h"
 #import "LXFilterFish.h"
 #import "GPUImagePicture+updateImage.h"
 #import "LXShare.h"
@@ -29,12 +28,10 @@
     GPUImageSharpenFilter *filterSharpen;
     LXFilterPipe *pipe;
     LXFilterFish *filterFish;
-    LXFilterDOF *filterDOF;
     GPUImagePinchDistortionFilter *filterDistord;
     LXImageFilter *filterMain;
     
     GPUImagePicture *previewFilter;
-    GPUImageRawDataInput *pictureDOF;
     
     CGSize picSize;
     CGSize previewUISize;
@@ -236,8 +233,6 @@
     pipe = [[LXFilterPipe alloc] init];
     pipe.filters = [[NSMutableArray alloc] init];
     filterMain = [[LXImageFilter alloc] init];
-    
-    pictureDOF = [[GPUImageRawDataInput alloc] initWithBytes:nil size:CGSizeMake(0, 0)];
     
     videoCamera = [[LXStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionBack];
     [videoCamera setOutputImageOrientation:UIInterfaceOrientationPortrait];
@@ -457,30 +452,32 @@
 
 
 - (void)preparePipe {
-
     filterFish = nil;
-
     filterSharpen = nil;
     filterDistord = nil;
     
     if (isEditing) {
-        if (pictureDOF != nil) {
-            [pictureDOF removeAllTargets];
-        }
-        
         [previewFilter removeAllTargets];
+        [filterMain removeAllTargets];
         [pipe removeAllFilters];
 
         pipe.input = previewFilter;
         pipe.output = viewCamera;
         
-        if (buttonBlurNone.enabled) {
-            filterDOF = [[LXFilterDOF alloc] init];
-            [pipe addFilter:filterDOF];
-            [pictureDOF addTarget:filterDOF atTextureLocation:1];
+        if (!buttonLensWide.enabled) {
+            filterDistord = [[GPUImagePinchDistortionFilter alloc] init];
+            [pipe addFilter:filterDistord];
+        }
+        
+        if (!buttonLensFish.enabled) {
+            filterFish = [[LXFilterFish alloc] init];
+            [pipe addFilter:filterFish];
         }
         
         [pipe addFilter:filterMain];
+        
+        filterSharpen = [[GPUImageSharpenFilter alloc] init];
+        [pipe addFilter:filterSharpen];
         
     } else {
         [filterFish removeAllTargets];
@@ -522,32 +519,16 @@
         filterDistord.radius = 1.0;
     }
     
-    if (!buttonBlurNormal.enabled) {
-        filterDOF.bias = 0.02;
-    }
-    
-    if (!buttonBlurWeak.enabled) {
-        filterDOF.bias = 0.01;
-    }
-    
-    if (!buttonBlurStrong.enabled) {
-        filterDOF.bias = 0.03;
-    }
-    
     if (switchGain.on)
-        filterDOF.gain = 2.0;
+        filterMain.gain = 2.0;
     else
-        filterDOF.gain = 0.0;
+        filterMain.gain = 0.0;
 }
 
 - (void)processImage {
     isSaved = false;
     buttonReset.enabled = true;
     [previewFilter processImage];
-        
-    if (buttonBlurNone.enabled) {
-        [pictureDOF processData];
-    }
 }
 
 - (IBAction)setEffect:(id)sender {
@@ -633,10 +614,14 @@
             previewFilter = [[GPUImagePicture alloc] initWithImage:previewPic];
             
             isPicFromCamera = true;
+            [self resetSetting];
             [self initPreviewPic];
             [self switchEditImage];
             [self resizeCameraViewWithAnimation:YES];
+
             [self preparePipe];
+            [self preparePipe];
+            
             [self applyFilterSetting];
             [self processImage];
             buttonReset.enabled = false;
@@ -892,16 +877,11 @@
     }
     filterMain.blendRotation = imageViewRotationModeIdx1;
 
-
     [picture addTarget:pipe.filters[0] atTextureLocation:0];
     
     [[pipe.filters lastObject] removeAllTargets];
     
     [picture processImage];
-
-    if (buttonBlurNone.enabled) {
-        [pictureDOF processData];
-    }
     
     // Save to Jpeg NSData
     CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:imageOrientation];
@@ -1219,6 +1199,7 @@
         
         previewFilter = [[GPUImagePicture alloc] initWithImage:previewPic];
         isPicFromCamera = false;
+        [self resetSetting];
         [self initPreviewPic];
         [self switchEditImage];
         
@@ -1303,9 +1284,6 @@
 }
 
 - (void)switchEditImage {
-    // Reset to normal lens
-    [self resetSetting];
-
     isWatingToUpload = NO;
 
     currentBlend = kBlendNone;
@@ -1356,16 +1334,14 @@
 }
 
 - (void)initPreviewPic {
-    [previewFilter removeAllTargets];
+    [previewFilter addTarget:filterMain];
     for (NSInteger i = 0; i < effectNum; i++) {
+        [filterMain removeAllTargets];
         GPUImageView *effectView = effectPreview[i];
-        LXImageFilter *effectSmallPreview = [[LXImageFilter alloc] init];
-        effectSmallPreview.toneCurve = effectCurve[i];
-        [previewFilter addTarget:effectSmallPreview];
-        [effectSmallPreview addTarget:effectView];
-        
+        filterMain.toneCurve = effectCurve[i];
+        [filterMain addTarget:effectView];
+        [previewFilter processImage];
     }
-    [previewFilter processImage];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(NSDictionary *)info {
@@ -1407,6 +1383,8 @@
     
     filterMain.toneCurve = effectCurve[0];
     filterMain.imageBlend = nil;
+    filterMain.dofEnable = NO;
+    filterMain.imageDOF = nil;
     
     [self setUIMask:kMaskBlurNone];
     
@@ -1524,23 +1502,27 @@
     switch (tag) {
         case kMaskBlurNone:
             buttonBlurNone.enabled = false;
+            filterMain.dofEnable = NO;
             break;
         case kMaskBlurWeak:
             buttonBlurWeak.enabled = false;
+            filterMain.dofEnable = YES;
+            filterMain.bias = 0.01;
             break;
         case kMaskBlurNormal:
             buttonBlurNormal.enabled = false;
+            filterMain.dofEnable = YES;
+            filterMain.bias = 0.02;
             break;
         case kMaskBlurStrong:
             buttonBlurStrong.enabled = false;
+            filterMain.dofEnable = YES;
+            filterMain.bias = 0.03;
             break;
         default:
             break;
     }
     
-    if ((currentMask == kMaskBlurNone) != (tag == kMaskBlurNone)) {
-        [self preparePipe];
-    }
     currentMask = tag;
 }
 
@@ -1845,19 +1827,8 @@
         [self setUIMask:kMaskBlurNormal];
     }
     
-    GLubyte *imageData = NULL;
-    // For resized image, redraw
-    imageData = (GLubyte *) calloc(1, (int)mask.size.width * (int)mask.size.height * 4);
-    CGColorSpaceRef genericRGBColorspace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef imageContext = CGBitmapContextCreate(imageData, (size_t)mask.size.width, (size_t)mask.size.height, 8, (size_t)mask.size.width * 4, genericRGBColorspace,  kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
-    CGContextDrawImage(imageContext, CGRectMake(0.0, 0.0, mask.size.width, mask.size.height), mask.CGImage);
-    CGContextRelease(imageContext);
-    CGColorSpaceRelease(genericRGBColorspace);
+    filterMain.imageDOF = mask;
     
-    [pictureDOF updateDataFromBytes:imageData size:mask.size];
-    free(imageData);
-    
-    [self applyFilterSetting];
     [self processImage];
 }
 

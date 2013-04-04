@@ -622,7 +622,6 @@
 		886C63A51681A68C0007D952 /* bg_canvas@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 886C63A31681A68C0007D952 /* bg_canvas@2x.png */; };
 		886C63A81681B92D0007D952 /* lattefragment.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 886C63A61681B4A20007D952 /* lattefragment.fsh */; };
 		886C63AC1682E17E0007D952 /* lattedof.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 886C63AB1682E1710007D952 /* lattedof.fsh */; };
-		886C63AF1682E1DB0007D952 /* LXFilterDOF.m in Sources */ = {isa = PBXBuildFile; fileRef = 886C63AE1682E1DA0007D952 /* LXFilterDOF.m */; };
 		886E540B16FC469B00629D76 /* LXLikedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 886E540A16FC469B00629D76 /* LXLikedViewController.m */; };
 		8874DB2E16E75F5700FDF60B /* LXCollectionCellUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8874DB2D16E75F5700FDF60B /* LXCollectionCellUser.m */; };
 		8874DBC316E8BF3600FDF60B /* LXNavMypageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8874DBC216E8BF3500FDF60B /* LXNavMypageController.m */; };
@@ -2093,8 +2092,6 @@
 		886C63A31681A68C0007D952 /* bg_canvas@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_canvas@2x.png"; sourceTree = "<group>"; };
 		886C63A61681B4A20007D952 /* lattefragment.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lattefragment.fsh; sourceTree = "<group>"; };
 		886C63AB1682E1710007D952 /* lattedof.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = lattedof.fsh; sourceTree = "<group>"; };
-		886C63AD1682E1DA0007D952 /* LXFilterDOF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFilterDOF.h; sourceTree = "<group>"; };
-		886C63AE1682E1DA0007D952 /* LXFilterDOF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFilterDOF.m; sourceTree = "<group>"; };
 		886E540916FC469A00629D76 /* LXLikedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXLikedViewController.h; sourceTree = "<group>"; };
 		886E540A16FC469B00629D76 /* LXLikedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXLikedViewController.m; sourceTree = "<group>"; };
 		8874DB2C16E75F5700FDF60B /* LXCollectionCellUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCollectionCellUser.h; sourceTree = "<group>"; };
@@ -3904,8 +3901,6 @@
 				88079F8E16B6933900420AC3 /* GPUImagePicture+updateImage.m */,
 				8890729816770EBB0013DF7A /* LatteAPIClient.h */,
 				8890729916770EBB0013DF7A /* LatteAPIClient.m */,
-				886C63AD1682E1DA0007D952 /* LXFilterDOF.h */,
-				886C63AE1682E1DA0007D952 /* LXFilterDOF.m */,
 				8890729E16770EBB0013DF7A /* LXFilterFish.h */,
 				8890729F16770EBB0013DF7A /* LXFilterFish.m */,
 				88A9576116BFC18B003649E8 /* LXFilterPipe.h */,
@@ -6444,7 +6439,6 @@
 				889072FF16770EBB0013DF7A /* PicturePin.m in Sources */,
 				8890730016770EBB0013DF7A /* User.m in Sources */,
 				8890730116770EBB0013DF7A /* LXUtils.m in Sources */,
-				886C63AF1682E1DB0007D952 /* LXFilterDOF.m in Sources */,
 				880E35A816A7BECA0097B97F /* LXAboutViewController.m in Sources */,
 				8884E40516A8EB5700DCBAC7 /* DEComposeRuledView.m in Sources */,
 				8884E40616A8EB5700DCBAC7 /* DEComposeTextView.m in Sources */,

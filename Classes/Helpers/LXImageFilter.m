@@ -16,12 +16,18 @@
     GLint aspectratioUniform;
     GLint toneIntensityUniform;
     GLint blendIntensityUniform;
+    GLint dofEnableUniform;
+    GLint biasUniform;
+    GLint gainUniform;
     
     GLint toneCurveTextureUniform;
     GLuint toneCurveTexture;
     
     GLint inputBlendTextureUniform;
     GLuint inputBlendTexture;
+    
+    GLint inputDOFTextureUniform;
+    GLuint inputDOFTexture;
     
     GLfloat blendTextureCoordinates[8];
     
@@ -53,6 +59,11 @@
         aspectratioUniform = [filterProgram uniformIndex:@"aspectratio"];
         toneCurveTextureUniform = [filterProgram uniformIndex:@"toneCurveTexture"];
         inputBlendTextureUniform = [filterProgram uniformIndex:@"inputBlendTexture"];
+        inputDOFTextureUniform = [filterProgram uniformIndex:@"inputDOFTexture"];
+        
+        dofEnableUniform = [filterProgram uniformIndex:@"dofEnable"];
+        biasUniform = [filterProgram uniformIndex:@"bias"];
+        gainUniform = [filterProgram uniformIndex:@"gain"];
         
         blendTextureCoordinateAttribute = [filterProgram attributeIndex:@"blendTextureCoordinate"];
         glEnableVertexAttribArray(blendTextureCoordinateAttribute);
@@ -61,6 +72,7 @@
     self.saturation = 1.0;
     self.toneCurveIntensity = 1.0;
     self.vignfade = 1.0;
+    self.blendRegion = CGRectMake(0, 0, 1, 1);
     
     return self;
 }
@@ -95,6 +107,18 @@
 
 - (void)setBlendIntensity:(CGFloat)blendIntensity {
     [self setFloat:blendIntensity forUniform:blendIntensityUniform program:filterProgram];
+}
+
+- (void)setBias:(CGFloat)aBias {
+    [self setFloat:aBias forUniform:biasUniform program:filterProgram];
+}
+
+- (void)setGain:(CGFloat)aGain {
+    [self setFloat:aGain forUniform:gainUniform program:filterProgram];
+}
+
+- (void)setDofEnable:(BOOL)dofEnable {
+    [self setInteger:dofEnable forUniform:dofEnableUniform program:filterProgram];
 }
 
 - (void)setToneCurve:(UIImage *)toneCurve {
@@ -138,6 +162,7 @@
         }
         return;
     }
+    
     _imageBlend = imageBlend;
     CGFloat widthOfImage = CGImageGetWidth(_imageBlend.CGImage);
     CGFloat heightOfImage = CGImageGetHeight(_imageBlend.CGImage);
@@ -153,9 +178,48 @@
     
     runSynchronouslyOnVideoProcessingQueue(^{
         [GPUImageOpenGLESContext useImageProcessingContext];
-        glActiveTexture(GL_TEXTURE3);
+        glActiveTexture(GL_TEXTURE4);
         glGenTextures(1, &inputBlendTexture);
         glBindTexture(GL_TEXTURE_2D, inputBlendTexture);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        
+        
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (int)widthOfImage /*width*/, (int)heightOfImage /*height*/, 0, GL_BGRA, GL_UNSIGNED_BYTE, imageData);
+    });
+    
+    free(imageData);
+}
+
+- (void)setImageDOF:(UIImage *)imageDOF {
+    if (imageDOF == nil) {
+        if (inputDOFTexture)
+        {
+            glDeleteTextures(1, &inputDOFTexture);
+            inputDOFTexture = 0;
+        }
+        return;
+    }
+    _imageDOF = imageDOF;
+    CGFloat widthOfImage = CGImageGetWidth(_imageDOF.CGImage);
+    CGFloat heightOfImage = CGImageGetHeight(_imageDOF.CGImage);
+    
+    GLubyte *imageData = (GLubyte *) calloc(1, (int)widthOfImage * (int)heightOfImage * 4);
+    
+    CGColorSpaceRef genericRGBColorspace = CGColorSpaceCreateDeviceRGB();
+    
+    CGContextRef imageContext = CGBitmapContextCreate(imageData, (size_t)widthOfImage, (size_t)heightOfImage, 8, (size_t)widthOfImage * 4, genericRGBColorspace,  kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
+    CGContextDrawImage(imageContext, CGRectMake(0.0, 0.0, widthOfImage, heightOfImage), _imageDOF.CGImage);
+    CGContextRelease(imageContext);
+    CGColorSpaceRelease(genericRGBColorspace);
+    
+    runSynchronouslyOnVideoProcessingQueue(^{
+        [GPUImageOpenGLESContext useImageProcessingContext];
+        glActiveTexture(GL_TEXTURE5);
+        glGenTextures(1, &inputDOFTexture);
+        glBindTexture(GL_TEXTURE_2D, inputDOFTexture);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -193,6 +257,10 @@
     glBindTexture(GL_TEXTURE_2D, inputBlendTexture);
     glUniform1i(inputBlendTextureUniform, 4);
     
+    glActiveTexture(GL_TEXTURE5);
+    glBindTexture(GL_TEXTURE_2D, inputDOFTexture);
+    glUniform1i(inputDOFTextureUniform, 5);
+    
     glVertexAttribPointer(filterPositionAttribute, 2, GL_FLOAT, 0, 0, vertices);
     glVertexAttribPointer(filterTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, textureCoordinates);
     glVertexAttribPointer(blendTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, blendTextureCoordinates);
@@ -214,6 +282,13 @@
         glDeleteTextures(1, &toneCurveTexture);
         toneCurveTexture = 0;
     }
+    
+    if (inputDOFTexture)
+    {
+        glDeleteTextures(1, &inputDOFTexture);
+        inputDOFTexture = 0;
+    }
+
 }
 
 - (void)setupFilterForSize:(CGSize)filterFrameSize;

@@ -18,7 +18,12 @@
 @property(readwrite, nonatomic) CGFloat blendIntensity;
 @property(strong, nonatomic) UIImage* toneCurve;
 @property(strong, nonatomic) UIImage* imageBlend;
+@property(strong, nonatomic) UIImage* imageDOF;
 @property(readwrite, nonatomic) CGRect blendRegion;
+@property(readwrite, nonatomic) CGFloat bias;
+@property(readwrite, nonatomic) CGFloat gain;
+@property(readwrite, nonatomic) BOOL dofEnable;
+
 @property(readwrite, nonatomic) GPUImageRotationMode blendRotation;
 
 @end

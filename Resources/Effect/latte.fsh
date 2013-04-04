@@ -10,6 +10,7 @@ varying highp vec2 blendCoordinate;
 uniform sampler2D inputImageTexture;
 uniform sampler2D toneCurveTexture;
 uniform sampler2D inputBlendTexture;
+uniform sampler2D inputDOFTexture;
 
 uniform lowp float vignfade; //f-stops till vignete fades
 uniform lowp float brightness;
@@ -29,6 +30,89 @@ const float PI = 3.1415926535;
 const highp vec3 luminanceWeighting = vec3(0.2125, 0.7154, 0.0721);
 
 
+//BEGIN FOR DEF
+uniform bool dofEnable;
+uniform float bias; //0.02 aperture - bigger values for shallower depth of field
+
+float blurclamp = 3.0;  // 3.0 max blur amount 
+float focus = 0.0;  // this value comes from ReadDepth script.
+float threshold = 0.5; //highlight threshold;
+
+uniform float gain; //highlight gain;
+//END FOR DOF
+
+vec4 color(vec4 col, float blur) //processing the sample
+{
+        vec3 lumcoeff = vec3(0.299,0.587,0.114);
+        float lum = dot(col.rgb, lumcoeff);
+        float thresh = max((lum-threshold)*gain, 0.0);
+        return col+mix(vec4(0.0),col,thresh*blur);
+}
+ 
+vec4 dof()
+{
+        //float aspectratio = 800.0/600.0;
+        vec2 aspectcorrect = vec2(1.0,1.0/aspectratio);
+       
+        vec4 depth1   = texture2D(inputDOFTexture, blendCoordinate);
+ 
+        float factor = ( depth1.x - focus );
+         
+        vec2 dofblur = vec2 (clamp( factor * bias, -blurclamp, blurclamp ));
+ 
+        vec4 col = texture2D(inputImageTexture, textureCoordinate);
+       
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( 0.0,0.4 )*aspectcorrect) * dofblur);
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( 0.15,0.37 )*aspectcorrect) * dofblur);
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( 0.29,0.29 )*aspectcorrect) * dofblur);
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( -0.37,0.15 )*aspectcorrect) * dofblur);       
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( 0.4,0.0 )*aspectcorrect) * dofblur);   
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( 0.37,-0.15 )*aspectcorrect) * dofblur);       
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( 0.29,-0.29 )*aspectcorrect) * dofblur);       
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( -0.15,-0.37 )*aspectcorrect) * dofblur);
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( 0.0,-0.4 )*aspectcorrect) * dofblur); 
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( -0.15,0.37 )*aspectcorrect) * dofblur);
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( -0.29,0.29 )*aspectcorrect) * dofblur);
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( 0.37,0.15 )*aspectcorrect) * dofblur); 
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( -0.4,0.0 )*aspectcorrect) * dofblur); 
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( -0.37,-0.15 )*aspectcorrect) * dofblur);       
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( -0.29,-0.29 )*aspectcorrect) * dofblur);       
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( 0.15,-0.37 )*aspectcorrect) * dofblur);
+       
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( 0.15,0.37 )*aspectcorrect) * dofblur*0.9);
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( -0.37,0.15 )*aspectcorrect) * dofblur*0.9);           
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( 0.37,-0.15 )*aspectcorrect) * dofblur*0.9);           
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( -0.15,-0.37 )*aspectcorrect) * dofblur*0.9);
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( -0.15,0.37 )*aspectcorrect) * dofblur*0.9);
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( 0.37,0.15 )*aspectcorrect) * dofblur*0.9);            
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( -0.37,-0.15 )*aspectcorrect) * dofblur*0.9);   
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( 0.15,-0.37 )*aspectcorrect) * dofblur*0.9);   
+       
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( 0.29,0.29 )*aspectcorrect) * dofblur*0.7);
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( 0.4,0.0 )*aspectcorrect) * dofblur*0.7);       
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( 0.29,-0.29 )*aspectcorrect) * dofblur*0.7);   
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( 0.0,-0.4 )*aspectcorrect) * dofblur*0.7);     
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( -0.29,0.29 )*aspectcorrect) * dofblur*0.7);
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( -0.4,0.0 )*aspectcorrect) * dofblur*0.7);     
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( -0.29,-0.29 )*aspectcorrect) * dofblur*0.7);   
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( 0.0,0.4 )*aspectcorrect) * dofblur*0.7);
+                         
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( 0.29,0.29 )*aspectcorrect) * dofblur*0.4);
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( 0.4,0.0 )*aspectcorrect) * dofblur*0.4);
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( 0.29,-0.29 )*aspectcorrect) * dofblur*0.4);
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( 0.0,-0.4 )*aspectcorrect) * dofblur*0.4);
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( -0.29,0.29 )*aspectcorrect) * dofblur*0.4);
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( -0.4,0.0 )*aspectcorrect) * dofblur*0.4);
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( -0.29,-0.29 )*aspectcorrect) * dofblur*0.4);
+        col += texture2D(inputImageTexture, textureCoordinate + (vec2( 0.0,0.4 )*aspectcorrect) * dofblur*0.4);
+                       
+        col /= 41.0;
+
+        col = color(col, factor);
+        col.a = 1.0;
+        return col;
+}
+
 float vignette()
 {
     highp float dist = distance(vec2(textureCoordinate.x, (textureCoordinate.y * aspectratio + 0.5 - 0.5 * aspectratio)), vec2(0.5,0.5));
@@ -38,7 +122,11 @@ float vignette()
 
 void main()
 {
-    lowp vec4 textureColor = texture2D(inputImageTexture, textureCoordinate);
+    lowp vec4 textureColor;
+    if (dofEnable)
+        textureColor = dof();
+    else
+        textureColor = texture2D(inputImageTexture, textureCoordinate);
 
     lowp float luminance = dot(textureColor.rgb, luminanceWeighting);
     lowp float average = (textureColor.r + textureColor.g + textureColor.b)/3.0;
