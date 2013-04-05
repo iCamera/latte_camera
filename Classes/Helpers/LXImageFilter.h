@@ -23,6 +23,8 @@
 @property(readwrite, nonatomic) CGFloat bias;
 @property(readwrite, nonatomic) CGFloat gain;
 @property(readwrite, nonatomic) BOOL dofEnable;
+@property(readwrite, nonatomic) BOOL toneEnable;
+@property(readwrite, nonatomic) BOOL blendEnable;
 
 @property(readwrite, nonatomic) GPUImageRotationMode blendRotation;
 

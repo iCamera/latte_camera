@@ -17,6 +17,8 @@
     GLint toneIntensityUniform;
     GLint blendIntensityUniform;
     GLint dofEnableUniform;
+    GLint toneEnableUniform;
+    GLint blendEnableUniform;
     GLint biasUniform;
     GLint gainUniform;
     
@@ -60,6 +62,9 @@
         toneCurveTextureUniform = [filterProgram uniformIndex:@"toneCurveTexture"];
         inputBlendTextureUniform = [filterProgram uniformIndex:@"inputBlendTexture"];
         inputDOFTextureUniform = [filterProgram uniformIndex:@"inputDOFTexture"];
+        
+        toneEnableUniform = [filterProgram uniformIndex:@"toneEnable"];
+        blendEnableUniform = [filterProgram uniformIndex:@"blendEnable"];
         
         dofEnableUniform = [filterProgram uniformIndex:@"dofEnable"];
         biasUniform = [filterProgram uniformIndex:@"bias"];
@@ -117,12 +122,29 @@
     [self setFloat:aGain forUniform:gainUniform program:filterProgram];
 }
 
+- (void)setToneEnable:(BOOL)toneEnable {
+    [self setInteger:toneEnable forUniform:toneEnableUniform program:filterProgram];
+}
+
+- (void)setBlendEnable:(BOOL)blendEnable {
+    [self setInteger:blendEnable forUniform:blendEnableUniform program:filterProgram];
+}
+
 - (void)setDofEnable:(BOOL)dofEnable {
     [self setInteger:dofEnable forUniform:dofEnableUniform program:filterProgram];
 }
 
 - (void)setToneCurve:(UIImage *)toneCurve {
     _toneCurve = toneCurve;
+    
+    if (toneCurve == nil) {
+        if (toneCurveTexture)
+        {
+            glDeleteTextures(1, &toneCurveTexture);
+            toneCurveTexture = 0;
+        }
+        return;
+    }
     
     CGFloat widthOfImage = CGImageGetWidth(_toneCurve.CGImage);
     CGFloat heightOfImage = CGImageGetHeight(_toneCurve.CGImage);
@@ -154,6 +176,8 @@
 }
 
 - (void)setImageBlend:(UIImage *)imageBlend {
+    _imageBlend = imageBlend;
+    
     if (imageBlend == nil) {
         if (inputBlendTexture)
         {
@@ -163,7 +187,6 @@
         return;
     }
     
-    _imageBlend = imageBlend;
     CGFloat widthOfImage = CGImageGetWidth(_imageBlend.CGImage);
     CGFloat heightOfImage = CGImageGetHeight(_imageBlend.CGImage);
     
@@ -194,6 +217,8 @@
 }
 
 - (void)setImageDOF:(UIImage *)imageDOF {
+    _imageDOF = imageDOF;
+    
     if (imageDOF == nil) {
         if (inputDOFTexture)
         {
@@ -202,7 +227,7 @@
         }
         return;
     }
-    _imageDOF = imageDOF;
+    
     CGFloat widthOfImage = CGImageGetWidth(_imageDOF.CGImage);
     CGFloat heightOfImage = CGImageGetHeight(_imageDOF.CGImage);
     

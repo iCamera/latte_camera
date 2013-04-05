@@ -22,6 +22,9 @@ uniform lowp float aspectratio;
 uniform lowp float toneIntensity;
 uniform lowp float blendIntensity;
 
+uniform bool toneEnable;
+uniform bool blendEnable;
+
 lowp float vignin = 0.0; //vignetting inner border
 lowp float vignout = 0.5; //vignetting outer border
 
@@ -144,10 +147,6 @@ void main()
     // Vignette
     textureColor.rgb *= vignette();
 
-    // Saturation
-    luminance = dot(textureColor.rgb, luminanceWeighting);
-    textureColor = vec4(mix(vec3(luminance), textureColor.rgb, saturation), textureColor.a);
-
     // Overlay
     if (clearness > 0.0) {
         if (textureColor.r < 0.5) {
@@ -168,17 +167,25 @@ void main()
     }
 
     // Blending
-    mediump vec4 textureBlend = texture2D(inputBlendTexture, blendCoordinate);
-    textureBlend *= blendIntensity;
-    mediump vec4 whiteColor = vec4(1.0);
-    textureColor = whiteColor - ((whiteColor - textureBlend) * (whiteColor - textureColor));
+    if (blendEnable) {
+        mediump vec4 textureBlend = texture2D(inputBlendTexture, blendCoordinate);
+        textureBlend *= blendIntensity;
+        mediump vec4 whiteColor = vec4(1.0);
+        textureColor = whiteColor - ((whiteColor - textureBlend) * (whiteColor - textureColor));
+    }
+
+    // Saturation
+    luminance = dot(textureColor.rgb, luminanceWeighting);
+    textureColor = vec4(mix(vec3(luminance), textureColor.rgb, saturation), textureColor.a);
 
     // Tone Curve Mapping
-    lowp float redCurveValue = texture2D(toneCurveTexture, vec2(textureColor.r, 0.0)).r;
-    lowp float greenCurveValue = texture2D(toneCurveTexture, vec2(textureColor.g, 0.0)).g;
-    lowp float blueCurveValue = texture2D(toneCurveTexture, vec2(textureColor.b, 0.0)).b;
-     
-    textureColor = vec4(mix(textureColor.rgb, vec3(redCurveValue, greenCurveValue, blueCurveValue), toneIntensity), textureColor.a);
+    if (toneEnable) {
+        lowp float redCurveValue = texture2D(toneCurveTexture, vec2(textureColor.r, 0.0)).r;
+        lowp float greenCurveValue = texture2D(toneCurveTexture, vec2(textureColor.g, 0.0)).g;
+        lowp float blueCurveValue = texture2D(toneCurveTexture, vec2(textureColor.b, 0.0)).b;
+         
+        textureColor = vec4(mix(textureColor.rgb, vec3(redCurveValue, greenCurveValue, blueCurveValue), toneIntensity), textureColor.a);
+    }
 
     // End
     gl_FragColor = textureColor;

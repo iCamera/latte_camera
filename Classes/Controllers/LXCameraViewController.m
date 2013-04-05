@@ -232,6 +232,7 @@
     pipe = [[GPUImageFilterPipeline alloc] init];
     pipe.filters = [[NSMutableArray alloc] init];
     filterMain = [[LXImageFilter alloc] init];
+    filterSharpen = [[GPUImageSharpenFilter alloc] init];
     
     videoCamera = [[LXStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionBack];
     [videoCamera setOutputImageOrientation:UIInterfaceOrientationPortrait];
@@ -472,7 +473,6 @@
             pipe.output = nil;
         }
         else {
-            [previewFilter removeAllTargets];
             pipe.input = previewFilter;
             pipe.output = viewCamera;
         }
@@ -487,10 +487,10 @@
             [pipe addFilter:filterFish];
         }
         
-        [filterMain removeAllTargets];
         [pipe addFilter:filterMain];
         
         filterSharpen = [[GPUImageSharpenFilter alloc] init];
+        filterSharpen.sharpness = sliderSharpness.value;
         [pipe addFilter:filterSharpen];
         
     } else {
@@ -535,12 +535,19 @@
 - (void)processImage {
     isSaved = false;
     buttonReset.enabled = true;
+    [self preparePipe];
     [previewFilter processImage];
 }
 
 - (void)setEffect:(id)sender {
     UIButton* buttonEffect = (UIButton*)sender;
-    filterMain.toneCurve = effectCurve[buttonEffect.tag];
+    if (buttonEffect.tag == 0) {
+        filterMain.toneEnable = NO;
+        filterMain.toneCurve = nil;
+    } else {
+        filterMain.toneEnable = YES;
+        filterMain.toneCurve = effectCurve[buttonEffect.tag];
+    }
     [self processImage];
 }
 
@@ -622,8 +629,9 @@
             previewFilter = [[GPUImagePicture alloc] initWithImage:previewPic];
             
             isPicFromCamera = true;
-
+            [self initPreviewPic];
             [self switchEditImage];
+            
         }
         
         buttonCapture.enabled = true;
@@ -698,7 +706,7 @@
     sender.enabled = false;
     
     currentLens = sender.tag;
-    [self preparePipe];
+//    [self preparePipe];
     [self applyFilterSetting];
     [self processImage];
 }
@@ -946,7 +954,6 @@
         }
         
         // Return to preview mode
-        [self preparePipe];
         [self applyFilterSetting];
         [self processImage];
         filterMain.blendRotation = kGPUImageNoRotation;
@@ -1197,6 +1204,7 @@
         previewFilter = [[GPUImagePicture alloc] initWithImage:previewPic];
         isPicFromCamera = false;
 
+        [self initPreviewPic];
         [self switchEditImage];
     };
     
@@ -1273,7 +1281,6 @@
 
 - (void)switchEditImage {
     [self resetSetting];
-    [self initPreviewPic];
 
     isWatingToUpload = NO;
     didBackupPic = NO;
@@ -1327,27 +1334,30 @@
     buttonReset.enabled = false;
     
     [self resizeCameraViewWithAnimation:YES];
-    [self preparePipe];
-    [self applyFilterSetting];
-    [self processImage];
-    
-    //Hacky
-    [self preparePipe];
     [self applyFilterSetting];
     [self processImage];
 }
 
 - (void)initPreviewPic {
-    [previewFilter removeAllTargets];
+    
     for (NSInteger i = 0; i < effectNum; i++) {
-        LXImageFilter *filterSample = [[LXImageFilter alloc] init];
-        filterSample.toneCurve = effectCurve[i];
-
+        [previewFilter removeAllTargets];
         GPUImageView *effectView = effectPreview[i];
-        [previewFilter addTarget:filterSample];
-        [filterSample addTarget:effectView];
+        
+        if (i == 0) {
+            [previewFilter addTarget:effectView];
+        } else {
+            LXImageFilter *filterSample = [[LXImageFilter alloc] init];
+            filterSample.toneCurve = effectCurve[i];
+            filterSample.toneEnable = YES;
+            
+            [previewFilter addTarget:filterSample];
+            [filterSample addTarget:effectView];
+
+        }
+        [previewFilter processImage];
     }
-    [previewFilter processImage];
+
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(NSDictionary *)info {
@@ -1372,7 +1382,6 @@
 - (IBAction)touchReset:(id)sender {
     [self resetSetting];
     
-    [self preparePipe];
     [self applyFilterSetting];
     [self processImage];
     buttonReset.enabled = false;
@@ -1387,10 +1396,12 @@
     sliderFeather.value = 10.0;
     sliderEffectIntensity.value = 1.0;
     
-    filterMain.toneCurve = effectCurve[0];
+    filterMain.toneCurve = nil;
     filterMain.imageBlend = nil;
-    filterMain.dofEnable = NO;
     filterMain.imageDOF = nil;
+    filterMain.dofEnable = NO;
+    filterMain.toneEnable = NO;
+    filterMain.blendEnable = NO;
     
     [self setUIMask:kMaskBlurNone];
     
@@ -1600,6 +1611,7 @@
         buttonBlendNone.enabled = YES;
         buttonBlendWeak.enabled = NO;
         filterMain.blendIntensity = 0.40;
+        filterMain.blendEnable = YES;
     }
     
     
@@ -1657,18 +1669,22 @@
     switch (tag) {
         case kBlendNone:
             buttonBlendNone.enabled = false;
+            filterMain.blendEnable = NO;
             filterMain.blendIntensity = 0;
             break;
         case kBlendWeak:
             buttonBlendWeak.enabled = false;
+            filterMain.blendEnable = YES;
             filterMain.blendIntensity = 0.4;
             break;
         case kBlendNormal:
             buttonBlendMedium.enabled = false;
+            filterMain.blendEnable = YES;
             filterMain.blendIntensity = 0.66;
             break;
         case kBlendStrong:
             buttonBlendStrong.enabled = false;
+            filterMain.blendEnable = YES;
             filterMain.blendIntensity = 0.90;
             break;
         default:
