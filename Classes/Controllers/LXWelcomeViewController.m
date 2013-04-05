@@ -161,9 +161,11 @@ typedef enum {
                                            }
                                        }
                                        [indicator stopAnimating];
+                                       [self doneLoadingTableViewData];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        TFLog(@"Something went wrong (Welcome)");
                                        [indicator stopAnimating];
+                                       [self doneLoadingTableViewData];
                                    }];
 }
 
