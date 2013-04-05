@@ -916,6 +916,8 @@
 		88A49B8315B8FD5700CEA262 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A49B7E15B8FD5700CEA262 /* QuartzCore.framework */; };
 		88A4B43B16BFE48D004FEF05 /* libfacebook_ios_sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A4B43616BFE3BA004FEF05 /* libfacebook_ios_sdk.a */; };
 		88A4B43D16BFE73E004FEF05 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A4B43C16BFE73E004FEF05 /* MobileCoreServices.framework */; };
+		88A4CCD8170EBF7000B74002 /* banner_contest.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88A4CCD6170EBF7000B74002 /* banner_contest.jpg */; };
+		88A4CCD9170EBF7000B74002 /* banner_contest@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88A4CCD7170EBF7000B74002 /* banner_contest@2x.jpg */; };
 		88A5F41216E11B8500118996 /* icon_iphone_l_off.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88A5F40E16E11B8500118996 /* icon_iphone_l_off.jpg */; };
 		88A5F41316E11B8500118996 /* icon_iphone_l.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88A5F40F16E11B8500118996 /* icon_iphone_l.jpg */; };
 		88A5F41416E11B8500118996 /* icon_mail_l_off.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88A5F41016E11B8500118996 /* icon_mail_l_off.jpg */; };
@@ -2475,6 +2477,8 @@
 		88A49B7E15B8FD5700CEA262 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		88A4B43016BFE3BA004FEF05 /* facebook-ios-sdk.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "facebook-ios-sdk.xcodeproj"; path = "Vendor/FacebookSDK/src/facebook-ios-sdk.xcodeproj"; sourceTree = "<group>"; };
 		88A4B43C16BFE73E004FEF05 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		88A4CCD6170EBF7000B74002 /* banner_contest.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = banner_contest.jpg; sourceTree = "<group>"; };
+		88A4CCD7170EBF7000B74002 /* banner_contest@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "banner_contest@2x.jpg"; sourceTree = "<group>"; };
 		88A5F40E16E11B8500118996 /* icon_iphone_l_off.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = icon_iphone_l_off.jpg; sourceTree = "<group>"; };
 		88A5F40F16E11B8500118996 /* icon_iphone_l.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = icon_iphone_l.jpg; sourceTree = "<group>"; };
 		88A5F41016E11B8500118996 /* icon_mail_l_off.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = icon_mail_l_off.jpg; sourceTree = "<group>"; };
@@ -4494,6 +4498,8 @@
 		88FE3FAB166C93D6004DCE53 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				88A4CCD6170EBF7000B74002 /* banner_contest.jpg */,
+				88A4CCD7170EBF7000B74002 /* banner_contest@2x.jpg */,
 				881015D41700270A00AE81E1 /* hicon_menu.png */,
 				881015D51700270A00AE81E1 /* hicon_menu@2x.png */,
 				888F64BD16FBEE7400ED74BB /* box_acount_s.png */,
@@ -6437,6 +6443,8 @@
 				8880F058170D798700478E42 /* print4.jpg in Resources */,
 				8880F05B170D7B4100478E42 /* blend2.jpg in Resources */,
 				8880F05C170D7B4100478E42 /* blend3.jpg in Resources */,
+				88A4CCD8170EBF7000B74002 /* banner_contest.jpg in Resources */,
+				88A4CCD9170EBF7000B74002 /* banner_contest@2x.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

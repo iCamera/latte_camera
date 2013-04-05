@@ -19,6 +19,8 @@
     LXShare *lxShare;
 }
 
+@synthesize viewBanner;
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -31,6 +33,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
+    if (![language isEqualToString:@"ja"]) {
+        viewBanner.hidden = true;
+    }
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -106,4 +113,7 @@
     }
 }
 
+- (IBAction)touchBanner:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/picture/contest/2013april"]];
+}
 @end

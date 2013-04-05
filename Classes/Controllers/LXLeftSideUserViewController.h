@@ -11,5 +11,7 @@
 @interface LXLeftSideUserViewController : UITableViewController
 @property (strong, nonatomic) IBOutlet UIImageView *imageProfilepic;
 @property (strong, nonatomic) IBOutlet UILabel *labelUsername;
+@property (strong, nonatomic) IBOutlet UIView *viewBanner;
+- (IBAction)touchBanner:(id)sender;
 
 @end

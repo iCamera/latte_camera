@@ -20,6 +20,7 @@
 
 @synthesize labelUsername;
 @synthesize imageProfilepic;
+@synthesize viewBanner;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -44,6 +45,11 @@
     [imageProfilepic loadProgess:app.currentUser.profilePicture];
     imageProfilepic.layer.cornerRadius = 5.0;
     imageProfilepic.layer.masksToBounds = YES;
+    
+    NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
+    if (![language isEqualToString:@"ja"]) {
+        viewBanner.hidden = true;
+    }
     
 }
 
@@ -123,6 +129,10 @@
         default:
             break;
     }
+}
+
+- (IBAction)touchBanner:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/picture/contest/2013april"]];
 }
 
 @end

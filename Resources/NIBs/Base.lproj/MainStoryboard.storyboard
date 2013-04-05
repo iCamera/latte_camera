@@ -1857,6 +1857,28 @@
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         </view>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="o3Q-XC-ezE">
+                            <rect key="frame" x="0.0" y="224" width="320" height="213"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="fU8-9E-hvP">
+                                    <rect key="frame" x="0.0" y="0.0" width="256" height="213"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                    <state key="normal" backgroundImage="banner_contest.jpg">
+                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="highlighted">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="touchBanner:" destination="mfS-J2-gN7" eventType="touchUpInside" id="U3P-fP-AOt"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </view>
                         <sections>
                             <tableViewSection headerTitle="Menu" id="uaV-ZQ-nvW">
                                 <cells>
@@ -2001,6 +2023,7 @@
                     <connections>
                         <outlet property="imageProfilepic" destination="XOe-Bk-H6m" id="LdP-qg-Y2A"/>
                         <outlet property="labelUsername" destination="xcW-4H-oGa" id="PxT-4Q-XZM"/>
+                        <outlet property="viewBanner" destination="o3Q-XC-ezE" id="E8I-ke-3h5"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U4Q-ga-oPv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2167,6 +2190,28 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="A8e-Mh-zvM">
+                            <rect key="frame" x="0.0" y="204" width="320" height="213"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="DND-VO-acN">
+                                    <rect key="frame" x="0.0" y="0.0" width="256" height="213"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                    <state key="normal" backgroundImage="banner_contest.jpg">
+                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="highlighted">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="touchBanner:" destination="Zf4-Ei-iIZ" eventType="touchUpInside" id="p3K-F8-Blp"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </view>
                         <sections>
                             <tableViewSection headerTitle="Menu" id="evK-EJ-pTC">
                                 <cells>
@@ -2312,6 +2357,9 @@
                             <outlet property="delegate" destination="Zf4-Ei-iIZ" id="Z60-E6-tma"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="viewBanner" destination="A8e-Mh-zvM" id="6UN-fd-B09"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1cO-tF-ttq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2319,6 +2367,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="banner_contest.jpg" width="256" height="213"/>
         <image name="bg_rank1.png" width="20" height="21"/>
         <image name="bg_rank2.png" width="20" height="21"/>
         <image name="bg_rank3-9.png" width="20" height="21"/>
@@ -2531,12 +2580,18 @@
         </class>
         <class className="LXLeftGuestViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXLeftGuestViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="touchBanner:"/>
+                <relationship kind="outlet" name="viewBanner" candidateClass="UIView"/>
+            </relationships>
         </class>
         <class className="LXLeftSideUserViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXLeftSideUserViewController.h"/>
             <relationships>
+                <relationship kind="action" name="touchBanner:"/>
                 <relationship kind="outlet" name="imageProfilepic" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="labelUsername" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="viewBanner" candidateClass="UIView"/>
             </relationships>
         </class>
         <class className="LXLikedViewController" superclassName="UITableViewController">

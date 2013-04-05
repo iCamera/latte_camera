@@ -191,12 +191,6 @@ typedef enum {
                 // paso los parametros para mandar al feed del usuario
                 NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
                 
-                if (text) {
-                    [params setObject:text forKey:@"caption"];
-                }
-                if (imageData) {
-                    [params setObject:imageData forKey:@"source"];
-                }
                 if (composeViewController.text) {
                     [params setObject:composeViewController.text forKey:@"message"];
                 }
@@ -205,22 +199,31 @@ typedef enum {
                 }
                 
                 if (imageData) {
-                    [FBRequestConnection startForUploadPhoto:[UIImage imageWithData:imageData] completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-                        if (!error)
-                        {
-                            [self completionResult:typeDone];
-                        }
-                        else
-                        {
-                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                            message:error.localizedDescription
-                                                                           delegate:nil
-                                                                  cancelButtonTitle:@"Close"
-                                                                  otherButtonTitles:nil];
-                            [alert show];
-                            [self completionResult:typeCanceled];
-                        }
-                    }];
+                    if (imageData) {
+                        [params setObject:imageData forKey:@"picture"];
+                    }
+                    
+                    [FBRequestConnection startWithGraphPath:@"me/photos"
+                                                 parameters:params
+                                                 HTTPMethod:@"POST"
+                                          completionHandler:^(FBRequestConnection *connection,
+                                                              id result,
+                                                              NSError *error) {
+                                              if (!error)
+                                              {
+                                                  [self completionResult:typeDone];
+                                              }
+                                              else
+                                              {
+                                                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                                                  message:error.localizedDescription
+                                                                                                 delegate:nil
+                                                                                        cancelButtonTitle:@"Close"
+                                                                                        otherButtonTitles:nil];
+                                                  [alert show];
+                                                  [self completionResult:typeCanceled];
+                                              }
+                                          }];
                 } else {
                     [FBRequestConnection startWithGraphPath:@"me/feed"
                                                  parameters:params

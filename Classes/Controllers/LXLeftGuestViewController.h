@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface LXLeftGuestViewController : UITableViewController
+@property (strong, nonatomic) IBOutlet UIView *viewBanner;
+- (IBAction)touchBanner:(id)sender;
 
 @end
