@@ -125,6 +125,8 @@
     if (!app.currentUser) {
         sender.enabled = NO;
         sender.selected = _comment.isVoted;
+    } else {
+        sender.selected = !_comment.isVoted;
     }
     
     _comment.isVoted = !_comment.isVoted;
