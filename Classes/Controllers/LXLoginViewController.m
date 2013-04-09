@@ -55,27 +55,6 @@
     // [app openSessionWithAllowLoginUI:NO];
 }
 
-- (void)sessionStateChanged:(NSNotification*)notification {
-    if (FBSession.activeSession.isOpen) {
-        TFLog(@"Open fb");
-        FBAccessTokenData *tokenData = FBSession.activeSession.accessTokenData;
-        
-        [[LatteAPIClient sharedClient] postPath:@"user/login_facebook"
-                                     parameters:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                 tokenData.accessToken, @"facebook_token", nil]
-                                        success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                            [self processLogin:JSON];
-                                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                            TFLog(@"Something went wrong (Facebook): %@", error.description);
-                                            // Clear FBsession to be sure
-                                            [FBSession.activeSession closeAndClearTokenInformation];
-                                        }];
-    } else {
-        [HUD hide:YES];
-        TFLog(@"Unopen fb");
-    }
-}
-
 - (void)viewDidDisappear:(BOOL)animated {
 //    luxeysAppDelegate* app = (luxeysAppDelegate*)[UIApplication sharedApplication].delegate;
 //    [app.fbLogin setDelegate:nil];
@@ -125,15 +104,43 @@
 
 - (IBAction)touchFacebook:(id)sender {
     [HUD show:YES];
-
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(sessionStateChanged:)
-     name:FBSessionStateChangedNotification
-     object:nil];
     
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    [app openSessionWithAllowLoginUI:YES];
+    NSArray *permissions = [[NSArray alloc] initWithObjects: @"email", nil];
+    [FBSession openActiveSessionWithReadPermissions:permissions
+                                       allowLoginUI:YES
+                                  completionHandler:^(FBSession *session,
+                                                      FBSessionState state,
+                                                      NSError *error) {
+                                      
+                                      switch (state) {
+                                          case FBSessionStateOpen:
+                                              if (!error) {
+                                                  // We have a valid session
+                                                  TFLog(@"Open fb");
+                                                  FBAccessTokenData *tokenData = FBSession.activeSession.accessTokenData;
+                                                  
+                                                  [[LatteAPIClient sharedClient] postPath:@"user/login_facebook"
+                                                                               parameters:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                                           tokenData.accessToken, @"facebook_token", nil]
+                                                                                  success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                                                                      [self processLogin:JSON];
+                                                                                  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                                                      TFLog(@"Something went wrong (Facebook): %@", error.description);
+                                                                                      // Clear FBsession to be sure
+                                                                                      [FBSession.activeSession closeAndClearTokenInformation];
+                                                                                  }];
+
+                                              }
+                                              break;
+                                          case FBSessionStateClosed:
+                                          case FBSessionStateClosedLoginFailed:
+                                              [FBSession.activeSession closeAndClearTokenInformation];
+                                              break;
+                                          default:
+                                              break;
+                                      }
+
+                                  }];
 }
 
 - (IBAction)touchTwitter:(id)sender {
@@ -190,8 +197,6 @@
                                            if ([[JSON objectForKey:@"status"] integerValue] == 1) {
                                                app.currentUser = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
                                                
-                                               if (app.apns != nil)
-                                                   [app updateUserAPNS];
                                                
                                                [self.navigationController popViewControllerAnimated:YES];
                                                [self.navigationController dismissViewControllerAnimated:YES completion:nil];

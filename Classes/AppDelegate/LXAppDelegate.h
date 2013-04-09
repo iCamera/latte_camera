@@ -19,7 +19,6 @@
 
 @interface LXAppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate> {
     LXSidePanelController *revealController;
-    NSString *apns;
     id<GAITracker> tracker;
 }
 
@@ -27,7 +26,6 @@
 @property(strong, nonatomic) LXSidePanelController *controllerSide;
 
 @property (strong, nonatomic) User *currentUser;
-@property (strong, nonatomic) NSString *apns;
 @property (strong, nonatomic) LXMainTabViewController *viewMainTab;
 @property (weak, nonatomic) LXCameraViewController *controllerCamera;
 
@@ -35,13 +33,9 @@
 
 extern NSString *const FBSessionStateChangedNotification;
 
-- (BOOL)openSessionWithAllowLoginUI:(BOOL)allowLoginUI;
-
 - (NSURL *)applicationDocumentsDirectory;
 - (NSString*)getToken;
-- (void)logOut;
 - (void)setToken:(NSString*)token;
-- (void)updateUserAPNS;
 
 + (LXAppDelegate*)currentDelegate;
 

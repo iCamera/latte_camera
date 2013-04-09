@@ -159,8 +159,8 @@
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="2.0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cQb-06-rty">
-                                                    <rect key="frame" x="248" y="11" width="42" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <rect key="frame" x="228" y="11" width="62" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -282,6 +282,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="labelVersion" destination="cQb-06-rty" id="Zew-yT-YMj"/>
                         <segue destination="130-si-waG" kind="push" identifier="Notification" id="psS-hn-o4m"/>
                     </connections>
                 </tableViewController>
@@ -652,6 +653,7 @@ We improve our services to the best of our ability,but please understand that no
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXSettingRootViewController.h"/>
             <relationships>
                 <relationship kind="action" name="touchClose:"/>
+                <relationship kind="outlet" name="labelVersion" candidateClass="UILabel"/>
             </relationships>
         </class>
     </classes>

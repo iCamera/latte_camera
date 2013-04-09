@@ -43,18 +43,27 @@
     
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(sessionStateChanged:)
-     name:FBSessionStateChangedNotification
-     object:nil];
-    
-    LXAppDelegate *app = [LXAppDelegate currentDelegate];
-    if (FBSession.activeSession.isOpen) {
-        [self loadFacebokFriend];
-    } else {
-        [app openSessionWithAllowLoginUI:YES];
-    }
+    NSArray *permissions = [[NSArray alloc] initWithObjects: @"email", nil];
+    [FBSession openActiveSessionWithReadPermissions:permissions
+                                       allowLoginUI:YES
+                                  completionHandler:^(FBSession *session,
+                                                      FBSessionState state,
+                                                      NSError *error) {
+                                      switch (state) {
+                                          case FBSessionStateOpen:
+                                              if (!error) {
+                                                  // We have a valid session
+                                                  [self loadFacebokFriend];
+                                              }
+                                              break;
+                                          case FBSessionStateClosed:
+                                          case FBSessionStateClosedLoginFailed:
+                                              [FBSession.activeSession closeAndClearTokenInformation];
+                                              break;
+                                          default:
+                                              break;
+                                      }
+                                  }];
 }
 
 - (void)loadFacebokFriend {

@@ -22,6 +22,8 @@
     LXShare *lxShare;
 }
 
+@synthesize labelVersion;
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -42,6 +44,7 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    labelVersion.text = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
     
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
     [app.tracker sendView:@"Setting Screen"];

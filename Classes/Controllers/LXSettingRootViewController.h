@@ -10,5 +10,6 @@
 
 @interface LXSettingRootViewController : UITableViewController
 - (IBAction)touchClose:(id)sender;
+@property (strong, nonatomic) IBOutlet UILabel *labelVersion;
 
 @end

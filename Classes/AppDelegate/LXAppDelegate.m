@@ -13,11 +13,8 @@
 @implementation LXAppDelegate
 
 @synthesize currentUser;
-@synthesize apns;
 @synthesize window;
 @synthesize tracker;
-
-NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSessionStateChangedNotification";
 
 + (LXAppDelegate*)currentDelegate {
     return (LXAppDelegate*)[UIApplication sharedApplication].delegate;
@@ -42,23 +39,13 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // FBSample logic
-    [FBSession.activeSession close];
-}
-
-- (void) closeSession {
-    if (FBSession.activeSession.isOpen) {
-        [FBSession.activeSession closeAndClearTokenInformation];
-    }
+    [FBSession.activeSession closeAndClearTokenInformation];
 }
 
 - (void)setToken:(NSString *)token{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:token forKey:@"latte_token"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-- (void)logOut{
-    
 }
 
 - (void)checkTokenValidity {
@@ -68,10 +55,7 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
                                             [self getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        if ([[JSON objectForKey:@"status"] integerValue] == 1) {
-                                           currentUser = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
-                                           if (apns != nil)
-                                               [self updateUserAPNS];
-                                           
+                                           currentUser = [User instanceFromDictionary:[JSON objectForKey:@"user"]];                                           
                                            
                                            [[NSNotificationCenter defaultCenter]
                                             postNotificationName:@"LoggedIn"
@@ -96,8 +80,6 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
     tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-242292-26"];
     
     [TestFlight takeOff:@"7f1fb2cd-bf2d-41bc-bbf7-4a6870785c9e"];
-    // Register for Push Notification
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     
     // Check user auth async
     if ([[self getToken] length] > 0) {
@@ -107,7 +89,6 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
     
     // Clear notify but save badge
     [self clearNotification];
-    [FBSession openActiveSessionWithAllowLoginUI:NO];
 
     _uploader = [[NSMutableArray alloc] init];
     
@@ -129,75 +110,19 @@ NSString *const FBSessionStateChangedNotification = @"com.luxeys.latte:FBSession
     return YES;
 }
 
-
-- (void)updateUserAPNS {
-    [[LatteAPIClient sharedClient] postPath:@"user/me/update"
-                                parameters:[NSDictionary dictionaryWithObjectsAndKeys:
-                                            [self getToken], @"token",
-                                            apns, @"apns",
-                                            nil]
-                                    success:nil
-                                    failure:nil];
-}
-
-/*
- * Callback for session changes.
- */
-- (void)sessionStateChanged:(FBSession *)session
-                      state:(FBSessionState) state
-                      error:(NSError *)error
-{
-    switch (state) {
-        case FBSessionStateOpen:
-            if (!error) {
-                // We have a valid session
-                TFLog(@"User session found");
-            }
-            break;
-        case FBSessionStateClosed:
-        case FBSessionStateClosedLoginFailed:
-            [FBSession.activeSession closeAndClearTokenInformation];
-            break;
-        default:
-            break;
-    }
-    
-    [[NSNotificationCenter defaultCenter]
-     postNotificationName:FBSessionStateChangedNotification
-     object:session];
-    
-    if (error) {
-        TFLog(error.localizedDescription);
-    }
-}
-
-/*
- * Opens a Facebook session and optionally shows the login UX.
- */
-- (BOOL)openSessionWithAllowLoginUI:(BOOL)allowLoginUI {
-    NSArray *permissions = [[NSArray alloc] initWithObjects:
-                            @"email",
-                            @"user_photos",
-                            nil];
-    return [FBSession openActiveSessionWithReadPermissions:permissions
-                                              allowLoginUI:allowLoginUI
-                                         completionHandler:^(FBSession *session,
-                                                             FBSessionState state,
-                                                             NSError *error) {
-                                   [self sessionStateChanged:session
-                                                                 state:state
-                                                       error:error];
-                               }];
-}
-
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    apns = [[[[deviceToken description]
+    NSString *apns = [[[[deviceToken description]
                                   stringByReplacingOccurrencesOfString: @"<" withString: @""]
                                  stringByReplacingOccurrencesOfString: @">" withString: @""]
                                 stringByReplacingOccurrencesOfString: @" " withString: @""];
-    if (currentUser != nil) {
-        [self updateUserAPNS];
-    }
+    
+    [[LatteAPIClient sharedClient] postPath:@"user/me/update"
+                                 parameters:[NSDictionary dictionaryWithObjectsAndKeys:
+                                             [self getToken], @"token",
+                                             apns, @"apns",
+                                             nil]
+                                    success:nil
+                                    failure:nil];
 }
 
 - (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err {

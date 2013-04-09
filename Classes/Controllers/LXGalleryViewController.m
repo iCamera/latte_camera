@@ -172,6 +172,13 @@
     
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
     [app.tracker sendView:@"Gallery Screen"];
+    
+    //Setup Auto Animation
+    CATransition *animation = [CATransition animation];
+    animation.duration = 1.0;
+    animation.type = kCATransitionFade;
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    [labelDesc.layer addAnimation:animation forKey:@"changeTextTransition"];
 }
 
 - (void)setCurrentTab:(GalleryTab)currentTab {
@@ -335,38 +342,34 @@
     if ([self isShowingContainer]) {
         [self toggleFrame];
     }
-    [UIView animateWithDuration:kGlobalAnimationSpeed
-                     animations:^{
-                         viewDesc.alpha = 0;
-                     }];
 }
 
 - (void)setPicture {
     loadedInfo = false;
     LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
     
-    if (currentPage.picture.descriptionText.length > 0) {
-        CGSize size = [currentPage.picture.descriptionText sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0]
-                                                      constrainedToSize:CGSizeMake(308, CGFLOAT_MAX)
-                                                          lineBreakMode:labelDesc.lineBreakMode];
-        CGRect frame = labelDesc.frame;
-        frame.size.height = size.height;
-        CGRect screenRect = [[UIScreen mainScreen] bounds];
-        CGRect frameDesc = CGRectMake(0, screenRect.size.height-frame.size.height-12-35, 320, frame.size.height + 12);
-        [UIView animateWithDuration:kGlobalAnimationSpeed
-                              delay:0
-                            options:UIViewAnimationOptionCurveEaseInOut
-                         animations:^{
-                             viewDesc.alpha = 1;
-                             labelDesc.frame = frame;
-                             viewDesc.frame = frameDesc;
-                             
-                             [labelDesc setText:currentPage.picture.descriptionText];
-                         }
-                         completion:nil];
-    } else {
-
+    CGSize size = [currentPage.picture.descriptionText sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0]
+                                                  constrainedToSize:CGSizeMake(308, CGFLOAT_MAX)
+                                                      lineBreakMode:labelDesc.lineBreakMode];
+    CGRect frame = labelDesc.frame;
+    frame.size.height = size.height;
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGRect frameDesc = CGRectMake(0, screenRect.size.height-frame.size.height-12-35, 320, frame.size.height + 12);
+    
+    if (currentPage.picture.descriptionText.length == 0) {
+        frameDesc.size.height = 0;
     }
+    
+    [UIView animateWithDuration:kGlobalAnimationSpeed
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         labelDesc.frame = frame;
+                         viewDesc.frame = frameDesc;
+                         
+                         [labelDesc setText:currentPage.picture.descriptionText];
+                     }
+                     completion:nil];
     
     viewPicTab.picture = currentPage.picture;
     viewPicTab.viewComment.comments = nil;

@@ -499,7 +499,7 @@ typedef enum {
                                        [dayFormat setDateFormat:@"dd"];
                                        
                                        for (Picture *pic in currentMonthPicsFlat) {
-                                           NSString* key = [dayFormat stringFromDate:pic.createdAt];
+                                           NSString* key = [dayFormat stringFromDate:pic.takenAt];
                                            [currentMonthPics setObject:pic forKey:key];
                                        }
                                        
@@ -729,7 +729,7 @@ typedef enum {
                     NSInteger row = i/5;
                     NSInteger col = i%5;
                     
-                    NSString *key = [NSString stringWithFormat:@"%2d", i+1];
+                    NSString *key = [NSString stringWithFormat:@"%02d", i+1];
                     Picture *pic = [currentMonthPics objectForKey:key];
                     [cell addSubview:[self viewForCalendarPic:pic atRow:row atColumn:col cellIndex:i]];
                 }
@@ -1099,7 +1099,7 @@ typedef enum {
             break;
         }
         case kPhotoCalendar:
-            viewGallery.picture = [currentMonthPics objectForKey:[NSString stringWithFormat:@"%2d", sender.tag]];
+            viewGallery.picture = [currentMonthPics objectForKey:[NSString stringWithFormat:@"%02d", sender.tag]];
             viewGallery.user = _user;
             break;
         default:

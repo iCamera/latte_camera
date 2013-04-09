@@ -266,6 +266,8 @@
 - (void)receiveLoggedIn:(NSNotification *) notification {
     [self setUser];
     
+    // Register for Push Notification
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
 }
 
 - (void)receiveLoggedOut:(NSNotification *) notification {
