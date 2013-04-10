@@ -26,9 +26,7 @@
     LXStillCamera *videoCamera;
     GPUImageSharpenFilter *filterSharpen;
     GPUImageFilterPipeline *pipe;
-    LXFilterFish *filterFish;
     LXImageFilter *filterMain;
-    LXImageLens *filterLens;
     
     GPUImagePicture *previewFilter;
     
@@ -229,10 +227,7 @@
     
     scrollProcess.contentSize = CGSizeMake(320, 50);
 
-    pipe = [[GPUImageFilterPipeline alloc] init];
-    pipe.filters = [[NSMutableArray alloc] init];
     filterMain = [[LXImageFilter alloc] init];
-    filterSharpen = [[GPUImageSharpenFilter alloc] init];
     
     videoCamera = [[LXStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionBack];
     [videoCamera setOutputImageOrientation:UIInterfaceOrientationPortrait];
@@ -258,17 +253,17 @@
         labelEffect.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:11];
         labelEffect.userInteractionEnabled = NO;
         UIButton *buttonEffect = [[UIButton alloc] initWithFrame:CGRectMake(5+75*i, 0, 70, 70)];
-        GPUImageView *effectView = [[GPUImageView alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
-        effectView.fillMode = kGPUImageFillModePreserveAspectRatioAndFill;
-        effectView.userInteractionEnabled = NO;
+        UIImageView *previewEffect = [[UIImageView alloc] initWithFrame:buttonEffect.bounds];
+        previewEffect.contentMode = UIViewContentModeScaleAspectFill;
+        previewEffect.userInteractionEnabled = NO;
         
-        [effectPreview addObject:effectView];
+        [effectPreview addObject:previewEffect];
         
         UIView *labelBack = [[UIView alloc] initWithFrame:CGRectMake(0, 53, 70, 20)];
         labelBack.userInteractionEnabled = NO;
         labelBack.backgroundColor = [UIColor blackColor];
         labelBack.alpha = 0.4;
-        [buttonEffect addSubview:effectView];
+        [buttonEffect addSubview:previewEffect];
         [buttonEffect addSubview:labelBack];
         
         labelEffect.center = CGPointMake(buttonEffect.center.x, 62);
@@ -462,12 +457,10 @@
 
 
 - (void)preparePipe:(GPUImagePicture*)source {
-    filterFish = nil;
-    filterLens = nil;
+    pipe = [[GPUImageFilterPipeline alloc] init];
+    pipe.filters = [[NSMutableArray alloc] init];
     
     if (isEditing) {
-        [pipe removeAllFilters];
-        
         if (source != nil) {
             pipe.input = source;
             pipe.output = nil;
@@ -478,12 +471,12 @@
         }
         
         if (!buttonLensWide.enabled) {
-            filterLens = [[LXImageLens alloc] init];
+            LXImageLens *filterLens = [[LXImageLens alloc] init];
             [pipe addFilter:filterLens];
         }
         
         if (!buttonLensFish.enabled) {
-            filterFish = [[LXFilterFish alloc] init];
+            LXFilterFish *filterFish = [[LXFilterFish alloc] init];
             [pipe addFilter:filterFish];
         }
         
@@ -498,7 +491,7 @@
         pipe.output = viewCamera;
         [pipe removeAllFilters];
         if (buttonToggleFisheye.selected) {
-            filterFish = [[LXFilterFish alloc] init];
+            LXFilterFish *filterFish = [[LXFilterFish alloc] init];
             [pipe addFilter:filterFish];
         }
     }
@@ -535,7 +528,6 @@
 - (void)processImage {
     isSaved = false;
     buttonReset.enabled = true;
-    [self preparePipe];
     [previewFilter processImage];
 }
 
@@ -624,12 +616,13 @@
             CGSize previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:capturedImage.size.width height:capturedImage.size.height]);
             
             UIImage *previewPic = [LXCameraViewController imageWithImage:capturedImage scaledToSize:previewUISize];
+            [self initPreviewPic:previewPic];
             savedPreview = previewPic;
             
             previewFilter = [[GPUImagePicture alloc] initWithImage:previewPic];
             
             isPicFromCamera = true;
-            [self initPreviewPic];
+            
             [self switchEditImage];
             
         }
@@ -706,8 +699,7 @@
     sender.enabled = false;
     
     currentLens = sender.tag;
-//    [self preparePipe];
-    [self applyFilterSetting];
+    [self preparePipe];
     [self processImage];
 }
 
@@ -830,12 +822,14 @@
     if (dictForTIFF == nil) {
         dictForTIFF = [[NSMutableDictionary alloc] init];
     }
-    [dictForTIFF setObject:@"Latte camera" forKey:(NSString *)kCGImagePropertyTIFFSoftware];
+    NSString *appVersion = [NSString stringWithFormat:@"Latte camera %@", [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"]];
+    [dictForTIFF setObject:appVersion forKey:(NSString *)kCGImagePropertyTIFFSoftware];
     [imageMeta setObject:dictForTIFF forKey:(NSString *)kCGImagePropertyTIFFDictionary];
     
     // If this is new photo save original pic first, and then process
     if (isPicFromCamera && !didBackupPic) {
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+        
         [library writeImageToSavedPhotosAlbum:capturedImage.CGImage metadata:imageMeta completionBlock:^(NSURL *assetURL, NSError *error) {
             didBackupPic = true;
             [self processRawAndSave:^{
@@ -858,7 +852,6 @@
     
     GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:capturedImage];
     [self preparePipe:picture];
-    [self applyFilterSetting];
 
     GPUImageRotationMode imageViewRotationModeIdx1 = kGPUImageNoRotation;
 
@@ -934,6 +927,10 @@
     
     
     [library writeImageDataToSavedPhotosAlbum:savedData metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
+        // Save to album
+        [library addAssetURL:assetURL toAlbum:@"Latte camera" withCompletionBlock:^(NSError *error) {
+            
+        }];
         if (!error) {
             HUD.mode = MBProgressHUDModeText;
             HUD.labelText = NSLocalizedString(@"saved_photo", @"Saved to Camera Roll") ;
@@ -954,8 +951,7 @@
         }
         
         // Return to preview mode
-        [self applyFilterSetting];
-        [self processImage];
+        [self preparePipe];
         filterMain.blendRotation = kGPUImageNoRotation;
     }];
     
@@ -1165,47 +1161,42 @@
     }];
 }
 
-- (UIImageOrientation) imageOrientationForUI:(UIInterfaceOrientation)orientation
-{
-	switch (orientation) {
-		case UIInterfaceOrientationPortrait:
-			return UIImageOrientationUp;
-		case UIInterfaceOrientationLandscapeLeft:
-			return UIImageOrientationUp;
-		case UIInterfaceOrientationLandscapeRight:
-			return UIImageOrientationUp;
-		case UIInterfaceOrientationPortraitUpsideDown:
-			return UIImageOrientationRight;
-		default:
-			return UIImageOrientationLeft;
-	}
-}
-
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [locationManager stopUpdatingLocation];
+    [picker dismissViewControllerAnimated:NO completion:nil];
     
     ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset)
     {
-        [picker dismissViewControllerAnimated:NO completion:nil];
-        
         bestEffortAtLocation = nil;
         imageMeta = [NSMutableDictionary dictionaryWithDictionary:myasset.defaultRepresentation.metadata];
-        
         capturedImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+        
         imageOrientation = capturedImage.imageOrientation;
+        
+        // UIImagePicker screws up orientation if the photo was editted before.
+        if (imageOrientation == UIImageOrientationUp) {
+            NSMutableDictionary *dictTIFF = [imageMeta objectForKey:(NSString*)kCGImagePropertyTIFFDictionary];
+            if (dictTIFF) {
+                [dictTIFF removeObjectForKey:(NSString *)kCGImagePropertyTIFFOrientation];
+            }
+            
+            [imageMeta removeObjectForKey:(NSString *)kCGImagePropertyOrientation];
+        }
         
         picSize = capturedImage.size;
         
         //
         CGSize previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:capturedImage.size.width height:capturedImage.size.height]);
         UIImage *previewPic = [LXCameraViewController imageWithImage:capturedImage scaledToSize:previewUISize];
+        [self initPreviewPic:previewPic];
         savedPreview = previewPic;
         
         previewFilter = [[GPUImagePicture alloc] initWithImage:previewPic];
         isPicFromCamera = false;
 
-        [self initPreviewPic];
+        
         [self switchEditImage];
+        
     };
     
     //
@@ -1334,30 +1325,21 @@
     buttonReset.enabled = false;
     
     [self resizeCameraViewWithAnimation:YES];
+    [self preparePipe];
     [self applyFilterSetting];
     [self processImage];
 }
 
-- (void)initPreviewPic {
-    
+- (void)initPreviewPic:(UIImage *)previewPic {
     for (NSInteger i = 0; i < effectNum; i++) {
-        [previewFilter removeAllTargets];
-        GPUImageView *effectView = effectPreview[i];
-        
-        if (i == 0) {
-            [previewFilter addTarget:effectView];
-        } else {
-            LXImageFilter *filterSample = [[LXImageFilter alloc] init];
-            filterSample.toneCurve = effectCurve[i];
-            filterSample.toneEnable = YES;
-            
-            [previewFilter addTarget:filterSample];
-            [filterSample addTarget:effectView];
-
-        }
-        [previewFilter processImage];
+        UIImageView *imageViewPreview = effectPreview[i];
+        LXImageFilter *filterSample = [[LXImageFilter alloc] init];
+        filterSample.toneCurve = effectCurve[i];
+        filterSample.toneEnable = YES;
+        CGImageRef cgPreview = [filterSample newCGImageByFilteringImage:previewPic];
+        imageViewPreview.image = [UIImage imageWithCGImage:cgPreview];
+        CGImageRelease(cgPreview);
     }
-
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(NSDictionary *)info {
@@ -1620,6 +1602,7 @@
 
 - (IBAction)setBlend:(UIButton *)sender {
     [self setBlendImpl:sender.tag];
+    [self processImage];
 }
 
 - (IBAction)toggleFisheye:(UIButton *)sender {
@@ -1692,7 +1675,6 @@
     }
     
     currentBlend = tag;
-    [self processImage];
 }
 
 

@@ -10,6 +10,7 @@
 #import "LatteAPIClient.h"
 #import "TestFlight.h"
 #import "LXButtonBack.h"
+#import "UIDeviceHardware.h"
 
 @interface LXAboutViewController ()
 
@@ -49,10 +50,14 @@
 
 - (IBAction)touchSend:(id)sender {
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    
+    UIDeviceHardware *device = [[UIDeviceHardware alloc] init];
     NSString *senderName = @"";
+    NSString *memo = [NSString stringWithFormat:@"Version:%@\nDevice:%@\n\n%@",
+                      [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"],
+                      [device platformString],
+                      textForm.text];
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   textForm.text, @"memo",
+                                   memo, @"memo",
                                    senderName, @"sender",
                                    nil];
     if (app.currentUser != nil) {

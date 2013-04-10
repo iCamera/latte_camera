@@ -13,14 +13,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" id="tT3-G5-ugW" userLabel="View Description">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="dcl-lB-O6o" userLabel="Scroll View Description">
                                 <rect key="frame" x="0.0" y="537" width="320" height="0.0"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
-                                <accessibility key="accessibilityConfiguration">
-                                    <accessibilityTraits key="traits" none="YES" notEnabled="YES"/>
-                                </accessibility>
-                            </view>
+                            </scrollView>
                             <view contentMode="scaleToFill" id="elZ-1B-Ddf" userLabel="View Tab">
                                 <rect key="frame" x="0.0" y="533" width="320" height="35"/>
                                 <subviews>
@@ -207,7 +204,7 @@
                         <outlet property="labelLike" destination="YRf-Qi-Bof" id="MRx-Ds-70H"/>
                         <outlet property="labelNickname" destination="S7J-P5-R5U" id="3JX-Bu-Shv"/>
                         <outlet property="labelView" destination="o8T-e9-IaH" id="Dpy-he-8Dp"/>
-                        <outlet property="viewDesc" destination="tT3-G5-ugW" id="8Zn-qY-o9B"/>
+                        <outlet property="viewDesc" destination="dcl-lB-O6o" id="v30-Hy-nyU"/>
                         <outlet property="viewInfoTop" destination="KWF-Xb-pkH" id="h1n-OK-hc4"/>
                         <outlet property="viewTab" destination="elZ-1B-Ddf" id="42G-qT-YRn"/>
                     </connections>
@@ -1064,7 +1061,7 @@
                 <relationship kind="outlet" name="labelLike" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="labelNickname" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="labelView" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="viewDesc" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewDesc" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="viewInfoTop" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewTab" candidateClass="UIView"/>
             </relationships>

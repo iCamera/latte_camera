@@ -354,7 +354,10 @@
     CGRect frame = labelDesc.frame;
     frame.size.height = size.height;
     CGRect screenRect = [[UIScreen mainScreen] bounds];
-    CGRect frameDesc = CGRectMake(0, screenRect.size.height-frame.size.height-12-35, 320, frame.size.height + 12);
+    CGRect frameDesc = viewDesc.frame;
+    frameDesc.size.height = MIN(frame.size.height + 12, 200);
+    frameDesc.origin.y = screenRect.size.height-frameDesc.size.height-35;
+    viewDesc.contentSize = CGSizeMake(320, frame.size.height + 12);
     
     if (currentPage.picture.descriptionText.length == 0) {
         frameDesc.size.height = 0;
