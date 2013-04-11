@@ -486,6 +486,28 @@
         filterSharpen.sharpness = sliderSharpness.value;
         [pipe addFilter:filterSharpen];
         
+        
+        GPUImageRotationMode imageViewRotationModeIdx1 = kGPUImageNoRotation;
+        if (source != nil) {
+            switch (imageOrientation) {
+                case UIImageOrientationLeft:
+                    imageViewRotationModeIdx1 = kGPUImageRotateLeft;
+                    break;
+                case UIImageOrientationRight:
+                    imageViewRotationModeIdx1 = kGPUImageRotateRight;
+                    break;
+                case UIImageOrientationDown:
+                    imageViewRotationModeIdx1 = kGPUImageRotate180;
+                    break;
+                case UIImageOrientationUp:
+                    imageViewRotationModeIdx1 = kGPUImageNoRotation;
+                    break;
+                default:
+                    imageViewRotationModeIdx1 = kGPUImageNoRotation;
+                    break;
+            }
+        }
+        [pipe.filters[0] setInputRotation:imageViewRotationModeIdx1 atIndex:0];
     } else {
         pipe.input = videoCamera;
         pipe.output = viewCamera;
@@ -832,11 +854,19 @@
         
         [library writeImageToSavedPhotosAlbum:capturedImage.CGImage metadata:imageMeta completionBlock:^(NSURL *assetURL, NSError *error) {
             didBackupPic = true;
+            
+            [dictForTIFF removeObjectForKey:(NSString *)kCGImagePropertyTIFFOrientation];
+            [imageMeta removeObjectForKey:(NSString *)kCGImagePropertyOrientation];
+            
             [self processRawAndSave:^{
                 block();
             }];
         }];
     } else {
+        
+        [dictForTIFF removeObjectForKey:(NSString *)kCGImagePropertyTIFFOrientation];
+        [imageMeta removeObjectForKey:(NSString *)kCGImagePropertyOrientation];
+        
         [self processRawAndSave:^{
             block();
         }];
@@ -852,27 +882,6 @@
     
     GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:capturedImage];
     [self preparePipe:picture];
-
-    GPUImageRotationMode imageViewRotationModeIdx1 = kGPUImageNoRotation;
-
-    switch (imageOrientation) {
-        case UIImageOrientationLeft:
-            imageViewRotationModeIdx1 = kGPUImageRotateRight;
-            break;
-        case UIImageOrientationRight:
-            imageViewRotationModeIdx1 = kGPUImageRotateLeft;
-            break;
-        case UIImageOrientationDown:
-            imageViewRotationModeIdx1 = kGPUImageRotate180;
-            break;
-        case UIImageOrientationUp:
-            imageViewRotationModeIdx1 = kGPUImageNoRotation;
-            break;
-        default:
-            imageViewRotationModeIdx1 = kGPUImageRotateLeft;
-            break;
-    }
-    filterMain.blendRotation = imageViewRotationModeIdx1;
 
     [(GPUImageFilter *)[pipe.filters lastObject] prepareForImageCapture];
     
@@ -952,7 +961,6 @@
         
         // Return to preview mode
         [self preparePipe];
-        filterMain.blendRotation = kGPUImageNoRotation;
     }];
     
 }
@@ -1172,16 +1180,6 @@
         capturedImage = [info objectForKey:UIImagePickerControllerOriginalImage];
         
         imageOrientation = capturedImage.imageOrientation;
-        
-        // UIImagePicker screws up orientation if the photo was editted before.
-        if (imageOrientation == UIImageOrientationUp) {
-            NSMutableDictionary *dictTIFF = [imageMeta objectForKey:(NSString*)kCGImagePropertyTIFFDictionary];
-            if (dictTIFF) {
-                [dictTIFF removeObjectForKey:(NSString *)kCGImagePropertyTIFFOrientation];
-            }
-            
-            [imageMeta removeObjectForKey:(NSString *)kCGImagePropertyOrientation];
-        }
         
         picSize = capturedImage.size;
         

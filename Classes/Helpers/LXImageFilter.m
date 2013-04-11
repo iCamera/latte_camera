@@ -34,6 +34,7 @@
     GLfloat blendTextureCoordinates[8];
     
     GLint blendTextureCoordinateAttribute;
+    GLint dofTextureCoordinateAttribute;
 }
 
 - (id)init;
@@ -48,8 +49,6 @@
     {
 		return nil;
     }
-    
-    _blendRotation = kGPUImageNoRotation;
     
     runSynchronouslyOnVideoProcessingQueue(^{
         vignfadeUniform = [filterProgram uniformIndex:@"vignfade"];
@@ -71,7 +70,9 @@
         gainUniform = [filterProgram uniformIndex:@"gain"];
         
         blendTextureCoordinateAttribute = [filterProgram attributeIndex:@"blendTextureCoordinate"];
+        dofTextureCoordinateAttribute = [filterProgram attributeIndex:@"dofTextureCoordinate"];
         glEnableVertexAttribArray(blendTextureCoordinateAttribute);
+        glEnableVertexAttribArray(dofTextureCoordinateAttribute);
     });
     
     self.saturation = 1.0;
@@ -86,6 +87,7 @@
 {
     [super initializeAttributes];
     [filterProgram addAttribute:@"blendTextureCoordinate"];
+    [filterProgram addAttribute:@"dofTextureCoordinate"];
 }
 
 - (void)setVignfade:(CGFloat)aVignfade
@@ -286,8 +288,16 @@
     glBindTexture(GL_TEXTURE_2D, inputDOFTexture);
     glUniform1i(inputDOFTextureUniform, 5);
     
+    static const GLfloat noRotationTextureCoordinates[] = {
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        0.0f, 1.0f,
+        1.0f, 1.0f,
+    };
+    
     glVertexAttribPointer(filterPositionAttribute, 2, GL_FLOAT, 0, 0, vertices);
     glVertexAttribPointer(filterTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, textureCoordinates);
+    glVertexAttribPointer(dofTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, noRotationTextureCoordinates);
     glVertexAttribPointer(blendTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, blendTextureCoordinates);
     
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -328,10 +338,6 @@
     }
 }
 
-- (void)setBlendRotation:(GPUImageRotationMode)blendRotation {
-    _blendRotation = blendRotation;
-    [self calculateCropTextureCoordinates];
-}
 
 - (void)setBlendRegion:(CGRect)blendRegion {
     _blendRegion = blendRegion;
@@ -346,107 +352,17 @@
     CGFloat maxX = CGRectGetMaxX(_blendRegion);
     CGFloat maxY = CGRectGetMaxY(_blendRegion);
     
-    switch(_blendRotation)
-    {
-        case kGPUImageNoRotation: // Works
-        {
-            blendTextureCoordinates[0] = minX; // 0,0
-            blendTextureCoordinates[1] = minY;
-            
-            blendTextureCoordinates[2] = maxX; // 1,0
-            blendTextureCoordinates[3] = minY;
-            
-            blendTextureCoordinates[4] = minX; // 0,1
-            blendTextureCoordinates[5] = maxY;
-            
-            blendTextureCoordinates[6] = maxX; // 1,1
-            blendTextureCoordinates[7] = maxY;
-        }; break;
-        case kGPUImageRotateLeft: // Broken
-        {
-            blendTextureCoordinates[0] = maxX; // 1,0
-            blendTextureCoordinates[1] = minY;
-            
-            blendTextureCoordinates[2] = maxX; // 1,1
-            blendTextureCoordinates[3] = maxY;
-            
-            blendTextureCoordinates[4] = minX; // 0,0
-            blendTextureCoordinates[5] = minY;
-            
-            blendTextureCoordinates[6] = minX; // 0,1
-            blendTextureCoordinates[7] = maxY;
-        }; break;
-        case kGPUImageRotateRight: // Fixed
-        {
-            blendTextureCoordinates[0] = minY; // 0,1
-            blendTextureCoordinates[1] = 1.0 - minX;
-            
-            blendTextureCoordinates[2] = minY; // 0,0
-            blendTextureCoordinates[3] = 1.0 - maxX;
-            
-            blendTextureCoordinates[4] = maxY; // 1,1
-            blendTextureCoordinates[5] = 1.0 - minX;
-            
-            blendTextureCoordinates[6] = maxY; // 1,0
-            blendTextureCoordinates[7] = 1.0 - maxX;
-        }; break;
-        case kGPUImageFlipVertical: // Broken
-        {
-            blendTextureCoordinates[0] = minX; // 0,1
-            blendTextureCoordinates[1] = maxY;
-            
-            blendTextureCoordinates[2] = maxX; // 1,1
-            blendTextureCoordinates[3] = maxY;
-            
-            blendTextureCoordinates[4] = minX; // 0,0
-            blendTextureCoordinates[5] = minY;
-            
-            blendTextureCoordinates[6] = maxX; // 1,0
-            blendTextureCoordinates[7] = minY;
-        }; break;
-        case kGPUImageFlipHorizonal: // Broken
-        {
-            blendTextureCoordinates[0] = maxX; // 1,0
-            blendTextureCoordinates[1] = minY;
-            
-            blendTextureCoordinates[2] = minX; // 0,0
-            blendTextureCoordinates[3] = minY;
-            
-            blendTextureCoordinates[4] = maxX; // 1,1
-            blendTextureCoordinates[5] = maxY;
-            
-            blendTextureCoordinates[6] = minX; // 0,1
-            blendTextureCoordinates[7] = maxY;
-        }; break;
-        case kGPUImageRotate180: // Broken
-        {
-            blendTextureCoordinates[0] = maxX; // 1,1
-            blendTextureCoordinates[1] = maxY;
-            
-            blendTextureCoordinates[2] = maxX; // 1,0
-            blendTextureCoordinates[3] = minY;
-            
-            blendTextureCoordinates[4] = minX; // 0,1
-            blendTextureCoordinates[5] = maxY;
-            
-            blendTextureCoordinates[6] = minX; // 0,0
-            blendTextureCoordinates[7] = minY;
-        }; break;
-        case kGPUImageRotateRightFlipVertical: // Fixed
-        {
-            blendTextureCoordinates[0] = minY; // 0,0
-            blendTextureCoordinates[1] = 1.0 - maxX;
-            
-            blendTextureCoordinates[2] = minY; // 0,1
-            blendTextureCoordinates[3] = 1.0 - minX;
-            
-            blendTextureCoordinates[4] = maxY; // 1,0
-            blendTextureCoordinates[5] = 1.0 - maxX;
-            
-            blendTextureCoordinates[6] = maxY; // 1,1
-            blendTextureCoordinates[7] = 1.0 - minX;
-        }; break;
-    }    
+    blendTextureCoordinates[0] = minX; // 0,0
+    blendTextureCoordinates[1] = minY;
+    
+    blendTextureCoordinates[2] = maxX; // 1,0
+    blendTextureCoordinates[3] = minY;
+    
+    blendTextureCoordinates[4] = minX; // 0,1
+    blendTextureCoordinates[5] = maxY;
+    
+    blendTextureCoordinates[6] = maxX; // 1,1
+    blendTextureCoordinates[7] = maxY;
 }
 
 

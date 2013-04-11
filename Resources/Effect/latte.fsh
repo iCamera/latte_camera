@@ -5,6 +5,7 @@
 precision highp float;
 
 varying highp vec2 textureCoordinate;
+varying highp vec2 dofCoordinate;
 varying highp vec2 blendCoordinate;
 
 uniform sampler2D inputImageTexture;
@@ -57,7 +58,7 @@ vec4 dof()
         //float aspectratio = 800.0/600.0;
         vec2 aspectcorrect = vec2(1.0,1.0/aspectratio);
        
-        vec4 depth1   = texture2D(inputDOFTexture, blendCoordinate);
+        vec4 depth1 = texture2D(inputDOFTexture, dofCoordinate);
  
         float factor = ( depth1.x - focus );
          

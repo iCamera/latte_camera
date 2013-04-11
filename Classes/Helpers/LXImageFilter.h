@@ -26,6 +26,4 @@
 @property(readwrite, nonatomic) BOOL toneEnable;
 @property(readwrite, nonatomic) BOOL blendEnable;
 
-@property(readwrite, nonatomic) GPUImageRotationMode blendRotation;
-
 @end
