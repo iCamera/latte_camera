@@ -133,6 +133,7 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIButton *buttonToggleFisheye;
 @property (strong, nonatomic) IBOutlet UIView *viewShoot;
 @property (strong, nonatomic) IBOutlet UIButton *buttonUploadStatus;
+@property (strong, nonatomic) IBOutlet UIButton *buttonBlackWhite;
 
 @property (strong, nonatomic) NSDictionary *dictUpload;
 @property (strong, nonatomic) LXStillCamera *videoCamera;
@@ -160,6 +161,7 @@ typedef enum {
 - (IBAction)toggleFisheye:(UIButton *)sender;
 - (IBAction)setBlend:(UIButton *)sender;
 - (IBAction)touchUploadStatus:(id)sender;
+- (IBAction)toggleMono:(id)sender;
 
 - (void)switchCamera;
 

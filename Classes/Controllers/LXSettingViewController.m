@@ -240,6 +240,18 @@
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
     [dict setObject:[app getToken] forKey:@"token"];
     
+    if ([dict objectForKey:@"default_show_exif"]) {
+        app.currentUser.defaultShowEXIF = [[dict objectForKey:@"default_show_exif"] boolValue];
+    }
+    
+    if ([dict objectForKey:@"default_show_gps"]) {
+        app.currentUser.defaultShowGPS= [[dict objectForKey:@"default_show_gps"] boolValue];
+    }
+    
+    if ([dict objectForKey:@"default_show_taken_at"]) {
+        app.currentUser.defaultShowTakenAt = [[dict objectForKey:@"default_show_taken_at"] boolValue];
+    }
+    
     [[LatteAPIClient sharedClient] postPath:@"user/me/update"
                                  parameters: dict
                                     success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {

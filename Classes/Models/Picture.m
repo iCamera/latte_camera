@@ -72,7 +72,12 @@
         if ([value isKindOfClass:[NSArray class]]) {
             self.tagsOld = [NSMutableArray arrayWithArray:value];
         }
-    } else {
+    } else if ([key isEqualToString:@"user"]) {
+        if ([value isKindOfClass:[NSDictionary class]]) {
+            _user = [User instanceFromDictionary:value];
+        }
+        
+    }else {
         [super setValue:value forKey:key];
     }
 

@@ -20,7 +20,9 @@
 @end
 
 @implementation LXTagViewController {
-    NSArray *pictures;
+    NSMutableArray *pictures;
+    NSInteger page;
+    BOOL loadEnded;
 }
 
 @synthesize viewHeader;
@@ -51,29 +53,47 @@
     labelTag.text = _keyword;
     
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
+    page = 1;
+    loadEnded = false;
+    [self loadMore];
+}
 
+- (void)loadMore {
+    [activityLoad startAnimating];
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
                            [app getToken], @"token",
-                           _keyword, @"keyword", nil];
+                           _keyword, @"keyword",
+                           [NSNumber numberWithInt:page], @"page",
+                           nil];
     
     [[LatteAPIClient sharedClient] getPath:@"picture/tag"
-                                 parameters:param
-                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                parameters:param
+                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       
+                                       NSMutableArray *data = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
+                                       if (page == 1) {
+                                           pictures = data;
+                                       } else {
+                                           [pictures addObjectsFromArray:data];
+                                       }
+                                       
+                                       page += 1;
+                                       loadEnded = data.count == 0;
+                                       
+                                       [self.tableView reloadData];
+                                       [activityLoad stopAnimating];
+                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       TFLog(@"Something went wrong Tag");
+                                       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                       message:error.localizedDescription
+                                                                                      delegate:nil
+                                                                             cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                             otherButtonTitles:nil];
+                                       [alert show];
+                                       [activityLoad stopAnimating];
+                                   }];
 
-                                        pictures = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
-                                        [self.tableView reloadData];
-                                        [activityLoad stopAnimating];
-                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        TFLog(@"Something went wrong Tag");
-                                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
-                                                                                        message:error.localizedDescription
-                                                                                       delegate:nil
-                                                                              cancelButtonTitle:NSLocalizedString(@"close", "Close")
-                                                                              otherButtonTitles:nil];
-                                        [alert show];
-                                        [activityLoad stopAnimating];
-                                    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -142,6 +162,24 @@
                          picPrev, @"picture",
                          nil];
     return ret;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
+    if (loadEnded)
+        return;
+    CGPoint offset = aScrollView.contentOffset;
+    CGRect bounds = aScrollView.bounds;
+    CGSize size = aScrollView.contentSize;
+    UIEdgeInsets inset = aScrollView.contentInset;
+    float y = offset.y + bounds.size.height - inset.bottom;
+    float h = size.height;
+    
+    float reload_distance = -100;
+    if(y > h + reload_distance) {
+        if (!activityLoad.isAnimating) {
+            [self loadMore];
+        }
+    }
 }
 
 @end

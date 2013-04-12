@@ -378,12 +378,17 @@
     viewPicTab.viewComment.comments = nil;
     
     
-    if (currentPage.user == nil) {
-        [self loadInfo];
-    } else {
+    if (currentPage.user) {
         labelNickname.text = currentPage.user.name;
         [LXUtils setNationalityOfUser:currentPage.user forImage:imageNationality nextToLabel:labelNickname];
         [buttonUser loadBackground:currentPage.user.profilePicture placeholderImage:@"user.gif"];
+        
+    } else if (currentPage.picture.user) {
+        labelNickname.text = currentPage.picture.user.name;
+        [LXUtils setNationalityOfUser:currentPage.picture.user forImage:imageNationality nextToLabel:labelNickname];
+        [buttonUser loadBackground:currentPage.picture.user.profilePicture placeholderImage:@"user.gif"];
+    } else {
+        [self loadInfo];
     }
     
     labelView.text = [NSString stringWithFormat:NSLocalizedString(@"d_views", @""), [currentPage.picture.pageviews integerValue]];

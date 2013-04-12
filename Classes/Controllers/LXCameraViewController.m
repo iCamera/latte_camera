@@ -153,6 +153,7 @@
 @synthesize sliderFeather;
 
 @synthesize buttonUploadStatus;
+@synthesize buttonBlackWhite;
 
 @synthesize delegate;
 
@@ -239,12 +240,12 @@
     [locationManager startUpdatingLocation];
     [self performSelector:@selector(stopUpdatingLocation:) withObject:nil afterDelay:45];
     
-    effectNum = 17;
+    effectNum = 19;
     effectPreview = [[NSMutableArray alloc] initWithCapacity:effectNum];
     effectCurve = [[NSMutableArray alloc] initWithCapacity:effectNum];
     
     for (int i=0; i < effectNum; i++) {
-        [effectCurve addObject:[UIImage imageNamed:[NSString stringWithFormat:@"curve%d.JPG", i]]];
+        [effectCurve addObject:[UIImage imageNamed:[NSString stringWithFormat:@"curve%d.png", i]]];
         UILabel *labelEffect = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 70, 12)];
         labelEffect.backgroundColor = [UIColor clearColor];
         labelEffect.textColor = [UIColor whiteColor];
@@ -321,6 +322,12 @@
                 break;
             case 16:
                 labelEffect.text = @"Alone";
+                break;
+            case 17:
+                labelEffect.text = @"Inaka";
+                break;
+            case 18:
+                labelEffect.text = @"Curvy";
                 break;
             default:
                 labelEffect.text = @"Original";
@@ -1393,6 +1400,7 @@
     buttonBlendMedium.enabled = true;
     buttonBlendStrong.enabled = true;
     buttonBlendWeak.enabled = true;
+    buttonBlackWhite.selected = false;
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -1639,6 +1647,19 @@
         default:
             break;
     }
+}
+
+- (IBAction)toggleMono:(id)sender {
+    buttonBlackWhite.selected = !buttonBlackWhite.selected;
+    if (buttonBlackWhite.selected) {
+        filterMain.saturation = 0;
+        sliderSaturation.value = 0;
+    }
+    else {
+        filterMain.saturation = 1;
+        sliderSaturation.value = 1;
+    }
+    [self processImage];
 }
 
 - (void)setBlendImpl:(NSInteger)tag {

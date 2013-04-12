@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "LXGalleryViewController.h"
 
-@interface LXTagViewController : UITableViewController<LXGalleryViewControllerDataSource>
+@interface LXTagViewController : UITableViewController<LXGalleryViewControllerDataSource, UIScrollViewDelegate>
 
 @property (strong, nonatomic) NSString *keyword;
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;

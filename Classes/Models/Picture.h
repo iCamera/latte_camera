@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "ModelObject.h"
-#import "User.h"
 #import "LXUtils.h"
+#import "User.h"
 
 @interface Picture : ModelObject {
     BOOL canComment;
@@ -66,6 +66,8 @@
 @property (nonatomic, assign) BOOL showEXIF;
 @property (nonatomic, assign) BOOL showTakenAt;
 @property (nonatomic, copy) NSString *urlWeb;
+
+@property (nonatomic, strong) User *user;
 
 + (Picture *)instanceFromDictionary:(NSDictionary *)aDictionary;
 - (void)setAttributesFromDictionary:(NSDictionary *)aDictionary;

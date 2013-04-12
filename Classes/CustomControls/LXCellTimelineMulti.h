@@ -9,9 +9,6 @@
 #import <UIKit/UIKit.h>
 
 #import "Feed.h"
-#import "Picture.h"
-#import "UIButton+AsyncImage.h"
-#import "LXTimelineMultiItemViewController.h"
 
 @interface LXCellTimelineMulti : UITableViewCell {
     UIViewController *viewController;

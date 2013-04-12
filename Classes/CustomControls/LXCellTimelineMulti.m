@@ -7,6 +7,11 @@
 //
 
 #import "LXCellTimelineMulti.h"
+#import "User.h"
+#import "Picture.h"
+#import "UIButton+AsyncImage.h"
+#import "LXTimelineMultiItemViewController.h"
+
 
 @implementation LXCellTimelineMulti
 
