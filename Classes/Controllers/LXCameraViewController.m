@@ -645,7 +645,7 @@
             CGSize previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:capturedImage.size.width height:capturedImage.size.height]);
             
             UIImage *previewPic = [LXCameraViewController imageWithImage:capturedImage scaledToSize:previewUISize];
-            [self initPreviewPic:previewPic];
+            
             savedPreview = previewPic;
             
             previewFilter = [[GPUImagePicture alloc] initWithImage:previewPic];
@@ -653,7 +653,7 @@
             isPicFromCamera = true;
             
             [self switchEditImage];
-            
+            [self initPreviewPic:previewPic];
         }
         
         buttonCapture.enabled = true;
@@ -1193,15 +1193,14 @@
         //
         CGSize previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:capturedImage.size.width height:capturedImage.size.height]);
         UIImage *previewPic = [LXCameraViewController imageWithImage:capturedImage scaledToSize:previewUISize];
-        [self initPreviewPic:previewPic];
         savedPreview = previewPic;
         
         previewFilter = [[GPUImagePicture alloc] initWithImage:previewPic];
         isPicFromCamera = false;
-
         
         [self switchEditImage];
         
+        [self initPreviewPic:previewPic];
     };
     
     //

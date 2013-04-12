@@ -139,15 +139,6 @@
 - (void)setToneCurve:(UIImage *)toneCurve {
     _toneCurve = toneCurve;
     
-    if (toneCurve == nil) {
-        if (toneCurveTexture)
-        {
-            glDeleteTextures(1, &toneCurveTexture);
-            toneCurveTexture = 0;
-        }
-        return;
-    }
-    
     CGFloat widthOfImage = CGImageGetWidth(_toneCurve.CGImage);
     CGFloat heightOfImage = CGImageGetHeight(_toneCurve.CGImage);
     
@@ -162,6 +153,13 @@
     
     runSynchronouslyOnVideoProcessingQueue(^{
         [GPUImageOpenGLESContext useImageProcessingContext];
+        
+        if (toneCurveTexture)
+        {
+            glDeleteTextures(1, &toneCurveTexture);
+            toneCurveTexture = 0;
+        }
+        
         glActiveTexture(GL_TEXTURE3);
         glGenTextures(1, &toneCurveTexture);
         glBindTexture(GL_TEXTURE_2D, toneCurveTexture);
@@ -180,15 +178,6 @@
 - (void)setImageBlend:(UIImage *)imageBlend {
     _imageBlend = imageBlend;
     
-    if (imageBlend == nil) {
-        if (inputBlendTexture)
-        {
-            glDeleteTextures(1, &inputBlendTexture);
-            inputBlendTexture = 0;
-        }
-        return;
-    }
-    
     CGFloat widthOfImage = CGImageGetWidth(_imageBlend.CGImage);
     CGFloat heightOfImage = CGImageGetHeight(_imageBlend.CGImage);
     
@@ -203,6 +192,13 @@
     
     runSynchronouslyOnVideoProcessingQueue(^{
         [GPUImageOpenGLESContext useImageProcessingContext];
+        
+        if (inputBlendTexture)
+        {
+            glDeleteTextures(1, &inputBlendTexture);
+            inputBlendTexture = 0;
+        }
+
         glActiveTexture(GL_TEXTURE4);
         glGenTextures(1, &inputBlendTexture);
         glBindTexture(GL_TEXTURE_2D, inputBlendTexture);
@@ -221,15 +217,6 @@
 - (void)setImageDOF:(UIImage *)imageDOF {
     _imageDOF = imageDOF;
     
-    if (imageDOF == nil) {
-        if (inputDOFTexture)
-        {
-            glDeleteTextures(1, &inputDOFTexture);
-            inputDOFTexture = 0;
-        }
-        return;
-    }
-    
     CGFloat widthOfImage = CGImageGetWidth(_imageDOF.CGImage);
     CGFloat heightOfImage = CGImageGetHeight(_imageDOF.CGImage);
     
@@ -244,6 +231,13 @@
     
     runSynchronouslyOnVideoProcessingQueue(^{
         [GPUImageOpenGLESContext useImageProcessingContext];
+        
+        if (inputDOFTexture)
+        {
+            glDeleteTextures(1, &inputDOFTexture);
+            inputDOFTexture = 0;
+        }
+        
         glActiveTexture(GL_TEXTURE5);
         glGenTextures(1, &inputDOFTexture);
         glBindTexture(GL_TEXTURE_2D, inputDOFTexture);

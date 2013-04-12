@@ -286,6 +286,7 @@
     _picture.status = [NSNumber numberWithInteger:imageStatus];
     _picture.showEXIF = switchEXIF.on;
     _picture.showGPS = switchGPS.on;
+    _picture.showTakenAt = switchTakenAt.on;
     _picture.tagsOld = tags;
     
     [[LatteAPIClient sharedClient] postPath:url
