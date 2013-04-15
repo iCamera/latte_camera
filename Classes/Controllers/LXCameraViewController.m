@@ -254,8 +254,8 @@
         labelEffect.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:11];
         labelEffect.userInteractionEnabled = NO;
         UIButton *buttonEffect = [[UIButton alloc] initWithFrame:CGRectMake(5+75*i, 0, 70, 70)];
-        UIImageView *previewEffect = [[UIImageView alloc] initWithFrame:buttonEffect.bounds];
-        previewEffect.contentMode = UIViewContentModeScaleAspectFill;
+        GPUImageView *previewEffect = [[GPUImageView alloc] initWithFrame:buttonEffect.bounds];
+        previewEffect.fillMode = kGPUImageFillModePreserveAspectRatioAndFill;
         previewEffect.userInteractionEnabled = NO;
         
         [effectPreview addObject:previewEffect];
@@ -652,8 +652,8 @@
             
             isPicFromCamera = true;
             
-            [self switchEditImage];
             [self initPreviewPic:previewPic];
+            [self switchEditImage];
         }
         
         buttonCapture.enabled = true;
@@ -1198,9 +1198,9 @@
         previewFilter = [[GPUImagePicture alloc] initWithImage:previewPic];
         isPicFromCamera = false;
         
-        [self switchEditImage];
         
         [self initPreviewPic:previewPic];
+        [self switchEditImage];
     };
     
     //
@@ -1335,15 +1335,16 @@
 }
 
 - (void)initPreviewPic:(UIImage *)previewPic {
+    GPUImagePicture *gpuimagePreview = [[GPUImagePicture alloc] initWithImage:previewPic];
     for (NSInteger i = 0; i < effectNum; i++) {
-        UIImageView *imageViewPreview = effectPreview[i];
+        GPUImageView *imageViewPreview = effectPreview[i];
         LXImageFilter *filterSample = [[LXImageFilter alloc] init];
         filterSample.toneCurve = effectCurve[i];
         filterSample.toneEnable = YES;
-        CGImageRef cgPreview = [filterSample newCGImageByFilteringImage:previewPic];
-        imageViewPreview.image = [UIImage imageWithCGImage:cgPreview];
-        CGImageRelease(cgPreview);
+        [gpuimagePreview addTarget:filterSample];
+        [filterSample addTarget:imageViewPreview];
     }
+    [gpuimagePreview processImage];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(NSDictionary *)info {
@@ -1382,12 +1383,13 @@
     sliderFeather.value = 10.0;
     sliderEffectIntensity.value = 1.0;
     
-    filterMain.toneCurve = nil;
-    filterMain.imageBlend = nil;
-    filterMain.imageDOF = nil;
     filterMain.dofEnable = NO;
     filterMain.toneEnable = NO;
     filterMain.blendEnable = NO;
+    
+    filterMain.toneCurve = nil;
+    filterMain.imageBlend = nil;
+    filterMain.imageDOF = nil;
     
     [self setUIMask:kMaskBlurNone];
     

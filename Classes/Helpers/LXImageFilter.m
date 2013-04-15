@@ -79,6 +79,9 @@
     self.toneCurveIntensity = 1.0;
     self.vignfade = 1.0;
     self.blendRegion = CGRectMake(0, 0, 1, 1);
+    [self setToneEnable:false];
+    self.dofEnable = NO;
+    self.blendEnable = NO;
     
     return self;
 }
@@ -138,6 +141,17 @@
 
 - (void)setToneCurve:(UIImage *)toneCurve {
     _toneCurve = toneCurve;
+    if (!toneCurve) {
+        if (toneCurveTexture)
+        {
+            runSynchronouslyOnVideoProcessingQueue(^{
+                [GPUImageOpenGLESContext useImageProcessingContext];
+                glDeleteTextures(1, &toneCurveTexture);
+                toneCurveTexture = 0;
+            });
+        }
+        return;
+    }
     
     CGFloat widthOfImage = CGImageGetWidth(_toneCurve.CGImage);
     CGFloat heightOfImage = CGImageGetHeight(_toneCurve.CGImage);
@@ -177,6 +191,17 @@
 
 - (void)setImageBlend:(UIImage *)imageBlend {
     _imageBlend = imageBlend;
+    if (!imageBlend) {
+        if (inputBlendTexture)
+        {
+            runSynchronouslyOnVideoProcessingQueue(^{
+                [GPUImageOpenGLESContext useImageProcessingContext];
+                glDeleteTextures(1, &inputBlendTexture);
+                inputBlendTexture = 0;
+            });
+        }
+        return;
+    }
     
     CGFloat widthOfImage = CGImageGetWidth(_imageBlend.CGImage);
     CGFloat heightOfImage = CGImageGetHeight(_imageBlend.CGImage);
@@ -216,6 +241,17 @@
 
 - (void)setImageDOF:(UIImage *)imageDOF {
     _imageDOF = imageDOF;
+    if (!imageDOF) {
+        if (inputDOFTexture)
+        {
+            runSynchronouslyOnVideoProcessingQueue(^{
+                [GPUImageOpenGLESContext useImageProcessingContext];
+                glDeleteTextures(1, &inputDOFTexture);
+                inputDOFTexture = 0;
+            });
+        }
+        return;
+    }
     
     CGFloat widthOfImage = CGImageGetWidth(_imageDOF.CGImage);
     CGFloat heightOfImage = CGImageGetHeight(_imageDOF.CGImage);
