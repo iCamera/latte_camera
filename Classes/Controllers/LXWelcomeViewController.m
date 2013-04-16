@@ -61,17 +61,9 @@ typedef enum {
     return self;
 }
 
-- (void)becomeActive:(id)sender {
-    [self reloadView];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(becomeActive:)
-                                                 name:@"BecomeActive" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(receiveLoggedIn:)
@@ -115,6 +107,8 @@ typedef enum {
     UIBarButtonItem *navLeftItem = self.navigationItem.leftBarButtonItem;
     UIButton *buttonSide = (UIButton*)navLeftItem.customView;
     [buttonSide addTarget:app.controllerSide action:@selector(toggleLeftPanel:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self reloadView];
 }
 
 - (void)reloadView {
@@ -180,7 +174,7 @@ typedef enum {
     if (tableMode == kWelcomeTableTimeline) {
         Feed *feed = feeds[indexPath.row];
         if (feed.targets.count == 1) {
-            LXCellTimelineSingle *cell = [tableView dequeueReusableCellWithIdentifier:@"Single" forIndexPath:indexPath];
+            LXCellTimelineSingle *cell = [tableView dequeueReusableCellWithIdentifier:@"Single"];
             if (nil == cell) {
                 cell = [[LXCellTimelineSingle alloc] initWithStyle:UITableViewCellStyleDefault
                                                    reuseIdentifier:@"Single"];
@@ -192,7 +186,7 @@ typedef enum {
 
             return cell;
         } else {
-            LXCellTimelineMulti *cell = [tableView dequeueReusableCellWithIdentifier:@"Multi" forIndexPath:indexPath];
+            LXCellTimelineMulti *cell = [tableView dequeueReusableCellWithIdentifier:@"Multi"];
             if (nil == cell) {
                 cell = [[LXCellTimelineMulti alloc] initWithStyle:UITableViewCellStyleDefault
                                                       reuseIdentifier:@"Multi"];
@@ -206,7 +200,7 @@ typedef enum {
         }
     
     } else {
-        LXCellGrid *cell = [tableView dequeueReusableCellWithIdentifier:@"Grid" forIndexPath:indexPath];
+        LXCellGrid *cell = [tableView dequeueReusableCellWithIdentifier:@"Grid"];
     
         NSMutableArray *pictures = [[NSMutableArray alloc] init];
         for (Feed *feed in feeds) {

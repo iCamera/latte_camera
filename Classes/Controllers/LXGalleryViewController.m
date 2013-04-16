@@ -329,6 +329,10 @@
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed {
+    if ([self isShowingContainer]) {
+        [self toggleFrame];
+    }
+    
     if (completed) {
         [self setPicture];
     }

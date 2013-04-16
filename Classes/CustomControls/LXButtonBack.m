@@ -19,7 +19,7 @@
         [self setContentEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
 //        [self setS]
         self.titleLabel.shadowOffset = CGSizeMake(0, 1);
-        self.titleLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Medium" size:16];
+        self.titleLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:16];
     }
     return self;
 }

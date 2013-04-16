@@ -8,9 +8,9 @@
 
 #import "LXVoteViewController.h"
 #import "LXAppDelegate.h"
-#import "LXCollectionCellUser.h"
 #import "LXMyPageViewController.h"
 #import "LXButtonBack.h"
+#import "LXCellGridUser.h"
 
 @interface LXVoteViewController () {
     NSMutableArray *voters;
@@ -76,7 +76,7 @@
 
                                            }
                                            
-                                           [self.collectionView reloadData];
+                                           [self.tableView reloadData];
                                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                            TFLog(@"Something went wrong (Get vote)");
                                            
@@ -90,42 +90,52 @@
     }
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.item == voters.count) {
-        UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Guest" forIndexPath:indexPath];
-        UILabel *labelGuest = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-        labelGuest.textAlignment = NSTextAlignmentCenter;
-        labelGuest.backgroundColor = [UIColor clearColor];
-        labelGuest.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:22.0];
-        labelGuest.text = [NSString stringWithFormat:@"+%d", guestVoteCount];
-        [cell addSubview:labelGuest];
-        return cell;
-    } else {
-        LXCollectionCellUser *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"User" forIndexPath:indexPath];
-        cell.user = voters[indexPath.item];
-        return cell;
-    }
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    LXCellGridUser *cell = [tableView dequeueReusableCellWithIdentifier:@"Grid"];
+    [cell setUsers:voters forRow:indexPath.row];
+
+    return cell;
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return voters.count + (guestVoteCount>0?1:0);
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return voters.count/5 + (voters.count%5>0?1:0);
 }
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 1;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    // tap on last item
-    if (indexPath.item == voters.count) {
-        return;
-    }
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                             bundle:nil];
-    LXMyPageViewController *viewUser = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
-    viewUser.user = voters[indexPath.item];
-
-    [self.navigationController pushViewController:viewUser animated:YES];
-}
+//- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+//    if (indexPath.item == voters.count) {
+//        UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Guest"];
+//        UILabel *labelGuest = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+//        labelGuest.textAlignment = NSTextAlignmentCenter;
+//        labelGuest.backgroundColor = [UIColor clearColor];
+//        labelGuest.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:22.0];
+//        labelGuest.text = [NSString stringWithFormat:@"+%d", guestVoteCount];
+//        [cell addSubview:labelGuest];
+//        return cell;
+//    } else {
+//        LXCollectionCellUser *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"User"];
+//        cell.user = voters[indexPath.item];
+//        return cell;
+//    }
+//}
+//
+//- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+//    return voters.count + (guestVoteCount>0?1:0);
+//}
+//
+//- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+//    return 1;
+//}
+//
+//- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+//    // tap on last item
+//    if (indexPath.item == voters.count) {
+//        return;
+//    }
+//    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+//                                                             bundle:nil];
+//    LXMyPageViewController *viewUser = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+//    viewUser.user = voters[indexPath.item];
+//
+//    [self.navigationController pushViewController:viewUser animated:YES];
+//}
 
 @end

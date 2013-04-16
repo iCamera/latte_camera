@@ -85,12 +85,12 @@
         buttonLike.enabled = YES;
     buttonLike.selected = pic.isVoted;
     
-    if (pic.canComment) {
-        buttonComment.enabled = YES;
-    }
+        buttonComment.enabled = pic.canComment;
     
     if ((pic.latitude != nil) && (pic.longitude != nil)) {
         buttonMap.enabled = YES;
+    } else {
+        buttonMap.enabled = NO;
     }
     
     

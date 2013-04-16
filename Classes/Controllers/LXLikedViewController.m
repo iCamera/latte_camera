@@ -132,7 +132,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    LXCellGrid *cell = [tableView dequeueReusableCellWithIdentifier:@"Grid" forIndexPath:indexPath];
+    LXCellGrid *cell = [tableView dequeueReusableCellWithIdentifier:@"Grid"];
 
     [cell setPictures:pictures forRow:indexPath.row];
     return cell;

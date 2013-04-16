@@ -23,7 +23,7 @@
 {
     self = [super initWithCoder:aDecoder];
     
-    UIFont *font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:22];
+    UIFont *font = [UIFont fontWithName:@"Futura-CondensedMedium" size:22];
     self.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 font, UITextAttributeFont,
                                 [UIColor whiteColor], UITextAttributeTextColor,

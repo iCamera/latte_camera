@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "Picture.h"
-@interface LXVoteViewController : UICollectionViewController
+@interface LXVoteViewController : UITableViewController
 
 @property (strong, nonatomic) Picture *picture;
 

@@ -19,6 +19,9 @@
 
 #import "mach/mach.h"
 
+#import "NSDate+TKCategory.h"
+#import "NSDate+CalendarGrid.h"
+
 @implementation LXUtils
 
 + (void)setNationalityOfUser:(User *)user forImage:(UIImageView*)imageNationality nextToLabel:(UILabel*)label {
@@ -133,13 +136,18 @@
         if (i > 0)
             stringUsers= [stringUsers stringByAppendingString:NSLocalizedString(@"and", @"と")];
         
+        if (i > 2) {
+            stringUsers = [stringUsers stringByAppendingString:[NSString stringWithFormat:NSLocalizedString(@"x_others", "%d others"), (users.count - i)]];
+            break;
+        }
+        
         if (user.name != nil) {
             stringUsers = [stringUsers stringByAppendingString:user.name];
         } else {
             stringUsers = [stringUsers stringByAppendingString:NSLocalizedString(@"guest", @"ゲスト") ];
         }
         
-        if (i < users.count-1) {
+        if (i < users.count) {
             stringUsers = [stringUsers stringByAppendingString:NSLocalizedString(@"subfix", @"さん") ];
         }
     }
@@ -296,6 +304,87 @@ vm_size_t freeMemory(void) {
         prevMemUsage = curMemUsage;
         NSLog(@"Memory used %7.1f (%+5.0f), free %7.1f kb", curMemUsage/1000.0f, memUsageDiff/1000.0f, freeMemory()/1000.0f);
     }
+}
+
++ (NSArray*) rangeOfDatesInMonthGrid:(NSDate*)date startOnSunday:(BOOL)sunday timeZone:(NSTimeZone*)timeZone{
+	
+	NSDate *firstDate, *lastDate;
+	
+	NSDateComponents *info = [date dateComponentsWithTimeZone:timeZone];
+	
+	info.day = 1;
+	info.hour = info.minute = info.second = 0;
+	
+	NSDate *currentMonth = [NSDate dateWithDateComponents:info];
+	info = [currentMonth dateComponentsWithTimeZone:timeZone];
+	
+	
+	NSDate *previousMonth = [currentMonth previousMonthWithTimeZone:timeZone];
+	NSDate *nextMonth = [currentMonth nextMonthWithTimeZone:timeZone];
+	
+	if(info.weekday > 1 && sunday){
+		
+		NSDateComponents *info2 = [previousMonth dateComponentsWithTimeZone:timeZone];
+		
+		NSInteger preDayCnt = [previousMonth daysBetweenDate:currentMonth];
+		info2.day = preDayCnt - info.weekday + 2;
+		firstDate = [NSDate dateWithDateComponents:info2];
+		
+		
+	}else if(!sunday && info.weekday != 2){
+		
+		NSDateComponents *info2 = [previousMonth dateComponentsWithTimeZone:timeZone];
+		NSInteger preDayCnt = [previousMonth daysBetweenDate:currentMonth];
+		if(info.weekday==1){
+			info2.day = preDayCnt - 5;
+		}else{
+			info2.day = preDayCnt - info.weekday + 3;
+		}
+		firstDate = [NSDate dateWithDateComponents:info2];
+		
+		
+		
+	}else{
+		firstDate = currentMonth;
+	}
+	
+	
+	
+	NSInteger daysInMonth = [currentMonth daysBetweenDate:nextMonth];
+	info.day = daysInMonth;
+	NSDate *lastInMonth = [NSDate dateWithDateComponents:info];
+	NSDateComponents *lastDateInfo = [lastInMonth dateComponentsWithTimeZone:timeZone];
+    
+	
+	
+	if(lastDateInfo.weekday < 7 && sunday){
+		
+		lastDateInfo.day = 7 - lastDateInfo.weekday;
+		lastDateInfo.month++;
+		lastDateInfo.weekday = 0;
+		if(lastDateInfo.month>12){
+			lastDateInfo.month = 1;
+			lastDateInfo.year++;
+		}
+		lastDate = [NSDate dateWithDateComponents:lastDateInfo];
+        
+	}else if(!sunday && lastDateInfo.weekday != 1){
+		
+		
+		lastDateInfo.day = 8 - lastDateInfo.weekday;
+		lastDateInfo.month++;
+		if(lastDateInfo.month>12){ lastDateInfo.month = 1; lastDateInfo.year++; }
+        
+		
+		lastDate = [NSDate dateWithDateComponents:lastDateInfo];
+        
+	}else{
+		lastDate = lastInMonth;
+	}
+	
+	
+	
+	return @[firstDate,lastDate];
 }
 
 @end

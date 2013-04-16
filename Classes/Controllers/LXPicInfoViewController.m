@@ -38,33 +38,40 @@
     [super viewDidLoad];
     
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
-}
-
-- (void)setPicture:(Picture *)picture {
-    _picture = picture;
     // Do any additional setup after loading the view.
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     [app.tracker sendView:@"Picture Info Screen"];
-    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self render];
+}
+
+- (void)render {
     keyBasic = [[NSMutableArray alloc] init];
-    if (picture.takenAt) {
+    if (_picture.takenAt) {
         [keyBasic addObject:@"taken_at"];
     }
-    if (picture.createdAt) {
+    if (_picture.createdAt) {
         [keyBasic addObject:@"created_at"];
     }
-    if (picture.tagsOld.count > 0) {
+    if (_picture.tagsOld.count > 0) {
         [keyBasic addObject:@"tags"];
     }
     
     sections = 1;
     
-    if (picture.exif.count > 0) {
+    if (_picture.exif.count > 0) {
         sections += 1;
-        keyExif = [picture.exif allKeys];
+        keyExif = [_picture.exif allKeys];
     }
     
     [self.tableView reloadData];
+}
+
+- (void)setPicture:(Picture *)picture {
+    _picture = picture;
+    [self render];
 }
 
 - (void)viewDidUnload
@@ -111,17 +118,22 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0)
         if ([[keyBasic objectAtIndex:indexPath.row] isEqualToString:@"tags"]) {
-            LXCellInfoTag *cellTag = [tableView dequeueReusableCellWithIdentifier:@"Tag" forIndexPath:indexPath];
+            LXCellInfoTag *cellTag = [tableView dequeueReusableCellWithIdentifier:@"Tag"];
             cellTag.tags = _picture.tagsOld;
             cellTag.parent = _parent;
             return cellTag;
         }
     
-    LXCellDataField *cell = [tableView dequeueReusableCellWithIdentifier:@"Profile" forIndexPath:indexPath];
+    LXCellDataField *cell = [tableView dequeueReusableCellWithIdentifier:@"Profile"];
+    cell.imageHide.hidden = YES;
     if (indexPath.section == 0)
     {
         NSString *key = [keyBasic objectAtIndex:indexPath.row];
         if ([key isEqualToString:@"taken_at"]) {
+            if (_picture.isOwner) {
+                cell.imageHide.hidden = _picture.showTakenAt;
+            }
+            
             cell.labelField.text = NSLocalizedString(@"taken_date", @"撮影月日") ;
             cell.labelDetail.text = [LXUtils dateToString:_picture.takenAt];
         }
@@ -131,6 +143,10 @@
         }
     }
     if (indexPath.section == 1) {
+        if (_picture.isOwner) {
+            cell.imageHide.hidden = _picture.showEXIF;
+        }
+        
         cell.labelField.text = [keyExif objectAtIndex:indexPath.row];
         cell.labelDetail.text = [_picture.exif objectForKey:[keyExif objectAtIndex:indexPath.row]];
     }

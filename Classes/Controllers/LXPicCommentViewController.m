@@ -259,7 +259,7 @@
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    LXCellComment* cellComment = [tableView dequeueReusableCellWithIdentifier:@"Comment" forIndexPath:indexPath];
+    LXCellComment* cellComment = [tableView dequeueReusableCellWithIdentifier:@"Comment"];
         
     Comment *comment = _comments[indexPath.row];
     

@@ -34,6 +34,7 @@ typedef enum {
     SearchMode tableMode;
     NSInteger page;
     BOOL loadEnded;
+    UITapGestureRecognizer *gestureTap;
 }
 
 @synthesize textKeyword;
@@ -67,8 +68,7 @@ typedef enum {
     
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
 
-    UITapGestureRecognizer *gestureTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchBackground:)];
-    [self.tableView addGestureRecognizer:gestureTap];
+    gestureTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchBackground:)];
     tableMode = kSearchPhoto;
     
     //setup left button
@@ -77,7 +77,21 @@ typedef enum {
     UIButton *buttonSide = (UIButton*)navLeftItem.customView;
     [buttonSide addTarget:app.controllerSide action:@selector(toggleLeftPanel:) forControlEvents:UIControlEventTouchUpInside];
     
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
+    [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];
+    
     [app.tracker sendView:@"Search Screen"];
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    [self.tableView addGestureRecognizer:gestureTap];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    [self.tableView removeGestureRecognizer:gestureTap];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -141,13 +155,13 @@ typedef enum {
     if (tableMode == kSearchPhoto) {
         if (pictures.count > 0) {
             static NSString *CellIdentifier = @"Grid";
-            LXCellGrid *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+            LXCellGrid *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
             cell.viewController = self;
             [cell setPictures:pictures forRow:indexPath.row];
             return cell;
         } else {
             static NSString *CellIdentifier = @"Tags";
-            LXCellTags *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+            LXCellTags *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
             [cell.buttonTag setTitle:tags[indexPath.row] forState:UIControlStateNormal];
             [cell.buttonTag addTarget:self action:@selector(showTag:) forControlEvents:UIControlEventTouchUpInside];
             cell.buttonTag.tag = indexPath.row;
@@ -155,11 +169,11 @@ typedef enum {
         }
     } else {
         if (users.count == 0) {
-            LXCellSearchConnection *cell = [tableView dequeueReusableCellWithIdentifier:@"FacebookSearch" forIndexPath:indexPath];
+            LXCellSearchConnection *cell = [tableView dequeueReusableCellWithIdentifier:@"FacebookSearch"];
             cell.controller = self;
             return cell;
         } else {
-            LXCellSearchUser *cell = [tableView dequeueReusableCellWithIdentifier:@"User" forIndexPath:indexPath];
+            LXCellSearchUser *cell = [tableView dequeueReusableCellWithIdentifier:@"User"];
             cell.parentNav = self.navigationController;
             cell.user = users[indexPath.row];
             return cell;

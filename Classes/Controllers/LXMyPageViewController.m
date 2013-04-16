@@ -627,8 +627,8 @@ typedef enum {
         [next addTarget:self action:@selector(nextMonth:) forControlEvents:UIControlEventTouchUpInside];
         [prev setTitle:@"PREV" forState:UIControlStateNormal];
         [next setTitle:@"NEXT" forState:UIControlStateNormal];
-        prev.titleLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Medium" size:16];
-        next.titleLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Medium" size:16];
+        prev.titleLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:16];
+        next.titleLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:16];
         [prev setTitleColor:[UIColor colorWithRed:101.0/255.0	green:90.0/255.0 blue:56.0/255.0 alpha:1] forState:UIControlStateNormal];
         [next setTitleColor:[UIColor colorWithRed:101.0/255.0	green:90.0/255.0 blue:56.0/255.0 alpha:1] forState:UIControlStateNormal];
         
@@ -640,7 +640,7 @@ typedef enum {
         label.text = [dateFormat stringFromDate:currentMonth];
         label.textColor = [UIColor colorWithRed:101.0/255.0	green:90.0/255.0 blue:56.0/255.0 alpha:1];
         label.backgroundColor = [UIColor clearColor];
-        [label setFont:[UIFont fontWithName:@"AvenirNextCondensed-Medium" size:20]];
+        [label setFont:[UIFont fontWithName:@"Futura-CondensedMedium" size:20]];
         [view addSubview:prev];
         [view addSubview:next];
         [view addSubview:label];
@@ -691,7 +691,7 @@ typedef enum {
             LXCellFriend* cellUser;
             User *user;
             
-            cellUser = [tableView dequeueReusableCellWithIdentifier:@"User" forIndexPath:indexPath];
+            cellUser = [tableView dequeueReusableCellWithIdentifier:@"User"];
             
             @try {
                 if (tableMode == kTableFollower) {
@@ -715,7 +715,7 @@ typedef enum {
             break;
         case kTablePhoto:    {
             if (photoMode == kPhotoMyphoto) {
-                LXCellGrid *cellPic = [tableView dequeueReusableCellWithIdentifier:@"Grid" forIndexPath:indexPath];
+                LXCellGrid *cellPic = [tableView dequeueReusableCellWithIdentifier:@"Grid"];
 
                 cellPic.viewController = self;
                 [cellPic setPictures:pictures forRow:indexPath.row];
@@ -739,7 +739,7 @@ typedef enum {
                 Feed *feed = [feeds objectAtIndex:indexPath.row];
                 if (feed.targets.count == 1)
                 {
-                    LXCellTimelineSingle *cell = [tableView dequeueReusableCellWithIdentifier:@"Single" forIndexPath:indexPath];
+                    LXCellTimelineSingle *cell = [tableView dequeueReusableCellWithIdentifier:@"Single"];
                     
                     cell.viewController = self;
                     cell.feed = feed;
@@ -747,7 +747,7 @@ typedef enum {
                     
                     return cell;
                 } else {
-                    LXCellTimelineMulti *cell = [tableView dequeueReusableCellWithIdentifier:@"Multi" forIndexPath:indexPath];
+                    LXCellTimelineMulti *cell = [tableView dequeueReusableCellWithIdentifier:@"Multi"];
                     
                     cell.viewController = self;
                     cell.feed = feed;
@@ -833,10 +833,10 @@ typedef enum {
     labelBig.backgroundColor = [UIColor clearColor];
     labelBig.textAlignment = NSTextAlignmentCenter;
     
-    [labelBig setFont:[UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:15]];
+    [labelBig setFont:[UIFont fontWithName:@"Futura-CondensedMedium" size:15]];
     labelBig.text = [NSString stringWithFormat:@"%d", cellIndex+1];
     labelSmall.text = [NSString stringWithFormat:@"%d", cellIndex+1];
-    [labelSmall setFont:[UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:11]];
+    [labelSmall setFont:[UIFont fontWithName:@"Futura-CondensedMedium" size:11]];
     labelSmall.textColor = [UIColor whiteColor];
     
     if (cellIndex < 9) {

@@ -390,7 +390,7 @@ typedef enum {
         NSDictionary *dayInfo = days[indexPath.section];
         NSArray *pictures = [Picture mutableArrayFromDictionary:dayInfo withKey:@"pictures"];
         
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Grid" forIndexPath:indexPath];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Grid"];
 
         for(UIView *subview in [cell subviews]) {
             [subview removeFromSuperview];

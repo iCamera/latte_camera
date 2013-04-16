@@ -33,33 +33,49 @@
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery" bundle:nil];
+        _viewVote = [storyGallery instantiateViewControllerWithIdentifier:@"Vote"];
+        _viewComment = [storyGallery instantiateViewControllerWithIdentifier:@"Comment"];
+        viewInfo = [storyGallery instantiateViewControllerWithIdentifier:@"Info"];
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    _viewVote.view.frame = CGRectMake(0, 0, 320, 320);
+    [scrollTab addSubview:_viewVote.view];
+    [self addChildViewController:_viewVote];
+    [_viewVote didMoveToParentViewController:self];
+    
+    _viewComment.view.frame = CGRectMake(320, 0, 320, 320);
+    [scrollTab addSubview:_viewComment.view];
+    [self addChildViewController:_viewComment];
+    [_viewComment didMoveToParentViewController:self];
+    
+    viewInfo.view.frame = CGRectMake(640, 0, 320, 320);
+    [scrollTab addSubview:viewInfo.view];
+    [self addChildViewController:viewInfo];
+    [viewInfo didMoveToParentViewController:self];
+    
     currentTab = 2;
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    scrollTab.contentSize = CGSizeMake(960, screenRect.size.height);
+    scrollTab.contentSize = CGSizeMake(960, 320);
     scrollTab.contentOffset = CGPointMake(320, 0);
+    
+    viewInfo.parent = _parent;
+    if (_picture != nil) {
+        viewInfo.picture = _picture;
+    }
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"Vote"]) {
-        _viewVote = segue.destinationViewController;
-    } else if ([segue.identifier isEqualToString:@"Comment"]) {
-        _viewComment = segue.destinationViewController;
-    } else if ([segue.identifier isEqualToString:@"Info"]) {
-        viewInfo = segue.destinationViewController;
-        viewInfo.parent = _parent;
-        if (_picture != nil) {
-            viewInfo.picture = _picture;
-        }
-    }
 }
 
 - (void)setPicture:(Picture *)picture {
@@ -78,4 +94,7 @@
     [scrollTab  setContentOffset:CGPointMake((tab-1)*320, 0) animated:YES];
 }
 
+- (void)viewDidUnload {
+    [super viewDidUnload];
+}
 @end

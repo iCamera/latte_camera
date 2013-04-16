@@ -131,7 +131,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"FacebookFriend";
-    LXCellFacebook *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    LXCellFacebook *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     cell.parent = self;
     cell.user = fbfriends[indexPath.row];

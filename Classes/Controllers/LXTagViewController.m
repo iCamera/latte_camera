@@ -116,7 +116,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Grid";
-    LXCellGrid *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    LXCellGrid *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     cell.viewController = self;
     [cell setPictures:pictures forRow:indexPath.row];

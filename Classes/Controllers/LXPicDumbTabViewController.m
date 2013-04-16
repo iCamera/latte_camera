@@ -59,7 +59,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Tag";
-    LXCellTag *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    LXCellTag *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     [cell.textTag addTarget:self action:@selector(editEnd:) forControlEvents:UIControlEventEditingDidEnd];
     [cell.textTag addTarget:self action:@selector(editBegin:) forControlEvents:UIControlEventEditingDidBegin];
     cell.textTag.tag = indexPath.row;

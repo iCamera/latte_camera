@@ -652,8 +652,9 @@
             
             isPicFromCamera = true;
             
-            [self initPreviewPic:previewPic];
             [self switchEditImage];
+            [self initPreviewPic:previewPic];
+            filterMain.toneEnable = NO;
         }
         
         buttonCapture.enabled = true;
@@ -1182,7 +1183,6 @@
     
     ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset)
     {
-        bestEffortAtLocation = nil;
         imageMeta = [NSMutableDictionary dictionaryWithDictionary:myasset.defaultRepresentation.metadata];
         capturedImage = [info objectForKey:UIImagePickerControllerOriginalImage];
         
@@ -1199,8 +1199,9 @@
         isPicFromCamera = false;
         
         
-        [self initPreviewPic:previewPic];
         [self switchEditImage];
+        [self initPreviewPic:previewPic];
+        filterMain.toneEnable = NO;
     };
     
     //

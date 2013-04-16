@@ -63,6 +63,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     // Tab style
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
     for (UITabBarItem* tab in [self.tabBarController.tabBar items]) {
         TFLog(@"text");
         [tab setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
