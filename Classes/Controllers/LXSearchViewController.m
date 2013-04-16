@@ -362,6 +362,13 @@ typedef enum {
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
     if (loadEnded)
         return;
+    if (tableMode == kSearchPhoto && pictures.count == 0) {
+            return;
+    }
+    if (tableMode == kSearchFriend && users.count == 0) {
+        return;
+    }
+    
     CGPoint offset = aScrollView.contentOffset;
     CGRect bounds = aScrollView.bounds;
     CGSize size = aScrollView.contentSize;
@@ -380,5 +387,16 @@ typedef enum {
 
 - (IBAction)editChanged:(id)sender {
     buttonSearch.enabled = textKeyword.text.length > 0;
+    if (textKeyword.text.length == 0) {
+        if (tableMode == kSearchPhoto) {
+            pictures = nil;
+            [self.tableView reloadData];
+        }
+        if (tableMode == kSearchFriend) {
+            users = nil;
+            [self.tableView reloadData];
+        }
+
+    }
 }
 @end
