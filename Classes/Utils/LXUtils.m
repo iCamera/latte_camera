@@ -136,7 +136,7 @@
         if (i > 0)
             stringUsers= [stringUsers stringByAppendingString:NSLocalizedString(@"and", @"と")];
         
-        if (i > 2) {
+        if (i > 1) {
             stringUsers = [stringUsers stringByAppendingString:[NSString stringWithFormat:NSLocalizedString(@"x_others", "%d others"), (users.count - i)]];
             break;
         }
