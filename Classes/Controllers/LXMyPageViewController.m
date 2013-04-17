@@ -33,6 +33,7 @@
 #import "LXCellGrid.h"
 #import "LXButtonBack.h"
 #import "LXCellDataField.h"
+#import "NSDate+TKCategory.h"
 
 typedef enum {
     kTimelineAll = 10,
@@ -66,6 +67,8 @@ typedef enum {
     NSMutableArray *followers;
     NSMutableArray *followings;
     NSMutableDictionary *currentMonthPics;
+    NSMutableDictionary *currentDayPics;
+    NSDate *selectedCalendarDate;
     NSMutableArray *currentMonthPicsFlat;
     NSDate *currentMonth;
     EGORefreshTableHeaderView *refreshHeaderView;
@@ -484,6 +487,7 @@ typedef enum {
 }
 
 - (void)reloadCalendar {
+    selectedCalendarDate = nil;
     LXAppDelegate* app = (LXAppDelegate*)[[UIApplication sharedApplication] delegate];
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"yyyyMM"];
@@ -495,12 +499,28 @@ typedef enum {
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        currentMonthPicsFlat = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
                                        currentMonthPics = [[NSMutableDictionary alloc]init];
-                                       NSDateFormatter *dayFormat = [[NSDateFormatter alloc] init];
-                                       [dayFormat setDateFormat:@"dd"];
+                                       currentDayPics = [[NSMutableDictionary alloc]init];
+                                       NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
                                        
+                                       [dateFormat setDateFormat:@"yyyyMMdd"];
                                        for (Picture *pic in currentMonthPicsFlat) {
-                                           NSString* key = [dayFormat stringFromDate:pic.takenAt];
-                                           [currentMonthPics setObject:pic forKey:key];
+                                           if (pic.takenAt) {
+                                               NSString* key = [dateFormat stringFromDate:pic.takenAt];
+                                               [currentMonthPics setObject:pic forKey:key];
+                                           }
+                                       }
+                                       
+                                       [dateFormat setDateFormat:@"yyyyMMddHH"];
+                                       for (Picture *pic in currentMonthPicsFlat) {
+                                           if (pic.takenAt) {
+                                               NSString* key = [dateFormat stringFromDate:pic.takenAt];
+                                               NSMutableArray *dayPics = [currentDayPics objectForKey:key];
+                                               if (!dayPics) {
+                                                   dayPics = [[NSMutableArray alloc] init];
+                                               }
+                                               [dayPics addObject:pic];
+                                               [currentDayPics setObject:dayPics forKey:key];
+                                           }
                                        }
                                        
                                        [self.tableView reloadData];
@@ -514,6 +534,11 @@ typedef enum {
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if (tableMode == kTablePhoto && photoMode == kPhotoCalendar) {
+        NSArray *rangeDates = [LXUtils rangeOfDatesInMonthGrid:currentMonth startOnSunday:YES timeZone:[NSTimeZone localTimeZone]];
+        NSUInteger numberOfDaysBetween = [rangeDates[0] daysBetweenDate:[rangeDates lastObject]] + 1;
+        return numberOfDaysBetween/7 + 2;
+    } else
     return 1;
 }
 
@@ -523,7 +548,22 @@ typedef enum {
             if (photoMode == kPhotoMyphoto) {
                 return (pictures.count/3) + (pictures.count%3>0?1:0);
             } else if (photoMode == kPhotoCalendar) {
-                return 1;
+                if (selectedCalendarDate && section > 0) {
+                    NSArray *rangeDates = [LXUtils rangeOfDatesInMonthGrid:currentMonth startOnSunday:YES timeZone:[NSTimeZone localTimeZone]];
+                    
+                    NSDate *dateStart = [rangeDates[0] copy];
+                    dateStart = [dateStart dateByAddingTimeInterval:24*60*60*(section-1)*7];
+                    NSDate *dateEnd = [dateStart dateByAddingTimeInterval:24*60*60*7];
+                    
+                    if (
+                        (([selectedCalendarDate compare:dateStart] == NSOrderedDescending) ||
+                        ([selectedCalendarDate compare:dateStart] == NSOrderedSame)) &&
+                        ([selectedCalendarDate compare:dateEnd] == NSOrderedAscending))
+                    {
+                        return 1;
+                    }
+                }
+                return 0;
             }
             else {
                 return feeds.count;
@@ -544,12 +584,11 @@ typedef enum {
         if (photoMode == kPhotoMyphoto) {
             return 104;
         } else if (photoMode == kPhotoCalendar) {
-            NSCalendar *calendar = [NSCalendar currentCalendar];
-            NSRange days = [calendar rangeOfUnit:NSDayCalendarUnit
-                                          inUnit:NSMonthCalendarUnit
-                                         forDate:currentMonth];
-            daysInMonth = days.length;
-            return (daysInMonth/5 + (daysInMonth%5>0?1:0)) * 63;
+            if (selectedCalendarDate) {
+                UIView *view = [self viewForCalendarDay:selectedCalendarDate];
+                return view.frame.size.height;
+            } else
+                return 0;
 
         } else {
             Feed *feed = feeds[indexPath.row];
@@ -610,43 +649,137 @@ typedef enum {
     }
     
     if ((tableMode == kTablePhoto) && (photoMode == kPhotoCalendar)) {
-        UIView *view = [[UIView alloc] init];
-        view.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.8];
+        NSArray *rangeDates = [LXUtils rangeOfDatesInMonthGrid:currentMonth startOnSunday:YES timeZone:[NSTimeZone localTimeZone]];
+        NSUInteger numberOfDaysBetween = [rangeDates[0] daysBetweenDate:[rangeDates lastObject]] + 1;
+        NSUInteger headerCount = numberOfDaysBetween/7;
         
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, 100, 30)];
-        label.textAlignment = NSTextAlignmentCenter;
-        
-        UIImageView *imagePrev = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow_left2.png"]];
-        imagePrev.frame = CGRectMake(5, 16, 5, 8);
-        UIImageView *imageNext = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow_right2.png"]];
-        imageNext.frame = CGRectMake(310, 16, 5, 8);
-        
-        UIButton *prev = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 60, 30)];
-        UIButton *next = [[UIButton alloc] initWithFrame:CGRectMake(255, 5, 60, 30)];
-        [prev addTarget:self action:@selector(prevMonth:) forControlEvents:UIControlEventTouchUpInside];
-        [next addTarget:self action:@selector(nextMonth:) forControlEvents:UIControlEventTouchUpInside];
-        [prev setTitle:@"PREV" forState:UIControlStateNormal];
-        [next setTitle:@"NEXT" forState:UIControlStateNormal];
-        prev.titleLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:16];
-        next.titleLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:16];
-        [prev setTitleColor:[UIColor colorWithRed:101.0/255.0	green:90.0/255.0 blue:56.0/255.0 alpha:1] forState:UIControlStateNormal];
-        [next setTitleColor:[UIColor colorWithRed:101.0/255.0	green:90.0/255.0 blue:56.0/255.0 alpha:1] forState:UIControlStateNormal];
-        
-        label.center = CGPointMake(160, 20);
-        
-        
-        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-        [dateFormat setDateFormat:@"yyyy/MM"];
-        label.text = [dateFormat stringFromDate:currentMonth];
-        label.textColor = [UIColor colorWithRed:101.0/255.0	green:90.0/255.0 blue:56.0/255.0 alpha:1];
-        label.backgroundColor = [UIColor clearColor];
-        [label setFont:[UIFont fontWithName:@"Futura-CondensedMedium" size:20]];
-        [view addSubview:prev];
-        [view addSubview:next];
-        [view addSubview:label];
-        [view addSubview:imagePrev];
-        [view addSubview:imageNext];
-        return view;
+        if (section == 0 || section == headerCount + 1) {
+            UIView *view = [[UIView alloc] init];
+            view.backgroundColor = [UIColor whiteColor];
+            
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, 100, 30)];
+            label.textAlignment = NSTextAlignmentCenter;
+            
+            UIImageView *imagePrev = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow_left2.png"]];
+            imagePrev.frame = CGRectMake(5, 16, 5, 8);
+            UIImageView *imageNext = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow_right2.png"]];
+            imageNext.frame = CGRectMake(310, 16, 5, 8);
+            
+            UIButton *prev = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 60, 30)];
+            UIButton *next = [[UIButton alloc] initWithFrame:CGRectMake(255, 5, 60, 30)];
+            [prev addTarget:self action:@selector(prevMonth:) forControlEvents:UIControlEventTouchUpInside];
+            [next addTarget:self action:@selector(nextMonth:) forControlEvents:UIControlEventTouchUpInside];
+            [prev setTitle:@"PREV" forState:UIControlStateNormal];
+            [next setTitle:@"NEXT" forState:UIControlStateNormal];
+            prev.titleLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:14];
+            next.titleLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:14];
+            [prev setTitleColor:[UIColor colorWithRed:101.0/255.0	green:90.0/255.0 blue:56.0/255.0 alpha:1] forState:UIControlStateNormal];
+            [next setTitleColor:[UIColor colorWithRed:101.0/255.0	green:90.0/255.0 blue:56.0/255.0 alpha:1] forState:UIControlStateNormal];
+            
+            label.center = CGPointMake(160, 18);
+            
+            
+            NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+            [dateFormat setDateFormat:@"yyyy/MM"];
+            label.text = [dateFormat stringFromDate:currentMonth];
+            label.textColor = [UIColor colorWithRed:101.0/255.0	green:90.0/255.0 blue:56.0/255.0 alpha:1];
+            label.backgroundColor = [UIColor clearColor];
+            [label setFont:[UIFont fontWithName:@"HelveticaNeue-UltraLight" size:20]];
+            [view addSubview:prev];
+            [view addSubview:next];
+            [view addSubview:label];
+            [view addSubview:imagePrev];
+            [view addSubview:imageNext];
+            
+            if (section == 0) {
+                UIView* viewWeek = [[UIView alloc] initWithFrame:CGRectMake(0, 37, 320, 23)];
+                UIView* viewLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 1)];
+                viewLine.backgroundColor = [UIColor colorWithRed:191.0/255.0 green:185.0/255.0 blue:172.0/255.0 alpha:1];
+                viewWeek.backgroundColor = [UIColor colorWithRed:225.0/255.0 green:223.0/255.0 blue:217.0/255.0 alpha:1];
+                NSArray *weekDays = [NSArray arrayWithObjects:@"SUN", @"MON",@"TUE",@"WED",@"THU",@"FRI", @"SAT", nil];
+                
+                for (NSInteger i = 0; i < weekDays.count; i++) {
+                    NSString *week = weekDays[i];
+                    UILabel *labelWeek = [[UILabel alloc] initWithFrame:CGRectMake(6+i*44, 3, 44, 20)];
+
+                    if (i == 0)
+                        labelWeek.textColor = [UIColor colorWithRed:151.0/255.0	green:15.0/255.0 blue:20.0/255.0 alpha:1];
+                    else if (i == 6)
+                        labelWeek.textColor = [UIColor colorWithRed:36.0/255.0	green:87.0/255.0 blue:147.0/255.0 alpha:1];
+                    else
+                        labelWeek.textColor = [UIColor colorWithRed:101.0/255.0	green:90.0/255.0 blue:56.0/255.0 alpha:1];
+                    
+                    labelWeek.backgroundColor = [UIColor clearColor];
+                    labelWeek.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:10];
+                    labelWeek.text = week;
+                    
+                    labelWeek.textAlignment = NSTextAlignmentCenter;
+                    [viewWeek addSubview:labelWeek];
+                }
+                [viewWeek addSubview:viewLine];
+                [view addSubview:viewWeek];
+            }
+            return view;
+        } else {
+            NSDate *date = [rangeDates[0] copy];
+            date = [date dateByAddingTimeInterval:24*60*60*(section-1)*7];
+            UIView *view = [[UIView alloc] init];
+            view.backgroundColor = [UIColor colorWithRed:225.0/255.0 green:223.0/255.0 blue:217.0/255.0 alpha:1];
+            for (int i = 0; i < 7; i++) {
+                NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:date];
+                NSDateComponents *componentCurrent = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:currentMonth];
+                UIImageView *bg = [[UIImageView alloc] initWithFrame:CGRectMake(6+i*44, 0, 44, 46)];
+                [view addSubview:bg];
+                NSDateFormatter *dayFormat = [[NSDateFormatter alloc] init];
+                [dayFormat setDateFormat:@"yyyyMMdd"];
+                NSString* key = [dayFormat stringFromDate:date];
+                Picture *pic = [currentMonthPics objectForKey:key];
+                if (pic) {
+                    bg.image = [UIImage imageNamed:@"calendar_on.png"];
+                    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(i*44+11, 6, 34, 34)];
+                    button.layer.cornerRadius = 5;
+                    button.layer.masksToBounds = YES;
+                    [button loadBackground:pic.urlSquare animated:NO];
+                    button.tag = (section-1)*7 + i;
+                    [button addTarget:self action:@selector(showDay:) forControlEvents:UIControlEventTouchUpInside];
+                    UIImageView *medal = [[UIImageView alloc] initWithFrame:CGRectMake(i*44+16, 4, 12, 13)];
+                    medal.image = [UIImage imageNamed:@"calendar_label.png"];
+                    UILabel *label = [[UILabel alloc] initWithFrame:medal.bounds];
+                    label.text = [NSString stringWithFormat:@"%d", components.day];
+                    label.textColor = [UIColor whiteColor];
+                    label.textAlignment = NSTextAlignmentCenter;
+                    label.backgroundColor = [UIColor clearColor];
+                    label.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:7];
+                    [medal addSubview:label];
+                    [view addSubview:button];
+                    [view addSubview:medal];
+                } else {
+                    UILabel *label = [[UILabel alloc] initWithFrame:bg.bounds];
+                    label.textColor = [UIColor colorWithRed:101.0/255.0	green:90.0/255.0 blue:56.0/255.0 alpha:1];
+                    label.textAlignment = NSTextAlignmentCenter;
+                    label.backgroundColor = [UIColor clearColor];
+                    label.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:12];
+                    
+                    NSDateComponents *today = [[NSCalendar currentCalendar] components:NSEraCalendarUnit|NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:[NSDate date]];
+                    if([today day] == [components day] &&
+                       [today month] == [components month] &&
+                       [today year] == [components year]) {
+                        bg.image = [UIImage imageNamed:@"calendar_today.png"];
+                        label.text = NSLocalizedString(@"today", @"calendar today");
+                    } else {
+                        bg.image = [UIImage imageNamed:@"calendar_off.png"];
+                        label.text = [NSString stringWithFormat:@"%d", components.day];
+                    }
+                    [bg addSubview:label];
+                    if (componentCurrent.month != components.month) {
+                        bg.alpha = 0.5;
+                    }
+                }
+                
+                date = [date dateByAddingTimeInterval:24*60*60];
+            }
+            return view;
+        }
     } else if (tableMode == kTableProfile) {
         UIView *view = [[UIView alloc] init];
         UIView *line = [[UIView alloc] initWithFrame:CGRectMake(6, 5, 309, 1)];
@@ -655,6 +788,16 @@ typedef enum {
         return view;
     }
     return nil;
+}
+
+- (void)showDay:(UIButton*)sender {
+    NSArray *rangeDates = [LXUtils rangeOfDatesInMonthGrid:currentMonth startOnSunday:YES timeZone:[NSTimeZone localTimeZone]];
+    NSDate *dateStart = rangeDates[0];
+    dateStart = [dateStart dateByAddingTimeInterval:24*60*60*sender.tag];
+    selectedCalendarDate = dateStart;
+    [self.tableView reloadData];
+//    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:sender.tag/7+1] withRowAnimation:UITableViewRowAnimationAutomatic];
+//    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:sender.tag/7 + 1]] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 - (void)nextMonth:(id)sender {
@@ -678,7 +821,17 @@ typedef enum {
     if ([self checkEmpty])
         return 200;
     if ((tableMode == kTablePhoto) && (photoMode == kPhotoCalendar)) {
-        return 40;
+        NSArray *rangeDates = [LXUtils rangeOfDatesInMonthGrid:currentMonth startOnSunday:YES timeZone:[NSTimeZone localTimeZone]];
+        NSUInteger numberOfDaysBetween = [rangeDates[0] daysBetweenDate:[rangeDates lastObject]] + 1;
+        NSUInteger headerCount = numberOfDaysBetween/7;
+        if (section == 0)
+            return 60;
+        else if (section == headerCount + 1)
+            return 40;
+        else {
+            return 46;
+        }
+
     } else if (tableMode == kTableProfile)
         return 6;
     return 0;
@@ -724,15 +877,8 @@ typedef enum {
             } else if (photoMode == kPhotoCalendar) {
                 UITableViewCell *cell = [[UITableViewCell alloc] init];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                
-                for (int i = 0; i < daysInMonth; i++) {
-                    NSInteger row = i/5;
-                    NSInteger col = i%5;
-                    
-                    NSString *key = [NSString stringWithFormat:@"%02d", i+1];
-                    Picture *pic = [currentMonthPics objectForKey:key];
-                    [cell addSubview:[self viewForCalendarPic:pic atRow:row atColumn:col cellIndex:i]];
-                }
+
+                [cell addSubview:[self viewForCalendarDay:selectedCalendarDate]];
                 return cell;
             }
             else {
@@ -821,61 +967,107 @@ typedef enum {
     }
 }
 
-- (UIView *)viewForCalendarPic:(Picture *)pic atRow:(NSInteger)row atColumn:(NSInteger)col cellIndex:(NSInteger)cellIndex {
-    UIView *viewDate = [[UIView alloc] initWithFrame:CGRectMake(col*63, row*63, 61, 61)];
+- (UIView *)viewForCalendarDay:(NSDate*)date {
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
+    UIView *viewBg = [[UIView alloc] initWithFrame:CGRectMake(6, 3, 308, 100)];
+    [view addSubview:viewBg];
+    viewBg.backgroundColor = [UIColor whiteColor];
+    viewBg.layer.cornerRadius = 5;
+    viewBg.layer.masksToBounds = YES;
+    view.backgroundColor = [UIColor colorWithRed:225.0/255.0 green:223.0/255.0 blue:217.0/255.0 alpha:1];
+    NSInteger head = 0;
+    CGFloat height = 0;
+    for (NSInteger i = 0; i < 25; i++) {
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        
+        [dateFormat setDateFormat:@"yyyyMMdd"];
+        NSString* key = [NSString stringWithFormat:@"%@%02d", [dateFormat stringFromDate:date], i];
+        UIFont *font = [UIFont fontWithName:@"HelveticaNeue-Light" size:10];
     
-    UIImageView *imageLabel = [[UIImageView alloc] init];
-    UILabel *labelBig = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 15)];
-    UILabel *labelSmall = [[UILabel alloc] init];
-    labelSmall.backgroundColor = [UIColor clearColor];
-    labelSmall.backgroundColor = [UIColor clearColor];
-    labelSmall.textAlignment = NSTextAlignmentCenter;
-    labelBig.backgroundColor = [UIColor clearColor];
-    labelBig.textAlignment = NSTextAlignmentCenter;
-    
-    [labelBig setFont:[UIFont fontWithName:@"Futura-CondensedMedium" size:15]];
-    labelBig.text = [NSString stringWithFormat:@"%d", cellIndex+1];
-    labelSmall.text = [NSString stringWithFormat:@"%d", cellIndex+1];
-    [labelSmall setFont:[UIFont fontWithName:@"Futura-CondensedMedium" size:11]];
-    labelSmall.textColor = [UIColor whiteColor];
-    
-    if (cellIndex < 9) {
-        imageLabel.frame = CGRectMake(10, 0, 15, 20);
-        labelSmall.frame =  CGRectMake(5, 4, 16, 11);
-        [imageLabel setImage:[UIImage imageNamed:@"deco_calender.png"]];
-    } else {
-        imageLabel.frame = CGRectMake(10, 0, 22, 20);
-        labelSmall.frame =  CGRectMake(8, 4, 20, 11);
-        [imageLabel setImage:[UIImage imageNamed:@"deco_calender_wide.png"]];
+        if ([currentDayPics objectForKey:key] || i == 24) {
+            if (head < i - 1) {
+                UILabel *labelStart = [[UILabel alloc] initWithFrame:CGRectMake(6, height + 6, 50, 16)];
+                labelStart.text = [NSString stringWithFormat:@"%02d:00", head];
+                UILabel *labelEnd = [[UILabel alloc] initWithFrame:CGRectMake(6, height + 33, 50, 16)];
+                labelEnd.text = [NSString stringWithFormat:@"%02d:00", i-1];
+                
+                labelEnd.textAlignment = NSTextAlignmentCenter;
+                labelStart.textAlignment = NSTextAlignmentCenter;
+                labelEnd.alpha = 0.5;
+                labelStart.alpha = 0.5;
+                labelEnd.font = font;
+                labelStart.font = font;
+                labelEnd.backgroundColor = [UIColor clearColor];
+                labelStart.backgroundColor = [UIColor clearColor];
+                
+                [view addSubview:labelStart];
+                [view addSubview:labelEnd];
+                
+                UIView *line = [[UIView alloc] initWithFrame:CGRectMake(30, height + 22, 1, 10)];
+                line.backgroundColor = [UIColor colorWithWhite:0 alpha:0.4];
+                
+                [view addSubview:line];
+                height += 52;
+                
+                UIImageView *sp = [[UIImageView alloc] initWithFrame:CGRectMake(12, height, 296, 1)];
+                sp.image = [UIImage imageNamed:@"dotted_line.png"];
+                sp.contentMode = UIViewContentModeCenter;
+                [view addSubview:sp];
+            } else if (head == i-1) {
+                UILabel *labelStart = [[UILabel alloc] initWithFrame:CGRectMake(6, height + 6, 50, 16)];
+                labelStart.text = [NSString stringWithFormat:@"%02d:00", head];
+                labelStart.textAlignment = NSTextAlignmentCenter;
+                labelStart.font = font;
+                labelStart.backgroundColor = [UIColor clearColor];
+                [view addSubview:labelStart];
+                height += 45;
+            }
+        }
+        
+        if ([currentDayPics objectForKey:key]) {
+            head += i+1;
+            UILabel *labelStart = [[UILabel alloc] initWithFrame:CGRectMake(6, height + 6, 50, 16)];
+            labelStart.text = [NSString stringWithFormat:@"%02d:00", i];
+            labelStart.textAlignment = NSTextAlignmentCenter;
+            labelStart.font = font;
+            labelStart.backgroundColor = [UIColor clearColor];
+            [view addSubview:labelStart];
+            
+            UIScrollView *scroll = [[UIScrollView alloc] initWithFrame:CGRectMake(62, height+8, 246, 80)];
+            scroll.showsHorizontalScrollIndicator = NO;
+            NSArray *pics = [currentDayPics objectForKey:key];
+            for (NSInteger j = 0; j < pics.count; j++) {
+                UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(j*82, 0, 80, 80)];
+                button.layer.cornerRadius = 5;
+                button.layer.masksToBounds = YES;
+                Picture *pic = pics[j];
+                button.tag = [pic.pictureId integerValue];
+                [button loadBackground:pic.urlSquare];
+                [button addTarget:self action:@selector(showPic:) forControlEvents:UIControlEventTouchUpInside];
+                [scroll addSubview:button];
+            }
+            scroll.contentSize = CGSizeMake(pics.count*82-2, 80);
+            [view addSubview:scroll];
+            
+            height += 95;
+            
+            UIImageView *sp = [[UIImageView alloc] initWithFrame:CGRectMake(12, height, 296, 1)];
+            sp.image = [UIImage imageNamed:@"dotted_line.png"];
+            sp.contentMode = UIViewContentModeCenter;
+            [view addSubview:sp];
+        }
     }
     
-    UIView *border = [[UIView alloc] initWithFrame:CGRectMake(5, 3, 58, 58)];
-    border.backgroundColor = [UIColor colorWithRed:188.0/255.0 green:184.0/255.0 blue:169.0/255.0 alpha:1];
-    UIView *bg = [[UIView alloc] initWithFrame:CGRectMake(2, 2, 54, 54)];
-    bg.backgroundColor = [UIColor colorWithRed:228.0/255.0 green:226.0/255.0 blue:220.0/255.0 alpha:1];
+    height += 6;
+    CGRect frame = view.frame;
+    frame.size.height = height;
+    view.frame = frame;
     
-    [labelBig setCenter:bg.center];
-    [labelBig setFont:[UIFont fontWithName:@"Baskerville-Bold" size:14]];
-    labelBig.textColor = [UIColor colorWithRed:187.0/255.0 green:184.0/255.0 blue:169.0/255.0 alpha:1];
-    
-    [border addSubview:bg];
-    [viewDate addSubview:border];
-    
-    if (pic != nil) {
-        [viewDate addSubview:imageLabel];
-        [viewDate addSubview:labelSmall];
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(1, 1, 52, 52)];
-        [button loadBackground:pic.urlSquare];
-        button.tag = cellIndex + 1;
-        [button addTarget:self action:@selector(showPic:) forControlEvents:UIControlEventTouchUpInside];
-        [bg addSubview:button];
-    } else {
-        [border addSubview:labelBig];
-    }
-    
-    return viewDate;
+    frame = viewBg.frame;
+    frame.size.height = height - 6;
+    viewBg.frame = frame;
+    return view;
 }
-
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -1099,8 +1291,14 @@ typedef enum {
             break;
         }
         case kPhotoCalendar:
-            viewGallery.picture = [currentMonthPics objectForKey:[NSString stringWithFormat:@"%02d", sender.tag]];
-            viewGallery.user = _user;
+            for (Picture *pic in currentMonthPicsFlat) {
+                if ([pic.pictureId integerValue] == sender.tag) {
+                    viewGallery.picture = pic;
+                    viewGallery.user = _user;
+                    break;
+                }
+            }
+            
             break;
         default:
             break;

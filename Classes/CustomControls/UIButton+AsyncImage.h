@@ -14,5 +14,6 @@
 @interface UIButton (AsyncImage) 
 - (void)loadBackground:(NSString*)url;
 - (void)loadBackground:(NSString *)url placeholderImage:(NSString *)placeHolder;
+- (void)loadBackground:(NSString *)url animated:(BOOL)animated;
 
 @end

@@ -10,6 +10,34 @@
 
 @implementation UIButton (AsyncImage)
 
+- (void)loadBackground:(NSString *)url animated:(BOOL)animated {
+    if (animated) {
+        [self loadBackground:url placeholderImage:nil];
+    } else {
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]
+                                                 cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                             timeoutInterval:60.0];
+        
+        AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+        
+        void (^successDownload)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
+            [self setBackgroundImage:[UIImage imageWithData:responseObject] forState:UIControlStateNormal];
+        };
+        
+        
+        void (^failDownload)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
+        };
+        
+        [operation setCompletionBlockWithSuccess: successDownload failure: failDownload];
+        
+        [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+        }];
+        
+        [operation start];
+    }
+
+}
+
 - (void)loadBackground:(NSString *)url {
     [self loadBackground:url placeholderImage:nil];
 }
