@@ -34,9 +34,9 @@
         [subview removeFromSuperview];
     }
     
-    for (int i = 0; i < 3; ++i)
+    for (int i = 0; i < 5; ++i)
     {
-        NSInteger index = row*3+i;
+        NSInteger index = row*5+i;
         
         User *user;
         if (index >= users.count)
@@ -58,11 +58,14 @@
         UILabel *labelUser = [[UILabel alloc] initWithFrame:CGRectMake(3, 34, 44, 16)];
         labelUser.textAlignment = NSTextAlignmentCenter;
         labelUser.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:10];
+        labelUser.textColor = [UIColor whiteColor];
         labelUser.shadowColor = [UIColor blackColor];
         labelUser.shadowOffset = CGSizeMake(0, 1);
         labelUser.backgroundColor = [UIColor clearColor];
-        labelUser.minimumFontSize = 7;
+        labelUser.minimumFontSize = 5;
         labelUser.userInteractionEnabled = NO;
+        
+        labelUser.text = user.name;
         
         [viewWrap addSubview:button];
         [viewWrap addSubview:viewBg];
@@ -70,7 +73,6 @@
         viewWrap.layer.masksToBounds = YES;
         [LXUtils globalShadow:viewWrap];
         viewWrap.layer.cornerRadius = 5.0;
-        
         
         [self addSubview:viewWrap];
     }

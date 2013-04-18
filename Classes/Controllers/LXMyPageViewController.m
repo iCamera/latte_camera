@@ -173,8 +173,9 @@ typedef enum {
                                        failure:nil];
     }
     
-    HUD = [[MBProgressHUD alloc] initWithView:self.tableView];
-    [self.tableView addSubview:HUD];
+    HUD = [[MBProgressHUD alloc] initWithView:app.viewMainTab.view];
+    HUD.userInteractionEnabled = NO;
+    [app.viewMainTab.view addSubview:HUD];
     HUD.mode = MBProgressHUDModeText;
     HUD.labelText = NSLocalizedString(@"Loading...", @"Loading...") ;
     HUD.labelFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
@@ -493,7 +494,7 @@ typedef enum {
     [dateFormat setDateFormat:@"yyyyMM"];
     
     NSString* urlPhotos = [NSString stringWithFormat:@"picture/album/by_month/%@/%d", [dateFormat stringFromDate:currentMonth], [_user.userId integerValue]];
-    
+    [HUD show:YES];
     [[LatteAPIClient sharedClient] getPath:urlPhotos
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -526,10 +527,11 @@ typedef enum {
                                        [self.tableView reloadData];
                                        
                                        [self doneLoadingTableViewData];
+                                       [HUD hide:YES];
                                        
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        TFLog(@"Something went wrong (User - Calendar)");
-                                       
+                                       [HUD hide:YES];
                                    }];
 }
 
@@ -794,10 +796,15 @@ typedef enum {
     NSArray *rangeDates = [LXUtils rangeOfDatesInMonthGrid:currentMonth startOnSunday:YES timeZone:[NSTimeZone localTimeZone]];
     NSDate *dateStart = rangeDates[0];
     dateStart = [dateStart dateByAddingTimeInterval:24*60*60*sender.tag];
+    [self.tableView beginUpdates];
+    if (selectedCalendarDate) {
+        NSInteger days = [rangeDates[0] daysBetweenDate:selectedCalendarDate];
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:days/7 + 1]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
     selectedCalendarDate = dateStart;
-    [self.tableView reloadData];
-//    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:sender.tag/7+1] withRowAnimation:UITableViewRowAnimationAutomatic];
-//    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:sender.tag/7 + 1]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:sender.tag/7 + 1]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView endUpdates];
 }
 
 - (void)nextMonth:(id)sender {

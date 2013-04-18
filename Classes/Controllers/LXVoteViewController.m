@@ -92,6 +92,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LXCellGridUser *cell = [tableView dequeueReusableCellWithIdentifier:@"Grid"];
+    cell.viewController = self;
     [cell setUsers:voters forRow:indexPath.row];
 
     return cell;
@@ -99,6 +100,15 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return voters.count/5 + (voters.count%5>0?1:0);
+}
+
+- (void)showUser:(UIButton*)sender {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    LXMyPageViewController *viewUser = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    viewUser.user = voters[sender.tag];
+    
+    [self.navigationController pushViewController:viewUser animated:YES];
 }
 //- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 //    if (indexPath.item == voters.count) {
