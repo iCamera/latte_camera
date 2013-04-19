@@ -36,6 +36,7 @@ typedef enum {
 
 @property (strong, nonatomic) User *user;
 @property (assign, nonatomic) MypageTableMode tableMode;
+@property (strong, nonatomic) NSDate *currentMonth;
 
 - (void)touchTab:(MypageTableMode)mode;
 - (void)touchPhoto:(MypagePhotoMode)mode;

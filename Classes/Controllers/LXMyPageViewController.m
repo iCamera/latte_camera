@@ -70,7 +70,6 @@ typedef enum {
     NSMutableDictionary *currentDayPics;
     NSDate *selectedCalendarDate;
     NSMutableArray *currentMonthPicsFlat;
-    NSDate *currentMonth;
     EGORefreshTableHeaderView *refreshHeaderView;
     MBProgressHUD *HUD;
     
@@ -78,7 +77,7 @@ typedef enum {
     LXViewHeaderUserPage *viewHeaderUserpage;
 }
 
-
+@synthesize currentMonth;
 @synthesize loadIndicator;
 @synthesize tableMode;
 
@@ -673,8 +672,8 @@ typedef enum {
             [next addTarget:self action:@selector(nextMonth:) forControlEvents:UIControlEventTouchUpInside];
             [prev setTitle:@"PREV" forState:UIControlStateNormal];
             [next setTitle:@"NEXT" forState:UIControlStateNormal];
-            prev.titleLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:14];
-            next.titleLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:14];
+            prev.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:14];
+            next.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:14];
             [prev setTitleColor:[UIColor colorWithRed:101.0/255.0	green:90.0/255.0 blue:56.0/255.0 alpha:1] forState:UIControlStateNormal];
             [next setTitleColor:[UIColor colorWithRed:101.0/255.0	green:90.0/255.0 blue:56.0/255.0 alpha:1] forState:UIControlStateNormal];
             
@@ -746,7 +745,9 @@ typedef enum {
                     [button addTarget:self action:@selector(showDay:) forControlEvents:UIControlEventTouchUpInside];
                     UIImageView *medal = [[UIImageView alloc] initWithFrame:CGRectMake(i*44+16, 4, 12, 13)];
                     medal.image = [UIImage imageNamed:@"calendar_label.png"];
-                    UILabel *label = [[UILabel alloc] initWithFrame:medal.bounds];
+                    CGRect frame = medal.bounds;
+                    frame.size.height -= 2;
+                    UILabel *label = [[UILabel alloc] initWithFrame:frame];
                     label.text = [NSString stringWithFormat:@"%d", components.day];
                     label.textColor = [UIColor whiteColor];
                     label.textAlignment = NSTextAlignmentCenter;
@@ -801,9 +802,15 @@ typedef enum {
         NSInteger days = [rangeDates[0] daysBetweenDate:selectedCalendarDate];
         [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:days/7 + 1]] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
-    selectedCalendarDate = dateStart;
     
-    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:sender.tag/7 + 1]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    if (([selectedCalendarDate compare:dateStart] != NSOrderedSame) || (selectedCalendarDate == nil)) {
+        selectedCalendarDate = dateStart;
+        
+        [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:sender.tag/7 + 1]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    } else {
+        selectedCalendarDate = nil;
+    }
+    
     [self.tableView endUpdates];
 }
 
@@ -975,6 +982,7 @@ typedef enum {
 }
 
 - (UIView *)viewForCalendarDay:(NSDate*)date {
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
     UIView *viewBg = [[UIView alloc] initWithFrame:CGRectMake(6, 3, 308, 100)];
     [view addSubview:viewBg];
@@ -984,9 +992,18 @@ typedef enum {
     view.backgroundColor = [UIColor colorWithRed:225.0/255.0 green:223.0/255.0 blue:217.0/255.0 alpha:1];
     NSInteger head = 0;
     CGFloat height = 0;
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(210, 2, 100, 50)];
+    title.textColor = [UIColor colorWithRed:101.0/255.0	green:90.0/255.0 blue:56.0/255.0 alpha:0.5];
+    title.backgroundColor = [UIColor clearColor];
+    title.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:50];
+    title.textAlignment = NSTextAlignmentRight;
+    
+    dateFormat.dateFormat = @"d";
+    title.text = [dateFormat stringFromDate:date];
+    
+    [view addSubview:title];
+    
     for (NSInteger i = 0; i < 25; i++) {
-        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-        
         [dateFormat setDateFormat:@"yyyyMMdd"];
         NSString* key = [NSString stringWithFormat:@"%@%02d", [dateFormat stringFromDate:date], i];
         UIFont *font = [UIFont fontWithName:@"HelveticaNeue-Light" size:10];
@@ -1064,7 +1081,6 @@ typedef enum {
             [view addSubview:sp];
         }
     }
-    
     height += 6;
     CGRect frame = view.frame;
     frame.size.height = height;

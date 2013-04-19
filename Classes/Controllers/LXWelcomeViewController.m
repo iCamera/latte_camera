@@ -70,6 +70,10 @@ typedef enum {
                                                  name:@"LoggedIn"
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(becomeActive:)
+                                                 name:@"BecomeActive" object:nil];
+    
     loadEnded = false;
     pagephoto = 1;
     tableMode = kWelcomeTableGrid;
@@ -110,6 +114,11 @@ typedef enum {
     
     [self reloadView];
 }
+
+- (void)becomeActive:(id)sender {
+    [self reloadView];
+}
+
 
 - (void)reloadView {
     loadEnded = false;

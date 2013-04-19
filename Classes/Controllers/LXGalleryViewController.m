@@ -544,13 +544,16 @@
 
 - (IBAction)touchUser:(UIButton *)sender {
     LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
-    if (currentPage.user == nil) {
-        return;
-    }
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
     LXMyPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
-    viewUserPage.user = currentPage.user;
+    if (currentPage.user)
+        viewUserPage.user = currentPage.user;
+    else if (currentPage.picture.user)
+        viewUserPage.user = currentPage.picture.user;
+    else
+        return;
+
     [self.navigationController pushViewController:viewUserPage animated:YES];
     
 }

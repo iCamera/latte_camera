@@ -38,9 +38,6 @@
     [super viewDidLoad];
     
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
-    // Do any additional setup after loading the view.
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    [app.tracker sendView:@"Picture Info Screen"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

@@ -152,6 +152,7 @@
             break;
         case 9:
             [self resetTimelineButton];
+            _parent.currentMonth = [NSDate date];
             [_parent touchPhoto:kPhotoCalendar];
             break;
     }

@@ -126,6 +126,7 @@
             break;
         case 8:
             [self resetPhotoButton];
+            _parent.currentMonth = [NSDate date];
             [_parent touchPhoto:kPhotoCalendar];
             break;
     }

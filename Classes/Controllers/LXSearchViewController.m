@@ -355,6 +355,7 @@ typedef enum {
                                                                              cancelButtonTitle:NSLocalizedString(@"close", "Close")
                                                                              otherButtonTitles:nil];
                                        [alert show];
+                                       loadEnded = true;
                                        [activityLoad stopAnimating];
                                    }];
 }
