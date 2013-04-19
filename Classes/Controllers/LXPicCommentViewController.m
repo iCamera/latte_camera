@@ -14,6 +14,7 @@
 //#import "SideSwipeTableViewCell.h"
 #import "LXCommentControllViewController.h"
 #import "LXButtonBack.h"
+#import "MBProgressHUD.h"
 
 @interface LXPicCommentViewController ()
 
@@ -180,6 +181,9 @@
         
         NSString *url = [NSString stringWithFormat:@"picture/%d/comment_post", [_picture.pictureId integerValue]];
         
+        [MBProgressHUD showHUDAddedTo:self.view.superview.superview.superview animated:YES];
+        [growingComment resignFirstResponder];
+        
         [[LatteAPIClient sharedClient] postPath:url
                                      parameters:param
                                         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -188,8 +192,12 @@
                                             NSIndexPath *path = [NSIndexPath indexPathForRow:_comments.count-1 inSection:0];
                                             [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationRight];
                                             [self.tableView scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                                            growingComment.text = @"";
+                                            buttonSend.enabled = false;
+                                            [MBProgressHUD hideHUDForView:self.view.superview.superview.superview animated:YES];
                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                             TFLog(@"Something went wrong (Comment)");
+                                            [MBProgressHUD hideHUDForView:self.view.superview.superview.superview animated:YES];
                                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
                                                                                             message:error.localizedDescription
                                                                                            delegate:nil
@@ -198,9 +206,7 @@
                                             [alert show];
                                         }];
         
-        growingComment.text = @"";
-        buttonSend.enabled = false;
-        [growingComment resignFirstResponder];
+        
         return TRUE;
     } else {
         return FALSE;
