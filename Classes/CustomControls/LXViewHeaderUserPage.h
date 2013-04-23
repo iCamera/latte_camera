@@ -12,7 +12,7 @@
 
 @interface LXViewHeaderUserPage : UIViewController
 
-@property (strong, nonatomic) IBOutlet UIImageView *imageUser;
+@property (strong, nonatomic) IBOutlet UIButton *buttonUser;
 @property (strong, nonatomic) IBOutlet UIView *viewStats;
 @property (strong, nonatomic) IBOutlet UIButton *buttonProfile;
 @property (strong, nonatomic) IBOutlet UIButton *buttonCalendar;
@@ -33,5 +33,6 @@
 
 - (IBAction)touchTab:(UIButton *)sender;
 - (IBAction)toggleFollow:(UIButton *)sender;
+- (IBAction)touchUser:(id)sender;
 
 @end

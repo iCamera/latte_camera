@@ -13,6 +13,7 @@
 #import "LatteAPIClient.h"
 #import "LXUtils.h"
 #import "LXShare.h"
+#import "UIImageView+loadProgress.h"
 
 @interface LXSettingRootViewController ()
 
@@ -23,6 +24,8 @@
 }
 
 @synthesize labelVersion;
+@synthesize viewHeader;
+@synthesize imageProfile;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -50,6 +53,16 @@
     [app.tracker sendView:@"Setting Screen"];
     lxShare = [[LXShare alloc] init];
     lxShare.controller = self;
+    
+    if (app.currentUser) {
+        [LXUtils globalShadow:viewHeader];
+        [imageProfile loadProgess:app.currentUser.profilePicture];
+        viewHeader.layer.cornerRadius = 5;
+        imageProfile.layer.cornerRadius = 5;
+        imageProfile.layer.masksToBounds = YES;
+    } else {
+        self.tableView.tableHeaderView = nil;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -189,5 +202,89 @@
 
 - (IBAction)touchClose:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+- (void)viewDidUnload {
+    [self setImageProfile:nil];
+    [self setViewHeader:nil];
+    [super viewDidUnload];
+}
+- (IBAction)touchSetPicture:(id)sender {
+    UIStoryboard* storySetting = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
+    UINavigationController *navCamera = [storySetting instantiateInitialViewController];
+    LXCameraViewController *controllerCamera = navCamera.viewControllers[0];
+    controllerCamera.delegate = self;
+    
+    [self presentViewController:navCamera animated:YES completion:nil];
+}
+
+- (void)imagePickerController:(LXCameraViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info {
+    [picker dismissViewControllerAnimated:NO completion:nil];
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    
+    MBProgressHUD *progessHUD = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:progessHUD];
+    
+    progessHUD.mode = MBProgressHUDModeDeterminate;
+    [progessHUD show:YES];
+    
+    void (^createForm)(id<AFMultipartFormData>) = ^(id<AFMultipartFormData> formData) {
+        [formData appendPartWithFileData:[info objectForKey:@"data"]
+                                    name:@"file"
+                                fileName:@"latte.jpg"
+                                mimeType:@"image/jpeg"];
+    };
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [app getToken], @"token", nil];
+    
+    NSURLRequest *request = [[LatteAPIClient sharedClient] multipartFormRequestWithMethod:@"POST"
+                                                                                     path:@"user/me/profile_picture"
+                                                                               parameters:params
+                                                                constructingBodyWithBlock:createForm];
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    
+    void (^successUpload)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        progessHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+        progessHUD.mode = MBProgressHUDModeCustomView;
+        [progessHUD hide:YES afterDelay:1];
+        
+        imageProfile.image = [info objectForKey:@"preview"];
+        
+        [[LatteAPIClient sharedClient] getPath:@"user/me"
+                                    parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                       success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                           
+                                           User *user = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
+                                           app.currentUser = user;
+                                           
+                                           
+                                       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                           TFLog(@"Something went wrong (Profile)");
+                                       }];
+    };
+    
+    void (^failUpload)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
+        if([operation.response statusCode] != 200){
+            TFLog(@"Upload Failed");
+            return;
+        }
+        TFLog(@"error: %@", [operation error]);
+        progessHUD.mode = MBProgressHUDModeText;
+        progessHUD.labelText = @"Error";
+        progessHUD.margin = 10.f;
+        progessHUD.yOffset = 150.f;
+        progessHUD.removeFromSuperViewOnHide = YES;
+        
+        [progessHUD hide:YES afterDelay:2];
+    };
+    
+    [operation setCompletionBlockWithSuccess: successUpload failure: failUpload];
+    
+    [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+        progessHUD.progress = (float)totalBytesWritten/(float)totalBytesExpectedToWrite;
+    }];
+    
+    [operation start];
 }
 @end

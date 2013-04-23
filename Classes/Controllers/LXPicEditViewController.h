@@ -30,6 +30,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *labelStatus;
 @property (strong, nonatomic) IBOutlet UIView *viewDelete;
 @property (strong, nonatomic) IBOutlet UILabel *labelTag;
+@property (strong, nonatomic) IBOutlet UIButton *buttonFacebook;
+@property (strong, nonatomic) IBOutlet UIButton *buttonTwitter;
 
 @property (strong, nonatomic) Picture *picture;
 @property (strong, nonatomic) UIImage *preview;
@@ -39,5 +41,7 @@
 - (IBAction)touchPost:(id)sender;
 - (IBAction)touchBackground:(id)sender;
 - (IBAction)touchDelete:(id)sender;
+- (IBAction)touchFacebook:(id)sender;
+- (IBAction)touchTwitter:(id)sender;
 
 @end

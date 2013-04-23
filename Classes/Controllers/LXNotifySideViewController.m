@@ -310,7 +310,7 @@
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 260, 30)];
     label.text = [self tableView:tableView titleForHeaderInSection:section];
-    label.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:14];
+    label.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:14];
     label.shadowOffset = CGSizeMake(0, 1);
     label.textColor = [UIColor whiteColor];
     label.shadowColor = [UIColor blackColor];

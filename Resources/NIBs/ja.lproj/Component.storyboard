@@ -50,10 +50,6 @@
                                 <rect key="frame" x="6" y="6" width="308" height="73"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="user.gif" id="Zpk-Fl-G91">
-                                        <rect key="frame" x="6" y="6" width="30" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="-----" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gYb-UY-UQ3">
                                         <rect key="frame" x="49" y="13" width="160" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -205,6 +201,21 @@
                                         <color key="shadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                         <size key="shadowOffset" width="0.0" height="1"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="DQb-1I-lXt" userLabel="Button Photo Pic">
+                                        <rect key="frame" x="6" y="6" width="30" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" backgroundImage="user.gif">
+                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="touchUser:" destination="i0V-Lu-K17" eventType="touchUpInside" id="EUx-vU-XQG"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -241,8 +252,8 @@
                         <outlet property="buttonPhotoTimeline" destination="O6A-Zl-Nye" id="UJf-pk-TU5"/>
                         <outlet property="buttonProfile" destination="OYF-cc-FHD" id="xPi-nl-lgf"/>
                         <outlet property="buttonTableFollowing" destination="4qb-Xd-lYv" id="uHo-gP-VPe"/>
+                        <outlet property="buttonUser" destination="DQb-1I-lXt" id="3Wb-Hv-JIo"/>
                         <outlet property="imageNationality" destination="qWY-fu-H4F" id="Jrq-UU-fNE"/>
-                        <outlet property="imageUser" destination="Zpk-Fl-G91" id="mgS-p7-deR"/>
                         <outlet property="labelLikes" destination="SYX-L0-pvS" id="nHi-jO-0s0"/>
                         <outlet property="labelNickname" destination="gYb-UY-UQ3" id="KUL-zZ-aKj"/>
                         <outlet property="labelView" destination="3il-hY-An8" id="mak-Y8-W0W"/>
@@ -304,6 +315,7 @@
                                 <state key="disabled">
                                     <color key="titleColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <state key="selected" image="icon_iine_ss_on.png"/>
                                 <state key="highlighted">
                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
@@ -484,7 +496,7 @@
                                                 <rect key="frame" x="0.0" y="1" width="41" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" red="0.81960784313725488" green="0.80784313725490198" blue="0.77254901960784317" alpha="1" colorSpace="calibratedRGB"/>
-                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="14"/>
+                                                <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="14"/>
                                                 <state key="normal" image="icon_profile_s.png">
                                                     <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                 </state>
@@ -556,7 +568,7 @@
                             <button opaque="NO" tag="5" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="WwP-uc-qPE">
                                 <rect key="frame" x="0.0" y="79" width="68" height="41"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="12"/>
+                                <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="12"/>
                                 <inset key="contentEdgeInsets" minX="4" minY="-1" maxX="0.0" maxY="0.0"/>
                                 <state key="normal" image="icon_timeline_m_off.png" backgroundImage="menu5_left.png">
                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -575,7 +587,7 @@
                             <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="dqN-pq-yz4">
                                 <rect key="frame" x="130" y="79" width="62" height="41"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="12"/>
+                                <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="12"/>
                                 <inset key="contentEdgeInsets" minX="0.0" minY="-1" maxX="0.0" maxY="0.0"/>
                                 <state key="normal" image="icon_follow_m2_off.png" backgroundImage="menu5_center.png">
                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -615,7 +627,7 @@
                             <button opaque="NO" tag="9" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="e2S-so-FNm">
                                 <rect key="frame" x="254" y="79" width="66" height="41"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="12"/>
+                                <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="12"/>
                                 <inset key="contentEdgeInsets" minX="0.0" minY="-1" maxX="5" maxY="0.0"/>
                                 <state key="normal" image="icon_calender_m_off.png" backgroundImage="menu5_right.png">
                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -634,7 +646,7 @@
                             <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="oFO-O3-liV">
                                 <rect key="frame" x="68" y="79" width="62" height="41"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="12"/>
+                                <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="12"/>
                                 <inset key="contentEdgeInsets" minX="0.0" minY="-1" maxX="0.0" maxY="0.0"/>
                                 <state key="normal" image="follow_mutual_m_off.png" backgroundImage="menu5_center.png">
                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -697,6 +709,7 @@
         <image name="icon_grid_m.png" width="15" height="15"/>
         <image name="icon_grid_m_off.png" width="15" height="15"/>
         <image name="icon_iine_ss.png" width="10" height="10"/>
+        <image name="icon_iine_ss_on.png" width="10" height="10"/>
         <image name="icon_photo_s.png" width="12" height="10"/>
         <image name="icon_profile_s.png" width="12" height="12"/>
         <image name="icon_timeline_m.png" width="15" height="15"/>
@@ -760,6 +773,7 @@
             <relationships>
                 <relationship kind="action" name="toggleFollow:" candidateClass="UIButton"/>
                 <relationship kind="action" name="touchTab:" candidateClass="UIButton"/>
+                <relationship kind="action" name="touchUser:"/>
                 <relationship kind="outlet" name="buttonCalendar" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonFollow" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonFollower" candidateClass="UIButton"/>
@@ -768,8 +782,8 @@
                 <relationship kind="outlet" name="buttonPhotoTimeline" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonProfile" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonTableFollowing" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="imageNationality" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="imageUser" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="labelLikes" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="labelNickname" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="labelView" candidateClass="UILabel"/>

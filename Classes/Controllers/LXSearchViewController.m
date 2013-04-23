@@ -214,6 +214,13 @@ typedef enum {
     NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
                          picNext, @"picture",
                          nil];
+    
+    if (current > pictures.count - 6) {
+        if (!activityLoad.isAnimating && !loadEnded) {
+            [self loadMore];
+        }
+    }
+    
     return ret;
 }
 

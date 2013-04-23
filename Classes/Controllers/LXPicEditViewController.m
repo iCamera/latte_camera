@@ -11,6 +11,7 @@
 #import "LXUploadObject.h"
 #import "LXCameraViewController.h"
 #import "LXPicDumbTabViewController.h"
+#import "Facebook.h"
 
 @interface LXPicEditViewController ()
 
@@ -32,6 +33,8 @@
 @synthesize viewDelete;
 @synthesize labelTag;
 @synthesize switchTakenAt;
+@synthesize buttonFacebook;
+@synthesize buttonTwitter;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -94,6 +97,9 @@
         switchGPS.on = app.currentUser.defaultShowGPS;
         switchEXIF.on = app.currentUser.defaultShowEXIF;
         switchTakenAt.on = app.currentUser.defaultShowTakenAt;
+        buttonFacebook.selected = app.currentUser.pictureAutoFacebookUpload;
+        buttonTwitter.selected = app.currentUser.pictureAutoTweet;
+        
         tags = [[NSMutableArray alloc]init];
     }
     [self setStatusLabel];
@@ -156,13 +162,7 @@
     } else if (indexPath.section == 2) {
         share.text = textDesc.text;
         switch (indexPath.row) {
-            case 0:
-                [share facebookPost];
-                break;
             case 1:
-                [share tweet];
-                break;
-            case 2:
                 [share emailIt];
                 break;
             default:
@@ -251,6 +251,43 @@
     [sheet showInView:self.navigationController.view];
 }
 
+- (IBAction)touchFacebook:(id)sender {
+    if (!buttonFacebook.selected) {
+        [FBSession openActiveSessionWithPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]
+                                           defaultAudience:FBSessionDefaultAudienceFriends
+                                              allowLoginUI:YES
+                                         completionHandler:^(FBSession *session,
+                                                             FBSessionState state,
+                                                             NSError *error) {
+                                             if (state == FBSessionStateOpen)
+                                                 buttonFacebook.selected = true;
+                                         }];
+        
+    } else {
+        buttonFacebook.selected = false;
+    }
+}
+
+- (IBAction)touchTwitter:(id)sender {
+    ACAccountStore *account = [[ACAccountStore alloc] init];
+    ACAccountType *accountType = [account accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+    
+    NSArray *arrayOfAccounts = [account accountsWithAccountType:accountType];
+    
+    // Sanity check
+    if ([arrayOfAccounts count] > 0) {
+        buttonTwitter.selected = !buttonTwitter.selected;
+    } else {
+        buttonTwitter.selected = false;
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"")
+                                                        message:NSLocalizedString(@"error_no_twitter", @"")
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"close", @"")
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
 - (void)keyboardWillShow:(NSNotification *)notification
 {
     [self.tableView addGestureRecognizer:gestureTap];
@@ -329,18 +366,41 @@
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
-    LXUploadObject *upload = [[LXUploadObject alloc]init];
-    upload.imageFile = _imageData;
-    upload.imagePreview = _preview;
-    upload.imageDescription = textDesc.text;
-    upload.showEXIF = switchEXIF.on;
-    upload.showGPS = switchGPS.on;
-    upload.showTakenAt = switchTakenAt.on;
-    upload.tags = tags;
-    upload.status = imageStatus;
+    LXUploadObject *uploadLatte = [[LXUploadObject alloc]init];
+    uploadLatte.destination = kUploadDestinationLatte;
+    uploadLatte.imageFile = _imageData;
+    uploadLatte.imagePreview = _preview;
+    uploadLatte.imageDescription = textDesc.text;
+    uploadLatte.showEXIF = switchEXIF.on;
+    uploadLatte.showGPS = switchGPS.on;
+    uploadLatte.showTakenAt = switchTakenAt.on;
+    uploadLatte.tags = tags;
+    uploadLatte.status = imageStatus;
     
-    [app.uploader addObject:upload];
-    [upload upload];
+    [app.uploader addObject:uploadLatte];
+    [uploadLatte upload];
+    
+    if (buttonFacebook.selected) {
+        LXUploadObject *uploadFacebook = [[LXUploadObject alloc]init];
+        uploadFacebook.destination = kUploadDestinationFacebook;
+        uploadFacebook.imageFile = _imageData;
+        uploadFacebook.imagePreview = _preview;
+        uploadFacebook.imageDescription = textDesc.text;
+        
+        [app.uploader addObject:uploadFacebook];
+        [uploadFacebook upload];
+    }
+    
+    if (buttonTwitter.selected) {
+        LXUploadObject *uploadFacebook = [[LXUploadObject alloc]init];
+        uploadFacebook.destination = kUploadDestinationFacebook;
+        uploadFacebook.imageFile = _imageData;
+        uploadFacebook.imagePreview = _preview;
+        uploadFacebook.imageDescription = textDesc.text;
+        
+        [app.uploader addObject:uploadFacebook];
+        [uploadFacebook uploadTwitter];
+    }
     
     [self backToCamera];
 }
@@ -377,6 +437,8 @@
 
 - (void)viewDidUnload {
     [self setTextDesc:nil];
+    [self setButtonFacebook:nil];
+    [self setButtonTwitter:nil];
     [super viewDidUnload];
 }
 @end

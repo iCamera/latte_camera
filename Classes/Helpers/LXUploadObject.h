@@ -14,6 +14,12 @@ typedef enum {
     kUploadStateFail,
 } UploadState;
 
+typedef enum {
+    kUploadDestinationLatte,
+    kUploadDestinationFacebook,
+    kUploadDestinationTwitter,
+} UploadDestination;
+
 @class  LXUploadObject;
 
 @protocol LXUploadObjectDelegate <NSObject>
@@ -34,11 +40,13 @@ typedef enum {
 @property (assign, nonatomic) BOOL showGPS;
 @property (assign, nonatomic) BOOL showTakenAt;
 @property (assign, nonatomic) NSInteger status;
+@property (assign, nonatomic) UploadDestination destination;
 @property (readonly, nonatomic) float percent;
 @property (readonly, nonatomic) UploadState uploadState;
 
 @property (weak, nonatomic) id<LXUploadObjectDelegate> delegate;
 
 - (void)upload;
+- (void)uploadTwitter;
 
 @end

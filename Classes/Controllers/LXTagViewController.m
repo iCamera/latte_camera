@@ -141,15 +141,22 @@
 }
 
 - (NSDictionary *)pictureAfterPicture:(Picture *)picture {
-        NSUInteger current = [pictures indexOfObject:picture];
-        if (current == pictures.count-1) {
-            return nil;
+    NSUInteger current = [pictures indexOfObject:picture];
+    if (current == pictures.count-1) {
+        return nil;
+    }
+    Picture *picNext = pictures[current+1];
+    NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
+                         picNext, @"picture",
+                         nil];
+    
+    if (current > pictures.count - 6) {
+        if (!activityLoad.isAnimating && !loadEnded) {
+            [self loadMore];
         }
-        Picture *picNext = pictures[current+1];
-        NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
-                             picNext, @"picture",
-                             nil];
-        return ret;
+    }
+    
+    return ret;
 }
 
 - (NSDictionary *)pictureBeforePicture:(Picture *)picture {

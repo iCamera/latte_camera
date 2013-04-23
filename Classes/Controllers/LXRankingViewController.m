@@ -107,6 +107,23 @@ typedef enum {
     }
 }
 
+- (void)loadMore {
+    if (loadIndicator.isAnimating || loadEnded) {
+        return;
+    }
+
+    switch (rankLayout) {
+        case kLayoutCalendar:
+            [self loadMoreCalendar];
+            break;
+        case kLayoutNormal:
+            [self loadMoreNormal];
+            break;
+        default:
+            break;
+    }
+}
+
 
 - (void)loadCalendar {
     NSString* url = [NSString stringWithFormat:@"picture/ranking/calendar"];
@@ -516,19 +533,7 @@ typedef enum {
     
     float reload_distance = -100;
     if(y > h + reload_distance) {
-        if (!loadIndicator.isAnimating) {
-            switch (rankLayout) {
-                case kLayoutCalendar:
-                    [self loadMoreCalendar];
-                    break;
-                case kLayoutNormal:
-                    [self loadMoreNormal];
-                    break;
-                default:
-                    break;
-            }
-
-        }
+        [self loadMore];
     }
 }
 

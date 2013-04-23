@@ -12,13 +12,12 @@
 #import "GPUImageFilter+saveToLibrary.h"
 #import "LXUploadObject.h"
 #import "UIDeviceHardware.h"
-#import "UIDeviceHardware.h"
 #import "LXFilterFish.h"
 #import "LXShare.h"
 #import "RDActionSheet.h"
 #import "LXImageFilter.h"
 #import "LXImageLens.h"
-
+#import <MediaPlayer/MediaPlayer.h>
 
 #define kAccelerometerFrequency        10.0 //Hz
 
@@ -218,13 +217,6 @@
     HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:HUD];
     HUD.userInteractionEnabled = NO;
-    
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    
-    [nc addObserver:self selector:@selector(receiveLoggedIn:) name:@"LoggedIn" object:nil];
-    [nc addObserver:self selector:@selector(uploaderSuccess:) name:@"LXUploaderSuccess" object:nil];
-    [nc addObserver:self selector:@selector(uploaderFail:) name:@"LXUploaderFail" object:nil];
-    [nc addObserver:self selector:@selector(uploaderProgress:) name:@"LXUploaderProgress" object:nil];
     
     scrollProcess.contentSize = CGSizeMake(320, 50);
 
@@ -430,10 +422,36 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    
+    [nc addObserver:self selector:@selector(receiveLoggedIn:) name:@"LoggedIn" object:nil];
+    [nc addObserver:self selector:@selector(uploaderSuccess:) name:@"LXUploaderSuccess" object:nil];
+    [nc addObserver:self selector:@selector(uploaderFail:) name:@"LXUploaderFail" object:nil];
+    [nc addObserver:self selector:@selector(uploaderProgress:) name:@"LXUploaderProgress" object:nil];
+    
     [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
     self.navigationController.navigationBarHidden = YES;
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
     app.controllerCamera = self;
+    
+    MPVolumeView *volumeView = [[MPVolumeView alloc] initWithFrame:CGRectMake(-100, 0, 10, 0)];
+    [volumeView sizeToFit];
+    [self.view addSubview:volumeView];
+    
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(captureByVolume:)
+     name:@"AVSystemController_SystemVolumeDidChangeNotification"
+     object:nil];
+    
+    AudioSessionInitialize(NULL, NULL, NULL, NULL);
+    AudioSessionSetActive(true);
+}
+
+- (void)captureByVolume:(id)sender {
+    if (!isEditing) {
+        [self capturePhotoAsync];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -444,6 +462,9 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:self];
+    
     UIAccelerometer* a = [UIAccelerometer sharedAccelerometer];
     a.delegate = nil;
     [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
@@ -453,6 +474,8 @@
     });
     
     [super viewWillDisappear:animated];
+    
+    AudioSessionSetActive(false);
     
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
     app.controllerCamera = nil;

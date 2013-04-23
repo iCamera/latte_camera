@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LXCameraViewController.h"
 
-@interface LXSettingRootViewController : UITableViewController
+@interface LXSettingRootViewController : UITableViewController<LXImagePickerDelegate>
 - (IBAction)touchClose:(id)sender;
 @property (strong, nonatomic) IBOutlet UILabel *labelVersion;
+@property (strong, nonatomic) IBOutlet UIImageView *imageProfile;
+- (IBAction)touchSetPicture:(id)sender;
+@property (strong, nonatomic) IBOutlet UIView *viewHeader;
 
 @end

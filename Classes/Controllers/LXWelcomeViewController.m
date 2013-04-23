@@ -26,7 +26,6 @@ typedef enum {
 
 @implementation LXWelcomeViewController {
     NSMutableArray *feeds;
-    int pagephoto;
     BOOL loadEnded;
     BOOL reloading;
     EGORefreshTableHeaderView *refreshHeaderView;
@@ -75,7 +74,6 @@ typedef enum {
                                                  name:@"BecomeActive" object:nil];
     
     loadEnded = false;
-    pagephoto = 1;
     tableMode = kWelcomeTableGrid;
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
@@ -122,27 +120,32 @@ typedef enum {
 
 - (void)reloadView {
     loadEnded = false;
-    pagephoto = 0;
+    feeds = nil;
+
     [self loadMore];
 }
 
 - (void)loadMore {
-    if (indicator.isAnimating) {
+    if (indicator.isAnimating || loadEnded) {
         return;
     }
 
     [indicator startAnimating];
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
+    
+    Feed *feed = feeds.lastObject;
+    
     NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
     [param setObject:[app getToken] forKey:@"token"];
     
-    [param setObject:[NSNumber numberWithInt:pagephoto+1] forKey:@"page"];
+    if (feed) {
+        [param setObject:feed.feedID forKey:@"last_id"];
+    }
     
     [[LatteAPIClient sharedClient] getPath:@"user/everyone/timeline"
                                 parameters: param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       pagephoto += 1;
-                                       if (pagephoto == 1) {
+                                       if (feeds == nil) {
                                            feeds = [Feed mutableArrayFromDictionary:JSON withKey:@"feeds"];
                                            [tablePic reloadData];
                                        } else {
@@ -329,6 +332,10 @@ typedef enum {
                              feedNext.targets[0], @"picture",
                              feedNext.user, @"user",
                              nil];
+        
+        // Loadmore
+        if (current > feeds.count - 6)
+            [self loadMore];
         return ret;
     } else if (tableMode == kWelcomeTableTimeline) {
         NSArray *flatPictures = [self flatPictureArray];
@@ -340,6 +347,11 @@ typedef enum {
                                  nextPic,  @"picture",
                                  feed.user, @"user",
                                  nil];
+            
+            // Loadmore
+            if (current > flatPictures.count - 6)
+                [self loadMore];
+            
             return ret;
         }
     }
@@ -456,9 +468,7 @@ typedef enum {
     
     float reload_distance = -100;
     if(y > h + reload_distance) {
-        if (!indicator.isAnimating) {
-            [self loadMore];
-        }
+        [self loadMore];
     }
 }
 

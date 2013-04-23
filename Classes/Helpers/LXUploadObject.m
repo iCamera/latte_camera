@@ -10,10 +10,58 @@
 #import "AFNetworking.h"
 #import "LatteAPIClient.h"
 #import "LXAppDelegate.h"
+#import "LXFBOpenGraph.h"
+#import "AFNetworking.h"
 
 @implementation LXUploadObject
 
-- (void)upload {
+- (void)uploadTwitter {
+    ACAccountStore *account = [[ACAccountStore alloc] init];
+    ACAccountType *accountType = [account accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+    
+    // Request access from the user to access their Twitter account
+    [account requestAccessToAccountsWithType:accountType withCompletionHandler:^(BOOL granted, NSError *error)
+     {
+         // Did user allow us access?
+         if (granted == YES)
+         {
+             // Populate array with all available Twitter accounts
+             NSArray *arrayOfAccounts = [account accountsWithAccountType:accountType];
+             
+             // Sanity check
+             if ([arrayOfAccounts count] > 0)
+             {
+                 // Keep it simple, use the first account available
+                 ACAccount *acct = [arrayOfAccounts objectAtIndex:0];
+                 
+                 // Build a twitter request
+                 TWRequest *postRequest = [[TWRequest alloc] initWithURL:[NSURL URLWithString:@"https://upload.twitter.com/1/statuses/update_with_media.json"] parameters:nil requestMethod:TWRequestMethodPOST];
+                 [postRequest addMultiPartData:_imageFile withName:@"media" type:@"image/jpeg"];
+                 [postRequest addMultiPartData:[_imageDescription dataUsingEncoding:NSUTF8StringEncoding] withName:@"status" type:@"text/plain"];
+                 
+                 // Post the request
+                 [postRequest setAccount:acct];
+                 
+                 // Block handler to manage the response
+                 [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderStart" object:self];
+                 
+                 [postRequest performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error)
+                  {
+                      if (error) {
+                          [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderFail" object:self];
+                          _uploadState = kUploadStateFail;
+                      } else {
+                          [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderSuccess" object:self];
+                          _uploadState = kUploadStateSuccess;
+                      }
+                      NSLog(@"Twitter response, HTTP response: %i", [urlResponse statusCode]);
+                  }];
+             }
+         }
+     }];
+}
+
+- (NSURLRequest*)getLatteRequest {
     void (^createForm)(id<AFMultipartFormData>) = ^(id<AFMultipartFormData> formData) {
         [formData appendPartWithFileData:_imageFile
                                     name:@"file"
@@ -38,11 +86,49 @@
                             [tagsPolish componentsJoinedByString:@","], @"tags",
                             nil];
 
-    
     NSURLRequest *request = [[LatteAPIClient sharedClient] multipartFormRequestWithMethod:@"POST"
                                                                                      path:@"picture/upload"
                                                                                parameters:params
                                                                 constructingBodyWithBlock:createForm];
+    return request;
+}
+
+- (NSURLRequest*)getFacebookRequest {
+    void (^createForm)(id<AFMultipartFormData>) = ^(id<AFMultipartFormData> formData) {
+        [formData appendPartWithFileData:_imageFile
+                                    name:@"source"
+                                fileName:@"latte.jpg"
+                                mimeType:@"image/jpeg"];
+    };
+
+    NSURL *url = [NSURL URLWithString:@"https://graph.facebook.com"];
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
+    
+    NSMutableArray *tagsPolish = [[NSMutableArray alloc] init];
+    for (NSString *tag in _tags)
+        if (tag.length > 0)
+            [tagsPolish addObject:tag];
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            FBSession.activeSession.accessTokenData.accessToken, @"access_token",
+                            _imageDescription, @"message",
+                            nil];
+    
+    NSURLRequest *request = [httpClient multipartFormRequestWithMethod:@"POST"
+                                                                  path:@"/me/photos"
+                                                            parameters:params
+                                             constructingBodyWithBlock:createForm];
+    
+    return request;
+}
+
+- (void)upload {
+    NSURLRequest *request;
+    if (_destination == kUploadDestinationLatte) {
+        request = [self getLatteRequest];
+    } else if (_destination == kUploadDestinationFacebook) {
+        request = [self getFacebookRequest];
+    }
     
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     

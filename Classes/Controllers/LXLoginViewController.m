@@ -128,6 +128,7 @@
                                                                                       TFLog(@"Something went wrong (Facebook): %@", error.description);
                                                                                       // Clear FBsession to be sure
                                                                                       [FBSession.activeSession closeAndClearTokenInformation];
+                                                                                      [FBSession renewSystemCredentials:^(ACAccountCredentialRenewResult result, NSError *error) {}];
                                                                                   }];
 
                                               }
@@ -135,6 +136,7 @@
                                           case FBSessionStateClosed:
                                           case FBSessionStateClosedLoginFailed:
                                               [FBSession.activeSession closeAndClearTokenInformation];
+                                              [FBSession renewSystemCredentials:^(ACAccountCredentialRenewResult result, NSError *error) {}];
                                               break;
                                           default:
                                               break;

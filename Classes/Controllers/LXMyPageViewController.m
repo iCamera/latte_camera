@@ -103,10 +103,6 @@ typedef enum {
 {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTimeline:) name:@"LoggedIn" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive:) name:@"BecomeActive" object:nil];
-
-    
     showSet = [NSMutableSet setWithObjects:@"gender", @"residence", @"age", @"birthdate", @"bloodtype", @"occupation", @"introduction", @"hobby", @"nationality", nil];
     
     if (tableMode == 0) {
@@ -142,6 +138,9 @@ typedef enum {
             
             photoMode = kPhotoTimeline;
             isMypage = true;
+            
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTimeline:) name:@"LoggedIn" object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive:) name:@"BecomeActive" object:nil];
         }
         
         
@@ -416,6 +415,15 @@ typedef enum {
             break;
         default:
             break;
+    }
+}
+
+- (void)loadMore {
+    if (!loadIndicator.isAnimating) {
+        if (photoMode == kPhotoMyphoto)
+            [self loadMorePicList];
+        else
+            [self loadMoreTimeline];
     }
 }
 
@@ -1217,10 +1225,12 @@ typedef enum {
 }
 
 - (void)imagePickerController:(LXCameraViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info {
+    [picker dismissViewControllerAnimated:NO completion:nil];
+    
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
-    MBProgressHUD *progessHUD = [[MBProgressHUD alloc] initWithView:picker.view];
-    [picker.view addSubview:progessHUD];
+    MBProgressHUD *progessHUD = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:progessHUD];
     
     progessHUD.mode = MBProgressHUDModeDeterminate;
     [progessHUD show:YES];
@@ -1247,7 +1257,6 @@ typedef enum {
         progessHUD.mode = MBProgressHUDModeCustomView;
         [progessHUD hide:YES afterDelay:1];
         
-        [picker dismissViewControllerAnimated:NO completion:nil];
         [self reloadProfile];
     };
     
@@ -1381,6 +1390,10 @@ typedef enum {
                                      pictures[current+1], @"picture",
                                      _user, @"user",
                                      nil];
+                
+                // Loadmore
+                if (current > pictures.count - 6)
+                    [self loadMore];
                 return ret;
             }
             break;
@@ -1398,6 +1411,9 @@ typedef enum {
                                      nextPic, @"picture",
                                      feed.user, @"user",
                                      nil];
+                // Loadmore
+                if (current > flatPictures.count - 6)
+                    [self loadMore];
                 return ret;
             }
             break;
@@ -1566,12 +1582,7 @@ typedef enum {
     
     float reload_distance = -100;
     if(y > h + reload_distance) {
-        if (!loadIndicator.isAnimating) {
-            if (photoMode == kPhotoMyphoto)
-                [self loadMorePicList];
-            else
-                [self loadMoreTimeline];
-        }
+        [self loadMore];
     }
 }
 

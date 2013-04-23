@@ -104,6 +104,8 @@
         [self setValue:value forKey:@"pictureStatus"];
     } else if ([key isEqualToString:@"profile_picture"]) {
         [self setValue:value forKey:@"profilePicture"];
+    } else if ([key isEqualToString:@"profile_picture_hi"]) {
+        [self setValue:value forKey:@"_profilePictureHi"];
     } else if ([key isEqualToString:@"vote_count"]) {
         [self setValue:value forKey:@"voteCount"];
     } else if ([key isEqualToString:@"page_views"]) {
@@ -122,6 +124,10 @@
         [self setValue:value forKey:@"_defaultShowTakenAt"];
     } else if ([key isEqualToString:@"nationality"]) {
         [self setValue:value forKey:@"_nationality"];
+    } else if ([key isEqualToString:@"picture_auto_facebook_upload"]) {
+        [self setValue:value forKey:@"_pictureAutoFacebookUpload"];
+    } else if ([key isEqualToString:@"picture_auto_tweet"]) {
+        [self setValue:value forKey:@"_pictureAutoTweet"];
     }
     
     else {

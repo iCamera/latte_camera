@@ -7,8 +7,10 @@
 //
 
 #import "LXViewHeaderUserPage.h"
+#import "UIButton+AsyncImage.h"
 #import "UIImageView+loadProgress.h"
 #import "LXAppDelegate.h"
+#import "RNBlurModalView.h"
 
 @interface LXViewHeaderUserPage ()
 
@@ -16,7 +18,7 @@
 
 @implementation LXViewHeaderUserPage
 
-@synthesize imageUser;
+@synthesize buttonUser;
 @synthesize viewStats;
 @synthesize viewStatsButton;
 @synthesize labelNickname;
@@ -45,8 +47,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    imageUser.clipsToBounds = YES;
-    imageUser.layer.cornerRadius = 5;
+    buttonUser.clipsToBounds = YES;
+    buttonUser.layer.cornerRadius = 5;
     
     [LXUtils globalShadow:viewStats];
     viewStats.layer.cornerRadius = 5.0;
@@ -70,8 +72,8 @@
     labelLikes.text = [user.voteCount stringValue];
     labelView.text = [user.pageViews stringValue];
     
-    if (user.profilePicture != nil)
-        [imageUser setImageWithURL:[NSURL URLWithString:user.profilePicture]];
+    if (user.profilePicture)
+        [buttonUser loadBackground:user.profilePicture placeholderImage:@"user.gif"];
 
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
     if (app.currentUser != nil && ![user.userId isEqualToNumber:app.currentUser.userId]) {
@@ -158,6 +160,27 @@
 
 }
 
+- (IBAction)touchUser:(id)sender {
+    UIView *wrap = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 280)];
+    UIImageView *viewUserPic = [[UIImageView alloc] initWithFrame:wrap.bounds];
+    viewUserPic.layer.cornerRadius = 5;
+    viewUserPic.layer.masksToBounds = YES;
+    viewUserPic.layer.borderWidth = 1;
+    viewUserPic.layer.borderColor = [UIColor colorWithWhite:1 alpha:0.5].CGColor;
+    [wrap addSubview:viewUserPic];
+    [LXUtils globalShadow:wrap];
+    wrap.layer.cornerRadius = 5;
+    if (_user.profilePictureHi)
+        [viewUserPic loadProgess:_user.profilePictureHi];
+    else if (_user.profilePicture)
+        [viewUserPic loadProgess:_user.profilePicture];
+    else
+        return;
+    
+    RNBlurModalView *modal = [[RNBlurModalView alloc] initWithParentView:_parent.navigationController.view view:wrap];
+    [modal show];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -171,6 +194,7 @@
     [self setButtonFollower:nil];
     [self setButtonFollow:nil];
     [self setButtonPhotoCount:nil];
+    [self setButtonUser:nil];
     [super viewDidUnload];
 }
 @end
