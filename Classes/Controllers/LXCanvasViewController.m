@@ -6,47 +6,32 @@
 //  Copyright (c) 2012 LUXEYS. All rights reserved.
 //
 
-#import "LXCameraViewController.h"
+#import "LXCanvasViewController.h"
 #import "LXAppDelegate.h"
 #import "ALAssetsLibrary+CustomPhotoAlbum.h"
 #import "GPUImageFilter+saveToLibrary.h"
-#import "LXUploadObject.h"
-#import "UIDeviceHardware.h"
 #import "LXFilterFish.h"
 #import "LXShare.h"
 #import "RDActionSheet.h"
 #import "LXImageFilter.h"
 #import "LXImageLens.h"
-#import <MediaPlayer/MediaPlayer.h>
+#import "LXImageCropViewController.h"
 
-#define kAccelerometerFrequency        10.0 //Hz
-
-@interface LXCameraViewController ()  {
-    LXStillCamera *videoCamera;
+@interface LXCanvasViewController ()  {
     GPUImageSharpenFilter *filterSharpen;
     GPUImageFilterPipeline *pipe;
     LXImageFilter *filterMain;
     
     GPUImagePicture *previewFilter;
     
-    CGSize picSize;
-    
     UIActionSheet *sheet;
     
-    NSMutableDictionary *imageMeta;
-    NSTimer *timer;
-    NSInteger timerCount;
-    
-    BOOL isEditing;
     BOOL isSaved;
     BOOL isKeyboard;
     BOOL isWatingToUpload;
     BOOL isBackCamera;
-    BOOL isPicFromCamera;
-    BOOL didBackupPic;
     
     NSInteger currentLens;
-    NSInteger currentTimer;
     NSInteger currentMask;
     NSInteger currentBlend;
     NSInteger effectNum;
@@ -55,54 +40,34 @@
     
     NSLayoutConstraint *cameraAspect;
     NSInteger timerMode;
-    CLLocationManager *locationManager;
-    CLLocation *bestEffortAtLocation;
-    UIImageOrientation imageOrientation;
-    UIInterfaceOrientation uiOrientation;
-    UIInterfaceOrientation orientationLast;
+    
     MBProgressHUD *HUD;
     
-    NSData *savedData;
-    UIImage *savedPreview;
-    UIImage *capturedImage;
     NSInteger currentTab;
-    
     LXShare *laSharekit;
-    LXUploadObject *currentUploader;
     
-    MBRoundProgressView *viewRoundProgess;
+    NSData *imageFinalData;
+    UIImage *imageFinalThumb;
 }
 
 @end
 
-@implementation LXCameraViewController
+@implementation LXCanvasViewController
 
-@synthesize videoCamera;
 @synthesize scrollEffect;
 @synthesize scrollProcess;
 @synthesize scrollBlend;
 @synthesize sliderEffectIntensity;
 @synthesize viewShoot;
-
 @synthesize viewCamera;
-@synthesize viewTimer;
-@synthesize buttonCapture;
+
 @synthesize buttonYes;
 @synthesize buttonNo;
-@synthesize buttonTimer;
-@synthesize buttonFlash;
-@synthesize buttonFlash35;
-@synthesize buttonFlip;
 @synthesize buttonReset;
 @synthesize buttonPickTop;
 
 @synthesize gesturePan;
 @synthesize viewBottomBar;
-@synthesize imageAutoFocus;
-@synthesize buttonPick;
-@synthesize buttonSetNoTimer;
-@synthesize buttonSetTimer5s;
-@synthesize tapFocus;
 
 @synthesize buttonToggleFocus;
 @synthesize buttonToggleEffect;
@@ -128,7 +93,6 @@
 @synthesize buttonLensWide;
 @synthesize buttonLensFish;
 
-@synthesize buttonClose;
 @synthesize viewCameraWraper;
 @synthesize viewDraw;
 @synthesize buttonToggleFisheye;
@@ -142,7 +106,6 @@
 @synthesize viewCanvas;
 
 @synthesize viewTopBar;
-@synthesize viewTopBar35;
 
 @synthesize sliderExposure;
 @synthesize sliderVignette;
@@ -151,10 +114,14 @@
 @synthesize sliderSaturation;
 @synthesize sliderFeather;
 
-@synthesize buttonUploadStatus;
 @synthesize buttonBlackWhite;
 
 @synthesize delegate;
+
+@synthesize imageMeta;
+@synthesize imageFullsize;
+@synthesize imagePreview;
+@synthesize imageSize;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -168,8 +135,6 @@
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        isEditing = false;
-        
         viewDraw.isEmpty = YES;
     }
     return self;
@@ -178,17 +143,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    viewRoundProgess = [[MBRoundProgressView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
-    viewRoundProgess.userInteractionEnabled = false;
-
-    [buttonUploadStatus addSubview:viewRoundProgess];
     
     isBackCamera = YES;
-    orientationLast = UIInterfaceOrientationPortrait;
+    
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     [app.tracker sendView:@"Camera Screen"];
     
-    self.navigationController.modalPresentationStyle = UIModalPresentationCurrentContext;
     // LAShare
     laSharekit = [[LXShare alloc] init];
     laSharekit.controller = self;
@@ -198,13 +158,16 @@
     UIImage *imageCanvas = [[UIImage imageNamed:@"bg_canvas.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(8, 8, 8, 8)];
     viewCanvas.image = imageCanvas;
     
-    UIBezierPath *shadowPathCamera = [UIBezierPath bezierPathWithRect:viewCameraWraper.bounds];
-    viewCameraWraper.layer.masksToBounds = NO;
-    viewCameraWraper.layer.shadowColor = [UIColor blackColor].CGColor;
-    viewCameraWraper.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-    viewCameraWraper.layer.shadowOpacity = 1.0;
-    viewCameraWraper.layer.shadowRadius = 5.0;
-    viewCameraWraper.layer.shadowPath = shadowPathCamera.CGPath;
+//    UIBezierPath *shadowPathCamera = [UIBezierPath bezierPathWithRect:viewCameraWraper.bounds];
+//    viewCameraWraper.layer.masksToBounds = NO;
+//    viewCameraWraper.layer.shadowColor = [UIColor blackColor].CGColor;
+//    viewCameraWraper.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+//    viewCameraWraper.layer.shadowOpacity = 1.0;
+//    viewCameraWraper.layer.shadowRadius = 5.0;
+//    viewCameraWraper.layer.shadowPath = shadowPathCamera.CGPath;
+//    [viewCamera setInputRotation:kGPUImageRotateRight atIndex:0];
+    
+    viewCamera.fillMode = kGPUImageFillModeStretch;
     
     isSaved = true;
     viewDraw.delegate = self;
@@ -212,25 +175,15 @@
     currentTab = kTabPreview;
     
     currentLens = 0;
-    currentTimer = kTimerNone;
     
-    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:HUD];
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    HUD = [[MBProgressHUD alloc] initWithView:window];
+    [window addSubview:HUD];
     HUD.userInteractionEnabled = NO;
     
     scrollProcess.contentSize = CGSizeMake(320, 50);
 
     filterMain = [[LXImageFilter alloc] init];
-    
-    videoCamera = [[LXStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionBack];
-    [videoCamera setOutputImageOrientation:UIInterfaceOrientationPortrait];
-    
-    // GPS Info
-    locationManager = [[CLLocationManager alloc] init];
-    locationManager.delegate = self;
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    [locationManager startUpdatingLocation];
-    [self performSelector:@selector(stopUpdatingLocation:) withObject:nil afterDelay:45];
     
     effectNum = 19;
     effectPreview = [[NSMutableArray alloc] initWithCapacity:effectNum];
@@ -371,89 +324,26 @@
     }
     scrollBlend.contentSize = CGSizeMake(2*55+10, 60);
     
-    [self resizeCameraViewWithAnimation:NO];
-    [self preparePipe];
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [videoCamera startCameraCapture];
-    });
-}
-
-- (void)uploaderSuccess:(NSNotification *)notification {
-    currentUploader = nil;
-    
-    [UIView animateWithDuration:0.3
-                          delay:0.0
-                        options:UIViewAnimationCurveEaseInOut
-                     animations:^{
-                         buttonUploadStatus.alpha = 0.0;
-                     } completion:^(BOOL finished) {
-                         buttonUploadStatus.hidden = true;
-                     }];
-}
-
-- (void)uploaderFail:(NSNotification *)notification {
-    viewRoundProgess.hidden = true;
-    [buttonUploadStatus setImage:[UIImage imageNamed:@"bt_info.png"]
-                        forState:UIControlStateNormal];
-    currentUploader = notification.object;
-}
-
-
-- (void)uploaderProgress:(NSNotification *)notification {
-    viewRoundProgess.hidden = false;
-    buttonUploadStatus.hidden = false;
-    buttonUploadStatus.alpha = 0.75;
-    
-    [buttonUploadStatus setImage:nil
-                        forState:UIControlStateNormal];
-    
-    LXUploadObject *uploader = notification.object;
-    viewRoundProgess.progress = uploader.percent;
+    [self switchEditImage];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-    UIAccelerometer* a = [UIAccelerometer sharedAccelerometer];
-    a.updateInterval = 1 / kAccelerometerFrequency;
-    a.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     
     [nc addObserver:self selector:@selector(receiveLoggedIn:) name:@"LoggedIn" object:nil];
-    [nc addObserver:self selector:@selector(uploaderSuccess:) name:@"LXUploaderSuccess" object:nil];
-    [nc addObserver:self selector:@selector(uploaderFail:) name:@"LXUploaderFail" object:nil];
-    [nc addObserver:self selector:@selector(uploaderProgress:) name:@"LXUploaderProgress" object:nil];
-    
-    [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
     self.navigationController.navigationBarHidden = YES;
-    LXAppDelegate *app = [LXAppDelegate currentDelegate];
-    app.controllerCamera = self;
-    
-    MPVolumeView *volumeView = [[MPVolumeView alloc] initWithFrame:CGRectMake(-100, 0, 10, 0)];
-    [volumeView sizeToFit];
-    [self.view addSubview:volumeView];
-    
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(captureByVolume:)
-     name:@"AVSystemController_SystemVolumeDidChangeNotification"
-     object:nil];
-    
-    AudioSessionInitialize(NULL, NULL, NULL, NULL);
-    AudioSessionSetActive(true);
 }
 
-- (void)captureByVolume:(id)sender {
-    if (!isEditing) {
-        [self capturePhotoAsync];
+- (void)setImageFullsize:(UIImage *)aImageFullsize {
+    imageFullsize = aImageFullsize;
+    if (imageFullsize) {
+        buttonYes.enabled = true;
     }
 }
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -462,23 +352,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc removeObserver:self];
-    
-    UIAccelerometer* a = [UIAccelerometer sharedAccelerometer];
-    a.delegate = nil;
-    [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [videoCamera stopCameraCapture];
-    });
     
     [super viewWillDisappear:animated];
-    
-    AudioSessionSetActive(false);
-    
-    LXAppDelegate *app = [LXAppDelegate currentDelegate];
-    app.controllerCamera = nil;
 }
 
 - (void)preparePipe {
@@ -490,63 +365,53 @@
     pipe = [[GPUImageFilterPipeline alloc] init];
     pipe.filters = [[NSMutableArray alloc] init];
     
-    if (isEditing) {
-        if (source != nil) {
-            pipe.input = source;
-            pipe.output = nil;
-        }
-        else {
-            pipe.input = previewFilter;
-            pipe.output = viewCamera;
-        }
-        
-        if (!buttonLensWide.enabled) {
-            LXImageLens *filterLens = [[LXImageLens alloc] init];
-            [pipe addFilter:filterLens];
-        }
-        
-        if (!buttonLensFish.enabled) {
-            LXFilterFish *filterFish = [[LXFilterFish alloc] init];
-            [pipe addFilter:filterFish];
-        }
-        
-        [pipe addFilter:filterMain];
-        
-        filterSharpen = [[GPUImageSharpenFilter alloc] init];
-        filterSharpen.sharpness = sliderSharpness.value;
-        [pipe addFilter:filterSharpen];
-        
-        
-        GPUImageRotationMode imageViewRotationModeIdx1 = kGPUImageNoRotation;
-        if (source != nil) {
-            switch (imageOrientation) {
-                case UIImageOrientationLeft:
-                    imageViewRotationModeIdx1 = kGPUImageRotateLeft;
-                    break;
-                case UIImageOrientationRight:
-                    imageViewRotationModeIdx1 = kGPUImageRotateRight;
-                    break;
-                case UIImageOrientationDown:
-                    imageViewRotationModeIdx1 = kGPUImageRotate180;
-                    break;
-                case UIImageOrientationUp:
-                    imageViewRotationModeIdx1 = kGPUImageNoRotation;
-                    break;
-                default:
-                    imageViewRotationModeIdx1 = kGPUImageNoRotation;
-                    break;
-            }
-        }
-        [pipe.filters[0] setInputRotation:imageViewRotationModeIdx1 atIndex:0];
-    } else {
-        pipe.input = videoCamera;
-        pipe.output = viewCamera;
-        [pipe removeAllFilters];
-        if (buttonToggleFisheye.selected) {
-            LXFilterFish *filterFish = [[LXFilterFish alloc] init];
-            [pipe addFilter:filterFish];
-        }
+    if (source != nil) {
+        pipe.input = source;
+        pipe.output = nil;
     }
+    else {
+        pipe.input = previewFilter;
+        pipe.output = viewCamera;
+    }
+    
+    if (!buttonLensWide.enabled) {
+        LXImageLens *filterLens = [[LXImageLens alloc] init];
+        [pipe addFilter:filterLens];
+    }
+    
+    if (!buttonLensFish.enabled) {
+        LXFilterFish *filterFish = [[LXFilterFish alloc] init];
+        [pipe addFilter:filterFish];
+    }
+    
+    [pipe addFilter:filterMain];
+    
+    filterSharpen = [[GPUImageSharpenFilter alloc] init];
+    filterSharpen.sharpness = sliderSharpness.value;
+    [pipe addFilter:filterSharpen];
+    [pipe.filters[0] setInputRotation:[self rotationFromImage:imagePreview.imageOrientation] atIndex:0];
+}
+
+- (GPUImageRotationMode)rotationFromImage:(UIImageOrientation)orientation {
+    GPUImageRotationMode imageViewRotationModeIdx1 = kGPUImageNoRotation;
+    switch (imagePreview.imageOrientation) {
+        case UIImageOrientationLeft:
+            imageViewRotationModeIdx1 = kGPUImageRotateLeft;
+            break;
+        case UIImageOrientationRight:
+            imageViewRotationModeIdx1 = kGPUImageRotateRight;
+            break;
+        case UIImageOrientationDown:
+            imageViewRotationModeIdx1 = kGPUImageRotate180;
+            break;
+        case UIImageOrientationUp:
+            imageViewRotationModeIdx1 = kGPUImageNoRotation;
+            break;
+        default:
+            imageViewRotationModeIdx1 = kGPUImageNoRotation;
+            break;
+    }
+    return imageViewRotationModeIdx1;
 }
 
 - (void)applyFilterSetting {
@@ -579,6 +444,8 @@
 
 - (void)processImage {
     isSaved = false;
+    imageFinalThumb = nil;
+    imageFinalData = nil;
     buttonReset.enabled = true;
     [previewFilter processImage];
 }
@@ -595,148 +462,12 @@
     [self processImage];
 }
 
-
-- (void)updateTargetPoint {
-    CGPoint point = CGPointMake(imageAutoFocus.center.x/viewCamera.frame.size.width, imageAutoFocus.center.y/viewCamera.frame.size.height);
-    
-    
-    [self setFocusPoint:point];
-    [self setMetteringPoint:point];
-    //        imageAutoFocus.hidden = false;
-    imageAutoFocus.alpha = 1.0;
-    [UIView animateWithDuration:0.3
-                          delay:1.0
-                        options:UIViewAnimationCurveEaseInOut
-                     animations:^{
-                         imageAutoFocus.alpha = 0.0;
-                     } completion:^(BOOL finished) {
-                         //imageAutoFocus.hidden = true;
-                     }];
-}
-
-- (void)capturePhotoAsync {
-    // Save last GPS and Orientation
-    [locationManager stopUpdatingLocation];
-    
-    [videoCamera pauseCameraCapture];
-    [videoCamera capturePhotoAsSampleBufferWithCompletionHandler:^(CMSampleBufferRef imageSampleBuffer, NSError *error) {
-        [videoCamera resumeCameraCapture];
-        if (error) {
-            TFLog(error.description);
-        } else {
-            [videoCamera stopCameraCapture];
-            
-            NSData *jpeg = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
-            imageMeta = [NSMutableDictionary dictionaryWithDictionary:videoCamera.currentCaptureMetadata];
-            
-            // Add GPS
-            NSDictionary *location;
-            if (bestEffortAtLocation != nil) {
-                location = [LXUtils getGPSDictionaryForLocation:bestEffortAtLocation];
-                [imageMeta setObject:location forKey:(NSString *)kCGImagePropertyGPSDictionary];
-            }
-            
-            // Create formatted date
-            NSMutableDictionary *dictForEXIF = [imageMeta objectForKey:(NSString *)kCGImagePropertyExifDictionary];
-            NSMutableDictionary *dictForTIFF = [imageMeta objectForKey:(NSString *)kCGImagePropertyTIFFDictionary];
-            if (dictForTIFF == nil) {
-                dictForTIFF = [[NSMutableDictionary alloc] init];
-            }
-            if (dictForEXIF == nil) {
-                dictForEXIF = [[NSMutableDictionary alloc] init];
-            }
-            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-            [formatter setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
-            NSString *stringDate = [formatter stringFromDate:[NSDate date]];
-            
-            UIDeviceHardware *hardware = [[UIDeviceHardware alloc] init];
-            
-            [dictForEXIF setObject:stringDate forKey:(NSString *)kCGImagePropertyExifDateTimeDigitized];
-            [dictForEXIF setObject:stringDate forKey:(NSString *)kCGImagePropertyExifDateTimeOriginal];
-            [dictForTIFF setObject:stringDate forKey:(NSString *)kCGImagePropertyTIFFDateTime];
-            [dictForTIFF setObject:@"Apple" forKey:(NSString *)kCGImagePropertyTIFFMake];
-            [dictForTIFF setObject:hardware.platformString forKey:(NSString *)kCGImagePropertyTIFFModel];
-            [imageMeta setObject:dictForEXIF forKey:(NSString *)kCGImagePropertyExifDictionary];
-            [imageMeta setObject:dictForTIFF forKey:(NSString *)kCGImagePropertyTIFFDictionary];
-            
-            // Save GPS & Correct orientation
-            
-            capturedImage = [UIImage imageWithData:jpeg];
-            imageOrientation = capturedImage.imageOrientation;
-            
-            picSize = capturedImage.size;
-            CGSize previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:capturedImage.size.width height:capturedImage.size.height]);
-            
-            UIImage *previewPic = [LXCameraViewController imageWithImage:capturedImage scaledToSize:previewUISize];
-            savedPreview = previewPic;
-            
-            
-            isPicFromCamera = true;
-            
-            [self switchEditImage];
-        }
-        
-        buttonCapture.enabled = true;
-    } withOrientation:orientationLast];
-}
-
-+ (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
-    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
-    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return newImage;
-}
-
-- (IBAction)cameraTouch:(UITapGestureRecognizer *)sender {
-    if (sender.state == UIGestureRecognizerStateRecognized) {
-        CGPoint location = [sender locationInView:self.viewCamera];
-        
-        imageAutoFocus.hidden = false;
-        [UIView animateWithDuration:0.1 animations:^{
-            imageAutoFocus.alpha = 1;
-        }];
-        
-        imageAutoFocus.center = location;
-        
-        [self updateTargetPoint];
-    }
-}
-
 - (IBAction)openImagePicker:(id)sender {
-    if (!isEditing) {
-        [locationManager stopUpdatingLocation];
-    }
-    
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc]init];
     imagePicker.delegate = self;
     [imagePicker.navigationBar setBackgroundImage:[UIImage imageNamed: @"bg_head.png"] forBarMetrics:UIBarMetricsDefault];
     
     [self presentViewController:imagePicker animated:NO completion:nil];
-}
-
-- (IBAction)close:(id)sender {
-    if (!isSaved) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"photo_hasnt_been_saved", @"写真が保存されていません")
-                                                        message:NSLocalizedString(@"stop_camera_confirm", @"カメラを閉じますか？")
-                                                       delegate:self
-                                              cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
-                                              otherButtonTitles:NSLocalizedString(@"stop_camera", @"はい"), nil];
-        alert.tag = 2;
-        [alert show];
-    } else {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }
-}
-
-- (IBAction)capture:(id)sender {
-    buttonPick.hidden = true;
-    buttonCapture.enabled = false;
-    if (currentTimer == kTimerNone) {
-        [self capturePhotoAsync];
-    } else {
-        timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countDown:) userInfo:nil repeats:YES];
-    }
 }
 
 - (IBAction)changeLens:(UIButton*)sender {
@@ -751,21 +482,25 @@
     [self processImage];
 }
 
-- (IBAction)changeFlash:(id)sender {
-    buttonFlash.selected = !buttonFlash.selected;
-    buttonFlash35.selected = !buttonFlash35.selected;
-    [self setFlash:buttonFlash.selected];
-}
-
-- (IBAction)touchTimer:(id)sender {
-    // wait for time before begin
-    [viewTimer setHidden:!viewTimer.isHidden];
-}
-
 - (IBAction)touchSave:(id)sender {
-    buttonYes.enabled = false;
-    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:HUD];
+    if (!isSaved) {
+        [self saveFinalImage];
+    }
+    
+    [self processSavedData];
+}
+
+- (void)receiveLoggedIn:(NSNotification *)notification
+{
+    if (isWatingToUpload && isSaved) {
+        [self processSavedData];
+    }
+}
+
+- (void)saveFinalImage {
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    HUD = [[MBProgressHUD alloc] initWithView:window];
+    [window addSubview:HUD];
     HUD.userInteractionEnabled = NO;
     HUD.mode = MBProgressHUDModeIndeterminate;
     HUD.dimBackground = YES;
@@ -773,18 +508,16 @@
     [HUD show:NO];
     [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     
-    [self getFinalImage:^{
-        buttonYes.enabled = true;
-        [[UIApplication sharedApplication] endIgnoringInteractionEvents];
-        [self processSavedData];
-    }];
-}
-
-- (void)receiveLoggedIn:(NSNotification *)notification
-{
-    if (isEditing && isWatingToUpload && isSaved) {
-        [self processSavedData];
-    }
+    imageFinalThumb = [self getFinalThumb];
+    imageFinalData = [self getFinalImage];
+    
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    
+    [library writeImageDataToSavedPhotosAlbum:UIImageJPEGRepresentation(imageFinalThumb, 10) metadata:nil completionBlock:nil];
+        
+    [self saveImageToLib:imageFinalData];
+    
+    [[UIApplication sharedApplication] endIgnoringInteractionEvents];
 }
 
 - (void)processSavedData {
@@ -794,13 +527,13 @@
         if (delegate == nil) {
             LXPicEditViewController *controllerPicEdit = [[UIStoryboard storyboardWithName:@"Gallery"
                                                                             bundle: nil] instantiateViewControllerWithIdentifier:@"PicEdit"];
-            controllerPicEdit.imageData = savedData;
-            controllerPicEdit.preview = savedPreview;
+            controllerPicEdit.imageData = imageFinalData;
+            controllerPicEdit.preview = imageFinalThumb;
             [self.navigationController pushViewController:controllerPicEdit animated:YES];
         } else {
             NSDictionary *info = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                  savedData, @"data",
-                                  savedPreview, @"preview",
+                                  imageFinalData, @"data",
+                                  imageFinalThumb, @"preview",
                                   nil];
             [delegate imagePickerController:self didFinishPickingMediaWithData:info];
             [self dismissViewControllerAnimated:YES completion:nil];
@@ -816,8 +549,8 @@
             switch (result) {
                 case RDActionSheetButtonResultSelected: {
                     laSharekit.text = @"";
-                    laSharekit.imageData = savedData;
-                    laSharekit.imagePreview = savedPreview;
+                    laSharekit.imageData = imageFinalData;
+                    laSharekit.imagePreview = imageFinalThumb;
                     
                     switch (buttonIndex) {
                         case 0: // email
@@ -853,14 +586,15 @@
     }
 }
 
-- (void)getFinalImage:(void(^)())block {
-    if (isSaved) {
-        block();
-        
-        [HUD hide:YES];
-        return;
-    }
-    
+- (UIImage*)getFinalThumb {
+    CGImageRef cgImagePreviewFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:imageFullsize.imageOrientation];
+    UIImage* ret = [UIImage imageWithCGImage:cgImagePreviewFromBytes];
+    CGImageRelease(cgImagePreviewFromBytes);
+    return ret;
+}
+
+- (NSData*)getFinalImage {
+    NSData* ret;
     // Prepare meta data
     if (imageMeta == nil) {
         imageMeta = [[NSMutableDictionary alloc] init];
@@ -874,47 +608,19 @@
     [dictForTIFF setObject:appVersion forKey:(NSString *)kCGImagePropertyTIFFSoftware];
     [imageMeta setObject:dictForTIFF forKey:(NSString *)kCGImagePropertyTIFFDictionary];
     
-    // If this is new photo save original pic first, and then process
-    if (isPicFromCamera && !didBackupPic) {
-        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-        
-        [library writeImageToSavedPhotosAlbum:capturedImage.CGImage metadata:imageMeta completionBlock:^(NSURL *assetURL, NSError *error) {
-            didBackupPic = true;
-            
-            [dictForTIFF removeObjectForKey:(NSString *)kCGImagePropertyTIFFOrientation];
-            [imageMeta removeObjectForKey:(NSString *)kCGImagePropertyOrientation];
-            
-            [self processRawAndSave:^{
-                block();
-            }];
-        }];
-    } else {
-        
-        [dictForTIFF removeObjectForKey:(NSString *)kCGImagePropertyTIFFOrientation];
-        [imageMeta removeObjectForKey:(NSString *)kCGImagePropertyOrientation];
-        
-        [self processRawAndSave:^{
-            block();
-        }];
-    }
-}
-
-- (void)processRawAndSave:(void(^)())block {
-    CGImageRef cgImagePreviewFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:imageOrientation];
-    savedPreview = [UIImage imageWithCGImage:cgImagePreviewFromBytes];
-    CGImageRelease(cgImagePreviewFromBytes);
+    // If this is new photo save original pic first, and then process    
+    [dictForTIFF removeObjectForKey:(NSString *)kCGImagePropertyTIFFOrientation];
+    [imageMeta removeObjectForKey:(NSString *)kCGImagePropertyOrientation];
     
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-    
-    GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:capturedImage];
+    GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:imageFullsize];
     [self preparePipe:picture];
-
+    
     [(GPUImageFilter *)[pipe.filters lastObject] prepareForImageCapture];
     
     [picture processImage];
     
     // Save to Jpeg NSData
-    CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:imageOrientation];
+    CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:imageFullsize.imageOrientation];
     UIImage *outputImage = [UIImage imageWithCGImage:cgImageFromBytes];
     NSData *jpeg = UIImageJPEGRepresentation(outputImage, 0.9);
     CGImageRelease(cgImageFromBytes);
@@ -947,7 +653,7 @@
         
         //now we have the data ready to go, so do whatever you want with it
         //here we just write it to disk at the same path we were passed
-        savedData = [NSData dataWithData:dest_data];
+        ret = [NSData dataWithData:dest_data];
         isSaved = true;
         
         //cleanup
@@ -956,13 +662,13 @@
     }
     CFRelease(source);
     
-    // Save now
-    block();
+    return ret;
+}
+
+- (void)saveImageToLib:(NSData*)imageData {
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     
-    
-    
-    [library writeImageDataToSavedPhotosAlbum:savedData metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
-        // Save to album
+    [library writeImageDataToSavedPhotosAlbum:imageData metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
         [library addAssetURL:assetURL toAlbum:@"Latte camera" withCompletionBlock:^(NSError *error) {
             
         }];
@@ -984,11 +690,9 @@
             HUD.dimBackground = NO;
             [HUD hide:YES afterDelay:3];
         }
-        
         // Return to preview mode
         [self preparePipe];
     }];
-    
 }
 
 - (IBAction)toggleControl:(UIButton*)sender {
@@ -1126,7 +830,7 @@
     }
     
     
-    if (isEditing) {
+
         CGFloat height;
         if (screen.size.height > 480) {
             height = 568 - 50 - 40 - 20;
@@ -1144,39 +848,17 @@
         
         frameCanvas = CGRectMake(0, 40, 320, height+20);
         
-        CGFloat horizontalRatio = 300.0 / picSize.width;
-        CGFloat verticalRatio = height / picSize.height;
+        CGFloat horizontalRatio = 300.0 / imageSize.width;
+        CGFloat verticalRatio = height / imageSize.height;
         CGFloat ratio;
         ratio = MIN(horizontalRatio, verticalRatio);
         
-        frame.size = CGSizeMake(picSize.width*ratio, picSize.height*ratio);
+        frame.size = CGSizeMake(imageSize.width*ratio, imageSize.height*ratio);
         frame.origin = CGPointMake((320-frame.size.width)/2, (height - frame.size.height)/2 + 50.0);
         
         viewTopBar.hidden = false;
-        viewTopBar35.hidden = true;
-        
-    } else {
-        if (screen.size.height > 480) {
-            frame = CGRectMake(10, 79, 300, 400);
-            frameCanvas = CGRectMake(0, 40, 320, 568-40-50);
-        }
-        else {
-            frame = CGRectMake(10, 15, 300, 400);
-            frameCanvas = CGRectMake(0, 0, 320, 430);
-        }
-        
-        if (screen.size.height > 480) {
-            viewTopBar.hidden = false;
-            viewTopBar35.hidden = true;
-        }
-        else {
-            viewTopBar.hidden = true;
-            viewTopBar35.hidden = false;
-        }
-    }
     
-//    viewCameraWraper.layer.shadowRadius = 5.0;
-    viewCameraWraper.layer.shadowPath = nil;
+//    viewCameraWraper.layer.shadowPath = nil;
 
     [UIView animateWithDuration:animation?0.3:0 animations:^{
         viewFocusControl.frame = frameBokeh;
@@ -1189,31 +871,26 @@
         viewBlendControl.frame = frameBlend;
 
     } completion:^(BOOL finished) {
-        viewCameraWraper.layer.shadowRadius = 5.0;
-        UIBezierPath *shadowPathCamera = [UIBezierPath bezierPathWithRect:viewCameraWraper.bounds];
-        viewCameraWraper.layer.shadowPath = shadowPathCamera.CGPath;
+//        viewCameraWraper.layer.shadowRadius = 5.0;
+//        UIBezierPath *shadowPathCamera = [UIBezierPath bezierPathWithRect:viewCameraWraper.bounds];
+//        viewCameraWraper.layer.shadowPath = shadowPathCamera.CGPath;
     }];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    [locationManager stopUpdatingLocation];
     [picker dismissViewControllerAnimated:NO completion:nil];
     
     ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset)
     {
         imageMeta = [NSMutableDictionary dictionaryWithDictionary:myasset.defaultRepresentation.metadata];
-        capturedImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+        imageFullsize = [info objectForKey:UIImagePickerControllerOriginalImage];
         
-        imageOrientation = capturedImage.imageOrientation;
-        
-        picSize = capturedImage.size;
+        imageSize = imageFullsize.size;
         
         //
-        CGSize previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:capturedImage.size.width height:capturedImage.size.height]);
-        UIImage *previewPic = [LXCameraViewController imageWithImage:capturedImage scaledToSize:previewUISize];
-        savedPreview = previewPic;
-        
-        isPicFromCamera = false;
+        CGSize previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:imageFullsize.size.width height:imageFullsize.size.height]);
+        UIImage *previewPic = [LXUtils imageWithImage:imageFullsize scaledToSize:previewUISize];
+        imagePreview = previewPic;
         
         [self switchEditImage];
     };
@@ -1237,63 +914,12 @@
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [picker dismissViewControllerAnimated:NO completion:nil];
-    if (!isEditing) {
-        [self switchCamera];
-    }
-}
-
-- (void)switchCamera {
-    isSaved = true;
-    // Clear memory/blur mode
-    previewFilter = nil;
-    capturedImage = nil;
-    
-    // Set to normal lens
-    currentLens = 0;
-    currentTab = kTabPreview;
-    viewDraw.hidden = true;
-    viewDraw.isEmpty = true;
-    
-    buttonBlurNone.enabled = false;
-    
-    [locationManager startUpdatingLocation];
-    
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [videoCamera startCameraCapture];
-    });
-    
-    
-    buttonNo.hidden = YES;
-    buttonYes.hidden = YES;
-    
-    buttonFlash.hidden = NO;
-    buttonTimer.hidden = NO;
-    buttonFlip.hidden = NO;
-    imageAutoFocus.hidden = NO;
-    buttonReset.hidden = YES;
-    buttonPickTop.hidden = YES;
-    
-    buttonPick.hidden = NO;
-    tapFocus.enabled = true;
-    
-    scrollEffect.hidden = false;
-    
-    scrollProcess.hidden = YES;
-    viewShoot.hidden = NO;
-    
-    buttonClose.hidden = NO;
-    isEditing = NO;
-    
-    [self resizeCameraViewWithAnimation:NO];
-    [self preparePipe];
 }
 
 - (void)switchEditImage {
     [self resetSetting];
 
     isWatingToUpload = NO;
-    didBackupPic = NO;
 
     currentBlend = kBlendNone;
     [self setBlendImpl:kBlendNone];
@@ -1303,24 +929,12 @@
     
     currentLens = 0;
     currentMask = kMaskBlurNone;
-    
-    isEditing = YES;
-    
-    buttonNo.hidden = NO;
-    buttonYes.hidden = NO;
-    buttonFlash.hidden = YES;
-    buttonTimer.hidden = YES;
-    buttonFlip.hidden = YES;
 
     buttonPickTop.hidden = NO;
 
     viewShoot.hidden = YES;
     scrollProcess.hidden = NO;
-    
-    buttonClose.hidden = YES;
-    imageAutoFocus.hidden = YES;
-    viewTimer.hidden = YES;
-    tapFocus.enabled = false;
+
     isSaved = FALSE;
     
     // Clear depth mask
@@ -1345,21 +959,21 @@
     
     [self resizeCameraViewWithAnimation:YES];
     
-    previewFilter = [[GPUImagePicture alloc] initWithImage:savedPreview];
+    previewFilter = [[GPUImagePicture alloc] initWithImage:imagePreview];
     [self preparePipe];
     [self applyFilterSetting];
+    
     [self processImage];
-    [self initPreviewPic:savedPreview];
+    [self initPreviewPic];
     filterMain.toneEnable = NO;
 }
 
-- (void)initPreviewPic:(UIImage *)previewPic {
-    CGSize thumbUISize = CGSizeMake(70.0, [LXUtils heightFromWidth:70.0 width:previewPic.size.width height:previewPic.size.height]);
-    UIImage *thumb = [LXCameraViewController imageWithImage:capturedImage scaledToSize:thumbUISize];
-    GPUImagePicture *gpuimagePreview = [[GPUImagePicture alloc] initWithImage:thumb];
+- (void)initPreviewPic {
+    GPUImagePicture *gpuimagePreview = [[GPUImagePicture alloc] initWithImage:imagePreview];
     for (NSInteger i = 0; i < effectNum; i++) {
         GPUImageView *imageViewPreview = effectPreview[i];
         LXImageFilter *filterSample = [[LXImageFilter alloc] init];
+        [filterSample setInputRotation:[self rotationFromImage:imagePreview.imageOrientation] atIndex:0];
         filterSample.toneCurve = effectCurve[i];
         filterSample.toneEnable = YES;
         [gpuimagePreview addTarget:filterSample];
@@ -1371,6 +985,15 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(NSDictionary *)info {
     if ([segue.identifier isEqualToString:@"HelpBokeh"]) {
         
+    } else if ([segue.identifier isEqualToString:@"Crop"]) {
+        LXImageCropViewController *controllerCrop = segue.destinationViewController;
+        controllerCrop.cropSize = CGSizeMake(280,280);
+        controllerCrop.minimumScale = 0.2;
+        controllerCrop.maximumScale = 10;
+        
+        controllerCrop.sourceImage = imageFullsize;
+        controllerCrop.previewImage = imagePreview;
+        [controllerCrop reset:NO];
     }
 }
 
@@ -1383,8 +1006,9 @@
                                               otherButtonTitles:NSLocalizedString(@"stop_camera", @"はい"), nil];
         alert.tag = 1;
         [alert show];
-    } else
-        [self switchCamera];
+    } else {
+        [self.navigationController popViewControllerAnimated:NO];
+    }
 }
 
 - (IBAction)touchReset:(id)sender {
@@ -1428,67 +1052,14 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     switch (alertView.tag) {
         case 1: //Touch No
-            if (buttonIndex == 1)
-                [self switchCamera];
+            if (buttonIndex == 1) {
+                [self.navigationController popViewControllerAnimated:NO];
+            }
             break;
         case 2:
             if (buttonIndex == 1) {
-                [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+                [self.navigationController dismissModalViewControllerAnimated:YES];
             }
-            break;
-        case 3: //Retry upload
-            if (buttonIndex == 1) {
-                [currentUploader upload];
-            }
-        default:
-            break;
-    }
-}
-
-
-- (IBAction)flipCamera:(id)sender {
-    isBackCamera = !isBackCamera;
-    [videoCamera rotateCamera];
-}
-
-- (IBAction)panTarget:(UIPanGestureRecognizer *)sender {
-    CGPoint translation = [sender translationInView:viewCamera];
-    CGPoint center = CGPointMake(sender.view.center.x + translation.x,
-                                 sender.view.center.y + translation.y);
-    center.x = center.x<0?0:(center.x>320?320:center.x);
-    center.y = center.y<0?0:(center.y>viewCamera.frame.size.height?viewCamera.frame.size.height:center.y);
-    sender.view.center = center;
-    [sender setTranslation:CGPointMake(0, 0) inView:viewCamera];
-    
-    if (sender.state == UIGestureRecognizerStateEnded) {
-        [self updateTargetPoint];
-    }
-}
-
-- (IBAction)setTimer:(UIButton *)sender {
-    buttonSetNoTimer.enabled = true;
-    buttonSetTimer5s.enabled = true;
-    buttonSetNoTimer.alpha = 0.4;
-    buttonSetTimer5s.alpha = 0.4;
-    
-    sender.enabled = false;
-    sender.alpha = 0.9;
-    
-    switch (sender.tag) {
-        case 0:
-            timerCount = 0;
-            currentTimer = kTimerNone;
-            break;
-        case 1:
-            currentTimer = kTimer5s;
-            timerCount = 5;
-            break;
-        case 2:
-            timerCount = 10;
-            currentTimer = kTimer10s;
-            break;
-        case 3:
-            currentTimer = kTimerContinuous;
             break;
         default:
             break;
@@ -1600,17 +1171,17 @@
     if (isFixedAspectBlend) {
         CGSize blendSize = imageBlend.size;
         
-        CGFloat ratioWidth = blendSize.width / picSize.width;
-        CGFloat ratioHeight = blendSize.height / picSize.height;
+        CGFloat ratioWidth = blendSize.width / imageSize.width;
+        CGFloat ratioHeight = blendSize.height / imageSize.height;
         CGRect crop;
         
         CGFloat ratio = MIN(ratioWidth, ratioHeight);
         CGSize newSize = CGSizeMake(blendSize.width / ratio, blendSize.height / ratio);
-        if (newSize.width > picSize.width) {
-            CGFloat sub = (newSize.width - picSize.width) / newSize.width;
+        if (newSize.width > imageSize.width) {
+            CGFloat sub = (newSize.width - imageSize.width) / newSize.width;
             crop = CGRectMake(sub/2.0, 0.0, 1.0-sub, 1.0);
         } else {
-            CGFloat sub = (newSize.height - picSize.height) / newSize.height;
+            CGFloat sub = (newSize.height - imageSize.height) / newSize.height;
             crop = CGRectMake(0.0, sub/2.0, 1.0, 1.0-sub);
         }
         
@@ -1639,36 +1210,6 @@
     buttonLensFish.enabled = !sender.selected;
     buttonLensWide.enabled = true;
     [self preparePipe];
-}
-
-- (IBAction)touchUploadStatus:(id)sender {
-    switch (currentUploader.uploadState) {
-        case kUploadStateSuccess:
-            break;
-        case kUploadStateFail:
-        {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"Error")
-                                                            message:NSLocalizedString(@"cannot_upload", @"")
-                                                           delegate:self
-                                                  cancelButtonTitle:NSLocalizedString(@"close", "Close")
-                                                  otherButtonTitles:NSLocalizedString(@"retry_upload", "Retry"), nil];
-            alert.tag = 3;
-            [alert show];
-        }
-            break;
-        case kUploadStateProgress:
-        {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                            message:NSLocalizedString(@"uploading", @"Uploading :)")
-                                                           delegate:nil
-                                                  cancelButtonTitle:NSLocalizedString(@"close", "Close")
-                                                  otherButtonTitles:nil];
-            [alert show];
-        }
-            break;
-        default:
-            break;
-    }
 }
 
 - (IBAction)toggleMono:(id)sender {
@@ -1717,167 +1258,6 @@
     
     currentBlend = tag;
 }
-
-
-- (void)countDown:(id)sender {
-    if (timerCount == 0) {
-        switch (currentTimer) {
-            case kTimerNone:
-                timerCount = 0;
-                break;
-            case kTimer5s:
-                timerCount = 5;
-                break;
-            case kTimer10s:
-                timerCount = 10;
-                break;
-            case kTimerContinuous:
-                currentTimer = kTimerContinuous;
-                break;
-            default:
-                break;
-        }
-        
-        [timer invalidate];
-        [self capturePhotoAsync];
-    } else {
-        MBProgressHUD *count = [[MBProgressHUD alloc] initWithView:self.view];
-        [self.view addSubview:count];
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
-        label.text = [NSString stringWithFormat:@"%d", timerCount];
-        label.textColor = [UIColor whiteColor];
-        label.backgroundColor = [UIColor clearColor];
-        label.font = [UIFont systemFontOfSize:100];
-        label.textAlignment = NSTextAlignmentCenter;
-        count.customView = label;
-        count.mode = MBProgressHUDModeCustomView;
-        
-        [count show:YES];
-        [count hide:YES afterDelay:0.5];
-        count.removeFromSuperViewOnHide = YES;
-    }
-    timerCount--;
-}
-
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    NSTimeInterval locationAge = -[newLocation.timestamp timeIntervalSinceNow];
-    if (locationAge > 5.0) return;
-    
-    if (newLocation.horizontalAccuracy < 0) return;
-    
-    if (bestEffortAtLocation == nil || bestEffortAtLocation.horizontalAccuracy > newLocation.horizontalAccuracy) {
-        bestEffortAtLocation = newLocation;
-        if (newLocation.horizontalAccuracy <= locationManager.desiredAccuracy) {
-            [locationManager stopUpdatingLocation];
-        }
-    }
-}
-
-- (void)stopUpdatingLocation:(id)sender {
-    [locationManager stopUpdatingLocation];
-    locationManager.delegate = nil;
-}
-
-- (void)setFlash:(BOOL)flash {
-    AVCaptureDevice *device = videoCamera.inputCamera;
-    
-    NSError *error;
-    if ([device lockForConfiguration:&error]) {
-        if ([device isFlashAvailable]) {
-            if (flash)
-                [device setFlashMode:AVCaptureFlashModeOn];
-            else
-                [device setFlashMode:AVCaptureFlashModeOff];
-            [device unlockForConfiguration];
-        }
-    } else {
-        TFLog(@"ERROR = %@", error);
-    }
-}
-
-- (void)setFocusPoint:(CGPoint)point {
-    AVCaptureDevice *device = videoCamera.inputCamera;
-    
-    CGPoint pointOfInterest;
-    
-    pointOfInterest = CGPointMake(point.y, 1.0 - point.x);
-    
-    NSError *error;
-    if ([device lockForConfiguration:&error]) {
-        if ([device isFocusPointOfInterestSupported] && [device isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
-            [device setFocusPointOfInterest:pointOfInterest];
-            [device setFocusMode:AVCaptureFocusModeAutoFocus];
-            [device unlockForConfiguration];
-        }
-    } else {
-        TFLog(@"ERROR = %@", error);
-    }
-}
-
-
-- (void)setMetteringPoint:(CGPoint)point {
-    AVCaptureDevice *device = videoCamera.inputCamera;
-    
-    CGPoint pointOfInterest;
-    pointOfInterest = CGPointMake(point.y, 1.0 - point.x);
-    
-    NSError *error;
-    if ([device lockForConfiguration:&error]) {;
-        if([device isExposurePointOfInterestSupported] && [device isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure])
-        {
-            [device setExposurePointOfInterest:pointOfInterest];
-            [device setExposureMode:AVCaptureExposureModeContinuousAutoExposure];
-        }
-        [device unlockForConfiguration];
-    } else {
-        TFLog(@"ERROR = %@", error);
-    }
-}
-
-#ifdef DEBUG
-+(NSString*)orientationToText:(const UIInterfaceOrientation)ORIENTATION {
-    switch (ORIENTATION) {
-        case UIInterfaceOrientationPortrait:
-            return @"UIInterfaceOrientationPortrait";
-        case UIInterfaceOrientationPortraitUpsideDown:
-            return @"UIInterfaceOrientationPortraitUpsideDown";
-        case UIInterfaceOrientationLandscapeLeft:
-            return @"UIInterfaceOrientationLandscapeLeft";
-        case UIInterfaceOrientationLandscapeRight:
-            return @"UIInterfaceOrientationLandscapeRight";
-    }
-    return @"Unknown orientation!";
-}
-#endif
-
-#pragma mark UIAccelerometerDelegate
--(void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration {
-    UIInterfaceOrientation orientationNew;
-    if (acceleration.x >= 0.75) {
-        orientationNew = UIInterfaceOrientationLandscapeLeft;
-    }
-    else if (acceleration.x <= -0.75) {
-        orientationNew = UIInterfaceOrientationLandscapeRight;
-    }
-    else if (acceleration.y <= -0.75) {
-        orientationNew = UIInterfaceOrientationPortrait;
-    }
-    else if (acceleration.y >= 0.75) {
-        orientationNew = UIInterfaceOrientationPortraitUpsideDown;
-    }
-    else {
-        // Consider same as last time
-        return;
-    }
-    
-    if (orientationNew == orientationLast)
-        return;
-#ifdef DEBUG
-    TFLog(@"Going from %@ to %@!", [[self class] orientationToText:orientationLast], [[self class] orientationToText:orientationNew]);
-#endif
-    orientationLast = orientationNew;
-}
-#pragma mark -
 
 - (void)newMask:(UIImage *)mask {
     if (!buttonBlurNone.enabled) {

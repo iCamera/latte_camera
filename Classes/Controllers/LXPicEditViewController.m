@@ -9,7 +9,7 @@
 #import "LXPicEditViewController.h"
 #import "LXAppDelegate.h"
 #import "LXUploadObject.h"
-#import "LXCameraViewController.h"
+#import "LXCanvasViewController.h"
 #import "LXPicDumbTabViewController.h"
 #import "Facebook.h"
 
@@ -362,10 +362,7 @@
 }
 
 - (void)backToCamera {
-    LXCameraViewController *cameraView = (LXCameraViewController*)self.navigationController.viewControllers[0];
     [self.navigationController popToRootViewControllerAnimated:YES];
-    
-    [cameraView switchCamera];
 }
 
 - (void)saveImage {

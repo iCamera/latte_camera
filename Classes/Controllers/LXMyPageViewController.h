@@ -11,7 +11,7 @@
 #import "LXGalleryViewController.h"
 #import "EGORefreshTableHeaderView.h"
 #import "MBProgressHUD.h"
-#import "LXCameraViewController.h"
+#import "LXCanvasViewController.h"
 
 typedef enum {
     kTableProfile = 1,

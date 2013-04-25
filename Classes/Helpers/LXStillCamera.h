@@ -6,14 +6,8 @@
 //  Copyright (c) 2013年 LUXEYS. All rights reserved.
 //
 
-#import "GPUImageVideoCamera.h"
+#import "GPUImageStillCamera.h"
 
-@interface LXStillCamera : GPUImageVideoCamera {
-    AVCaptureStillImageOutput *photoOutput;
-}
-
-@property (readonly) NSDictionary *currentCaptureMetadata;
-
-- (void)capturePhotoAsSampleBufferWithCompletionHandler:(void (^)(CMSampleBufferRef imageSampleBuffer, NSError *error))block withOrientation:(UIInterfaceOrientation)uiOrientation;
+@interface LXStillCamera : GPUImageStillCamera
 
 @end

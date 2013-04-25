@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LXCameraViewController.h"
+#import "LXCanvasViewController.h"
 
 @interface LXSettingRootViewController : UITableViewController<LXImagePickerDelegate>
 - (IBAction)touchClose:(id)sender;

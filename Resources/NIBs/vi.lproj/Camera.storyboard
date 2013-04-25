@@ -20,10 +20,10 @@
             </objects>
             <point key="canvasLocation" x="-2938" y="-31"/>
         </scene>
-        <!--Camera View Controller-->
+        <!--Canvas View Controller-->
         <scene sceneID="Cfe-N5-SPi">
             <objects>
-                <viewController storyboardIdentifier="Camera" id="IgC-G0-Nfq" customClass="LXCameraViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Camera" id="IgC-G0-Nfq" customClass="LXCanvasViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Q13-QQ-vfl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
@@ -1159,97 +1159,6 @@
     <classes>
         <class className="GPUImageView" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/GPUImageView.h"/>
-        </class>
-        <class className="LXCameraViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCameraViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cameraTouch:" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="action" name="capture:"/>
-                <relationship kind="action" name="changeFlash:"/>
-                <relationship kind="action" name="changeLens:" candidateClass="UIButton"/>
-                <relationship kind="action" name="changePen:" candidateClass="UISlider"/>
-                <relationship kind="action" name="close:"/>
-                <relationship kind="action" name="flipCamera:"/>
-                <relationship kind="action" name="openImagePicker:"/>
-                <relationship kind="action" name="panTarget:" candidateClass="UIPanGestureRecognizer"/>
-                <relationship kind="action" name="setBlend:" candidateClass="UIButton"/>
-                <relationship kind="action" name="setMask:" candidateClass="UIButton"/>
-                <relationship kind="action" name="setTimer:"/>
-                <relationship kind="action" name="toggleControl:" candidateClass="UIButton"/>
-                <relationship kind="action" name="toggleFisheye:" candidateClass="UIButton"/>
-                <relationship kind="action" name="toggleGain:" candidateClass="UISwitch"/>
-                <relationship kind="action" name="toggleMaskNatual:" candidateClass="UISwitch"/>
-                <relationship kind="action" name="toggleMono:"/>
-                <relationship kind="action" name="touchNo:"/>
-                <relationship kind="action" name="touchOpenHelp:"/>
-                <relationship kind="action" name="touchReset:"/>
-                <relationship kind="action" name="touchSave:"/>
-                <relationship kind="action" name="touchTimer:"/>
-                <relationship kind="action" name="touchUploadStatus:"/>
-                <relationship kind="action" name="updateFilter:"/>
-                <relationship kind="outlet" name="buttonBackgroundNatual" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="buttonBlackWhite" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonBlendMedium" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonBlendNone" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonBlendStrong" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonBlendWeak" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonBlurNone" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonBlurNormal" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonBlurStrong" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonBlurWeak" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonCapture" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonClose" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonFlash" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonFlash35" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonFlip" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonLensFish" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonLensNormal" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonLensWide" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonNo" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonPick" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonPickTop" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonReset" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonSetNoTimer" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonSetTimer5s" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonTimer" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonToggleBasic" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonToggleBlend" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonToggleEffect" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonToggleFisheye" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonToggleFocus" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonToggleLens" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonToggleText" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonUploadStatus" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonYes" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="gesturePan" candidateClass="UIPanGestureRecognizer"/>
-                <relationship kind="outlet" name="imageAutoFocus" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="scrollBlend" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="scrollEffect" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="scrollProcess" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="sliderClear" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderEffectIntensity" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderExposure" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderFeather" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderSaturation" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderSharpness" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderVignette" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="switchGain" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="tapFocus" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="outlet" name="viewBasicControl" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewBlendControl" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewBottomBar" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewCamera" candidateClass="GPUImageView"/>
-                <relationship kind="outlet" name="viewCameraWraper" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewCanvas" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="viewDraw" candidateClass="LXDrawView"/>
-                <relationship kind="outlet" name="viewEffectControl" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewFocusControl" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewLensControl" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewShoot" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewTimer" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewTopBar" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewTopBar35" candidateClass="UIView"/>
-            </relationships>
         </class>
         <class className="LXDrawView" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXDrawView.h"/>

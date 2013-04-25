@@ -19,13 +19,6 @@
 #import "LXStillCamera.h"
 
 typedef enum {
-    kTimerNone = 0,
-    kTimer5s = 1,
-    kTimer10s = 2,
-    kTimerContinuous = 3,
-} CameraTimer;
-
-typedef enum {
     kTabPreview = 0,
     kTabEffect = 1,
     kTabBokeh = 2,
@@ -49,39 +42,28 @@ typedef enum {
     kBlendStrong = 3,
 } TypeDefBlend;
 
-@class LXCameraViewController;
+@class LXCanvasViewController;
 
 @protocol LXImagePickerDelegate <NSObject>
 @optional
-- (void)imagePickerController:(LXCameraViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info;
-- (void)imagePickerControllerDidCancel:(LXCameraViewController *)picker;
+- (void)imagePickerController:(LXCanvasViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info;
+- (void)imagePickerControllerDidCancel:(LXCanvasViewController *)picker;
 @end
 
-@interface LXCameraViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, UIScrollViewDelegate, UIAccelerometerDelegate, LXDrawViewDelegate, UIAlertViewDelegate, UINavigationControllerDelegate>
+@interface LXCanvasViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, UIScrollViewDelegate, LXDrawViewDelegate, UIAlertViewDelegate, UINavigationControllerDelegate>
 @property (weak, nonatomic) id <LXImagePickerDelegate> delegate;
 
 @property (strong, nonatomic) IBOutlet UIView *viewBottomBar;
-
 @property (strong, nonatomic) IBOutlet GPUImageView *viewCamera;
-@property (strong, nonatomic) IBOutlet UIView *viewTimer;
-@property (strong, nonatomic) IBOutlet UIImageView *imageAutoFocus;
+
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollEffect;
-@property (strong, nonatomic) IBOutlet UIButton *buttonCapture;
+
 @property (strong, nonatomic) IBOutlet UIButton *buttonYes;
 @property (strong, nonatomic) IBOutlet UIButton *buttonNo;
-@property (strong, nonatomic) IBOutlet UIButton *buttonTimer;
-@property (strong, nonatomic) IBOutlet UIButton *buttonFlash;
-@property (strong, nonatomic) IBOutlet UIButton *buttonFlash35;
-@property (strong, nonatomic) IBOutlet UIButton *buttonFlip;
-@property (strong, nonatomic) IBOutlet UIButton *buttonPick;
 @property (strong, nonatomic) IBOutlet UIButton *buttonReset;
 @property (strong, nonatomic) IBOutlet UIButton *buttonPickTop;
 
 @property (strong, nonatomic) IBOutlet UIPanGestureRecognizer *gesturePan;
-@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapFocus;
-
-@property (strong, nonatomic) IBOutlet UIButton *buttonSetNoTimer;
-@property (strong, nonatomic) IBOutlet UIButton *buttonSetTimer5s;
 
 @property (strong, nonatomic) IBOutlet UIView *viewFocusControl;
 @property (strong, nonatomic) IBOutlet UIView *viewLensControl;
@@ -115,9 +97,7 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIButton *buttonLensWide;
 @property (strong, nonatomic) IBOutlet UIButton *buttonLensFish;
 
-@property (strong, nonatomic) IBOutlet UIButton *buttonClose;
 @property (strong, nonatomic) IBOutlet UIView *viewTopBar;
-@property (strong, nonatomic) IBOutlet UIView *viewTopBar35;
 
 @property (strong, nonatomic) IBOutlet UIImageView *viewCanvas;
 
@@ -132,26 +112,17 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollBlend;
 @property (strong, nonatomic) IBOutlet UIButton *buttonToggleFisheye;
 @property (strong, nonatomic) IBOutlet UIView *viewShoot;
-@property (strong, nonatomic) IBOutlet UIButton *buttonUploadStatus;
+
 @property (strong, nonatomic) IBOutlet UIButton *buttonBlackWhite;
 
 @property (strong, nonatomic) NSDictionary *dictUpload;
-@property (strong, nonatomic) LXStillCamera *videoCamera;
 
-- (IBAction)cameraTouch:(UITapGestureRecognizer *)sender;
 - (IBAction)openImagePicker:(id)sender;
-- (IBAction)close:(id)sender;
-- (IBAction)capture:(id)sender;
 - (IBAction)changeLens:(UIButton*)sender;
-- (IBAction)changeFlash:(id)sender;
-- (IBAction)touchTimer:(id)sender;
 - (IBAction)touchSave:(id)sender;
 - (IBAction)toggleControl:(UIButton*)sender;
 - (IBAction)touchNo:(id)sender;
 - (IBAction)touchReset:(id)sender;
-- (IBAction)flipCamera:(id)sender;
-- (IBAction)panTarget:(UIPanGestureRecognizer *)sender;
-- (IBAction)setTimer:(id)sender;
 - (IBAction)setMask:(UIButton*)sender;
 - (IBAction)toggleMaskNatual:(UISwitch*)sender;
 - (IBAction)touchOpenHelp:(id)sender;
@@ -160,9 +131,11 @@ typedef enum {
 - (IBAction)updateFilter:(id)sender;
 - (IBAction)toggleFisheye:(UIButton *)sender;
 - (IBAction)setBlend:(UIButton *)sender;
-- (IBAction)touchUploadStatus:(id)sender;
 - (IBAction)toggleMono:(id)sender;
 
-- (void)switchCamera;
+@property (strong, nonatomic) UIImage *imagePreview;
+@property (strong, nonatomic) UIImage *imageFullsize;
+@property (strong, nonatomic) NSMutableDictionary *imageMeta;
+@property (assign, nonatomic) CGSize imageSize;
 
 @end

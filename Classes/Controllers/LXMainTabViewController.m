@@ -9,7 +9,7 @@
 #import "LXLoginViewController.h"
 #import "User.h"
 #import "Picture.h"
-#import "LXCameraViewController.h"
+#import "LXCanvasViewController.h"
 #import "LXMainTabViewController.h"
 #import "LXAppDelegate.h"
 #import "LXAboutViewController.h"
@@ -226,7 +226,7 @@
     [self presentViewController:[storySetting instantiateInitialViewController] animated:YES completion:nil];
 }
 
-- (void)imagePickerController:(LXCameraViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info {
+- (void)imagePickerController:(LXCanvasViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info {
     [picker performSegueWithIdentifier:@"Edit" sender:info];
 }
 

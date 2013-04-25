@@ -16,9 +16,13 @@
 		880E35B016A7F7150097B97F /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 880E35AC16A7F7150097B97F /* release_notes.md */; };
 		880E50BD17252A9F00D584EE /* icon_iine_ss_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 880E50BB17252A9F00D584EE /* icon_iine_ss_on.png */; };
 		880E50BE17252A9F00D584EE /* icon_iine_ss_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 880E50BC17252A9F00D584EE /* icon_iine_ss_on@2x.png */; };
-		880E50C617256F1000D584EE /* RBVolumeButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E50C51725463000D584EE /* RBVolumeButtons.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		880E50CA1725702900D584EE /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880E50C91725702900D584EE /* MediaPlayer.framework */; };
 		880E50CC1725703D00D584EE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880E50CB1725703D00D584EE /* AudioToolbox.framework */; };
+		880E50EF1728C30800D584EE /* HFImageEditorFrameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E50DA1728C30800D584EE /* HFImageEditorFrameView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		880E50F01728C30800D584EE /* HFImageEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E50DD1728C30800D584EE /* HFImageEditorViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		880E50F71728C30800D584EE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 880E50EC1728C30800D584EE /* README.md */; };
+		880E50FD1728C63700D584EE /* LXImageCropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E50FC1728C63600D584EE /* LXImageCropViewController.m */; };
+		880E51001728E50400D584EE /* LXCaptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E50FF1728E50300D584EE /* LXCaptureViewController.m */; };
 		881015D61700270A00AE81E1 /* hicon_menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 881015D41700270A00AE81E1 /* hicon_menu.png */; };
 		881015D71700270A00AE81E1 /* hicon_menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 881015D51700270A00AE81E1 /* hicon_menu@2x.png */; };
 		8818860916F17B61009A9266 /* LXCommentControllViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8818860816F17B60009A9266 /* LXCommentControllViewController.m */; };
@@ -868,7 +872,7 @@
 		888F651316FBFB8F00ED74BB /* LXLeftSideUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 888F651216FBFB8E00ED74BB /* LXLeftSideUserViewController.m */; };
 		888F651616FC09E100ED74BB /* LXLeftGuestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 888F651516FC09E000ED74BB /* LXLeftGuestViewController.m */; };
 		889072BC16770EBB0013DF7A /* LXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890722E16770EBB0013DF7A /* LXAppDelegate.m */; };
-		889072BD16770EBB0013DF7A /* LXCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890723116770EBB0013DF7A /* LXCameraViewController.m */; };
+		889072BD16770EBB0013DF7A /* LXCanvasViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890723116770EBB0013DF7A /* LXCanvasViewController.m */; };
 		889072C016770EBB0013DF7A /* LXLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890723716770EBB0013DF7A /* LXLoginViewController.m */; };
 		889072C116770EBB0013DF7A /* LXMyPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890723916770EBB0013DF7A /* LXMyPageViewController.m */; };
 		889072C416770EBB0013DF7A /* LXPicEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890723F16770EBB0013DF7A /* LXPicEditViewController.m */; };
@@ -1483,11 +1487,19 @@
 		880E35AD16A7F7150097B97F /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		880E50BB17252A9F00D584EE /* icon_iine_ss_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_iine_ss_on.png; sourceTree = "<group>"; };
 		880E50BC17252A9F00D584EE /* icon_iine_ss_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_iine_ss_on@2x.png"; sourceTree = "<group>"; };
-		880E50C41725463000D584EE /* RBVolumeButtons.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RBVolumeButtons.h; sourceTree = "<group>"; };
-		880E50C51725463000D584EE /* RBVolumeButtons.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RBVolumeButtons.m; sourceTree = "<group>"; };
 		880E50C71725701900D584EE /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		880E50C91725702900D584EE /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		880E50CB1725703D00D584EE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		880E50D91728C30800D584EE /* HFImageEditorFrameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFImageEditorFrameView.h; sourceTree = "<group>"; };
+		880E50DA1728C30800D584EE /* HFImageEditorFrameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFImageEditorFrameView.m; sourceTree = "<group>"; };
+		880E50DB1728C30800D584EE /* HFImageEditorViewController+SubclassingHooks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HFImageEditorViewController+SubclassingHooks.h"; sourceTree = "<group>"; };
+		880E50DC1728C30800D584EE /* HFImageEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFImageEditorViewController.h; sourceTree = "<group>"; };
+		880E50DD1728C30800D584EE /* HFImageEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFImageEditorViewController.m; sourceTree = "<group>"; };
+		880E50EC1728C30800D584EE /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		880E50FB1728C63600D584EE /* LXImageCropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXImageCropViewController.h; sourceTree = "<group>"; };
+		880E50FC1728C63600D584EE /* LXImageCropViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXImageCropViewController.m; sourceTree = "<group>"; };
+		880E50FE1728E50300D584EE /* LXCaptureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCaptureViewController.h; sourceTree = "<group>"; };
+		880E50FF1728E50300D584EE /* LXCaptureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCaptureViewController.m; sourceTree = "<group>"; };
 		881015D41700270A00AE81E1 /* hicon_menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hicon_menu.png; sourceTree = "<group>"; };
 		881015D51700270A00AE81E1 /* hicon_menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hicon_menu@2x.png"; sourceTree = "<group>"; };
 		8818860716F17B60009A9266 /* LXCommentControllViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCommentControllViewController.h; sourceTree = "<group>"; };
@@ -2404,8 +2416,8 @@
 		888F651516FC09E000ED74BB /* LXLeftGuestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXLeftGuestViewController.m; sourceTree = "<group>"; };
 		8890722D16770EBB0013DF7A /* LXAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXAppDelegate.h; sourceTree = "<group>"; };
 		8890722E16770EBB0013DF7A /* LXAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXAppDelegate.m; sourceTree = "<group>"; };
-		8890723016770EBB0013DF7A /* LXCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCameraViewController.h; sourceTree = "<group>"; };
-		8890723116770EBB0013DF7A /* LXCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCameraViewController.m; sourceTree = "<group>"; };
+		8890723016770EBB0013DF7A /* LXCanvasViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCanvasViewController.h; sourceTree = "<group>"; };
+		8890723116770EBB0013DF7A /* LXCanvasViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCanvasViewController.m; sourceTree = "<group>"; };
 		8890723616770EBB0013DF7A /* LXLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXLoginViewController.h; sourceTree = "<group>"; };
 		8890723716770EBB0013DF7A /* LXLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXLoginViewController.m; sourceTree = "<group>"; };
 		8890723816770EBB0013DF7A /* LXMyPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXMyPageViewController.h; sourceTree = "<group>"; };
@@ -3196,6 +3208,28 @@
 			path = TestFlightSDK1.2;
 			sourceTree = "<group>";
 		};
+		880E50D51728C30800D584EE /* ImageCrop */ = {
+			isa = PBXGroup;
+			children = (
+				880E50D81728C30800D584EE /* ImageEditor */,
+				880E50EC1728C30800D584EE /* README.md */,
+			);
+			name = ImageCrop;
+			path = Vendor/ImageCrop;
+			sourceTree = "<group>";
+		};
+		880E50D81728C30800D584EE /* ImageEditor */ = {
+			isa = PBXGroup;
+			children = (
+				880E50D91728C30800D584EE /* HFImageEditorFrameView.h */,
+				880E50DA1728C30800D584EE /* HFImageEditorFrameView.m */,
+				880E50DB1728C30800D584EE /* HFImageEditorViewController+SubclassingHooks.h */,
+				880E50DC1728C30800D584EE /* HFImageEditorViewController.h */,
+				880E50DD1728C30800D584EE /* HFImageEditorViewController.m */,
+			);
+			path = ImageEditor;
+			sourceTree = "<group>";
+		};
 		8824FB4516F72CE700357ADB /* NIBs */ = {
 			isa = PBXGroup;
 			children = (
@@ -3875,20 +3909,48 @@
 		8890722F16770EBB0013DF7A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				886E540916FC469A00629D76 /* LXLikedViewController.h */,
-				886E540A16FC469B00629D76 /* LXLikedViewController.m */,
 				880E35A616A7BECA0097B97F /* LXAboutViewController.h */,
 				880E35A716A7BECA0097B97F /* LXAboutViewController.m */,
-				8890723016770EBB0013DF7A /* LXCameraViewController.h */,
-				8890723116770EBB0013DF7A /* LXCameraViewController.m */,
+				880E50FE1728E50300D584EE /* LXCaptureViewController.h */,
+				880E50FF1728E50300D584EE /* LXCaptureViewController.m */,
+				8890723016770EBB0013DF7A /* LXCanvasViewController.h */,
+				8890723116770EBB0013DF7A /* LXCanvasViewController.m */,
+				8818860716F17B60009A9266 /* LXCommentControllViewController.h */,
+				8818860816F17B60009A9266 /* LXCommentControllViewController.m */,
+				882E14A316EF0BF100839B92 /* LXFacebookFriendViewController.h */,
+				882E14A416EF0BF100839B92 /* LXFacebookFriendViewController.m */,
+				8883C07B16DCBCE0003510A1 /* LXGalleryViewController.h */,
+				8883C07C16DCBCE1003510A1 /* LXGalleryViewController.m */,
+				884C54D316B22EF500DA318E /* LXHelpBokehViewController.h */,
+				884C54D416B22EF500DA318E /* LXHelpBokehViewController.m */,
+				880E50FB1728C63600D584EE /* LXImageCropViewController.h */,
+				880E50FC1728C63600D584EE /* LXImageCropViewController.m */,
+				888F651416FC09DF00ED74BB /* LXLeftGuestViewController.h */,
+				888F651516FC09E000ED74BB /* LXLeftGuestViewController.m */,
+				888F651116FBFB8D00ED74BB /* LXLeftSideUserViewController.h */,
+				888F651216FBFB8E00ED74BB /* LXLeftSideUserViewController.m */,
+				886E540916FC469A00629D76 /* LXLikedViewController.h */,
+				886E540A16FC469B00629D76 /* LXLikedViewController.m */,
 				8890723616770EBB0013DF7A /* LXLoginViewController.h */,
 				8890723716770EBB0013DF7A /* LXLoginViewController.m */,
 				8890724E16770EBB0013DF7A /* LXMainTabViewController.h */,
 				8890724F16770EBB0013DF7A /* LXMainTabViewController.m */,
 				8890723816770EBB0013DF7A /* LXMyPageViewController.h */,
 				8890723916770EBB0013DF7A /* LXMyPageViewController.m */,
+				8874DBD016E8C58100FDF60B /* LXNavGalleryViewController.h */,
+				8874DBD116E8C58200FDF60B /* LXNavGalleryViewController.m */,
+				889093ED16F8714C00E98DF4 /* LXNavigationController.h */,
+				889093EE16F8714C00E98DF4 /* LXNavigationController.m */,
+				8874DBC116E8BF3500FDF60B /* LXNavMypageController.h */,
+				8874DBC216E8BF3500FDF60B /* LXNavMypageController.m */,
 				8890724A16770EBB0013DF7A /* LXNotifySideViewController.h */,
 				8890724B16770EBB0013DF7A /* LXNotifySideViewController.m */,
+				88B37BEC16E710DD00AB682C /* LXPicCommentViewController.h */,
+				88B37BED16E710DD00AB682C /* LXPicCommentViewController.m */,
+				8835C77216E6EAED0036BF5E /* LXPicDetailTabViewController.h */,
+				8835C77316E6EAED0036BF5E /* LXPicDetailTabViewController.m */,
+				888F64B416FAD74400ED74BB /* LXPicDumbTabViewController.h */,
+				888F64B516FAD74500ED74BB /* LXPicDumbTabViewController.m */,
 				8890723E16770EBB0013DF7A /* LXPicEditViewController.h */,
 				8890723F16770EBB0013DF7A /* LXPicEditViewController.m */,
 				8890724016770EBB0013DF7A /* LXPicInfoViewController.h */,
@@ -3899,44 +3961,20 @@
 				8890724516770EBB0013DF7A /* LXRankingViewController.m */,
 				8890724616770EBB0013DF7A /* LXRegisterViewController.h */,
 				8890724716770EBB0013DF7A /* LXRegisterViewController.m */,
-				8890724C16770EBB0013DF7A /* LXSettingViewController.h */,
-				8890724D16770EBB0013DF7A /* LXSettingViewController.m */,
-				8890725216770EBB0013DF7A /* LXWelcomeViewController.h */,
-				8890725316770EBB0013DF7A /* LXWelcomeViewController.m */,
-				884C54D316B22EF500DA318E /* LXHelpBokehViewController.h */,
-				884C54D416B22EF500DA318E /* LXHelpBokehViewController.m */,
-				8883C07B16DCBCE0003510A1 /* LXGalleryViewController.h */,
-				8883C07C16DCBCE1003510A1 /* LXGalleryViewController.m */,
-				88A5F41616E11D8B00118996 /* LXSettingRootViewController.h */,
-				88A5F41716E11D8B00118996 /* LXSettingRootViewController.m */,
-				88F0074E16E4A29A0071369C /* LXSettingNotifyViewController.h */,
-				88F0074F16E4A29B0071369C /* LXSettingNotifyViewController.m */,
-				8835C77216E6EAED0036BF5E /* LXPicDetailTabViewController.h */,
-				8835C77316E6EAED0036BF5E /* LXPicDetailTabViewController.m */,
-				88B37BEC16E710DD00AB682C /* LXPicCommentViewController.h */,
-				88B37BED16E710DD00AB682C /* LXPicCommentViewController.m */,
-				88B37BF416E719B700AB682C /* LXVoteViewController.h */,
-				88B37BF516E719B700AB682C /* LXVoteViewController.m */,
-				8874DBC116E8BF3500FDF60B /* LXNavMypageController.h */,
-				8874DBC216E8BF3500FDF60B /* LXNavMypageController.m */,
-				8874DBD016E8C58100FDF60B /* LXNavGalleryViewController.h */,
-				8874DBD116E8C58200FDF60B /* LXNavGalleryViewController.m */,
 				8866D30216E9EE4200CAE6E5 /* LXSearchViewController.h */,
 				8866D30316E9EE4300CAE6E5 /* LXSearchViewController.m */,
-				882E14A316EF0BF100839B92 /* LXFacebookFriendViewController.h */,
-				882E14A416EF0BF100839B92 /* LXFacebookFriendViewController.m */,
+				88F0074E16E4A29A0071369C /* LXSettingNotifyViewController.h */,
+				88F0074F16E4A29B0071369C /* LXSettingNotifyViewController.m */,
+				88A5F41616E11D8B00118996 /* LXSettingRootViewController.h */,
+				88A5F41716E11D8B00118996 /* LXSettingRootViewController.m */,
+				8890724C16770EBB0013DF7A /* LXSettingViewController.h */,
+				8890724D16770EBB0013DF7A /* LXSettingViewController.m */,
 				882E14C016F09B4A00839B92 /* LXTagViewController.h */,
 				882E14C116F09B4A00839B92 /* LXTagViewController.m */,
-				8818860716F17B60009A9266 /* LXCommentControllViewController.h */,
-				8818860816F17B60009A9266 /* LXCommentControllViewController.m */,
-				889093ED16F8714C00E98DF4 /* LXNavigationController.h */,
-				889093EE16F8714C00E98DF4 /* LXNavigationController.m */,
-				888F64B416FAD74400ED74BB /* LXPicDumbTabViewController.h */,
-				888F64B516FAD74500ED74BB /* LXPicDumbTabViewController.m */,
-				888F651116FBFB8D00ED74BB /* LXLeftSideUserViewController.h */,
-				888F651216FBFB8E00ED74BB /* LXLeftSideUserViewController.m */,
-				888F651416FC09DF00ED74BB /* LXLeftGuestViewController.h */,
-				888F651516FC09E000ED74BB /* LXLeftGuestViewController.m */,
+				88B37BF416E719B700AB682C /* LXVoteViewController.h */,
+				88B37BF516E719B700AB682C /* LXVoteViewController.m */,
+				8890725216770EBB0013DF7A /* LXWelcomeViewController.h */,
+				8890725316770EBB0013DF7A /* LXWelcomeViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -4057,8 +4095,6 @@
 				885C061C16BB69B0000820E7 /* UIDeviceHardware.m */,
 				88F621041724E6AE00CDD1EC /* LXFBOpenGraph.h */,
 				88F621051724E6AE00CDD1EC /* LXFBOpenGraph.m */,
-				880E50C41725463000D584EE /* RBVolumeButtons.h */,
-				880E50C51725463000D584EE /* RBVolumeButtons.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -4149,6 +4185,7 @@
 		88D4B5BE15D4B66B00FC4FBB /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				880E50D51728C30800D584EE /* ImageCrop */,
 				8847561617212718005CA201 /* RNBlurModalView */,
 				8866D66916EEE66300CAE6E5 /* STTweetLabel */,
 				8890B9B716E03B1F008EDFBF /* GrowingTextView */,
@@ -6530,6 +6567,7 @@
 				88795ED1171EADBD009EA487 /* calendar_label@2x.png in Resources */,
 				880E50BD17252A9F00D584EE /* icon_iine_ss_on.png in Resources */,
 				880E50BE17252A9F00D584EE /* icon_iine_ss_on@2x.png in Resources */,
+				880E50F71728C30800D584EE /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6540,7 +6578,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				880E50C617256F1000D584EE /* RBVolumeButtons.m in Sources */,
 				8866D66716EA00E000CAE6E5 /* SideSwipeTableViewCell.m in Sources */,
 				8866D66816EA00E000CAE6E5 /* SideSwipeTableViewController.m in Sources */,
 				880120BF16E5E80900B9E3D9 /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */,
@@ -6556,7 +6593,7 @@
 				88B47B3D15DE522F00FD9C72 /* UIImageView+AFNetworking.m in Sources */,
 				880C4B17161C2A1400252C6A /* MBProgressHUD.m in Sources */,
 				889072BC16770EBB0013DF7A /* LXAppDelegate.m in Sources */,
-				889072BD16770EBB0013DF7A /* LXCameraViewController.m in Sources */,
+				889072BD16770EBB0013DF7A /* LXCanvasViewController.m in Sources */,
 				889072C016770EBB0013DF7A /* LXLoginViewController.m in Sources */,
 				889072C116770EBB0013DF7A /* LXMyPageViewController.m in Sources */,
 				889072C416770EBB0013DF7A /* LXPicEditViewController.m in Sources */,
@@ -6655,6 +6692,10 @@
 				8835FCC8171CE31900A48346 /* LXCellGridUser.m in Sources */,
 				8847564217212718005CA201 /* RNBlurModalView.m in Sources */,
 				88F621061724E6AE00CDD1EC /* LXFBOpenGraph.m in Sources */,
+				880E50EF1728C30800D584EE /* HFImageEditorFrameView.m in Sources */,
+				880E50F01728C30800D584EE /* HFImageEditorViewController.m in Sources */,
+				880E50FD1728C63700D584EE /* LXImageCropViewController.m in Sources */,
+				880E51001728E50400D584EE /* LXCaptureViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

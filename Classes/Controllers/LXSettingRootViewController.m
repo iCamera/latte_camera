@@ -211,13 +211,13 @@
 - (IBAction)touchSetPicture:(id)sender {
     UIStoryboard* storySetting = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
     UINavigationController *navCamera = [storySetting instantiateInitialViewController];
-    LXCameraViewController *controllerCamera = navCamera.viewControllers[0];
+    LXCanvasViewController *controllerCamera = navCamera.viewControllers[0];
     controllerCamera.delegate = self;
     
     [self presentViewController:navCamera animated:YES completion:nil];
 }
 
-- (void)imagePickerController:(LXCameraViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info {
+- (void)imagePickerController:(LXCanvasViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info {
     [picker dismissViewControllerAnimated:NO completion:nil];
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
