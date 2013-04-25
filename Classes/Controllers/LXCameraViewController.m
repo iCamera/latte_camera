@@ -668,16 +668,12 @@
             CGSize previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:capturedImage.size.width height:capturedImage.size.height]);
             
             UIImage *previewPic = [LXCameraViewController imageWithImage:capturedImage scaledToSize:previewUISize];
-            
             savedPreview = previewPic;
             
-            previewFilter = [[GPUImagePicture alloc] initWithImage:previewPic];
             
             isPicFromCamera = true;
             
             [self switchEditImage];
-            [self initPreviewPic:previewPic];
-            filterMain.toneEnable = NO;
         }
         
         buttonCapture.enabled = true;
@@ -685,7 +681,6 @@
 }
 
 + (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
-    //UIGraphicsBeginImageContext(newSize);
     UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
     [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
@@ -1218,13 +1213,9 @@
         UIImage *previewPic = [LXCameraViewController imageWithImage:capturedImage scaledToSize:previewUISize];
         savedPreview = previewPic;
         
-        previewFilter = [[GPUImagePicture alloc] initWithImage:previewPic];
         isPicFromCamera = false;
         
-        
         [self switchEditImage];
-        [self initPreviewPic:previewPic];
-        filterMain.toneEnable = NO;
     };
     
     //
@@ -1353,13 +1344,19 @@
     buttonReset.enabled = false;
     
     [self resizeCameraViewWithAnimation:YES];
+    
+    previewFilter = [[GPUImagePicture alloc] initWithImage:savedPreview];
     [self preparePipe];
     [self applyFilterSetting];
     [self processImage];
+    [self initPreviewPic:savedPreview];
+    filterMain.toneEnable = NO;
 }
 
 - (void)initPreviewPic:(UIImage *)previewPic {
-    GPUImagePicture *gpuimagePreview = [[GPUImagePicture alloc] initWithImage:previewPic];
+    CGSize thumbUISize = CGSizeMake(70.0, [LXUtils heightFromWidth:70.0 width:previewPic.size.width height:previewPic.size.height]);
+    UIImage *thumb = [LXCameraViewController imageWithImage:capturedImage scaledToSize:thumbUISize];
+    GPUImagePicture *gpuimagePreview = [[GPUImagePicture alloc] initWithImage:thumb];
     for (NSInteger i = 0; i < effectNum; i++) {
         GPUImageView *imageViewPreview = effectPreview[i];
         LXImageFilter *filterSample = [[LXImageFilter alloc] init];

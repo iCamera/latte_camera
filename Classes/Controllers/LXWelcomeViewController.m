@@ -119,13 +119,10 @@ typedef enum {
 
 
 - (void)reloadView {
-    loadEnded = false;
-    feeds = nil;
-
-    [self loadMore];
+    [self loadMore:YES];
 }
 
-- (void)loadMore {
+- (void)loadMore:(BOOL)reset {
     if (indicator.isAnimating || loadEnded) {
         return;
     }
@@ -138,14 +135,15 @@ typedef enum {
     NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
     [param setObject:[app getToken] forKey:@"token"];
     
-    if (feed) {
+    if (!reset) {
         [param setObject:feed.feedID forKey:@"last_id"];
     }
     
     [[LatteAPIClient sharedClient] getPath:@"user/everyone/timeline"
                                 parameters: param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       if (feeds == nil) {
+                                       if (reset) {
+                                           loadEnded = false;
                                            feeds = [Feed mutableArrayFromDictionary:JSON withKey:@"feeds"];
                                            [tablePic reloadData];
                                        } else {
@@ -335,7 +333,7 @@ typedef enum {
         
         // Loadmore
         if (current > feeds.count - 6)
-            [self loadMore];
+            [self loadMore:NO];
         return ret;
     } else if (tableMode == kWelcomeTableTimeline) {
         NSArray *flatPictures = [self flatPictureArray];
@@ -350,7 +348,7 @@ typedef enum {
             
             // Loadmore
             if (current > flatPictures.count - 6)
-                [self loadMore];
+                [self loadMore:NO];
             
             return ret;
         }
@@ -468,7 +466,7 @@ typedef enum {
     
     float reload_distance = -100;
     if(y > h + reload_distance) {
-        [self loadMore];
+        [self loadMore:NO];
     }
 }
 

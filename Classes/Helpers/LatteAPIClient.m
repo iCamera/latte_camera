@@ -17,7 +17,9 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedClient = [[LatteAPIClient alloc] initWithBaseURL:[NSURL URLWithString:kLatteAPIBaseURLString]];
+        #ifdef DEBUG
         [_sharedClient setAuthorizationHeaderWithUsername:@"luxeys" password:@"13579"];
+        #endif
         
         [_sharedClient setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
             switch (status) {
@@ -39,6 +41,14 @@
     
     return _sharedClient;
 }
+
+//- (void)postPath:(NSString *)path parameters:(NSDictionary *)parameters success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure {
+//    [super postPath:path parameters:parameters success:success failure:failure];
+//}
+//
+//- (void)getPath:(NSString *)path parameters:(NSDictionary *)parameters success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure {
+//    [super getPath:path parameters:parameters success:success failure:failure];
+//}
 
 - (id)initWithBaseURL:(NSURL *)url {
     self = [super initWithBaseURL:url];

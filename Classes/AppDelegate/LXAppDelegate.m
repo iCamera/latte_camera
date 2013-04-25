@@ -107,15 +107,23 @@
     window.rootViewController = _controllerSide;
     [window makeKeyAndVisible];
     
+    NSDictionary *remoteNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    
+    if(remoteNotif)
+    {
+        [_viewMainTab showNotify];
+    }
+    
     return YES;
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    
     NSString *apns = [[[[deviceToken description]
                                   stringByReplacingOccurrencesOfString: @"<" withString: @""]
                                  stringByReplacingOccurrencesOfString: @">" withString: @""]
                                 stringByReplacingOccurrencesOfString: @" " withString: @""];
-    
+    TFLog(@"Register APNS: %@", apns);
     [[LatteAPIClient sharedClient] postPath:@"user/me/update"
                                  parameters:[NSDictionary dictionaryWithObjectsAndKeys:
                                              [self getToken], @"token",
@@ -132,13 +140,10 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ReceivedPushNotify" object:userInfo];
     
-//    NSDictionary *aps = [userInfo objectForKey:@"aps"];
-//    NSDictionary *alert = [aps objectForKey:@"alert"];
-//    NSString *action = [alert objectForKey:@"loc-key"];
-//    
-//    if ([action isEqualToString:@"apns_friend_request"]) {
-//        
-//    }
+    if([application applicationState] == UIApplicationStateInactive)
+    {
+        [_viewMainTab showNotify];
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

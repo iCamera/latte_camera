@@ -16,5 +16,6 @@
 
 - (void)showSetting:(id)sender;
 - (void)toggleNotify:(id)sender;
+- (void)showNotify;
 
 @end

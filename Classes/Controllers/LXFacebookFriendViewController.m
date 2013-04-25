@@ -59,6 +59,7 @@
                                           case FBSessionStateClosed:
                                           case FBSessionStateClosedLoginFailed:
                                               [FBSession.activeSession closeAndClearTokenInformation];
+                                              [FBSession renewSystemCredentials:^(ACAccountCredentialRenewResult result, NSError *error) {}];
                                               break;
                                           default:
                                               break;

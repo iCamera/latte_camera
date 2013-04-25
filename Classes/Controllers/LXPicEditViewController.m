@@ -259,10 +259,22 @@
                                          completionHandler:^(FBSession *session,
                                                              FBSessionState state,
                                                              NSError *error) {
-                                             if (state == FBSessionStateOpen)
-                                                 buttonFacebook.selected = true;
+                                             switch (state) {
+                                                 case FBSessionStateOpen:
+                                                     if (!error) {
+                                                         // We have a valid session
+                                                         buttonFacebook.selected = true;
+                                                     }
+                                                     break;
+                                                 case FBSessionStateClosed:
+                                                 case FBSessionStateClosedLoginFailed:
+                                                     [FBSession.activeSession closeAndClearTokenInformation];
+                                                     [FBSession renewSystemCredentials:^(ACAccountCredentialRenewResult result, NSError *error) {}];
+                                                     break;
+                                                 default:
+                                                     break;
+                                             }
                                          }];
-        
     } else {
         buttonFacebook.selected = false;
     }
@@ -367,7 +379,7 @@
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
     LXUploadObject *uploadLatte = [[LXUploadObject alloc]init];
-    uploadLatte.destination = kUploadDestinationLatte;
+    uploadLatte.facebook = buttonFacebook.selected;
     uploadLatte.imageFile = _imageData;
     uploadLatte.imagePreview = _preview;
     uploadLatte.imageDescription = textDesc.text;
@@ -380,20 +392,9 @@
     [app.uploader addObject:uploadLatte];
     [uploadLatte upload];
     
-    if (buttonFacebook.selected) {
-        LXUploadObject *uploadFacebook = [[LXUploadObject alloc]init];
-        uploadFacebook.destination = kUploadDestinationFacebook;
-        uploadFacebook.imageFile = _imageData;
-        uploadFacebook.imagePreview = _preview;
-        uploadFacebook.imageDescription = textDesc.text;
-        
-        [app.uploader addObject:uploadFacebook];
-        [uploadFacebook upload];
-    }
     
     if (buttonTwitter.selected) {
         LXUploadObject *uploadFacebook = [[LXUploadObject alloc]init];
-        uploadFacebook.destination = kUploadDestinationFacebook;
         uploadFacebook.imageFile = _imageData;
         uploadFacebook.imagePreview = _preview;
         uploadFacebook.imageDescription = textDesc.text;
