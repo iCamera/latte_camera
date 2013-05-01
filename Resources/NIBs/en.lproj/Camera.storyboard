@@ -36,7 +36,7 @@
                                 <rect key="frame" x="10" y="15" width="300" height="400"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <view autoresizesSubviews="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" id="dUo-Bm-yyD" userLabel="CameraView" customClass="GPUImageView">
+                                    <view autoresizesSubviews="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" id="dUo-Bm-yyD" userLabel="CameraView">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="400"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -50,9 +50,28 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <gestureRecognizers/>
                                     </imageView>
+                                    <view hidden="YES" contentMode="scaleToFill" id="hgn-BD-UPD">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view hidden="YES" contentMode="scaleToFill" id="p5g-E1-2jV">
+                                        <rect key="frame" x="0.0" y="350" width="300" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="tqC-De-Q0B">
+                                <rect key="frame" x="10" y="15" width="300" height="400"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" id="Sch-Dt-cDf" userLabel="View Flash">
+                                <rect key="frame" x="10" y="15" width="300" height="400"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" id="ypF-If-kaQ" userLabel="Top Bar 35in">
                                 <rect key="frame" x="0.0" y="20" width="320" height="30"/>
@@ -271,21 +290,22 @@
                                                 <state key="highlighted" backgroundImage="bg_camera_bt2_on.png">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="touchPick:" destination="z2T-vS-fgP" eventType="touchUpInside" id="z7j-TG-GLo"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="WBa-0X-mpI" userLabel="Button Fisheye">
                                                 <rect key="frame" x="256" y="5" width="58" height="40"/>
                                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="15"/>
-                                                <state key="normal" title="1:1" backgroundImage="bg_camera_bt2.png">
+                                                <state key="normal" title="Quick" backgroundImage="bg_camera_bt2.png">
                                                     <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <state key="disabled" backgroundImage="bg_camera_bt2_on.png"/>
                                                 <state key="selected" backgroundImage="bg_camera_bt2_on.png"/>
-                                                <state key="highlighted" backgroundImage="bg_camera_bt2_on.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
                                                 <connections>
                                                     <action selector="toggleFisheye:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="05X-a5-abj"/>
+                                                    <action selector="touchQuick:" destination="z2T-vS-fgP" eventType="touchUpInside" id="Qpv-Gu-QP7"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -305,16 +325,19 @@
                         <outlet property="buttonFlash" destination="xgh-qo-xEj" id="e0A-ff-gcE"/>
                         <outlet property="buttonFlash35" destination="88t-eN-EKu" id="6rn-bf-mdu"/>
                         <outlet property="buttonPick" destination="Yez-jA-IKE" id="yHs-fR-BLI"/>
+                        <outlet property="buttonQuick" destination="WBa-0X-mpI" id="7oK-0r-u16"/>
                         <outlet property="buttonSetNoTimer" destination="DcX-ms-ADN" id="B1V-lF-VdG"/>
                         <outlet property="buttonSetTimer5s" destination="zNS-HV-F6h" id="1kl-op-hac"/>
                         <outlet property="imageAutoFocus" destination="klm-x3-1P2" id="yqW-KY-Xof"/>
+                        <outlet property="imagePreview" destination="tqC-De-Q0B" id="F5P-8A-IX1"/>
                         <outlet property="viewCamera" destination="dUo-Bm-yyD" id="Gbp-MS-zc4"/>
                         <outlet property="viewCameraWraper" destination="Ihj-8h-10g" id="FIj-DQ-lEi"/>
                         <outlet property="viewCanvas" destination="4ic-aB-m4L" id="tI8-SI-vjX"/>
+                        <outlet property="viewFlash" destination="Sch-Dt-cDf" id="aBr-Nt-fet"/>
                         <outlet property="viewTimer" destination="yuj-Rf-5EU" id="yjH-Nf-9JY"/>
                         <outlet property="viewTopBar" destination="s4o-wt-yU6" id="liF-4G-LPe"/>
                         <outlet property="viewTopBar35" destination="ypF-If-kaQ" id="0t5-c7-6Sy"/>
-                        <segue destination="IgC-G0-Nfq" kind="modal" modalTransitionStyle="crossDissolve" id="hkL-t5-Ue9"/>
+                        <segue destination="IgC-G0-Nfq" kind="push" identifier="Canvas" id="hkL-t5-Ue9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6CY-Fv-K2G" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -391,7 +414,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="IXp-ZD-FIZ" userLabel="Button Pick Photo">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="IXp-ZD-FIZ" userLabel="Button Pick Photo">
                                         <rect key="frame" x="69" y="5" width="58" height="30"/>
                                         <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                         <state key="normal" image="icon_photo_select2.png" backgroundImage="bg_camera_bt3.png">
@@ -405,7 +428,7 @@
                                             <action selector="openImagePicker:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="5qV-Q8-pPd"/>
                                         </connections>
                                     </button>
-                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="nb5-ZL-yq6" userLabel="Button Reset">
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="nb5-ZL-yq6" userLabel="Button Reset">
                                         <rect key="frame" x="5" y="5" width="58" height="30"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                                         <state key="normal" image="icon_reset.png" backgroundImage="bg_camera_bt3.png">
@@ -1011,12 +1034,13 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Yv1-mn-rDb">
-                                <rect key="frame" x="10" y="50" width="73" height="44"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Yv1-mn-rDb">
+                                <rect key="frame" x="10" y="50" width="50" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="15"/>
+                                <state key="normal" title="Crop">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted">
@@ -1048,7 +1072,6 @@
                         <outlet property="buttonLensNormal" destination="QVO-XY-3L1" id="p8i-70-N1u"/>
                         <outlet property="buttonLensWide" destination="SD5-lJ-lQy" id="DMf-SZ-ubk"/>
                         <outlet property="buttonNo" destination="9jE-Vo-OQn" id="sal-i1-xzB"/>
-                        <outlet property="buttonPickTop" destination="IXp-ZD-FIZ" id="7rR-sI-chT"/>
                         <outlet property="buttonReset" destination="nb5-ZL-yq6" id="ILI-RJ-vRv"/>
                         <outlet property="buttonToggleBasic" destination="CP0-Lp-GWs" id="D0t-1c-xIq"/>
                         <outlet property="buttonToggleBlend" destination="Uwq-sI-myn" id="352-VU-uLi"/>
@@ -1113,7 +1136,7 @@
                             </imageView>
                             <imageView contentMode="scaleToFill" image="icon_addfollow_s.png" id="iZq-QN-mz3">
                                 <rect key="frame" x="300" y="350" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="dKH-l6-gMS" appends="YES" id="rOA-dS-0qx"/>
@@ -1121,32 +1144,77 @@
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ADu-ii-K9h">
                                 <rect key="frame" x="254" y="435" width="58" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Button" backgroundImage="bg_camera_bt2.png">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                <state key="normal" title="Crop" backgroundImage="bg_camera_bt2.png">
+                                    <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="touchCrop:" destination="Hd8-gk-RP3" eventType="touchUpInside" id="Dtx-TI-eP0"/>
+                                    <action selector="doneAction:" destination="Hd8-gk-RP3" eventType="touchUpInside" id="DoI-at-CS6"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jwU-4F-egW">
-                                <rect key="frame" x="7" y="435" width="58" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Button" backgroundImage="bg_camera_bt2.png">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="5" y="435" width="58" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                <state key="normal" title="X" backgroundImage="bg_camera_bt2.png">
+                                    <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="touchCancel:" destination="Hd8-gk-RP3" eventType="touchUpInside" id="Ibt-Zx-9iU"/>
+                                    <action selector="cancelAction:" destination="Hd8-gk-RP3" eventType="touchUpInside" id="n2U-eN-p2f"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="J5R-ie-A2f">
+                                <rect key="frame" x="68" y="435" width="58" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                <state key="normal" title="1:1" backgroundImage="bg_camera_bt2.png">
+                                    <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="setCropRatio:" destination="Hd8-gk-RP3" eventType="touchUpInside" id="aaf-dC-YEz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vne-VC-Tts">
+                                <rect key="frame" x="131" y="435" width="58" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                <state key="normal" title="4:3" backgroundImage="bg_camera_bt2.png">
+                                    <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="setCropRatio:" destination="Hd8-gk-RP3" eventType="touchUpInside" id="NOL-jB-Ljh"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="xdk-dO-8q3">
+                                <rect key="frame" x="194" y="435" width="58" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                <state key="normal" title="3:4" backgroundImage="bg_camera_bt2.png">
+                                    <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="setCropRatio:" destination="Hd8-gk-RP3" eventType="touchUpInside" id="Vll-N7-l5V"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1340,7 +1408,6 @@
             <relationships>
                 <relationship kind="action" name="changeLens:" candidateClass="UIButton"/>
                 <relationship kind="action" name="changePen:" candidateClass="UISlider"/>
-                <relationship kind="action" name="close:"/>
                 <relationship kind="action" name="openImagePicker:"/>
                 <relationship kind="action" name="setBlend:" candidateClass="UIButton"/>
                 <relationship kind="action" name="setMask:" candidateClass="UIButton"/>
@@ -1364,12 +1431,10 @@
                 <relationship kind="outlet" name="buttonBlurNormal" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonBlurStrong" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonBlurWeak" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonClose" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonLensFish" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonLensNormal" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonLensWide" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonNo" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonPickTop" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonReset" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonToggleBasic" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonToggleBlend" candidateClass="UIButton"/>
@@ -1408,26 +1473,27 @@
         <class className="LXCaptureViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCaptureViewController.h"/>
             <relationships>
-                <relationship kind="action" name="cameraTouch:" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="action" name="capture:"/>
                 <relationship kind="action" name="changeFlash:"/>
                 <relationship kind="action" name="close:"/>
                 <relationship kind="action" name="flipCamera:"/>
                 <relationship kind="action" name="setTimer:"/>
+                <relationship kind="action" name="touchPick:"/>
+                <relationship kind="action" name="touchQuick:" candidateClass="UIButton"/>
                 <relationship kind="action" name="touchTimer:"/>
                 <relationship kind="outlet" name="buttonCapture" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonFlash" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonFlash35" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonFlip" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonPick" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonQuick" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonSetNoTimer" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonSetTimer5s" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonTimer" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="imageAutoFocus" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="tapFocus" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="outlet" name="viewCamera" candidateClass="GPUImageView"/>
+                <relationship kind="outlet" name="imagePreview" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="viewCamera" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewCameraWraper" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewCanvas" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="viewFlash" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewTimer" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewTopBar" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewTopBar35" candidateClass="UIView"/>
@@ -1451,8 +1517,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXImageCropViewController.h"/>
             <relationships>
                 <relationship kind="action" name="panSize:" candidateClass="UIPanGestureRecognizer"/>
-                <relationship kind="action" name="touchCancel:"/>
-                <relationship kind="action" name="touchCrop:"/>
+                <relationship kind="action" name="setCropRatio:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="imageCropSize" candidateClass="UIImageView"/>
             </relationships>
         </class>

@@ -23,8 +23,13 @@
 		880E50F71728C30800D584EE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 880E50EC1728C30800D584EE /* README.md */; };
 		880E50FD1728C63700D584EE /* LXImageCropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E50FC1728C63600D584EE /* LXImageCropViewController.m */; };
 		880E51001728E50400D584EE /* LXCaptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E50FF1728E50300D584EE /* LXCaptureViewController.m */; };
+		880E510A172A130E00D584EE /* AVCamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E5102172A11AE00D584EE /* AVCamViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		880E510B172A130E00D584EE /* AVCamCaptureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E5104172A11AE00D584EE /* AVCamCaptureManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		880E510D172A130E00D584EE /* AVCamUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E5108172A11AE00D584EE /* AVCamUtilities.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		880E5110172A16C900D584EE /* LXCamCaptureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E510F172A16C900D584EE /* LXCamCaptureManager.m */; };
 		881015D61700270A00AE81E1 /* hicon_menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 881015D41700270A00AE81E1 /* hicon_menu.png */; };
 		881015D71700270A00AE81E1 /* hicon_menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 881015D51700270A00AE81E1 /* hicon_menu@2x.png */; };
+		88144259172F9CCF00A5B3FF /* UIView+Genie.m in Sources */ = {isa = PBXBuildFile; fileRef = 88144248172F9CCF00A5B3FF /* UIView+Genie.m */; };
 		8818860916F17B61009A9266 /* LXCommentControllViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8818860816F17B60009A9266 /* LXCommentControllViewController.m */; };
 		8818861116F1F039009A9266 /* LXCellSearchUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8818861016F1F039009A9266 /* LXCellSearchUser.m */; };
 		8818861316F30BEA009A9266 /* mymenu.png in Resources */ = {isa = PBXBuildFile; fileRef = 8818861216F30BEA009A9266 /* mymenu.png */; };
@@ -1500,8 +1505,18 @@
 		880E50FC1728C63600D584EE /* LXImageCropViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXImageCropViewController.m; sourceTree = "<group>"; };
 		880E50FE1728E50300D584EE /* LXCaptureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCaptureViewController.h; sourceTree = "<group>"; };
 		880E50FF1728E50300D584EE /* LXCaptureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCaptureViewController.m; sourceTree = "<group>"; };
+		880E5102172A11AE00D584EE /* AVCamViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVCamViewController.m; sourceTree = "<group>"; };
+		880E5103172A11AE00D584EE /* AVCamCaptureManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVCamCaptureManager.h; sourceTree = "<group>"; };
+		880E5104172A11AE00D584EE /* AVCamCaptureManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVCamCaptureManager.m; sourceTree = "<group>"; };
+		880E5107172A11AE00D584EE /* AVCamUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVCamUtilities.h; sourceTree = "<group>"; };
+		880E5108172A11AE00D584EE /* AVCamUtilities.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVCamUtilities.m; sourceTree = "<group>"; };
+		880E5109172A11AE00D584EE /* AVCamViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVCamViewController.h; sourceTree = "<group>"; };
+		880E510E172A16C900D584EE /* LXCamCaptureManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCamCaptureManager.h; sourceTree = "<group>"; };
+		880E510F172A16C900D584EE /* LXCamCaptureManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCamCaptureManager.m; sourceTree = "<group>"; };
 		881015D41700270A00AE81E1 /* hicon_menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hicon_menu.png; sourceTree = "<group>"; };
 		881015D51700270A00AE81E1 /* hicon_menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hicon_menu@2x.png"; sourceTree = "<group>"; };
+		88144247172F9CCF00A5B3FF /* UIView+Genie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Genie.h"; sourceTree = "<group>"; };
+		88144248172F9CCF00A5B3FF /* UIView+Genie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Genie.m"; sourceTree = "<group>"; };
 		8818860716F17B60009A9266 /* LXCommentControllViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCommentControllViewController.h; sourceTree = "<group>"; };
 		8818860816F17B60009A9266 /* LXCommentControllViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCommentControllViewController.m; sourceTree = "<group>"; };
 		8818860F16F1F039009A9266 /* LXCellSearchUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCellSearchUser.h; sourceTree = "<group>"; };
@@ -3230,6 +3245,31 @@
 			path = ImageEditor;
 			sourceTree = "<group>";
 		};
+		880E5101172A119D00D584EE /* AVCam */ = {
+			isa = PBXGroup;
+			children = (
+				880E5103172A11AE00D584EE /* AVCamCaptureManager.h */,
+				880E5104172A11AE00D584EE /* AVCamCaptureManager.m */,
+				880E5107172A11AE00D584EE /* AVCamUtilities.h */,
+				880E5108172A11AE00D584EE /* AVCamUtilities.m */,
+				880E5109172A11AE00D584EE /* AVCamViewController.h */,
+				880E5102172A11AE00D584EE /* AVCamViewController.m */,
+				880E510E172A16C900D584EE /* LXCamCaptureManager.h */,
+				880E510F172A16C900D584EE /* LXCamCaptureManager.m */,
+			);
+			path = AVCam;
+			sourceTree = "<group>";
+		};
+		8814422B172F9CCF00A5B3FF /* BCGenieEffect */ = {
+			isa = PBXGroup;
+			children = (
+				88144247172F9CCF00A5B3FF /* UIView+Genie.h */,
+				88144248172F9CCF00A5B3FF /* UIView+Genie.m */,
+			);
+			name = BCGenieEffect;
+			path = Vendor/BCGenieEffect;
+			sourceTree = "<group>";
+		};
 		8824FB4516F72CE700357ADB /* NIBs */ = {
 			isa = PBXGroup;
 			children = (
@@ -3888,6 +3928,7 @@
 		8890722B16770EBB0013DF7A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				880E5101172A119D00D584EE /* AVCam */,
 				8890722C16770EBB0013DF7A /* AppDelegate */,
 				8890722F16770EBB0013DF7A /* Controllers */,
 				8890725416770EBB0013DF7A /* CustomControls */,
@@ -4185,6 +4226,7 @@
 		88D4B5BE15D4B66B00FC4FBB /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				8814422B172F9CCF00A5B3FF /* BCGenieEffect */,
 				880E50D51728C30800D584EE /* ImageCrop */,
 				8847561617212718005CA201 /* RNBlurModalView */,
 				8866D66916EEE66300CAE6E5 /* STTweetLabel */,
@@ -6578,6 +6620,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				880E510A172A130E00D584EE /* AVCamViewController.m in Sources */,
+				880E510B172A130E00D584EE /* AVCamCaptureManager.m in Sources */,
+				880E510D172A130E00D584EE /* AVCamUtilities.m in Sources */,
 				8866D66716EA00E000CAE6E5 /* SideSwipeTableViewCell.m in Sources */,
 				8866D66816EA00E000CAE6E5 /* SideSwipeTableViewController.m in Sources */,
 				880120BF16E5E80900B9E3D9 /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */,
@@ -6696,6 +6741,8 @@
 				880E50F01728C30800D584EE /* HFImageEditorViewController.m in Sources */,
 				880E50FD1728C63700D584EE /* LXImageCropViewController.m in Sources */,
 				880E51001728E50400D584EE /* LXCaptureViewController.m in Sources */,
+				880E5110172A16C900D584EE /* LXCamCaptureManager.m in Sources */,
+				88144259172F9CCF00A5B3FF /* UIView+Genie.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -61,7 +61,6 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIButton *buttonYes;
 @property (strong, nonatomic) IBOutlet UIButton *buttonNo;
 @property (strong, nonatomic) IBOutlet UIButton *buttonReset;
-@property (strong, nonatomic) IBOutlet UIButton *buttonPickTop;
 
 @property (strong, nonatomic) IBOutlet UIPanGestureRecognizer *gesturePan;
 
@@ -133,9 +132,8 @@ typedef enum {
 - (IBAction)setBlend:(UIButton *)sender;
 - (IBAction)toggleMono:(id)sender;
 
-@property (strong, nonatomic) UIImage *imagePreview;
-@property (strong, nonatomic) UIImage *imageFullsize;
+@property (strong, nonatomic) UIImage *imageOriginalPreview;
+@property (strong, nonatomic) UIImage *imageOriginal;
 @property (strong, nonatomic) NSMutableDictionary *imageMeta;
-@property (assign, nonatomic) CGSize imageSize;
 
 @end

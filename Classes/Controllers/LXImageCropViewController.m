@@ -37,13 +37,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)touchCancel:(id)sender {
-    [self dismissModalViewControllerAnimated:YES];
-}
-
-- (IBAction)touchCrop:(id)sender {
-    NSLog(@"%f %f %f %f", self.cropBoundsInSourceImage.origin.x, self.cropBoundsInSourceImage.origin.y, self.cropBoundsInSourceImage.size.width, self.cropBoundsInSourceImage.size.height);
-}
 
 - (IBAction)panSize:(UIPanGestureRecognizer *)sender {
     CGPoint translation = [sender translationInView:self.view];
@@ -62,5 +55,23 @@
 - (void)viewDidUnload {
     [self setImageCropSize:nil];
     [super viewDidUnload];
+}
+- (IBAction)setCropRatio:(UIButton*)sender {
+    switch (sender.tag) {
+        case 1:
+            self.cropSize = CGSizeMake(280, 280);
+            [self reset:YES];
+            break;
+        case 2:
+            self.cropSize = CGSizeMake(280, 210);
+            [self reset:YES];
+            break;
+        case 3:
+            self.cropSize = CGSizeMake(300, 400);
+            [self reset:YES];
+            break;
+        default:
+            break;
+    }
 }
 @end

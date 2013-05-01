@@ -34,6 +34,7 @@
 #import "LXButtonBack.h"
 #import "LXCellDataField.h"
 #import "NSDate+TKCategory.h"
+#import "LXCaptureViewController.h"
 
 typedef enum {
     kTimelineAll = 10,
@@ -1218,7 +1219,8 @@ typedef enum {
 - (void)pickPhoto {
     UIStoryboard* storySetting = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
     UINavigationController *navCamera = [storySetting instantiateInitialViewController];
-    LXCanvasViewController *controllerCamera = navCamera.viewControllers[0];
+
+    LXCaptureViewController *controllerCamera = navCamera.viewControllers[0];
     controllerCamera.delegate = self;
     
     [self presentViewController:navCamera animated:YES completion:nil];

@@ -14,6 +14,7 @@
 #import "LXUtils.h"
 #import "LXShare.h"
 #import "UIImageView+loadProgress.h"
+#import "LXCaptureViewController.h"
 
 @interface LXSettingRootViewController ()
 
@@ -211,7 +212,7 @@
 - (IBAction)touchSetPicture:(id)sender {
     UIStoryboard* storySetting = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
     UINavigationController *navCamera = [storySetting instantiateInitialViewController];
-    LXCanvasViewController *controllerCamera = navCamera.viewControllers[0];
+    LXCaptureViewController *controllerCamera = navCamera.viewControllers[0];
     controllerCamera.delegate = self;
     
     [self presentViewController:navCamera animated:YES completion:nil];

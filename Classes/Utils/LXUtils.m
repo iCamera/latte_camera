@@ -130,6 +130,7 @@
 + (NSString *)stringFromNotify:(NSDictionary *)notify {
     NSString * stringUsers = @"";
     NSMutableArray *users = [User mutableArrayFromDictionary:notify withKey:@"users"];
+    NSNumber *count = notify[@"count"];
 
     for (int i = 0; i < users.count; i++) {
         User* user = users[i];
@@ -137,7 +138,7 @@
             stringUsers= [stringUsers stringByAppendingString:NSLocalizedString(@"and", @"と")];
         
         if (i > 1) {
-            stringUsers = [stringUsers stringByAppendingString:[NSString stringWithFormat:NSLocalizedString(@"x_others", "%d others"), (users.count - i)]];
+            stringUsers = [stringUsers stringByAppendingString:[NSString stringWithFormat:NSLocalizedString(@"x_others", "%d others"), ([count integerValue] - i)]];
             break;
         }
         

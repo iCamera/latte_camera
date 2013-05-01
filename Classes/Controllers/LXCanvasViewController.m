@@ -27,9 +27,7 @@
     UIActionSheet *sheet;
     
     BOOL isSaved;
-    BOOL isKeyboard;
     BOOL isWatingToUpload;
-    BOOL isBackCamera;
     
     NSInteger currentLens;
     NSInteger currentMask;
@@ -46,8 +44,14 @@
     NSInteger currentTab;
     LXShare *laSharekit;
     
+    CGSize imageSize;
+    
+    UIImage *imagePreview;
+    UIImage *imageFullsize;
     NSData *imageFinalData;
     UIImage *imageFinalThumb;
+    
+    BOOL didInit;
 }
 
 @end
@@ -64,7 +68,6 @@
 @synthesize buttonYes;
 @synthesize buttonNo;
 @synthesize buttonReset;
-@synthesize buttonPickTop;
 
 @synthesize gesturePan;
 @synthesize viewBottomBar;
@@ -119,9 +122,6 @@
 @synthesize delegate;
 
 @synthesize imageMeta;
-@synthesize imageFullsize;
-@synthesize imagePreview;
-@synthesize imageSize;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -144,8 +144,6 @@
 {
     [super viewDidLoad];
     
-    isBackCamera = YES;
-    
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     [app.tracker sendView:@"Camera Screen"];
     
@@ -153,19 +151,16 @@
     laSharekit = [[LXShare alloc] init];
     laSharekit.controller = self;
     
-    isKeyboard = NO;
-    
     UIImage *imageCanvas = [[UIImage imageNamed:@"bg_canvas.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(8, 8, 8, 8)];
     viewCanvas.image = imageCanvas;
     
-//    UIBezierPath *shadowPathCamera = [UIBezierPath bezierPathWithRect:viewCameraWraper.bounds];
-//    viewCameraWraper.layer.masksToBounds = NO;
-//    viewCameraWraper.layer.shadowColor = [UIColor blackColor].CGColor;
-//    viewCameraWraper.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-//    viewCameraWraper.layer.shadowOpacity = 1.0;
-//    viewCameraWraper.layer.shadowRadius = 5.0;
-//    viewCameraWraper.layer.shadowPath = shadowPathCamera.CGPath;
-//    [viewCamera setInputRotation:kGPUImageRotateRight atIndex:0];
+    UIBezierPath *shadowPathCamera = [UIBezierPath bezierPathWithRect:viewCameraWraper.bounds];
+    viewCameraWraper.layer.masksToBounds = NO;
+    viewCameraWraper.layer.shadowColor = [UIColor blackColor].CGColor;
+    viewCameraWraper.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+    viewCameraWraper.layer.shadowOpacity = 1.0;
+    viewCameraWraper.layer.shadowRadius = 5.0;
+    viewCameraWraper.layer.shadowPath = shadowPathCamera.CGPath;
     
     viewCamera.fillMode = kGPUImageFillModeStretch;
     
@@ -323,12 +318,16 @@
         [scrollBlend addSubview:labelBlend];
     }
     scrollBlend.contentSize = CGSizeMake(2*55+10, 60);
-    
-    [self switchEditImage];
+    [self resizeCameraViewWithAnimation:NO];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
+    if (!didInit) {
+        didInit = true;
+        [self switchEditImage];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -338,12 +337,21 @@
     self.navigationController.navigationBarHidden = YES;
 }
 
-- (void)setImageFullsize:(UIImage *)aImageFullsize {
-    imageFullsize = aImageFullsize;
-    if (imageFullsize) {
-        buttonYes.enabled = true;
-    }
+- (void)setImageOriginalPreview:(UIImage *)imageOriginalPreview {
+    _imageOriginalPreview = imageOriginalPreview;
+    imagePreview = imageOriginalPreview;
+    imageSize = imagePreview.size;
 }
+
+- (void)setImageOriginal:(UIImage *)imageOriginal {
+    _imageOriginal = imageOriginal;
+    imageFullsize = imageOriginal;
+    imageSize = imageFullsize.size;
+    
+    buttonYes.enabled = true;
+}
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -484,10 +492,30 @@
 
 - (IBAction)touchSave:(id)sender {
     if (!isSaved) {
-        [self saveFinalImage];
-    }
-    
-    [self processSavedData];
+        UIWindow *window = [UIApplication sharedApplication].keyWindow;
+        HUD = [[MBProgressHUD alloc] initWithView:window];
+        [window addSubview:HUD];
+        HUD.userInteractionEnabled = NO;
+        HUD.mode = MBProgressHUDModeIndeterminate;
+        HUD.dimBackground = YES;
+        
+        [HUD show:NO];
+        
+        //delay slightly for UI to update HUD
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+            
+            imageFinalThumb = [self getFinalThumb];
+            imageFinalData = [self getFinalImage];
+            [self saveImageToLib:imageFinalData];
+            
+            [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+            [self processSavedData];
+        });
+        
+    } else
+        [self processSavedData];
 }
 
 - (void)receiveLoggedIn:(NSNotification *)notification
@@ -495,29 +523,6 @@
     if (isWatingToUpload && isSaved) {
         [self processSavedData];
     }
-}
-
-- (void)saveFinalImage {
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    HUD = [[MBProgressHUD alloc] initWithView:window];
-    [window addSubview:HUD];
-    HUD.userInteractionEnabled = NO;
-    HUD.mode = MBProgressHUDModeIndeterminate;
-    HUD.dimBackground = YES;
-    
-    [HUD show:NO];
-    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
-    
-    imageFinalThumb = [self getFinalThumb];
-    imageFinalData = [self getFinalImage];
-    
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-    
-    [library writeImageDataToSavedPhotosAlbum:UIImageJPEGRepresentation(imageFinalThumb, 10) metadata:nil completionBlock:nil];
-        
-    [self saveImageToLib:imageFinalData];
-    
-    [[UIApplication sharedApplication] endIgnoringInteractionEvents];
 }
 
 - (void)processSavedData {
@@ -536,7 +541,7 @@
                                   imageFinalThumb, @"preview",
                                   nil];
             [delegate imagePickerController:self didFinishPickingMediaWithData:info];
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self.navigationController dismissModalViewControllerAnimated:YES];
         }
     } else {
         RDActionSheet *actionSheet = [[RDActionSheet alloc] initWithCancelButtonTitle:NSLocalizedString(@"Cancel", @"")
@@ -830,35 +835,33 @@
     }
     
     
-
-        CGFloat height;
-        if (screen.size.height > 480) {
-            height = 568 - 50 - 40 - 20;
-        }
-        else {
-            height = 480 - 50 - 40 - 20;
-        }
-        
-        if (currentTab != kTabPreview) {
-            if ((currentTab == kTabText) && (!isKeyboard))
-                height -= 140;
-            else
-                height -= 110;
-        }
-        
-        frameCanvas = CGRectMake(0, 40, 320, height+20);
-        
-        CGFloat horizontalRatio = 300.0 / imageSize.width;
-        CGFloat verticalRatio = height / imageSize.height;
-        CGFloat ratio;
-        ratio = MIN(horizontalRatio, verticalRatio);
-        
-        frame.size = CGSizeMake(imageSize.width*ratio, imageSize.height*ratio);
-        frame.origin = CGPointMake((320-frame.size.width)/2, (height - frame.size.height)/2 + 50.0);
-        
-        viewTopBar.hidden = false;
     
-//    viewCameraWraper.layer.shadowPath = nil;
+    CGFloat height;
+    if (screen.size.height > 480) {
+        height = 568 - 50 - 40 - 20;
+    }
+    else {
+        height = 480 - 50 - 40 - 20;
+    }
+    
+    if (currentTab != kTabPreview) {
+        height -= 110;
+    }
+    
+    frameCanvas = CGRectMake(0, 40, 320, height+20);
+    
+    CGFloat horizontalRatio = 300.0 / imageSize.width;
+    CGFloat verticalRatio = height / imageSize.height;
+    CGFloat ratio;
+    ratio = MIN(horizontalRatio, verticalRatio);
+    
+    frame.size = CGSizeMake(imageSize.width*ratio, imageSize.height*ratio);
+    frame.origin = CGPointMake((320-frame.size.width)/2, (height - frame.size.height)/2 + 50.0);
+    
+    viewTopBar.hidden = false;
+    
+    viewCameraWraper.layer.shadowPath = nil;
+    viewCameraWraper.layer.shadowRadius = 0;
 
     [UIView animateWithDuration:animation?0.3:0 animations:^{
         viewFocusControl.frame = frameBokeh;
@@ -871,9 +874,9 @@
         viewBlendControl.frame = frameBlend;
 
     } completion:^(BOOL finished) {
-//        viewCameraWraper.layer.shadowRadius = 5.0;
-//        UIBezierPath *shadowPathCamera = [UIBezierPath bezierPathWithRect:viewCameraWraper.bounds];
-//        viewCameraWraper.layer.shadowPath = shadowPathCamera.CGPath;
+        UIBezierPath *shadowPathCamera = [UIBezierPath bezierPathWithRect:viewCameraWraper.bounds];
+        viewCameraWraper.layer.shadowPath = shadowPathCamera.CGPath;
+        viewCameraWraper.layer.shadowRadius = 5.0;
     }];
 }
 
@@ -883,19 +886,18 @@
     ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset)
     {
         imageMeta = [NSMutableDictionary dictionaryWithDictionary:myasset.defaultRepresentation.metadata];
-        imageFullsize = [info objectForKey:UIImagePickerControllerOriginalImage];
         
+        self.imageOriginal = [info objectForKey:UIImagePickerControllerOriginalImage];
         imageSize = imageFullsize.size;
         
         //
-        CGSize previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:imageFullsize.size.width height:imageFullsize.size.height]);
-        UIImage *previewPic = [LXUtils imageWithImage:imageFullsize scaledToSize:previewUISize];
-        imagePreview = previewPic;
+        CGSize previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:imageSize.width height:imageSize.height]);
+        UIImage *previewPic = [LXUtils imageWithImage:_imageOriginal scaledToSize:previewUISize];
+        self.imageOriginalPreview = previewPic;
         
         [self switchEditImage];
     };
     
-    //
     ALAssetsLibraryAccessFailureBlock failureblock  = ^(NSError *myerror)
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"Error")
@@ -929,8 +931,6 @@
     
     currentLens = 0;
     currentMask = kMaskBlurNone;
-
-    buttonPickTop.hidden = NO;
 
     viewShoot.hidden = YES;
     scrollProcess.hidden = NO;
@@ -977,7 +977,7 @@
         filterSample.toneCurve = effectCurve[i];
         filterSample.toneEnable = YES;
         [gpuimagePreview addTarget:filterSample];
-        [filterSample addTarget:imageViewPreview];
+        [filterSample addTarget:imageViewPreview atTextureLocation:0];
     }
     [gpuimagePreview processImage];
 }
@@ -987,12 +987,26 @@
         
     } else if ([segue.identifier isEqualToString:@"Crop"]) {
         LXImageCropViewController *controllerCrop = segue.destinationViewController;
+        __block LXImageCropViewController *weakController = controllerCrop;
+        controllerCrop.doneCallback = ^(UIImage *editedImage, BOOL canceled){
+            if(!canceled) {
+                CGSize previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:imageFullsize.size.width height:imageFullsize.size.height]);
+                imageFullsize = editedImage;
+                imageSize = editedImage.size;
+                imagePreview = [LXUtils imageWithImage:imageFullsize scaledToSize:previewUISize];
+                [self resizeCameraViewWithAnimation:YES];
+                previewFilter = [[GPUImagePicture alloc] initWithImage:imagePreview];
+                [self preparePipe];
+                [self processImage];
+            }
+            [weakController dismissModalViewControllerAnimated:YES];
+        };
         controllerCrop.cropSize = CGSizeMake(280,280);
         controllerCrop.minimumScale = 0.2;
         controllerCrop.maximumScale = 10;
         
-        controllerCrop.sourceImage = imageFullsize;
-        controllerCrop.previewImage = imagePreview;
+        controllerCrop.sourceImage = _imageOriginal;
+        controllerCrop.previewImage = _imageOriginalPreview;
         [controllerCrop reset:NO];
     }
 }
@@ -1007,15 +1021,16 @@
         alert.tag = 1;
         [alert show];
     } else {
-        [self.navigationController popViewControllerAnimated:NO];
+        [self.navigationController popToRootViewControllerAnimated:NO];
     }
 }
 
 - (IBAction)touchReset:(id)sender {
-    [self resetSetting];
+    imageFullsize = _imageOriginal;
+    imagePreview = _imageOriginalPreview;
+    imageSize = _imageOriginalPreview.size;
     
-    [self applyFilterSetting];
-    [self processImage];
+    [self switchEditImage];
     buttonReset.enabled = false;
 }
 
@@ -1053,7 +1068,7 @@
     switch (alertView.tag) {
         case 1: //Touch No
             if (buttonIndex == 1) {
-                [self.navigationController popViewControllerAnimated:NO];
+                [self.navigationController popToRootViewControllerAnimated:NO];
             }
             break;
         case 2:

@@ -7,12 +7,13 @@
 //
 
 #import "LXCaptureViewController.h"
-#import "UIDeviceHardware.h"
 #import "LXUtils.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "MBProgressHUD.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "LXCanvasViewController.h"
+#import "UIView+Genie.h"
+#import "MBProgressHUD.h"
 
 #define kAccelerometerFrequency        10.0 //Hz
 
@@ -24,14 +25,12 @@ typedef enum {
 } CameraTimer;
 
 @interface LXCaptureViewController ()
-
+- (CGPoint)convertToPointOfInterestFromViewCoordinates:(CGPoint)viewCoordinates;
+- (void)tapToAutoFocus:(UIGestureRecognizer *)gestureRecognizer;
+- (void)tapToContinouslyAutoFocus:(UIGestureRecognizer *)gestureRecognizer;
 @end
 
 @implementation LXCaptureViewController {
-    GPUImageStillCamera *videoCamera;
-    
-    BOOL isBackCamera;
-    
     NSTimer *timer;
     NSInteger timerCount;
     
@@ -39,9 +38,7 @@ typedef enum {
     
     CLLocationManager *locationManager;
     CLLocation *bestEffortAtLocation;
-    UIInterfaceOrientation orientationLast;
-    
-    GPUImageFilter *dummy;
+    UIImage *tmpImagePreview;
 }
 
 @synthesize viewCamera;
@@ -49,18 +46,23 @@ typedef enum {
 @synthesize buttonCapture;
 @synthesize buttonFlash;
 @synthesize buttonFlash35;
-@synthesize buttonFlip;
 
 @synthesize imageAutoFocus;
 @synthesize buttonPick;
 @synthesize buttonSetNoTimer;
 @synthesize buttonSetTimer5s;
-@synthesize tapFocus;
 
 @synthesize viewTopBar;
 @synthesize viewTopBar35;
 @synthesize viewCameraWraper;
 @synthesize viewCanvas;
+@synthesize imagePreview;
+@synthesize viewFlash;
+
+@synthesize captureManager;
+@synthesize captureVideoPreviewLayer;
+
+@synthesize buttonQuick;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -73,6 +75,48 @@ typedef enum {
 
 - (void)viewDidLoad
 {
+    if ([self captureManager] == nil) {
+		LXCamCaptureManager *manager = [[LXCamCaptureManager alloc] init];
+		[self setCaptureManager:manager];
+		
+		[[self captureManager] setDelegate:self];
+        
+		if ([[self captureManager] setupSession]) {
+            // Create video preview layer and add it to the UI
+			AVCaptureVideoPreviewLayer *newCaptureVideoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:[[self captureManager] session]];
+			UIView *view = [self viewCamera];
+			CALayer *viewLayer = [view layer];
+			[viewLayer setMasksToBounds:YES];
+			
+			CGRect bounds = [view bounds];
+			[newCaptureVideoPreviewLayer setFrame:bounds];
+			
+//			if ([newCaptureVideoPreviewLayer isOrientationSupported]) {
+//				[newCaptureVideoPreviewLayer setOrientation:AVCaptureVideoOrientationPortrait];
+//			}
+			
+			[newCaptureVideoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspect];
+			
+			[viewLayer insertSublayer:newCaptureVideoPreviewLayer below:[[viewLayer sublayers] objectAtIndex:0]];
+			
+			[self setCaptureVideoPreviewLayer:newCaptureVideoPreviewLayer];
+            
+            // Add a single tap gesture to focus on the point tapped, then lock focus
+			UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapToAutoFocus:)];
+			[singleTap setDelegate:self];
+			[singleTap setNumberOfTapsRequired:1];
+			[view addGestureRecognizer:singleTap];
+			
+            // Add a double tap gesture to reset the focus mode to continuous auto focus
+			UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapToContinouslyAutoFocus:)];
+			[doubleTap setDelegate:self];
+			[doubleTap setNumberOfTapsRequired:2];
+			[singleTap requireGestureRecognizerToFail:doubleTap];
+			[view addGestureRecognizer:doubleTap];
+		}
+	}
+    
+
     [super viewDidLoad];
     CGRect screen = [[UIScreen mainScreen] bounds];
 	// Do any additional setup after loading the view.
@@ -102,17 +146,16 @@ typedef enum {
     
     viewCanvas.frame = frameCanvas;
     viewCameraWraper.frame = frame;
+    imagePreview.frame = frame;
+    viewFlash.frame = frame;
     
-    [LXUtils globalShadow:viewCameraWraper];
-    
-    viewCamera.fillMode = kGPUImageFillModeStretch;
-    
-    videoCamera = [[LXStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionBack];
-    [videoCamera setOutputImageOrientation:UIInterfaceOrientationPortrait];
-    
-    dummy = [[GPUImageFilter alloc] init];
-    [videoCamera addTarget:dummy];
-    [dummy addTarget:viewCamera];
+    UIBezierPath *shadowPathCamera = [UIBezierPath bezierPathWithRect:viewCameraWraper.bounds];
+    viewCameraWraper.layer.masksToBounds = NO;
+    viewCameraWraper.layer.shadowColor = [UIColor blackColor].CGColor;
+    viewCameraWraper.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+    viewCameraWraper.layer.shadowOpacity = 1.0;
+    viewCameraWraper.layer.shadowRadius = 5.0;
+    viewCameraWraper.layer.shadowPath = shadowPathCamera.CGPath;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -126,11 +169,10 @@ typedef enum {
      name:@"AVSystemController_SystemVolumeDidChangeNotification"
      object:nil];
     
-    AudioSessionInitialize(NULL, NULL, NULL, NULL);
-    AudioSessionSetActive(true);
+//    AudioSessionInitialize(NULL, NULL, NULL, NULL);
+//    AudioSessionSetActive(true);
     
     currentTimer = kTimerNone;
-    orientationLast = UIInterfaceOrientationPortrait;
     
     locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
@@ -140,20 +182,20 @@ typedef enum {
     
     [locationManager startUpdatingLocation];
     
-    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     UIAccelerometer* a = [UIAccelerometer sharedAccelerometer];
     a.updateInterval = 1 / kAccelerometerFrequency;
     a.delegate = self;
     
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
+    
+    // Start the session. This is done asychronously since -startRunning doesn't return until the session is running.
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [[[self captureManager] session] startRunning];
+    });
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [videoCamera resumeCameraCapture];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [videoCamera startCameraCapture];
-    });
     [super viewDidAppear:animated];
 }
 
@@ -166,13 +208,10 @@ typedef enum {
     
     UIAccelerometer* a = [UIAccelerometer sharedAccelerometer];
     a.delegate = nil;
-    [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
     
     [super viewWillDisappear:animated];
+//    AudioSessionSetActive(false);
     
-    AudioSessionSetActive(false);
-    
-    [super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -181,131 +220,74 @@ typedef enum {
     // Dispose of any resources that can be recreated.
 }
 
-- (void)updateTargetPoint {
-    CGPoint point = CGPointMake(imageAutoFocus.center.x/viewCamera.frame.size.width, imageAutoFocus.center.y/viewCamera.frame.size.height);
+- (IBAction)flipCamera:(id)sender
+{
+    // Toggle between cameras when there is more than one
+    [[self captureManager] toggleCamera];
     
-    
-    [self setFocusPoint:point];
-    [self setMetteringPoint:point];
-    //        imageAutoFocus.hidden = false;
-    imageAutoFocus.alpha = 1.0;
-    [UIView animateWithDuration:0.3
-                          delay:1.0
-                        options:UIViewAnimationCurveEaseInOut
-                     animations:^{
-                         imageAutoFocus.alpha = 0.0;
-                     } completion:^(BOOL finished) {
-                         //imageAutoFocus.hidden = true;
-                     }];
+    // Do an initial focus
+    [[self captureManager] continuousFocusAtPoint:CGPointMake(.5f, .5f)];
 }
+
 
 - (void)capturePhotoAsync {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:self];
+    // Capture a still image
+    viewFlash.hidden = false;
+    viewFlash.alpha = 1;
+    
+    [[self buttonCapture] setEnabled:NO];
+    [[self captureManager] captureStillImage];
+    
     // Save last GPS and Orientation
     [locationManager stopUpdatingLocation];
-    UIStoryboard *storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
-    
-    UIImage *previewPic = [dummy imageFromCurrentlyProcessedOutputWithOrientation:[self imageOrientationFromUI:orientationLast]];
 
-    LXCanvasViewController *controllerCanvas = [storyCamera instantiateViewControllerWithIdentifier:@"Canvas"];
-    controllerCanvas.imagePreview = previewPic;
-    controllerCanvas.imageSize = previewPic.size;
-
-    
-    [videoCamera capturePhotoAsImageProcessedUpToFilter:dummy withCompletionHandler:^(UIImage *processedImage, NSError *error) {
-//        [videoCamera pauseCameraCapture];
-        [videoCamera stopCameraCapture];
-        NSMutableDictionary *imageMeta = [NSMutableDictionary dictionaryWithDictionary:videoCamera.currentCaptureMetadata];
-        
-        // Create formatted date
-        NSMutableDictionary *dictForEXIF = [imageMeta objectForKey:(NSString *)kCGImagePropertyExifDictionary];
-        NSMutableDictionary *dictForTIFF = [imageMeta objectForKey:(NSString *)kCGImagePropertyTIFFDictionary];
-        if (dictForTIFF == nil) {
-            dictForTIFF = [[NSMutableDictionary alloc] init];
-        }
-        if (dictForEXIF == nil) {
-            dictForEXIF = [[NSMutableDictionary alloc] init];
-        }
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
-        NSString *stringDate = [formatter stringFromDate:[NSDate date]];
-        
-        // Save GPS & Correct orientation
-        NSDictionary *location;
-        if (bestEffortAtLocation != nil) {
-            location = [LXUtils getGPSDictionaryForLocation:bestEffortAtLocation];
-            [imageMeta setObject:location forKey:(NSString *)kCGImagePropertyGPSDictionary];
-        }
-        [dictForTIFF setObject:[NSNumber numberWithInteger:[self exifOrientationFromImage:previewPic.imageOrientation]] forKey:(NSString *)kCGImagePropertyTIFFOrientation];
-        [imageMeta setObject:[NSNumber numberWithInteger:[self exifOrientationFromImage:previewPic.imageOrientation]] forKey:(NSString *)kCGImagePropertyOrientation];
-        
-        // Hardware Name
-        UIDeviceHardware *hardware = [[UIDeviceHardware alloc] init];
-        [dictForEXIF setObject:stringDate forKey:(NSString *)kCGImagePropertyExifDateTimeDigitized];
-        [dictForEXIF setObject:stringDate forKey:(NSString *)kCGImagePropertyExifDateTimeOriginal];
-        [dictForTIFF setObject:stringDate forKey:(NSString *)kCGImagePropertyTIFFDateTime];
-        [dictForTIFF setObject:@"Apple" forKey:(NSString *)kCGImagePropertyTIFFMake];
-        [dictForTIFF setObject:hardware.platformString forKey:(NSString *)kCGImagePropertyTIFFModel];
-        
-        [imageMeta setObject:dictForEXIF forKey:(NSString *)kCGImagePropertyExifDictionary];
-        [imageMeta setObject:dictForTIFF forKey:(NSString *)kCGImagePropertyTIFFDictionary];
-        
-        processedImage = [UIImage imageWithCGImage:processedImage.CGImage scale:1.0 orientation:previewPic.imageOrientation];
-        controllerCanvas.imageFullsize = processedImage;
-        controllerCanvas.imageSize = processedImage.size;
-        controllerCanvas.imageMeta = imageMeta;
-        
-        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-        [library writeImageToSavedPhotosAlbum:processedImage.CGImage metadata:imageMeta completionBlock:^(NSURL *assetURL, NSError *error) {
-        }];
-    }];
-    
-    [self.navigationController pushViewController:controllerCanvas animated:NO];
 }
 
-- (UIImageOrientation)imageOrientationFromUI:(UIInterfaceOrientation)ui {
-    switch (ui) {
-        case UIInterfaceOrientationPortrait:
-            return UIImageOrientationUp;
-        case UIInterfaceOrientationLandscapeLeft:
-            return UIImageOrientationRight;
-        case UIInterfaceOrientationLandscapeRight:
-            return UIImageOrientationLeft;
-        case UIInterfaceOrientationPortraitUpsideDown:
-            return UIImageOrientationDown;
-        default:
-            return UIImageOrientationUp;
+- (void)lattePreviewImageCaptured:(UIImage *)image {
+    if (buttonQuick.selected) {
+        imagePreview.image = image;
+    } else {
+        tmpImagePreview = image;
+        [self performSegueWithIdentifier:@"Canvas" sender:nil];
     }
 }
 
-- (NSInteger)exifOrientationFromImage:(UIImageOrientation)orientation {
-    switch (orientation) {
-        case UIImageOrientationDown:
-            return 3;
-        case UIImageOrientationUp:
-            return 1;
-        case UIImageOrientationLeft:
-            return 8;
-        case UIImageOrientationRight:
-            return 6;
-        default:
-            return 1;
+- (void)latteStillImageCaptured:(UIImage *)image imageMeta:(NSMutableDictionary *)imageMeta {
+    [UIView animateWithDuration:0.3
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         viewFlash.alpha = 0;
+                     } completion:^(BOOL finished) {
+                         viewFlash.hidden = true;
+                     }];
+    CGRect screen = [[UIScreen mainScreen] bounds];
+    [imagePreview genieInTransitionWithDuration:0.7
+                                destinationRect:CGRectMake(10, screen.size.height-50, 50, 40)
+                                destinationEdge:BCRectEdgeTop
+                                     completion:nil];
+    
+    if (!buttonQuick.selected) {
+        if ([self.navigationController.viewControllers.lastObject isKindOfClass:[LXCanvasViewController class]]) {
+            LXCanvasViewController *controllerCanvas = (LXCanvasViewController*)self.navigationController.viewControllers.lastObject;
+            controllerCanvas.delegate = _delegate;
+            controllerCanvas.imageOriginal = image;
+            controllerCanvas.imageMeta = imageMeta;
+        }
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [self.captureManager.session stopRunning];
+        });
     }
 }
 
-
-- (IBAction)cameraTouch:(UITapGestureRecognizer *)sender {
-    if (sender.state == UIGestureRecognizerStateRecognized) {
-        CGPoint location = [sender locationInView:self.viewCamera];
-        
-        imageAutoFocus.hidden = false;
-        [UIView animateWithDuration:0.1 animations:^{
-            imageAutoFocus.alpha = 1;
-        }];
-        
-        imageAutoFocus.center = location;
-        
-        [self updateTargetPoint];
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"Canvas"]) {
+        LXCanvasViewController *controllerCanvas = segue.destinationViewController;
+        controllerCanvas.imageOriginalPreview = tmpImagePreview;
+        tmpImagePreview = nil;
     }
 }
 
@@ -314,7 +296,7 @@ typedef enum {
 }
 
 - (IBAction)capture:(id)sender {
-    buttonPick.hidden = true;
+    //buttonPick.enabled = true;
     buttonCapture.enabled = false;
     if (currentTimer == kTimerNone) {
         [self capturePhotoAsync];
@@ -332,11 +314,6 @@ typedef enum {
 - (IBAction)touchTimer:(id)sender {
     // wait for time before begin
     [viewTimer setHidden:!viewTimer.isHidden];
-}
-
-- (IBAction)flipCamera:(id)sender {
-    isBackCamera = !isBackCamera;
-    [videoCamera rotateCamera];
 }
 
 
@@ -369,6 +346,58 @@ typedef enum {
             break;
     }
 }
+
+- (IBAction)touchQuick:(UIButton *)sender {
+    sender.selected = !sender.selected;
+}
+
+- (IBAction)touchPick:(id)sender {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self.captureManager.session stopRunning];
+    });
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    [imagePicker.navigationBar setBackgroundImage:[UIImage imageNamed: @"bg_head.png"] forBarMetrics:UIBarMetricsDefault];
+    imagePicker.delegate = self;
+    [self presentViewController:imagePicker animated:NO completion:nil];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    [picker dismissModalViewControllerAnimated:NO];
+    
+    ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset)
+    {
+        UIStoryboard *storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
+        LXCanvasViewController *controllerCanvas = [storyCamera instantiateViewControllerWithIdentifier:@"Canvas"];
+        
+        UIImage *imageFullsize = [info objectForKey:UIImagePickerControllerOriginalImage];
+        CGSize previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:imageFullsize.size.width height:imageFullsize.size.height]);
+        UIImage *previewPic = [LXUtils imageWithImage:imageFullsize scaledToSize:previewUISize];
+        controllerCanvas.imageOriginalPreview = previewPic;
+        controllerCanvas.imageMeta = [NSMutableDictionary dictionaryWithDictionary:myasset.defaultRepresentation.metadata];
+        [self.navigationController pushViewController:controllerCanvas animated:YES];
+        controllerCanvas.imageOriginal = imageFullsize;
+    };
+    
+    ALAssetsLibraryAccessFailureBlock failureblock  = ^(NSError *myerror)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"Error")
+                                                        message:[myerror localizedDescription]
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"cancel", @"Error")
+                                              otherButtonTitles:nil];
+        [alert show];
+    };
+    
+    ALAssetsLibrary* assetslibrary = [[ALAssetsLibrary alloc] init];
+    [assetslibrary assetForURL:[info objectForKey:UIImagePickerControllerReferenceURL]
+                   resultBlock:resultblock
+                  failureBlock:failureblock];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissModalViewControllerAnimated:NO];
+}
+
 
 - (void)countDown:(id)sender {
     if (timerCount == 0) {
@@ -416,7 +445,7 @@ typedef enum {
 }
 
 - (void)setFlash:(BOOL)flash {
-    AVCaptureDevice *device = videoCamera.inputCamera;
+    AVCaptureDevice *device = self.captureManager.videoInput.device;
     
     NSError *error;
     if ([device lockForConfiguration:&error]) {
@@ -427,45 +456,6 @@ typedef enum {
                 [device setFlashMode:AVCaptureFlashModeOff];
             [device unlockForConfiguration];
         }
-    } else {
-        TFLog(@"ERROR = %@", error);
-    }
-}
-
-- (void)setFocusPoint:(CGPoint)point {
-    AVCaptureDevice *device = videoCamera.inputCamera;
-    
-    CGPoint pointOfInterest;
-    
-    pointOfInterest = CGPointMake(point.y, 1.0 - point.x);
-    
-    NSError *error;
-    if ([device lockForConfiguration:&error]) {
-        if ([device isFocusPointOfInterestSupported] && [device isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
-            [device setFocusPointOfInterest:pointOfInterest];
-            [device setFocusMode:AVCaptureFocusModeAutoFocus];
-            [device unlockForConfiguration];
-        }
-    } else {
-        TFLog(@"ERROR = %@", error);
-    }
-}
-
-
-- (void)setMetteringPoint:(CGPoint)point {
-    AVCaptureDevice *device = videoCamera.inputCamera;
-    
-    CGPoint pointOfInterest;
-    pointOfInterest = CGPointMake(point.y, 1.0 - point.x);
-    
-    NSError *error;
-    if ([device lockForConfiguration:&error]) {;
-        if([device isExposurePointOfInterestSupported] && [device isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure])
-        {
-            [device setExposurePointOfInterest:pointOfInterest];
-            [device setExposureMode:AVCaptureExposureModeContinuousAutoExposure];
-        }
-        [device unlockForConfiguration];
     } else {
         TFLog(@"ERROR = %@", error);
     }
@@ -489,30 +479,22 @@ typedef enum {
 
 #pragma mark UIAccelerometerDelegate
 -(void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration {
-    UIInterfaceOrientation orientationNew;
     if (acceleration.x >= 0.75) {
-        orientationNew = UIInterfaceOrientationLandscapeLeft;
+        self.captureManager.orientation = AVCaptureVideoOrientationLandscapeLeft;
     }
     else if (acceleration.x <= -0.75) {
-        orientationNew = UIInterfaceOrientationLandscapeRight;
+        self.captureManager.orientation = AVCaptureVideoOrientationLandscapeRight;
     }
     else if (acceleration.y <= -0.75) {
-        orientationNew = UIInterfaceOrientationPortrait;
+        self.captureManager.orientation = AVCaptureVideoOrientationPortrait;
     }
     else if (acceleration.y >= 0.75) {
-        orientationNew = UIInterfaceOrientationPortraitUpsideDown;
+        self.captureManager.orientation = AVCaptureVideoOrientationPortraitUpsideDown;
     }
     else {
-        // Consider same as last time
+        self.captureManager.orientation = AVCaptureVideoOrientationPortrait;
         return;
     }
-
-    if (orientationNew == orientationLast)
-        return;
-#ifdef DEBUG
-    TFLog(@"Going from %@ to %@!", [[self class] orientationToText:orientationLast], [[self class] orientationToText:orientationNew]);
-#endif
-    orientationLast = orientationNew;
 }
 #pragma mark -
 
@@ -524,6 +506,7 @@ typedef enum {
     
     if (bestEffortAtLocation == nil || bestEffortAtLocation.horizontalAccuracy > newLocation.horizontalAccuracy) {
         bestEffortAtLocation = newLocation;
+        self.captureManager.bestEffortAtLocation = bestEffortAtLocation;
         if (newLocation.horizontalAccuracy <= locationManager.desiredAccuracy) {
             [locationManager stopUpdatingLocation];
         }
@@ -531,7 +514,133 @@ typedef enum {
 }
 
 - (void)close:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self.captureManager.session stopRunning];
+    });
+    [self.navigationController dismissModalViewControllerAnimated:YES];
 }
 
+- (CGPoint)convertToPointOfInterestFromViewCoordinates:(CGPoint)viewCoordinates
+{
+    CGPoint pointOfInterest = CGPointMake(.5f, .5f);
+    CGSize frameSize = [[self viewCamera] frame].size;
+    
+//    if ([captureVideoPreviewLayer isMirrored]) {
+//        viewCoordinates.x = frameSize.width - viewCoordinates.x;
+//    }
+    
+    if ( [[captureVideoPreviewLayer videoGravity] isEqualToString:AVLayerVideoGravityResize] ) {
+		// Scale, switch x and y, and reverse x
+        pointOfInterest = CGPointMake(viewCoordinates.y / frameSize.height, 1.f - (viewCoordinates.x / frameSize.width));
+    } else {
+        CGRect cleanAperture;
+        for (AVCaptureInputPort *port in [[[self captureManager] videoInput] ports]) {
+            if ([port mediaType] == AVMediaTypeVideo) {
+                cleanAperture = CMVideoFormatDescriptionGetCleanAperture([port formatDescription], YES);
+                CGSize apertureSize = cleanAperture.size;
+                CGPoint point = viewCoordinates;
+                
+                CGFloat apertureRatio = apertureSize.height / apertureSize.width;
+                CGFloat viewRatio = frameSize.width / frameSize.height;
+                CGFloat xc = .5f;
+                CGFloat yc = .5f;
+                
+                if ( [[captureVideoPreviewLayer videoGravity] isEqualToString:AVLayerVideoGravityResizeAspect] ) {
+                    if (viewRatio > apertureRatio) {
+                        CGFloat y2 = frameSize.height;
+                        CGFloat x2 = frameSize.height * apertureRatio;
+                        CGFloat x1 = frameSize.width;
+                        CGFloat blackBar = (x1 - x2) / 2;
+						// If point is inside letterboxed area, do coordinate conversion; otherwise, don't change the default value returned (.5,.5)
+                        if (point.x >= blackBar && point.x <= blackBar + x2) {
+							// Scale (accounting for the letterboxing on the left and right of the video preview), switch x and y, and reverse x
+                            xc = point.y / y2;
+                            yc = 1.f - ((point.x - blackBar) / x2);
+                        }
+                    } else {
+                        CGFloat y2 = frameSize.width / apertureRatio;
+                        CGFloat y1 = frameSize.height;
+                        CGFloat x2 = frameSize.width;
+                        CGFloat blackBar = (y1 - y2) / 2;
+						// If point is inside letterboxed area, do coordinate conversion. Otherwise, don't change the default value returned (.5,.5)
+                        if (point.y >= blackBar && point.y <= blackBar + y2) {
+							// Scale (accounting for the letterboxing on the top and bottom of the video preview), switch x and y, and reverse x
+                            xc = ((point.y - blackBar) / y2);
+                            yc = 1.f - (point.x / x2);
+                        }
+                    }
+                } else if ([[captureVideoPreviewLayer videoGravity] isEqualToString:AVLayerVideoGravityResizeAspectFill]) {
+					// Scale, switch x and y, and reverse x
+                    if (viewRatio > apertureRatio) {
+                        CGFloat y2 = apertureSize.width * (frameSize.width / apertureSize.height);
+                        xc = (point.y + ((y2 - frameSize.height) / 2.f)) / y2; // Account for cropped height
+                        yc = (frameSize.width - point.x) / frameSize.width;
+                    } else {
+                        CGFloat x2 = apertureSize.height * (frameSize.height / apertureSize.width);
+                        yc = 1.f - ((point.x + ((x2 - frameSize.width) / 2)) / x2); // Account for cropped width
+                        xc = point.y / frameSize.height;
+                    }
+                }
+                
+                pointOfInterest = CGPointMake(xc, yc);
+                break;
+            }
+        }
+    }
+    
+    return pointOfInterest;
+}
+
+// Auto focus at a particular point. The focus mode will change to locked once the auto focus happens.
+- (void)tapToAutoFocus:(UIGestureRecognizer *)gestureRecognizer
+{
+    if ([[[captureManager videoInput] device] isFocusPointOfInterestSupported]) {
+        CGPoint tapPoint = [gestureRecognizer locationInView:[self viewCamera]];
+        CGPoint convertedFocusPoint = [self convertToPointOfInterestFromViewCoordinates:tapPoint];
+        [captureManager autoFocusAtPoint:convertedFocusPoint];
+        [captureManager meteringAtPoint:convertedFocusPoint];
+        imageAutoFocus.center = tapPoint;
+        imageAutoFocus.alpha = 1;
+        [UIView animateWithDuration:kGlobalAnimationSpeed
+                              delay:1
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             imageAutoFocus.alpha = 0;
+                         } completion:nil];
+    }
+}
+
+// Change to continuous auto focus. The camera will constantly focus at the point choosen.
+- (void)tapToContinouslyAutoFocus:(UIGestureRecognizer *)gestureRecognizer
+{
+    if ([[[captureManager videoInput] device] isFocusPointOfInterestSupported])
+        [captureManager continuousFocusAtPoint:CGPointMake(.5f, .5f)];
+}
+
+
+- (void)captureManager:(AVCamCaptureManager *)captureManager didFailWithError:(NSError *)error
+{
+    CFRunLoopPerformBlock(CFRunLoopGetMain(), kCFRunLoopCommonModes, ^(void) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[error localizedDescription]
+                                                            message:[error localizedFailureReason]
+                                                           delegate:nil
+                                                  cancelButtonTitle:NSLocalizedString(@"OK", @"OK button title")
+                                                  otherButtonTitles:nil];
+        [alertView show];
+    });
+}
+
+- (void)captureManagerStillImageCaptured:(AVCamCaptureManager *)captureManager
+{
+    CFRunLoopPerformBlock(CFRunLoopGetMain(), kCFRunLoopCommonModes, ^(void) {
+        [[self buttonCapture] setEnabled:YES];
+    });
+}
+
+- (void)viewDidUnload {
+    [self setImagePreview:nil];
+    [self setViewFlash:nil];
+    [self setButtonQuick:nil];
+    [super viewDidUnload];
+}
 @end
