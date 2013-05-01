@@ -131,9 +131,13 @@ typedef enum {
 - (IBAction)toggleFisheye:(UIButton *)sender;
 - (IBAction)setBlend:(UIButton *)sender;
 - (IBAction)toggleMono:(id)sender;
+- (IBAction)touchCrop:(id)sender;
 
 @property (strong, nonatomic) UIImage *imageOriginalPreview;
 @property (strong, nonatomic) UIImage *imageOriginal;
 @property (strong, nonatomic) NSMutableDictionary *imageMeta;
-
+@property (strong, nonatomic) UIImage *imagePreview;
+@property (strong, nonatomic) UIImage *imageFullsize;
+@property (assign, nonatomic) CGSize imageSize;
+@property (strong, nonatomic) GPUImagePicture *previewFilter;
 @end

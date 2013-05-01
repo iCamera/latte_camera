@@ -22,8 +22,6 @@
     GPUImageFilterPipeline *pipe;
     LXImageFilter *filterMain;
     
-    GPUImagePicture *previewFilter;
-    
     UIActionSheet *sheet;
     
     BOOL isSaved;
@@ -44,14 +42,12 @@
     NSInteger currentTab;
     LXShare *laSharekit;
     
-    CGSize imageSize;
-    
-    UIImage *imagePreview;
-    UIImage *imageFullsize;
     NSData *imageFinalData;
     UIImage *imageFinalThumb;
     
     BOOL didInit;
+    
+    LXImageCropViewController *controllerCrop;
 }
 
 @end
@@ -122,6 +118,10 @@
 @synthesize delegate;
 
 @synthesize imageMeta;
+@synthesize imagePreview;
+@synthesize imageFullsize;
+@synthesize imageSize;
+@synthesize previewFilter;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -966,6 +966,27 @@
     [self processImage];
     [self initPreviewPic];
     filterMain.toneEnable = NO;
+    
+    // Init Crop Controller
+    UIStoryboard *storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
+    controllerCrop = [storyCamera instantiateViewControllerWithIdentifier:@"Crop"];
+    
+    __block LXCanvasViewController *weakController = self;
+    controllerCrop.doneCallback = ^(UIImage *editedImage, BOOL canceled){
+        if(!canceled) {
+            CGSize previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:editedImage.size.width height:editedImage.size.height]);
+            weakController.imageFullsize = editedImage;
+            weakController.imageSize = editedImage.size;
+            weakController.imagePreview = [LXUtils imageWithImage:editedImage scaledToSize:previewUISize];
+            [weakController resizeCameraViewWithAnimation:YES];
+            weakController.previewFilter = [[GPUImagePicture alloc] initWithImage:weakController.imagePreview];
+            [weakController preparePipe];
+            [weakController processImage];
+        }
+        [weakController dismissModalViewControllerAnimated:YES];
+    };
+    controllerCrop.sourceImage = _imageOriginal;
+    controllerCrop.previewImage = _imageOriginalPreview;
 }
 
 - (void)initPreviewPic {
@@ -986,28 +1007,7 @@
     if ([segue.identifier isEqualToString:@"HelpBokeh"]) {
         
     } else if ([segue.identifier isEqualToString:@"Crop"]) {
-        LXImageCropViewController *controllerCrop = segue.destinationViewController;
-        __block LXImageCropViewController *weakController = controllerCrop;
-        controllerCrop.doneCallback = ^(UIImage *editedImage, BOOL canceled){
-            if(!canceled) {
-                CGSize previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:imageFullsize.size.width height:imageFullsize.size.height]);
-                imageFullsize = editedImage;
-                imageSize = editedImage.size;
-                imagePreview = [LXUtils imageWithImage:imageFullsize scaledToSize:previewUISize];
-                [self resizeCameraViewWithAnimation:YES];
-                previewFilter = [[GPUImagePicture alloc] initWithImage:imagePreview];
-                [self preparePipe];
-                [self processImage];
-            }
-            [weakController dismissModalViewControllerAnimated:YES];
-        };
-        controllerCrop.cropSize = CGSizeMake(280,280);
-        controllerCrop.minimumScale = 0.2;
-        controllerCrop.maximumScale = 10;
         
-        controllerCrop.sourceImage = _imageOriginal;
-        controllerCrop.previewImage = _imageOriginalPreview;
-        [controllerCrop reset:NO];
     }
 }
 
@@ -1238,6 +1238,10 @@
         sliderSaturation.value = 1;
     }
     [self processImage];
+}
+
+- (IBAction)touchCrop:(id)sender {
+    [self presentModalViewController:controllerCrop animated:YES];
 }
 
 - (void)setBlendImpl:(NSInteger)tag {

@@ -7,6 +7,7 @@
 //
 
 #import "LXImageCropViewController.h"
+#import "MBProgressHUD.h"
 
 @interface LXImageCropViewController ()
 
@@ -29,6 +30,15 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.cropSize = CGSizeMake(280,280);
+    self.minimumScale = 0.2;
+    self.maximumScale = 10;
+    [self reset:NO];
+    [super viewWillAppear:YES];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -40,22 +50,35 @@
 
 - (IBAction)panSize:(UIPanGestureRecognizer *)sender {
     CGPoint translation = [sender translationInView:self.view];
-    CGRect frame = imageCropSize.frame;
-    frame.origin.x += translation.x;
-    frame.origin.y += translation.y;
     CGSize size = self.cropSize;
     size.width += translation.x*2;
     size.height += translation.y*2;
     self.cropSize = size;
-    imageCropSize.frame = frame;
-
+    
     [sender setTranslation:CGPointMake(0, 0) inView:self.view];
 
 }
+
+- (void)setCropSize:(CGSize)cropSize {
+    [super setCropSize:cropSize];
+    
+    CGPoint center = CGPointMake(self.cropRect.origin.x + self.cropRect.size.width, self.cropRect.origin.y + self.cropRect.size.height);
+    imageCropSize.center = center;
+}
+
 - (void)viewDidUnload {
     [self setImageCropSize:nil];
     [super viewDidUnload];
 }
+
+- (void)startTransformHook {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+}
+
+- (void)endTransformHook {
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+}
+
 - (IBAction)setCropRatio:(UIButton*)sender {
     switch (sender.tag) {
         case 1:
