@@ -50,7 +50,7 @@ typedef enum {
 - (void)imagePickerControllerDidCancel:(LXCanvasViewController *)picker;
 @end
 
-@interface LXCanvasViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, UIScrollViewDelegate, LXDrawViewDelegate, UIAlertViewDelegate, UINavigationControllerDelegate>
+@interface LXCanvasViewController : UIViewController <UIActionSheetDelegate, UIGestureRecognizerDelegate, UIScrollViewDelegate, LXDrawViewDelegate, UIAlertViewDelegate, UINavigationControllerDelegate>
 @property (weak, nonatomic) id <LXImagePickerDelegate> delegate;
 
 @property (strong, nonatomic) IBOutlet UIView *viewBottomBar;
@@ -116,7 +116,6 @@ typedef enum {
 
 @property (strong, nonatomic) NSDictionary *dictUpload;
 
-- (IBAction)openImagePicker:(id)sender;
 - (IBAction)changeLens:(UIButton*)sender;
 - (IBAction)touchSave:(id)sender;
 - (IBAction)toggleControl:(UIButton*)sender;

@@ -489,14 +489,6 @@
     [self processImage];
 }
 
-- (IBAction)openImagePicker:(id)sender {
-    UIImagePickerController *imagePicker = [[UIImagePickerController alloc]init];
-    imagePicker.delegate = self;
-    [imagePicker.navigationBar setBackgroundImage:[UIImage imageNamed: @"bg_head.png"] forBarMetrics:UIBarMetricsDefault];
-    
-    [self presentViewController:imagePicker animated:NO completion:nil];
-}
-
 - (IBAction)changeLens:(UIButton*)sender {
     buttonLensFish.enabled = true;
     buttonLensNormal.enabled = true;
@@ -897,44 +889,6 @@
         viewCameraWraper.layer.shadowPath = shadowPathCamera.CGPath;
         viewCameraWraper.layer.shadowRadius = 5.0;
     }];
-}
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    [picker dismissViewControllerAnimated:NO completion:nil];
-    
-    ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset)
-    {
-        imageMeta = [NSMutableDictionary dictionaryWithDictionary:myasset.defaultRepresentation.metadata];
-        
-        self.imageOriginal = [info objectForKey:UIImagePickerControllerOriginalImage];
-        imageSize = imageFullsize.size;
-        
-        //
-        CGSize previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:imageSize.width height:imageSize.height]);
-        UIImage *previewPic = [LXUtils imageWithImage:_imageOriginal scaledToSize:previewUISize];
-        self.imageOriginalPreview = previewPic;
-        
-        [self switchEditImage];
-    };
-    
-    ALAssetsLibraryAccessFailureBlock failureblock  = ^(NSError *myerror)
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"Error")
-                                                        message:[myerror localizedDescription]
-                                                       delegate:nil
-                                              cancelButtonTitle:NSLocalizedString(@"cancel", @"Error")
-                                              otherButtonTitles:nil];
-        [alert show];
-    };
-    
-    ALAssetsLibrary* assetslibrary = [[ALAssetsLibrary alloc] init];
-    [assetslibrary assetForURL:[info objectForKey:UIImagePickerControllerReferenceURL]
-                   resultBlock:resultblock
-                  failureBlock:failureblock];
-}
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [picker dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (void)switchEditImage {
