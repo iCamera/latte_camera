@@ -128,6 +128,7 @@
     labelDesc.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0];
     labelDesc.textColor = [UIColor whiteColor];
     
+    __weak LXGalleryViewController *weakSelf = self;
     STLinkCallbackBlock callbackBlock = ^(STLinkActionType actionType, NSString *link) {
         
         NSString *displayString = NULL;
@@ -148,7 +149,8 @@
                                                                        bundle:nil];
                 LXTagViewController *viewTag = [storyMain instantiateViewControllerWithIdentifier:@"Tag"];
                 viewTag.keyword = [link substringFromIndex:1];
-                [self.navigationController pushViewController:viewTag animated:YES];
+                
+                [weakSelf.navigationController pushViewController:viewTag animated:YES];
 
                 break;
             }

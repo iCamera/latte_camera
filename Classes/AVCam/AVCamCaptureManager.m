@@ -70,15 +70,15 @@
 @synthesize orientation;
 @synthesize videoInput;
 @synthesize stillImageOutput;
-@synthesize deviceConnectedObserver;
-@synthesize deviceDisconnectedObserver;
+//@synthesize deviceConnectedObserver;
+//@synthesize deviceDisconnectedObserver;
 @synthesize delegate;
 
 - (id) init
 {
     self = [super init];
     if (self != nil) {
-		__block id weakSelf = self;
+		/*__block id weakSelf = self;
         void (^deviceConnectedBlock)(NSNotification *) = ^(NSNotification *notification) {
 			AVCaptureDevice *device = [notification object];
 			
@@ -126,9 +126,8 @@
         NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
         [self setDeviceConnectedObserver:[notificationCenter addObserverForName:AVCaptureDeviceWasConnectedNotification object:nil queue:nil usingBlock:deviceConnectedBlock]];
         [self setDeviceDisconnectedObserver:[notificationCenter addObserverForName:AVCaptureDeviceWasDisconnectedNotification object:nil queue:nil usingBlock:deviceDisconnectedBlock]];
-		[[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-		[notificationCenter addObserver:self selector:@selector(deviceOrientationDidChange) name:UIDeviceOrientationDidChangeNotification object:nil];
-		orientation = AVCaptureVideoOrientationPortrait;
+
+		orientation = AVCaptureVideoOrientationPortrait;*/
     }
     
     return self;
@@ -136,18 +135,12 @@
 
 - (void) dealloc
 {
-    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    [notificationCenter removeObserver:[self deviceConnectedObserver]];
-    [notificationCenter removeObserver:[self deviceDisconnectedObserver]];
-	[notificationCenter removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
-	[[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
+//    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+//    [notificationCenter removeObserver:[self deviceConnectedObserver]];
+//    [notificationCenter removeObserver:[self deviceDisconnectedObserver]];
+
     
     [[self session] stopRunning];
-    [session release];
-    [videoInput release];
-    [stillImageOutput release];
-    
-    [super dealloc];
 }
 
 - (BOOL) setupSession
@@ -182,7 +175,6 @@
                                     AVVideoCodecJPEG, AVVideoCodecKey,
                                     nil];
     [newStillImageOutput setOutputSettings:outputSettings];
-    [outputSettings release];
     
     
     // Create session (use default AVCaptureSessionPresetHigh)
@@ -200,10 +192,7 @@
     [self setStillImageOutput:newStillImageOutput];
     [self setVideoInput:newVideoInput];
     [self setSession:newCaptureSession];
-    
-    [newStillImageOutput release];
-    [newVideoInput release];
-    [newCaptureSession release];
+
     
     success = YES;
     
@@ -235,9 +224,6 @@
 																 [library writeImageToSavedPhotosAlbum:[image CGImage]
 																						   orientation:(ALAssetOrientation)[image imageOrientation]
 																					   completionBlock:completionBlock];
-																 [image release];
-																 
-																 [library release];
 															 }
 															 else
 																 completionBlock(nil, error);
@@ -276,7 +262,6 @@
             }
             [[self session] commitConfiguration];
             success = YES;
-            [newVideoInput release];
         } else if (error) {
             if ([[self delegate] respondsToSelector:@selector(captureManager:didFailWithError:)]) {
                 [[self delegate] captureManager:self didFailWithError:error];

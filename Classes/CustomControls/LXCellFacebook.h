@@ -20,6 +20,6 @@
 - (IBAction)toggleFollow:(UIButton *)sender;
 
 @property (strong, nonatomic) User *user;
-@property (strong, nonatomic) LXFacebookFriendViewController* parent;
+@property (weak, nonatomic) LXFacebookFriendViewController* parent;
 
 @end

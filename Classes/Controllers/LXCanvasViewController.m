@@ -9,7 +9,6 @@
 #import "LXCanvasViewController.h"
 #import "LXAppDelegate.h"
 #import "ALAssetsLibrary+CustomPhotoAlbum.h"
-#import "GPUImageFilter+saveToLibrary.h"
 #import "LXFilterFish.h"
 #import "LXShare.h"
 #import "RDActionSheet.h"
@@ -136,6 +135,25 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         viewDraw.isEmpty = YES;
+        
+        // Init Crop Controller
+        UIStoryboard *storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
+        controllerCrop = [storyCamera instantiateViewControllerWithIdentifier:@"Crop"];
+        
+        __weak LXCanvasViewController *weakController = self;
+        controllerCrop.doneCallback = ^(UIImage *editedImage, BOOL canceled){
+            if(!canceled) {
+                CGSize previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:editedImage.size.width height:editedImage.size.height]);
+                weakController.imageFullsize = editedImage;
+                weakController.imageSize = editedImage.size;
+                weakController.imagePreview = [LXUtils imageWithImage:editedImage scaledToSize:previewUISize];
+                [weakController resizeCameraViewWithAnimation:YES];
+                weakController.previewFilter = [[GPUImagePicture alloc] initWithImage:weakController.imagePreview];
+                [weakController preparePipe];
+                [weakController processImage];
+            }
+            [weakController dismissModalViewControllerAnimated:YES];
+        };
     }
     return self;
 }
@@ -164,7 +182,6 @@
     
     viewCamera.fillMode = kGPUImageFillModeStretch;
     
-    isSaved = true;
     viewDraw.delegate = self;
     viewDraw.lineWidth = 10.0;
     currentTab = kTabPreview;
@@ -341,14 +358,16 @@
     _imageOriginalPreview = imageOriginalPreview;
     imagePreview = imageOriginalPreview;
     imageSize = imagePreview.size;
+    
+    controllerCrop.previewImage = imageOriginalPreview;
 }
 
 - (void)setImageOriginal:(UIImage *)imageOriginal {
     _imageOriginal = imageOriginal;
     imageFullsize = imageOriginal;
     imageSize = imageFullsize.size;
-    
     buttonYes.enabled = true;
+    controllerCrop.sourceImage = imageOriginal;
 }
 
 
@@ -934,8 +953,6 @@
 
     viewShoot.hidden = YES;
     scrollProcess.hidden = NO;
-
-    isSaved = FALSE;
     
     // Clear depth mask
     [viewDraw.drawImageView setImage:nil];
@@ -967,26 +984,7 @@
     [self initPreviewPic];
     filterMain.toneEnable = NO;
     
-    // Init Crop Controller
-    UIStoryboard *storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
-    controllerCrop = [storyCamera instantiateViewControllerWithIdentifier:@"Crop"];
-    
-    __block LXCanvasViewController *weakController = self;
-    controllerCrop.doneCallback = ^(UIImage *editedImage, BOOL canceled){
-        if(!canceled) {
-            CGSize previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:editedImage.size.width height:editedImage.size.height]);
-            weakController.imageFullsize = editedImage;
-            weakController.imageSize = editedImage.size;
-            weakController.imagePreview = [LXUtils imageWithImage:editedImage scaledToSize:previewUISize];
-            [weakController resizeCameraViewWithAnimation:YES];
-            weakController.previewFilter = [[GPUImagePicture alloc] initWithImage:weakController.imagePreview];
-            [weakController preparePipe];
-            [weakController processImage];
-        }
-        [weakController dismissModalViewControllerAnimated:YES];
-    };
-    controllerCrop.sourceImage = _imageOriginal;
-    controllerCrop.previewImage = _imageOriginalPreview;
+    isSaved = YES;
 }
 
 - (void)initPreviewPic {
@@ -1021,7 +1019,7 @@
         alert.tag = 1;
         [alert show];
     } else {
-        [self.navigationController popToRootViewControllerAnimated:NO];
+        [self.navigationController popViewControllerAnimated:NO];
     }
 }
 
@@ -1068,7 +1066,7 @@
     switch (alertView.tag) {
         case 1: //Touch No
             if (buttonIndex == 1) {
-                [self.navigationController popToRootViewControllerAnimated:NO];
+                [self.navigationController popViewControllerAnimated:NO];
             }
             break;
         case 2:

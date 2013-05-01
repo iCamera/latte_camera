@@ -17,7 +17,7 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *tableNotify;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityLoad;
-@property (strong, nonatomic) LXMainTabViewController *parent;
+@property (weak, nonatomic) LXMainTabViewController *parent;
 - (IBAction)touchBackground:(id)sender;
 
 @end

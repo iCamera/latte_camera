@@ -58,9 +58,9 @@
 @property (nonatomic,assign) AVCaptureVideoOrientation orientation;
 @property (nonatomic,retain) AVCaptureDeviceInput *videoInput;
 @property (nonatomic,retain) AVCaptureStillImageOutput *stillImageOutput;
-@property (nonatomic,assign) id deviceConnectedObserver;
-@property (nonatomic,assign) id deviceDisconnectedObserver;
-@property (nonatomic,assign) id <AVCamCaptureManagerDelegate> delegate;
+//@property (nonatomic,assign) id deviceConnectedObserver;
+//@property (nonatomic,assign) id deviceDisconnectedObserver;
+@property (nonatomic,weak) id <AVCamCaptureManagerDelegate> delegate;
 
 - (BOOL) setupSession;
 - (void) captureStillImage;
@@ -68,7 +68,7 @@
 - (NSUInteger) cameraCount;
 - (NSUInteger) micCount;
 - (void) autoFocusAtPoint:(CGPoint)point;
-- (void)meteringAtPoint:(CGPoint)point;
+- (void) meteringAtPoint:(CGPoint)point;
 - (void) continuousFocusAtPoint:(CGPoint)point;
 
 @end

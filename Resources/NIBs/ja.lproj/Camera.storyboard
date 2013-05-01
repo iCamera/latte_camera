@@ -1175,6 +1175,7 @@
                 <relationship kind="action" name="toggleGain:" candidateClass="UISwitch"/>
                 <relationship kind="action" name="toggleMaskNatual:" candidateClass="UISwitch"/>
                 <relationship kind="action" name="toggleMono:"/>
+                <relationship kind="action" name="touchCrop:"/>
                 <relationship kind="action" name="touchNo:"/>
                 <relationship kind="action" name="touchOpenHelp:"/>
                 <relationship kind="action" name="touchReset:"/>
@@ -1193,8 +1194,6 @@
                 <relationship kind="outlet" name="buttonLensFish" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonLensNormal" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonLensWide" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonNo" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonPickTop" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonReset" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonToggleBasic" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonToggleBlend" candidateClass="UIButton"/>

@@ -31,7 +31,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *imageNationality;
 
 @property (strong, nonatomic) User* user;
-@property (strong, nonatomic) LXMyPageViewController* parent;
+@property (weak, nonatomic) LXMyPageViewController* parent;
 
 - (IBAction)touchTab:(UIButton *)sender;
 - (IBAction)touchSetProfilePic:(id)sender;

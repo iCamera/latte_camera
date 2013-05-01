@@ -39,6 +39,9 @@ typedef enum {
     CLLocationManager *locationManager;
     CLLocation *bestEffortAtLocation;
     UIImage *tmpImagePreview;
+    
+    LXCamCaptureManager *captureManager;
+    AVCaptureVideoPreviewLayer *captureVideoPreviewLayer;
 }
 
 @synthesize viewCamera;
@@ -59,9 +62,6 @@ typedef enum {
 @synthesize imagePreview;
 @synthesize viewFlash;
 
-@synthesize captureManager;
-@synthesize captureVideoPreviewLayer;
-
 @synthesize buttonQuick;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -75,49 +75,42 @@ typedef enum {
 
 - (void)viewDidLoad
 {
-    if ([self captureManager] == nil) {
-		LXCamCaptureManager *manager = [[LXCamCaptureManager alloc] init];
-		[self setCaptureManager:manager];
-		
-		[[self captureManager] setDelegate:self];
-        
-		if ([[self captureManager] setupSession]) {
-            // Create video preview layer and add it to the UI
-			AVCaptureVideoPreviewLayer *newCaptureVideoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:[[self captureManager] session]];
-			UIView *view = [self viewCamera];
-			CALayer *viewLayer = [view layer];
-			[viewLayer setMasksToBounds:YES];
-			
-			CGRect bounds = [view bounds];
-			[newCaptureVideoPreviewLayer setFrame:bounds];
-			
-//			if ([newCaptureVideoPreviewLayer isOrientationSupported]) {
-//				[newCaptureVideoPreviewLayer setOrientation:AVCaptureVideoOrientationPortrait];
-//			}
-			
-			[newCaptureVideoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspect];
-			
-			[viewLayer insertSublayer:newCaptureVideoPreviewLayer below:[[viewLayer sublayers] objectAtIndex:0]];
-			
-			[self setCaptureVideoPreviewLayer:newCaptureVideoPreviewLayer];
-            
-            // Add a single tap gesture to focus on the point tapped, then lock focus
-			UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapToAutoFocus:)];
-			[singleTap setDelegate:self];
-			[singleTap setNumberOfTapsRequired:1];
-			[view addGestureRecognizer:singleTap];
-			
-            // Add a double tap gesture to reset the focus mode to continuous auto focus
-			UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapToContinouslyAutoFocus:)];
-			[doubleTap setDelegate:self];
-			[doubleTap setNumberOfTapsRequired:2];
-			[singleTap requireGestureRecognizerToFail:doubleTap];
-			[view addGestureRecognizer:doubleTap];
-		}
-	}
-    
-
     [super viewDidLoad];
+    captureManager = [[LXCamCaptureManager alloc] init];
+    captureManager.delegate = self;
+ 
+    if ([captureManager setupSession]) {
+        // Create video preview layer and add it to the UI
+        captureVideoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:[captureManager session]];
+        UIView *view = [self viewCamera];
+        CALayer *viewLayer = [view layer];
+        [viewLayer setMasksToBounds:YES];
+        
+        CGRect bounds = [view bounds];
+        [captureVideoPreviewLayer setFrame:bounds];
+        
+        //			if ([newCaptureVideoPreviewLayer isOrientationSupported]) {
+        //				[newCaptureVideoPreviewLayer setOrientation:AVCaptureVideoOrientationPortrait];
+        //			}
+        
+        [captureVideoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspect];
+        
+        [viewLayer insertSublayer:captureVideoPreviewLayer below:[[viewLayer sublayers] objectAtIndex:0]];
+        
+        // Add a single tap gesture to focus on the point tapped, then lock focus
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapToAutoFocus:)];
+        [singleTap setDelegate:self];
+        [singleTap setNumberOfTapsRequired:1];
+        [view addGestureRecognizer:singleTap];
+        
+        // Add a double tap gesture to reset the focus mode to continuous auto focus
+        UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapToContinouslyAutoFocus:)];
+        [doubleTap setDelegate:self];
+        [doubleTap setNumberOfTapsRequired:2];
+        [singleTap requireGestureRecognizerToFail:doubleTap];
+        [view addGestureRecognizer:doubleTap];
+    }
+    
     CGRect screen = [[UIScreen mainScreen] bounds];
 	// Do any additional setup after loading the view.
     
@@ -191,7 +184,7 @@ typedef enum {
     
     // Start the session. This is done asychronously since -startRunning doesn't return until the session is running.
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [[[self captureManager] session] startRunning];
+        [[captureManager session] startRunning];
     });
 }
 
@@ -223,10 +216,10 @@ typedef enum {
 - (IBAction)flipCamera:(id)sender
 {
     // Toggle between cameras when there is more than one
-    [[self captureManager] toggleCamera];
+    [captureManager toggleCamera];
     
     // Do an initial focus
-    [[self captureManager] continuousFocusAtPoint:CGPointMake(.5f, .5f)];
+    [captureManager continuousFocusAtPoint:CGPointMake(.5f, .5f)];
 }
 
 
@@ -237,8 +230,8 @@ typedef enum {
     viewFlash.hidden = false;
     viewFlash.alpha = 1;
     
-    [[self buttonCapture] setEnabled:NO];
-    [[self captureManager] captureStillImage];
+    [ buttonCapture setEnabled:NO];
+    [ captureManager captureStillImage];
     
     // Save last GPS and Orientation
     [locationManager stopUpdatingLocation];
@@ -278,7 +271,7 @@ typedef enum {
         }
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [self.captureManager.session stopRunning];
+            [[captureManager session] stopRunning];
         });
     }
 }
@@ -353,7 +346,7 @@ typedef enum {
 
 - (IBAction)touchPick:(id)sender {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self.captureManager.session stopRunning];
+        [[captureManager session] stopRunning];
     });
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     [imagePicker.navigationBar setBackgroundImage:[UIImage imageNamed: @"bg_head.png"] forBarMetrics:UIBarMetricsDefault];
@@ -445,7 +438,7 @@ typedef enum {
 }
 
 - (void)setFlash:(BOOL)flash {
-    AVCaptureDevice *device = self.captureManager.videoInput.device;
+    AVCaptureDevice *device = [captureManager videoInput].device;
     
     NSError *error;
     if ([device lockForConfiguration:&error]) {
@@ -480,19 +473,19 @@ typedef enum {
 #pragma mark UIAccelerometerDelegate
 -(void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration {
     if (acceleration.x >= 0.75) {
-        self.captureManager.orientation = AVCaptureVideoOrientationLandscapeLeft;
+        captureManager.orientation = AVCaptureVideoOrientationLandscapeLeft;
     }
     else if (acceleration.x <= -0.75) {
-        self.captureManager.orientation = AVCaptureVideoOrientationLandscapeRight;
+        captureManager.orientation = AVCaptureVideoOrientationLandscapeRight;
     }
     else if (acceleration.y <= -0.75) {
-        self.captureManager.orientation = AVCaptureVideoOrientationPortrait;
+        captureManager.orientation = AVCaptureVideoOrientationPortrait;
     }
     else if (acceleration.y >= 0.75) {
-        self.captureManager.orientation = AVCaptureVideoOrientationPortraitUpsideDown;
+        captureManager.orientation = AVCaptureVideoOrientationPortraitUpsideDown;
     }
     else {
-        self.captureManager.orientation = AVCaptureVideoOrientationPortrait;
+        captureManager.orientation = AVCaptureVideoOrientationPortrait;
         return;
     }
 }
@@ -506,7 +499,7 @@ typedef enum {
     
     if (bestEffortAtLocation == nil || bestEffortAtLocation.horizontalAccuracy > newLocation.horizontalAccuracy) {
         bestEffortAtLocation = newLocation;
-        self.captureManager.bestEffortAtLocation = bestEffortAtLocation;
+        captureManager.bestEffortAtLocation = bestEffortAtLocation;
         if (newLocation.horizontalAccuracy <= locationManager.desiredAccuracy) {
             [locationManager stopUpdatingLocation];
         }
@@ -515,7 +508,7 @@ typedef enum {
 
 - (void)close:(id)sender {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self.captureManager.session stopRunning];
+        [[captureManager session] stopRunning];
     });
     [self.navigationController dismissModalViewControllerAnimated:YES];
 }
@@ -534,7 +527,7 @@ typedef enum {
         pointOfInterest = CGPointMake(viewCoordinates.y / frameSize.height, 1.f - (viewCoordinates.x / frameSize.width));
     } else {
         CGRect cleanAperture;
-        for (AVCaptureInputPort *port in [[[self captureManager] videoInput] ports]) {
+        for (AVCaptureInputPort *port in [[captureManager videoInput] ports]) {
             if ([port mediaType] == AVMediaTypeVideo) {
                 cleanAperture = CMVideoFormatDescriptionGetCleanAperture([port formatDescription], YES);
                 CGSize apertureSize = cleanAperture.size;

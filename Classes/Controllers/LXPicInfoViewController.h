@@ -12,7 +12,7 @@
 
 @interface LXPicInfoViewController : UITableViewController<UIAlertViewDelegate>
 
-@property (strong, nonatomic) LXGalleryViewController *parent;
+@property (weak, nonatomic) LXGalleryViewController *parent;
 @property (strong, nonatomic) Picture *picture;
 - (IBAction)touchReport:(id)sender;
 @end

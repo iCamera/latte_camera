@@ -16,7 +16,8 @@
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollTab;
 @property (strong, nonatomic) LXPicCommentViewController *viewComment;
 @property (strong, nonatomic) LXVoteViewController *viewVote;
-@property (strong, nonatomic) LXGalleryViewController *parent;
+
+@property (weak, nonatomic) LXGalleryViewController *parent;
 
 @property (strong, nonatomic) Picture *picture;
 @property (strong, nonatomic) NSDictionary *picDict;

@@ -1413,6 +1413,14 @@
         <class className="HFImageEditorViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/HFImageEditorViewController.h"/>
             <relationships>
+                <relationship kind="action" name="cancelAction:"/>
+                <relationship kind="action" name="doneAction:"/>
+                <relationship kind="action" name="handlePan:" candidateClass="UIPanGestureRecognizer"/>
+                <relationship kind="action" name="handlePinch:" candidateClass="UIPinchGestureRecognizer"/>
+                <relationship kind="action" name="handleRotation:" candidateClass="UIRotationGestureRecognizer"/>
+                <relationship kind="action" name="handleTap:" candidateClass="UITapGestureRecognizer"/>
+                <relationship kind="action" name="resetAction:"/>
+                <relationship kind="action" name="resetAnimatedAction:"/>
                 <relationship kind="outlet" name="frameView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="panRecognizer" candidateClass="UIPanGestureRecognizer"/>
                 <relationship kind="outlet" name="pinchRecognizer" candidateClass="UIPinchGestureRecognizer"/>

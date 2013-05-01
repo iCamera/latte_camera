@@ -95,14 +95,6 @@ static void *AVCamFocusModeObserverContext = &AVCamFocusModeObserverContext;
 - (void)dealloc
 {
     [self removeObserver:self forKeyPath:@"captureManager.videoInput.device.focusMode"];
-	[captureManager release];
-    [videoPreviewView release];
-	[captureVideoPreviewLayer release];
-    [cameraToggleButton release];
-    [stillButton release];	
-	[focusModeLabel release];
-	
-    [super dealloc];
 }
 
 - (void)viewDidLoad
@@ -110,7 +102,6 @@ static void *AVCamFocusModeObserverContext = &AVCamFocusModeObserverContext;
 	if ([self captureManager] == nil) {
 		AVCamCaptureManager *manager = [[AVCamCaptureManager alloc] init];
 		[self setCaptureManager:manager];
-		[manager release];
 		
 		[[self captureManager] setDelegate:self];
 
@@ -133,7 +124,7 @@ static void *AVCamFocusModeObserverContext = &AVCamFocusModeObserverContext;
 			[viewLayer insertSublayer:newCaptureVideoPreviewLayer below:[[viewLayer sublayers] objectAtIndex:0]];
 			
 			[self setCaptureVideoPreviewLayer:newCaptureVideoPreviewLayer];
-            [newCaptureVideoPreviewLayer release];
+            
 			
             // Start the session. This is done asychronously since -startRunning doesn't return until the session is running.
 			dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -149,7 +140,7 @@ static void *AVCamFocusModeObserverContext = &AVCamFocusModeObserverContext;
 			[view addSubview:newFocusModeLabel];
 			[self addObserver:self forKeyPath:@"captureManager.videoInput.device.focusMode" options:NSKeyValueObservingOptionNew context:AVCamFocusModeObserverContext];
 			[self setFocusModeLabel:newFocusModeLabel];
-            [newFocusModeLabel release];
+            
             
             // Add a single tap gesture to focus on the point tapped, then lock focus
 			UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapToAutoFocus:)];
@@ -163,9 +154,6 @@ static void *AVCamFocusModeObserverContext = &AVCamFocusModeObserverContext;
 			[doubleTap setNumberOfTapsRequired:2];
 			[singleTap requireGestureRecognizerToFail:doubleTap];
 			[view addGestureRecognizer:doubleTap];
-			
-			[doubleTap release];
-			[singleTap release];
 		}		
 	}
 		
@@ -209,7 +197,6 @@ static void *AVCamFocusModeObserverContext = &AVCamFocusModeObserverContext;
                      }
                      completion:^(BOOL finished){
                          [flashView removeFromSuperview];
-                         [flashView release];
                      }
      ];
 }
@@ -322,7 +309,6 @@ static void *AVCamFocusModeObserverContext = &AVCamFocusModeObserverContext;
                                                   cancelButtonTitle:NSLocalizedString(@"OK", @"OK button title")
                                                   otherButtonTitles:nil];
         [alertView show];
-        [alertView release];
     });
 }
 

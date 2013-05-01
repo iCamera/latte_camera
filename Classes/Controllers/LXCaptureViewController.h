@@ -13,8 +13,6 @@
 
 @interface LXCaptureViewController : UIViewController <CLLocationManagerDelegate, UIAccelerometerDelegate, LXCamCaptureManagerDelegate, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
-@property (strong, nonatomic) LXCamCaptureManager *captureManager;
-@property (strong, nonatomic) AVCaptureVideoPreviewLayer *captureVideoPreviewLayer;
 @property (strong, nonatomic) IBOutlet UIView *viewCamera;
 @property (strong, nonatomic) IBOutlet UIView *viewTopBar;
 @property (strong, nonatomic) IBOutlet UIView *viewTimer;
@@ -35,7 +33,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *viewCanvas;
 @property (strong, nonatomic) IBOutlet UIButton *buttonQuick;
 
-@property (assign, nonatomic) id <LXImagePickerDelegate> delegate;
+@property (weak, nonatomic) id <LXImagePickerDelegate> delegate;
 
 - (IBAction)changeFlash:(id)sender;
 - (IBAction)touchTimer:(id)sender;
