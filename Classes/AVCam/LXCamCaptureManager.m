@@ -66,6 +66,10 @@
     }
 }
 
+- (void)getPreview {
+    needPreview = true;
+}
+
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
     if (needPreview) {
         needPreview = false;
@@ -169,7 +173,6 @@
 																 [[self delegate] captureManagerStillImageCaptured:self];
 															 }
                                                          }];
-    needPreview = true;
 }
 
 @end

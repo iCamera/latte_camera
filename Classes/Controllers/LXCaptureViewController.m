@@ -188,12 +188,7 @@ typedef enum {
     });
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-
 - (void)viewWillDisappear:(BOOL)animated {
-    
     [locationManager stopUpdatingLocation];
     
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
@@ -201,6 +196,10 @@ typedef enum {
     
     UIAccelerometer* a = [UIAccelerometer sharedAccelerometer];
     a.delegate = nil;
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [[captureManager session] stopRunning];
+    });
     
     [super viewWillDisappear:animated];
 //    AudioSessionSetActive(false);
@@ -231,6 +230,7 @@ typedef enum {
     viewFlash.alpha = 1;
     
     [ buttonCapture setEnabled:NO];
+    [ captureManager getPreview];
     [ captureManager captureStillImage];
     
     // Save last GPS and Orientation
@@ -269,10 +269,6 @@ typedef enum {
             controllerCanvas.imageOriginal = image;
             controllerCanvas.imageMeta = imageMeta;
         }
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [[captureManager session] stopRunning];
-        });
     }
 }
 

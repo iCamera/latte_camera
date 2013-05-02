@@ -18,4 +18,6 @@
 @interface LXCamCaptureManager : AVCamCaptureManager<AVCaptureVideoDataOutputSampleBufferDelegate>
 @property (nonatomic, weak) id<LXCamCaptureManagerDelegate> delegate;
 @property (nonatomic, weak) CLLocation *bestEffortAtLocation;
+
+- (void)getPreview;
 @end
