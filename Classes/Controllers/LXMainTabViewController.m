@@ -174,7 +174,10 @@
     [self.view addSubview:viewNotify.view];
     [viewNotify didMoveToParentViewController:self];
     viewNotify.view.hidden = true;
-
+    
+    if ([app getToken]) {
+        [self cameraView:nil];
+    }
 }
 
 - (void)showNotify {

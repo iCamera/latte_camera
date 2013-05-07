@@ -10,7 +10,7 @@
             <objects>
                 <tableViewController id="BA8-7X-K8C" customClass="LXSettingRootViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Cei-Sk-F12">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="separatorColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -49,7 +49,7 @@
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="VuM-R6-68a">
-                            <rect key="frame" x="0.0" y="649" width="320" height="44"/>
+                            <rect key="frame" x="0.0" y="693" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Copyright 2013 LUXEYS." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Kyv-1L-Fye">
@@ -178,8 +178,29 @@
                                             <segue destination="yf1-Mj-Etk" kind="push" id="ufP-t9-pfN"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="hGd-ga-4ex">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="JKO-bq-nEN">
                                         <rect key="frame" x="0.0" y="356" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="280" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="ヘルプ" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Q0U-f4-ubN">
+                                                    <rect key="frame" x="9" y="11" width="211" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <connections>
+                                            <segue destination="Dyz-N0-aFo" kind="push" id="64I-6K-8bS"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="hGd-ga-4ex">
+                                        <rect key="frame" x="0.0" y="400" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
@@ -208,7 +229,7 @@
                             <tableViewSection id="O9Z-Ze-opm">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="xAk-e2-rbQ">
-                                        <rect key="frame" x="0.0" y="420" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="464" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="280" height="43"/>
@@ -234,7 +255,7 @@
                             <tableViewSection id="TG5-Uh-Wtq">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="gTD-UI-Rdw">
-                                        <rect key="frame" x="0.0" y="485" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="529" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="280" height="43"/>
@@ -252,7 +273,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="2PM-9S-zrr">
-                                        <rect key="frame" x="0.0" y="530" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="574" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -274,7 +295,7 @@
                             <tableViewSection id="0X7-JQ-wld">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="RmZ-18-mpJ">
-                                        <rect key="frame" x="0.0" y="594" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="638" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
@@ -341,12 +362,77 @@
             </objects>
             <point key="canvasLocation" x="-1375" y="-912"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="2UR-51-eWh">
+            <objects>
+                <viewController id="Dyz-N0-aFo" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ElV-56-4T2">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="wpZ-3e-7ad">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                <string key="text">★登録確認メールが届かない
+------------------------------
+登録確認メールが届かない場合、以下をご確認ください。
+
+・迷惑メールフォルダに振り分けられていないか、ご確認ください
+・携帯電話のメールアドレスの場合、Latte事務局（mail@latte.la）からのメールが受信できるようになっているか、携帯電話の受信設定をご確認ください。
+
+※また、既にLatteに登録されているメールアドレスを利用して、新規会員登録することは出来ません。
+
+★パスワードを忘れてしまった
+------------------------------
+ログインボタンの下にある「ログインパスワードをお忘れの方」をタップしてください。
+パスワードの再設定のページから新パスワードへ変更する手続きが行えます。
+
+★iPhoneのカメラロールにアクセスできない
+------------------------------
+「このAppには写真およびビデオへのアクセス権がありません。」
+または「ユーザーによるアクセス拒否」等と表示され、iPhoneのカメラロールにアクセスできない場合、以下をご確認ください。
+
+・iOS6の場合
+iPhoneの「設定」＞「プライバシー」＞「写真」を開いてください。
+項目の中にあるLatte cameraをオンにしてください。
+
+・iOS5の場合
+iPhoneの「設定」＞「位置情報サービス」を開いてください。
+項目の中にあるLatte cameraをオンにしてください。
+
+★アップロードした写真を削除したい
+------------------------------
+削除したい写真を選択してください。次に右上にある編集アイコンをタップしてください。
+画面の一番下にある「写真を削除する」＞「この写真を削除する」をタップすると写真を削除できます。
+
+★投稿したコメントを削除したい
+------------------------------
+投稿したコメントを左右どちらかにスライドしてください。
+マイナス印のアイコンが表示されますのでタップしてください。
+表示された削除ボタンをタップするとコメントを削除できます。
+
+</string>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Pdp-Wp-ne8"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="g6H-xe-xgQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-279" y="-323"/>
+        </scene>
         <!--About View Controller - 機能要望・ご意見-->
         <scene sceneID="e7i-I8-8V7">
             <objects>
                 <tableViewController storyboardIdentifier="About" useStoryboardIdentifierAsRestorationIdentifier="YES" id="yf1-Mj-Etk" customClass="LXAboutViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="h8Y-kw-RSM">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                         <sections>
@@ -375,11 +461,11 @@ Latteについて、「こんな機能があったら良い」、「この機能
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="191" id="f66-DH-Vl3">
-                                        <rect key="frame" x="0.0" y="265" width="320" height="191"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="213" id="f66-DH-Vl3">
+                                        <rect key="frame" x="0.0" y="265" width="320" height="213"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="190"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="212"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="機能要望・ご意見" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Zgm-Ho-UXr">
@@ -390,14 +476,14 @@ Latteについて、「こんな機能があったら良い」、「この機能
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="Wga-On-KEw">
-                                                    <rect key="frame" x="20" y="26" width="280" height="109"/>
+                                                    <rect key="frame" x="20" y="53" width="280" height="106"/>
                                                     <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="tgy-xr-pyL" customClass="LXButtonNormal">
-                                                    <rect key="frame" x="101" y="142" width="118" height="44"/>
+                                                    <rect key="frame" x="101" y="164" width="118" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="15"/>
                                                     <state key="normal" title="送信">
@@ -411,6 +497,13 @@ Latteについて、「こんな機能があったら良い」、「この機能
                                                         <action selector="touchSend:" destination="yf1-Mj-Etk" eventType="touchUpInside" id="uus-oN-k8w"/>
                                                     </connections>
                                                 </button>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="あなたのメールアドレス" minimumFontSize="17" id="y9H-Ag-JdV">
+                                                    <rect key="frame" x="20" y="22" width="280" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -425,6 +518,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
                     </tableView>
                     <navigationItem key="navigationItem" title="機能要望・ご意見" id="vxy-Cf-zG3"/>
                     <connections>
+                        <outlet property="textEmail" destination="y9H-Ag-JdV" id="Plo-2t-yRx"/>
                         <outlet property="textForm" destination="Wga-On-KEw" id="Rxk-CK-hKj"/>
                     </connections>
                 </tableViewController>
@@ -437,7 +531,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
             <objects>
                 <tableViewController id="130-si-waG" customClass="LXSettingNotifyViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="qLH-jV-a7F">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="A2d-RF-HCZ">
@@ -651,53 +745,9 @@ Latteについて、「こんな機能があったら良い」、「この機能
         <image name="icon_mail_l_off.jpg" width="22" height="16"/>
         <image name="user.gif" width="100" height="100"/>
     </resources>
-    <classes>
-        <class className="LXAboutViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXAboutViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="touchClose:"/>
-                <relationship kind="action" name="touchSend:"/>
-                <relationship kind="outlet" name="textForm" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="LXButtonBrown30" superclassName="UIButton">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonBrown30.h"/>
-        </class>
-        <class className="LXButtonNormal" superclassName="UIButton">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonNormal.h"/>
-        </class>
-        <class className="LXNavBar" superclassName="UINavigationBar">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavBar.h"/>
-        </class>
-        <class className="LXNavigationController" superclassName="UINavigationController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavigationController.h"/>
-        </class>
-        <class className="LXSettingNotifyViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXSettingNotifyViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="toggleNotify:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonMailComment" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonMailFollow" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonMailLike" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonPushComment" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonPushFollow" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonPushLike" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="LXSettingRootViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXSettingRootViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="touchClose:"/>
-                <relationship kind="action" name="touchSetPicture:"/>
-                <relationship kind="outlet" name="imageProfile" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="labelVersion" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="viewHeader" candidateClass="UIView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
+        <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
 </document>

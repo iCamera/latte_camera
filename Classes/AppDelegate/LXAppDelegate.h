@@ -36,6 +36,7 @@ extern NSString *const FBSessionStateChangedNotification;
 - (NSString*)getToken;
 - (void)setToken:(NSString*)token;
 
+
 + (LXAppDelegate*)currentDelegate;
 
 @end

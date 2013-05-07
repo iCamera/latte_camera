@@ -264,6 +264,9 @@
                                                      if (!error) {
                                                          // We have a valid session
                                                          buttonFacebook.selected = true;
+                                                         LXAppDelegate *app = [LXAppDelegate currentDelegate];
+                                                         app.currentUser.pictureAutoFacebookUpload = buttonFacebook.selected;
+                                                         [self updateUserInfo:@"picture_auto_facebook_upload" value:buttonFacebook.selected];
                                                      }
                                                      break;
                                                  case FBSessionStateClosed:
@@ -277,7 +280,22 @@
                                          }];
     } else {
         buttonFacebook.selected = false;
+        LXAppDelegate *app = [LXAppDelegate currentDelegate];
+        app.currentUser.pictureAutoFacebookUpload = buttonFacebook.selected;
+        [self updateUserInfo:@"picture_auto_facebook_upload" value:buttonFacebook.selected];
     }
+}
+
+- (void)updateUserInfo:(NSString*)field value:(BOOL)value {
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [app getToken], @"token",
+                            [NSNumber numberWithBool:value], field, nil];
+
+    [[LatteAPIClient sharedClient] postPath:@"user/me/update"
+                                 parameters: params
+                                    success:nil
+                                    failure:nil];
 }
 
 - (IBAction)touchTwitter:(id)sender {
@@ -298,6 +316,10 @@
                                               otherButtonTitles:nil];
         [alert show];
     }
+    
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    app.currentUser.pictureAutoTweet = buttonTwitter.selected;
+    [self updateUserInfo:@"picture_auto_tweet" value:buttonTwitter.selected];
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification

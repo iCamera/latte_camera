@@ -18,7 +18,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Eof-hy-AXG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3493" y="-31"/>
+            <point key="canvasLocation" x="-3487" y="-31"/>
         </scene>
         <!--Capture View Controller-->
         <scene sceneID="umh-4D-NeD">
@@ -297,12 +297,13 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="WBa-0X-mpI" userLabel="Button Fisheye">
                                                 <rect key="frame" x="256" y="5" width="58" height="40"/>
                                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="15"/>
-                                                <state key="normal" title="Quick" backgroundImage="bg_camera_bt2.png">
+                                                <state key="normal" image="icon_quick.png" backgroundImage="bg_camera_bt2.png">
                                                     <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <state key="disabled" backgroundImage="bg_camera_bt2_on.png"/>
                                                 <state key="selected" backgroundImage="bg_camera_bt2_on.png"/>
+                                                <state key="highlighted" backgroundImage="bg_camera_bt2_on.png"/>
                                                 <connections>
                                                     <action selector="toggleFisheye:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="05X-a5-abj"/>
                                                     <action selector="touchQuick:" destination="z2T-vS-fgP" eventType="touchUpInside" id="Qpv-Gu-QP7"/>
@@ -347,30 +348,85 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-3009" y="-31"/>
+            <point key="canvasLocation" x="-3027" y="-31"/>
         </scene>
-        <!--View Controller-->
+        <!--Text Template View Controller-->
         <scene sceneID="LLC-uS-gQB">
             <objects>
-                <viewController id="IJM-5o-GtK" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Template" id="IJM-5o-GtK" customClass="LXTextTemplateViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gcR-1u-vnS">
-                        <rect key="frame" x="0.0" y="0.0" width="960" height="400"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <rect key="frame" x="0.0" y="0.0" width="3200" height="426"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" id="vhA-QG-Hsj">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="400"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="426"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DTh-A1-Ot0">
+                                        <rect key="frame" x="33" y="312" width="197" height="94"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="42"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="right" id="rQk-uk-8fM">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="426"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" heightSizable="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <string key="text">SAMPLE
+TEXT</string>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="50"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" id="9Yg-Uq-vci">
-                                <rect key="frame" x="320" y="0.0" width="320" height="405"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <rect key="frame" x="320" y="0.0" width="320" height="426"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" id="RCM-91-Vjq">
+                                        <rect key="frame" x="0.0" y="97" width="320" height="163"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <string key="text">THIS IS
+HOW
+I WORK</string>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="30"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" id="6wF-D8-fD4">
-                                <rect key="frame" x="640" y="0.0" width="320" height="405"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <rect key="frame" x="640" y="0.0" width="320" height="426"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Sample text" minimumFontSize="17" id="gxh-Ft-wpb">
+                                        <rect key="frame" x="8" y="354" width="292" height="63"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="45"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="LaI-6k-skV">
+                                <rect key="frame" x="968" y="0.0" width="320" height="426"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Sample text" minimumFontSize="17" id="zaC-7w-uBS">
+                                        <rect key="frame" x="8" y="354" width="292" height="63"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="45"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -380,7 +436,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cUr-lh-ELm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2933" y="-624"/>
+            <point key="canvasLocation" x="-3487" y="-566"/>
         </scene>
         <!--Canvas View Controller-->
         <scene sceneID="Cfe-N5-SPi">
@@ -448,13 +504,26 @@
                                         <rect key="frame" x="73" y="5" width="50" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="15"/>
-                                        <state key="normal" title="Crop" backgroundImage="bg_camera_bt3.png">
+                                        <state key="normal" image="icon_crop.png" backgroundImage="bg_camera_bt3.png">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <state key="highlighted" backgroundImage="bg_camera_bt3_on.png"/>
                                         <connections>
                                             <action selector="touchCrop:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="n0p-f6-BcW"/>
+                                        </connections>
+                                    </button>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="IRn-zt-AGC">
+                                        <rect key="frame" x="131" y="5" width="50" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="15"/>
+                                        <state key="normal" title="ABC" backgroundImage="bg_camera_bt3.png">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted" backgroundImage="bg_camera_bt3_on.png"/>
+                                        <connections>
+                                            <action selector="touchText:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="prP-dO-BvL"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="9jE-Vo-OQn" userLabel="Button Cancel">
@@ -471,7 +540,7 @@
                                             <action selector="touchNo:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="J4l-6n-U8j"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="4Vx-ae-rPd" userLabel="Button OK">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="4Vx-ae-rPd" userLabel="Button OK">
                                         <rect key="frame" x="270" y="5" width="40" height="30"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" image="icon_ok2.png" backgroundImage="bg_camera_bt3.png">
@@ -1115,7 +1184,7 @@
                 </panGestureRecognizer>
                 <tapGestureRecognizer enabled="NO" id="fyN-OV-Nho"/>
             </objects>
-            <point key="canvasLocation" x="-2424" y="-31"/>
+            <point key="canvasLocation" x="-2560" y="-31"/>
         </scene>
         <!--Image Crop View Controller-->
         <scene sceneID="jje-Wo-hob">
@@ -1134,8 +1203,8 @@
                                 <rect key="frame" x="0.0" y="410" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                             </imageView>
-                            <imageView contentMode="scaleToFill" image="icon_addfollow_s.png" id="iZq-QN-mz3">
-                                <rect key="frame" x="300" y="350" width="30" height="30"/>
+                            <imageView contentMode="scaleToFill" image="crop_rb.png" id="iZq-QN-mz3">
+                                <rect key="frame" x="300" y="350" width="22" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -1146,7 +1215,7 @@
                                 <rect key="frame" x="254" y="415" width="58" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
-                                <state key="normal" title="Crop" backgroundImage="bg_camera_bt2.png">
+                                <state key="normal" image="icon_ok.png" backgroundImage="bg_camera_bt2.png">
                                     <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -1161,7 +1230,7 @@
                                 <rect key="frame" x="5" y="415" width="58" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
-                                <state key="normal" title="X" backgroundImage="bg_camera_bt2.png">
+                                <state key="normal" image="icon_escape.png" backgroundImage="bg_camera_bt2.png">
                                     <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -1256,7 +1325,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-2424" y="539"/>
+            <point key="canvasLocation" x="-2560" y="539"/>
         </scene>
         <!--Help Bokeh View Controller-->
         <scene sceneID="nK4-BP-gzm">
@@ -1334,7 +1403,130 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FMa-Bo-WoZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1889" y="-31"/>
+            <point key="canvasLocation" x="-2024" y="539"/>
+        </scene>
+        <!--Image Text View Controller-->
+        <scene sceneID="diS-UO-x0Q">
+            <objects>
+                <viewController storyboardIdentifier="Text" definesPresentationContext="YES" modalTransitionStyle="crossDissolve" id="bke-ye-End" customClass="LXImageTextViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ray-0u-rjP">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" id="vWz-AW-aa4">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="429"/>
+                                <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="R3n-cj-BKX">
+                                        <rect key="frame" x="0.0" y="2" width="320" height="426"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="prg-iE-9E4">
+                                        <rect key="frame" x="0.0" y="2" width="320" height="426"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="bke-ye-End" id="slH-tN-xWD"/>
+                                        </connections>
+                                    </scrollView>
+                                </subviews>
+                            </scrollView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bg_camera_bottom.png" id="Go1-6o-ec7">
+                                <rect key="frame" x="0.0" y="430" width="320" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="JrI-NA-VF4">
+                                <rect key="frame" x="254" y="435" width="58" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                <state key="normal" title="OK" backgroundImage="bg_camera_bt2.png">
+                                    <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="touchOK:" destination="bke-ye-End" eventType="touchUpInside" id="wpw-Nm-a6j"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="SzT-ly-LTc">
+                                <rect key="frame" x="5" y="435" width="58" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                <state key="normal" title="X" backgroundImage="bg_camera_bt2.png">
+                                    <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="touchClose:" destination="bke-ye-End" eventType="touchUpInside" id="dOR-sO-hbC"/>
+                                </connections>
+                            </button>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="10" id="yaH-Cn-Y4N">
+                                <rect key="frame" x="71" y="437" width="175" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <color key="pageIndicatorTintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                            </pageControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="DCa-QB-oSC">
+                                <rect key="frame" x="0.0" y="0.0" width="73" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Done">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="touchDone:" destination="bke-ye-End" eventType="touchUpInside" id="WbV-l7-hUX"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <connections>
+                        <outlet property="imagePreview" destination="R3n-cj-BKX" id="Ba8-Z1-FXA"/>
+                        <outlet property="pageControl" destination="yaH-Cn-Y4N" id="nHx-75-ATc"/>
+                        <outlet property="panRecognizer" destination="K1e-Ye-Jdz" id="hMK-mn-h9Y"/>
+                        <outlet property="pinchRecognizer" destination="Xm1-cb-dhv" id="qVB-he-cHJ"/>
+                        <outlet property="rotationRecognizer" destination="ujO-XJ-qAF" id="hn4-UG-SGJ"/>
+                        <outlet property="scrollCanvas" destination="vWz-AW-aa4" id="3HY-Zc-AfR"/>
+                        <outlet property="scrollTemplate" destination="prg-iE-9E4" id="jIM-ih-77O"/>
+                        <outlet property="tapRecognizer" destination="biM-Nh-wTT" id="fV5-xf-ZhG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ysC-Sq-0VZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <rotationGestureRecognizer id="gpS-BE-GPJ">
+                    <connections>
+                        <action selector="handleRotation:" destination="bke-ye-End" id="guX-gO-c1D"/>
+                    </connections>
+                </rotationGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="h5z-6r-Njh">
+                    <connections>
+                        <action selector="handlePan:" destination="bke-ye-End" id="v8s-Hi-jnG"/>
+                    </connections>
+                </panGestureRecognizer>
+                <pinchGestureRecognizer id="qaX-yP-R0x">
+                    <connections>
+                        <action selector="handlePinch:" destination="bke-ye-End" id="wxO-S9-du3"/>
+                    </connections>
+                </pinchGestureRecognizer>
+                <tapGestureRecognizer id="HNr-4V-KUe">
+                    <connections>
+                        <action selector="handleTap:" destination="bke-ye-End" id="yH4-nQ-Cpc"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="9jZ-xy-oLp">
+                    <connections>
+                        <action selector="panSize:" destination="bke-ye-End" id="nLR-G8-W6T"/>
+                    </connections>
+                </panGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="-2024" y="-31"/>
         </scene>
     </scenes>
     <resources>
@@ -1348,14 +1540,16 @@
         <image name="bt_timer_3ren.png" width="54" height="30"/>
         <image name="bt_timer_5s.png" width="34" height="30"/>
         <image name="bt_timer_none.png" width="77" height="38"/>
-        <image name="icon_addfollow_s.png" width="12" height="12"/>
+        <image name="crop_rb.png" width="22" height="22"/>
         <image name="icon_blending2.png" width="20" height="20"/>
         <image name="icon_boke.png" width="13" height="20"/>
         <image name="icon_boke2.png" width="10" height="15"/>
         <image name="icon_camera2.png" width="30" height="25"/>
         <image name="icon_change_camera.png" width="32" height="15"/>
         <image name="icon_close.png" width="20" height="20"/>
+        <image name="icon_crop.png" width="18" height="18"/>
         <image name="icon_detail.png" width="20" height="20"/>
+        <image name="icon_escape.png" width="15" height="15"/>
         <image name="icon_filter.png" width="20" height="20"/>
         <image name="icon_flash.png" width="12" height="15"/>
         <image name="icon_flash_30.png" width="12" height="15"/>
@@ -1365,8 +1559,10 @@
         <image name="icon_lens3.png" width="20" height="20"/>
         <image name="icon_light.png" width="12" height="12"/>
         <image name="icon_no2.png" width="15" height="15"/>
+        <image name="icon_ok.png" width="15" height="14"/>
         <image name="icon_ok2.png" width="15" height="14"/>
         <image name="icon_photo_select.png" width="22" height="22"/>
+        <image name="icon_quick.png" width="20" height="20"/>
         <image name="icon_reset.png" width="15" height="15"/>
         <image name="icon_time2.png" width="14" height="15"/>
         <image name="icon_time2_none.png" width="15" height="15"/>
@@ -1407,7 +1603,6 @@
             <relationships>
                 <relationship kind="action" name="changeLens:" candidateClass="UIButton"/>
                 <relationship kind="action" name="changePen:" candidateClass="UISlider"/>
-                <relationship kind="action" name="openImagePicker:"/>
                 <relationship kind="action" name="setBlend:" candidateClass="UIButton"/>
                 <relationship kind="action" name="setMask:" candidateClass="UIButton"/>
                 <relationship kind="action" name="toggleControl:" candidateClass="UIButton"/>
@@ -1420,6 +1615,7 @@
                 <relationship kind="action" name="touchOpenHelp:"/>
                 <relationship kind="action" name="touchReset:"/>
                 <relationship kind="action" name="touchSave:"/>
+                <relationship kind="action" name="touchText:"/>
                 <relationship kind="action" name="updateFilter:"/>
                 <relationship kind="outlet" name="buttonBackgroundNatual" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="buttonBlackWhite" candidateClass="UIButton"/>
@@ -1521,11 +1717,26 @@
                 <relationship kind="outlet" name="imageCropSize" candidateClass="UIImageView"/>
             </relationships>
         </class>
+        <class className="LXImageTextViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXImageTextViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="touchClose:"/>
+                <relationship kind="action" name="touchDone:"/>
+                <relationship kind="action" name="touchOK:"/>
+                <relationship kind="outlet" name="imagePreview" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="pageControl" candidateClass="UIPageControl"/>
+                <relationship kind="outlet" name="scrollCanvas" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="scrollTemplate" candidateClass="UIScrollView"/>
+            </relationships>
+        </class>
         <class className="LXNavBar" superclassName="UINavigationBar">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavBar.h"/>
         </class>
         <class className="LXNavGalleryViewController" superclassName="UINavigationController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavGalleryViewController.h"/>
+        </class>
+        <class className="LXTextTemplateViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXTextTemplateViewController.h"/>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

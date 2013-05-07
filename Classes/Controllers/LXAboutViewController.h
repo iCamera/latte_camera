@@ -11,7 +11,8 @@
 
 @interface LXAboutViewController : UITableViewController<UIAlertViewDelegate>
 @property (strong, nonatomic) IBOutlet UITextView *textForm;
-- (IBAction)touchClose:(id)sender;
+@property (strong, nonatomic) IBOutlet UITextField *textEmail;
+
 - (IBAction)touchSend:(id)sender;
 
 @end

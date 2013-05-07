@@ -20,6 +20,7 @@
 }
 
 @synthesize viewBanner;
+@synthesize buttonBanner;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -34,16 +35,17 @@
 {
     [super viewDidLoad];
     
-    NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
-    if (![language isEqualToString:@"ja"]) {
-        viewBanner.hidden = true;
-    }
+//    NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
+//    if (![language isEqualToString:@"ja"]) {
+//        viewBanner.hidden = true;
+//    }
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [buttonBanner setBackgroundImage:[UIImage imageNamed:@"banner_contest.jpg"] forState:UIControlStateNormal];
 }
 
 - (void)didReceiveMemoryWarning
@@ -115,5 +117,9 @@
 
 - (IBAction)touchBanner:(id)sender {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/picture/contest/2013april"]];
+}
+- (void)viewDidUnload {
+    [self setButtonBanner:nil];
+    [super viewDidUnload];
 }
 @end

@@ -8,12 +8,13 @@
 
 #import "LXCaptureViewController.h"
 #import "LXUtils.h"
-#import <MediaPlayer/MediaPlayer.h>
 #import "MBProgressHUD.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "LXCanvasViewController.h"
 #import "UIView+Genie.h"
 #import "MBProgressHUD.h"
+#import "UIApplication+Private.h"
+#import <MediaPlayer/MediaPlayer.h>
 
 #define kAccelerometerFrequency        10.0 //Hz
 
@@ -42,6 +43,7 @@ typedef enum {
     
     LXCamCaptureManager *captureManager;
     AVCaptureVideoPreviewLayer *captureVideoPreviewLayer;
+    float volumeLevel;
 }
 
 @synthesize viewCamera;
@@ -76,6 +78,7 @@ typedef enum {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     captureManager = [[LXCamCaptureManager alloc] init];
     captureManager.delegate = self;
  
@@ -88,10 +91,6 @@ typedef enum {
         
         CGRect bounds = [view bounds];
         [captureVideoPreviewLayer setFrame:bounds];
-        
-        //			if ([newCaptureVideoPreviewLayer isOrientationSupported]) {
-        //				[newCaptureVideoPreviewLayer setOrientation:AVCaptureVideoOrientationPortrait];
-        //			}
         
         [captureVideoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspect];
         
@@ -151,20 +150,15 @@ typedef enum {
     viewCameraWraper.layer.shadowPath = shadowPathCamera.CGPath;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    MPVolumeView *volumeView = [[MPVolumeView alloc] initWithFrame:CGRectMake(-100, 0, 10, 0)];
-    [volumeView sizeToFit];
-    [self.view addSubview:volumeView];
-    
+- (void)enableVolumeSnap {
     [[NSNotificationCenter defaultCenter]
      addObserver:self
      selector:@selector(captureByVolume:)
      name:@"AVSystemController_SystemVolumeDidChangeNotification"
      object:nil];
-    
-//    AudioSessionInitialize(NULL, NULL, NULL, NULL);
-//    AudioSessionSetActive(true);
-    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
     currentTimer = kTimerNone;
     
     locationManager = [[CLLocationManager alloc] init];
@@ -186,6 +180,10 @@ typedef enum {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [[captureManager session] startRunning];
     });
+    
+    UIApplication *app = [UIApplication sharedApplication];
+    [app setSystemVolumeHUDEnabled:NO];
+    [self enableVolumeSnap];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -200,10 +198,11 @@ typedef enum {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [[captureManager session] stopRunning];
     });
+
+    UIApplication *app = [UIApplication sharedApplication];
+    [app setSystemVolumeHUDEnabled:YES];
     
     [super viewWillDisappear:animated];
-//    AudioSessionSetActive(false);
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -243,11 +242,10 @@ typedef enum {
         imagePreview.image = image;
     } else {
         tmpImagePreview = image;
-        [self performSegueWithIdentifier:@"Canvas" sender:nil];
     }
 }
 
-- (void)latteStillImageCaptured:(UIImage *)image imageMeta:(NSMutableDictionary *)imageMeta {
+- (void)latteStillImageCaptured:(UIImage *)image imageMeta:(NSMutableDictionary *)imageMeta {    
     [UIView animateWithDuration:0.3
                           delay:0
                         options:UIViewAnimationOptionCurveEaseInOut
@@ -263,24 +261,27 @@ typedef enum {
                                      completion:nil];
     
     if (!buttonQuick.selected) {
-        if ([self.navigationController.viewControllers.lastObject isKindOfClass:[LXCanvasViewController class]]) {
-            LXCanvasViewController *controllerCanvas = (LXCanvasViewController*)self.navigationController.viewControllers.lastObject;
-            controllerCanvas.delegate = _delegate;
-            controllerCanvas.imageOriginal = image;
-            controllerCanvas.imageMeta = imageMeta;
-        }
+        UIStoryboard *storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
+        LXCanvasViewController *controllerCanvas = [storyCamera instantiateViewControllerWithIdentifier:@"Canvas"];
+        
+        controllerCanvas.imageMeta = imageMeta;
+        controllerCanvas.imageOriginalPreview = tmpImagePreview;
+        tmpImagePreview = nil;
+        controllerCanvas.delegate = _delegate;
+        controllerCanvas.imageOriginal = image;
+        [self.navigationController pushViewController:controllerCanvas animated:YES];
+    } else {
+        [self performSelector:@selector(enableVolumeSnap) withObject:nil afterDelay:2];
     }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"Canvas"]) {
-        LXCanvasViewController *controllerCanvas = segue.destinationViewController;
-        controllerCanvas.imageOriginalPreview = tmpImagePreview;
-        tmpImagePreview = nil;
+        
     }
 }
 
-- (void)captureByVolume:(id)sender {
+- (void)captureByVolume:(NSNotification*)notification {
     [self capturePhotoAsync];
 }
 
@@ -361,10 +362,11 @@ typedef enum {
         UIImage *imageFullsize = [info objectForKey:UIImagePickerControllerOriginalImage];
         CGSize previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:imageFullsize.size.width height:imageFullsize.size.height]);
         UIImage *previewPic = [LXUtils imageWithImage:imageFullsize scaledToSize:previewUISize];
+        controllerCanvas.delegate = _delegate;
         controllerCanvas.imageOriginalPreview = previewPic;
         controllerCanvas.imageMeta = [NSMutableDictionary dictionaryWithDictionary:myasset.defaultRepresentation.metadata];
-        [self.navigationController pushViewController:controllerCanvas animated:YES];
         controllerCanvas.imageOriginal = imageFullsize;
+        [self.navigationController pushViewController:controllerCanvas animated:YES];
     };
     
     ALAssetsLibraryAccessFailureBlock failureblock  = ^(NSError *myerror)
@@ -514,10 +516,6 @@ typedef enum {
     CGPoint pointOfInterest = CGPointMake(.5f, .5f);
     CGSize frameSize = [[self viewCamera] frame].size;
     
-//    if ([captureVideoPreviewLayer isMirrored]) {
-//        viewCoordinates.x = frameSize.width - viewCoordinates.x;
-//    }
-    
     if ( [[captureVideoPreviewLayer videoGravity] isEqualToString:AVLayerVideoGravityResize] ) {
 		// Scale, switch x and y, and reverse x
         pointOfInterest = CGPointMake(viewCoordinates.y / frameSize.height, 1.f - (viewCoordinates.x / frameSize.width));
@@ -583,20 +581,25 @@ typedef enum {
 // Auto focus at a particular point. The focus mode will change to locked once the auto focus happens.
 - (void)tapToAutoFocus:(UIGestureRecognizer *)gestureRecognizer
 {
+    CGPoint tapPoint = [gestureRecognizer locationInView:[self viewCamera]];
+    CGPoint convertedFocusPoint = [self convertToPointOfInterestFromViewCoordinates:tapPoint];
+    
     if ([[[captureManager videoInput] device] isFocusPointOfInterestSupported]) {
-        CGPoint tapPoint = [gestureRecognizer locationInView:[self viewCamera]];
-        CGPoint convertedFocusPoint = [self convertToPointOfInterestFromViewCoordinates:tapPoint];
         [captureManager autoFocusAtPoint:convertedFocusPoint];
-        [captureManager meteringAtPoint:convertedFocusPoint];
-        imageAutoFocus.center = tapPoint;
-        imageAutoFocus.alpha = 1;
-        [UIView animateWithDuration:kGlobalAnimationSpeed
-                              delay:1
-                            options:UIViewAnimationOptionCurveEaseInOut
-                         animations:^{
-                             imageAutoFocus.alpha = 0;
-                         } completion:nil];
     }
+    
+    if ([[[captureManager videoInput] device] isExposurePointOfInterestSupported]) {
+        [captureManager meteringAtPoint:convertedFocusPoint];
+    }
+    
+    imageAutoFocus.center = tapPoint;
+    imageAutoFocus.alpha = 1;
+    [UIView animateWithDuration:kGlobalAnimationSpeed
+                          delay:1
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         imageAutoFocus.alpha = 0;
+                     } completion:nil];
 }
 
 // Change to continuous auto focus. The camera will constantly focus at the point choosen.

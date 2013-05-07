@@ -1227,7 +1227,7 @@ typedef enum {
 }
 
 - (void)imagePickerController:(LXCanvasViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info {
-    [picker dismissViewControllerAnimated:NO completion:nil];
+    [picker.navigationController dismissModalViewControllerAnimated:YES];
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     

@@ -135,12 +135,7 @@
     for (int i = 0; i < users.count; i++) {
         User* user = users[i];
         if (i > 0)
-            stringUsers= [stringUsers stringByAppendingString:NSLocalizedString(@"and", @"と")];
-        
-        if (i > 1) {
-            stringUsers = [stringUsers stringByAppendingString:[NSString stringWithFormat:NSLocalizedString(@"x_others", "%d others"), ([count integerValue] - i)]];
-            break;
-        }
+            stringUsers = [stringUsers stringByAppendingString:NSLocalizedString(@"and", @"と")];
         
         if (user.name != nil) {
             stringUsers = [stringUsers stringByAppendingString:user.name];
@@ -151,6 +146,11 @@
         if (i < users.count) {
             stringUsers = [stringUsers stringByAppendingString:NSLocalizedString(@"subfix", @"さん") ];
         }
+    }
+    
+    if ([count integerValue] > 2) {
+        stringUsers = [stringUsers stringByAppendingString:NSLocalizedString(@"and", @"と")];
+        stringUsers = [stringUsers stringByAppendingString:[NSString stringWithFormat:NSLocalizedString(@"x_others", "%d others"), ([count integerValue] - 2)]];
     }
     
     NSString * notifyString;

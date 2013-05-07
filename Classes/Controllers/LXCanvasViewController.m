@@ -44,9 +44,8 @@
     NSData *imageFinalData;
     UIImage *imageFinalThumb;
     
-    BOOL didInit;
-    
     LXImageCropViewController *controllerCrop;
+    LXImageTextViewController *controllerText;
 }
 
 @end
@@ -114,8 +113,6 @@
 
 @synthesize buttonBlackWhite;
 
-@synthesize delegate;
-
 @synthesize imageMeta;
 @synthesize imagePreview;
 @synthesize imageFullsize;
@@ -139,8 +136,11 @@
         // Init Crop Controller
         UIStoryboard *storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
         controllerCrop = [storyCamera instantiateViewControllerWithIdentifier:@"Crop"];
+        controllerText = [storyCamera instantiateViewControllerWithIdentifier:@"Text"];
+        controllerText.delegate = self;
         
         __weak LXCanvasViewController *weakController = self;
+        __weak LXImageTextViewController *weakText = controllerText;
         controllerCrop.doneCallback = ^(UIImage *editedImage, BOOL canceled){
             if(!canceled) {
                 CGSize previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:editedImage.size.width height:editedImage.size.height]);
@@ -151,6 +151,8 @@
                 weakController.previewFilter = [[GPUImagePicture alloc] initWithImage:weakController.imagePreview];
                 [weakController preparePipe];
                 [weakController processImage];
+                
+                weakText.image = editedImage;
             }
             [weakController dismissModalViewControllerAnimated:YES];
         };
@@ -335,16 +337,17 @@
         [scrollBlend addSubview:labelBlend];
     }
     scrollBlend.contentSize = CGSizeMake(2*55+10, 60);
-    [self resizeCameraViewWithAnimation:NO];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
     
-    if (!didInit) {
-        didInit = true;
-        [self switchEditImage];
-    }
+    // Set Image
+    imageFullsize = _imageOriginal;
+    imagePreview = _imageOriginalPreview;
+    imageSize = imageFullsize.size;
+    controllerCrop.previewImage = _imageOriginalPreview;
+    controllerCrop.sourceImage = _imageOriginal;
+    controllerText.image = _imageOriginal;
+    
+    
+    [self switchEditImage];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -352,22 +355,6 @@
     
     [nc addObserver:self selector:@selector(receiveLoggedIn:) name:@"LoggedIn" object:nil];
     self.navigationController.navigationBarHidden = YES;
-}
-
-- (void)setImageOriginalPreview:(UIImage *)imageOriginalPreview {
-    _imageOriginalPreview = imageOriginalPreview;
-    imagePreview = imageOriginalPreview;
-    imageSize = imagePreview.size;
-    
-    controllerCrop.previewImage = imageOriginalPreview;
-}
-
-- (void)setImageOriginal:(UIImage *)imageOriginal {
-    _imageOriginal = imageOriginal;
-    imageFullsize = imageOriginal;
-    imageSize = imageFullsize.size;
-    buttonYes.enabled = true;
-    controllerCrop.sourceImage = imageOriginal;
 }
 
 
@@ -416,7 +403,7 @@
     filterSharpen = [[GPUImageSharpenFilter alloc] init];
     filterSharpen.sharpness = sliderSharpness.value;
     [pipe addFilter:filterSharpen];
-    [pipe.filters[0] setInputRotation:[self rotationFromImage:imagePreview.imageOrientation] atIndex:0];
+    [pipe.filters[0] setInputRotation:[self rotationFromImage:_imageOriginalPreview.imageOrientation] atIndex:0];
 }
 
 - (GPUImageRotationMode)rotationFromImage:(UIImageOrientation)orientation {
@@ -540,7 +527,7 @@
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
     if (app.currentUser != nil) {
-        if (delegate == nil) {
+        if (_delegate == nil) {
             LXPicEditViewController *controllerPicEdit = [[UIStoryboard storyboardWithName:@"Gallery"
                                                                             bundle: nil] instantiateViewControllerWithIdentifier:@"PicEdit"];
             controllerPicEdit.imageData = imageFinalData;
@@ -551,8 +538,7 @@
                                   imageFinalData, @"data",
                                   imageFinalThumb, @"preview",
                                   nil];
-            [delegate imagePickerController:self didFinishPickingMediaWithData:info];
-            [self.navigationController dismissModalViewControllerAnimated:YES];
+            [_delegate imagePickerController:self didFinishPickingMediaWithData:info];
         }
     } else {
         RDActionSheet *actionSheet = [[RDActionSheet alloc] initWithCancelButtonTitle:NSLocalizedString(@"Cancel", @"")
@@ -603,7 +589,7 @@
 }
 
 - (UIImage*)getFinalThumb {
-    CGImageRef cgImagePreviewFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:imageFullsize.imageOrientation];
+    CGImageRef cgImagePreviewFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:_imageOriginalPreview.imageOrientation];
     UIImage* ret = [UIImage imageWithCGImage:cgImagePreviewFromBytes];
     CGImageRelease(cgImagePreviewFromBytes);
     return ret;
@@ -636,7 +622,7 @@
     [picture processImage];
     
     // Save to Jpeg NSData
-    CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:imageFullsize.imageOrientation];
+    CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:_imageOriginal.imageOrientation];
     UIImage *outputImage = [UIImage imageWithCGImage:cgImageFromBytes];
     NSData *jpeg = UIImageJPEGRepresentation(outputImage, 0.9);
     CGImageRelease(cgImageFromBytes);
@@ -872,7 +858,7 @@
     viewTopBar.hidden = false;
     
     viewCameraWraper.layer.shadowPath = nil;
-    viewCameraWraper.layer.shadowRadius = 0;
+    viewCameraWraper.layer.shadowRadius = 5.0;
 
     [UIView animateWithDuration:animation?0.3:0 animations:^{
         viewFocusControl.frame = frameBokeh;
@@ -887,7 +873,6 @@
     } completion:^(BOOL finished) {
         UIBezierPath *shadowPathCamera = [UIBezierPath bezierPathWithRect:viewCameraWraper.bounds];
         viewCameraWraper.layer.shadowPath = shadowPathCamera.CGPath;
-        viewCameraWraper.layer.shadowRadius = 5.0;
     }];
 }
 
@@ -937,16 +922,14 @@
     [self processImage];
     [self initPreviewPic];
     filterMain.toneEnable = NO;
-    
-    isSaved = YES;
 }
 
 - (void)initPreviewPic {
-    GPUImagePicture *gpuimagePreview = [[GPUImagePicture alloc] initWithImage:imagePreview];
+    GPUImagePicture *gpuimagePreview = [[GPUImagePicture alloc] initWithImage:_imageOriginalPreview];
     for (NSInteger i = 0; i < effectNum; i++) {
         GPUImageView *imageViewPreview = effectPreview[i];
         LXImageFilter *filterSample = [[LXImageFilter alloc] init];
-        [filterSample setInputRotation:[self rotationFromImage:imagePreview.imageOrientation] atIndex:0];
+        [filterSample setInputRotation:[self rotationFromImage:_imageOriginalPreview.imageOrientation] atIndex:0];
         filterSample.toneCurve = effectCurve[i];
         filterSample.toneEnable = YES;
         [gpuimagePreview addTarget:filterSample];
@@ -1196,6 +1179,10 @@
     [self presentModalViewController:controllerCrop animated:YES];
 }
 
+- (IBAction)touchText:(id)sender {
+    [self presentModalViewController:controllerText animated:YES];
+}
+
 - (void)setBlendImpl:(NSInteger)tag {
     buttonBlendNone.enabled = true;
     buttonBlendStrong.enabled = true;
@@ -1242,6 +1229,13 @@
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     return YES;
+}
+
+- (void)newTextImage:(UIImage *)textImage {
+    filterMain.imageBlend = textImage;
+    filterMain.blendIntensity = 1.0;
+    filterMain.blendEnable = YES;
+    [self processImage];
 }
 
 @end

@@ -13,5 +13,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *labelUsername;
 @property (strong, nonatomic) IBOutlet UIView *viewBanner;
 - (IBAction)touchBanner:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *buttonBanner;
 
 @end

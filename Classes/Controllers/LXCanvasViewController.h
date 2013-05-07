@@ -17,6 +17,7 @@
 #import "UIImage+fixOrientation.h"
 #import "MBProgressHUD.h"
 #import "LXStillCamera.h"
+#import "LXImageTextViewController.h"
 
 typedef enum {
     kTabPreview = 0,
@@ -50,7 +51,7 @@ typedef enum {
 - (void)imagePickerControllerDidCancel:(LXCanvasViewController *)picker;
 @end
 
-@interface LXCanvasViewController : UIViewController <UIActionSheetDelegate, UIGestureRecognizerDelegate, UIScrollViewDelegate, LXDrawViewDelegate, UIAlertViewDelegate, UINavigationControllerDelegate>
+@interface LXCanvasViewController : UIViewController <UIActionSheetDelegate, UIGestureRecognizerDelegate, UIScrollViewDelegate, LXDrawViewDelegate, UIAlertViewDelegate, UINavigationControllerDelegate, LXImageTextDelegate>
 @property (weak, nonatomic) id <LXImagePickerDelegate> delegate;
 
 @property (strong, nonatomic) IBOutlet UIView *viewBottomBar;
@@ -131,6 +132,7 @@ typedef enum {
 - (IBAction)setBlend:(UIButton *)sender;
 - (IBAction)toggleMono:(id)sender;
 - (IBAction)touchCrop:(id)sender;
+- (IBAction)touchText:(id)sender;
 
 @property (strong, nonatomic) UIImage *imageOriginalPreview;
 @property (strong, nonatomic) UIImage *imageOriginal;

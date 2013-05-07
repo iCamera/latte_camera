@@ -19,6 +19,7 @@
 @implementation LXAboutViewController
 
 @synthesize textForm;
+@synthesize textEmail;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -44,15 +45,12 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)touchClose:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
 - (IBAction)touchSend:(id)sender {
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     UIDeviceHardware *device = [[UIDeviceHardware alloc] init];
     NSString *senderName = @"";
-    NSString *memo = [NSString stringWithFormat:@"Version:%@\nDevice:%@\n\n%@",
+    NSString *memo = [NSString stringWithFormat:@"Email:%@\nVersion:%@\nDevice:%@\n\n%@",
+                      textEmail.text,
                       [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"],
                       [device platformString],
                       textForm.text];
@@ -85,6 +83,7 @@
 
 - (void)viewDidUnload {
     [self setTextForm:nil];
+    [self setTextEmail:nil];
     [super viewDidUnload];
 }
 @end
