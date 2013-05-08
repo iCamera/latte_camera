@@ -19,7 +19,6 @@
 
 @synthesize mapPic;
 @synthesize viewHidden;
-@synthesize viewHiddenIcon;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -66,7 +65,6 @@
     
     if (_picture.isOwner && !_picture.showGPS) {
         viewHidden.hidden = false;
-        viewHiddenIcon.hidden = false;
     }
     
 }
@@ -79,7 +77,6 @@
 
 - (void)viewDidUnload {
     [self setViewHidden:nil];
-    [self setViewHiddenIcon:nil];
     [super viewDidUnload];
 }
 @end
