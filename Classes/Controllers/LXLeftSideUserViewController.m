@@ -134,7 +134,12 @@
 }
 
 - (IBAction)touchBanner:(id)sender {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/picture/contest/2013april"]];
+    NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
+    if ([language isEqualToString:@"ja"]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/picture/contest/2013may"]];
+    } else {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://en.latte.la/picture/contest/2013may"]];
+    }
 }
 
 - (void)viewDidUnload {

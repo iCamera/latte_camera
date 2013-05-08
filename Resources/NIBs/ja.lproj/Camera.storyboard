@@ -264,7 +264,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="3wF-Hd-rcJ" userLabel="Button Shoot">
+                                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="3wF-Hd-rcJ" userLabel="Button Shoot">
                                                 <rect key="frame" x="105" y="5" width="110" height="40"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                 <state key="normal" image="icon_camera2.png" backgroundImage="bg_camera_bt.png">
@@ -1203,8 +1203,8 @@ I WORK</string>
                                 <rect key="frame" x="0.0" y="410" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                             </imageView>
-                            <imageView contentMode="scaleToFill" image="crop_rb.png" id="iZq-QN-mz3">
-                                <rect key="frame" x="290" y="359" width="22" height="22"/>
+                            <imageView contentMode="center" image="crop_rb.png" id="iZq-QN-mz3">
+                                <rect key="frame" x="278" y="350" width="40" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -1469,7 +1469,6 @@ I WORK</string>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="10" id="yaH-Cn-Y4N">
                                 <rect key="frame" x="71" y="437" width="175" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <color key="pageIndicatorTintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                             </pageControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="DCa-QB-oSC">
                                 <rect key="frame" x="0.0" y="0.0" width="73" height="44"/>

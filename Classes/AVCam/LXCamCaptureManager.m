@@ -10,6 +10,7 @@
 #import "AVCamUtilities.h"
 #import <ImageIO/ImageIO.h>
 #import "UIDeviceHardware.h"
+#import "UIImage+fixOrientation.h"
 #import "LXUtils.h"
 
 @implementation LXCamCaptureManager {
@@ -76,7 +77,6 @@
         CGImageRef cgImage = [self imageFromSampleBuffer:sampleBuffer];
         UIImage* ret = [UIImage imageWithCGImage:cgImage scale:1.0 orientation:[self imageOrientationFromAV:self.orientation]];
         CGImageRelease(cgImage);
-        
         
         [[self delegate] lattePreviewImageCaptured:ret];
     }

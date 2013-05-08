@@ -44,6 +44,7 @@ typedef enum {
     LXCamCaptureManager *captureManager;
     AVCaptureVideoPreviewLayer *captureVideoPreviewLayer;
     float volumeLevel;
+    BOOL isReady;
 }
 
 @synthesize viewCamera;
@@ -176,14 +177,29 @@ typedef enum {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
     
-    // Start the session. This is done asychronously since -startRunning doesn't return until the session is running.
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [[captureManager session] startRunning];
-    });
-    
     UIApplication *app = [UIApplication sharedApplication];
     [app setSystemVolumeHUDEnabled:NO];
     [self enableVolumeSnap];
+    [self startCamera];
+}
+
+- (void)startCamera {
+    // Start the session. This is done asychronously since -startRunning doesn't return until the session is running.
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [[captureManager session] startRunning];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            buttonCapture.enabled = YES;
+            isReady = YES;
+        });
+    });
+}
+
+- (void)stopCamera {
+    isReady = NO;
+    buttonCapture.enabled = NO;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [[captureManager session] stopRunning];
+    });
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -195,9 +211,7 @@ typedef enum {
     UIAccelerometer* a = [UIAccelerometer sharedAccelerometer];
     a.delegate = nil;
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [[captureManager session] stopRunning];
-    });
+    [self stopCamera];
 
     UIApplication *app = [UIApplication sharedApplication];
     [app setSystemVolumeHUDEnabled:YES];
@@ -222,6 +236,9 @@ typedef enum {
 
 
 - (void)capturePhotoAsync {
+    if (!isReady) {
+        return;
+    }
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:self];
     // Capture a still image
@@ -266,6 +283,9 @@ typedef enum {
         
         controllerCanvas.imageMeta = imageMeta;
         controllerCanvas.imageOriginalPreview = tmpImagePreview;
+        
+        CGFloat height = [LXUtils heightFromWidth:70 width:tmpImagePreview.size.height height:tmpImagePreview.size.height];
+        controllerCanvas.imageThumbnail = [LXUtils imageWithImage:tmpImagePreview scaledToSize:CGSizeMake(70, height)];
         tmpImagePreview = nil;
         controllerCanvas.delegate = _delegate;
         controllerCanvas.imageOriginal = image;
@@ -342,9 +362,8 @@ typedef enum {
 }
 
 - (IBAction)touchPick:(id)sender {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [[captureManager session] stopRunning];
-    });
+    [self stopCamera];
+    
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     [imagePicker.navigationBar setBackgroundImage:[UIImage imageNamed: @"bg_head.png"] forBarMetrics:UIBarMetricsDefault];
     imagePicker.delegate = self;
@@ -360,12 +379,12 @@ typedef enum {
         LXCanvasViewController *controllerCanvas = [storyCamera instantiateViewControllerWithIdentifier:@"Canvas"];
         
         UIImage *imageFullsize = [info objectForKey:UIImagePickerControllerOriginalImage];
-        CGSize previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:imageFullsize.size.width height:imageFullsize.size.height]);
-        UIImage *previewPic = [LXUtils imageWithImage:imageFullsize scaledToSize:previewUISize];
         controllerCanvas.delegate = _delegate;
-        controllerCanvas.imageOriginalPreview = previewPic;
+        controllerCanvas.imageOriginalPreview = [UIImage imageWithCGImage:myasset.defaultRepresentation.fullScreenImage];
+        controllerCanvas.imageThumbnail = [UIImage imageWithCGImage:myasset.thumbnail];
         controllerCanvas.imageMeta = [NSMutableDictionary dictionaryWithDictionary:myasset.defaultRepresentation.metadata];
         controllerCanvas.imageOriginal = imageFullsize;
+        
         [self.navigationController pushViewController:controllerCanvas animated:YES];
     };
     
@@ -505,9 +524,7 @@ typedef enum {
 }
 
 - (void)close:(id)sender {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [[captureManager session] stopRunning];
-    });
+    [self stopCamera];
     [self.navigationController dismissModalViewControllerAnimated:YES];
 }
 

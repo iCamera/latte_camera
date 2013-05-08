@@ -403,12 +403,18 @@
     filterSharpen = [[GPUImageSharpenFilter alloc] init];
     filterSharpen.sharpness = sliderSharpness.value;
     [pipe addFilter:filterSharpen];
-    [pipe.filters[0] setInputRotation:[self rotationFromImage:_imageOriginalPreview.imageOrientation] atIndex:0];
+    if (source) {
+        [pipe.filters[0] setInputRotation:[self rotationFromImage:imageFullsize.imageOrientation] atIndex:0];
+    }
+    else {
+        [pipe.filters[0] setInputRotation:[self rotationFromImage:imagePreview.imageOrientation] atIndex:0];
+    }
+
 }
 
 - (GPUImageRotationMode)rotationFromImage:(UIImageOrientation)orientation {
     GPUImageRotationMode imageViewRotationModeIdx1 = kGPUImageNoRotation;
-    switch (imagePreview.imageOrientation) {
+    switch (orientation) {
         case UIImageOrientationLeft:
             imageViewRotationModeIdx1 = kGPUImageRotateLeft;
             break;
@@ -610,9 +616,11 @@
     [dictForTIFF setObject:appVersion forKey:(NSString *)kCGImagePropertyTIFFSoftware];
     [imageMeta setObject:dictForTIFF forKey:(NSString *)kCGImagePropertyTIFFDictionary];
     
-    // If this is new photo save original pic first, and then process    
-    [dictForTIFF removeObjectForKey:(NSString *)kCGImagePropertyTIFFOrientation];
-    [imageMeta removeObjectForKey:(NSString *)kCGImagePropertyOrientation];
+    // If this is new photo save original pic first, and then process
+//    if (imageFullsize != _imageOriginal) {
+        [dictForTIFF removeObjectForKey:(NSString *)kCGImagePropertyTIFFOrientation];
+        [imageMeta removeObjectForKey:(NSString *)kCGImagePropertyOrientation];
+//    }
     
     GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:imageFullsize];
     [self preparePipe:picture];
@@ -622,7 +630,7 @@
     [picture processImage];
     
     // Save to Jpeg NSData
-    CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:_imageOriginal.imageOrientation];
+    CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:UIImageOrientationUp];
     UIImage *outputImage = [UIImage imageWithCGImage:cgImageFromBytes];
     NSData *jpeg = UIImageJPEGRepresentation(outputImage, 0.9);
     CGImageRelease(cgImageFromBytes);
@@ -925,11 +933,10 @@
 }
 
 - (void)initPreviewPic {
-    GPUImagePicture *gpuimagePreview = [[GPUImagePicture alloc] initWithImage:_imageOriginalPreview];
+    GPUImagePicture *gpuimagePreview = [[GPUImagePicture alloc] initWithImage:_imageThumbnail];
     for (NSInteger i = 0; i < effectNum; i++) {
         GPUImageView *imageViewPreview = effectPreview[i];
         LXImageFilter *filterSample = [[LXImageFilter alloc] init];
-        [filterSample setInputRotation:[self rotationFromImage:_imageOriginalPreview.imageOrientation] atIndex:0];
         filterSample.toneCurve = effectCurve[i];
         filterSample.toneEnable = YES;
         [gpuimagePreview addTarget:filterSample];
@@ -1116,7 +1123,7 @@
     }
     
     UIImage *imageBlend = [UIImage imageNamed:blendPic];
-    filterMain.imageBlend = [UIImage imageNamed:blendPic];
+    filterMain.imageBlend = imageBlend;
     
     if (isFixedAspectBlend) {
         CGSize blendSize = imageBlend.size;

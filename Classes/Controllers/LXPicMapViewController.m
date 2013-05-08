@@ -18,6 +18,8 @@
 }
 
 @synthesize mapPic;
+@synthesize viewHidden;
+@synthesize viewHiddenIcon;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,6 +36,7 @@
 }
 
 - (void)setPicture:(Picture *)picture {
+    _picture = picture;
     CLLocationCoordinate2D location;
     location.latitude = [picture.latitude floatValue];
     location.longitude = [picture.longitude floatValue];
@@ -61,6 +64,11 @@
     [mapPic setRegion:adjustedRegion animated:YES];
     [mapPic regionThatFits:adjustedRegion];
     
+    if (_picture.isOwner && !_picture.showGPS) {
+        viewHidden.hidden = false;
+        viewHiddenIcon.hidden = false;
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -69,4 +77,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewDidUnload {
+    [self setViewHidden:nil];
+    [self setViewHiddenIcon:nil];
+    [super viewDidUnload];
+}
 @end

@@ -315,7 +315,7 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="center" image="icon_login.png" id="GqE-i6-bFY">
+                                        <imageView userInteractionEnabled="NO" contentMode="center" image="hicon_lock_s.png" highlightedImage="icon_public_s.png" highlighted="YES" id="GqE-i6-bFY">
                                             <rect key="frame" x="278" y="6" width="13" height="16"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -409,13 +409,43 @@
                                     <outlet property="delegate" destination="59n-9u-wT7" id="Xwc-hV-NtU"/>
                                 </connections>
                             </mapView>
+                            <view hidden="YES" contentMode="scaleToFill" id="4eO-MU-P2C">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Location information is hidden" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="QxN-lI-Chj">
+                                        <rect key="frame" x="20" y="11" width="280" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="bDs-D2-cPu"/>
+                    <navigationItem key="navigationItem" id="bDs-D2-cPu">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="tmB-oq-9sd">
+                            <view key="customView" hidden="YES" contentMode="scaleToFill" id="4Hy-h5-S8j">
+                                <rect key="frame" x="281" y="5" width="34" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" image="hicon_lock.png" id="Spp-az-GeN">
+                                        <rect key="frame" x="0.0" y="0.0" width="35" height="33"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="mapPic" destination="9Ih-x9-5Dk" id="nKg-Jh-8uA"/>
+                        <outlet property="viewHidden" destination="4eO-MU-P2C" id="KPd-IR-VOj"/>
+                        <outlet property="viewHiddenIcon" destination="4Hy-h5-S8j" id="KEV-ma-RbC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VZ5-CL-VyY" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -932,17 +962,156 @@
         <image name="bt_send_on.png" width="100" height="30"/>
         <image name="checkbox_off.png" width="15" height="15"/>
         <image name="checkbox_on.png" width="15" height="15"/>
+        <image name="hicon_lock.png" width="13" height="16"/>
+        <image name="hicon_lock_s.png" width="10" height="12"/>
         <image name="icon_close.png" width="20" height="20"/>
         <image name="icon_comment_s.png" width="12" height="12"/>
         <image name="icon_iine_s.png" width="12" height="12"/>
         <image name="icon_iine_s_on.png" width="12" height="12"/>
         <image name="icon_iine_ss.png" width="10" height="10"/>
-        <image name="icon_login.png" width="13" height="16"/>
         <image name="icon_map_s.png" width="12" height="15"/>
         <image name="icon_plus_s.png" width="11" height="11"/>
+        <image name="icon_public_s.png" width="12" height="12"/>
         <image name="icon_setting_m_ocher.png" width="15" height="15"/>
         <image name="user.gif" width="100" height="100"/>
     </resources>
+    <classes>
+        <class className="HPGrowingTextView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HPGrowingTextView.h"/>
+        </class>
+        <class className="LXButtonBrown30" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonBrown30.h"/>
+        </class>
+        <class className="LXCellComment" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellComment.h"/>
+            <relationships>
+                <relationship kind="outlet" name="buttonLike" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="imageLike" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="imageNationality" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="labelAuthor" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelDate" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelLike" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="textComment" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="viewBack" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXCellDataField" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellDataField.h"/>
+            <relationships>
+                <relationship kind="outlet" name="imageHide" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="labelDetail" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelField" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="LXCellGridUser" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellGridUser.h"/>
+        </class>
+        <class className="LXCellInfoTag" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellInfoTag.h"/>
+            <relationships>
+                <relationship kind="outlet" name="scrollTag" candidateClass="UIScrollView"/>
+            </relationships>
+        </class>
+        <class className="LXCellTag" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellTag.h"/>
+            <relationships>
+                <relationship kind="outlet" name="textTag" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="LXGalleryViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXGalleryViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="dragTab:" candidateClass="UIPanGestureRecognizer"/>
+                <relationship kind="action" name="switchTab:" candidateClass="UIButton"/>
+                <relationship kind="action" name="toggleLike:" candidateClass="UIButton"/>
+                <relationship kind="action" name="touchClose:"/>
+                <relationship kind="action" name="touchShare:"/>
+                <relationship kind="action" name="touchUser:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonComment" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonEdit" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonLike" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonMap" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="imageNationality" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="labelComment" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelLike" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelNickname" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelView" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="viewDesc" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="viewInfoTop" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewTab" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXNavBar" superclassName="UINavigationBar">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavBar.h"/>
+        </class>
+        <class className="LXNavGalleryViewController" superclassName="UINavigationController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavGalleryViewController.h"/>
+        </class>
+        <class className="LXPicCommentViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicCommentViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="touchSend:"/>
+                <relationship kind="outlet" name="activityLoad" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="buttonSend" candidateClass="LXButtonBrown30"/>
+                <relationship kind="outlet" name="growingComment" candidateClass="HPGrowingTextView"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="viewHeader" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXPicDetailTabViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicDetailTabViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="scrollTab" candidateClass="UIScrollView"/>
+            </relationships>
+        </class>
+        <class className="LXPicDumbTabViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicDumbTabViewController.h"/>
+        </class>
+        <class className="LXPicEditViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicEditViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="touchBackground:"/>
+                <relationship kind="action" name="touchDelete:"/>
+                <relationship kind="action" name="touchFacebook:"/>
+                <relationship kind="action" name="touchPost:"/>
+                <relationship kind="action" name="touchTwitter:"/>
+                <relationship kind="outlet" name="buttonDelete" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonFacebook" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonTwitter" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="gestureTap" candidateClass="UITapGestureRecognizer"/>
+                <relationship kind="outlet" name="imagePic" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="labelStatus" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelTag" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="switchEXIF" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="switchGPS" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="switchTakenAt" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="textDesc" candidateClass="LXTextView"/>
+                <relationship kind="outlet" name="viewDelete" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXPicInfoViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicInfoViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="touchReport:"/>
+            </relationships>
+        </class>
+        <class className="LXPicMapViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicMapViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="mapPic" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="viewHidden" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewHiddenIcon" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXTextView" superclassName="UITextView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXTextView.h"/>
+        </class>
+        <class className="LXVoteViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXVoteViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

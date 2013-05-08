@@ -19,5 +19,7 @@
 @property (strong, nonatomic) IBOutlet MKMapView *mapPic;
 
 @property (strong, nonatomic) Picture *picture;
+@property (strong, nonatomic) IBOutlet UIView *viewHidden;
+@property (strong, nonatomic) IBOutlet UIView *viewHiddenIcon;
 
 @end

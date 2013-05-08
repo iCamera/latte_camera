@@ -299,27 +299,41 @@
 }
 
 - (IBAction)touchTwitter:(id)sender {
-    ACAccountStore *account = [[ACAccountStore alloc] init];
-    ACAccountType *accountType = [account accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-    
-    NSArray *arrayOfAccounts = [account accountsWithAccountType:accountType];
-    
-    // Sanity check
-    if ([arrayOfAccounts count] > 0) {
-        buttonTwitter.selected = !buttonTwitter.selected;
-    } else {
-        buttonTwitter.selected = false;
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"")
-                                                        message:NSLocalizedString(@"error_no_twitter", @"")
-                                                       delegate:nil
-                                              cancelButtonTitle:NSLocalizedString(@"close", @"")
-                                              otherButtonTitles:nil];
-        [alert show];
-    }
-    
+    buttonTwitter.selected = !buttonTwitter.selected;
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
     app.currentUser.pictureAutoTweet = buttonTwitter.selected;
     [self updateUserInfo:@"picture_auto_tweet" value:buttonTwitter.selected];
+    
+    if (buttonTwitter.selected) {
+        ACAccountStore *account = [[ACAccountStore alloc] init];
+        ACAccountType *accountType = [account accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+        
+        [account requestAccessToAccountsWithType:accountType withCompletionHandler:^(BOOL granted, NSError *error) {
+            if(granted) {
+                NSArray *arrayOfAccounts = [account accountsWithAccountType:accountType];
+                
+                if ([arrayOfAccounts count] == 0) {
+                    buttonTwitter.selected = NO;
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"")
+                                                                    message:NSLocalizedString(@"error_no_twitter", @"")
+                                                                   delegate:nil
+                                                          cancelButtonTitle:NSLocalizedString(@"close", @"")
+                                                          otherButtonTitles:nil];
+                    [alert performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:YES];
+                }
+            } else {
+                buttonTwitter.selected = NO;
+                
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"")
+                                                                message:NSLocalizedString(@"Please allow Latte camera to access Twitter in iPhone Setting", @"")
+                                                               delegate:nil
+                                                      cancelButtonTitle:NSLocalizedString(@"close", @"")
+                                                      otherButtonTitles:nil];
+                [alert performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:YES];
+            }
+            // Handle any error state here as you wish
+        }];
+    }
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification
