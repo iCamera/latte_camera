@@ -44,4 +44,6 @@
 - (IBAction)touchQuick:(UIButton *)sender;
 - (IBAction)touchPick:(id)sender;
 
+- (void)capturePhotoAsync;
+
 @end

@@ -14,7 +14,7 @@
 #import "UIView+Genie.h"
 #import "MBProgressHUD.h"
 #import "UIApplication+Private.h"
-#import <MediaPlayer/MediaPlayer.h>
+#import "RBVolumeButtons.h"
 
 #define kAccelerometerFrequency        10.0 //Hz
 
@@ -149,14 +149,19 @@ typedef enum {
     viewCameraWraper.layer.shadowOpacity = 1.0;
     viewCameraWraper.layer.shadowRadius = 5.0;
     viewCameraWraper.layer.shadowPath = shadowPathCamera.CGPath;
+    [self enableVolumeSnap];
 }
 
 - (void)enableVolumeSnap {
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(captureByVolume:)
-     name:@"AVSystemController_SystemVolumeDidChangeNotification"
-     object:nil];
+    RBVolumeButtons *buttonStealer = [[RBVolumeButtons alloc] init];
+    
+    __weak LXCaptureViewController *weakSelf = self;
+    buttonStealer.upBlock = ^{
+        [weakSelf capturePhotoAsync];
+    };
+    buttonStealer.downBlock = ^{
+        [weakSelf capturePhotoAsync];
+    };
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -177,9 +182,8 @@ typedef enum {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
     
-    UIApplication *app = [UIApplication sharedApplication];
-    [app setSystemVolumeHUDEnabled:NO];
-    [self enableVolumeSnap];
+//    UIApplication *app = [UIApplication sharedApplication];
+//    [app setSystemVolumeHUDEnabled:NO];
     [self startCamera];
 }
 
@@ -213,8 +217,8 @@ typedef enum {
     
     [self stopCamera];
 
-    UIApplication *app = [UIApplication sharedApplication];
-    [app setSystemVolumeHUDEnabled:YES];
+//    UIApplication *app = [UIApplication sharedApplication];
+//    [app setSystemVolumeHUDEnabled:YES];
     
     [super viewWillDisappear:animated];
 }
@@ -290,8 +294,6 @@ typedef enum {
         controllerCanvas.delegate = _delegate;
         controllerCanvas.imageOriginal = image;
         [self.navigationController pushViewController:controllerCanvas animated:YES];
-    } else {
-        [self performSelector:@selector(enableVolumeSnap) withObject:nil afterDelay:2];
     }
 }
 
