@@ -69,8 +69,8 @@
     action[@"image[0][url]"] = picture.urlLarge;
     action[@"image[0][user_generated]"] = @"true";
     action[@"fb:explicitly_shared"] = @"true";
-    if (picture.descriptionText) {
-        action[@"message"] = picture.descriptionText;
+    if (_imageDescription) {
+        action[@"message"] = _imageDescription;
     }
     
     [FBRequestConnection startForPostWithGraphPath:@"me/latte_prod:upload"

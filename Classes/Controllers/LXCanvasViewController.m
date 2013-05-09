@@ -17,7 +17,6 @@
 #import "LXImageCropViewController.h"
 
 @interface LXCanvasViewController ()  {
-    GPUImageSharpenFilter *filterSharpen;
     GPUImageFilterPipeline *pipe;
     LXImageFilter *filterMain;
     
@@ -26,12 +25,16 @@
     BOOL isSaved;
     BOOL isWatingToUpload;
     
+    NSString *currentEffect;
     NSInteger currentLens;
     NSInteger currentMask;
-    NSInteger currentBlend;
+    NSString *currentBlend;
+    NSString *currentFilm;
     NSInteger effectNum;
+    NSMutableArray *arrayPreviewPreset;
     NSMutableArray *effectPreview;
     NSMutableArray *effectCurve;
+    NSArray *arrayPreset;
     
     NSLayoutConstraint *cameraAspect;
     NSInteger timerMode;
@@ -55,8 +58,10 @@
 @synthesize scrollEffect;
 @synthesize scrollProcess;
 @synthesize scrollBlend;
+@synthesize scrollFilm;
+@synthesize scrollPreset;
+
 @synthesize sliderEffectIntensity;
-@synthesize viewShoot;
 @synthesize viewCamera;
 
 @synthesize buttonYes;
@@ -70,8 +75,9 @@
 @synthesize buttonToggleEffect;
 @synthesize buttonToggleBasic;
 @synthesize buttonToggleLens;
-@synthesize buttonToggleText;
+@synthesize buttonToggleFilm;
 @synthesize buttonToggleBlend;
+@synthesize buttonTogglePreset;
 
 @synthesize buttonBackgroundNatual;
 @synthesize switchGain;
@@ -86,19 +92,25 @@
 @synthesize buttonBlendMedium;
 @synthesize buttonBlendStrong;
 
+@synthesize buttonFilmNone;
+@synthesize buttonFilmWeak;
+@synthesize buttonFilmMedium;
+@synthesize buttonFilmStrong;
+
 @synthesize buttonLensNormal;
 @synthesize buttonLensWide;
 @synthesize buttonLensFish;
 
 @synthesize viewCameraWraper;
 @synthesize viewDraw;
-@synthesize buttonToggleFisheye;
 
+@synthesize viewPresetControl;
 @synthesize viewBasicControl;
 @synthesize viewFocusControl;
 @synthesize viewLensControl;
 @synthesize viewEffectControl;
 @synthesize viewBlendControl;
+@synthesize viewFilmControl;
 
 @synthesize viewCanvas;
 
@@ -195,7 +207,7 @@
     [window addSubview:HUD];
     HUD.userInteractionEnabled = NO;
     
-    scrollProcess.contentSize = CGSizeMake(320, 50);
+    scrollProcess.contentSize = CGSizeMake(400, 50);
 
     filterMain = [[LXImageFilter alloc] init];
     
@@ -299,6 +311,7 @@
     scrollEffect.contentSize = CGSizeMake(effectNum*75+10, 70);
     
     
+    // Blend
     for (int i=0; i < 4; i++) {
         UILabel *labelBlend = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 10)];
         labelBlend.backgroundColor = [UIColor clearColor];
@@ -336,7 +349,46 @@
         [scrollBlend addSubview:buttonBlend];
         [scrollBlend addSubview:labelBlend];
     }
-    scrollBlend.contentSize = CGSizeMake(2*55+10, 60);
+    scrollBlend.contentSize = CGSizeMake(4*55+10, 60);
+    
+    // Film
+    for (int i=0; i < 9; i++) {
+        UIButton *buttonFilm = [[UIButton alloc] initWithFrame:CGRectMake(5+55*i, 5, 50, 50)];
+        UIImage *preview = [UIImage imageNamed:[NSString stringWithFormat:@"print%d.jpg", i+1]];
+        [buttonFilm setImage:preview forState:UIControlStateNormal];
+        [buttonFilm addTarget:self action:@selector(toggleFilm:) forControlEvents:UIControlEventTouchUpInside];
+        buttonFilm.layer.cornerRadius = 5;
+        buttonFilm.clipsToBounds = YES;
+        buttonFilm.tag = i+1;
+        
+        [scrollFilm addSubview:buttonFilm];
+    }
+    scrollFilm.contentSize = CGSizeMake(9*55+10, 60);
+    
+    // Preset
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"preset" ofType:@"plist"];
+    arrayPreset = [NSArray arrayWithContentsOfFile:path];
+    arrayPreviewPreset = [[NSMutableArray alloc] init];
+    for (int i=0; i < arrayPreset.count; i++) {
+        UIButton *buttonPreset = [[UIButton alloc] initWithFrame:CGRectMake(5+55*i, 5, 50, 50)];
+        
+        GPUImageView *previewPreset = [[GPUImageView alloc] initWithFrame:buttonPreset.bounds];
+        previewPreset.fillMode = kGPUImageFillModePreserveAspectRatioAndFill;
+        previewPreset.userInteractionEnabled = NO;
+        
+        buttonPreset.backgroundColor = [UIColor grayColor];
+        [buttonPreset addTarget:self action:@selector(setPreset:) forControlEvents:UIControlEventTouchUpInside];
+        buttonPreset.layer.cornerRadius = 5;
+        buttonPreset.clipsToBounds = YES;
+        buttonPreset.tag = i;
+        
+        [arrayPreviewPreset addObject:previewPreset];
+        
+        [buttonPreset addSubview:previewPreset];
+        
+        [scrollPreset addSubview:buttonPreset];
+    }
+    scrollPreset.contentSize = CGSizeMake(arrayPreset.count*55+10, 60);
     
     // Set Image
     imageFullsize = _imageOriginal;
@@ -400,9 +452,6 @@
     
     [pipe addFilter:filterMain];
     
-    filterSharpen = [[GPUImageSharpenFilter alloc] init];
-    filterSharpen.sharpness = sliderSharpness.value;
-    [pipe addFilter:filterSharpen];
     if (source) {
         [pipe.filters[0] setInputRotation:[self rotationFromImage:imageFullsize.imageOrientation] atIndex:0];
     }
@@ -435,12 +484,10 @@
 }
 
 - (void)applyFilterSetting {
-    filterMain.vignfade = 0.8-sliderVignette.value;
+    filterMain.vignfade = sliderVignette.value;
     filterMain.brightness = sliderExposure.value;
     filterMain.clearness = sliderClear.value;
     filterMain.saturation = sliderSaturation.value;
-    
-    filterSharpen.sharpness = sliderSharpness.value;
     
     filterMain.toneCurveIntensity = sliderEffectIntensity.value;
     
@@ -479,6 +526,7 @@
         filterMain.toneEnable = YES;
         filterMain.toneCurve = effectCurve[buttonEffect.tag];
     }
+    currentEffect = [NSString stringWithFormat:@"curve%d.png", buttonEffect.tag];
     [self processImage];
 }
 
@@ -706,15 +754,16 @@
 }
 
 - (IBAction)toggleControl:(UIButton*)sender {
-    // Disable Text
-    if (sender.tag == kTabText) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"Error")
-                                                        message:NSLocalizedString(@"feature_not_available", @"Feature Not Available")
-                                                       delegate:self
-                                              cancelButtonTitle:NSLocalizedString(@"close", @"Close")
-                                              otherButtonTitles: nil];
-        [alert show];
-        return;
+    NSArray *arrayButton = [NSArray arrayWithObjects:
+                            buttonTogglePreset,
+                            buttonToggleEffect,
+                            buttonToggleBasic,
+                            buttonToggleFocus,
+                            buttonToggleLens,
+                            buttonToggleBlend,
+                            buttonToggleFilm, nil];
+    for (UIButton *button in arrayButton) {
+        button.selected = false;
     }
     
     if (sender.tag == currentTab) {
@@ -726,66 +775,13 @@
         sender.selected = true;
     }
     
-    switch (currentTab) {
-        case kTabEffect:
-            buttonToggleFocus.selected = false;
-            buttonToggleBasic.selected = false;
-            buttonToggleLens.selected = false;
-            buttonToggleText.selected = false;
-            buttonToggleBlend.selected = false;
-            //            buttonTo
-            break;
-        case kTabBasic:
-            buttonToggleFocus.selected = false;
-            buttonToggleEffect.selected = false;
-            buttonToggleLens.selected = false;
-            buttonToggleText.selected = false;
-            buttonToggleBlend.selected = false;
-            break;
-        case kTabLens:
-            buttonToggleFocus.selected = false;
-            buttonToggleEffect.selected = false;
-            buttonToggleBasic.selected = false;
-            buttonToggleText.selected = false;
-            buttonToggleBlend.selected = false;
-            break;
-        case kTabText:
-            buttonToggleFocus.selected = false;
-            buttonToggleEffect.selected = false;
-            buttonToggleBasic.selected = false;
-            buttonToggleLens.selected = false;
-            buttonToggleBlend.selected = false;
-            break;
-        case kTabBlend:
-            buttonToggleFocus.selected = false;
-            buttonToggleEffect.selected = false;
-            buttonToggleBasic.selected = false;
-            buttonToggleLens.selected = false;
-            buttonToggleText.selected = false;
-            break;
-        case kTabBokeh: {
-            buttonToggleEffect.selected = false;
-            buttonToggleBasic.selected = false;
-            buttonToggleLens.selected = false;
-            buttonToggleText.selected = false;
-            buttonToggleBlend.selected = false;
-            
-            // Firsttime
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            if (![defaults objectForKey:@"firstRunBokeh"]) {
-                [defaults setObject:[NSDate date] forKey:@"firstRunBokeh"];
-                [self touchOpenHelp:nil];
-            }
+    if (currentTab == kTabBokeh) {
+        // Firsttime
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        if (![defaults objectForKey:@"firstRunBokeh"]) {
+            [defaults setObject:[NSDate date] forKey:@"firstRunBokeh"];
+            [self touchOpenHelp:nil];
         }
-            break;
-        default:
-            buttonToggleEffect.selected = false;
-            buttonToggleFocus.selected = false;
-            buttonToggleBasic.selected = false;
-            buttonToggleText.selected = false;
-            buttonToggleLens.selected = false;
-            buttonToggleBlend.selected = false;
-            break;
     }
     
     [self resizeCameraViewWithAnimation:YES];
@@ -799,13 +795,15 @@
     CGRect screen = [[UIScreen mainScreen] bounds];
     
     CGRect frame = viewCameraWraper.frame;
+    CGRect framePreset = viewPresetControl.frame;
     CGRect frameEffect = viewEffectControl.frame;
     CGRect frameBokeh = viewFocusControl.frame;
     CGRect frameBasic = viewBasicControl.frame;
     CGRect frameLens = viewLensControl.frame;
     CGRect frameTopBar = viewTopBar.frame;
-    CGRect frameCanvas;
     CGRect frameBlend = viewBlendControl.frame;
+    CGRect frameFilm = viewFilmControl.frame;
+    CGRect frameCanvas;
     
     
     CGFloat posBottom;
@@ -817,7 +815,7 @@
         posBottom = 480 - 50;
     }
     
-    frameEffect.origin.y = frameBokeh.origin.y = frameBasic.origin.y = frameLens.origin.y = frameBlend.origin.y =  posBottom;
+    frameEffect.origin.y = frameBokeh.origin.y = frameBasic.origin.y = frameLens.origin.y = frameBlend.origin.y = frameFilm.origin.y = framePreset.origin.y = posBottom;
     
     switch (currentTab) {
         case kTabBokeh:
@@ -834,6 +832,12 @@
             break;
         case kTabBlend:
             frameBlend.origin.y = posBottom - 110;
+            break;
+        case kTabFilm:
+            frameFilm.origin.y = posBottom - 110;
+            break;
+        case kTabPreset:
+            framePreset.origin.y = posBottom - 110;
             break;
         case kTabPreview:
             break;
@@ -877,6 +881,8 @@
         viewTopBar.frame = frameTopBar;
         viewCanvas.frame = frameCanvas;
         viewBlendControl.frame = frameBlend;
+        viewFilmControl.frame = frameFilm;
+        viewPresetControl.frame = framePreset;
 
     } completion:^(BOOL finished) {
         UIBezierPath *shadowPathCamera = [UIBezierPath bezierPathWithRect:viewCameraWraper.bounds];
@@ -889,7 +895,6 @@
 
     isWatingToUpload = NO;
 
-    currentBlend = kBlendNone;
     [self setBlendImpl:kBlendNone];
     //    isFixedAspectBlend = NO;
     
@@ -897,8 +902,6 @@
     
     currentLens = 0;
     currentMask = kMaskBlurNone;
-
-    viewShoot.hidden = YES;
     scrollProcess.hidden = NO;
     
     // Clear depth mask
@@ -913,7 +916,7 @@
     buttonToggleBasic.selected = false;
     buttonToggleEffect.selected = true;
     buttonToggleLens.selected = false;
-    buttonToggleText.selected = false;
+    buttonToggleFilm.selected = false;
     buttonToggleBlend.selected = false;
     
     buttonReset.hidden = false;
@@ -934,6 +937,7 @@
 
 - (void)initPreviewPic {
     GPUImagePicture *gpuimagePreview = [[GPUImagePicture alloc] initWithImage:_imageThumbnail];
+    
     for (NSInteger i = 0; i < effectNum; i++) {
         GPUImageView *imageViewPreview = effectPreview[i];
         LXImageFilter *filterSample = [[LXImageFilter alloc] init];
@@ -941,6 +945,17 @@
         filterSample.toneEnable = YES;
         [gpuimagePreview addTarget:filterSample];
         [filterSample addTarget:imageViewPreview atTextureLocation:0];
+    }
+    
+    for (NSInteger i = 0; i < arrayPreset.count; i++) {
+        GPUImageView *imageViewPreview = arrayPreviewPreset[i];
+        LXImageFilter *filterSample = [[LXImageFilter alloc] init];
+        
+        [filterSample setValuesForKeysWithDictionary:arrayPreset[i]];
+        
+        [gpuimagePreview addTarget:filterSample];
+        [filterSample addTarget:imageViewPreview atTextureLocation:0];
+        
     }
     [gpuimagePreview processImage];
 }
@@ -988,10 +1003,12 @@
     filterMain.dofEnable = NO;
     filterMain.toneEnable = NO;
     filterMain.blendEnable = NO;
+    filterMain.filmEnable = NO;
     
     filterMain.toneCurve = nil;
     filterMain.imageBlend = nil;
     filterMain.imageDOF = nil;
+    filterMain.imageFilm = nil;
     
     [self setUIMask:kMaskBlurNone];
     
@@ -1003,6 +1020,12 @@
     buttonBlendMedium.enabled = true;
     buttonBlendStrong.enabled = true;
     buttonBlendWeak.enabled = true;
+
+    buttonFilmNone.enabled = false;
+    buttonFilmMedium.enabled = true;
+    buttonFilmStrong.enabled = true;
+    buttonFilmWeak.enabled = true;
+    
     buttonBlackWhite.selected = false;
 }
 
@@ -1093,57 +1116,50 @@
 }
 
 - (void)toggleBlending:(UIButton *)sender {
-    NSString *blendPic;
     NSInteger blendid;
-    BOOL isFixedAspectBlend = NO;
     switch (sender.tag) {
         case 0:
             blendid = 1 + rand() % 71;
-            blendPic = [NSString stringWithFormat:@"leak%d.jpg", blendid];
+            currentBlend = [NSString stringWithFormat:@"leak%d.jpg", blendid];
             break;
         case 1:
-            isFixedAspectBlend = YES;
             blendid = 1 + rand() % 35;
-            blendPic = [NSString stringWithFormat:@"bokehcircle-%d.jpg", blendid];
+            currentBlend = [NSString stringWithFormat:@"bokehcircle-%d.jpg", blendid];
             break;
         case 2:
-            isFixedAspectBlend = YES;
             blendid = 1 + rand() % 25;
-            blendPic = [NSString stringWithFormat:@"lightblur-%d.JPG", blendid];
+            currentBlend = [NSString stringWithFormat:@"lightblur-%d.JPG", blendid];
             break;
 
         case 3:
-            isFixedAspectBlend = YES;
             blendid = 1 + rand() % 4;
-            blendPic = [NSString stringWithFormat:@"print%d.jpg", blendid];
+            currentBlend = [NSString stringWithFormat:@"print%d.jpg", blendid];
             break;
 
         default:
             break;
     }
     
-    UIImage *imageBlend = [UIImage imageNamed:blendPic];
+    UIImage *imageBlend = [UIImage imageNamed:currentBlend];
     filterMain.imageBlend = imageBlend;
     
-    if (isFixedAspectBlend) {
-        CGSize blendSize = imageBlend.size;
-        
-        CGFloat ratioWidth = blendSize.width / imageSize.width;
-        CGFloat ratioHeight = blendSize.height / imageSize.height;
-        CGRect crop;
-        
-        CGFloat ratio = MIN(ratioWidth, ratioHeight);
-        CGSize newSize = CGSizeMake(blendSize.width / ratio, blendSize.height / ratio);
-        if (newSize.width > imageSize.width) {
-            CGFloat sub = (newSize.width - imageSize.width) / newSize.width;
-            crop = CGRectMake(sub/2.0, 0.0, 1.0-sub, 1.0);
-        } else {
-            CGFloat sub = (newSize.height - imageSize.height) / newSize.height;
-            crop = CGRectMake(0.0, sub/2.0, 1.0, 1.0-sub);
-        }
-        
-        filterMain.blendRegion = crop;
+    CGSize blendSize = imageBlend.size;
+    
+    CGFloat ratioWidth = blendSize.width / imageSize.width;
+    CGFloat ratioHeight = blendSize.height / imageSize.height;
+    CGRect crop;
+    
+    CGFloat ratio = MIN(ratioWidth, ratioHeight);
+    CGSize newSize = CGSizeMake(blendSize.width / ratio, blendSize.height / ratio);
+    if (newSize.width > imageSize.width) {
+        CGFloat sub = (newSize.width - imageSize.width) / newSize.width;
+        crop = CGRectMake(sub/2.0, 0.0, 1.0-sub, 1.0);
+    } else {
+        CGFloat sub = (newSize.height - imageSize.height) / newSize.height;
+        crop = CGRectMake(0.0, sub/2.0, 1.0, 1.0-sub);
     }
+    
+    filterMain.blendRegion = crop;
     
     if (!buttonBlendNone.enabled) {
         buttonBlendNone.enabled = YES;
@@ -1156,10 +1172,66 @@
     [self processImage];
 }
 
+
+- (void)toggleFilm:(UIButton *)sender {
+    currentFilm = [NSString stringWithFormat:@"print%d.jpg", sender.tag];
+    UIImage *imageFilm = [UIImage imageNamed:currentFilm];
+    filterMain.imageFilm = imageFilm;
+    
+    CGSize blendSize = imageFilm.size;
+    
+    CGFloat ratioWidth = blendSize.width / imageSize.width;
+    CGFloat ratioHeight = blendSize.height / imageSize.height;
+    CGRect crop;
+    
+    CGFloat ratio = MIN(ratioWidth, ratioHeight);
+    CGSize newSize = CGSizeMake(blendSize.width / ratio, blendSize.height / ratio);
+    if (newSize.width > imageSize.width) {
+        CGFloat sub = (newSize.width - imageSize.width) / newSize.width;
+        crop = CGRectMake(sub/2.0, 0.0, 1.0-sub, 1.0);
+    } else {
+        CGFloat sub = (newSize.height - imageSize.height) / newSize.height;
+        crop = CGRectMake(0.0, sub/2.0, 1.0, 1.0-sub);
+    }
+    
+    filterMain.filmRegion = crop;
+    
+    if (!buttonFilmNone.enabled) {
+        buttonFilmNone.enabled = YES;
+        buttonFilmWeak.enabled = NO;
+        filterMain.filmIntensity = 0.30;
+        filterMain.filmEnable = YES;
+    }
+    
+    [self processImage];
+}
+
 - (IBAction)setBlend:(UIButton *)sender {
     [self setBlendImpl:sender.tag];
     [self processImage];
 }
+
+- (IBAction)setFilm:(UIButton *)sender {
+    [self setFilmImpl:sender.tag];
+    [self processImage];
+}
+
+- (IBAction)printTemplate:(id)sender {
+    NSLog(@"<key>toneEnable</key>%@", filterMain.toneEnable?@"<true/>":@"<false/>");
+    NSLog(@"<key>toneImage</key><string>%@</string>", currentEffect);
+    NSLog(@"<key>toneCurveIntensity</key><real>%f</real>", filterMain.toneCurveIntensity);
+    NSLog(@"<key>brightness</key><real>%f</real>", filterMain.brightness);
+    NSLog(@"<key>saturation</key><real>%f</real>", filterMain.saturation);
+    NSLog(@"<key>clearness</key><real>%f</real>", filterMain.clearness);
+    NSLog(@"<key>vignfade</key><real>%f</real>", filterMain.vignfade);
+    NSLog(@"<key>blendEnable</key>%@", filterMain.filmEnable?@"<true/>":@"<false/>");
+    NSLog(@"<key>blendImage</key><string>%@</string>", currentBlend);
+    NSLog(@"<key>blendIntensity</key><real>%f</real>", filterMain.blendIntensity);
+    NSLog(@"<key>filmEnable</key>%@", filterMain.filmEnable?@"<true/>":@"<false/>");
+    NSLog(@"<key>filmImage</key><string>%@</string>", currentFilm);
+    NSLog(@"<key>filmIntensity</key><real>%f</real>", filterMain.filmIntensity);
+}
+
 
 - (IBAction)toggleFisheye:(UIButton *)sender {
     sender.selected = !sender.selected;
@@ -1220,8 +1292,38 @@
         default:
             break;
     }
+}
+
+- (void)setFilmImpl:(NSInteger)tag {
+    buttonFilmNone.enabled = true;
+    buttonFilmStrong.enabled = true;
+    buttonFilmWeak.enabled = true;
+    buttonFilmMedium.enabled = true;
     
-    currentBlend = tag;
+    switch (tag) {
+        case kBlendNone:
+            buttonFilmNone.enabled = false;
+            filterMain.filmEnable = NO;
+            filterMain.filmIntensity = 0;
+            break;
+        case kBlendWeak:
+            buttonFilmWeak.enabled = false;
+            filterMain.filmEnable = YES;
+            filterMain.filmIntensity = 0.30;
+            break;
+        case kBlendNormal:
+            buttonFilmMedium.enabled = false;
+            filterMain.filmEnable = YES;
+            filterMain.filmIntensity = 0.60;
+            break;
+        case kBlendStrong:
+            buttonFilmStrong.enabled = false;
+            filterMain.filmEnable = YES;
+            filterMain.filmIntensity = 0.90;
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)newMask:(UIImage *)mask {
@@ -1245,4 +1347,34 @@
     [self processImage];
 }
 
+- (void)setPreset:(UIButton*)button {
+    NSDictionary *preset = arrayPreset[button.tag];
+    [filterMain setValuesForKeysWithDictionary:preset];
+    
+    sliderClear.value = [preset[@"clearness"] floatValue];
+    sliderEffectIntensity.value = [preset[@"toneCurveIntensity"] floatValue];
+    sliderExposure.value = [preset[@"brightness"] floatValue];
+    sliderSaturation.value = [preset[@"saturation"] floatValue];
+    sliderSharpness.value = [preset[@"sharpness"] floatValue];
+    sliderVignette.value = [preset[@"vignfade"] floatValue];
+    
+    currentBlend = preset[@"blendImage"];
+    currentEffect = preset[@"toneImage"];
+    currentFilm = preset[@"filmImage"];
+
+    [self processImage];
+}
+
+- (void)viewDidUnload {
+    [self setScrollFilm:nil];
+    [self setViewFilmControl:nil];
+    [self setButtonFilmNone:nil];
+    [self setButtonFilmWeak:nil];
+    [self setButtonFilmMedium:nil];
+    [self setButtonFilmStrong:nil];
+    [self setButtonTogglePreset:nil];
+    [self setViewPresetControl:nil];
+    [self setScrollPreset:nil];
+    [super viewDidUnload];
+}
 @end

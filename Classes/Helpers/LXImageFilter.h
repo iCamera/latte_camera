@@ -16,14 +16,18 @@
 @property(readwrite, nonatomic) CGFloat saturation;
 @property(readwrite, nonatomic) CGFloat toneCurveIntensity;
 @property(readwrite, nonatomic) CGFloat blendIntensity;
+@property(readwrite, nonatomic) CGFloat filmIntensity;
 @property(strong, nonatomic) UIImage* toneCurve;
 @property(strong, nonatomic) UIImage* imageBlend;
 @property(strong, nonatomic) UIImage* imageDOF;
+@property(strong, nonatomic) UIImage* imageFilm;
 @property(readwrite, nonatomic) CGRect blendRegion;
+@property(readwrite, nonatomic) CGRect filmRegion;
 @property(readwrite, nonatomic) CGFloat bias;
 @property(readwrite, nonatomic) CGFloat gain;
 @property(readwrite, nonatomic) BOOL dofEnable;
 @property(readwrite, nonatomic) BOOL toneEnable;
 @property(readwrite, nonatomic) BOOL blendEnable;
+@property(readwrite, nonatomic) BOOL filmEnable;
 
 @end

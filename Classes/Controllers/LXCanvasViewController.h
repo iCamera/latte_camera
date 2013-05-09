@@ -25,8 +25,9 @@ typedef enum {
     kTabBokeh = 2,
     kTabBasic = 3,
     kTabLens = 4,
-    kTabText = 5,
+    kTabFilm = 5,
     kTabBlend = 6,
+    kTabPreset = 10,
 } EffectTab;
 
 typedef enum {
@@ -70,6 +71,8 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIView *viewBasicControl;
 @property (strong, nonatomic) IBOutlet UIView *viewEffectControl;
 @property (strong, nonatomic) IBOutlet UIView *viewBlendControl;
+@property (strong, nonatomic) IBOutlet UIView *viewFilmControl;
+@property (strong, nonatomic) IBOutlet UIView *viewPresetControl;
 
 @property (strong, nonatomic) IBOutlet UIView *viewCameraWraper;
 @property (strong, nonatomic) IBOutlet LXDrawView *viewDraw;
@@ -78,8 +81,9 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIButton *buttonToggleFocus;
 @property (strong, nonatomic) IBOutlet UIButton *buttonToggleBasic;
 @property (strong, nonatomic) IBOutlet UIButton *buttonToggleLens;
-@property (strong, nonatomic) IBOutlet UIButton *buttonToggleText;
+@property (strong, nonatomic) IBOutlet UIButton *buttonToggleFilm;
 @property (strong, nonatomic) IBOutlet UIButton *buttonToggleBlend;
+@property (strong, nonatomic) IBOutlet UIButton *buttonTogglePreset;
 
 @property (strong, nonatomic) IBOutlet UISwitch *buttonBackgroundNatual;
 @property (strong, nonatomic) IBOutlet UISwitch *switchGain;
@@ -92,6 +96,11 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIButton *buttonBlendWeak;
 @property (strong, nonatomic) IBOutlet UIButton *buttonBlendMedium;
 @property (strong, nonatomic) IBOutlet UIButton *buttonBlendStrong;
+
+@property (strong, nonatomic) IBOutlet UIButton *buttonFilmNone;
+@property (strong, nonatomic) IBOutlet UIButton *buttonFilmWeak;
+@property (strong, nonatomic) IBOutlet UIButton *buttonFilmMedium;
+@property (strong, nonatomic) IBOutlet UIButton *buttonFilmStrong;
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonLensNormal;
 @property (strong, nonatomic) IBOutlet UIButton *buttonLensWide;
@@ -110,8 +119,8 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UISlider *sliderEffectIntensity;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollProcess;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollBlend;
-@property (strong, nonatomic) IBOutlet UIButton *buttonToggleFisheye;
-@property (strong, nonatomic) IBOutlet UIView *viewShoot;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollFilm;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollPreset;
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonBlackWhite;
 
@@ -133,6 +142,8 @@ typedef enum {
 - (IBAction)toggleMono:(id)sender;
 - (IBAction)touchCrop:(id)sender;
 - (IBAction)touchText:(id)sender;
+- (IBAction)setFilm:(UIButton *)sender;
+- (IBAction)printTemplate:(id)sender;
 
 @property (strong, nonatomic) UIImage *imageOriginalPreview;
 @property (strong, nonatomic) UIImage *imageOriginal;
