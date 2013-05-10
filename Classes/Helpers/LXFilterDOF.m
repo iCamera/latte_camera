@@ -7,8 +7,16 @@
 //
 
 #import "LXFilterDOF.h"
+#import "GPUImage.h"
 
-@implementation LXFilterDOF
+@implementation LXFilterDOF {
+    GLint imageWidthFactorUniform, imageHeightFactorUniform;
+    GLint aspectratioUniform;
+    GLint biasUniform;
+    GLint gainUniform;
+    GLint dofEnableUniform;
+    GPUImagePicture *pictureDOF;
+}
 
 - (id)init {
     NSString *fragmentShaderPathname = [[NSBundle mainBundle] pathForResource:@"lattedof" ofType:@"fsh"];
@@ -24,8 +32,14 @@
     gainUniform = [filterProgram uniformIndex:@"gain"];
     imageWidthFactorUniform = [filterProgram uniformIndex:@"imageWidthFactor"];
     imageHeightFactorUniform = [filterProgram uniformIndex:@"imageHeightFactor"];
+    dofEnableUniform = [filterProgram uniformIndex:@"dofEnable"];
     
     return self;
+}
+
+
+- (void)setDofEnable:(BOOL)dofEnable {
+    [self setInteger:dofEnable forUniform:dofEnableUniform program:filterProgram];
 }
 
 - (void)setBias:(CGFloat)aBias {

@@ -13,6 +13,8 @@ varying highp vec2 textureCoordinate2;
 uniform sampler2D inputImageTexture;
 uniform sampler2D inputImageTexture2;
 
+uniform bool dofEnable;
+
 uniform float bias; //0.02 aperture - bigger values for shallower depth of field
 
 float blurclamp = 3.0;  // 3.0 max blur amount 
@@ -31,8 +33,8 @@ vec4 color(vec4 col, float blur) //processing the sample
         float thresh = max((lum-threshold)*gain, 0.0);
         return col+mix(vec4(0.0),col,thresh*blur);
 }
- 
-void main()
+
+vec4 dof()
 {
         //float aspectratio = 800.0/600.0;
         lowp vec2 texel = vec2(imageWidthFactor,imageHeightFactor);
@@ -91,6 +93,18 @@ void main()
         col += texture2D(inputImageTexture, textureCoordinate + (vec2( 0.0,0.4 )*aspectcorrect) * dofblur*0.4);
                        
         col /= 41.0;
-        gl_FragColor = color(col, factor);
-        gl_FragColor.a = 1.0;
+
+        col = color(col, factor);
+        col.a = 1.0;
+        return col;
+}
+
+ 
+void main()
+{
+    lowp vec4 textureColor;
+    if (dofEnable)
+        gl_FragColor = dof();
+    else
+        gl_FragColor = texture2D(inputImageTexture, textureCoordinate);
 }

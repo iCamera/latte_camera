@@ -15,10 +15,14 @@
 #import "LXImageFilter.h"
 #import "LXImageLens.h"
 #import "LXImageCropViewController.h"
+#import "LXFilterDOF.h"
+#import "GPUImageFilter+reset.h"
 
 @interface LXCanvasViewController ()  {
     GPUImageFilterPipeline *pipe;
     LXImageFilter *filterMain;
+    LXFilterDOF *filterDOF;
+    
     
     UIActionSheet *sheet;
     
@@ -27,11 +31,9 @@
     
     NSString *currentEffect;
     NSInteger currentLens;
-    NSInteger currentMask;
     NSString *currentBlend;
     NSString *currentFilm;
     NSInteger effectNum;
-    NSMutableArray *arrayPreviewPreset;
     NSMutableArray *effectPreview;
     NSMutableArray *effectCurve;
     NSArray *arrayPreset;
@@ -49,6 +51,8 @@
     
     LXImageCropViewController *controllerCrop;
     LXImageTextViewController *controllerText;
+    
+    GPUImagePicture *pictureDOF;
 }
 
 @end
@@ -118,7 +122,6 @@
 
 @synthesize sliderExposure;
 @synthesize sliderVignette;
-@synthesize sliderSharpness;
 @synthesize sliderClear;
 @synthesize sliderSaturation;
 @synthesize sliderFeather;
@@ -210,6 +213,7 @@
     scrollProcess.contentSize = CGSizeMake(400, 50);
 
     filterMain = [[LXImageFilter alloc] init];
+    filterDOF = [[LXFilterDOF alloc] init];
     
     effectNum = 19;
     effectPreview = [[NSMutableArray alloc] initWithCapacity:effectNum];
@@ -312,7 +316,7 @@
     
     
     // Blend
-    for (int i=0; i < 4; i++) {
+    for (int i=0; i < 6; i++) {
         UILabel *labelBlend = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 10)];
         labelBlend.backgroundColor = [UIColor clearColor];
         labelBlend.textColor = [UIColor whiteColor];
@@ -339,17 +343,23 @@
                 labelBlend.text = @"Circle";
                 break;
             case 2:
-                labelBlend.text = @"Lightblur";
+                labelBlend.text = @"Flower";
                 break;
             case 3:
-                labelBlend.text = @"Grain";
+                labelBlend.text = @"Star";
+                break;
+            case 4:
+                labelBlend.text = @"Heart";
+                break;
+            case 5:
+                labelBlend.text = @"Lightblur";
                 break;
         }
         
         [scrollBlend addSubview:buttonBlend];
         [scrollBlend addSubview:labelBlend];
     }
-    scrollBlend.contentSize = CGSizeMake(4*55+10, 60);
+    scrollBlend.contentSize = CGSizeMake(6*55+10, 60);
     
     // Film
     for (int i=0; i < 9; i++) {
@@ -368,13 +378,17 @@
     // Preset
     NSString *path = [[NSBundle mainBundle] pathForResource:@"preset" ofType:@"plist"];
     arrayPreset = [NSArray arrayWithContentsOfFile:path];
-    arrayPreviewPreset = [[NSMutableArray alloc] init];
     for (int i=0; i < arrayPreset.count; i++) {
-        UIButton *buttonPreset = [[UIButton alloc] initWithFrame:CGRectMake(5+55*i, 5, 50, 50)];
+        UIButton *buttonPreset = [[UIButton alloc] initWithFrame:CGRectMake(5+80*i, 5, 75, 75)];
+        UILabel *labelPreset = [[UILabel alloc] initWithFrame:CGRectMake(0, 55, 73, 20)];
+        labelPreset.backgroundColor = [UIColor clearColor];
+        labelPreset.textColor = [UIColor whiteColor];
+        labelPreset.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:18];
+        labelPreset.textAlignment = NSTextAlignmentRight;
+        labelPreset.text = [NSString stringWithFormat:@"%d", i+1];
         
-        GPUImageView *previewPreset = [[GPUImageView alloc] initWithFrame:buttonPreset.bounds];
-        previewPreset.fillMode = kGPUImageFillModePreserveAspectRatioAndFill;
-        previewPreset.userInteractionEnabled = NO;
+        UIImage *preview = [UIImage imageNamed:[NSString stringWithFormat:@"preset-%d.JPG", i]];
+        [buttonPreset setImage:preview forState:UIControlStateNormal];
         
         buttonPreset.backgroundColor = [UIColor grayColor];
         [buttonPreset addTarget:self action:@selector(setPreset:) forControlEvents:UIControlEventTouchUpInside];
@@ -382,13 +396,10 @@
         buttonPreset.clipsToBounds = YES;
         buttonPreset.tag = i;
         
-        [arrayPreviewPreset addObject:previewPreset];
-        
-        [buttonPreset addSubview:previewPreset];
-        
+        [buttonPreset addSubview:labelPreset];
         [scrollPreset addSubview:buttonPreset];
     }
-    scrollPreset.contentSize = CGSizeMake(arrayPreset.count*55+10, 60);
+    scrollPreset.contentSize = CGSizeMake(arrayPreset.count*80+10, 85);
     
     // Set Image
     imageFullsize = _imageOriginal;
@@ -450,6 +461,12 @@
         [pipe addFilter:filterFish];
     }
     
+    if (buttonBlurNone.enabled) {
+        [pipe addFilter:filterDOF];
+        [pictureDOF removeAllTargets];
+        [pictureDOF addTarget:filterDOF atTextureLocation:1];
+    }
+    
     [pipe addFilter:filterMain];
     
     if (source) {
@@ -504,9 +521,9 @@
     }
     
     if (switchGain.on)
-        filterMain.gain = 2.0;
+        filterDOF.gain = 2.0;
     else
-        filterMain.gain = 0.0;
+        filterDOF.gain = 0.0;
 }
 
 - (void)processImage {
@@ -515,6 +532,9 @@
     imageFinalData = nil;
     buttonReset.enabled = true;
     [previewFilter processImage];
+    if (buttonBlurNone.enabled) {
+        [pictureDOF processImage];
+    }
 }
 
 - (void)setEffect:(id)sender {
@@ -673,15 +693,22 @@
     GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:imageFullsize];
     [self preparePipe:picture];
     
+    [(GPUImageFilter *)[pipe.filters lastObject] destroyFilterFBO];
+    [(GPUImageFilter *)[pipe.filters lastObject] deleteOutputTexture];
     [(GPUImageFilter *)[pipe.filters lastObject] prepareForImageCapture];
     
     [picture processImage];
+    if (buttonBlurNone.enabled) {
+        [pictureDOF processImage];
+    }
     
     // Save to Jpeg NSData
     CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:UIImageOrientationUp];
     UIImage *outputImage = [UIImage imageWithCGImage:cgImageFromBytes];
     NSData *jpeg = UIImageJPEGRepresentation(outputImage, 0.9);
     CGImageRelease(cgImageFromBytes);
+    
+    [(GPUImageFilter *)[pipe.filters lastObject] resetCapture];
     
     // Write EXIF to NSData
     CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)jpeg, NULL);
@@ -901,7 +928,6 @@
     //    uiWrap.frame = CGRectMake(0, 0, previewSize.width, previewSize.height);
     
     currentLens = 0;
-    currentMask = kMaskBlurNone;
     scrollProcess.hidden = NO;
     
     // Clear depth mask
@@ -912,15 +938,16 @@
     // Default Brush
     [self setUIMask:kMaskBlurNone];
     
+    buttonTogglePreset.selected = true;
     buttonToggleFocus.selected = false;
     buttonToggleBasic.selected = false;
-    buttonToggleEffect.selected = true;
+    buttonToggleEffect.selected = false;
     buttonToggleLens.selected = false;
     buttonToggleFilm.selected = false;
     buttonToggleBlend.selected = false;
     
     buttonReset.hidden = false;
-    currentTab = kTabEffect;
+    currentTab = kTabPreset;
     
     buttonReset.enabled = false;
     
@@ -946,18 +973,32 @@
         [gpuimagePreview addTarget:filterSample];
         [filterSample addTarget:imageViewPreview atTextureLocation:0];
     }
-    
-    for (NSInteger i = 0; i < arrayPreset.count; i++) {
-        GPUImageView *imageViewPreview = arrayPreviewPreset[i];
-        LXImageFilter *filterSample = [[LXImageFilter alloc] init];
-        
-        [filterSample setValuesForKeysWithDictionary:arrayPreset[i]];
-        
-        [gpuimagePreview addTarget:filterSample];
-        [filterSample addTarget:imageViewPreview atTextureLocation:0];
-        
-    }
     [gpuimagePreview processImage];
+    
+//    [self generatePreview];
+}
+
+- (void)saveImage:(UIImage*)image {
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    [library writeImageToSavedPhotosAlbum:image.CGImage metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
+        if (error) {
+            NSLog(@"Fail, retry");
+            [self saveImage:image];
+        } else {
+            NSLog(@"saved");
+        }
+    }];
+}
+- (void)generatePreview {
+    for (NSInteger i = 0; i < arrayPreset.count; i++) {
+        GPUImagePicture *pic = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"presetsample.jpg"]];
+        LXImageFilter *filterSample = [[LXImageFilter alloc] init];
+        [filterSample setValuesForKeysWithDictionary:arrayPreset[i]];
+        [pic addTarget:filterSample];
+        [pic processImage];
+        UIImage *result = [filterSample imageFromCurrentlyProcessedOutput];
+        [self performSelector:@selector(saveImage:) withObject:result afterDelay:i];
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(NSDictionary *)info {
@@ -995,19 +1036,17 @@
     sliderExposure.value = 0.0;
     sliderClear.value = 0.0;
     sliderSaturation.value = 1.0;
-    sliderSharpness.value = 0.0;
-    sliderVignette.value = 0.0;
     sliderFeather.value = 10.0;
     sliderEffectIntensity.value = 1.0;
     
-    filterMain.dofEnable = NO;
     filterMain.toneEnable = NO;
     filterMain.blendEnable = NO;
     filterMain.filmEnable = NO;
     
     filterMain.toneCurve = nil;
     filterMain.imageBlend = nil;
-    filterMain.imageDOF = nil;
+    
+    pictureDOF = nil;
     filterMain.imageFilm = nil;
     
     [self setUIMask:kMaskBlurNone];
@@ -1049,7 +1088,7 @@
 
 - (IBAction)setMask:(UIButton*)sender {
     [self setUIMask:sender.tag];
-    [self applyFilterSetting];
+    [self preparePipe];
     [self processImage];
 }
 
@@ -1080,28 +1119,27 @@
     switch (tag) {
         case kMaskBlurNone:
             buttonBlurNone.enabled = false;
-            filterMain.dofEnable = NO;
+            filterDOF.dofEnable = NO;
             break;
         case kMaskBlurWeak:
             buttonBlurWeak.enabled = false;
-            filterMain.dofEnable = YES;
-            filterMain.bias = 0.01;
+            filterDOF.dofEnable = YES;
+            filterDOF.bias = 0.01;
             break;
         case kMaskBlurNormal:
             buttonBlurNormal.enabled = false;
-            filterMain.dofEnable = YES;
-            filterMain.bias = 0.02;
+            filterDOF.dofEnable = YES;
+            filterDOF.bias = 0.02;
             break;
         case kMaskBlurStrong:
             buttonBlurStrong.enabled = false;
-            filterMain.dofEnable = YES;
-            filterMain.bias = 0.03;
+            filterDOF.dofEnable = YES;
+            filterDOF.bias = 0.03;
             break;
         default:
             break;
     }
     
-    currentMask = tag;
 }
 
 
@@ -1127,15 +1165,21 @@
             currentBlend = [NSString stringWithFormat:@"bokehcircle-%d.jpg", blendid];
             break;
         case 2:
+            blendid = 1 + rand() % 20;
+            currentBlend = [NSString stringWithFormat:@"flower-%d.jpg", blendid];
+            break;
+        case 3:
+            blendid = 1 + rand() % 30;
+            currentBlend = [NSString stringWithFormat:@"star-%d.jpg", blendid];
+            break;
+        case 4:
+            blendid = 1 + rand() % 22;
+            currentBlend = [NSString stringWithFormat:@"heart-%d.jpg", blendid];
+            break;
+        case 5:
             blendid = 1 + rand() % 25;
             currentBlend = [NSString stringWithFormat:@"lightblur-%d.JPG", blendid];
             break;
-
-        case 3:
-            blendid = 1 + rand() % 4;
-            currentBlend = [NSString stringWithFormat:@"print%d.jpg", blendid];
-            break;
-
         default:
             break;
     }
@@ -1331,8 +1375,9 @@
         [self setUIMask:kMaskBlurNormal];
     }
     
-    filterMain.imageDOF = mask;
+    pictureDOF = [[GPUImagePicture alloc] initWithImage:mask];
     
+    [self preparePipe];
     [self processImage];
 }
 
@@ -1355,7 +1400,6 @@
     sliderEffectIntensity.value = [preset[@"toneCurveIntensity"] floatValue];
     sliderExposure.value = [preset[@"brightness"] floatValue];
     sliderSaturation.value = [preset[@"saturation"] floatValue];
-    sliderSharpness.value = [preset[@"sharpness"] floatValue];
     sliderVignette.value = [preset[@"vignfade"] floatValue];
     
     currentBlend = preset[@"blendImage"];

@@ -8,14 +8,10 @@
 
 #import "GPUImageTwoInputFilter.h"
 
-@interface LXFilterDOF : GPUImageTwoInputFilter {
-    GLint imageWidthFactorUniform, imageHeightFactorUniform;
-    GLint aspectratioUniform;
-    GLint biasUniform;
-    GLint gainUniform;
-}
+@interface LXFilterDOF : GPUImageTwoInputFilter
 
 @property(readwrite, nonatomic) CGFloat bias;
 @property(readwrite, nonatomic) CGFloat gain;
+@property(readwrite, nonatomic) BOOL dofEnable;
 
 @end
