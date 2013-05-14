@@ -370,9 +370,7 @@ typedef enum {
     [self presentViewController:imagePicker animated:NO completion:nil];
 }
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    [picker dismissModalViewControllerAnimated:NO];
-    
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {    
     ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset)
     {
         UIStoryboard *storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
@@ -385,7 +383,7 @@ typedef enum {
         controllerCanvas.imageMeta = [NSMutableDictionary dictionaryWithDictionary:myasset.defaultRepresentation.metadata];
         controllerCanvas.imageOriginal = imageFullsize;
         
-        [self.navigationController pushViewController:controllerCanvas animated:YES];
+        [picker pushViewController:controllerCanvas animated:YES];
     };
     
     ALAssetsLibraryAccessFailureBlock failureblock  = ^(NSError *myerror)

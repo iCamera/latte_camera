@@ -23,21 +23,19 @@
     LXImageFilter *filterMain;
     LXFilterDOF *filterDOF;
     
-    
     UIActionSheet *sheet;
     
     BOOL isSaved;
     BOOL isWatingToUpload;
     
     NSInteger currentLens;
+    NSInteger currentPreset;
     NSString *currentEffect;
     NSString *currentBlend;
     NSString *currentFilm;
     
     NSInteger effectNum;
-    NSMutableArray *effectPreview;
-    NSMutableArray *effectCurve;
-    NSArray *arrayPreset;
+    NSMutableArray *arrayPreset;
     
     NSLayoutConstraint *cameraAspect;
     NSInteger timerMode;
@@ -135,6 +133,8 @@
 @synthesize imageNext;
 @synthesize imagePrev;
 
+@synthesize buttonSavePreset;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -216,12 +216,10 @@
     filterMain = [[LXImageFilter alloc] init];
     filterDOF = [[LXFilterDOF alloc] init];
     
-    effectNum = 19;
-    effectPreview = [[NSMutableArray alloc] initWithCapacity:effectNum];
-    effectCurve = [[NSMutableArray alloc] initWithCapacity:effectNum];
+    arrayPreset = [self ReadOrCreatePreset];
+    effectNum = arrayPreset.count;
     
     for (int i=0; i < effectNum; i++) {
-        [effectCurve addObject:[UIImage imageNamed:[NSString stringWithFormat:@"curve%d.png", i]]];
         UILabel *labelEffect = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 70, 12)];
         labelEffect.backgroundColor = [UIColor clearColor];
         labelEffect.textColor = [UIColor whiteColor];
@@ -230,17 +228,13 @@
         labelEffect.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:11];
         labelEffect.userInteractionEnabled = NO;
         UIButton *buttonEffect = [[UIButton alloc] initWithFrame:CGRectMake(5+75*i, 0, 70, 70)];
-        GPUImageView *previewEffect = [[GPUImageView alloc] initWithFrame:buttonEffect.bounds];
-        previewEffect.fillMode = kGPUImageFillModePreserveAspectRatioAndFill;
-        previewEffect.userInteractionEnabled = NO;
-        
-        [effectPreview addObject:previewEffect];
+        UIImage *preview = [UIImage imageNamed:[NSString stringWithFormat:@"preset-%d.JPG", i]];
+        [buttonEffect setBackgroundImage:preview forState:UIControlStateNormal];
         
         UIView *labelBack = [[UIView alloc] initWithFrame:CGRectMake(0, 53, 70, 20)];
         labelBack.userInteractionEnabled = NO;
         labelBack.backgroundColor = [UIColor blackColor];
         labelBack.alpha = 0.4;
-        [buttonEffect addSubview:previewEffect];
         [buttonEffect addSubview:labelBack];
         
         labelEffect.center = CGPointMake(buttonEffect.center.x, 62);
@@ -413,6 +407,10 @@
     
     
     [self switchEditImage];
+    
+#if DEBUG
+    buttonSavePreset.hidden = NO;
+#endif
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -534,16 +532,7 @@
 }
 
 - (void)setEffect:(id)sender {
-    UIButton* buttonEffect = (UIButton*)sender;
-    if (buttonEffect.tag == 0) {
-        filterMain.toneEnable = NO;
-        filterMain.toneCurve = nil;
-    } else {
-        filterMain.toneEnable = YES;
-        filterMain.toneCurve = effectCurve[buttonEffect.tag];
-    }
-    currentEffect = [NSString stringWithFormat:@"curve%d.png", buttonEffect.tag];
-    [self processImage];
+    [self setPreset:sender];
 }
 
 - (IBAction)changeLens:(UIButton*)sender {
@@ -953,25 +942,26 @@
     [self applyFilterSetting];
     
     [self processImage];
-    [self initPreviewPic];
+//    [self initPreviewPic];
     filterMain.toneEnable = NO;
 }
 
-- (void)initPreviewPic {
+/*- (void)initPreviewPic {
     GPUImagePicture *gpuimagePreview = [[GPUImagePicture alloc] initWithImage:_imageThumbnail];
     
     for (NSInteger i = 0; i < effectNum; i++) {
         GPUImageView *imageViewPreview = effectPreview[i];
         LXImageFilter *filterSample = [[LXImageFilter alloc] init];
-        filterSample.toneCurve = effectCurve[i];
-        filterSample.toneEnable = YES;
+        if (i > 0) {
+            [filterSample setValuesForKeysWithDictionary:arrayPreset[i]];
+        }
         [gpuimagePreview addTarget:filterSample];
         [filterSample addTarget:imageViewPreview atTextureLocation:0];
     }
     [gpuimagePreview processImage];
     
-//    [self generatePreview];
-}
+    [self generatePreview];
+}*/
 
 - (void)saveImage:(UIImage*)image {
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
@@ -1257,7 +1247,8 @@
 }
 
 - (IBAction)printTemplate:(id)sender {
-    NSLog(@"<key>toneEnable</key>%@", filterMain.toneEnable?@"<true/>":@"<false/>");
+    [self SavePreset];
+    /*NSLog(@"<key>toneEnable</key>%@", filterMain.toneEnable?@"<true/>":@"<false/>");
     NSLog(@"<key>toneImage</key><string>%@</string>", currentEffect);
     NSLog(@"<key>toneCurveIntensity</key><real>%f</real>", filterMain.toneCurveIntensity);
     NSLog(@"<key>brightness</key><real>%f</real>", filterMain.brightness);
@@ -1269,7 +1260,7 @@
     NSLog(@"<key>blendIntensity</key><real>%f</real>", filterMain.blendIntensity);
     NSLog(@"<key>filmEnable</key>%@", filterMain.filmEnable?@"<true/>":@"<false/>");
     NSLog(@"<key>filmImage</key><string>%@</string>", currentFilm);
-    NSLog(@"<key>filmIntensity</key><real>%f</real>", filterMain.filmIntensity);
+    NSLog(@"<key>filmIntensity</key><real>%f</real>", filterMain.filmIntensity);*/
 }
 
 - (NSDictionary*)getState {
@@ -1412,6 +1403,7 @@
 }
 
 - (void)setPreset:(UIButton*)button {
+    currentPreset = button.tag;
     NSDictionary *preset = arrayPreset[button.tag];
     [filterMain setValuesForKeysWithDictionary:preset];
     
@@ -1424,6 +1416,18 @@
     currentBlend = preset[@"blendImage"];
     currentEffect = preset[@"toneImage"];
     currentFilm = preset[@"filmImage"];
+    
+    CGFloat blendIntensity = [preset[@"blendIntensity"] floatValue];
+    
+    if (blendIntensity == 0.40) {
+        [self setBlendImpl:kBlendWeak];
+    } else if (blendIntensity == 0.66) {
+        [self setBlendImpl:kBlendNormal];
+    } else if (blendIntensity == 0.90) {
+        [self setBlendImpl:kBlendStrong];
+    } else {
+        [self setBlendImpl:kBlendNone];
+    }
 
     [self processImage];
 }
@@ -1468,6 +1472,41 @@
     }
 }
 
+- (NSMutableArray*)ReadOrCreatePreset
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"preset" ofType:@"plist"];
+    arrayPreset = [NSArray arrayWithContentsOfFile:path];
+    return arrayPreset;
+    
+    //-------------------------
+    NSArray *documentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentFolder = [documentPath objectAtIndex:0];
+    
+    //the below variable is an instance of the NSString class and is declared inteh .h file
+    NSString *newPlistFile = [documentFolder stringByAppendingPathComponent:@"preset.plist"];
+    arrayPreset = [NSArray arrayWithContentsOfFile:newPlistFile];
+    
+    if (!arrayPreset) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"preset" ofType:@"plist"];
+        arrayPreset = [NSArray arrayWithContentsOfFile:path];
+        BOOL OK = [arrayPreset writeToFile:newPlistFile atomically:YES];
+        NSLog(@"write %d", OK);
+    }
+    return arrayPreset;
+}
+
+- (void)SavePreset
+{
+    arrayPreset[currentPreset] = [self getState];
+    NSArray *documentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentFolder = [documentPath objectAtIndex:0];
+    
+    NSString *newPlistFile = [documentFolder stringByAppendingPathComponent:@"preset.plist"];
+    
+    BOOL OK = [arrayPreset writeToFile:newPlistFile atomically:YES];
+    NSLog(@"write %d %@", OK, newPlistFile);
+}
+
 - (void)viewDidUnload {
     [self setScrollFilm:nil];
     [self setViewFilmControl:nil];
@@ -1479,6 +1518,7 @@
     [self setScrollPreset:nil];
     [self setImagePrev:nil];
     [self setImageNext:nil];
+    [self setButtonSavePreset:nil];
     [super viewDidUnload];
 }
 @end

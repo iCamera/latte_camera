@@ -123,6 +123,7 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIButton *buttonBlackWhite;
 @property (strong, nonatomic) IBOutlet UIImageView *imagePrev;
 @property (strong, nonatomic) IBOutlet UIImageView *imageNext;
+@property (strong, nonatomic) IBOutlet UIButton *buttonSavePreset;
 
 @property (strong, nonatomic) NSDictionary *dictUpload;
 
