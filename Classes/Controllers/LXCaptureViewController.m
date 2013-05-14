@@ -247,7 +247,18 @@ typedef enum {
     [nc removeObserver:self];
     // Capture a still image
     viewFlash.hidden = false;
-    viewFlash.alpha = 1;
+    viewFlash.alpha = 1.0;
+    
+    [UIView animateWithDuration:0.3
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         viewFlash.alpha = 0;
+                     } completion:^(BOOL finished) {
+                         viewFlash.hidden = true;
+                     }];
+    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     [ buttonCapture setEnabled:NO];
     [ captureManager getPreview];
@@ -259,22 +270,14 @@ typedef enum {
 }
 
 - (void)lattePreviewImageCaptured:(UIImage *)image {
-    if (buttonQuick.selected) {
-        imagePreview.image = image;
-    } else {
+    imagePreview.image = image;
+    if (!buttonQuick.selected) {
         tmpImagePreview = image;
     }
 }
 
-- (void)latteStillImageCaptured:(UIImage *)image imageMeta:(NSMutableDictionary *)imageMeta {    
-    [UIView animateWithDuration:0.3
-                          delay:0
-                        options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^{
-                         viewFlash.alpha = 0;
-                     } completion:^(BOOL finished) {
-                         viewFlash.hidden = true;
-                     }];
+- (void)latteStillImageCaptured:(UIImage *)image imageMeta:(NSMutableDictionary *)imageMeta {
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
     CGRect screen = [[UIScreen mainScreen] bounds];
     [imagePreview genieInTransitionWithDuration:0.7
                                 destinationRect:CGRectMake(10, screen.size.height-50, 50, 40)

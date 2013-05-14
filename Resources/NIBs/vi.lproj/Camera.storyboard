@@ -68,7 +68,7 @@
                                 <rect key="frame" x="10" y="15" width="300" height="400"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" id="Sch-Dt-cDf" userLabel="View Flash">
+                            <view hidden="YES" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleToFill" id="Sch-Dt-cDf" userLabel="View Flash">
                                 <rect key="frame" x="10" y="15" width="300" height="400"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -1271,6 +1271,7 @@ I WORK</string>
                         <outlet property="buttonLensWide" destination="SD5-lJ-lQy" id="DMf-SZ-ubk"/>
                         <outlet property="buttonNo" destination="9jE-Vo-OQn" id="sal-i1-xzB"/>
                         <outlet property="buttonReset" destination="nb5-ZL-yq6" id="ILI-RJ-vRv"/>
+                        <outlet property="buttonSavePreset" destination="0jV-MA-2rR" id="WL4-Io-JGE"/>
                         <outlet property="buttonToggleBasic" destination="CP0-Lp-GWs" id="D0t-1c-xIq"/>
                         <outlet property="buttonToggleBlend" destination="Uwq-sI-myn" id="352-VU-uLi"/>
                         <outlet property="buttonToggleEffect" destination="QUq-85-XIf" id="w0f-iF-mFz"/>
@@ -1773,6 +1774,7 @@ I WORK</string>
                 <relationship kind="outlet" name="buttonLensWide" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonNo" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonReset" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonSavePreset" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonToggleBasic" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonToggleBlend" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonToggleEffect" candidateClass="UIButton"/>
