@@ -196,29 +196,7 @@
 }
 
 - (void)setImageBlend:(UIImage *)imageBlend {
-    if (!imageBlend) {
-        if (inputBlendTexture)
-        {
-            runSynchronouslyOnVideoProcessingQueue(^{
-                [GPUImageContext useImageProcessingContext];
-                glDeleteTextures(1, &inputBlendTexture);
-                inputBlendTexture = 0;
-            });
-        }
-        return;
-    }
-    
-    CGFloat widthOfImage = CGImageGetWidth(imageBlend.CGImage);
-    CGFloat heightOfImage = CGImageGetHeight(imageBlend.CGImage);
-    
-    GLubyte *imageData = (GLubyte *) calloc(1, (int)widthOfImage * (int)heightOfImage * 4);
-    
-    CGColorSpaceRef genericRGBColorspace = CGColorSpaceCreateDeviceRGB();
-    
-    CGContextRef imageContext = CGBitmapContextCreate(imageData, (size_t)widthOfImage, (size_t)heightOfImage, 8, (size_t)widthOfImage * 4, genericRGBColorspace,  kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
-    CGContextDrawImage(imageContext, CGRectMake(0.0, 0.0, widthOfImage, heightOfImage), imageBlend.CGImage);
-    CGContextRelease(imageContext);
-    CGColorSpaceRelease(genericRGBColorspace);
+
     
     runSynchronouslyOnVideoProcessingQueue(^{
         [GPUImageContext useImageProcessingContext];
@@ -228,6 +206,22 @@
             glDeleteTextures(1, &inputBlendTexture);
             inputBlendTexture = 0;
         }
+        
+        if (!imageBlend) {
+            return;
+        }
+        
+        CGFloat widthOfImage = CGImageGetWidth(imageBlend.CGImage);
+        CGFloat heightOfImage = CGImageGetHeight(imageBlend.CGImage);
+        
+        GLubyte *imageData = (GLubyte *) calloc(1, (int)widthOfImage * (int)heightOfImage * 4);
+        
+        CGColorSpaceRef genericRGBColorspace = CGColorSpaceCreateDeviceRGB();
+        
+        CGContextRef imageContext = CGBitmapContextCreate(imageData, (size_t)widthOfImage, (size_t)heightOfImage, 8, (size_t)widthOfImage * 4, genericRGBColorspace,  kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
+        CGContextDrawImage(imageContext, CGRectMake(0.0, 0.0, widthOfImage, heightOfImage), imageBlend.CGImage);
+        CGContextRelease(imageContext);
+        CGColorSpaceRelease(genericRGBColorspace);
 
         glActiveTexture(GL_TEXTURE4);
         glGenTextures(1, &inputBlendTexture);
@@ -239,36 +233,12 @@
         
         
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (int)widthOfImage /*width*/, (int)heightOfImage /*height*/, 0, GL_BGRA, GL_UNSIGNED_BYTE, imageData);
+        
+        free(imageData);
     });
-    
-    free(imageData);
 }
 
 - (void)setImageFilm:(UIImage *)imageFilm {
-    if (!imageFilm) {
-        if (inputFilmTexture)
-        {
-            runSynchronouslyOnVideoProcessingQueue(^{
-                [GPUImageContext useImageProcessingContext];
-                glDeleteTextures(1, &inputFilmTexture);
-                inputFilmTexture = 0;
-            });
-        }
-        return;
-    }
-    
-    CGFloat widthOfImage = CGImageGetWidth(imageFilm.CGImage);
-    CGFloat heightOfImage = CGImageGetHeight(imageFilm.CGImage);
-    
-    GLubyte *imageData = (GLubyte *) calloc(1, (int)widthOfImage * (int)heightOfImage * 4);
-    
-    CGColorSpaceRef genericRGBColorspace = CGColorSpaceCreateDeviceRGB();
-    
-    CGContextRef imageContext = CGBitmapContextCreate(imageData, (size_t)widthOfImage, (size_t)heightOfImage, 8, (size_t)widthOfImage * 4, genericRGBColorspace,  kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
-    CGContextDrawImage(imageContext, CGRectMake(0.0, 0.0, widthOfImage, heightOfImage), imageFilm.CGImage);
-    CGContextRelease(imageContext);
-    CGColorSpaceRelease(genericRGBColorspace);
-    
     runSynchronouslyOnVideoProcessingQueue(^{
         [GPUImageContext useImageProcessingContext];
         
@@ -277,6 +247,24 @@
             glDeleteTextures(1, &inputFilmTexture);
             inputFilmTexture = 0;
         }
+        
+        if (!imageFilm) {
+            return;
+        }
+        
+        CGFloat widthOfImage = CGImageGetWidth(imageFilm.CGImage);
+        CGFloat heightOfImage = CGImageGetHeight(imageFilm.CGImage);
+        
+        GLubyte *imageData = (GLubyte *) calloc(1, (int)widthOfImage * (int)heightOfImage * 4);
+        
+        CGColorSpaceRef genericRGBColorspace = CGColorSpaceCreateDeviceRGB();
+        
+        CGContextRef imageContext = CGBitmapContextCreate(imageData, (size_t)widthOfImage, (size_t)heightOfImage, 8, (size_t)widthOfImage * 4, genericRGBColorspace,  kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
+        CGContextDrawImage(imageContext, CGRectMake(0.0, 0.0, widthOfImage, heightOfImage), imageFilm.CGImage);
+        CGContextRelease(imageContext);
+        CGColorSpaceRelease(genericRGBColorspace);
+        
+      
         
         glActiveTexture(GL_TEXTURE5);
         glGenTextures(1, &inputFilmTexture);
@@ -288,9 +276,10 @@
         
         
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (int)widthOfImage /*width*/, (int)heightOfImage /*height*/, 0, GL_BGRA, GL_UNSIGNED_BYTE, imageData);
+        
+        free(imageData);
     });
     
-    free(imageData);
 }
 
 - (void)renderToTextureWithVertices:(const GLfloat *)vertices textureCoordinates:(const GLfloat *)textureCoordinates sourceTexture:(GLuint)sourceTexture;

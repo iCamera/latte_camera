@@ -1033,6 +1033,7 @@
     sliderSaturation.value = 1.0;
     sliderFeather.value = 10.0;
     sliderEffectIntensity.value = 1.0;
+    sliderVignette.value = 0.0;
     
     filterMain.toneEnable = NO;
     filterMain.blendEnable = NO;
