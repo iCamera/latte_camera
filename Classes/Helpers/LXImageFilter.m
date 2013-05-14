@@ -155,38 +155,29 @@
 }
 
 - (void)setToneCurve:(UIImage *)toneCurve {
-    if (!toneCurve) {
-        if (toneCurveTexture)
-        {
-            runSynchronouslyOnVideoProcessingQueue(^{
-                [GPUImageOpenGLESContext useImageProcessingContext];
-                glDeleteTextures(1, &toneCurveTexture);
-                toneCurveTexture = 0;
-            });
-        }
-        return;
-    }
-    
-    CGFloat widthOfImage = CGImageGetWidth(toneCurve.CGImage);
-    CGFloat heightOfImage = CGImageGetHeight(toneCurve.CGImage);
-    
-    GLubyte *imageData = (GLubyte *) calloc(1, (int)widthOfImage * (int)heightOfImage * 4);
-    
-    CGColorSpaceRef genericRGBColorspace = CGColorSpaceCreateDeviceRGB();
-    
-    CGContextRef imageContext = CGBitmapContextCreate(imageData, (size_t)widthOfImage, (size_t)heightOfImage, 8, (size_t)widthOfImage * 4, genericRGBColorspace,  kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
-    CGContextDrawImage(imageContext, CGRectMake(0.0, 0.0, widthOfImage, heightOfImage), toneCurve.CGImage);
-    CGContextRelease(imageContext);
-    CGColorSpaceRelease(genericRGBColorspace);
-    
     runSynchronouslyOnVideoProcessingQueue(^{
-        [GPUImageOpenGLESContext useImageProcessingContext];
-        
+        [GPUImageContext useImageProcessingContext];
         if (toneCurveTexture)
         {
             glDeleteTextures(1, &toneCurveTexture);
             toneCurveTexture = 0;
         }
+        
+        if (!toneCurve) {
+            return;
+        }
+        
+        CGFloat widthOfImage = CGImageGetWidth(toneCurve.CGImage);
+        CGFloat heightOfImage = CGImageGetHeight(toneCurve.CGImage);
+        
+        GLubyte *imageData = (GLubyte *) calloc(1, (int)widthOfImage * (int)heightOfImage * 4);
+        
+        CGColorSpaceRef genericRGBColorspace = CGColorSpaceCreateDeviceRGB();
+        
+        CGContextRef imageContext = CGBitmapContextCreate(imageData, (size_t)widthOfImage, (size_t)heightOfImage, 8, (size_t)widthOfImage * 4, genericRGBColorspace,  kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
+        CGContextDrawImage(imageContext, CGRectMake(0.0, 0.0, widthOfImage, heightOfImage), toneCurve.CGImage);
+        CGContextRelease(imageContext);
+        CGColorSpaceRelease(genericRGBColorspace);
         
         glActiveTexture(GL_TEXTURE3);
         glGenTextures(1, &toneCurveTexture);
@@ -198,9 +189,10 @@
         
         
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (int)widthOfImage /*width*/, (int)heightOfImage /*height*/, 0, GL_BGRA, GL_UNSIGNED_BYTE, imageData);
+        
+        free(imageData);
     });
     
-    free(imageData);
 }
 
 - (void)setImageBlend:(UIImage *)imageBlend {
@@ -208,7 +200,7 @@
         if (inputBlendTexture)
         {
             runSynchronouslyOnVideoProcessingQueue(^{
-                [GPUImageOpenGLESContext useImageProcessingContext];
+                [GPUImageContext useImageProcessingContext];
                 glDeleteTextures(1, &inputBlendTexture);
                 inputBlendTexture = 0;
             });
@@ -229,7 +221,7 @@
     CGColorSpaceRelease(genericRGBColorspace);
     
     runSynchronouslyOnVideoProcessingQueue(^{
-        [GPUImageOpenGLESContext useImageProcessingContext];
+        [GPUImageContext useImageProcessingContext];
         
         if (inputBlendTexture)
         {
@@ -257,7 +249,7 @@
         if (inputFilmTexture)
         {
             runSynchronouslyOnVideoProcessingQueue(^{
-                [GPUImageOpenGLESContext useImageProcessingContext];
+                [GPUImageContext useImageProcessingContext];
                 glDeleteTextures(1, &inputFilmTexture);
                 inputFilmTexture = 0;
             });
@@ -278,7 +270,7 @@
     CGColorSpaceRelease(genericRGBColorspace);
     
     runSynchronouslyOnVideoProcessingQueue(^{
-        [GPUImageOpenGLESContext useImageProcessingContext];
+        [GPUImageContext useImageProcessingContext];
         
         if (inputFilmTexture)
         {
@@ -308,7 +300,7 @@
         return;
     }
     
-    [GPUImageOpenGLESContext setActiveShaderProgram:filterProgram];
+    [GPUImageContext setActiveShaderProgram:filterProgram];
     [self setFilterFBO];
     
     glClearColor(backgroundColorRed, backgroundColorGreen, backgroundColorBlue, backgroundColorAlpha);

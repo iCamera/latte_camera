@@ -14,7 +14,7 @@
 #import "UIView+Genie.h"
 #import "MBProgressHUD.h"
 #import "UIApplication+Private.h"
-#import "RBVolumeButtons.h"
+//#import "RBVolumeButtons.h"
 
 #define kAccelerometerFrequency        10.0 //Hz
 
@@ -149,20 +149,20 @@ typedef enum {
     viewCameraWraper.layer.shadowOpacity = 1.0;
     viewCameraWraper.layer.shadowRadius = 5.0;
     viewCameraWraper.layer.shadowPath = shadowPathCamera.CGPath;
-    [self enableVolumeSnap];
+//    [self enableVolumeSnap];
 }
 
-- (void)enableVolumeSnap {
-    RBVolumeButtons *buttonStealer = [[RBVolumeButtons alloc] init];
-    
-    __weak LXCaptureViewController *weakSelf = self;
-    buttonStealer.upBlock = ^{
-        [weakSelf capturePhotoAsync];
-    };
-    buttonStealer.downBlock = ^{
-        [weakSelf capturePhotoAsync];
-    };
-}
+//- (void)enableVolumeSnap {
+//    RBVolumeButtons *buttonStealer = [[RBVolumeButtons alloc] init];
+//    
+//    __weak LXCaptureViewController *weakSelf = self;
+//    buttonStealer.upBlock = ^{
+//        [weakSelf capturePhotoAsync];
+//    };
+//    buttonStealer.downBlock = ^{
+//        [weakSelf capturePhotoAsync];
+//    };
+//}
 
 - (void)viewWillAppear:(BOOL)animated {
     currentTimer = kTimerNone;
@@ -363,9 +363,7 @@ typedef enum {
     sender.selected = !sender.selected;
 }
 
-- (IBAction)touchPick:(id)sender {
-    [self stopCamera];
-    
+- (IBAction)touchPick:(id)sender {    
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     [imagePicker.navigationBar setBackgroundImage:[UIImage imageNamed: @"bg_head.png"] forBarMetrics:UIBarMetricsDefault];
     imagePicker.delegate = self;

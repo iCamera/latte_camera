@@ -29,10 +29,11 @@
     BOOL isSaved;
     BOOL isWatingToUpload;
     
-    NSString *currentEffect;
     NSInteger currentLens;
+    NSString *currentEffect;
     NSString *currentBlend;
     NSString *currentFilm;
+    
     NSInteger effectNum;
     NSMutableArray *effectPreview;
     NSMutableArray *effectCurve;
@@ -51,8 +52,6 @@
     
     LXImageCropViewController *controllerCrop;
     LXImageTextViewController *controllerText;
-    
-    GPUImagePicture *pictureDOF;
 }
 
 @end
@@ -81,7 +80,6 @@
 @synthesize buttonToggleLens;
 @synthesize buttonToggleFilm;
 @synthesize buttonToggleBlend;
-@synthesize buttonTogglePreset;
 
 @synthesize buttonBackgroundNatual;
 @synthesize switchGain;
@@ -133,6 +131,9 @@
 @synthesize imageFullsize;
 @synthesize imageSize;
 @synthesize previewFilter;
+
+@synthesize imageNext;
+@synthesize imagePrev;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -210,7 +211,7 @@
     [window addSubview:HUD];
     HUD.userInteractionEnabled = NO;
     
-    scrollProcess.contentSize = CGSizeMake(400, 50);
+    scrollProcess.contentSize = CGSizeMake(320, 50);
 
     filterMain = [[LXImageFilter alloc] init];
     filterDOF = [[LXFilterDOF alloc] init];
@@ -376,6 +377,7 @@
     scrollFilm.contentSize = CGSizeMake(9*55+10, 60);
     
     // Preset
+    /*
     NSString *path = [[NSBundle mainBundle] pathForResource:@"preset" ofType:@"plist"];
     arrayPreset = [NSArray arrayWithContentsOfFile:path];
     for (int i=0; i < arrayPreset.count; i++) {
@@ -399,7 +401,7 @@
         [buttonPreset addSubview:labelPreset];
         [scrollPreset addSubview:buttonPreset];
     }
-    scrollPreset.contentSize = CGSizeMake(arrayPreset.count*80+10, 85);
+    scrollPreset.contentSize = CGSizeMake(arrayPreset.count*80+10, 85);*/
     
     // Set Image
     imageFullsize = _imageOriginal;
@@ -463,8 +465,6 @@
     
     if (buttonBlurNone.enabled) {
         [pipe addFilter:filterDOF];
-        [pictureDOF removeAllTargets];
-        [pictureDOF addTarget:filterDOF atTextureLocation:1];
     }
     
     [pipe addFilter:filterMain];
@@ -475,7 +475,6 @@
     else {
         [pipe.filters[0] setInputRotation:[self rotationFromImage:imagePreview.imageOrientation] atIndex:0];
     }
-
 }
 
 - (GPUImageRotationMode)rotationFromImage:(UIImageOrientation)orientation {
@@ -532,9 +531,6 @@
     imageFinalData = nil;
     buttonReset.enabled = true;
     [previewFilter processImage];
-    if (buttonBlurNone.enabled) {
-        [pictureDOF processImage];
-    }
 }
 
 - (void)setEffect:(id)sender {
@@ -671,6 +667,7 @@
 
 - (NSData*)getFinalImage {
     NSData* ret;
+//    NSDictionary *state = [self getState];
     // Prepare meta data
     if (imageMeta == nil) {
         imageMeta = [[NSMutableDictionary alloc] init];
@@ -684,31 +681,31 @@
     [dictForTIFF setObject:appVersion forKey:(NSString *)kCGImagePropertyTIFFSoftware];
     [imageMeta setObject:dictForTIFF forKey:(NSString *)kCGImagePropertyTIFFDictionary];
     
-    // If this is new photo save original pic first, and then process
-//    if (imageFullsize != _imageOriginal) {
-        [dictForTIFF removeObjectForKey:(NSString *)kCGImagePropertyTIFFOrientation];
-        [imageMeta removeObjectForKey:(NSString *)kCGImagePropertyOrientation];
-//    }
+    [dictForTIFF removeObjectForKey:(NSString *)kCGImagePropertyTIFFOrientation];
+    [imageMeta removeObjectForKey:(NSString *)kCGImagePropertyOrientation];
     
-    GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:imageFullsize];
-    [self preparePipe:picture];
-    
-    [(GPUImageFilter *)[pipe.filters lastObject] destroyFilterFBO];
-    [(GPUImageFilter *)[pipe.filters lastObject] deleteOutputTexture];
-    [(GPUImageFilter *)[pipe.filters lastObject] prepareForImageCapture];
-    
-    [picture processImage];
-    if (buttonBlurNone.enabled) {
-        [pictureDOF processImage];
+    NSData *jpeg;
+    // skip processing if prevew pic same size with fullsize
+    if (CGSizeEqualToSize(imageFullsize.size, imagePreview.size)) {
+        jpeg = UIImageJPEGRepresentation(imageFinalThumb, 0.9);
+    } else {
+        GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:imageFullsize];
+        [self preparePipe:picture];
+        
+        [picture processImage];
+//        [filterMain prepareForImageCapture];
+        
+        // Save to Jpeg NSData
+        CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:UIImageOrientationUp];
+        UIImage *outputImage = [UIImage imageWithCGImage:cgImageFromBytes];
+        jpeg = UIImageJPEGRepresentation(outputImage, 0.9);
+        CGImageRelease(cgImageFromBytes);
+        
+//        [filterMain resetCapture];
     }
+
     
-    // Save to Jpeg NSData
-    CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:UIImageOrientationUp];
-    UIImage *outputImage = [UIImage imageWithCGImage:cgImageFromBytes];
-    NSData *jpeg = UIImageJPEGRepresentation(outputImage, 0.9);
-    CGImageRelease(cgImageFromBytes);
-    
-    [(GPUImageFilter *)[pipe.filters lastObject] resetCapture];
+    //[filterMain setValuesForKeysWithDictionary:state];
     
     // Write EXIF to NSData
     CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)jpeg, NULL);
@@ -775,14 +772,13 @@
             HUD.dimBackground = NO;
             [HUD hide:YES afterDelay:3];
         }
-        // Return to preview mode
+        
         [self preparePipe];
     }];
 }
 
 - (IBAction)toggleControl:(UIButton*)sender {
     NSArray *arrayButton = [NSArray arrayWithObjects:
-                            buttonTogglePreset,
                             buttonToggleEffect,
                             buttonToggleBasic,
                             buttonToggleFocus,
@@ -938,7 +934,6 @@
     // Default Brush
     [self setUIMask:kMaskBlurNone];
     
-    buttonTogglePreset.selected = true;
     buttonToggleFocus.selected = false;
     buttonToggleBasic.selected = false;
     buttonToggleEffect.selected = false;
@@ -947,7 +942,7 @@
     buttonToggleBlend.selected = false;
     
     buttonReset.hidden = false;
-    currentTab = kTabPreset;
+    currentTab = kTabEffect;
     
     buttonReset.enabled = false;
     
@@ -1046,7 +1041,7 @@
     filterMain.toneCurve = nil;
     filterMain.imageBlend = nil;
     
-    pictureDOF = nil;
+    filterDOF.imageDOF = nil;
     filterMain.imageFilm = nil;
     
     [self setUIMask:kMaskBlurNone];
@@ -1268,12 +1263,35 @@
     NSLog(@"<key>saturation</key><real>%f</real>", filterMain.saturation);
     NSLog(@"<key>clearness</key><real>%f</real>", filterMain.clearness);
     NSLog(@"<key>vignfade</key><real>%f</real>", filterMain.vignfade);
-    NSLog(@"<key>blendEnable</key>%@", filterMain.filmEnable?@"<true/>":@"<false/>");
+    NSLog(@"<key>blendEnable</key>%@", filterMain.blendEnable?@"<true/>":@"<false/>");
     NSLog(@"<key>blendImage</key><string>%@</string>", currentBlend);
     NSLog(@"<key>blendIntensity</key><real>%f</real>", filterMain.blendIntensity);
     NSLog(@"<key>filmEnable</key>%@", filterMain.filmEnable?@"<true/>":@"<false/>");
     NSLog(@"<key>filmImage</key><string>%@</string>", currentFilm);
     NSLog(@"<key>filmIntensity</key><real>%f</real>", filterMain.filmIntensity);
+}
+
+- (NSDictionary*)getState {
+    NSMutableDictionary *ret = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                         [NSNumber numberWithBool:filterMain.toneEnable], @"toneEnable",
+                         [NSNumber numberWithFloat:filterMain.toneCurveIntensity], @"toneCurveIntensity",
+                         [NSNumber numberWithFloat:filterMain.brightness], @"brightness",
+                         [NSNumber numberWithFloat:filterMain.saturation], @"saturation",
+                         [NSNumber numberWithFloat:filterMain.clearness], @"clearness",
+                         [NSNumber numberWithFloat:filterMain.vignfade], @"vignfade",
+                         [NSNumber numberWithBool:filterMain.blendEnable], @"blendEnable",
+                         [NSNumber numberWithFloat:filterMain.blendIntensity], @"blendIntensity",
+                         [NSNumber numberWithBool:filterMain.filmEnable], @"filmEnable",
+                         [NSNumber numberWithFloat:filterMain.filmIntensity], @"filmIntensity",
+                         nil];
+    
+    if (currentEffect)
+        ret[@"toneImage"] = currentEffect;
+    if (currentBlend)
+        ret[@"blendImage"] = currentBlend;
+    if (currentFilm)
+        ret[@"filmImage"] = currentFilm;
+    return ret;
 }
 
 
@@ -1375,7 +1393,7 @@
         [self setUIMask:kMaskBlurNormal];
     }
     
-    pictureDOF = [[GPUImagePicture alloc] initWithImage:mask];
+    filterDOF.imageDOF = mask;
     
     [self preparePipe];
     [self processImage];
@@ -1409,6 +1427,46 @@
     [self processImage];
 }
 
+
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (scrollView.contentOffset.x  < 50) {
+        [UIView animateWithDuration:kGlobalAnimationSpeed
+                              delay:0
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             imagePrev.alpha = 0;
+                         }
+                         completion:nil];
+    } else {
+        [UIView animateWithDuration:kGlobalAnimationSpeed
+                              delay:0
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             imagePrev.alpha = 1;
+                         }
+                         completion:nil];
+    }
+    
+    if (scrollView.contentOffset.x  > scrollView.contentSize.width-scrollView.bounds.size.width-50) {
+        [UIView animateWithDuration:kGlobalAnimationSpeed
+                              delay:0
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             imageNext.alpha = 0;
+                         }
+                         completion:nil];
+    } else {
+        [UIView animateWithDuration:kGlobalAnimationSpeed
+                              delay:0
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             imageNext.alpha = 1;
+                         }
+                         completion:nil];
+    }
+}
+
 - (void)viewDidUnload {
     [self setScrollFilm:nil];
     [self setViewFilmControl:nil];
@@ -1416,9 +1474,10 @@
     [self setButtonFilmWeak:nil];
     [self setButtonFilmMedium:nil];
     [self setButtonFilmStrong:nil];
-    [self setButtonTogglePreset:nil];
     [self setViewPresetControl:nil];
     [self setScrollPreset:nil];
+    [self setImagePrev:nil];
+    [self setImageNext:nil];
     [super viewDidUnload];
 }
 @end

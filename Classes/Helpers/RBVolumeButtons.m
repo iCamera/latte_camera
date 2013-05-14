@@ -115,7 +115,7 @@ void volumeListenerCallback (
       [self initializeVolumeButtonStealer];
       
       
-      [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillResignActiveNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification* notification){
+      /*[[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillResignActiveNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification* notification){
          [self applicationWentAway];
       }];
       
@@ -136,7 +136,7 @@ void volumeListenerCallback (
          [self applicationCameBack];
          
          
-      }];
+      }];*/
       
    }
    return self;

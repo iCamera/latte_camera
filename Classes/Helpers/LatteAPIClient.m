@@ -50,6 +50,14 @@
 //    [super getPath:path parameters:parameters success:success failure:failure];
 //}
 
+- (NSMutableURLRequest *)requestWithMethod:(NSString *)method path:(NSString *)path parameters:(NSDictionary *)parameters {
+    NSMutableURLRequest *request = [super requestWithMethod:method path:path parameters:parameters];
+//    [request setValue:@"" forHTTPHeaderField:@"Latte-ios"];
+//    [request setValue:@"" forHTTPHeaderField:@"Latte-version"];
+//    [request setValue:@"" forHTTPHeaderField:@"Latte-device"];
+    return request;
+}
+
 - (id)initWithBaseURL:(NSURL *)url {
     self = [super initWithBaseURL:url];
     if (!self) {

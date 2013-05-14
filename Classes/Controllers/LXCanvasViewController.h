@@ -83,7 +83,6 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIButton *buttonToggleLens;
 @property (strong, nonatomic) IBOutlet UIButton *buttonToggleFilm;
 @property (strong, nonatomic) IBOutlet UIButton *buttonToggleBlend;
-@property (strong, nonatomic) IBOutlet UIButton *buttonTogglePreset;
 
 @property (strong, nonatomic) IBOutlet UISwitch *buttonBackgroundNatual;
 @property (strong, nonatomic) IBOutlet UISwitch *switchGain;
@@ -122,6 +121,8 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollPreset;
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonBlackWhite;
+@property (strong, nonatomic) IBOutlet UIImageView *imagePrev;
+@property (strong, nonatomic) IBOutlet UIImageView *imageNext;
 
 @property (strong, nonatomic) NSDictionary *dictUpload;
 

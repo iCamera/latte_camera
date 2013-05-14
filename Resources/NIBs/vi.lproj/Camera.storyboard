@@ -1123,8 +1123,16 @@ I WORK</string>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bg_camera_bottom.png" id="iYq-ZJ-wtm">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                     </imageView>
+                                    <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" image="tool_prev.png" id="5Rc-ai-IPG">
+                                        <rect key="frame" x="0.0" y="0.0" width="30" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <imageView hidden="YES" contentMode="scaleToFill" image="tool_next.png" id="TU5-lO-n3g">
+                                        <rect key="frame" x="290" y="0.0" width="30" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="bgp-m6-lzX" userLabel="Scroll View Process">
-                                        <rect key="frame" x="50" y="0.0" width="270" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <subviews>
                                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="QUq-85-XIf" userLabel="Button Film">
@@ -1200,10 +1208,10 @@ I WORK</string>
                                                     <action selector="toggleControl:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="6xK-EQ-Z6a"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="Nh5-Tv-t7W" userLabel="Button FIlm">
+                                            <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="Nh5-Tv-t7W" userLabel="Button Blend2">
                                                 <rect key="frame" x="320" y="5" width="58" height="40"/>
                                                 <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="16"/>
-                                                <state key="normal" title="ABC" image="icon_blending2.png" backgroundImage="bg_camera_bt2.png">
+                                                <state key="normal" image="icon_blending2.png" backgroundImage="bg_camera_bt2.png">
                                                     <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
@@ -1214,23 +1222,10 @@ I WORK</string>
                                                 </connections>
                                             </button>
                                         </subviews>
-                                    </scrollView>
-                                    <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="bOt-t1-ZPM">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
-                                        <state key="normal" title="Preset">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
                                         <connections>
-                                            <action selector="toggleControl:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="j5T-Mf-MRM"/>
+                                            <outlet property="delegate" destination="IgC-G0-Nfq" id="lGf-2N-fV6"/>
                                         </connections>
-                                    </button>
+                                    </scrollView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -1282,9 +1277,10 @@ I WORK</string>
                         <outlet property="buttonToggleFilm" destination="Nh5-Tv-t7W" id="K0h-Vi-uC6"/>
                         <outlet property="buttonToggleFocus" destination="0jG-sT-hDz" id="TXr-Ss-2oz"/>
                         <outlet property="buttonToggleLens" destination="7us-9q-ShY" id="Rpc-ht-gN6"/>
-                        <outlet property="buttonTogglePreset" destination="bOt-t1-ZPM" id="dUz-S3-6Nj"/>
                         <outlet property="buttonYes" destination="4Vx-ae-rPd" id="92t-VS-mKB"/>
                         <outlet property="gesturePan" destination="pVG-Rs-BE8" id="0hN-6m-1cZ"/>
+                        <outlet property="imageNext" destination="TU5-lO-n3g" id="ouM-YR-g1g"/>
+                        <outlet property="imagePrev" destination="5Rc-ai-IPG" id="prd-kG-WpK"/>
                         <outlet property="scrollBlend" destination="Jqe-oV-WUx" id="yuA-R6-fqH"/>
                         <outlet property="scrollEffect" destination="EDY-bj-4DP" id="ZFj-H6-qG4"/>
                         <outlet property="scrollFilm" destination="gTp-sh-39W" id="JHo-4P-opc"/>
@@ -1717,6 +1713,8 @@ I WORK</string>
         <image name="select42_3.png" width="60" height="25"/>
         <image name="select42_3_on.png" width="60" height="25"/>
         <image name="target.png" width="70" height="70"/>
+        <image name="tool_next.png" width="30" height="50"/>
+        <image name="tool_prev.png" width="30" height="50"/>
     </resources>
     <classes>
         <class className="GPUImageView" superclassName="UIView">
@@ -1781,9 +1779,10 @@ I WORK</string>
                 <relationship kind="outlet" name="buttonToggleFilm" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonToggleFocus" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonToggleLens" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonTogglePreset" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonYes" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="gesturePan" candidateClass="UIPanGestureRecognizer"/>
+                <relationship kind="outlet" name="imageNext" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="imagePrev" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="scrollBlend" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="scrollEffect" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="scrollFilm" candidateClass="UIScrollView"/>
