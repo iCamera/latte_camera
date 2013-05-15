@@ -52,7 +52,9 @@
 
 - (NSMutableURLRequest *)requestWithMethod:(NSString *)method path:(NSString *)path parameters:(NSDictionary *)parameters {
     NSMutableURLRequest *request = [super requestWithMethod:method path:path parameters:parameters];
-//    [request setValue:@"" forHTTPHeaderField:@"Latte-ios"];
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *majorVersion = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    [request setValue:majorVersion forHTTPHeaderField:@"Latte-ios"];
 //    [request setValue:@"" forHTTPHeaderField:@"Latte-version"];
 //    [request setValue:@"" forHTTPHeaderField:@"Latte-device"];
     return request;

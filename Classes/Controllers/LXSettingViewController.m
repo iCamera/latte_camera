@@ -203,6 +203,9 @@
 
 
 - (void)sectionHeaderWillAppearForSection:(QSection *)section atIndex:(NSInteger)indexPath {
+    if (section.headerView) {
+        return;
+    }
     if (section.title == nil) {
         return;
     }

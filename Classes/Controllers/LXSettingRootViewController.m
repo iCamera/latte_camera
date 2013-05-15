@@ -15,6 +15,7 @@
 #import "LXShare.h"
 #import "UIImageView+loadProgress.h"
 #import "LXCaptureViewController.h"
+#import "LXButtonBrown30.h"
 
 @interface LXSettingRootViewController ()
 
@@ -27,6 +28,7 @@
 @synthesize labelVersion;
 @synthesize viewHeader;
 @synthesize imageProfile;
+@synthesize viewWrapHeader;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -55,14 +57,14 @@
     lxShare = [[LXShare alloc] init];
     lxShare.controller = self;
     
+    self.tableView.tableHeaderView = nil;
+    
     if (app.currentUser) {
         [LXUtils globalShadow:viewHeader];
         [imageProfile loadProgess:app.currentUser.profilePicture];
         viewHeader.layer.cornerRadius = 5;
         imageProfile.layer.cornerRadius = 5;
         imageProfile.layer.masksToBounds = YES;
-    } else {
-        self.tableView.tableHeaderView = nil;
     }
 }
 
@@ -115,7 +117,9 @@
                 QSection *section = root.sections[0];
                 QRadioElement *eleCountry = [[QRadioElement alloc] initWithDict:countriesDict selected:0 title:NSLocalizedString(@"nationality", @"Nationality")];
                 eleCountry.key = @"nationality";
-                eleCountry.controllerAction = @"handleUpdateRadio:";                
+                eleCountry.controllerAction = @"handleUpdateRadio:";
+                
+                section.headerView = viewWrapHeader;
                 
                 [section addElement:eleCountry];
                 break;
@@ -207,6 +211,7 @@
 - (void)viewDidUnload {
     [self setImageProfile:nil];
     [self setViewHeader:nil];
+    [self setViewWrapHeader:nil];
     [super viewDidUnload];
 }
 - (IBAction)touchSetPicture:(id)sender {
@@ -219,12 +224,18 @@
 }
 
 - (void)imagePickerController:(LXCanvasViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info {
-    [picker.navigationController dismissModalViewControllerAnimated:YES];
+    UIViewController *tmp2 = picker.navigationController.presentingViewController;
+    [picker dismissModalViewControllerAnimated:NO];
+    
+    if (tmp2 != self.navigationController) {
+        [tmp2 dismissModalViewControllerAnimated:YES];
+    }
+    
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
-    MBProgressHUD *progessHUD = [[MBProgressHUD alloc] initWithView:self.view];
-    [self.view addSubview:progessHUD];
-    
+    MBProgressHUD *progessHUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:progessHUD];
+    progessHUD.removeFromSuperViewOnHide = YES;
     progessHUD.mode = MBProgressHUDModeDeterminate;
     [progessHUD show:YES];
     
@@ -275,7 +286,6 @@
         progessHUD.labelText = @"Error";
         progessHUD.margin = 10.f;
         progessHUD.yOffset = 150.f;
-        progessHUD.removeFromSuperViewOnHide = YES;
         
         [progessHUD hide:YES afterDelay:2];
     };

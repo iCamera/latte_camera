@@ -84,6 +84,7 @@
     if (!(pic.isVoted && !app.currentUser))
         buttonLike.enabled = YES;
     buttonLike.selected = pic.isVoted;
+    labelLike.highlighted = pic.isVoted;
     
         buttonComment.enabled = pic.canComment;
     

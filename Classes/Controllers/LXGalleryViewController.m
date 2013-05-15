@@ -408,6 +408,7 @@
     if (!(currentPage.picture.isVoted && !app.currentUser))
         buttonLike.enabled = YES;
     buttonLike.selected = currentPage.picture.isVoted;
+    labelLike.highlighted = currentPage.picture.isVoted;
     
     if ((currentPage.picture.latitude != nil) && (currentPage.picture.longitude != nil)) {
         buttonMap.enabled = YES;

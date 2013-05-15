@@ -56,8 +56,6 @@
         buttonVote.enabled = YES;
     buttonVote.selected = _pic.isVoted;
     
-    buttonVote.selected = _pic.isVoted;
-    
     buttonComment.tag = [_pic.pictureId integerValue];
     buttonImage.tag = [_pic.pictureId integerValue];
     buttonVote.tag = [_pic.pictureId integerValue];

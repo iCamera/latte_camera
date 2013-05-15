@@ -10,7 +10,7 @@
 
 #import <MessageUI/MFMailComposeViewController.h>
 #import "REComposeViewController.h"
-#import "FacebookSDK.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 // MY OWN BLOCK
 typedef void (^MyCompletionBlock)();

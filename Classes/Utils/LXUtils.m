@@ -69,6 +69,7 @@
     BOOL increase = pic.isVoted;
 
     pic.voteCount = [NSNumber numberWithInteger:[pic.voteCount integerValue] + (increase?1:-1)];
+    labelCount.highlighted = increase;
     if (labelCount != nil) {
         labelCount.text = [pic.voteCount stringValue];
     } else {
@@ -96,6 +97,13 @@
                                         [alert show];
                                         TFLog(@"Something went wrong (Vote)");
                                     }];
+    
+    //Animation
+    sender.imageView.transform = CGAffineTransformIdentity;
+
+    [UIView animateWithDuration:0.3 animations:^{
+        sender.imageView.transform = CGAffineTransformMakeScale(0.3, 0.3);
+    }];
 }
 
 + (Picture *)picFromPicID:(long)picID of:(NSArray *)feeds {

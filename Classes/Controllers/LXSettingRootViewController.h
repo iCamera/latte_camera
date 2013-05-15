@@ -15,5 +15,6 @@
 @property (strong, nonatomic) IBOutlet UIImageView *imageProfile;
 - (IBAction)touchSetPicture:(id)sender;
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
+@property (strong, nonatomic) IBOutlet UIView *viewWrapHeader;
 
 @end

@@ -311,7 +311,7 @@
     
     
     // Blend
-    for (int i=0; i < 6; i++) {
+    for (int i=0; i < 7; i++) {
         UILabel *labelBlend = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 10)];
         labelBlend.backgroundColor = [UIColor clearColor];
         labelBlend.textColor = [UIColor whiteColor];
@@ -349,12 +349,15 @@
             case 5:
                 labelBlend.text = @"Lightblur";
                 break;
+            case 6:
+                labelBlend.text = @"Vintage";
+                break;
         }
         
         [scrollBlend addSubview:buttonBlend];
         [scrollBlend addSubview:labelBlend];
     }
-    scrollBlend.contentSize = CGSizeMake(6*55+10, 60);
+    scrollBlend.contentSize = CGSizeMake(7*55+10, 60);
     
     // Film
     for (int i=0; i < 9; i++) {
@@ -583,22 +586,23 @@
 }
 
 - (void)processSavedData {
+    if (_delegate) {
+        NSDictionary *info = [[NSDictionary alloc] initWithObjectsAndKeys:
+                              imageFinalData, @"data",
+                              imageFinalThumb, @"preview",
+                              nil];
+        [_delegate imagePickerController:self didFinishPickingMediaWithData:info];
+        return;
+    }
+    
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
-    if (app.currentUser != nil) {
-        if (_delegate == nil) {
-            LXPicEditViewController *controllerPicEdit = [[UIStoryboard storyboardWithName:@"Gallery"
-                                                                            bundle: nil] instantiateViewControllerWithIdentifier:@"PicEdit"];
-            controllerPicEdit.imageData = imageFinalData;
-            controllerPicEdit.preview = imageFinalThumb;
-            [self.navigationController pushViewController:controllerPicEdit animated:YES];
-        } else {
-            NSDictionary *info = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                  imageFinalData, @"data",
-                                  imageFinalThumb, @"preview",
-                                  nil];
-            [_delegate imagePickerController:self didFinishPickingMediaWithData:info];
-        }
+    if (app.currentUser) {
+        LXPicEditViewController *controllerPicEdit = [[UIStoryboard storyboardWithName:@"Gallery"
+                                                                                bundle: nil] instantiateViewControllerWithIdentifier:@"PicEdit"];
+        controllerPicEdit.imageData = imageFinalData;
+        controllerPicEdit.preview = imageFinalThumb;
+        [self.navigationController pushViewController:controllerPicEdit animated:YES];
     } else {
         RDActionSheet *actionSheet = [[RDActionSheet alloc] initWithCancelButtonTitle:NSLocalizedString(@"Cancel", @"")
                                                                    primaryButtonTitle:nil
@@ -737,6 +741,11 @@
 }
 
 - (void)saveImageToLib:(NSData*)imageData {
+    if (_delegate) {
+        [HUD hide:YES];
+        return;
+    }
+    
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     
     [library writeImageDataToSavedPhotosAlbum:imageData metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
@@ -1165,6 +1174,10 @@
         case 5:
             blendid = 1 + rand() % 25;
             currentBlend = [NSString stringWithFormat:@"lightblur-%d.JPG", blendid];
+            break;
+        case 6:
+            blendid = 1 + rand() % 27;
+            currentBlend = [NSString stringWithFormat:@"print%d.jpg", blendid];
             break;
         default:
             break;

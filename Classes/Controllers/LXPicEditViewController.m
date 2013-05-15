@@ -11,7 +11,7 @@
 #import "LXUploadObject.h"
 #import "LXCanvasViewController.h"
 #import "LXPicDumbTabViewController.h"
-#import "Facebook.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface LXPicEditViewController ()
 

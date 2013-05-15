@@ -32,7 +32,9 @@
                                             <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
                                         <state key="disabled" title="Đã thích"/>
-                                        <state key="selected" title="Thích" image="icon_iine_s_on.png"/>
+                                        <state key="selected" title="Thích" image="icon_iine_s_on.png">
+                                            <color key="titleColor" red="0.18090890849999999" green="0.29160622089999999" blue="0.49214504079999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="switchTab:" destination="IuH-xf-ibI" eventType="touchUpInside" id="2Qa-iu-Oga"/>
                                             <action selector="toggleLike:" destination="IuH-xf-ibI" eventType="touchUpInside" id="ReV-4R-xUa"/>
@@ -105,7 +107,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                         <color key="textColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                        <nil key="highlightedColor"/>
+                                        <color key="highlightedColor" red="0.18090890849999999" green="0.29160622089999999" blue="0.49214504079999999" alpha="1" colorSpace="calibratedRGB"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="C1l-wW-5fB">
                                         <rect key="frame" x="185" y="7" width="30" height="21"/>
