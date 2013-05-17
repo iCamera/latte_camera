@@ -81,7 +81,7 @@
         
         textDesc.text = _picture.descriptionText;
         
-        imageStatus = [_picture.status integerValue];
+        imageStatus = _picture.status;
         switchGPS.on = _picture.showGPS;
         switchEXIF.on = _picture.showEXIF;
         switchTakenAt.on = _picture.showTakenAt;

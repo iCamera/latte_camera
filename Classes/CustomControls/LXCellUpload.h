@@ -10,7 +10,7 @@
 
 #import "LXUploadObject.h"
 
-@interface LXCellUpload : UITableViewCell<UIAlertViewDelegate, LXUploadObjectDelegate>
+@interface LXCellUpload : UITableViewCell<UIAlertViewDelegate, LXUploadObjectDelegate, UIActionSheetDelegate>
 @property (strong, nonatomic) IBOutlet UIImageView *imageupload;
 @property (strong, nonatomic) IBOutlet UIProgressView *progressUpload;
 @property (strong, nonatomic) IBOutlet UIButton *buttonError;
