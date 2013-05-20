@@ -40,6 +40,9 @@
     
     GLint blendTextureCoordinateAttribute;
     GLint filmTextureCoordinateAttribute;
+    
+    GLint sharpnessUniform;
+    GLint imageWidthFactorUniform, imageHeightFactorUniform;
 }
 
 - (id)init;
@@ -80,6 +83,11 @@
         filmTextureCoordinateAttribute = [filterProgram attributeIndex:@"filmTextureCoordinate"];
         glEnableVertexAttribArray(blendTextureCoordinateAttribute);
         glEnableVertexAttribArray(filmTextureCoordinateAttribute);
+        
+        imageWidthFactorUniform = [filterProgram uniformIndex:@"imageWidthFactor"];
+        imageHeightFactorUniform = [filterProgram uniformIndex:@"imageHeightFactor"];
+        
+        sharpnessUniform = [filterProgram uniformIndex:@"sharpness"];
     });
     
     self.saturation = 1.0;
@@ -90,6 +98,7 @@
     self.toneEnable = NO;
     self.blendEnable = NO;
     self.filmEnable = NO;
+    self.sharpness = 0;
     
     return self;
 }
@@ -152,6 +161,13 @@
 - (void)setFilmEnable:(BOOL)filmEnable{
     _filmEnable = filmEnable;
     [self setInteger:filmEnable forUniform:filmEnableUniform program:filterProgram];
+}
+
+- (void)setSharpness:(CGFloat)sharpness;
+{
+    _sharpness = sharpness;
+    
+    [self setFloat:_sharpness forUniform:sharpnessUniform program:filterProgram];
 }
 
 - (void)setToneCurve:(UIImage *)toneCurve {
@@ -347,10 +363,16 @@
     if (GPUImageRotationSwapsWidthAndHeight(inputRotation))
     {
         [self setFloat:filterFrameSize.width/filterFrameSize.height forUniform:aspectratioUniform program:filterProgram];
+        
+        [self setFloat:1.0 / filterFrameSize.height forUniform:imageWidthFactorUniform program:filterProgram];
+        [self setFloat:1.0 / filterFrameSize.width forUniform:imageHeightFactorUniform program:filterProgram];
     }
     else
     {
         [self setFloat:filterFrameSize.height/filterFrameSize.width forUniform:aspectratioUniform program:filterProgram];
+        
+        [self setFloat:1.0 / filterFrameSize.height forUniform:imageHeightFactorUniform program:filterProgram];
+        [self setFloat:1.0 / filterFrameSize.width forUniform:imageWidthFactorUniform program:filterProgram];
     }
 }
 

@@ -25,5 +25,6 @@
 @property(readwrite, nonatomic) BOOL toneEnable;
 @property(readwrite, nonatomic) BOOL blendEnable;
 @property(readwrite, nonatomic) BOOL filmEnable;
+@property(readwrite, nonatomic) CGFloat sharpness;
 
 @end

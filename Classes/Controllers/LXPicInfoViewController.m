@@ -153,7 +153,7 @@
                 cell.imageHide.highlighted = _picture.showEXIF;
             }
             
-            cell.labelField.text = [keyExif objectAtIndex:indexPath.row];
+            cell.labelField.text = NSLocalizedString([keyExif objectAtIndex:indexPath.row], @"");
             cell.labelDetail.text = [_picture.exif objectForKey:[keyExif objectAtIndex:indexPath.row]];
         }
     }

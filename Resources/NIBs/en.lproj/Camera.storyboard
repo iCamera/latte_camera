@@ -795,6 +795,14 @@ I WORK</string>
                                         <nil key="highlightedColor"/>
                                         <size key="shadowOffset" width="0.0" height="0.0"/>
                                     </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Sharpness" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ofh-Jj-x7u">
+                                        <rect key="frame" x="12" y="79" width="52" height="16"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="10"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <size key="shadowOffset" width="0.0" height="0.0"/>
+                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="QVO-XY-3L1" userLabel="Button - Lens Normal">
                                         <rect key="frame" x="70" y="10" width="75" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -850,6 +858,15 @@ I WORK</string>
                                         <color key="thumbTintColor" red="0.60226004460000004" green="0.53549094019999999" blue="0.31669781419999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="updateFilter:" destination="IgC-G0-Nfq" eventType="valueChanged" id="IQp-co-XQi"/>
+                                        </connections>
+                                    </slider>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="2" id="v68-J1-M9J" userLabel="Slider Sharpness">
+                                        <rect key="frame" x="70" y="76" width="240" height="23"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="minimumTrackTintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                        <color key="thumbTintColor" red="0.60226004460000004" green="0.53549094019999999" blue="0.31669781419999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="updateFilter:" destination="IgC-G0-Nfq" eventType="valueChanged" id="gKd-k2-oSx"/>
                                         </connections>
                                     </slider>
                                 </subviews>
@@ -1292,6 +1309,7 @@ I WORK</string>
                         <outlet property="sliderExposure" destination="4kj-V5-0KA" id="Kin-5h-tDn"/>
                         <outlet property="sliderFeather" destination="gkz-os-k9A" id="eoG-D2-tKR"/>
                         <outlet property="sliderSaturation" destination="NeX-zm-jiQ" id="wHc-K0-EZR"/>
+                        <outlet property="sliderSharpness" destination="v68-J1-M9J" id="yyj-Io-VTL"/>
                         <outlet property="sliderVignette" destination="biM-cn-8dS" id="doL-7N-KXf"/>
                         <outlet property="switchGain" destination="ouN-2N-Jdj" id="bZd-YB-ARu"/>
                         <outlet property="viewBasicControl" destination="Si4-ZE-zrG" id="enc-xx-htL"/>
@@ -1795,6 +1813,7 @@ I WORK</string>
                 <relationship kind="outlet" name="sliderExposure" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="sliderFeather" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="sliderSaturation" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderSharpness" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="sliderVignette" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="switchGain" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="viewBasicControl" candidateClass="UIView"/>
