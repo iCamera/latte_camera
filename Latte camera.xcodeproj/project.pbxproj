@@ -77,6 +77,8 @@
 		8824FBC616F80E4A00357ADB /* icon_rank_m_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 8824FBBD16F80E4A00357ADB /* icon_rank_m_white.png */; };
 		8824FBC716F80E4A00357ADB /* icon_rank_m_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8824FBBE16F80E4A00357ADB /* icon_rank_m_white@2x.png */; };
 		8824FBC916F81F3400357ADB /* icon_iine_s_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8824FBC816F81F3300357ADB /* icon_iine_s_on@2x.png */; };
+		8826E3A917460D6800FF4A90 /* LXFontSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8826E3A817460D6800FF4A90 /* LXFontSelectorViewController.m */; };
+		8826E3AF17460DED00FF4A90 /* LXCellFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 8826E3AE17460DED00FF4A90 /* LXCellFont.m */; };
 		882E14A516EF0BF100839B92 /* LXFacebookFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 882E14A416EF0BF100839B92 /* LXFacebookFriendViewController.m */; };
 		882E14AD16EF0FDE00839B92 /* LXCellFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 882E14AC16EF0FDE00839B92 /* LXCellFacebook.m */; };
 		882E14B716F0142000839B92 /* menu4_center_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 882E14B116F0142000839B92 /* menu4_center_off.png */; };
@@ -1108,6 +1110,23 @@
 		88B47B3B15DE522F00FD9C72 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B47B2F15DE522F00FD9C72 /* AFURLConnectionOperation.m */; };
 		88B47B3C15DE522F00FD9C72 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B47B3115DE522F00FD9C72 /* AFXMLRequestOperation.m */; };
 		88B47B3D15DE522F00FD9C72 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B47B3315DE522F00FD9C72 /* UIImageView+AFNetworking.m */; };
+		88BAA322174B8C04004E0F63 /* UIColor+MLPFlatColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BAA321174B8C04004E0F63 /* UIColor+MLPFlatColors.m */; };
+		88BAA327174CB7C7004E0F63 /* fonts.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88BAA326174CB7C7004E0F63 /* fonts.plist */; };
+		88BAA347174CCC04004E0F63 /* aqua_pfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88BAA338174CC649004E0F63 /* aqua_pfont.ttf */; };
+		88BAA348174CCC04004E0F63 /* black_jack.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88BAA339174CC649004E0F63 /* black_jack.ttf */; };
+		88BAA349174CCC04004E0F63 /* Capture_it_2.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88BAA33A174CC649004E0F63 /* Capture_it_2.ttf */; };
+		88BAA34A174CCC04004E0F63 /* Caviar_Dreams_Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88BAA33B174CC649004E0F63 /* Caviar_Dreams_Bold.ttf */; };
+		88BAA34B174CCC04004E0F63 /* Existence-UnicaseLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 88BAA33C174CC649004E0F63 /* Existence-UnicaseLight.otf */; };
+		88BAA34C174CCC04004E0F63 /* Goon.otf in Resources */ = {isa = PBXBuildFile; fileRef = 88BAA33D174CC649004E0F63 /* Goon.otf */; };
+		88BAA34D174CCC04004E0F63 /* HuiFontP29.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88BAA33E174CC649004E0F63 /* HuiFontP29.ttf */; };
+		88BAA34E174CCC04004E0F63 /* journal.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88BAA33F174CC649004E0F63 /* journal.ttf */; };
+		88BAA34F174CCC04004E0F63 /* Lavanderia Delicate.otf in Resources */ = {isa = PBXBuildFile; fileRef = 88BAA340174CC64A004E0F63 /* Lavanderia Delicate.otf */; };
+		88BAA351174CCC04004E0F63 /* Pacifico.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88BAA342174CC64A004E0F63 /* Pacifico.ttf */; };
+		88BAA352174CCC04004E0F63 /* Quicksand_Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 88BAA343174CC64A004E0F63 /* Quicksand_Light.otf */; };
+		88BAA353174CCC04004E0F63 /* Sniglet.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88BAA344174CC64A004E0F63 /* Sniglet.ttf */; };
+		88BAA354174CCC04004E0F63 /* Ubuntu-Title.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88BAA345174CC64A004E0F63 /* Ubuntu-Title.ttf */; };
+		88BAA355174CCC04004E0F63 /* Windsong.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88BAA346174CC64A004E0F63 /* Windsong.ttf */; };
+		88BAA357174CCE2C004E0F63 /* Ostrich Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88BAA356174CCE2C004E0F63 /* Ostrich Regular.ttf */; };
 		88C095AA1739FF25007CED90 /* hicon_lock_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88C095A71739FF25007CED90 /* hicon_lock_s@2x.png */; };
 		88C095AB1739FF25007CED90 /* hicon_lock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88C095A81739FF25007CED90 /* hicon_lock@2x.png */; };
 		88C095AC1739FF25007CED90 /* icon_public_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88C095A91739FF25007CED90 /* icon_public_s@2x.png */; };
@@ -1716,6 +1735,10 @@
 		8824FBBD16F80E4A00357ADB /* icon_rank_m_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_rank_m_white.png; sourceTree = "<group>"; };
 		8824FBBE16F80E4A00357ADB /* icon_rank_m_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_rank_m_white@2x.png"; sourceTree = "<group>"; };
 		8824FBC816F81F3300357ADB /* icon_iine_s_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_iine_s_on@2x.png"; sourceTree = "<group>"; };
+		8826E3A717460D6800FF4A90 /* LXFontSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFontSelectorViewController.h; sourceTree = "<group>"; };
+		8826E3A817460D6800FF4A90 /* LXFontSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFontSelectorViewController.m; sourceTree = "<group>"; };
+		8826E3AD17460DED00FF4A90 /* LXCellFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCellFont.h; sourceTree = "<group>"; };
+		8826E3AE17460DED00FF4A90 /* LXCellFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCellFont.m; sourceTree = "<group>"; };
 		882E14A316EF0BF100839B92 /* LXFacebookFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFacebookFriendViewController.h; sourceTree = "<group>"; };
 		882E14A416EF0BF100839B92 /* LXFacebookFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFacebookFriendViewController.m; sourceTree = "<group>"; };
 		882E14AB16EF0FDE00839B92 /* LXCellFacebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCellFacebook.h; sourceTree = "<group>"; };
@@ -2877,6 +2900,24 @@
 		88B47B3115DE522F00FD9C72 /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
 		88B47B3215DE522F00FD9C72 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		88B47B3315DE522F00FD9C72 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
+		88BAA320174B8C04004E0F63 /* UIColor+MLPFlatColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MLPFlatColors.h"; sourceTree = "<group>"; };
+		88BAA321174B8C04004E0F63 /* UIColor+MLPFlatColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MLPFlatColors.m"; sourceTree = "<group>"; };
+		88BAA326174CB7C7004E0F63 /* fonts.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = fonts.plist; sourceTree = "<group>"; };
+		88BAA338174CC649004E0F63 /* aqua_pfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = aqua_pfont.ttf; sourceTree = "<group>"; };
+		88BAA339174CC649004E0F63 /* black_jack.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = black_jack.ttf; sourceTree = "<group>"; };
+		88BAA33A174CC649004E0F63 /* Capture_it_2.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Capture_it_2.ttf; sourceTree = "<group>"; };
+		88BAA33B174CC649004E0F63 /* Caviar_Dreams_Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Caviar_Dreams_Bold.ttf; sourceTree = "<group>"; };
+		88BAA33C174CC649004E0F63 /* Existence-UnicaseLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Existence-UnicaseLight.otf"; sourceTree = "<group>"; };
+		88BAA33D174CC649004E0F63 /* Goon.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Goon.otf; sourceTree = "<group>"; };
+		88BAA33E174CC649004E0F63 /* HuiFontP29.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = HuiFontP29.ttf; sourceTree = "<group>"; };
+		88BAA33F174CC649004E0F63 /* journal.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = journal.ttf; sourceTree = "<group>"; };
+		88BAA340174CC64A004E0F63 /* Lavanderia Delicate.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lavanderia Delicate.otf"; sourceTree = "<group>"; };
+		88BAA342174CC64A004E0F63 /* Pacifico.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Pacifico.ttf; sourceTree = "<group>"; };
+		88BAA343174CC64A004E0F63 /* Quicksand_Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Quicksand_Light.otf; sourceTree = "<group>"; };
+		88BAA344174CC64A004E0F63 /* Sniglet.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sniglet.ttf; sourceTree = "<group>"; };
+		88BAA345174CC64A004E0F63 /* Ubuntu-Title.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-Title.ttf"; sourceTree = "<group>"; };
+		88BAA346174CC64A004E0F63 /* Windsong.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Windsong.ttf; sourceTree = "<group>"; };
+		88BAA356174CCE2C004E0F63 /* Ostrich Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ostrich Regular.ttf"; sourceTree = "<group>"; };
 		88C095A71739FF25007CED90 /* hicon_lock_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hicon_lock_s@2x.png"; sourceTree = "<group>"; };
 		88C095A81739FF25007CED90 /* hicon_lock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hicon_lock@2x.png"; sourceTree = "<group>"; };
 		88C095A91739FF25007CED90 /* icon_public_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_public_s@2x.png"; sourceTree = "<group>"; };
@@ -4518,6 +4559,8 @@
 				8883EED3173212EC00AA2D5E /* LXImageTextViewController.m */,
 				8883EED5173220E900AA2D5E /* LXTextTemplateViewController.h */,
 				8883EED6173220E900AA2D5E /* LXTextTemplateViewController.m */,
+				8826E3A717460D6800FF4A90 /* LXFontSelectorViewController.h */,
+				8826E3A817460D6800FF4A90 /* LXFontSelectorViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -4599,6 +4642,8 @@
 				8890728E16770EBB0013DF7A /* UIImageView+loadProgress.m */,
 				8835FCC6171CE31800A48346 /* LXCellGridUser.h */,
 				8835FCC7171CE31900A48346 /* LXCellGridUser.m */,
+				8826E3AD17460DED00FF4A90 /* LXCellFont.h */,
+				8826E3AE17460DED00FF4A90 /* LXCellFont.m */,
 			);
 			path = CustomControls;
 			sourceTree = "<group>";
@@ -4724,9 +4769,41 @@
 			path = Vendor/AFNetworking/AFNetworking;
 			sourceTree = "<group>";
 		};
+		88BAA31F174B8C04004E0F63 /* UIColor+MLPFlatColors */ = {
+			isa = PBXGroup;
+			children = (
+				88BAA320174B8C04004E0F63 /* UIColor+MLPFlatColors.h */,
+				88BAA321174B8C04004E0F63 /* UIColor+MLPFlatColors.m */,
+			);
+			path = "UIColor+MLPFlatColors";
+			sourceTree = "<group>";
+		};
+		88BAA328174CC607004E0F63 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				88BAA356174CCE2C004E0F63 /* Ostrich Regular.ttf */,
+				88BAA338174CC649004E0F63 /* aqua_pfont.ttf */,
+				88BAA339174CC649004E0F63 /* black_jack.ttf */,
+				88BAA33A174CC649004E0F63 /* Capture_it_2.ttf */,
+				88BAA33B174CC649004E0F63 /* Caviar_Dreams_Bold.ttf */,
+				88BAA33C174CC649004E0F63 /* Existence-UnicaseLight.otf */,
+				88BAA33D174CC649004E0F63 /* Goon.otf */,
+				88BAA33E174CC649004E0F63 /* HuiFontP29.ttf */,
+				88BAA33F174CC649004E0F63 /* journal.ttf */,
+				88BAA340174CC64A004E0F63 /* Lavanderia Delicate.otf */,
+				88BAA342174CC64A004E0F63 /* Pacifico.ttf */,
+				88BAA343174CC64A004E0F63 /* Quicksand_Light.otf */,
+				88BAA344174CC64A004E0F63 /* Sniglet.ttf */,
+				88BAA345174CC64A004E0F63 /* Ubuntu-Title.ttf */,
+				88BAA346174CC64A004E0F63 /* Windsong.ttf */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
 		88D4B5BE15D4B66B00FC4FBB /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				88BAA31F174B8C04004E0F63 /* UIColor+MLPFlatColors */,
 				88B47AFC15DE503F00FD9C72 /* AFNetworking */,
 				8814422B172F9CCF00A5B3FF /* BCGenieEffect */,
 				888165F816B902260089106D /* GoogleAnalyticsiOS_2.0beta4 */,
@@ -5104,6 +5181,7 @@
 		88FE3F9E166C93D6004DCE53 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				88BAA328174CC607004E0F63 /* fonts */,
 				8855F902173CA517006892FD /* preset */,
 				88EDBE54170A7EE2003D7B15 /* Blend */,
 				886E521516FC1C8800629D76 /* country */,
@@ -5114,6 +5192,7 @@
 				88FE3FAB166C93D6004DCE53 /* Images */,
 				88FE438A166C941A004DCE53 /* Localizable.strings */,
 				88E617BA173B82F800E6E909 /* preset.plist */,
+				88BAA326174CB7C7004E0F63 /* fonts.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -5882,6 +5961,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88BAA347174CCC04004E0F63 /* aqua_pfont.ttf in Resources */,
+				88BAA348174CCC04004E0F63 /* black_jack.ttf in Resources */,
+				88BAA349174CCC04004E0F63 /* Capture_it_2.ttf in Resources */,
+				88BAA34A174CCC04004E0F63 /* Caviar_Dreams_Bold.ttf in Resources */,
+				88BAA34B174CCC04004E0F63 /* Existence-UnicaseLight.otf in Resources */,
+				88BAA34C174CCC04004E0F63 /* Goon.otf in Resources */,
+				88BAA34D174CCC04004E0F63 /* HuiFontP29.ttf in Resources */,
+				88BAA34E174CCC04004E0F63 /* journal.ttf in Resources */,
+				88BAA34F174CCC04004E0F63 /* Lavanderia Delicate.otf in Resources */,
+				88BAA351174CCC04004E0F63 /* Pacifico.ttf in Resources */,
+				88BAA352174CCC04004E0F63 /* Quicksand_Light.otf in Resources */,
+				88BAA353174CCC04004E0F63 /* Sniglet.ttf in Resources */,
+				88BAA354174CCC04004E0F63 /* Ubuntu-Title.ttf in Resources */,
+				88BAA355174CCC04004E0F63 /* Windsong.ttf in Resources */,
 				88E617C1173BD10200E6E909 /* lattedof.fsh in Resources */,
 				8880F01C170D6B0700478E42 /* lattelens.fsh in Resources */,
 				8867539F170C6E50009B5BBE /* lattevertex.fsh in Resources */,
@@ -7288,6 +7381,8 @@
 				88418F50174382F8004EFBA1 /* print26.jpg in Resources */,
 				88418F51174382F8004EFBA1 /* print27.jpg in Resources */,
 				88418F5317438302004EFBA1 /* blend6.jpg in Resources */,
+				88BAA327174CB7C7004E0F63 /* fonts.plist in Resources */,
+				88BAA357174CCE2C004E0F63 /* Ostrich Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7429,6 +7524,9 @@
 				88C095CB173A6767007CED90 /* RBVolumeButtons.m in Sources */,
 				88E617BE173BD0C000E6E909 /* LXFilterDOF.m in Sources */,
 				8855F9BF173CD452006892FD /* GPUImageFilter+reset.m in Sources */,
+				8826E3A917460D6800FF4A90 /* LXFontSelectorViewController.m in Sources */,
+				8826E3AF17460DED00FF4A90 /* LXCellFont.m in Sources */,
+				88BAA322174B8C04004E0F63 /* UIColor+MLPFlatColors.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

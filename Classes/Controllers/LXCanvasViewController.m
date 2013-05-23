@@ -1409,9 +1409,7 @@
 }
 
 - (void)newTextImage:(UIImage *)textImage {
-    filterMain.imageBlend = textImage;
-    filterMain.blendIntensity = 1.0;
-    filterMain.blendEnable = YES;
+    filterMain.imageText = textImage;
     [self processImage];
 }
 

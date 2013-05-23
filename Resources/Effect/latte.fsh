@@ -12,6 +12,7 @@ uniform sampler2D inputImageTexture;
 uniform sampler2D toneCurveTexture;
 uniform sampler2D inputBlendTexture;
 uniform sampler2D inputFilmTexture;
+uniform sampler2D inputTextTexture;
 
 uniform lowp float vignfade; //f-stops till vignete fades
 uniform lowp float brightness;
@@ -32,8 +33,6 @@ lowp float vignin = 0.0; //vignetting inner border
 lowp float vignout = 0.5; //vignetting outer border
 
 const highp vec3 luminanceWeighting = vec3(0.2125, 0.7154, 0.0721);
-
-
 
 float vignette()
 {
@@ -100,6 +99,10 @@ void main()
 
     // Vignette
     textureColor.rgb *= vignette();
+
+    // Text
+    lowp vec4 textureText = texture2D(inputTextTexture, textureCoordinate);
+    textureColor.rgb = mix(textureColor.rgb, textureText.rgb, textureText.a);
 
     // Tone Curve Mapping
     if (toneEnable) {

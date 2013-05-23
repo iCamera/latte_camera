@@ -35,6 +35,9 @@
     GLint inputFilmTextureUniform;
     GLuint inputFilmTexture;
     
+    GLint inputTextTextureUniform;
+    GLuint inputTextTexture;
+    
     GLfloat blendTextureCoordinates[8];
     GLfloat filmTextureCoordinates[8];
     
@@ -68,6 +71,7 @@
         toneCurveTextureUniform = [filterProgram uniformIndex:@"toneCurveTexture"];
         inputBlendTextureUniform = [filterProgram uniformIndex:@"inputBlendTexture"];
         inputFilmTextureUniform = [filterProgram uniformIndex:@"inputFilmTexture"];
+        inputTextTextureUniform = [filterProgram uniformIndex:@"inputTextTexture"];
         
         toneEnableUniform = [filterProgram uniformIndex:@"toneEnable"];
         blendEnableUniform = [filterProgram uniformIndex:@"blendEnable"];
@@ -282,6 +286,47 @@
     
 }
 
+- (void)setImageText:(UIImage *)imageText {
+    runSynchronouslyOnVideoProcessingQueue(^{
+        [GPUImageContext useImageProcessingContext];
+        
+        if (inputTextTexture)
+        {
+            glDeleteTextures(1, &inputTextTexture);
+            inputTextTexture = 0;
+        }
+        
+        if (!imageText) {
+            return;
+        }
+        
+        CGFloat widthOfImage = CGImageGetWidth(imageText.CGImage);
+        CGFloat heightOfImage = CGImageGetHeight(imageText.CGImage);
+        
+        GLubyte *imageData = (GLubyte *) calloc(1, (int)widthOfImage * (int)heightOfImage * 4);
+        
+        CGColorSpaceRef genericRGBColorspace = CGColorSpaceCreateDeviceRGB();
+        
+        CGContextRef imageContext = CGBitmapContextCreate(imageData, (size_t)widthOfImage, (size_t)heightOfImage, 8, (size_t)widthOfImage * 4, genericRGBColorspace,  kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
+        CGContextDrawImage(imageContext, CGRectMake(0.0, 0.0, widthOfImage, heightOfImage), imageText.CGImage);
+        CGContextRelease(imageContext);
+        CGColorSpaceRelease(genericRGBColorspace);
+        
+        glActiveTexture(GL_TEXTURE6);
+        glGenTextures(1, &inputTextTexture);
+        glBindTexture(GL_TEXTURE_2D, inputTextTexture);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (int)widthOfImage /*width*/, (int)heightOfImage /*height*/, 0, GL_BGRA, GL_UNSIGNED_BYTE, imageData);
+        
+        free(imageData);
+    });
+    
+}
+
 - (void)renderToTextureWithVertices:(const GLfloat *)vertices textureCoordinates:(const GLfloat *)textureCoordinates sourceTexture:(GLuint)sourceTexture;
 {
     if (self.preventRendering)
@@ -310,7 +355,11 @@
     glActiveTexture(GL_TEXTURE5);
     glBindTexture(GL_TEXTURE_2D, inputFilmTexture);
     glUniform1i(inputFilmTextureUniform, 5);
-        
+    
+    glActiveTexture(GL_TEXTURE6);
+    glBindTexture(GL_TEXTURE_2D, inputTextTexture);
+    glUniform1i(inputTextTextureUniform, 6);
+    
     glVertexAttribPointer(filterPositionAttribute, 2, GL_FLOAT, 0, 0, vertices);
     glVertexAttribPointer(filterTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, textureCoordinates);
     glVertexAttribPointer(blendTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, blendTextureCoordinates);
@@ -340,6 +389,11 @@
         inputFilmTexture = 0;
     }
 
+    if (inputTextTexture)
+    {
+        glDeleteTextures(1, &inputTextTexture);
+        inputTextTexture = 0;
+    }
 }
 
 - (void)setupFilterForSize:(CGSize)filterFrameSize;

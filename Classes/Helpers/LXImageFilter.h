@@ -20,6 +20,7 @@
 @property(strong, nonatomic) UIImage* toneCurve;
 @property(strong, nonatomic) UIImage* imageBlend;
 @property(strong, nonatomic) UIImage* imageFilm;
+@property(strong, nonatomic) UIImage* imageText;
 @property(readwrite, nonatomic) CGRect blendRegion;
 @property(readwrite, nonatomic) CGRect filmRegion;
 @property(readwrite, nonatomic) BOOL toneEnable;
