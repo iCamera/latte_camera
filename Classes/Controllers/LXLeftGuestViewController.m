@@ -10,6 +10,8 @@
 #import "LXAppDelegate.h"
 #import "LXAboutViewController.h"
 #import "LXShare.h"
+#import "LatteAPIClient.h"
+#import "UIButton+AsyncImage.h"
 
 @interface LXLeftGuestViewController ()
 
@@ -17,6 +19,7 @@
 
 @implementation LXLeftGuestViewController {
     LXShare *lxShare;
+    NSString *adsURL;
 }
 
 @synthesize viewBanner;
@@ -45,7 +48,29 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    [buttonBanner setBackgroundImage:[UIImage imageNamed:@"banner_contest.jpg"] forState:UIControlStateNormal];
+    
+    [self loadAds];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(becomeActive:)
+                                                 name:@"BecomeActive" object:nil];
+}
+
+- (void)becomeActive:(id)sender {
+    [self loadAds];
+}
+
+
+- (void)loadAds {
+    LatteAPIClient *api = [LatteAPIClient sharedClient];
+    NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
+    NSDictionary *params = [NSDictionary dictionaryWithObject:language forKey:@"language"];
+    [api getPath:@"user/ads"
+      parameters:params
+         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+             [buttonBanner loadBackground:JSON[@"image"]];
+             adsURL = JSON[@"url"];
+         } failure:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -116,11 +141,8 @@
 }
 
 - (IBAction)touchBanner:(id)sender {
-    NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
-    if ([language isEqualToString:@"ja"]) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/picture/contest/2013may"]];
-    } else {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://en.latte.la/picture/contest/2013may"]];
+    if (adsURL) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:adsURL]];
     }
 }
 - (void)viewDidUnload {

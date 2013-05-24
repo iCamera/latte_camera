@@ -9,6 +9,7 @@
 #import "LXLeftSideUserViewController.h"
 #import "LXAppDelegate.h"
 #import "UIImageView+loadProgress.h"
+#import "UIButton+AsyncImage.h"
 
 @interface LXLeftSideUserViewController ()
 
@@ -16,6 +17,7 @@
 
 @implementation LXLeftSideUserViewController {
     LXShare *lxShare;
+    NSString *adsURL;
 }
 
 @synthesize labelUsername;
@@ -47,13 +49,31 @@
     imageProfilepic.layer.cornerRadius = 5.0;
     imageProfilepic.layer.masksToBounds = YES;
     
-    [buttonBanner setBackgroundImage:[UIImage imageNamed:@"banner_contest.jpg"] forState:UIControlStateNormal];
-//    NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
-//    if (![language isEqualToString:@"ja"]) {
-//        viewBanner.hidden = true;
-//    }
+    [self loadAds];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(becomeActive:)
+                                                 name:@"BecomeActive" object:nil];
     
 }
+
+- (void)becomeActive:(id)sender {
+    [self loadAds];
+}
+
+
+- (void)loadAds {
+    LatteAPIClient *api = [LatteAPIClient sharedClient];
+    NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
+    NSDictionary *params = [NSDictionary dictionaryWithObject:language forKey:@"language"];
+    [api getPath:@"user/ads"
+      parameters:params
+         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+             [buttonBanner loadBackground:JSON[@"image"]];
+             adsURL = JSON[@"url"];
+         } failure:nil];
+}
+
 
 - (void)didReceiveMemoryWarning
 {
