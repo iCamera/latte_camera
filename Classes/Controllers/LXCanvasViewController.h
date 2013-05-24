@@ -111,6 +111,7 @@ typedef enum {
 
 @property (strong, nonatomic) IBOutlet UISlider *sliderExposure;
 @property (strong, nonatomic) IBOutlet UISlider *sliderVignette;
+@property (strong, nonatomic) IBOutlet UISlider *sliderSharpness;
 @property (strong, nonatomic) IBOutlet UISlider *sliderClear;
 @property (strong, nonatomic) IBOutlet UISlider *sliderSaturation;
 @property (strong, nonatomic) IBOutlet UISlider *sliderFeather;

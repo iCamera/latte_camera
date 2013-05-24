@@ -22,6 +22,7 @@
     GLint toneEnableUniform;
     GLint blendEnableUniform;
     GLint filmEnableUniform;
+    GLint textEnableUniform;
     
     GLint biasUniform;
     GLint gainUniform;
@@ -43,6 +44,10 @@
     
     GLint blendTextureCoordinateAttribute;
     GLint filmTextureCoordinateAttribute;
+    GLint textTextureCoordinateAttribute;
+    
+    GLint sharpnessUniform;
+    GLint imageWidthFactorUniform, imageHeightFactorUniform;
 }
 
 - (id)init;
@@ -76,14 +81,23 @@
         toneEnableUniform = [filterProgram uniformIndex:@"toneEnable"];
         blendEnableUniform = [filterProgram uniformIndex:@"blendEnable"];
         filmEnableUniform = [filterProgram uniformIndex:@"filmEnable"];
+        textEnableUniform = [filterProgram uniformIndex:@"textEnable"];
         
         biasUniform = [filterProgram uniformIndex:@"bias"];
         gainUniform = [filterProgram uniformIndex:@"gain"];
         
         blendTextureCoordinateAttribute = [filterProgram attributeIndex:@"blendTextureCoordinate"];
         filmTextureCoordinateAttribute = [filterProgram attributeIndex:@"filmTextureCoordinate"];
+        textTextureCoordinateAttribute = [filterProgram attributeIndex:@"textTextureCoordinate"];
+        
         glEnableVertexAttribArray(blendTextureCoordinateAttribute);
         glEnableVertexAttribArray(filmTextureCoordinateAttribute);
+        glEnableVertexAttribArray(textTextureCoordinateAttribute);
+        
+        imageWidthFactorUniform = [filterProgram uniformIndex:@"imageWidthFactor"];
+        imageHeightFactorUniform = [filterProgram uniformIndex:@"imageHeightFactor"];
+        
+        sharpnessUniform = [filterProgram uniformIndex:@"sharpness"];
     });
     
     self.saturation = 1.0;
@@ -94,6 +108,8 @@
     self.toneEnable = NO;
     self.blendEnable = NO;
     self.filmEnable = NO;
+    self.textEnable = NO;
+    self.sharpness = 0;
     
     return self;
 }
@@ -104,6 +120,7 @@
     [filterProgram addAttribute:@"blendTextureCoordinate"];
     [filterProgram addAttribute:@"dofTextureCoordinate"];
     [filterProgram addAttribute:@"filmTextureCoordinate"];
+    [filterProgram addAttribute:@"textTextureCoordinate"];
 }
 
 - (void)setVignfade:(CGFloat)aVignfade
@@ -156,6 +173,18 @@
 - (void)setFilmEnable:(BOOL)filmEnable{
     _filmEnable = filmEnable;
     [self setInteger:filmEnable forUniform:filmEnableUniform program:filterProgram];
+}
+
+- (void)setTextEnable:(BOOL)textEnable{
+    _textEnable = textEnable;
+    [self setInteger:textEnable forUniform:textEnableUniform program:filterProgram];
+}
+
+- (void)setSharpness:(CGFloat)sharpness;
+{
+    _sharpness = sharpness;
+    
+    [self setFloat:_sharpness forUniform:sharpnessUniform program:filterProgram];
 }
 
 - (void)setToneCurve:(UIImage *)toneCurve {
@@ -364,6 +393,7 @@
     glVertexAttribPointer(filterTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, textureCoordinates);
     glVertexAttribPointer(blendTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, blendTextureCoordinates);
     glVertexAttribPointer(filmTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, filmTextureCoordinates);
+    glVertexAttribPointer(textTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, [LXImageFilter textureCoordinatesForRotation:kGPUImageNoRotation]);
     
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
@@ -401,10 +431,16 @@
     if (GPUImageRotationSwapsWidthAndHeight(inputRotation))
     {
         [self setFloat:filterFrameSize.width/filterFrameSize.height forUniform:aspectratioUniform program:filterProgram];
+        
+        [self setFloat:1.0 / filterFrameSize.height forUniform:imageWidthFactorUniform program:filterProgram];
+        [self setFloat:1.0 / filterFrameSize.width forUniform:imageHeightFactorUniform program:filterProgram];
     }
     else
     {
         [self setFloat:filterFrameSize.height/filterFrameSize.width forUniform:aspectratioUniform program:filterProgram];
+        
+        [self setFloat:1.0 / filterFrameSize.height forUniform:imageHeightFactorUniform program:filterProgram];
+        [self setFloat:1.0 / filterFrameSize.width forUniform:imageWidthFactorUniform program:filterProgram];
     }
 }
 

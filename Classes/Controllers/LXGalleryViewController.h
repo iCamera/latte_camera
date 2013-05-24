@@ -25,7 +25,7 @@ typedef enum {
 @end
 
 
-@interface LXGalleryViewController : UIViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate, UIGestureRecognizerDelegate>
+@interface LXGalleryViewController : UIViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 
 @property (weak, nonatomic) id <LXGalleryViewControllerDataSource> delegate;
 @property (strong, nonatomic) IBOutlet UIButton *buttonLike;

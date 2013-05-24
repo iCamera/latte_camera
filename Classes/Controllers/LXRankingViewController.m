@@ -554,6 +554,10 @@ typedef enum {
         NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
                              pics[current+1],  @"picture",
                              nil];
+        
+        // Loadmore
+        if (current > pics.count - 6)
+            [self loadMore];
         return ret;
     }
     return nil;

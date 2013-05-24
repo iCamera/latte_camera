@@ -31,7 +31,9 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonCloseFont;
 @property (strong, nonatomic) IBOutlet UISlider *slideSize;
 @property (strong, nonatomic) IBOutlet UIButton *buttonRotate;
-
+@property (strong, nonatomic) IBOutlet UIView *viewControlText;
+@property (strong, nonatomic) IBOutlet UIView *viewControlObject;
+@property (strong, nonatomic) IBOutlet UISlider *slideOpacity;
 
 - (IBAction)touchClose:(id)sender;
 - (IBAction)touchOK:(id)sender;
@@ -44,4 +46,5 @@
 - (IBAction)touchSelectFont:(id)sender;
 - (IBAction)sizeChanged:(id)sender;
 - (IBAction)touchResetRotate:(id)sender;
+- (IBAction)opacityChanged:(UISlider*)sender;
 @end

@@ -3,6 +3,14 @@
 #import "LXUtils.h"
 #import "User.h"
 
+typedef enum {
+    PictureStatusPrivate = 0,
+    PictureStatusFriendsOnly = 10,
+    PictureStatusFriendsOfFriends = 20,
+    PictureStatusMember = 30,
+    PictureStatusPublic = 40,
+} PictureStatus;
+
 @interface Picture : ModelObject {
     BOOL canComment;
     BOOL canVote;
@@ -29,7 +37,7 @@
     NSString *urlOrg;
     NSNumber *voteCount;
     NSNumber *width;
-    NSNumber *status;
+    PictureStatus status;
     NSDictionary *exif;
     NSMutableArray *tagsOld;
 }
@@ -59,7 +67,7 @@
 @property (nonatomic, copy) NSString *urlOrg;
 @property (nonatomic, copy) NSNumber *voteCount;
 @property (nonatomic, copy) NSNumber *width;
-@property (nonatomic, copy) NSNumber *status;
+@property (nonatomic, assign) PictureStatus status;
 @property (nonatomic, copy) NSDictionary *exif;
 @property (nonatomic, copy) NSMutableArray *tagsOld;
 @property (nonatomic, assign) BOOL showGPS;

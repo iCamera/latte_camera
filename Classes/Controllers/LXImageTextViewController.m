@@ -9,7 +9,6 @@
 #import "LXImageTextViewController.h"
 #import "LXUtils.h"
 #import "UIColor+MLPFlatColors.h"
-#import "LXFontSelectorViewController.h"
 #import "LXCellFont.h"
 
 @interface LXImageTextViewController ()
@@ -18,7 +17,7 @@
 
 @implementation LXImageTextViewController {
     UIViewController *template;
-    UILabel *editingObject;
+    UIView *editingObject;
     UIView *activeTemplate;
     NSMutableArray *fonts;
 }
@@ -35,7 +34,10 @@
 @synthesize buttonCloseFont;
 @synthesize buttonFinishEdit;
 @synthesize buttonRotate;
+@synthesize viewControlText;
+@synthesize viewControlObject;
 @synthesize slideSize;
+@synthesize slideOpacity;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -50,16 +52,17 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    UIStoryboard *storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
-    template = [storyCamera instantiateViewControllerWithIdentifier:@"Template"];
+    template =[ [UIViewController alloc] initWithNibName:@"TextTemplate" bundle:nil];
     template.view.backgroundColor = [UIColor clearColor];
+    
     [self addChildViewController:template];
     [scrollTemplate insertSubview:template.view atIndex:0];
     [template didMoveToParentViewController:self];
     for (UIView *dummy in template.view.subviews) {
-        for (UIView *textView in dummy.subviews) {
-            
-            [self addGesture:(UILabel*)textView];
+        for (UIView *viewObject in dummy.subviews) {
+            if ([viewObject isKindOfClass:[UILabel class]]) {
+                [self addGesture:viewObject];
+            }
         }
     }
     activeTemplate = template.view.subviews[0];
@@ -67,6 +70,7 @@
     NSArray *colors = [NSArray arrayWithObjects:
                       [UIColor whiteColor],
                       [UIColor blackColor],
+                       UIColorFromRGB(0xEEDDB6),
                       [UIColor flatRedColor],
                       [UIColor flatGreenColor],
                       [UIColor flatBlueColor],
@@ -89,12 +93,18 @@
                       [UIColor flatDarkBlackColor],
                       nil];
     for (NSInteger i = 0; i < colors.count; i++) {
-        UIButton *buttonColor = [[UIButton alloc] initWithFrame:CGRectMake(i*40, 0, 40, 44)];
+        UIButton *buttonColor = [[UIButton alloc] initWithFrame:CGRectMake(i*40+5, 5, 30, 30)];
         buttonColor.backgroundColor = colors[i];
+        buttonColor.layer.borderWidth = 2;
+        buttonColor.layer.borderColor = [UIColor whiteColor].CGColor;
+        buttonColor.layer.cornerRadius = 15;
+        buttonColor.layer.masksToBounds = YES;
+        buttonColor.showsTouchWhenHighlighted = YES;
+        buttonColor.adjustsImageWhenHighlighted = NO;
         [buttonColor addTarget:self action:@selector(setTextColor:) forControlEvents:UIControlEventTouchUpInside];
         [scrollColor addSubview:buttonColor];
     }
-    scrollColor.contentSize = CGSizeMake(40*colors.count, 44);
+    scrollColor.contentSize = CGSizeMake(40*colors.count+10, 44);
     
     fonts = [[NSMutableArray alloc] init];
     
@@ -130,44 +140,53 @@
     
     float angle = atan2f(adjacent, opposite);
     
-    CGAffineTransform transform = CGAffineTransformMakeTranslation(editingObject.transform.tx, editingObject.transform.ty);
-    transform = CGAffineTransformRotate(transform, -angle);
-    editingObject.transform = transform;
+    CGFloat radians = atan2f(editingObject.transform.b, editingObject.transform.a);
     
-    CGFloat fontSize = editingObject.font.pointSize + (distance2 - distance1);
-    if (fontSize > 10) {
-        editingObject.font = [UIFont fontWithName:editingObject.font.fontName size:fontSize];
-        [self refreshLabel];
+//    CGAffineTransform transform = CGAffineTransformMakeTranslation(editingObject.transform.tx, editingObject.transform.ty);
+//    transform = CGAffineTransformRotate(transform, -angle);
+    editingObject.transform = CGAffineTransformRotate(editingObject.transform, -angle-radians);
+    
+    if ([editingObject isKindOfClass:[UILabel class]]) {
+        CGFloat fontSize = ((UILabel*)editingObject).font.pointSize + (distance2 - distance1);
+        if (fontSize > 10) {
+            ((UILabel*)editingObject).font = [UIFont fontWithName:((UILabel*)editingObject).font.fontName size:fontSize];
+            [self refreshLabel];
+        }
+    } else {
+        CGFloat scale = distance2/distance1;
+        editingObject.transform = CGAffineTransformScale(editingObject.transform, scale, scale);
     }
-    
+
     [self updateControlButtonPosition];
 }
 
 
-- (void)addGesture:(UILabel*)label {
-    label.userInteractionEnabled = YES;
-    label.clipsToBounds = NO;
+- (void)addGesture:(UIView*)view {
+    view.userInteractionEnabled = YES;
+    view.clipsToBounds = NO;
     
     UITapGestureRecognizer *tapText = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapText:)];
-    UITapGestureRecognizer *doubleTapText = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapText:)];
+    
     UIPanGestureRecognizer *panText = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panText:)];
     UIPinchGestureRecognizer *pinchText = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchText:)];
     UIRotationGestureRecognizer *rotateText = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(rotateText:)];
-    
-    //tapText.numberOfTapsRequired = 1;
-    doubleTapText.numberOfTapsRequired = 2;
     
     panText.delegate = self;
     rotateText.delegate = self;
     pinchText.delegate = self;
     
-    [label sizeToFit];
+    [view sizeToFit];
     
-    [label addGestureRecognizer:tapText];
-    [label addGestureRecognizer:doubleTapText];
-    [label addGestureRecognizer:panText];
-    [label addGestureRecognizer:rotateText];
-    [label addGestureRecognizer:pinchText];
+    [view addGestureRecognizer:tapText];
+    [view addGestureRecognizer:panText];
+    [view addGestureRecognizer:rotateText];
+    [view addGestureRecognizer:pinchText];
+    
+    if ([view isKindOfClass:[UILabel class]]) {
+        UITapGestureRecognizer *doubleTapText = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapText:)];
+        doubleTapText.numberOfTapsRequired = 2;
+        [view addGestureRecognizer:doubleTapText];
+    }
     
     panText.enabled = NO;
     rotateText.enabled = NO;
@@ -175,7 +194,12 @@
 }
 
 - (void)setTextColor:(UIButton*)button {
-    editingObject.textColor = button.backgroundColor;
+    if ([editingObject isKindOfClass:[UILabel class]]) {
+        ((UILabel*)editingObject).textColor = button.backgroundColor;
+    } else {
+        editingObject.backgroundColor = button.backgroundColor;
+    }
+    
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
@@ -184,22 +208,39 @@
 
 - (void)pinchText:(UIPinchGestureRecognizer*)gestureRecognizer {
     static CGFloat lastScale;
-    if([gestureRecognizer state] == UIGestureRecognizerStateBegan) {
-        // Reset the last scale, necessary if there are multiple objects with different scales
-        [gestureRecognizer setScale:editingObject.font.pointSize];
-        lastScale = [gestureRecognizer scale];
-    }
     
-    if ([gestureRecognizer state] == UIGestureRecognizerStateBegan ||
-        [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
+    if ([gestureRecognizer.view isKindOfClass:[UILabel class]]) {
+        if([gestureRecognizer state] == UIGestureRecognizerStateBegan) {
+            // Reset the last scale, necessary if there are multiple objects with different scales
+            [gestureRecognizer setScale:((UILabel*)editingObject).font.pointSize];
+            lastScale = [gestureRecognizer scale];
+        }
         
-        if ([gestureRecognizer scale] > 9) {
-            lastScale = [gestureRecognizer scale];  // Store the previous scale factor for the next pinch gesture call
-            UIFont *font = [UIFont fontWithName:editingObject.font.fontName size:lastScale];
-            editingObject.font = font;
+        if ([gestureRecognizer state] == UIGestureRecognizerStateBegan ||
+            [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
             
-            [self refreshLabel];
+            if ([gestureRecognizer scale] > 9) {
+                lastScale = [gestureRecognizer scale];  // Store the previous scale factor for the next pinch gesture call
+                UIFont *font = [UIFont fontWithName:((UILabel*)editingObject).font.fontName size:lastScale];
+                ((UILabel*)editingObject).font = font;
+                
+                [self refreshLabel];
+                
+                [self updateControlButtonPosition];
+            }
+        }
+    } else {
+        if([gestureRecognizer state] == UIGestureRecognizerStateBegan) {
+            lastScale = [gestureRecognizer scale];
+        }
+        
+        if ([gestureRecognizer state] == UIGestureRecognizerStateBegan ||
+            [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
+            lastScale = [gestureRecognizer scale];
             
+            editingObject.transform = CGAffineTransformScale(editingObject.transform, lastScale, lastScale);
+            
+            [gestureRecognizer setScale:1];
             [self updateControlButtonPosition];
         }
     }
@@ -208,7 +249,7 @@
 - (void)rotateText:(UIRotationGestureRecognizer*)gestureRecognizer {
     //[self adjustAnchorPointForGestureRecognizer:gestureRecognizer];
     UIView *target = gestureRecognizer.view;
-    [self selectText:(UILabel*)target];
+    [self selectView:target];
     if ([gestureRecognizer state] == UIGestureRecognizerStateBegan || [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
         target.transform = CGAffineTransformRotate([target transform], [gestureRecognizer rotation]);
         
@@ -218,8 +259,10 @@
 }
 
 - (void)updateControlButtonPosition {
-    CGFloat x = (editingObject.bounds.size.width+20)/2.0;
-    CGFloat y = (editingObject.bounds.size.height+20)/2.0;
+    CGAffineTransform t = editingObject.transform;
+    
+    CGFloat x = (editingObject.bounds.size.width+20)/2.0 * sqrt(t.a * t.a + t.c * t.c);
+    CGFloat y = (editingObject.bounds.size.height+20)/2.0 * sqrt(t.b * t.b + t.d * t.d);
     
     CGFloat a = atan2f(editingObject.transform.b, editingObject.transform.a);
     
@@ -227,51 +270,69 @@
     CGAffineTransform transformFinish = CGAffineTransformMakeTranslation(x*cos(a)+y*sin(a), x*sin(a)-y*cos(a));
     CGAffineTransform transformRotate = CGAffineTransformMakeTranslation(-y*sin(a), y*cos(a));
     
-    buttonDelete.transform = CGAffineTransformConcat(editingObject.transform, transformDelete);
-    buttonFinishEdit.transform = CGAffineTransformConcat(editingObject.transform, transformFinish);
-    buttonRotate.transform = CGAffineTransformConcat(editingObject.transform, transformRotate);
+    CGFloat basex = editingObject.transform.tx;
+    CGFloat basey = editingObject.transform.ty;
+    
+    buttonDelete.transform = CGAffineTransformTranslate(transformDelete, basex, basey);
+    buttonFinishEdit.transform = CGAffineTransformTranslate(transformFinish, basex, basey);
+    buttonRotate.transform = CGAffineTransformTranslate(transformRotate, basex, basey);
 }
 
 - (void)panText:(UIPanGestureRecognizer*)gestureRecognizer {
     UIView *target = gestureRecognizer.view;
-    [self selectText:(UILabel*)target];
+    [self selectView:target];
     CGPoint t = [gestureRecognizer translationInView:target];
     [gestureRecognizer setTranslation:CGPointZero inView:target];
     target.transform = CGAffineTransformTranslate([target transform], t.x, t.y);
     
+    [self updateCanvasContentOffset];
+    
     [self updateControlButtonPosition];
 }
 
-- (void)tapText:(UITapGestureRecognizer*)gestureRecognizer {
-    if ([gestureRecognizer.view isKindOfClass:[UILabel class]]) {
-        [self selectText:(UILabel*)gestureRecognizer.view];
+- (void)updateCanvasContentOffset {
+    CGRect frame = editingObject.frame;
+    CGFloat bottom = frame.origin.y + frame.size.height;
+    CGFloat top = frame.origin.y;
+    if (top < scrollCanvas.contentOffset.y && scrollCanvas.contentOffset.y >= 0) {
+        [scrollCanvas setContentOffset:CGPointMake(0, top) animated:NO];
     }
     
+    CGRect screen = [[UIScreen mainScreen] bounds];
+    
+    if (bottom - scrollCanvas.contentOffset.y > screen.size.height - 150 && scrollCanvas.contentOffset.y + scrollCanvas.bounds.size.height <= scrollCanvas.contentSize.height) {
+        [scrollCanvas setContentOffset:CGPointMake(0, bottom - screen.size.height + 150) animated:NO];
+    }
+}
+
+- (void)tapText:(UITapGestureRecognizer*)gestureRecognizer {
+    [self selectView:gestureRecognizer.view];
 }
 
 - (void)doubleTapText:(UITapGestureRecognizer*)gestureRecognizer {
     if ([gestureRecognizer.view isKindOfClass:[UILabel class]]) {
-        [self selectText:(UILabel*)gestureRecognizer.view];
+        [self selectView:gestureRecognizer.view];
         [self openEditText];
     }
     
 }
 
-- (void)selectText:(UILabel*)label {
-    if (editingObject != label) {
+- (void)selectView:(UIView*)view {
+    if (editingObject != view) {
         if (editingObject) {
             editingObject.layer.borderColor = [UIColor whiteColor].CGColor;
             editingObject.layer.borderWidth = 0;
         }
         
-        editingObject = label;
+        editingObject = view;
     } else
         return;
+    
+    [self updateCanvasContentOffset];
     
     editingObject.layer.borderColor = [UIColor whiteColor].CGColor;
     editingObject.layer.borderWidth = 1;
     
-    slideSize.value = editingObject.font.pointSize;
     
     [buttonDelete removeFromSuperview];
     [buttonFinishEdit removeFromSuperview];
@@ -302,34 +363,24 @@
         }
     }
     
+    if ([editingObject isKindOfClass:[UILabel class]]) {
+        slideSize.value = ((UILabel*)editingObject).font.pointSize;
+        viewControlText.hidden = NO;
+        viewControlObject.hidden = YES;
+    } else {
+        viewControlText.hidden = YES;
+        viewControlObject.hidden = NO;
+        slideOpacity.value = editingObject.alpha;
+    }
+    
     CGRect screen = [[UIScreen mainScreen] bounds];
     CGRect frameControl = viewTextControl.frame;
     frameControl.origin.y = screen.size.height - 150;
     
-//    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, 150, 0.0);
-//    scrollCanvas.contentInset = contentInsets;
-//    scrollCanvas.scrollIndicatorInsets = contentInsets;
-    
-    // Step 3: Scroll the target text field into view.
-    /*CGRect aRect = self.view.frame;
-     aRect.size.height -= 180;
-     if (!CGRectContainsPoint(aRect, editingObject.frame.origin) ) {
-     CGPoint scrollPoint = CGPointMake(0.0, editingObject.frame.origin.y - (150-15));
-     [scrollCanvas setContentOffset:scrollPoint animated:YES];
-     }*/
-    
-    if (scrollTemplate.bounds.size.height < scrollCanvas.bounds.size.height) {
-        CGFloat scrollTo = (scrollCanvas.bounds.size.height - scrollTemplate.bounds.size.height)/4;
-        [scrollCanvas setContentOffset:CGPointMake(0, scrollTo) animated:YES];
-    } else
-    if (editingObject.frame.origin.y + editingObject.bounds.size.height > scrollCanvas.contentSize.height - viewTextControl.bounds.size.height) {
-        CGFloat scrollTo = scrollCanvas.contentSize.height - scrollCanvas.bounds.size.height + viewTextControl.bounds.size.height;
-        [scrollCanvas setContentOffset:CGPointMake(0, scrollTo) animated:YES];
-    }
-    
     [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
         viewTextControl.frame = frameControl;
     }];
+    
 }
 
 - (void)popupTextView:(YIPopupTextView*)textView didDismissWithText:(NSString*)text cancelled:(BOOL)cancelled {
@@ -337,7 +388,7 @@
         if (text.length == 0) {
             return;
         }
-        [editingObject setText:text];
+        [((UILabel*)editingObject) setText:text];
         [self refreshLabel];
         [self updateControlButtonPosition];
     }
@@ -345,22 +396,22 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+
+    [self relayout];
+}
+
+- (void)relayout {
     imagePreview.image = _image;
     CGSize imageSize = _image.size;
     CGRect frame = imagePreview.frame;
     CGFloat frameHeight = [LXUtils heightFromWidth:320 width:imageSize.width height:imageSize.height];
     frame.size.height = frameHeight;
-    template.view.frame = CGRectMake(0, 0, 320*6, frameHeight);
+    template.view.frame = CGRectMake(0, 0, 320*8, frameHeight);
     imagePreview.frame = frame;
     scrollTemplate.frame = frame;
     scrollTemplate.contentSize = template.view.bounds.size;
     scrollCanvas.contentSize = frame.size;
     
-    
-    [self relayout];
-}
-
-- (void)relayout {    
     for (UIView* subView in scrollCanvas.subviews) {
         CGFloat offsetX = (scrollCanvas.bounds.size.width > scrollCanvas.contentSize.width)?
         (scrollCanvas.bounds.size.width - scrollCanvas.contentSize.width) * 0.5 : 0.0;
@@ -408,10 +459,10 @@
                                                                       buttonStyle:YIPopupTextViewButtonStyleLeftCancelRightDone
                                                                   tintsDoneButton:NO];
     popupTextView.delegate = self;
-    popupTextView.textAlignment = editingObject.textAlignment;
-    popupTextView.font = editingObject.font;
+    popupTextView.textAlignment = ((UILabel*)editingObject).textAlignment;
+    popupTextView.font = ((UILabel*)editingObject).font;
     //popupTextView.caretShiftGestureEnabled = YES;   // default = NO
-    popupTextView.text = [editingObject text];
+    popupTextView.text = [((UILabel*)editingObject) text];
     //popupTextView.editable = NO;                  // set editable=NO to show without keyboard
     [popupTextView showInView:self.view];
 }
@@ -425,16 +476,22 @@
     [self resignAllFocus];
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+}
+
 - (IBAction)touchAddText:(id)sender {
     UILabel *newLabel = [[UILabel alloc] init];
+    newLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:25];
     newLabel.text = @"Sample Text";
+    newLabel.layer.shadowOpacity = 1;
     newLabel.center = CGPointMake(activeTemplate.bounds.size.width/2, activeTemplate.bounds.size.height/2);
     newLabel.backgroundColor = [UIColor clearColor];
     newLabel.textColor = [UIColor whiteColor];
 
     [activeTemplate addSubview:newLabel];
     [self addGesture:newLabel];
-    [self selectText:newLabel];
+    [self selectView:newLabel];
 }
 
 - (IBAction)touchCloseFont:(id)sender {
@@ -447,7 +504,7 @@
 }
 
 - (IBAction)touchSelectFont:(id)sender {
-    slideSize.value = editingObject.font.pointSize;
+    slideSize.value = ((UILabel*)editingObject).font.pointSize;
     CGRect frame = viewFontControl.frame;
     frame.origin.x = 0;
     
@@ -457,7 +514,7 @@
 }
 
 - (IBAction)sizeChanged:(id)sender {
-    editingObject.font = [UIFont fontWithName:editingObject.font.fontName size:slideSize.value];
+    ((UILabel*)editingObject).font = [UIFont fontWithName:((UILabel*)editingObject).font.fontName size:slideSize.value];
     [self refreshLabel];
     [self updateControlButtonPosition];
 }
@@ -467,11 +524,16 @@
     [self updateControlButtonPosition];
 }
 
+- (IBAction)opacityChanged:(UISlider*)sender {
+    editingObject.alpha = sender.value;
+}
+
 - (IBAction)touchShadow:(id)sender {
     editingObject.layer.shadowColor = [UIColor blackColor].CGColor;
     editingObject.layer.shadowOffset = CGSizeZero;
     editingObject.layer.shadowRadius = 2;
     editingObject.layer.shadowOpacity = !editingObject.layer.shadowOpacity;
+    buttonShadow.selected = !buttonShadow.selected;
 }
 
 - (void)viewDidUnload {
@@ -488,6 +550,9 @@
     [self setButtonFinishEdit:nil];
     [self setSlideSize:nil];
     [self setButtonRotate:nil];
+    [self setViewControlText:nil];
+    [self setViewControlObject:nil];
+    [self setSlideOpacity:nil];
     [super viewDidUnload];
 }
 
@@ -533,10 +598,9 @@
 }
 
 - (void)refreshLabel {
-    CGSize textSize = [editingObject.text
-                       sizeWithFont:editingObject.font
-                       constrainedToSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)
-                       lineBreakMode:UILineBreakModeWordWrap];
+    CGSize textSize = [((UILabel*)editingObject).text
+                       sizeWithFont:((UILabel*)editingObject).font
+                       constrainedToSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
     CGRect frame = editingObject.bounds;
     frame.size = textSize;
     editingObject.bounds = frame;
@@ -594,13 +658,6 @@
     return [self snapShot:activeTemplate];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"Font"]) {
-        LXFontSelectorViewController *controllerFont = segue.destinationViewController;
-        controllerFont.label = editingObject;
-    }
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -620,7 +677,10 @@
     
     //cell.labelSample.text =
     cell.labelSample.font = [UIFont fontWithName:fonts[indexPath.row][@"font"] size:22];
-    cell.labelSample.text = fonts[indexPath.row][@"title"];
+    if (fonts[indexPath.row][@"title2"]) {
+        cell.labelSample.text = fonts[indexPath.row][@"title2"];
+    } else
+        cell.labelSample.text = fonts[indexPath.row][@"title"];
     cell.labelFontName.text = fonts[indexPath.row][@"title"];
     
     return cell;
@@ -629,8 +689,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat fontSize = editingObject.font.pointSize;
-    editingObject.font = [UIFont fontWithName:fonts[indexPath.row][@"font"] size:fontSize];
+    CGFloat fontSize = ((UILabel*)editingObject).font.pointSize;
+    ((UILabel*)editingObject).font = [UIFont fontWithName:fonts[indexPath.row][@"font"] size:fontSize];
     
     [self refreshLabel];
     [self updateControlButtonPosition];

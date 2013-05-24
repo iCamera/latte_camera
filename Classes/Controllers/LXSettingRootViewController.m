@@ -215,6 +215,16 @@
     [super viewDidUnload];
 }
 - (IBAction)touchSetPicture:(id)sender {
+    LatteAPIClient *api = [LatteAPIClient sharedClient];
+    if (api.networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"")
+                                                        message:NSLocalizedString(@"Network connectivity is not available", @"")
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"close", @"")
+                                              otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
     UIStoryboard* storySetting = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
     UINavigationController *navCamera = [storySetting instantiateInitialViewController];
     LXCaptureViewController *controllerCamera = navCamera.viewControllers[0];

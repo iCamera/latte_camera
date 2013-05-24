@@ -102,10 +102,10 @@
 
     tapPage = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapScrollImage:)];
     tapPage.numberOfTapsRequired = 1;
-    tapPage.delegate = self;
+
     tapDouble = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapZoom:)];
     tapDouble.numberOfTapsRequired = 2;
-    tapDouble.delegate = self;
+    
     [tapPage requireGestureRecognizerToFail:tapDouble];
     
     [pageController.view addGestureRecognizer:tapPage];
@@ -159,7 +159,7 @@
             }
                 // if the user clicked on a website (http://github.com/SebastienThiebaud)
             case STLinkActionTypeWebsite:
-                displayString = [NSString stringWithFormat:@"Website:\n%@", link];
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:link]];
                 break;
         }
     };
@@ -615,10 +615,6 @@
     CGRect frameTab = viewTab.frame;
 
     return screenRect.size.height - frameTab.origin.y - frameTab.size.height > 0;
-}
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    return YES;
 }
 
 @end

@@ -153,7 +153,7 @@
                 cell.imageHide.highlighted = _picture.showEXIF;
             }
             
-            cell.labelField.text = [keyExif objectAtIndex:indexPath.row];
+            cell.labelField.text = NSLocalizedString([keyExif objectAtIndex:indexPath.row], @"");
             cell.labelDetail.text = [_picture.exif objectForKey:[keyExif objectAtIndex:indexPath.row]];
         }
     }
@@ -161,12 +161,12 @@
     if (((indexPath.section == 1) && (_picture.exif.count == 0) && (_picture.isOwner)) ||
         (indexPath.section == 2)) {
         cell.imageHide.hidden = true;
-        NSInteger status = 0;
+        PictureStatus status = 0;
         NSString *text;
         switch (indexPath.row) {
             case 0:
                 text = NSLocalizedString(@"Photo", "");
-                status = [_picture.status integerValue];
+                status = _picture.status;
                 break;
             case 1:
                 text = NSLocalizedString(@"Show camera EXIF", "");
@@ -186,16 +186,16 @@
         
         cell.labelField.text = text;
         switch (status) {
-            case 0:
+            case PictureStatusPrivate:
                 cell.labelDetail.text = NSLocalizedString(@"status_private", @"");
                 break;
-            case 10:
+            case PictureStatusFriendsOnly:
                 cell.labelDetail.text = NSLocalizedString(@"status_friends", @"");
                 break;
-            case 30:
+            case PictureStatusMember:
                 cell.labelDetail.text = NSLocalizedString(@"status_members", @"");
                 break;
-            case 40:
+            case PictureStatusPublic:
                 cell.labelDetail.text = NSLocalizedString(@"status_public", @"");
                 break;
                 

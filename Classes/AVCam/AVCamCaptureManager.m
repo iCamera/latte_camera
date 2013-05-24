@@ -147,19 +147,19 @@
 {
     BOOL success = NO;
     
-	// Set torch and flash mode to auto
+	// Set torch and flash mode to manual
 	if ([[self backFacingCamera] hasFlash]) {
 		if ([[self backFacingCamera] lockForConfiguration:nil]) {
-			if ([[self backFacingCamera] isFlashModeSupported:AVCaptureFlashModeAuto]) {
-				[[self backFacingCamera] setFlashMode:AVCaptureFlashModeAuto];
+			if ([[self backFacingCamera] isFlashModeSupported:AVCaptureFlashModeOff]) {
+				[[self backFacingCamera] setFlashMode:AVCaptureFlashModeOff];
 			}
 			[[self backFacingCamera] unlockForConfiguration];
 		}
 	}
 	if ([[self backFacingCamera] hasTorch]) {
 		if ([[self backFacingCamera] lockForConfiguration:nil]) {
-			if ([[self backFacingCamera] isTorchModeSupported:AVCaptureTorchModeAuto]) {
-				[[self backFacingCamera] setTorchMode:AVCaptureTorchModeAuto];
+			if ([[self backFacingCamera] isTorchModeSupported:AVCaptureTorchModeOff]) {
+				[[self backFacingCamera] setTorchMode:AVCaptureTorchModeOff];
 			}
 			[[self backFacingCamera] unlockForConfiguration];
 		}

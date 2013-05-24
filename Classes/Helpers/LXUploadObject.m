@@ -10,8 +10,6 @@
 #import "AFNetworking.h"
 #import "LatteAPIClient.h"
 #import "LXAppDelegate.h"
-#import "LXFBOpenGraph.h"
-#import "AFNetworking.h"
 
 @implementation LXUploadObject {
     Picture *picture;
@@ -39,7 +37,9 @@
                  // Build a twitter request
                  TWRequest *postRequest = [[TWRequest alloc] initWithURL:[NSURL URLWithString:@"https://upload.twitter.com/1/statuses/update_with_media.json"] parameters:nil requestMethod:TWRequestMethodPOST];
                  [postRequest addMultiPartData:_imageFile withName:@"media" type:@"image/jpeg"];
-                 [postRequest addMultiPartData:[_imageDescription dataUsingEncoding:NSUTF8StringEncoding] withName:@"status" type:@"text/plain"];
+                 if (_imageDescription) {
+                     [postRequest addMultiPartData:[_imageDescription dataUsingEncoding:NSUTF8StringEncoding] withName:@"status" type:@"text/plain"];
+                 }
                  
                  // Post the request
                  [postRequest setAccount:acct];
@@ -64,36 +64,68 @@
 }
 
 - (void)uploadFacebook {
-    NSMutableDictionary<FBGraphObject> *action = [FBGraphObject graphObject];
-    action[@"photo"] = picture.urlWeb;
-    action[@"image[0][url]"] = picture.urlLarge;
-    action[@"image[0][user_generated]"] = @"true";
-    action[@"fb:explicitly_shared"] = @"true";
-    if (_imageDescription) {
-        action[@"message"] = _imageDescription;
+    if (picture.status == PictureStatusPublic) {
+        NSMutableDictionary<FBGraphObject> *action = [FBGraphObject graphObject];
+        action[@"photo"] = picture.urlWeb;
+        action[@"image[0][url]"] = picture.urlLarge;
+        action[@"image[0][user_generated]"] = @"true";
+        action[@"fb:explicitly_shared"] = @"true";
+        if (_imageDescription) {
+            action[@"message"] = _imageDescription;
+        }
+        
+        [FBRequestConnection startForPostWithGraphPath:@"me/latte_prod:upload"
+                                           graphObject:action
+                                     completionHandler:^(FBRequestConnection *connection,
+                                                         id result,
+                                                         NSError *error) {
+                                         if (error) {
+                                             [_delegate uploader:self fail:error];
+                                             [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderFail" object:self];
+                                             _uploadState = kUploadStateFail;
+                                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"")
+                                                                                             message:error.localizedDescription
+                                                                                            delegate:nil cancelButtonTitle:NSLocalizedString(@"close", @"")
+                                                                                   otherButtonTitles:nil];
+                                             [alert show];
+                                         }
+                                         else {
+                                             [_delegate uploader:self success:nil];
+                                             [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderSuccess" object:self];
+                                             _uploadState = kUploadStateSuccess;
+                                         }
+                                     }];
+    } else {
+        NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+        [params setObject:_imageFile forKey:@"picture"];
+        if (_imageDescription) {
+            [params setObject:_imageDescription forKey:@"message"];
+        }
+        
+        [FBRequestConnection startWithGraphPath:@"me/photos"
+                                     parameters:params
+                                     HTTPMethod:@"POST"
+                              completionHandler:^(FBRequestConnection *connection,
+                                                  id result,
+                                                  NSError *error) {
+                                  if (error) {
+                                      [_delegate uploader:self fail:error];
+                                      [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderFail" object:self];
+                                      _uploadState = kUploadStateFail;
+                                      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"")
+                                                                                      message:error.localizedDescription
+                                                                                     delegate:nil cancelButtonTitle:NSLocalizedString(@"close", @"")
+                                                                            otherButtonTitles:nil];
+                                      [alert show];
+                                  }
+                                  else {
+                                      [_delegate uploader:self success:nil];
+                                      [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderSuccess" object:self];
+                                      _uploadState = kUploadStateSuccess;
+                                  }
+                              }];
+        
     }
-    
-    [FBRequestConnection startForPostWithGraphPath:@"me/latte_prod:upload"
-                                       graphObject:action
-                                 completionHandler:^(FBRequestConnection *connection,
-                                                     id result,
-                                                     NSError *error) {
-                                     if (error) {
-                                         [_delegate uploader:self fail:error];
-                                         [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderFail" object:self];
-                                         _uploadState = kUploadStateFail;
-                                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"")
-                                                                                         message:error.localizedDescription
-                                                                                        delegate:nil cancelButtonTitle:NSLocalizedString(@"close", @"")
-                                                                               otherButtonTitles:nil];
-                                         [alert show];
-                                     }
-                                     else {
-                                         [_delegate uploader:self success:nil];
-                                         [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderSuccess" object:self];
-                                         _uploadState = kUploadStateSuccess;
-                                     }
-                                 }];
 }
 
 - (void)uploadLatte {

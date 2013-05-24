@@ -148,12 +148,12 @@ static void *AVCamFocusModeObserverContext = &AVCamFocusModeObserverContext;
 			[singleTap setNumberOfTapsRequired:1];
 			[view addGestureRecognizer:singleTap];
 			
-            // Add a double tap gesture to reset the focus mode to continuous auto focus
-			UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapToContinouslyAutoFocus:)];
-			[doubleTap setDelegate:self];
-			[doubleTap setNumberOfTapsRequired:2];
-			[singleTap requireGestureRecognizerToFail:doubleTap];
-			[view addGestureRecognizer:doubleTap];
+   //          // Add a double tap gesture to reset the focus mode to continuous auto focus
+			// UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapToContinouslyAutoFocus:)];
+			// [doubleTap setDelegate:self];
+			// [doubleTap setNumberOfTapsRequired:2];
+			// [singleTap requireGestureRecognizerToFail:doubleTap];
+			// [view addGestureRecognizer:doubleTap];
 		}		
 	}
 		

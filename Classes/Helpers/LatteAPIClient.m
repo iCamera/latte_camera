@@ -8,6 +8,7 @@
 
 #import "LatteAPIClient.h"
 #import "AFJSONRequestOperation.h"
+#import "UIDeviceHardware.h"
 
 @implementation LatteAPIClient
 
@@ -42,24 +43,6 @@
     return _sharedClient;
 }
 
-//- (void)postPath:(NSString *)path parameters:(NSDictionary *)parameters success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure {
-//    [super postPath:path parameters:parameters success:success failure:failure];
-//}
-//
-//- (void)getPath:(NSString *)path parameters:(NSDictionary *)parameters success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure {
-//    [super getPath:path parameters:parameters success:success failure:failure];
-//}
-
-- (NSMutableURLRequest *)requestWithMethod:(NSString *)method path:(NSString *)path parameters:(NSDictionary *)parameters {
-    NSMutableURLRequest *request = [super requestWithMethod:method path:path parameters:parameters];
-    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    NSString *majorVersion = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
-    [request setValue:majorVersion forHTTPHeaderField:@"Latte-ios"];
-//    [request setValue:@"" forHTTPHeaderField:@"Latte-version"];
-//    [request setValue:@"" forHTTPHeaderField:@"Latte-device"];
-    return request;
-}
-
 - (id)initWithBaseURL:(NSURL *)url {
     self = [super initWithBaseURL:url];
     if (!self) {
@@ -70,6 +53,16 @@
     
     // Accept HTTP Header; see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.1
 	[self setDefaultHeader:@"Accept" value:@"application/json"];
+
+    UIDeviceHardware *device = [[UIDeviceHardware alloc] init];
+    
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *majorVersion = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
+    [self setDefaultHeader:@"Latte-version" value:majorVersion];
+    [self setDefaultHeader:@"Latte-ios" value:[[UIDevice currentDevice] systemVersion]];
+    [self setDefaultHeader:@"Latte-device" value:[device platformString]];
+    [self setDefaultHeader:@"Latte-language" value:language];
     
     return self;
 }

@@ -81,7 +81,7 @@
         
         textDesc.text = _picture.descriptionText;
         
-        imageStatus = [_picture.status integerValue];
+        imageStatus = _picture.status;
         switchGPS.on = _picture.showGPS;
         switchEXIF.on = _picture.showEXIF;
         switchTakenAt.on = _picture.showTakenAt;
@@ -271,6 +271,14 @@
                                                      break;
                                                  case FBSessionStateClosed:
                                                  case FBSessionStateClosedLoginFailed:
+                                                     if (error.code == 2) {
+                                                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                                         message:NSLocalizedString(@"Please allow Latte camera to access Facebook in iPhone Setting", @"")
+                                                                                                        delegate:nil
+                                                                                               cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                                               otherButtonTitles:nil];
+                                                         [alert show];
+                                                     }
                                                      [FBSession.activeSession closeAndClearTokenInformation];
                                                      [FBSession renewSystemCredentials:^(ACAccountCredentialRenewResult result, NSError *error) {}];
                                                      break;

@@ -7,8 +7,11 @@
 //
 
 #import "LXCellUpload.h"
+#import "LXAppDelegate.h"
 
-@implementation LXCellUpload
+@implementation LXCellUpload {
+    
+}
 
 @synthesize imageupload;
 @synthesize progressUpload;
@@ -51,13 +54,13 @@
             break;
         case kUploadStateFail:
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"Error")
-                                                            message:NSLocalizedString(@"cannot_upload", @"")
-                                                           delegate:self
-                                                  cancelButtonTitle:NSLocalizedString(@"close", "Close")
-                                                  otherButtonTitles:NSLocalizedString(@"retry_upload", "Retry"), nil];
-            alert.delegate = self;
-            [alert show];
+            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"cannot_upload", @"")
+                                                                     delegate:self
+                                                            cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                       destructiveButtonTitle:NSLocalizedString(@"Abort Uploading", "Abort")
+                                                            otherButtonTitles:NSLocalizedString(@"retry_upload", "Retry"), nil];
+            LXAppDelegate *app = [LXAppDelegate currentDelegate];
+            [actionSheet showFromTabBar:app.viewMainTab.tabBar];
         }
             break;
         case kUploadStateProgress:
@@ -73,6 +76,15 @@
             break;
         default:
             break;
+    }
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        // to remove
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderSuccess" object:_uploader];
+    } else if (buttonIndex == 1) {
+        [_uploader upload];
     }
 }
 

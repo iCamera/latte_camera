@@ -7,6 +7,7 @@ precision highp float;
 varying highp vec2 textureCoordinate;
 varying highp vec2 blendCoordinate;
 varying highp vec2 filmCoordinate;
+varying highp vec2 textCoordinate;
 
 uniform sampler2D inputImageTexture;
 uniform sampler2D toneCurveTexture;
@@ -28,11 +29,21 @@ uniform lowp float filmIntensity;
 uniform bool toneEnable;
 uniform bool blendEnable;
 uniform bool filmEnable;
+uniform bool textEnable;
 
 lowp float vignin = 0.0; //vignetting inner border
 lowp float vignout = 0.5; //vignetting outer border
 
 const highp vec3 luminanceWeighting = vec3(0.2125, 0.7154, 0.0721);
+
+// Sharpen
+varying highp vec2 leftTextureCoordinate;
+varying highp vec2 rightTextureCoordinate; 
+varying highp vec2 topTextureCoordinate;
+varying highp vec2 bottomTextureCoordinate;
+
+varying highp float centerMultiplier;
+varying highp float edgeMultiplier;
 
 float vignette()
 {
@@ -43,7 +54,15 @@ float vignette()
 
 void main()
 {
-    lowp vec4 textureColor = texture2D(inputImageTexture, textureCoordinate);
+    mediump vec4 textureColor = texture2D(inputImageTexture, textureCoordinate);
+    if (edgeMultiplier > 0.0) {
+        mediump vec3 leftTextureColor = texture2D(inputImageTexture, leftTextureCoordinate).rgb;
+        mediump vec3 rightTextureColor = texture2D(inputImageTexture, rightTextureCoordinate).rgb;
+        mediump vec3 topTextureColor = texture2D(inputImageTexture, topTextureCoordinate).rgb;
+        mediump vec3 bottomTextureColor = texture2D(inputImageTexture, bottomTextureCoordinate).rgb;
+
+        textureColor = vec4((textureColor.rgb * centerMultiplier - (leftTextureColor * edgeMultiplier + rightTextureColor * edgeMultiplier + topTextureColor * edgeMultiplier + bottomTextureColor * edgeMultiplier)), texture2D(inputImageTexture, bottomTextureCoordinate).w);
+    }
 
     lowp float luminance = dot(textureColor.rgb, luminanceWeighting);
     lowp float average = (textureColor.r + textureColor.g + textureColor.b)/3.0;
@@ -101,8 +120,10 @@ void main()
     textureColor.rgb *= vignette();
 
     // Text
-    lowp vec4 textureText = texture2D(inputTextTexture, textureCoordinate);
-    textureColor.rgb = mix(textureColor.rgb, textureText.rgb, textureText.a);
+    if (textEnable) {
+        lowp vec4 textureText = texture2D(inputTextTexture, textCoordinate);
+        textureColor.rgb = mix(textureColor.rgb, textureText.rgb, textureText.a);
+    }
 
     // Tone Curve Mapping
     if (toneEnable) {

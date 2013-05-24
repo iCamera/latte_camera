@@ -114,6 +114,9 @@
         [_viewMainTab showNotify];
     }
     
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"preset" ofType:@"plist"];
+    _arrayPreset = [NSArray arrayWithContentsOfFile:path];
+    
     return YES;
 }
 
@@ -146,6 +149,30 @@
     }
 }
 
+- (void)fetchPreset {    
+    //-------------------------
+    NSArray *documentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentFolder = [documentPath objectAtIndex:0];
+    
+    //the below variable is an instance of the NSString class and is declared inteh .h file
+    NSString *newPlistFile = [documentFolder stringByAppendingPathComponent:@"preset.plist"];
+    NSArray *tmpPreset = [NSArray arrayWithContentsOfFile:newPlistFile];
+    
+    if (tmpPreset) {
+        _arrayPreset = tmpPreset;
+    }
+    
+    LatteAPIClient *api = [LatteAPIClient sharedClient];
+    [api getPath:@"picture/presets"
+      parameters:[NSDictionary dictionaryWithObject:[self getToken] forKey:@"token"]
+         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+             _arrayPreset = JSON[@"presets"];
+             
+             [_arrayPreset writeToFile:newPlistFile atomically:YES];
+             
+         } failure:nil];
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -172,6 +199,8 @@
     [self clearNotification];
 
     [[NSNotificationCenter defaultCenter] postNotificationName:@"BecomeActive" object:self];
+    
+    [self fetchPreset];
 }
 
 - (void)clearNotification {
