@@ -1357,6 +1357,12 @@
         currentFilm = preset[@"filmImage"];
     }
     
+    if ([preset objectForKey:@"saturation"]) {
+        buttonBlackWhite.selected = [[preset objectForKey:@"saturation"] floatValue] == 0.0;
+    } else {
+        buttonBlackWhite.selected = NO;
+    }
+    
     if ([preset objectForKey:@"blendIntensity"]) {
         CGFloat blendIntensity = [preset[@"blendIntensity"] floatValue];
         
