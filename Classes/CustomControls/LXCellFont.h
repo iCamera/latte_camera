@@ -11,5 +11,6 @@
 @interface LXCellFont : UITableViewCell
 @property (strong, nonatomic) IBOutlet UILabel *labelSample;
 @property (strong, nonatomic) IBOutlet UILabel *labelFontName;
+@property (strong, nonatomic) IBOutlet UIView *viewSelectIndicator;
 
 @end

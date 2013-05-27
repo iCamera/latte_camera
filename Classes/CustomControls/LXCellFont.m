@@ -22,7 +22,9 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-
+    [UIView animateWithDuration:0.3 animations:^{
+        _viewSelectIndicator.alpha = selected;
+    }];
     // Configure the view for the selected state
 }
 

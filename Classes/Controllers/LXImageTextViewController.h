@@ -34,6 +34,9 @@
 @property (strong, nonatomic) IBOutlet UIView *viewControlText;
 @property (strong, nonatomic) IBOutlet UIView *viewControlObject;
 @property (strong, nonatomic) IBOutlet UISlider *slideOpacity;
+@property (strong, nonatomic) IBOutlet UIButton *buttonFontList;
+@property (strong, nonatomic) IBOutlet UITableView *tableFont;
+@property (strong, nonatomic) IBOutlet UIButton *buttonVertical;
 
 - (IBAction)touchClose:(id)sender;
 - (IBAction)touchOK:(id)sender;
@@ -47,4 +50,7 @@
 - (IBAction)sizeChanged:(id)sender;
 - (IBAction)touchResetRotate:(id)sender;
 - (IBAction)opacityChanged:(UISlider*)sender;
+- (IBAction)pageChanged:(UIPageControl *)sender;
+- (IBAction)toggleFontList:(UIButton *)sender;
+- (IBAction)toggleVertical:(id)sender;
 @end

@@ -1625,6 +1625,23 @@
                                                     <action selector="touchShadow:" destination="bke-ye-End" eventType="touchUpInside" id="sze-cC-Raa"/>
                                                 </connections>
                                             </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="3tU-Qz-LsY">
+                                                <rect key="frame" x="7" y="6" width="60" height="44"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
+                                                <inset key="contentEdgeInsets" minX="0.0" minY="15" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" image="edit_horizon.png">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="selected" image="edit_vertical.png"/>
+                                                <state key="highlighted">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="toggleVertical:" destination="bke-ye-End" eventType="touchUpInside" id="QJ8-2R-xIL"/>
+                                                </connections>
+                                            </button>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="TEXT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kck-Fk-k1p">
                                                 <rect key="frame" x="66" y="4" width="61" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1708,6 +1725,9 @@
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="8" id="yaH-Cn-Y4N">
                                 <rect key="frame" x="71" y="437" width="175" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <connections>
+                                    <action selector="pageChanged:" destination="bke-ye-End" eventType="valueChanged" id="JQj-3z-fkS"/>
+                                </connections>
                             </pageControl>
                             <view contentMode="scaleToFill" id="V16-ud-Dk5">
                                 <rect key="frame" x="-220" y="0.0" width="220" height="480"/>
@@ -1717,6 +1737,29 @@
                                         <rect key="frame" x="0.0" y="0.0" width="220" height="430"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <view key="tableFooterView" contentMode="scaleToFill" id="39m-V1-Fgb">
+                                            <rect key="frame" x="0.0" y="66" width="220" height="44"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ECS-PM-dm5">
+                                                    <rect key="frame" x="61" y="5" width="99" height="35"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
+                                                    <state key="normal" title="Show All">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="selected" title="Collapse"/>
+                                                    <state key="highlighted">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="toggleFontList:" destination="bke-ye-End" eventType="touchUpInside" id="0UE-4g-OLx"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
                                         <prototypes>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Font" id="R95-Vx-VG0" customClass="LXCellFont">
                                                 <rect key="frame" x="0.0" y="22" width="220" height="44"/>
@@ -1739,12 +1782,18 @@
                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </label>
+                                                        <view alpha="0.0" contentMode="scaleToFill" id="Iz2-oN-o4h">
+                                                            <rect key="frame" x="0.0" y="0.0" width="1" height="44"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="backgroundColor" white="1" alpha="0.75" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                        </view>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <connections>
                                                     <outlet property="labelFontName" destination="JAn-KS-tMe" id="nnh-Ki-tg3"/>
                                                     <outlet property="labelSample" destination="a1b-Mb-QhK" id="BwI-N3-bSy"/>
+                                                    <outlet property="viewSelectIndicator" destination="Iz2-oN-o4h" id="icA-lw-gjg"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
@@ -1784,7 +1833,7 @@
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Size" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tq9-m9-IS4">
                                         <rect key="frame" x="7" y="445" width="39" height="17"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="14"/>
+                                        <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="12"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -1799,8 +1848,10 @@
                         <outlet property="buttonCloseFont" destination="V8b-2F-vv8" id="Mvl-7j-h3p"/>
                         <outlet property="buttonDelete" destination="5cU-nk-x7n" id="gaU-kd-WOV"/>
                         <outlet property="buttonFinishEdit" destination="Sy0-2H-Q6B" id="eRx-Ih-4iV"/>
+                        <outlet property="buttonFontList" destination="ECS-PM-dm5" id="Puc-mc-TVa"/>
                         <outlet property="buttonRotate" destination="Lae-uQ-gUo" id="CwJ-9a-A6e"/>
                         <outlet property="buttonShadow" destination="vnZ-6i-rPv" id="Asf-Zq-S7s"/>
+                        <outlet property="buttonVertical" destination="3tU-Qz-LsY" id="sv0-vQ-8UW"/>
                         <outlet property="imagePreview" destination="R3n-cj-BKX" id="Ba8-Z1-FXA"/>
                         <outlet property="pageControl" destination="yaH-Cn-Y4N" id="nHx-75-ATc"/>
                         <outlet property="panRecognizer" destination="K1e-Ye-Jdz" id="hMK-mn-h9Y"/>
@@ -1811,6 +1862,7 @@
                         <outlet property="scrollTemplate" destination="prg-iE-9E4" id="jIM-ih-77O"/>
                         <outlet property="slideOpacity" destination="1NV-jt-8PJ" id="LHc-RT-tdh"/>
                         <outlet property="slideSize" destination="dyM-bK-hZP" id="9cB-D6-iTE"/>
+                        <outlet property="tableFont" destination="tg9-w9-ke2" id="ObS-M0-GWO"/>
                         <outlet property="tapRecognizer" destination="biM-Nh-wTT" id="fV5-xf-ZhG"/>
                         <outlet property="viewControlObject" destination="njl-mC-KRL" id="YOJ-8U-kMT"/>
                         <outlet property="viewControlText" destination="h6k-5a-nHK" id="uOC-zH-Lpm"/>
@@ -1862,6 +1914,7 @@
         <image name="crop_rb.png" width="22" height="22"/>
         <image name="edit_delete.png" width="24" height="24"/>
         <image name="edit_fonts.png" width="19" height="15"/>
+        <image name="edit_horizon.png" width="12" height="15"/>
         <image name="edit_plus.png" width="12" height="12"/>
         <image name="edit_radio.png" width="20" height="20"/>
         <image name="edit_radio_checked.png" width="20" height="20"/>
@@ -1870,6 +1923,7 @@
         <image name="edit_tick.png" width="24" height="24"/>
         <image name="edit_tickbt.png" width="30" height="30"/>
         <image name="edit_tickbt_on.png" width="30" height="30"/>
+        <image name="edit_vertical.png" width="12" height="15"/>
         <image name="icon_blending2.png" width="20" height="20"/>
         <image name="icon_boke.png" width="13" height="20"/>
         <image name="icon_boke2.png" width="10" height="15"/>
@@ -1913,201 +1967,6 @@
         <image name="tool_next.png" width="30" height="50"/>
         <image name="tool_prev.png" width="30" height="50"/>
     </resources>
-    <classes>
-        <class className="GPUImageView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GPUImageView.h"/>
-        </class>
-        <class className="HFImageEditorFrameView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/HFImageEditorFrameView.h"/>
-        </class>
-        <class className="HFImageEditorViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/HFImageEditorViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="frameView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="panRecognizer" candidateClass="UIPanGestureRecognizer"/>
-                <relationship kind="outlet" name="pinchRecognizer" candidateClass="UIPinchGestureRecognizer"/>
-                <relationship kind="outlet" name="rotationRecognizer" candidateClass="UIRotationGestureRecognizer"/>
-                <relationship kind="outlet" name="tapRecognizer" candidateClass="UITapGestureRecognizer"/>
-            </relationships>
-        </class>
-        <class className="LXCanvasViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCanvasViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="changeLens:" candidateClass="UIButton"/>
-                <relationship kind="action" name="changePen:" candidateClass="UISlider"/>
-                <relationship kind="action" name="printTemplate:"/>
-                <relationship kind="action" name="setBlend:" candidateClass="UIButton"/>
-                <relationship kind="action" name="setFilm:" candidateClass="UIButton"/>
-                <relationship kind="action" name="setMask:" candidateClass="UIButton"/>
-                <relationship kind="action" name="toggleControl:" candidateClass="UIButton"/>
-                <relationship kind="action" name="toggleFisheye:" candidateClass="UIButton"/>
-                <relationship kind="action" name="toggleGain:" candidateClass="UISwitch"/>
-                <relationship kind="action" name="toggleMaskNatual:" candidateClass="UISwitch"/>
-                <relationship kind="action" name="toggleMono:"/>
-                <relationship kind="action" name="touchCrop:"/>
-                <relationship kind="action" name="touchNo:"/>
-                <relationship kind="action" name="touchOpenHelp:"/>
-                <relationship kind="action" name="touchReset:"/>
-                <relationship kind="action" name="touchSave:"/>
-                <relationship kind="action" name="touchText:"/>
-                <relationship kind="action" name="updateFilter:"/>
-                <relationship kind="outlet" name="buttonBackgroundNatual" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="buttonBlackWhite" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonBlendMedium" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonBlendNone" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonBlendStrong" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonBlendWeak" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonBlurNone" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonBlurNormal" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonBlurStrong" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonBlurWeak" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonFilmMedium" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonFilmNone" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonFilmStrong" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonFilmWeak" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonLensFish" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonLensNormal" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonLensWide" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonNo" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonReset" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonSavePreset" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonToggleBasic" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonToggleBlend" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonToggleEffect" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonToggleFilm" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonToggleFocus" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonToggleLens" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonYes" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="gesturePan" candidateClass="UIPanGestureRecognizer"/>
-                <relationship kind="outlet" name="imageNext" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="imagePrev" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="scrollBlend" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="scrollEffect" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="scrollFilm" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="scrollPreset" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="scrollProcess" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="sliderClear" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderEffectIntensity" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderExposure" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderFeather" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderSaturation" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderSharpness" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderVignette" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="switchGain" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="viewBasicControl" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewBlendControl" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewBottomBar" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewCamera" candidateClass="GPUImageView"/>
-                <relationship kind="outlet" name="viewCameraWraper" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewCanvas" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="viewDraw" candidateClass="LXDrawView"/>
-                <relationship kind="outlet" name="viewEffectControl" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewFilmControl" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewFocusControl" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewLensControl" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewPresetControl" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewTopBar" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="LXCaptureViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCaptureViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="capture:"/>
-                <relationship kind="action" name="changeFlash:"/>
-                <relationship kind="action" name="close:"/>
-                <relationship kind="action" name="flipCamera:"/>
-                <relationship kind="action" name="setTimer:"/>
-                <relationship kind="action" name="touchPick:"/>
-                <relationship kind="action" name="touchQuick:" candidateClass="UIButton"/>
-                <relationship kind="action" name="touchTimer:"/>
-                <relationship kind="outlet" name="buttonCapture" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonFlash" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonFlash35" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonPick" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonQuick" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonSetNoTimer" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonSetTimer5s" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="imageAutoFocus" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="imagePreview" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="viewCamera" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewCameraWraper" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewCanvas" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="viewFlash" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewTimer" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewTopBar" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewTopBar35" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="LXCellFont" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellFont.h"/>
-            <relationships>
-                <relationship kind="outlet" name="labelFontName" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelSample" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="LXDrawView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXDrawView.h"/>
-            <relationships>
-                <relationship kind="outlet" name="drawImageView" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="LXHelpBokehViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXHelpBokehViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="touchClose:"/>
-                <relationship kind="outlet" name="viewHelp" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewPopupHelp" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="LXImageCropViewController" superclassName="HFImageEditorViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXImageCropViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="panSize:" candidateClass="UIPanGestureRecognizer"/>
-                <relationship kind="action" name="setCropRatio:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="imageCropSize" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="LXImageTextViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXImageTextViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="opacityChanged:" candidateClass="UISlider"/>
-                <relationship kind="action" name="sizeChanged:"/>
-                <relationship kind="action" name="touchAddText:"/>
-                <relationship kind="action" name="touchClose:"/>
-                <relationship kind="action" name="touchCloseFont:"/>
-                <relationship kind="action" name="touchDelete:"/>
-                <relationship kind="action" name="touchDone:"/>
-                <relationship kind="action" name="touchDoneEdit:"/>
-                <relationship kind="action" name="touchEditText:"/>
-                <relationship kind="action" name="touchOK:"/>
-                <relationship kind="action" name="touchResetRotate:"/>
-                <relationship kind="action" name="touchSelectFont:"/>
-                <relationship kind="action" name="touchShadow:"/>
-                <relationship kind="outlet" name="buttonCloseFont" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonDelete" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonFinishEdit" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonRotate" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonShadow" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="imagePreview" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="pageControl" candidateClass="UIPageControl"/>
-                <relationship kind="outlet" name="scrollCanvas" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="scrollColor" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="scrollTemplate" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="slideOpacity" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="slideSize" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="viewControlObject" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewControlText" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewFontControl" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewTextControl" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="LXNavBar" superclassName="UINavigationBar">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavBar.h"/>
-        </class>
-        <class className="LXNavGalleryViewController" superclassName="UINavigationController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavGalleryViewController.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

@@ -38,6 +38,9 @@
 @synthesize viewControlObject;
 @synthesize slideSize;
 @synthesize slideOpacity;
+@synthesize tableFont;
+@synthesize buttonFontList;
+@synthesize buttonVertical;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -106,14 +109,7 @@
     }
     scrollColor.contentSize = CGSizeMake(40*colors.count+10, 44);
     
-    fonts = [[NSMutableArray alloc] init];
-    
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"fonts" ofType:@"plist"];
-    NSArray *arrayFonts = [NSArray arrayWithContentsOfFile:path];
-    
-    for (NSString *fontName in arrayFonts) {
-        [fonts addObject:fontName];
-    }
+    [self toggleFontList:buttonFontList];
     
     UIPanGestureRecognizer *panRotate = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panRotateButton:)];
     [buttonRotate addGestureRecognizer:panRotate];
@@ -298,10 +294,8 @@
         [scrollCanvas setContentOffset:CGPointMake(0, top) animated:NO];
     }
     
-    CGRect screen = [[UIScreen mainScreen] bounds];
-    
-    if (bottom - scrollCanvas.contentOffset.y > screen.size.height - 150 && scrollCanvas.contentOffset.y + scrollCanvas.bounds.size.height <= scrollCanvas.contentSize.height) {
-        [scrollCanvas setContentOffset:CGPointMake(0, bottom - screen.size.height + 150) animated:NO];
+    if (bottom - scrollCanvas.contentOffset.y > scrollCanvas.bounds.size.height && scrollCanvas.contentOffset.y + scrollCanvas.bounds.size.height <= scrollCanvas.contentSize.height) {
+        [scrollCanvas setContentOffset:CGPointMake(0, bottom - scrollCanvas.bounds.size.height) animated:NO];
     }
 }
 
@@ -327,8 +321,6 @@
         editingObject = view;
     } else
         return;
-    
-    [self updateCanvasContentOffset];
     
     editingObject.layer.borderColor = [UIColor whiteColor].CGColor;
     editingObject.layer.borderWidth = 1;
@@ -367,6 +359,7 @@
         slideSize.value = ((UILabel*)editingObject).font.pointSize;
         viewControlText.hidden = NO;
         viewControlObject.hidden = YES;
+        buttonVertical.selected = ((UILabel*)editingObject).tag==1;
     } else {
         viewControlText.hidden = YES;
         viewControlObject.hidden = NO;
@@ -377,8 +370,14 @@
     CGRect frameControl = viewTextControl.frame;
     frameControl.origin.y = screen.size.height - 150;
     
+    CGRect frameCanvas = scrollCanvas.frame;
+    frameCanvas.size.height = screen.size.height - 150;
+    
     [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
         viewTextControl.frame = frameControl;
+        scrollCanvas.frame = frameCanvas;
+        [self relayout];
+        [self updateCanvasContentOffset];
     }];
     
 }
@@ -389,6 +388,7 @@
             return;
         }
         [((UILabel*)editingObject) setText:text];
+        [((UILabel*)editingObject) setTextAlignment:textView.textAlignment];
         [self refreshLabel];
         [self updateControlButtonPosition];
     }
@@ -462,6 +462,7 @@
     popupTextView.textAlignment = ((UILabel*)editingObject).textAlignment;
     popupTextView.font = ((UILabel*)editingObject).font;
     //popupTextView.caretShiftGestureEnabled = YES;   // default = NO
+    popupTextView.placeholder = @"Sample Text";
     popupTextView.text = [((UILabel*)editingObject) text];
     //popupTextView.editable = NO;                  // set editable=NO to show without keyboard
     [popupTextView showInView:self.view];
@@ -507,6 +508,7 @@
     slideSize.value = ((UILabel*)editingObject).font.pointSize;
     CGRect frame = viewFontControl.frame;
     frame.origin.x = 0;
+    [tableFont reloadData];
     
     [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
         viewFontControl.frame = frame;
@@ -526,6 +528,54 @@
 
 - (IBAction)opacityChanged:(UISlider*)sender {
     editingObject.alpha = sender.value;
+}
+
+- (IBAction)pageChanged:(UIPageControl *)sender {
+    [self resignAllFocus];
+    activeTemplate = template.view.subviews[sender.currentPage];
+    [scrollTemplate setContentOffset:CGPointMake(sender.currentPage*320, 0) animated:YES];
+}
+
+- (IBAction)toggleFontList:(UIButton *)sender {
+    sender.selected = !sender.selected;
+    
+    if (sender.selected) {
+        fonts = [[NSMutableArray alloc] init];        
+        NSArray *fontFamilyNames = [UIFont familyNames];
+
+        for (NSString *familyName in fontFamilyNames)
+        {
+            NSArray *names = [UIFont fontNamesForFamilyName:familyName];
+            for (NSString *name in names) {
+                NSDictionary *fontDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                          name, @"title",
+                                          name, @"font",
+                                          nil];
+                [fonts addObject:fontDict];
+            }
+        
+        }
+    } else {
+        fonts = [[NSMutableArray alloc] init];
+        
+        
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"fonts" ofType:@"plist"];
+        NSArray *arrayFonts = [NSArray arrayWithContentsOfFile:path];
+        
+        for (NSString *fontName in arrayFonts) {
+            [fonts addObject:fontName];
+        }
+    }
+    
+    [tableFont reloadData];
+}
+
+- (IBAction)toggleVertical:(id)sender {
+    editingObject.tag = editingObject.tag==0?1:0;
+    buttonVertical.selected = !buttonVertical.selected;
+    
+    [self refreshLabel];
+    [self updateControlButtonPosition];
 }
 
 - (IBAction)touchShadow:(id)sender {
@@ -553,6 +603,9 @@
     [self setViewControlText:nil];
     [self setViewControlObject:nil];
     [self setSlideOpacity:nil];
+    [self setButtonFontList:nil];
+    [self setTableFont:nil];
+    [self setButtonVertical:nil];
     [super viewDidUnload];
 }
 
@@ -598,12 +651,43 @@
 }
 
 - (void)refreshLabel {
-    CGSize textSize = [((UILabel*)editingObject).text
-                       sizeWithFont:((UILabel*)editingObject).font
-                       constrainedToSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
-    CGRect frame = editingObject.bounds;
-    frame.size = textSize;
-    editingObject.bounds = frame;
+    if (editingObject.tag == 0) {
+        CGSize textSize = [((UILabel*)editingObject).text
+                           sizeWithFont:((UILabel*)editingObject).font
+                           constrainedToSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+        CGRect frame = editingObject.bounds;
+        frame.size = textSize;
+        editingObject.bounds = frame;
+    } else {
+        UILabel *label = (UILabel*)editingObject;
+        CGFloat maxWidth = 0;
+        for (NSInteger i = 0; i < label.text.length; i++) {
+            NSString* chr = [label.text substringWithRange:NSMakeRange(i, 1)];
+            CGSize size = [chr sizeWithFont:label.font];
+            maxWidth = MAX(maxWidth, size.width);
+        }
+        label.textAlignment = NSTextAlignmentCenter;
+        
+        CGSize textSize = [((UILabel*)editingObject).text
+                           sizeWithFont:((UILabel*)editingObject).font
+                           constrainedToSize:CGSizeMake(maxWidth, CGFLOAT_MAX)
+                           lineBreakMode:NSLineBreakByWordWrapping];
+        
+//        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+//        paragraphStyle.lineHeightMultiple = 1.0;
+//        paragraphStyle.lineBreakMode = label.lineBreakMode;
+//        paragraphStyle.alignment = label.textAlignment;
+//        
+//        NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:paragraphStyle, NSParagraphStyleAttributeName, nil];
+//        
+//        NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:label.text attributes:attrs];
+//        
+//        [label setAttributedText:attributedText];
+        
+        CGRect frame = editingObject.bounds;
+        frame.size = textSize;
+        editingObject.bounds = frame;
+    }
 }
 
 - (void)resignAllFocus {
@@ -631,17 +715,22 @@
     CGRect screen = [[UIScreen mainScreen] bounds];
     CGRect frameControl = viewTextControl.frame;
     frameControl.origin.y = screen.size.height - 50;
+    CGRect frameCanvas = scrollCanvas.frame;
+    frameCanvas.size.height = screen.size.height - 50;
+    
     [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
         viewTextControl.frame = frameControl;
+        scrollCanvas.frame = frameCanvas;
+        [self relayout];
     }];
     
-    if (scrollTemplate.bounds.size.height < scrollCanvas.bounds.size.height) {
-        [scrollCanvas setContentOffset:CGPointZero animated:YES];
-    } else
-    if (scrollCanvas.contentOffset.y + scrollCanvas.bounds.size.height > scrollCanvas.contentSize.height) {
-        CGFloat scrollTo = scrollCanvas.contentSize.height - scrollCanvas.bounds.size.height;
-        [scrollCanvas setContentOffset:CGPointMake(0, scrollTo) animated:YES];
-    }
+//    if (scrollTemplate.bounds.size.height < scrollCanvas.bounds.size.height) {
+//        [scrollCanvas setContentOffset:CGPointZero animated:YES];
+//    } else
+//    if (scrollCanvas.contentOffset.y + scrollCanvas.bounds.size.height > scrollCanvas.contentSize.height) {
+//        CGFloat scrollTo = scrollCanvas.contentSize.height - scrollCanvas.bounds.size.height;
+//        [scrollCanvas setContentOffset:CGPointMake(0, scrollTo) animated:YES];
+//    }
     
     CGRect frame = viewFontControl.frame;
     frame.origin.x = -frame.size.width;
@@ -682,6 +771,9 @@
     } else
         cell.labelSample.text = fonts[indexPath.row][@"title"];
     cell.labelFontName.text = fonts[indexPath.row][@"title"];
+    if ([((UILabel*)editingObject).font.fontName isEqualToString:fonts[indexPath.row][@"font"]]) {
+        [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    }
     
     return cell;
 }
@@ -695,4 +787,5 @@
     [self refreshLabel];
     [self updateControlButtonPosition];
 }
+
 @end
