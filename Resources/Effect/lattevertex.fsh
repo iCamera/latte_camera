@@ -2,10 +2,12 @@
  attribute vec4 inputTextureCoordinate;
  attribute vec4 blendTextureCoordinate;
  attribute vec4 filmTextureCoordinate;
+ attribute vec4 textTextureCoordinate;
  
  varying vec2 textureCoordinate;
  varying vec2 blendCoordinate;
  varying vec2 filmCoordinate;
+ varying vec2 textCoordinate;
 
  uniform float imageWidthFactor; 
  uniform float imageHeightFactor; 
@@ -25,6 +27,7 @@
      textureCoordinate = inputTextureCoordinate.xy;
      blendCoordinate = blendTextureCoordinate.xy;
      filmCoordinate = filmTextureCoordinate.xy;
+     textCoordinate = textTextureCoordinate.xy;
 
      vec2 widthStep = vec2(imageWidthFactor, 0.0);
      vec2 heightStep = vec2(0.0, imageHeightFactor);

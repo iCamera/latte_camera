@@ -43,8 +43,7 @@
     
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     
-    NSArray *permissions = [[NSArray alloc] initWithObjects: @"email", nil];
-    [FBSession openActiveSessionWithReadPermissions:permissions
+    [FBSession openActiveSessionWithReadPermissions:nil
                                        allowLoginUI:YES
                                   completionHandler:^(FBSession *session,
                                                       FBSessionState state,

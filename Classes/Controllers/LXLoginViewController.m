@@ -129,6 +129,7 @@
                                                                                       // Clear FBsession to be sure
                                                                                       [FBSession.activeSession closeAndClearTokenInformation];
                                                                                       [FBSession renewSystemCredentials:^(ACAccountCredentialRenewResult result, NSError *error) {}];
+                                                                                      [HUD hide:YES];
                                                                                   }];
 
                                               }

@@ -7,11 +7,13 @@ precision highp float;
 varying highp vec2 textureCoordinate;
 varying highp vec2 blendCoordinate;
 varying highp vec2 filmCoordinate;
+varying highp vec2 textCoordinate;
 
 uniform sampler2D inputImageTexture;
 uniform sampler2D toneCurveTexture;
 uniform sampler2D inputBlendTexture;
 uniform sampler2D inputFilmTexture;
+uniform sampler2D inputTextTexture;
 
 uniform lowp float vignfade; //f-stops till vignete fades
 uniform lowp float brightness;
@@ -27,6 +29,7 @@ uniform lowp float filmIntensity;
 uniform bool toneEnable;
 uniform bool blendEnable;
 uniform bool filmEnable;
+uniform bool textEnable;
 
 lowp float vignin = 0.0; //vignetting inner border
 lowp float vignout = 0.5; //vignetting outer border
@@ -115,6 +118,12 @@ void main()
 
     // Vignette
     textureColor.rgb *= vignette();
+
+    // Text
+    if (textEnable) {
+        lowp vec4 textureText = texture2D(inputTextTexture, textCoordinate);
+        textureColor.rgb = mix(textureColor.rgb, textureText.rgb, textureText.a);
+    }
 
     // Tone Curve Mapping
     if (toneEnable) {

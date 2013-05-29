@@ -213,7 +213,7 @@
     [window addSubview:HUD];
     HUD.userInteractionEnabled = NO;
     
-    scrollProcess.contentSize = CGSizeMake(320, 50);
+    scrollProcess.contentSize = CGSizeMake(390, 50);
 
     filterMain = [[LXImageFilter alloc] init];
     filterDOF = [[LXFilterDOF alloc] init];
@@ -1084,7 +1084,7 @@
             currentBlend = [NSString stringWithFormat:@"flower-%d.jpg", blendid];
             break;
         case 3:
-            blendid = 1 + rand() % 30;
+            blendid = 1 + rand() % 20;
             currentBlend = [NSString stringWithFormat:@"star-%d.jpg", blendid];
             break;
         case 4:
@@ -1096,7 +1096,7 @@
             currentBlend = [NSString stringWithFormat:@"lightblur-%d.JPG", blendid];
             break;
         case 6:
-            blendid = 1 + rand() % 27;
+            blendid = 1 + rand() % 25;
             currentBlend = [NSString stringWithFormat:@"print%d.jpg", blendid];
             break;
         default:
@@ -1329,9 +1329,8 @@
 }
 
 - (void)newTextImage:(UIImage *)textImage {
-    filterMain.imageBlend = textImage;
-    filterMain.blendIntensity = 1.0;
-    filterMain.blendEnable = YES;
+    filterMain.imageText = textImage;
+    filterMain.textEnable = YES;
     [self processImage];
 }
 
@@ -1356,6 +1355,12 @@
 
     if ([preset objectForKey:@"filmImage"]) {
         currentFilm = preset[@"filmImage"];
+    }
+    
+    if ([preset objectForKey:@"saturation"]) {
+        buttonBlackWhite.selected = [[preset objectForKey:@"saturation"] floatValue] == 0.0;
+    } else {
+        buttonBlackWhite.selected = NO;
     }
     
     if ([preset objectForKey:@"blendIntensity"]) {
