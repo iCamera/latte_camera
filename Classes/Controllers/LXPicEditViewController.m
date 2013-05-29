@@ -267,6 +267,8 @@
                                                          LXAppDelegate *app = [LXAppDelegate currentDelegate];
                                                          app.currentUser.pictureAutoFacebookUpload = buttonFacebook.selected;
                                                          [self updateUserInfo:@"picture_auto_facebook_upload" value:buttonFacebook.selected];
+                                                     } else {
+                                                         
                                                      }
                                                      break;
                                                  case FBSessionStateClosed:
@@ -276,6 +278,10 @@
                                                      break;
                                                  default:
                                                      break;
+                                             }
+                                             
+                                             if (error) {
+                                                 [LXUtils showFBAuthError:error];
                                              }
                                          }];
     } else {
@@ -406,7 +412,11 @@
         [FBSession openActiveSessionWithPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]
                                            defaultAudience:FBSessionDefaultAudienceFriends
                                               allowLoginUI:YES
-                                         completionHandler:nil];
+                                         completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+                                             if (error) {
+                                                 [LXUtils showFBAuthError:error];
+                                             }
+                                         }];
     }
     
     MBProgressHUD* HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];

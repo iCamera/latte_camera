@@ -404,5 +404,52 @@ vm_size_t freeMemory(void) {
     return newImage;
 }
 
++ (void)showFBAuthError:(NSError*)error {
+    NSString *alertMessage;
+    
+    if (error.fberrorShouldNotifyUser) {
+        if ([[error userInfo][FBErrorLoginFailedReason]
+             isEqualToString:FBErrorLoginFailedReasonSystemDisallowedWithoutErrorValue]) {
+            // Show a different error message
+            alertMessage = NSLocalizedString(@"Go to Settings > Facebook and turn ON Latte camera.", @"");
+            // Perform any additional customizations
+        } else {
+            // If the SDK has a message for the user, surface it.
+            alertMessage = error.fberrorUserMessage;
+        }
+    } else if (error.fberrorCategory == FBErrorCategoryUserCancelled) {
+        // The user has cancelled a login. You can inspect the error
+        // for more context. For this sample, we will simply ignore it.
+        NSLog(@"user cancelled login");
+    } else if (error.fberrorCategory == FBErrorCategoryAuthenticationReopenSession) {
+        // It is important to handle session closures since they can happen
+        // outside of the app. You can inspect the error for more context
+        // but this sample generically notifies the user.
+        alertMessage = NSLocalizedString(@"Your current session is no longer valid. Please log in again.", @"");
+    } else if (error.fberrorCategory == FBErrorCategoryAuthenticationReopenSession) {
+        NSInteger underlyingSubCode = [[error userInfo]
+                                       [@"com.facebook.sdk:ParsedJSONResponseKey"]
+                                       [@"body"]
+                                       [@"error"]
+                                       [@"error_subcode"] integerValue];
+        if (underlyingSubCode == 458) {
+            alertMessage = NSLocalizedString(@"The app was removed. Please log in again.", @"");
+        } else {
+            alertMessage = NSLocalizedString(@"Your current session is no longer valid. Please log in again.", @"");
+        }
+    } else {
+        // For simplicity, this sample treats other errors blindly.
+        alertMessage = NSLocalizedString(@"Error. Please try again later.", @"");
+        NSLog(@"Unexpected error:%@", error);
+    }
+    
+    if (alertMessage) {
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"")
+                                    message:alertMessage
+                                   delegate:nil
+                          cancelButtonTitle:NSLocalizedString(@"close", @"")
+                          otherButtonTitles:nil] show];
+    }
+}
 
 @end

@@ -368,6 +368,10 @@ typedef enum {
                                                 {
                                                     [self completionResult:typeCanceled];
                                                 }
+                                                
+                                                if (error) {
+                                                    [LXUtils showFBAuthError:error];
+                                                }
                                             }];
     
 }

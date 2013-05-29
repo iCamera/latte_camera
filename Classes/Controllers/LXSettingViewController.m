@@ -28,8 +28,8 @@
     
     
     //Logic
-    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:HUD];
+    HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:HUD];
     HUD.mode = MBProgressHUDModeIndeterminate;
     [HUD show:YES];
     

@@ -122,12 +122,20 @@
             [app.viewMainTab showSetting:nil];
             break;
         case 3: {
+            app.viewMainTab.selectedIndex = 3;
+            UINavigationController *nav = (UINavigationController*)app.viewMainTab.selectedViewController;
+            UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+            [nav popToRootViewControllerAnimated:NO];
+            [nav pushViewController:[storyMain instantiateViewControllerWithIdentifier:@"FacebookFriend"] animated:YES];
+        }
+            break;
+        case 4: {
             lxShare = [[LXShare alloc] init];
             lxShare.controller = self;
             [lxShare inviteFriend];
             break;
         }
-        case 4: {
+        case 5: {
             LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
             
             [[LatteAPIClient sharedClient] postPath:@"user/logout"

@@ -660,6 +660,8 @@
         editingObject.bounds = frame;
     } else {
         UILabel *label = (UILabel*)editingObject;
+        label.numberOfLines = 0;
+        label.lineBreakMode = NSLineBreakByCharWrapping;
         CGFloat maxWidth = 0;
         for (NSInteger i = 0; i < label.text.length; i++) {
             NSString* chr = [label.text substringWithRange:NSMakeRange(i, 1)];
@@ -671,7 +673,7 @@
         CGSize textSize = [((UILabel*)editingObject).text
                            sizeWithFont:((UILabel*)editingObject).font
                            constrainedToSize:CGSizeMake(maxWidth, CGFLOAT_MAX)
-                           lineBreakMode:NSLineBreakByWordWrapping];
+                           lineBreakMode:NSLineBreakByCharWrapping];
         
 //        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
 //        paragraphStyle.lineHeightMultiple = 1.0;

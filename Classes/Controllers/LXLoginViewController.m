@@ -142,7 +142,10 @@
                                           default:
                                               break;
                                       }
-
+                                      
+                                      if (error) {
+                                          [LXUtils showFBAuthError:error];
+                                      }
                                   }];
 }
 

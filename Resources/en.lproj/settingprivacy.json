@@ -4,12 +4,12 @@
     "controllerName": "luxeysSettingViewController",
     "sections": [
         { "title":"PROFILE PRIVACY SETTINGS", "elements": [
-                { "type":"QRadioElement", "key":"gender_public", "title":"Gender", "items":["Me only", "Friends only", "Members only", "Everyone"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QRadioElement", "key":"current_residence_public", "title":"Current Address", "items":["Me only", "Friends only", "Members only", "Everyone"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QRadioElement", "key":"hometown_public", "title":"Hometown", "items":["Me only", "Friends only", "Members only", "Everyone"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QRadioElement", "key":"birthyear_public", "title":"Age", "items":["Me only", "Friends only", "Members only", "Everyone"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QRadioElement", "key":"birthdate_public", "title":"Birthday", "items":["Me only", "Friends only", "Members only", "Everyone"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QRadioElement", "key":"nationality_public", "title":"Nationality", "items":["Me only", "Friends only", "Members only", "Everyone"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"}
+                { "type":"QRadioElement", "key":"gender_public", "title":"Gender", "items":["Private", "Friends only", "Members only", "Everyone"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QRadioElement", "key":"current_residence_public", "title":"Current Address", "items":["Private", "Friends only", "Members only", "Everyone"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QRadioElement", "key":"hometown_public", "title":"Hometown", "items":["Private", "Friends only", "Members only", "Everyone"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QRadioElement", "key":"birthyear_public", "title":"Age", "items":["Private", "Friends only", "Members only", "Everyone"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QRadioElement", "key":"birthdate_public", "title":"Birthday", "items":["Private", "Friends only", "Members only", "Everyone"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QRadioElement", "key":"nationality_public", "title":"Nationality", "items":["Private", "Friends only", "Members only", "Everyone"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"}
             ]
         },
         { "title":"PHOTO PRIVACY SETTINGS", "footer":"- All these settings will be default.", "elements": [

@@ -124,10 +124,17 @@
                 [section addElement:eleCountry];
                 break;
             }
-            case 1:
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/user/setting"]];
+            case 1: {
+                NSString *language = [[NSLocale preferredLanguages] objectAtIndex:0];
+                if ([language isEqualToString:@"ja"]) {
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/user/setting"]];
+                } else {
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://en.latte.la/user/setting"]];
+                }
+                
                 [tableView deselectRowAtIndexPath:indexPath animated:YES];
                 return;
+            }
                 break;
             case 2: {
                 NSString *filePath = [[NSBundle mainBundle] pathForResource:@"settingprivacy" ofType:@"json"];
