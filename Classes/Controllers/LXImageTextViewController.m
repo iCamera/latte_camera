@@ -182,6 +182,9 @@
         UITapGestureRecognizer *doubleTapText = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapText:)];
         doubleTapText.numberOfTapsRequired = 2;
         [view addGestureRecognizer:doubleTapText];
+        
+        ((UILabel*)view).numberOfLines = 0;
+        ((UILabel*)view).lineBreakMode = NSLineBreakByCharWrapping;
     }
     
     panText.enabled = NO;
@@ -660,8 +663,6 @@
         editingObject.bounds = frame;
     } else {
         UILabel *label = (UILabel*)editingObject;
-        label.numberOfLines = 0;
-        label.lineBreakMode = NSLineBreakByCharWrapping;
         CGFloat maxWidth = 0;
         for (NSInteger i = 0; i < label.text.length; i++) {
             NSString* chr = [label.text substringWithRange:NSMakeRange(i, 1)];
