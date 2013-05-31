@@ -37,6 +37,9 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonFontList;
 @property (strong, nonatomic) IBOutlet UITableView *tableFont;
 @property (strong, nonatomic) IBOutlet UIButton *buttonVertical;
+@property (strong, nonatomic) IBOutlet UIButton *buttonFontFav;
+@property (strong, nonatomic) IBOutlet UIButton *buttonFontAll;
+@property (strong, nonatomic) IBOutlet UIButton *buttonFontDown;
 
 - (IBAction)touchClose:(id)sender;
 - (IBAction)touchOK:(id)sender;
@@ -51,6 +54,6 @@
 - (IBAction)touchResetRotate:(id)sender;
 - (IBAction)opacityChanged:(UISlider*)sender;
 - (IBAction)pageChanged:(UIPageControl *)sender;
-- (IBAction)toggleFontList:(UIButton *)sender;
 - (IBAction)toggleVertical:(id)sender;
+- (IBAction)touchFontTab:(UIButton *)sender;
 @end

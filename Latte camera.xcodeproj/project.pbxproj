@@ -721,6 +721,9 @@
 		886C63A41681A68C0007D952 /* bg_canvas.png in Resources */ = {isa = PBXBuildFile; fileRef = 886C63A21681A68C0007D952 /* bg_canvas.png */; };
 		886C63A51681A68C0007D952 /* bg_canvas@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 886C63A31681A68C0007D952 /* bg_canvas@2x.png */; };
 		886E540B16FC469B00629D76 /* LXLikedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 886E540A16FC469B00629D76 /* LXLikedViewController.m */; };
+		887379BB17586FF400C1549B /* LXCellFontPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 887379BA17586FF400C1549B /* LXCellFontPreview.m */; };
+		887379BD1758842F00C1549B /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 887379BC1758842F00C1549B /* CoreText.framework */; };
+		887379BE1758CC3500C1549B /* fonts.plist in Resources */ = {isa = PBXBuildFile; fileRef = 887379C01758CC3500C1549B /* fonts.plist */; };
 		8874DBC316E8BF3600FDF60B /* LXNavMypageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8874DBC216E8BF3500FDF60B /* LXNavMypageController.m */; };
 		8874DBD216E8C58200FDF60B /* LXNavGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8874DBD116E8C58200FDF60B /* LXNavGalleryViewController.m */; };
 		88795EBF171E52BC009EA487 /* calendar_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 88795EB9171E52BC009EA487 /* calendar_off.png */; };
@@ -1092,7 +1095,6 @@
 		88CE89F9174E101A00C6A6B6 /* Sniglet.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88CE89E9174E101A00C6A6B6 /* Sniglet.ttf */; };
 		88CE89FA174E101A00C6A6B6 /* Ubuntu-Title.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88CE89EA174E101A00C6A6B6 /* Ubuntu-Title.ttf */; };
 		88CE89FB174E101A00C6A6B6 /* Windsong.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88CE89EB174E101A00C6A6B6 /* Windsong.ttf */; };
-		88CE89FC174E101A00C6A6B6 /* fonts.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88CE89EC174E101A00C6A6B6 /* fonts.plist */; };
 		88CE8A06174E10B500C6A6B6 /* UIColor+MLPFlatColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CE8A05174E10B500C6A6B6 /* UIColor+MLPFlatColors.m */; };
 		88CE8A09174E120300C6A6B6 /* LXCellFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CE8A08174E120300C6A6B6 /* LXCellFont.m */; };
 		88CE8A2A174EFBD800C6A6B6 /* edit_delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 88CE8A0A174EFBD700C6A6B6 /* edit_delete.png */; };
@@ -2389,6 +2391,11 @@
 		886C63A31681A68C0007D952 /* bg_canvas@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_canvas@2x.png"; sourceTree = "<group>"; };
 		886E540916FC469A00629D76 /* LXLikedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXLikedViewController.h; sourceTree = "<group>"; };
 		886E540A16FC469B00629D76 /* LXLikedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXLikedViewController.m; sourceTree = "<group>"; };
+		887379B917586FF400C1549B /* LXCellFontPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCellFontPreview.h; sourceTree = "<group>"; };
+		887379BA17586FF400C1549B /* LXCellFontPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCellFontPreview.m; sourceTree = "<group>"; };
+		887379BC1758842F00C1549B /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		887379BF1758CC3500C1549B /* ja */ = {isa = PBXFileReference; lastKnownFileType = file; name = ja; path = ja.lproj/fonts.plist; sourceTree = "<group>"; };
+		887379C11758CC3900C1549B /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/fonts.plist; sourceTree = "<group>"; };
 		8874DB9116E8A4CB00FDF60B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8874DBC116E8BF3500FDF60B /* LXNavMypageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXNavMypageController.h; sourceTree = "<group>"; };
 		8874DBC216E8BF3500FDF60B /* LXNavMypageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXNavMypageController.m; sourceTree = "<group>"; };
@@ -2855,7 +2862,6 @@
 		88CE89E9174E101A00C6A6B6 /* Sniglet.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sniglet.ttf; sourceTree = "<group>"; };
 		88CE89EA174E101A00C6A6B6 /* Ubuntu-Title.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-Title.ttf"; sourceTree = "<group>"; };
 		88CE89EB174E101A00C6A6B6 /* Windsong.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Windsong.ttf; sourceTree = "<group>"; };
-		88CE89EC174E101A00C6A6B6 /* fonts.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = fonts.plist; sourceTree = "<group>"; };
 		88CE8A04174E10B500C6A6B6 /* UIColor+MLPFlatColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MLPFlatColors.h"; sourceTree = "<group>"; };
 		88CE8A05174E10B500C6A6B6 /* UIColor+MLPFlatColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MLPFlatColors.m"; sourceTree = "<group>"; };
 		88CE8A07174E120300C6A6B6 /* LXCellFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCellFont.h; sourceTree = "<group>"; };
@@ -3465,6 +3471,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				887379BD1758842F00C1549B /* CoreText.framework in Frameworks */,
 				880E50CC1725703D00D584EE /* AudioToolbox.framework in Frameworks */,
 				880E50CA1725702900D584EE /* MediaPlayer.framework in Frameworks */,
 				88C0FF4817212C0600F8CA2D /* Accelerate.framework in Frameworks */,
@@ -4530,6 +4537,8 @@
 				8890728E16770EBB0013DF7A /* UIImageView+loadProgress.m */,
 				8835FCC6171CE31800A48346 /* LXCellGridUser.h */,
 				8835FCC7171CE31900A48346 /* LXCellGridUser.m */,
+				887379B917586FF400C1549B /* LXCellFontPreview.h */,
+				887379BA17586FF400C1549B /* LXCellFontPreview.m */,
 			);
 			path = CustomControls;
 			sourceTree = "<group>";
@@ -4732,6 +4741,7 @@
 		88D9864615B8F97800858AD6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				887379BC1758842F00C1549B /* CoreText.framework */,
 				88418F2C17436760004EFBA1 /* FacebookSDKResources.bundle */,
 				88418F2A1743674F004EFBA1 /* FacebookSDK.framework */,
 				880E50CB1725703D00D584EE /* AudioToolbox.framework */,
@@ -5068,7 +5078,7 @@
 			isa = PBXGroup;
 			children = (
 				88CE89DC174E101A00C6A6B6 /* fonts */,
-				88CE89EC174E101A00C6A6B6 /* fonts.plist */,
+				887379C01758CC3500C1549B /* fonts.plist */,
 				88EDBE54170A7EE2003D7B15 /* Blend */,
 				886E521516FC1C8800629D76 /* country */,
 				8824FB4516F72CE700357ADB /* NIBs */,
@@ -7212,7 +7222,7 @@
 				88CE89F9174E101A00C6A6B6 /* Sniglet.ttf in Resources */,
 				88CE89FA174E101A00C6A6B6 /* Ubuntu-Title.ttf in Resources */,
 				88CE89FB174E101A00C6A6B6 /* Windsong.ttf in Resources */,
-				88CE89FC174E101A00C6A6B6 /* fonts.plist in Resources */,
+				887379BE1758CC3500C1549B /* fonts.plist in Resources */,
 				88CE8A2A174EFBD800C6A6B6 /* edit_delete.png in Resources */,
 				88CE8A2B174EFBD800C6A6B6 /* edit_delete@2x.png in Resources */,
 				88CE8A2C174EFBD800C6A6B6 /* edit_fonts.png in Resources */,
@@ -7391,6 +7401,7 @@
 				8855F9BF173CD452006892FD /* GPUImageFilter+reset.m in Sources */,
 				88CE8A06174E10B500C6A6B6 /* UIColor+MLPFlatColors.m in Sources */,
 				88CE8A09174E120300C6A6B6 /* LXCellFont.m in Sources */,
+				887379BB17586FF400C1549B /* LXCellFontPreview.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7488,6 +7499,15 @@
 				8824FBB416F7643E00357ADB /* vi */,
 			);
 			name = settingprofile.json;
+			sourceTree = "<group>";
+		};
+		887379C01758CC3500C1549B /* fonts.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				887379BF1758CC3500C1549B /* ja */,
+				887379C11758CC3900C1549B /* en */,
+			);
+			name = fonts.plist;
 			sourceTree = "<group>";
 		};
 		88FE438A166C941A004DCE53 /* Localizable.strings */ = {

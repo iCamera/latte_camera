@@ -609,7 +609,9 @@
         [self preparePipe:picture];
         
         [picture processImage];
-//        [filterMain prepareForImageCapture];
+        if (MAX(imageFullsize.size.width, imageFullsize.size.height) > 1000) {
+            [filterMain prepareForImageCapture];
+        }
         
         // Save to Jpeg NSData
         CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:UIImageOrientationUp];
@@ -617,7 +619,10 @@
         jpeg = UIImageJPEGRepresentation(outputImage, 0.9);
         CGImageRelease(cgImageFromBytes);
         
-//        [filterMain resetCapture];
+        if (MAX(imageFullsize.size.width, imageFullsize.size.height) > 1000) {
+            [filterMain resetCapture];
+        }
+    
     }
 
     

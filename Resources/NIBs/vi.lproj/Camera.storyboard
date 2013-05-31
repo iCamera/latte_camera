@@ -1656,7 +1656,7 @@
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Fonts" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9yU-dq-msM">
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Phông" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9yU-dq-msM">
                                                 <rect key="frame" x="193" y="4" width="61" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="12"/>
@@ -1734,32 +1734,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                                 <subviews>
                                     <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="tg9-w9-ke2">
-                                        <rect key="frame" x="0.0" y="0.0" width="220" height="430"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <rect key="frame" x="0.0" y="40" width="220" height="390"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <view key="tableFooterView" contentMode="scaleToFill" id="39m-V1-Fgb">
-                                            <rect key="frame" x="0.0" y="66" width="220" height="44"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ECS-PM-dm5">
-                                                    <rect key="frame" x="61" y="5" width="99" height="35"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
-                                                    <state key="normal" title="Hiện tất cả">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <state key="selected" title="Thu gọn"/>
-                                                    <state key="highlighted">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="toggleFontList:" destination="bke-ye-End" eventType="touchUpInside" id="0UE-4g-OLx"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
                                         <prototypes>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Font" id="R95-Vx-VG0" customClass="LXCellFont">
                                                 <rect key="frame" x="0.0" y="22" width="220" height="44"/>
@@ -1769,14 +1746,14 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Sample Text" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="a1b-Mb-QhK">
-                                                            <rect key="frame" x="10" y="0.0" width="200" height="29"/>
+                                                            <rect key="frame" x="10" y="0.0" width="184" height="29"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </label>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Font name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JAn-KS-tMe">
-                                                            <rect key="frame" x="11" y="24" width="300" height="16"/>
+                                                            <rect key="frame" x="11" y="24" width="200" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1787,13 +1764,36 @@
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                         </view>
+                                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="edit_tick.png" id="QT1-un-PYi">
+                                                            <rect key="frame" x="200" y="7" width="16" height="16"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <connections>
+                                                    <outlet property="imageDownloaded" destination="QT1-un-PYi" id="A4d-NE-1mg"/>
                                                     <outlet property="labelFontName" destination="JAn-KS-tMe" id="nnh-Ki-tg3"/>
                                                     <outlet property="labelSample" destination="a1b-Mb-QhK" id="BwI-N3-bSy"/>
                                                     <outlet property="viewSelectIndicator" destination="Iz2-oN-o4h" id="icA-lw-gjg"/>
+                                                </connections>
+                                            </tableViewCell>
+                                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FontDownload" id="NRd-9e-ulD" customClass="LXCellFontPreview">
+                                                <rect key="frame" x="0.0" y="66" width="220" height="44"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                    <rect key="frame" x="0.0" y="0.0" width="220" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="aez-Bs-s4V">
+                                                            <rect key="frame" x="0.0" y="0.0" width="220" height="44"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                </view>
+                                                <connections>
+                                                    <outlet property="imageFont" destination="aez-Bs-s4V" id="edU-Bu-vQC"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
@@ -1802,9 +1802,10 @@
                                             <outlet property="delegate" destination="bke-ye-End" id="7m3-CP-USR"/>
                                         </connections>
                                     </tableView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="V8b-2F-vv8">
+                                    <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="V8b-2F-vv8">
                                         <rect key="frame" x="180" y="0.0" width="40" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" image="icon_close.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -1837,6 +1838,63 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="uGY-9u-juM">
+                                        <rect key="frame" x="0.0" y="0.0" width="62" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                        <state key="normal" title="★">
+                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="disabled">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="touchFontTab:" destination="bke-ye-End" eventType="touchUpInside" id="aId-3j-cDo"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="bpj-vb-ezL">
+                                        <rect key="frame" x="60" y="0.0" width="56" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                        <state key="normal" title="Tất cả">
+                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="disabled">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="touchFontTab:" destination="bke-ye-End" eventType="touchUpInside" id="ilW-pf-CRn"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ltB-84-JOF">
+                                        <rect key="frame" x="115" y="0.0" width="65" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                        <state key="normal" title="Nữa">
+                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="disabled">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="touchFontTab:" destination="bke-ye-End" eventType="touchUpInside" id="uQy-s8-tAf"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.21960784310000001" green="0.19215686269999999" blue="0.1137254902" alpha="0.90000000000000002" colorSpace="deviceRGB"/>
                             </view>
@@ -1848,7 +1906,9 @@
                         <outlet property="buttonCloseFont" destination="V8b-2F-vv8" id="Mvl-7j-h3p"/>
                         <outlet property="buttonDelete" destination="5cU-nk-x7n" id="gaU-kd-WOV"/>
                         <outlet property="buttonFinishEdit" destination="Sy0-2H-Q6B" id="eRx-Ih-4iV"/>
-                        <outlet property="buttonFontList" destination="ECS-PM-dm5" id="Puc-mc-TVa"/>
+                        <outlet property="buttonFontAll" destination="bpj-vb-ezL" id="hUl-KE-71v"/>
+                        <outlet property="buttonFontDown" destination="ltB-84-JOF" id="4MR-UZ-wTR"/>
+                        <outlet property="buttonFontFav" destination="uGY-9u-juM" id="joa-5q-icO"/>
                         <outlet property="buttonRotate" destination="Lae-uQ-gUo" id="CwJ-9a-A6e"/>
                         <outlet property="buttonShadow" destination="vnZ-6i-rPv" id="Asf-Zq-S7s"/>
                         <outlet property="buttonVertical" destination="3tU-Qz-LsY" id="sv0-vQ-8UW"/>
@@ -1967,6 +2027,217 @@
         <image name="tool_next.png" width="30" height="50"/>
         <image name="tool_prev.png" width="30" height="50"/>
     </resources>
+    <classes>
+        <class className="GPUImageView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GPUImageView.h"/>
+        </class>
+        <class className="HFImageEditorFrameView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HFImageEditorFrameView.h"/>
+        </class>
+        <class className="HFImageEditorViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HFImageEditorViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="frameView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="panRecognizer" candidateClass="UIPanGestureRecognizer"/>
+                <relationship kind="outlet" name="pinchRecognizer" candidateClass="UIPinchGestureRecognizer"/>
+                <relationship kind="outlet" name="rotationRecognizer" candidateClass="UIRotationGestureRecognizer"/>
+                <relationship kind="outlet" name="tapRecognizer" candidateClass="UITapGestureRecognizer"/>
+            </relationships>
+        </class>
+        <class className="LXCanvasViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCanvasViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="changeLens:" candidateClass="UIButton"/>
+                <relationship kind="action" name="changePen:" candidateClass="UISlider"/>
+                <relationship kind="action" name="printTemplate:"/>
+                <relationship kind="action" name="setBlend:" candidateClass="UIButton"/>
+                <relationship kind="action" name="setFilm:" candidateClass="UIButton"/>
+                <relationship kind="action" name="setMask:" candidateClass="UIButton"/>
+                <relationship kind="action" name="toggleControl:" candidateClass="UIButton"/>
+                <relationship kind="action" name="toggleFisheye:" candidateClass="UIButton"/>
+                <relationship kind="action" name="toggleGain:" candidateClass="UISwitch"/>
+                <relationship kind="action" name="toggleMaskNatual:" candidateClass="UISwitch"/>
+                <relationship kind="action" name="toggleMono:"/>
+                <relationship kind="action" name="touchCrop:"/>
+                <relationship kind="action" name="touchNo:"/>
+                <relationship kind="action" name="touchOpenHelp:"/>
+                <relationship kind="action" name="touchReset:"/>
+                <relationship kind="action" name="touchSave:"/>
+                <relationship kind="action" name="touchText:"/>
+                <relationship kind="action" name="updateFilter:"/>
+                <relationship kind="outlet" name="buttonBackgroundNatual" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="buttonBlackWhite" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonBlendMedium" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonBlendNone" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonBlendStrong" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonBlendWeak" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonBlurNone" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonBlurNormal" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonBlurStrong" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonBlurWeak" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonFilmMedium" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonFilmNone" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonFilmStrong" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonFilmWeak" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonLensFish" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonLensNormal" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonLensWide" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonNo" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonReset" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonSavePreset" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonToggleBasic" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonToggleBlend" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonToggleEffect" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonToggleFilm" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonToggleFocus" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonToggleLens" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonYes" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="gesturePan" candidateClass="UIPanGestureRecognizer"/>
+                <relationship kind="outlet" name="imageNext" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="imagePrev" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="scrollBlend" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="scrollEffect" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="scrollFilm" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="scrollPreset" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="scrollProcess" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="sliderClear" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderEffectIntensity" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderExposure" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderFeather" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderSaturation" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderSharpness" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderVignette" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="switchGain" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="viewBasicControl" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewBlendControl" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewBottomBar" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewCamera" candidateClass="GPUImageView"/>
+                <relationship kind="outlet" name="viewCameraWraper" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewCanvas" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="viewDraw" candidateClass="LXDrawView"/>
+                <relationship kind="outlet" name="viewEffectControl" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewFilmControl" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewFocusControl" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewLensControl" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewPresetControl" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewTopBar" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXCaptureViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCaptureViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="capture:"/>
+                <relationship kind="action" name="changeFlash:"/>
+                <relationship kind="action" name="close:"/>
+                <relationship kind="action" name="flipCamera:"/>
+                <relationship kind="action" name="setTimer:"/>
+                <relationship kind="action" name="touchPick:"/>
+                <relationship kind="action" name="touchQuick:" candidateClass="UIButton"/>
+                <relationship kind="action" name="touchTimer:"/>
+                <relationship kind="outlet" name="buttonCapture" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonFlash" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonFlash35" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonPick" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonQuick" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonSetNoTimer" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonSetTimer5s" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="imageAutoFocus" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="imagePreview" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="viewCamera" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewCameraWraper" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewCanvas" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="viewFlash" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewTimer" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewTopBar" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewTopBar35" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXCellFont" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellFont.h"/>
+            <relationships>
+                <relationship kind="outlet" name="imageDownloaded" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="labelFontName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelSample" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="viewSelectIndicator" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXCellFontPreview" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellFontPreview.h"/>
+            <relationships>
+                <relationship kind="outlet" name="imageFont" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="LXDrawView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXDrawView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="drawImageView" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="LXHelpBokehViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXHelpBokehViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="touchClose:"/>
+                <relationship kind="outlet" name="viewHelp" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewPopupHelp" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXImageCropViewController" superclassName="HFImageEditorViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXImageCropViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="panSize:" candidateClass="UIPanGestureRecognizer"/>
+                <relationship kind="action" name="setCropRatio:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="imageCropSize" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="LXImageTextViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXImageTextViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="opacityChanged:" candidateClass="UISlider"/>
+                <relationship kind="action" name="pageChanged:" candidateClass="UIPageControl"/>
+                <relationship kind="action" name="sizeChanged:"/>
+                <relationship kind="action" name="toggleVertical:"/>
+                <relationship kind="action" name="touchAddText:"/>
+                <relationship kind="action" name="touchClose:"/>
+                <relationship kind="action" name="touchCloseFont:"/>
+                <relationship kind="action" name="touchDelete:"/>
+                <relationship kind="action" name="touchDoneEdit:"/>
+                <relationship kind="action" name="touchEditText:"/>
+                <relationship kind="action" name="touchFontTab:" candidateClass="UIButton"/>
+                <relationship kind="action" name="touchOK:"/>
+                <relationship kind="action" name="touchResetRotate:"/>
+                <relationship kind="action" name="touchSelectFont:"/>
+                <relationship kind="action" name="touchShadow:"/>
+                <relationship kind="outlet" name="buttonCloseFont" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonDelete" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonFinishEdit" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonFontAll" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonFontDown" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonFontFav" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonFontList" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonRotate" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonShadow" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonVertical" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="imagePreview" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="pageControl" candidateClass="UIPageControl"/>
+                <relationship kind="outlet" name="scrollCanvas" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="scrollColor" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="scrollTemplate" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="slideOpacity" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="slideSize" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="tableFont" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="viewControlObject" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewControlText" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewFontControl" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewTextControl" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXNavBar" superclassName="UINavigationBar">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavBar.h"/>
+        </class>
+        <class className="LXNavGalleryViewController" superclassName="UINavigationController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavGalleryViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

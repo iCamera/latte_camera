@@ -10,6 +10,16 @@
 #import "LXUtils.h"
 #import "UIColor+MLPFlatColors.h"
 #import "LXCellFont.h"
+#import "LXCellFontPreview.h"
+#import "MBProgressHUD.h"
+#import "LatteAPIClient.h"
+#import "UIImageView+loadProgress.h"
+
+typedef enum {
+    kFontTabRecommend,
+    kFontTabAll,
+    kFontTabDownload,
+} LatteFontTab;
 
 @interface LXImageTextViewController ()
 
@@ -19,7 +29,15 @@
     UIViewController *template;
     UIView *editingObject;
     UIView *activeTemplate;
-    NSMutableArray *fonts;
+    NSMutableArray *recommend;
+    NSMutableArray *allfonts;
+    NSMutableArray *allfontsFlat;
+    NSMutableArray *history;
+    NSMutableArray *loadedFont;
+    NSArray *downloadable;
+    NSDictionary *selectedFontInfo;
+    
+    LatteFontTab currentTab;
 }
 
 @synthesize scrollTemplate;
@@ -41,6 +59,9 @@
 @synthesize tableFont;
 @synthesize buttonFontList;
 @synthesize buttonVertical;
+@synthesize buttonFontAll;
+@synthesize buttonFontDown;
+@synthesize buttonFontFav;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -109,10 +130,85 @@
     }
     scrollColor.contentSize = CGSizeMake(40*colors.count+10, 44);
     
-    [self toggleFontList:buttonFontList];
-    
     UIPanGestureRecognizer *panRotate = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panRotateButton:)];
     [buttonRotate addGestureRecognizer:panRotate];
+    
+    loadedFont = [[NSMutableArray alloc] init];
+    [self loadDownloadedFont];
+    [self reloadFontList];
+    
+    
+    // Load history
+    NSArray *documentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentFolder = [documentPath objectAtIndex:0];
+    NSString *newPlistFile = [documentFolder stringByAppendingPathComponent:@"history.plist"];
+    history = [NSMutableArray arrayWithContentsOfFile:newPlistFile];
+    
+    currentTab = kFontTabRecommend;
+}
+
+- (void)loadFontAtPath:(NSString*)path{
+    NSData *inData = [[NSFileManager defaultManager] contentsAtPath:path];
+    if(inData == nil){
+        NSLog(@"Failed to load font. Data at path is null");
+        return;
+    }
+    CFErrorRef error;
+    CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef)inData);
+    CGFontRef font = CGFontCreateWithDataProvider(provider);
+    
+    if (! CTFontManagerRegisterGraphicsFont(font, &error)) {
+        CFStringRef errorDescription = CFErrorCopyDescription(error);
+        NSLog(@"Failed to load font: %@", errorDescription);
+        CFRelease(errorDescription);
+    } else {
+        CFStringRef fontName = CGFontCopyFullName(font);
+        NSString *fontNameNS = (__bridge NSString *)fontName;
+        CFRelease(fontName);
+        
+        NSDictionary *fontDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  fontNameNS, @"title",
+                                  fontNameNS, @"font",
+                                  nil];
+        [loadedFont addObject:fontDict];
+    }
+    CFRelease(font);
+    CFRelease(provider);
+}
+
+- (void)loadDownloadedFont {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
+    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"Fonts"];
+    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:dataPath error:NULL];
+    
+    for (NSString *fontPath in directoryContent) {
+        [self loadFontAtPath:[dataPath stringByAppendingPathComponent:fontPath]];
+    }
+}
+- (void)reloadFontList {
+    //Get recommended fonts
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"fonts" ofType:@"plist"];
+    recommend = [NSArray arrayWithContentsOfFile:path];
+    
+    //Get all fonts
+    allfonts = [[NSMutableArray alloc] init];
+    allfontsFlat = [[NSMutableArray alloc] init];
+    NSArray *fontFamilyNames = [UIFont familyNames];
+    fontFamilyNames = [fontFamilyNames sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    for (NSString *familyName in fontFamilyNames)
+    {
+        NSArray *names = [UIFont fontNamesForFamilyName:familyName];
+        for (NSString *name in names) {
+            NSDictionary *fontDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                      name, @"title",
+                                      name, @"font",
+                                      nil];
+            [allfonts addObject:fontDict];
+            [allfontsFlat addObject:name];
+        }
+    }
+    
 }
 
 - (void)panRotateButton:(UIPanGestureRecognizer*)gesture {
@@ -425,7 +521,6 @@
         subView.center = CGPointMake(scrollCanvas.contentSize.width * 0.5 + offsetX,
                                      scrollCanvas.contentSize.height * 0.5 + offsetY);
     }
-    
 }
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
@@ -478,10 +573,6 @@
 - (IBAction)touchDelete:(id)sender {
     [editingObject removeFromSuperview];
     [self resignAllFocus];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
 }
 
 - (IBAction)touchAddText:(id)sender {
@@ -539,38 +630,38 @@
     [scrollTemplate setContentOffset:CGPointMake(sender.currentPage*320, 0) animated:YES];
 }
 
-- (IBAction)toggleFontList:(UIButton *)sender {
-    sender.selected = !sender.selected;
-    
-    if (sender.selected) {
-        fonts = [[NSMutableArray alloc] init];        
-        NSArray *fontFamilyNames = [UIFont familyNames];
+- (void)toggleFontList:(UIButton *)sender {
+    if (sender.tag == 2) {
+        
+        if (downloadable) {
+            currentTab = kFontTabDownload;
+            [tableFont reloadData];
+        } else {
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            [[LatteAPIClient sharedClient] getPath:@"picture/fonts"
+                                        parameters:nil
+                                           success:^(AFHTTPRequestOperation *operation, NSDictionary* JSON) {
+                                               downloadable = JSON[@"fonts"];
+                                               currentTab = kFontTabDownload;
+                                               [tableFont reloadData];
+                                               [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                               [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                           }];
+        }
 
-        for (NSString *familyName in fontFamilyNames)
-        {
-            NSArray *names = [UIFont fontNamesForFamilyName:familyName];
-            for (NSString *name in names) {
-                NSDictionary *fontDict = [NSDictionary dictionaryWithObjectsAndKeys:
-                                          name, @"title",
-                                          name, @"font",
-                                          nil];
-                [fonts addObject:fontDict];
-            }
-        
-        }
     } else {
-        fonts = [[NSMutableArray alloc] init];
-        
-        
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"fonts" ofType:@"plist"];
-        NSArray *arrayFonts = [NSArray arrayWithContentsOfFile:path];
-        
-        for (NSString *fontName in arrayFonts) {
-            [fonts addObject:fontName];
+        switch (sender.tag) {
+            case 0:
+                currentTab = kFontTabRecommend;
+                break;
+            case 1:
+                currentTab = kFontTabAll;
+            default:
+                break;
         }
+        [tableFont reloadData];
     }
-    
-    [tableFont reloadData];
 }
 
 - (IBAction)toggleVertical:(id)sender {
@@ -579,6 +670,14 @@
     
     [self refreshLabel];
     [self updateControlButtonPosition];
+}
+
+- (IBAction)touchFontTab:(UIButton *)sender {
+    buttonFontFav.enabled = YES;
+    buttonFontAll.enabled = YES;
+    buttonFontDown.enabled = YES;
+    sender.enabled = NO;
+    [self toggleFontList:sender];
 }
 
 - (IBAction)touchShadow:(id)sender {
@@ -609,6 +708,9 @@
     [self setButtonFontList:nil];
     [self setTableFont:nil];
     [self setButtonVertical:nil];
+    [self setButtonFontFav:nil];
+    [self setButtonFontAll:nil];
+    [self setButtonFontDown:nil];
     [super viewDidUnload];
 }
 
@@ -742,7 +844,34 @@
         viewFontControl.frame = frame;
     }];
     
+    if ([editingObject isKindOfClass:[UILabel class]]) {
+        if (selectedFontInfo) {
+            [self saveToHistory];
+        }
+    }
+    
     editingObject = nil;
+}
+
+- (void)saveToHistory {
+    if (!history)
+        history = [[NSMutableArray alloc] init];
+    BOOL found = NO;
+    for (NSDictionary *font in history) {
+        if ([font[@"font"] isEqualToString:selectedFontInfo[@"font"]])
+            found = YES;
+    }
+    
+    if (!found) {
+        [history insertObject:selectedFontInfo atIndex:0];
+        if (history.count > 10)
+            [history removeObjectAtIndex:10];
+        
+        NSArray *documentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentFolder = [documentPath objectAtIndex:0];
+        NSString *newPlistFile = [documentFolder stringByAppendingPathComponent:@"history.plist"];
+        [history writeToFile:newPlistFile atomically:NSDataWritingAtomic];
+    }
 }
 
 - (UIImage *)exportText
@@ -754,41 +883,192 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    if (currentTab == kFontTabRecommend) {
+        return 2;
+    } else {
+        return 1;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return fonts.count;
+    if (currentTab == kFontTabRecommend) {
+        switch (section) {
+            case 0:
+                return history.count;
+                break;
+            case 1:
+                return recommend.count;
+                break;
+            default:
+                break;
+        }
+    } else if (currentTab == kFontTabAll) {
+        return allfonts.count;
+    } else if (currentTab == kFontTabDownload) {
+        return downloadable.count;
+    }
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Font";
-    LXCellFont *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    //cell.labelSample.text =
-    cell.labelSample.font = [UIFont fontWithName:fonts[indexPath.row][@"font"] size:22];
-    if (fonts[indexPath.row][@"title2"]) {
-        cell.labelSample.text = fonts[indexPath.row][@"title2"];
-    } else
-        cell.labelSample.text = fonts[indexPath.row][@"title"];
-    cell.labelFontName.text = fonts[indexPath.row][@"title"];
-    if ([((UILabel*)editingObject).font.fontName isEqualToString:fonts[indexPath.row][@"font"]]) {
-        [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    if (currentTab == kFontTabDownload) {
+        if ([allfontsFlat indexOfObject:downloadable[indexPath.row][@"font"]] == NSNotFound) {
+            static NSString *CellIdentifier = @"FontDownload";
+            LXCellFontPreview *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            [cell.imageFont loadProgess:downloadable[indexPath.row][@"preview"]];
+            return cell;
+        } else {
+            static NSString *CellIdentifier = @"Font";
+            LXCellFont *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            cell.fontInfo = downloadable[indexPath.row];
+            cell.imageDownloaded.hidden = NO;
+            
+            if ([((UILabel*)editingObject).font.fontName isEqualToString:cell.fontInfo[@"font"]]) {
+                [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+            }
+            
+            return cell;
+        }
+    } else {
+        static NSString *CellIdentifier = @"Font";
+        LXCellFont *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        cell.imageDownloaded.hidden = YES;
+        if (currentTab == kFontTabRecommend) {
+            switch (indexPath.section) {
+                case 0:
+                    cell.fontInfo = history[indexPath.row];
+                    break;
+                case 1:
+                    cell.fontInfo = recommend[indexPath.row];
+                    break;
+                default:
+                    break;
+            }
+        } else if (currentTab == kFontTabAll) {
+            cell.fontInfo = allfonts[indexPath.row];
+        }
+        
+        if ([((UILabel*)editingObject).font.fontName isEqualToString:cell.fontInfo[@"font"]]) {
+            [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+        }
+        
+        return cell;
     }
-    
-    return cell;
 }
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (currentTab == kFontTabDownload) {
+        if ([allfontsFlat indexOfObject:downloadable[indexPath.row][@"font"]] == NSNotFound) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Download", @"")
+                                                            message:NSLocalizedString(@"Are you sure you want to download this font?", @"")
+                                                           delegate:self
+                                                  cancelButtonTitle:NSLocalizedString(@"cancel", @"")
+                                                  otherButtonTitles:NSLocalizedString(@"ok", @""), nil];
+            alert.tag = indexPath.row;
+            [alert show];
+            return;
+        }
+    }
+    
+    NSDictionary *fontInfo;
+    
+    if (currentTab == kFontTabRecommend) {
+        switch (indexPath.section) {
+            case 0:
+                fontInfo = history[indexPath.row];
+                break;
+            case 1:
+                fontInfo = recommend[indexPath.row];
+                break;
+            default:
+                break;
+        }
+    } else if (currentTab == kFontTabAll) {
+        fontInfo = allfonts[indexPath.row];
+    } else if (currentTab == kFontTabDownload) {
+        fontInfo = downloadable[indexPath.row];
+    }
+    
     CGFloat fontSize = ((UILabel*)editingObject).font.pointSize;
-    ((UILabel*)editingObject).font = [UIFont fontWithName:fonts[indexPath.row][@"font"] size:fontSize];
+    ((UILabel*)editingObject).font = [UIFont fontWithName:fontInfo[@"font"] size:fontSize];
     
     [self refreshLabel];
     [self updateControlButtonPosition];
+    
+    selectedFontInfo = fontInfo;
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        MBProgressHUD *progessHUD = [[MBProgressHUD alloc] initWithView:self.view];
+        progessHUD.mode = MBProgressHUDModeDeterminate;
+        progessHUD.removeFromSuperViewOnHide = YES;
+        [self.view addSubview:progessHUD];
+        
+        [progessHUD show:YES];
+        
+        
+        NSURLRequest *request = [[LatteAPIClient sharedClient] requestWithMethod:@"GET" path:downloadable[alertView.tag][@"url"] parameters:nil];
+        
+        AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+        
+        void (^successUpload)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, NSData *data) {
+            progessHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+            progessHUD.mode = MBProgressHUDModeCustomView;
+            [progessHUD hide:YES afterDelay:1];
+            
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
+            NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"Fonts"];
+            NSError *error;
+            
+            if (![[NSFileManager defaultManager] fileExistsAtPath:dataPath])
+                [[NSFileManager defaultManager] createDirectoryAtPath:dataPath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
+            
+            NSString *newPath = [dataPath stringByAppendingPathComponent:downloadable[alertView.tag][@"filename"]];
+            [data writeToFile:newPath atomically:NSDataWritingAtomic];
+            [self loadFontAtPath:newPath];
+            [self reloadFontList];
+            [tableFont reloadData];
+        };
+        
+        void (^failDownload)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
+            progessHUD.mode = MBProgressHUDModeText;
+            progessHUD.labelText = @"Error";
+            [progessHUD hide:YES afterDelay:2];
+        };
+        
+        [operation setCompletionBlockWithSuccess: successUpload failure: failDownload];
+        
+        [operation setDownloadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+            progessHUD.progress = (float)totalBytesWritten/(float)totalBytesExpectedToWrite;
+        }];
+        
+        [operation start];
+    }
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (currentTab == kFontTabRecommend) {
+        if (section > 0) {
+            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 220, 1)];
+            view.backgroundColor = [UIColor whiteColor];
+            return view;
+        }
+        
+    }
+    return nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (currentTab == kFontTabRecommend) {
+        return 1;
+    }else
+        return 0;
 }
 
 @end

@@ -12,5 +12,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *labelSample;
 @property (strong, nonatomic) IBOutlet UILabel *labelFontName;
 @property (strong, nonatomic) IBOutlet UIView *viewSelectIndicator;
+@property (strong, nonatomic) NSDictionary *fontInfo;
+@property (strong, nonatomic) IBOutlet UIImageView *imageDownloaded;
 
 @end
