@@ -144,64 +144,6 @@
     [HUD show:YES];
 }
 
-- (void)updateNow {
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithObject:[app getToken] forKey:@"token"];
-    
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-    
-    [self.root fetchValueIntoObject:dict];
-
-    NSString *msg = @"Values:";
-    for (NSString *aKey in dict) {
-        msg = [msg stringByAppendingFormat:@"\n- %@: %@", aKey, [dict objectForKey:aKey]];
-        
-        if ([aKey isEqualToString:@"birthday"]) {
-            NSDate *date = [dict objectForKey:aKey];
-            NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-            
-            [dateFormat setDateFormat:@"yyyy"];
-            NSString *year = [dateFormat stringFromDate:date];
-            [param setObject:year forKey:@"birthday_year"];
-            
-            [dateFormat setDateFormat:@"MM"];
-            NSString *month = [dateFormat stringFromDate:date];
-            [param setObject:month forKey:@"birthday_month"];
-            
-            [dateFormat setDateFormat:@"dd"];
-            NSString *day = [dateFormat stringFromDate:date];
-            [param setObject:day forKey:@"birthday_day"];
-        }
-        else {
-            [param setObject:[dict objectForKey:aKey] forKey:aKey];
-        }
-    }
-    
-    [[LatteAPIClient sharedClient] postPath:@"user/me/update"
-                                       parameters: param
-                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                              if ([[JSON objectForKey:@"status"] integerValue] == 0) {
-                                                  NSString *error = @"";
-                                                  NSDictionary *errors = [JSON objectForKey:@"errors"];
-                                                  for (NSString *tmp in [JSON objectForKey:@"errors"]) {
-                                                      error = [error stringByAppendingFormat:@"\n%@", [errors objectForKey:tmp]];
-                                                  }
-                                                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"エラー" message:error delegate:self cancelButtonTitle:@"YES!" otherButtonTitles:nil];
-                                                  [alert show];
-                                              }
- 
-                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) { 
-                                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
-                                                                                              message:error.localizedDescription
-                                                                                             delegate:nil
-                                                                                    cancelButtonTitle:NSLocalizedString(@"close", "Close")
-                                                                                    otherButtonTitles:nil];
-                                              [alert show];
-                                          }];
-
-}
-
-
 - (void)sectionHeaderWillAppearForSection:(QSection *)section atIndex:(NSInteger)indexPath {
     if (section.headerView) {
         return;
@@ -243,7 +185,7 @@
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
     [dict setObject:[app getToken] forKey:@"token"];
     
-    if ([dict objectForKey:@"default_show_exif"]) {
+    /*if ([dict objectForKey:@"default_show_exif"]) {
         app.currentUser.defaultShowEXIF = [[dict objectForKey:@"default_show_exif"] boolValue];
     }
     
@@ -253,7 +195,7 @@
     
     if ([dict objectForKey:@"default_show_taken_at"]) {
         app.currentUser.defaultShowTakenAt = [[dict objectForKey:@"default_show_taken_at"] boolValue];
-    }
+    }*/
     
     [[LatteAPIClient sharedClient] postPath:@"user/me/update"
                                  parameters: dict
@@ -266,6 +208,8 @@
                                             }
                                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"エラー" message:error delegate:self cancelButtonTitle:@"YES!" otherButtonTitles:nil];
                                             [alert show];
+                                        } else {
+                                            app.currentUser = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
                                         }
                                         
                                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

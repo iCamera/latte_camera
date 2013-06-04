@@ -6,14 +6,19 @@
 //  Copyright (c) 2012年 LUXEYS. All rights reserved.
 //
 
-#import "LXFilterDOF.h"
+#import "LXFilterDOF2.h"
 #import "GPUImage.h"
 
-@implementation LXFilterDOF {
-    GLint imageWidthFactorUniform, imageHeightFactorUniform;
-    GLint aspectratioUniform;
-    GLint biasUniform;
+@implementation LXFilterDOF2 {
+    GLint depthTextureUniform;
+    GLint widthUniform;
+    GLint heightUniform;
+    GLint maxblurUniform;
+
     GLint gainUniform;
+    GLint thresholdUniform;
+    GLint ringsUniform;
+    GLint samplesUniform;
     
     GLint filterSecondTextureCoordinateAttribute;
     GLint filterInputTextureUniform2;
@@ -22,7 +27,7 @@
 }
 
 - (id)init {
-    NSString *fragmentShaderPathname = [[NSBundle mainBundle] pathForResource:@"lattedof" ofType:@"fsh"];
+    NSString *fragmentShaderPathname = [[NSBundle mainBundle] pathForResource:@"latteblur" ofType:@"fsh"];
     NSString *fragmentShaderString = [NSString stringWithContentsOfFile:fragmentShaderPathname encoding:NSUTF8StringEncoding error:nil];
     
     if (!(self = [super initWithVertexShaderFromString:kGPUImageTwoInputTextureVertexShaderString fragmentShaderFromString:fragmentShaderString]))
@@ -38,11 +43,21 @@
         glEnableVertexAttribArray(filterSecondTextureCoordinateAttribute);
     });
     
-    aspectratioUniform = [filterProgram uniformIndex:@"aspectratio"];
-    biasUniform = [filterProgram uniformIndex:@"bias"];
+    widthUniform = [filterProgram uniformIndex:@"width"];
+    heightUniform = [filterProgram uniformIndex:@"height"];
+    
+    maxblurUniform = [filterProgram uniformIndex:@"maxblur"];
+    
     gainUniform = [filterProgram uniformIndex:@"gain"];
-    imageWidthFactorUniform = [filterProgram uniformIndex:@"imageWidthFactor"];
-    imageHeightFactorUniform = [filterProgram uniformIndex:@"imageHeightFactor"];
+    
+    thresholdUniform = [filterProgram uniformIndex:@"threshold"];
+    
+    samplesUniform = [filterProgram uniformIndex:@"samples"];
+    ringsUniform = [filterProgram uniformIndex:@"rings"];
+    
+    [self setInteger:4 forUniform:ringsUniform program:filterProgram];
+    [self setInteger:5 forUniform:samplesUniform program:filterProgram];
+    self.maxblur = 1.0;
     
     inputRotation2 = kGPUImageNoRotation;
     
@@ -84,12 +99,21 @@
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
-- (void)setBias:(CGFloat)aBias {
-    [self setFloat:aBias forUniform:biasUniform program:filterProgram];
+
+
+- (void)setMaxblur:(CGFloat)aMaxblur {
+    _maxblur = aMaxblur;
+    [self setFloat:_maxblur forUniform:maxblurUniform program:filterProgram];
+}
+
+- (void)setThreshold:(CGFloat)aThreshold {
+    _threshold = aThreshold;
+    [self setFloat:_threshold forUniform:thresholdUniform program:filterProgram];
 }
 
 - (void)setGain:(CGFloat)aGain {
-    [self setFloat:aGain forUniform:gainUniform program:filterProgram];
+    _gain = aGain;
+    [self setFloat:_gain forUniform:gainUniform program:filterProgram];
 }
 
 - (void)setImageDOF:(UIImage *)imageDOF {
@@ -143,27 +167,18 @@
 
 - (void)setupFilterForSize:(CGSize)filterFrameSize
 {
-    if (GPUImageRotationSwapsWidthAndHeight(inputRotation))
-    {
-        [self setFloat:filterFrameSize.width/filterFrameSize.height forUniform:aspectratioUniform program:filterProgram];
-    }
-    else
-    {
-        [self setFloat:filterFrameSize.height/filterFrameSize.width forUniform:aspectratioUniform program:filterProgram];
-    }
-    
    runSynchronouslyOnVideoProcessingQueue(^{
        [GPUImageContext setActiveShaderProgram:filterProgram];
        
        if (GPUImageRotationSwapsWidthAndHeight(inputRotation))
        {
-           glUniform1f(imageWidthFactorUniform, 1.0 / filterFrameSize.height);
-           glUniform1f(imageHeightFactorUniform, 1.0 / filterFrameSize.width);
+           glUniform1f(widthUniform, filterFrameSize.height);
+           glUniform1f(heightUniform, filterFrameSize.width);
        }
        else
        {
-           glUniform1f(imageWidthFactorUniform, 1.0 / filterFrameSize.width);
-           glUniform1f(imageHeightFactorUniform, 1.0 / filterFrameSize.height);
+           glUniform1f(widthUniform, filterFrameSize.width);
+           glUniform1f(heightUniform, filterFrameSize.height);
        }
    });
 }

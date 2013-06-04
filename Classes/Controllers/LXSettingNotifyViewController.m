@@ -121,6 +121,8 @@
                                             }
                                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"エラー" message:error delegate:self cancelButtonTitle:@"YES!" otherButtonTitles:nil];
                                             [alert show];
+                                        } else {
+                                            app.currentUser = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
                                         }
                                         
                                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

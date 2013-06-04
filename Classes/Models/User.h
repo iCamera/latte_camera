@@ -47,7 +47,7 @@
     BOOL isUnregister;
     NSString *name;
     NSString *occupation;
-    NSNumber *pictureStatus;
+    PictureStatus pictureStatus;
     NSString *profilePicture;
     NSNumber *voteCount;
     
@@ -80,7 +80,7 @@
 @property (nonatomic, assign) BOOL isUnregister;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *occupation;
-@property (nonatomic, copy) NSNumber *pictureStatus;
+@property (nonatomic, assign) PictureStatus pictureStatus;
 @property (nonatomic, copy) NSString *profilePicture;
 @property (nonatomic, copy) NSString *profilePictureHi;
 @property (nonatomic, copy) NSString *nationality;

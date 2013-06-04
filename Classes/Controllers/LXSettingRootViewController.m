@@ -102,20 +102,23 @@
 
                 NSDictionary *data = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:filePath] options:0 error:nil];
                 
-                NSMutableDictionary *countriesDict = [[NSMutableDictionary alloc] init];
                 NSLocale *locale = [NSLocale currentLocale];
                 
                 NSArray *countryArray = [NSLocale ISOCountryCodes];
+                countryArray = [countryArray sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+                NSMutableArray *countryString = [[NSMutableArray alloc] init];
                 for (NSString *countryCode in countryArray)
                 {
                     NSString *displayNameString = [locale displayNameForKey:NSLocaleCountryCode value:countryCode];
-                    [countriesDict setObject:countryCode forKey:displayNameString];
+                    [countryString addObject:displayNameString];
                 }
                 
                 root = [[LXRootBuilder new]buildWithObject:data];
                 [root bindToObject:data];
                 QSection *section = root.sections[0];
-                QRadioElement *eleCountry = [[QRadioElement alloc] initWithDict:countriesDict selected:0 title:NSLocalizedString(@"nationality", @"Nationality")];
+//                QRadioElement *eleCountry = [[QRadioElement alloc] initWithDict:countriesDict selected:0 title:NSLocalizedString(@"nationality", @"Nationality")];
+                QRadioElement *eleCountry = [[QRadioElement alloc] initWithItems:countryString selected:0 title:NSLocalizedString(@"nationality", @"Nationality")];
+                eleCountry.values = countryArray;
                 eleCountry.key = @"nationality";
                 eleCountry.controllerAction = @"handleUpdateRadio:";
                 

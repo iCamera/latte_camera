@@ -18,7 +18,7 @@
 @end
 
 @implementation LXPicEditViewController {
-    NSInteger imageStatus;
+    PictureStatus imageStatus;
     LXShare *share;
     NSMutableArray *tags;
 }
@@ -93,7 +93,7 @@
         
         LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
         imagePic.image = _preview;
-        imageStatus = [app.currentUser.pictureStatus integerValue];
+        imageStatus = app.currentUser.pictureStatus;
         switchGPS.on = app.currentUser.defaultShowGPS;
         switchEXIF.on = app.currentUser.defaultShowEXIF;
         switchTakenAt.on = app.currentUser.defaultShowTakenAt;
@@ -113,16 +113,16 @@
 
 - (void)setStatusLabel {
     switch (imageStatus) {
-        case 0:
+        case PictureStatusPrivate:
             labelStatus.text = NSLocalizedString(@"status_private", @"非公開");
             break;
-        case 10:
+        case PictureStatusFriendsOnly:
             labelStatus.text = NSLocalizedString(@"status_friends", @"友達まで");
             break;
-        case 30:
+        case PictureStatusMember:
             labelStatus.text = NSLocalizedString(@"status_members", @"会員まで");
             break;
-        case 40:
+        case PictureStatusPublic:
             labelStatus.text = NSLocalizedString(@"status_public", @"公開");
             break;
         default:
@@ -300,8 +300,23 @@
 
     [[LatteAPIClient sharedClient] postPath:@"user/me/update"
                                  parameters: params
-                                    success:nil
-                                    failure:nil];
+                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                        if ([[JSON objectForKey:@"status"] integerValue] == 0) {
+                                            NSString *error = @"";
+                                            NSDictionary *errors = [JSON objectForKey:@"errors"];
+                                            for (NSString *tmp in [JSON objectForKey:@"errors"]) {
+                                                error = [error stringByAppendingFormat:@"\n%@", [errors objectForKey:tmp]];
+                                            }
+                                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"エラー"
+                                                                                            message:error
+                                                                                           delegate:nil
+                                                                                  cancelButtonTitle:@"Close"
+                                                                                  otherButtonTitles:nil];
+                                            [alert show];
+                                        } else {
+                                            app.currentUser = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
+                                        }
+                                    } failure:nil];
 }
 
 - (IBAction)touchTwitter:(id)sender {

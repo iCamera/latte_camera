@@ -585,6 +585,14 @@
 		88418F5317438302004EFBA1 /* blend6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88418F5217438302004EFBA1 /* blend6.jpg */; };
 		8847564217212718005CA201 /* RNBlurModalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8847563217212718005CA201 /* RNBlurModalView.m */; };
 		884C54D516B22EF500DA318E /* LXHelpBokehViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 884C54D416B22EF500DA318E /* LXHelpBokehViewController.m */; };
+		884D215A175C9BF0002FF853 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 884D2150175C9BEF002FF853 /* ioapi.c */; };
+		884D215B175C9BF0002FF853 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 884D2152175C9BF0002FF853 /* mztools.c */; };
+		884D215C175C9BF0002FF853 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 884D2154175C9BF0002FF853 /* unzip.c */; };
+		884D215D175C9BF0002FF853 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 884D2156175C9BF0002FF853 /* zip.c */; };
+		884D215E175C9BF0002FF853 /* ZipArchive.mm in Sources */ = {isa = PBXBuildFile; fileRef = 884D2159175C9BF0002FF853 /* ZipArchive.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		884D2161175CA656002FF853 /* LXFilterDOF2.m in Sources */ = {isa = PBXBuildFile; fileRef = 884D2160175CA656002FF853 /* LXFilterDOF2.m */; };
+		884D2166175CAEF7002FF853 /* latteblur.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 884D2164175CABBE002FF853 /* latteblur.fsh */; };
+		884D2168175DC231002FF853 /* tone.plist in Resources */ = {isa = PBXBuildFile; fileRef = 884D2167175DC231002FF853 /* tone.plist */; };
 		884FBB90163E24A3006C4359 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 884FBB8F163E24A3006C4359 /* SystemConfiguration.framework */; };
 		8855F971173CB3C1006892FD /* flower-1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8855F927173CB3C1006892FD /* flower-1.jpg */; };
 		8855F972173CB3C1006892FD /* flower-10.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8855F928173CB3C1006892FD /* flower-10.jpg */; };
@@ -2247,6 +2255,22 @@
 		8847563217212718005CA201 /* RNBlurModalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNBlurModalView.m; sourceTree = "<group>"; };
 		884C54D316B22EF500DA318E /* LXHelpBokehViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHelpBokehViewController.h; sourceTree = "<group>"; };
 		884C54D416B22EF500DA318E /* LXHelpBokehViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHelpBokehViewController.m; sourceTree = "<group>"; };
+		884D214F175C9BEF002FF853 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
+		884D2150175C9BEF002FF853 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
+		884D2151175C9BEF002FF853 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
+		884D2152175C9BF0002FF853 /* mztools.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mztools.c; sourceTree = "<group>"; };
+		884D2153175C9BF0002FF853 /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mztools.h; sourceTree = "<group>"; };
+		884D2154175C9BF0002FF853 /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unzip.c; sourceTree = "<group>"; };
+		884D2155175C9BF0002FF853 /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
+		884D2156175C9BF0002FF853 /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
+		884D2157175C9BF0002FF853 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
+		884D2158175C9BF0002FF853 /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipArchive.h; sourceTree = "<group>"; };
+		884D2159175C9BF0002FF853 /* ZipArchive.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ZipArchive.mm; sourceTree = "<group>"; };
+		884D215F175CA656002FF853 /* LXFilterDOF2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFilterDOF2.h; sourceTree = "<group>"; };
+		884D2160175CA656002FF853 /* LXFilterDOF2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFilterDOF2.m; sourceTree = "<group>"; };
+		884D2162175CABA2002FF853 /* lattefragment.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lattefragment.fsh; sourceTree = "<group>"; };
+		884D2164175CABBE002FF853 /* latteblur.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = latteblur.fsh; sourceTree = "<group>"; };
+		884D2167175DC231002FF853 /* tone.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = tone.plist; sourceTree = "<group>"; };
 		884FBB8F163E24A3006C4359 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8855F927173CB3C1006892FD /* flower-1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "flower-1.jpg"; sourceTree = "<group>"; };
 		8855F928173CB3C1006892FD /* flower-10.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "flower-10.jpg"; sourceTree = "<group>"; };
@@ -2394,8 +2418,8 @@
 		887379B917586FF400C1549B /* LXCellFontPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCellFontPreview.h; sourceTree = "<group>"; };
 		887379BA17586FF400C1549B /* LXCellFontPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCellFontPreview.m; sourceTree = "<group>"; };
 		887379BC1758842F00C1549B /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
-		887379BF1758CC3500C1549B /* ja */ = {isa = PBXFileReference; lastKnownFileType = file; name = ja; path = ja.lproj/fonts.plist; sourceTree = "<group>"; };
-		887379C11758CC3900C1549B /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/fonts.plist; sourceTree = "<group>"; };
+		887379BF1758CC3500C1549B /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = ja; path = ja.lproj/fonts.plist; sourceTree = "<group>"; };
+		887379C11758CC3900C1549B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/fonts.plist; sourceTree = "<group>"; };
 		8874DB9116E8A4CB00FDF60B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8874DBC116E8BF3500FDF60B /* LXNavMypageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXNavMypageController.h; sourceTree = "<group>"; };
 		8874DBC216E8BF3500FDF60B /* LXNavMypageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXNavMypageController.m; sourceTree = "<group>"; };
@@ -3517,8 +3541,7 @@
 				880C4AFB161C2A1400252C6A /* MBProgressHUD.h */,
 				880C4AFC161C2A1400252C6A /* MBProgressHUD.m */,
 			);
-			name = MBProgressHUD;
-			path = Vendor/MBProgressHUD;
+			path = MBProgressHUD;
 			sourceTree = "<group>";
 		};
 		880E35A916A7F7150097B97F /* TestFlightSDK1.2 */ = {
@@ -3529,7 +3552,8 @@
 				880E35AC16A7F7150097B97F /* release_notes.md */,
 				880E35AD16A7F7150097B97F /* TestFlight.h */,
 			);
-			path = TestFlightSDK1.2;
+			name = TestFlightSDK1.2;
+			path = ../TestFlightSDK1.2;
 			sourceTree = "<group>";
 		};
 		880E50D51728C30800D584EE /* ImageCrop */ = {
@@ -3538,8 +3562,7 @@
 				880E50D81728C30800D584EE /* ImageEditor */,
 				880E50EC1728C30800D584EE /* README.md */,
 			);
-			name = ImageCrop;
-			path = Vendor/ImageCrop;
+			path = ImageCrop;
 			sourceTree = "<group>";
 		};
 		880E50D81728C30800D584EE /* ImageEditor */ = {
@@ -3575,8 +3598,7 @@
 				88144247172F9CCF00A5B3FF /* UIView+Genie.h */,
 				88144248172F9CCF00A5B3FF /* UIView+Genie.m */,
 			);
-			name = BCGenieEffect;
-			path = Vendor/BCGenieEffect;
+			path = BCGenieEffect;
 			sourceTree = "<group>";
 		};
 		8824FB4516F72CE700357ADB /* NIBs */ = {
@@ -3601,8 +3623,33 @@
 				8847563117212718005CA201 /* RNBlurModalView.h */,
 				8847563217212718005CA201 /* RNBlurModalView.m */,
 			);
-			name = RNBlurModalView;
-			path = Vendor/RNBlurModalView;
+			path = RNBlurModalView;
+			sourceTree = "<group>";
+		};
+		884D214D175C9BEF002FF853 /* ZipArchive */ = {
+			isa = PBXGroup;
+			children = (
+				884D214E175C9BEF002FF853 /* minizip */,
+				884D2158175C9BF0002FF853 /* ZipArchive.h */,
+				884D2159175C9BF0002FF853 /* ZipArchive.mm */,
+			);
+			path = ZipArchive;
+			sourceTree = "<group>";
+		};
+		884D214E175C9BEF002FF853 /* minizip */ = {
+			isa = PBXGroup;
+			children = (
+				884D214F175C9BEF002FF853 /* crypt.h */,
+				884D2150175C9BEF002FF853 /* ioapi.c */,
+				884D2151175C9BEF002FF853 /* ioapi.h */,
+				884D2152175C9BF0002FF853 /* mztools.c */,
+				884D2153175C9BF0002FF853 /* mztools.h */,
+				884D2154175C9BF0002FF853 /* unzip.c */,
+				884D2155175C9BF0002FF853 /* unzip.h */,
+				884D2156175C9BF0002FF853 /* zip.c */,
+				884D2157175C9BF0002FF853 /* zip.h */,
+			);
+			path = minizip;
 			sourceTree = "<group>";
 		};
 		8855F926173CB3C1006892FD /* flower */ = {
@@ -3693,8 +3740,7 @@
 			children = (
 				8866D66E16EEE66300CAE6E5 /* STTweetLabel */,
 			);
-			name = STTweetLabel;
-			path = Vendor/STTweetLabel;
+			path = STTweetLabel;
 			sourceTree = "<group>";
 		};
 		8866D66E16EEE66300CAE6E5 /* STTweetLabel */ = {
@@ -4265,8 +4311,7 @@
 				8881663716B902260089106D /* Library */,
 				8881663F16B902260089106D /* Readme.txt */,
 			);
-			name = GoogleAnalyticsiOS_2.0beta4;
-			path = Vendor/GoogleAnalyticsiOS_2.0beta4;
+			path = GoogleAnalyticsiOS_2.0beta4;
 			sourceTree = "<group>";
 		};
 		8881663716B902260089106D /* Library */ = {
@@ -4291,7 +4336,7 @@
 				8883C07616DCAE85003510A1 /* UIViewController+JASidePanel.m */,
 			);
 			name = JASidePanel;
-			path = Vendor/JASidePanels/JASidePanels/Source;
+			path = JASidePanels/JASidePanels/Source;
 			sourceTree = "<group>";
 		};
 		8883EED81732256B00AA2D5E /* YIPopupTextView */ = {
@@ -4299,8 +4344,7 @@
 			children = (
 				8883EED91732256B00AA2D5E /* Classes */,
 			);
-			name = YIPopupTextView;
-			path = Vendor/YIPopupTextView;
+			path = YIPopupTextView;
 			sourceTree = "<group>";
 		};
 		8883EED91732256B00AA2D5E /* Classes */ = {
@@ -4330,7 +4374,7 @@
 				8884E40416A8EB5700DCBAC7 /* REComposeViewController.m */,
 			);
 			name = REComposeViewController;
-			path = Vendor/REComposeViewController/REComposeViewController;
+			path = REComposeViewController/REComposeViewController;
 			sourceTree = "<group>";
 		};
 		8884E40B16A8EB6C00DCBAC7 /* RDActionSheet */ = {
@@ -4356,7 +4400,7 @@
 				8884E41416A8EB6C00DCBAC7 /* RDActionSheet.m */,
 			);
 			name = RDActionSheet;
-			path = Vendor/RDActionSheet/RDActionSheet;
+			path = RDActionSheet/RDActionSheet;
 			sourceTree = "<group>";
 		};
 		8890722B16770EBB0013DF7A /* Classes */ = {
@@ -4546,12 +4590,16 @@
 		8890728F16770EBB0013DF7A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				8855F9BD173CD452006892FD /* GPUImageFilter+reset.h */,
+				8855F9BE173CD452006892FD /* GPUImageFilter+reset.m */,
 				8890729816770EBB0013DF7A /* LatteAPIClient.h */,
 				8890729916770EBB0013DF7A /* LatteAPIClient.m */,
 				88F621041724E6AE00CDD1EC /* LXFBOpenGraph.h */,
 				88F621051724E6AE00CDD1EC /* LXFBOpenGraph.m */,
 				88E617BC173BD0C000E6E909 /* LXFilterDOF.h */,
 				88E617BD173BD0C000E6E909 /* LXFilterDOF.m */,
+				884D215F175CA656002FF853 /* LXFilterDOF2.h */,
+				884D2160175CA656002FF853 /* LXFilterDOF2.m */,
 				8890729E16770EBB0013DF7A /* LXFilterFish.h */,
 				8890729F16770EBB0013DF7A /* LXFilterFish.m */,
 				88675371170C274A009B5BBE /* LXImageFilter.h */,
@@ -4584,8 +4632,6 @@
 				885C061C16BB69B0000820E7 /* UIDeviceHardware.m */,
 				88C095C6173A47BD007CED90 /* UIImage+fixOrientation.h */,
 				88C095C7173A47BD007CED90 /* UIImage+fixOrientation.m */,
-				8855F9BD173CD452006892FD /* GPUImageFilter+reset.h */,
-				8855F9BE173CD452006892FD /* GPUImageFilter+reset.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -4614,8 +4660,7 @@
 			children = (
 				8890B9B916E03B1F008EDFBF /* class */,
 			);
-			name = GrowingTextView;
-			path = Vendor/GrowingTextView;
+			path = GrowingTextView;
 			sourceTree = "<group>";
 		};
 		8890B9B916E03B1F008EDFBF /* class */ = {
@@ -4634,7 +4679,7 @@
 			children = (
 				88B47B1E15DE522F00FD9C72 /* AFNetworking */,
 			);
-			name = AFNetworking;
+			path = AFNetworking;
 			sourceTree = "<group>";
 		};
 		88B47B1E15DE522F00FD9C72 /* AFNetworking */ = {
@@ -4660,8 +4705,7 @@
 				88B47B3215DE522F00FD9C72 /* UIImageView+AFNetworking.h */,
 				88B47B3315DE522F00FD9C72 /* UIImageView+AFNetworking.m */,
 			);
-			name = AFNetworking;
-			path = Vendor/AFNetworking/AFNetworking;
+			path = AFNetworking;
 			sourceTree = "<group>";
 		};
 		88CE89DC174E101A00C6A6B6 /* fonts */ = {
@@ -4698,6 +4742,7 @@
 		88D4B5BE15D4B66B00FC4FBB /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				884D214D175C9BEF002FF853 /* ZipArchive */,
 				88CE8A03174E10B500C6A6B6 /* UIColor+MLPFlatColors */,
 				88B47AFC15DE503F00FD9C72 /* AFNetworking */,
 				8814422B172F9CCF00A5B3FF /* BCGenieEffect */,
@@ -4714,7 +4759,7 @@
 				880E35A916A7F7150097B97F /* TestFlightSDK1.2 */,
 				8883EED81732256B00AA2D5E /* YIPopupTextView */,
 			);
-			name = Vendor;
+			path = Vendor;
 			sourceTree = "<group>";
 		};
 		88D9863815B8F97700858AD6 = {
@@ -4912,7 +4957,7 @@
 				88E96AD615EDC81500FB9CC8 /* QWebViewController.m */,
 			);
 			name = quickdialog;
-			path = Vendor/quickdialog;
+			path = QuickDialog/quickdialog;
 			sourceTree = "<group>";
 		};
 		88E96B1315EDCB5E00FB9CC8 /* Products */ = {
@@ -5077,17 +5122,18 @@
 		88FE3F9E166C93D6004DCE53 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				88CE89DC174E101A00C6A6B6 /* fonts */,
-				887379C01758CC3500C1549B /* fonts.plist */,
 				88EDBE54170A7EE2003D7B15 /* Blend */,
 				886E521516FC1C8800629D76 /* country */,
-				8824FB4516F72CE700357ADB /* NIBs */,
-				8824FBAB16F7643200357ADB /* settingprivacy.json */,
-				8824FBAE16F7643500357ADB /* settingprofile.json */,
 				88FE3F9F166C93D6004DCE53 /* Effect */,
+				88CE89DC174E101A00C6A6B6 /* fonts */,
+				887379C01758CC3500C1549B /* fonts.plist */,
 				88FE3FAB166C93D6004DCE53 /* Images */,
 				88FE438A166C941A004DCE53 /* Localizable.strings */,
+				8824FB4516F72CE700357ADB /* NIBs */,
 				88E617BA173B82F800E6E909 /* preset.plist */,
+				8824FBAB16F7643200357ADB /* settingprivacy.json */,
+				8824FBAE16F7643500357ADB /* settingprofile.json */,
+				884D2167175DC231002FF853 /* tone.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -5095,12 +5141,18 @@
 		88FE3F9F166C93D6004DCE53 /* Effect */ = {
 			isa = PBXGroup;
 			children = (
-				88BAA31B174A19AB004E0F63 /* curve19.png */,
-				88E617BF173BD0E000E6E909 /* lattedof.fsh */,
-				88679D6417180CD800F7EB55 /* curve18.png */,
-				88679D621717E58900F7EB55 /* curve17.png */,
 				88679D401717DD3E00F7EB55 /* curve0.png */,
 				88679D411717DD3E00F7EB55 /* curve1.png */,
+				88679D4A1717DD3E00F7EB55 /* curve10.png */,
+				88679D4B1717DD3E00F7EB55 /* curve11.png */,
+				88679D4C1717DD3E00F7EB55 /* curve12.png */,
+				88679D4D1717DD3E00F7EB55 /* curve13.png */,
+				88679D4E1717DD3E00F7EB55 /* curve14.png */,
+				88679D4F1717DD3E00F7EB55 /* curve15.png */,
+				88679D501717DD3E00F7EB55 /* curve16.png */,
+				88679D621717E58900F7EB55 /* curve17.png */,
+				88679D6417180CD800F7EB55 /* curve18.png */,
+				88BAA31B174A19AB004E0F63 /* curve19.png */,
 				88679D421717DD3E00F7EB55 /* curve2.png */,
 				88679D431717DD3E00F7EB55 /* curve3.png */,
 				88679D441717DD3E00F7EB55 /* curve4.png */,
@@ -5109,16 +5161,12 @@
 				88679D471717DD3E00F7EB55 /* curve7.png */,
 				88679D481717DD3E00F7EB55 /* curve8.png */,
 				88679D491717DD3E00F7EB55 /* curve9.png */,
-				88679D4A1717DD3E00F7EB55 /* curve10.png */,
-				88679D4B1717DD3E00F7EB55 /* curve11.png */,
-				88679D4C1717DD3E00F7EB55 /* curve12.png */,
-				88679D4D1717DD3E00F7EB55 /* curve13.png */,
-				88679D4E1717DD3E00F7EB55 /* curve14.png */,
-				88679D4F1717DD3E00F7EB55 /* curve15.png */,
-				88679D501717DD3E00F7EB55 /* curve16.png */,
+				88675385170C3140009B5BBE /* latte.fsh */,
+				884D2164175CABBE002FF853 /* latteblur.fsh */,
+				88E617BF173BD0E000E6E909 /* lattedof.fsh */,
+				884D2162175CABA2002FF853 /* lattefragment.fsh */,
 				8880F015170D6AFD00478E42 /* lattelens.fsh */,
 				8867539D170C6E40009B5BBE /* lattevertex.fsh */,
-				88675385170C3140009B5BBE /* latte.fsh */,
 			);
 			path = Effect;
 			sourceTree = "<group>";
@@ -5862,6 +5910,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				884D2166175CAEF7002FF853 /* latteblur.fsh in Resources */,
 				88E617C1173BD10200E6E909 /* lattedof.fsh in Resources */,
 				8880F01C170D6B0700478E42 /* lattelens.fsh in Resources */,
 				8867539F170C6E50009B5BBE /* lattevertex.fsh in Resources */,
@@ -7258,6 +7307,7 @@
 				88877F1517533773002B81D7 /* edit_right@2x.png in Resources */,
 				88877F1617533773002B81D7 /* edit_vertical.png in Resources */,
 				88877F1717533773002B81D7 /* edit_vertical@2x.png in Resources */,
+				884D2168175DC231002FF853 /* tone.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7402,6 +7452,12 @@
 				88CE8A06174E10B500C6A6B6 /* UIColor+MLPFlatColors.m in Sources */,
 				88CE8A09174E120300C6A6B6 /* LXCellFont.m in Sources */,
 				887379BB17586FF400C1549B /* LXCellFontPreview.m in Sources */,
+				884D215A175C9BF0002FF853 /* ioapi.c in Sources */,
+				884D215B175C9BF0002FF853 /* mztools.c in Sources */,
+				884D215C175C9BF0002FF853 /* unzip.c in Sources */,
+				884D215D175C9BF0002FF853 /* zip.c in Sources */,
+				884D215E175C9BF0002FF853 /* ZipArchive.mm in Sources */,
+				884D2161175CA656002FF853 /* LXFilterDOF2.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

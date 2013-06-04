@@ -580,6 +580,7 @@ typedef enum {
     newLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:25];
     newLabel.text = @"Sample Text";
     newLabel.layer.shadowOpacity = 1;
+    newLabel.layer.shadowOffset = CGSizeZero;
     newLabel.center = CGPointMake(activeTemplate.bounds.size.width/2, activeTemplate.bounds.size.height/2);
     newLabel.backgroundColor = [UIColor clearColor];
     newLabel.textColor = [UIColor whiteColor];
@@ -637,17 +638,18 @@ typedef enum {
             currentTab = kFontTabDownload;
             [tableFont reloadData];
         } else {
+            LatteAPIClient *api = [LatteAPIClient sharedClient];
             [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            [[LatteAPIClient sharedClient] getPath:@"picture/fonts"
-                                        parameters:nil
-                                           success:^(AFHTTPRequestOperation *operation, NSDictionary* JSON) {
-                                               downloadable = JSON[@"fonts"];
-                                               currentTab = kFontTabDownload;
-                                               [tableFont reloadData];
-                                               [MBProgressHUD hideHUDForView:self.view animated:YES];
-                                           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                               [MBProgressHUD hideHUDForView:self.view animated:YES];
-                                           }];
+            [api getPath:@"picture/fonts"
+              parameters:nil
+                 success:^(AFHTTPRequestOperation *operation, NSDictionary* JSON) {
+                     downloadable = JSON[@"fonts"];
+                     currentTab = kFontTabDownload;
+                     [tableFont reloadData];
+                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                 }];
         }
 
     } else {

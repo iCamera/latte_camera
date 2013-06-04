@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Picture.h"
 
 typedef enum {
     kUploadStateProgress,
@@ -34,7 +35,7 @@ typedef enum {
 @property (assign, nonatomic) BOOL showGPS;
 @property (assign, nonatomic) BOOL showTakenAt;
 @property (assign, nonatomic) BOOL facebook;
-@property (assign, nonatomic) NSInteger status;
+@property (assign, nonatomic) PictureStatus status;
 @property (readonly, nonatomic) float percent;
 @property (readonly, nonatomic) UploadState uploadState;
 

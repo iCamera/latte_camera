@@ -13,8 +13,6 @@ varying highp vec2 textureCoordinate2;
 uniform sampler2D inputImageTexture;
 uniform sampler2D inputImageTexture2;
 
-uniform bool dofEnable;
-
 uniform float bias; //0.02 aperture - bigger values for shallower depth of field
 
 float blurclamp = 3.0;  // 3.0 max blur amount 
@@ -102,9 +100,5 @@ vec4 dof()
  
 void main()
 {
-    lowp vec4 textureColor;
-    if (dofEnable)
-        gl_FragColor = dof();
-    else
-        gl_FragColor = texture2D(inputImageTexture, textureCoordinate);
+    gl_FragColor = dof();
 }

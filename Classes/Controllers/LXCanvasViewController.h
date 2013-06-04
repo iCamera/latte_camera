@@ -25,7 +25,6 @@ typedef enum {
     kTabBokeh = 2,
     kTabBasic = 3,
     kTabLens = 4,
-    kTabFilm = 5,
     kTabBlend = 6,
     kTabPreset = 10,
 } EffectTab;
@@ -71,7 +70,6 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIView *viewBasicControl;
 @property (strong, nonatomic) IBOutlet UIView *viewEffectControl;
 @property (strong, nonatomic) IBOutlet UIView *viewBlendControl;
-@property (strong, nonatomic) IBOutlet UIView *viewFilmControl;
 @property (strong, nonatomic) IBOutlet UIView *viewPresetControl;
 
 @property (strong, nonatomic) IBOutlet UIView *viewCameraWraper;
@@ -83,6 +81,7 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIButton *buttonToggleLens;
 @property (strong, nonatomic) IBOutlet UIButton *buttonToggleFilm;
 @property (strong, nonatomic) IBOutlet UIButton *buttonToggleBlend;
+@property (strong, nonatomic) IBOutlet UIButton *buttonTogglePreset;
 
 @property (strong, nonatomic) IBOutlet UISwitch *buttonBackgroundNatual;
 @property (strong, nonatomic) IBOutlet UISwitch *switchGain;
@@ -114,12 +113,16 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UISlider *sliderSharpness;
 @property (strong, nonatomic) IBOutlet UISlider *sliderClear;
 @property (strong, nonatomic) IBOutlet UISlider *sliderSaturation;
+@property (strong, nonatomic) IBOutlet UISlider *sliderBrightness;
+@property (strong, nonatomic) IBOutlet UISlider *sliderContrast;
 @property (strong, nonatomic) IBOutlet UISlider *sliderFeather;
 @property (strong, nonatomic) IBOutlet UISlider *sliderEffectIntensity;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollProcess;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollBlend;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollFilm;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollPreset;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollDetail;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollBlendLayer;
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonBlackWhite;
 @property (strong, nonatomic) IBOutlet UIImageView *imagePrev;

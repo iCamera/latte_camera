@@ -8,10 +8,15 @@
 
 #import "GPUImageTwoInputFilter.h"
 
-@interface LXFilterDOF : GPUImageFilter
+@interface LXFilterDOF2 : GPUImageFilter
 
+@property(readwrite, nonatomic) CGFloat maxblur;
 @property(readwrite, nonatomic) CGFloat bias;
+@property(readwrite, nonatomic) CGFloat focalDepth;
 @property(readwrite, nonatomic) CGFloat gain;
+@property(readwrite, nonatomic) BOOL autofocus;
+@property(readwrite, nonatomic) CGFloat threshold;
+
 @property(readwrite, nonatomic) UIImage* imageDOF;
 
 @end

@@ -16,6 +16,7 @@
 #import "LXImageLens.h"
 #import "LXImageCropViewController.h"
 #import "LXFilterDOF.h"
+#import "LXFilterDOF2.h"
 #import "GPUImageFilter+reset.h"
 
 @interface LXCanvasViewController ()  {
@@ -36,7 +37,9 @@
     
     NSInteger effectNum;
     NSMutableArray *arrayPreset;
+    NSArray *arrayTone;
     NSMutableArray *effectPreview;
+    NSMutableArray *effectPreviewPreset;
     
     NSLayoutConstraint *cameraAspect;
     NSInteger timerMode;
@@ -62,6 +65,7 @@
 @synthesize scrollBlend;
 @synthesize scrollFilm;
 @synthesize scrollPreset;
+@synthesize scrollDetail;
 
 @synthesize sliderEffectIntensity;
 @synthesize viewCamera;
@@ -79,6 +83,7 @@
 @synthesize buttonToggleLens;
 @synthesize buttonToggleFilm;
 @synthesize buttonToggleBlend;
+@synthesize buttonTogglePreset;
 
 @synthesize buttonBackgroundNatual;
 @synthesize switchGain;
@@ -111,7 +116,6 @@
 @synthesize viewLensControl;
 @synthesize viewEffectControl;
 @synthesize viewBlendControl;
-@synthesize viewFilmControl;
 
 @synthesize viewCanvas;
 
@@ -123,6 +127,8 @@
 @synthesize sliderSaturation;
 @synthesize sliderFeather;
 @synthesize sliderSharpness;
+@synthesize sliderBrightness;
+@synthesize sliderContrast;
 
 @synthesize buttonBlackWhite;
 
@@ -136,6 +142,7 @@
 @synthesize imagePrev;
 
 @synthesize buttonSavePreset;
+@synthesize scrollBlendLayer;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -213,13 +220,15 @@
     [window addSubview:HUD];
     HUD.userInteractionEnabled = NO;
     
-    scrollProcess.contentSize = CGSizeMake(390, 50);
+    scrollProcess.contentSize = CGSizeMake(436, 50);
 
     filterMain = [[LXImageFilter alloc] init];
     filterDOF = [[LXFilterDOF alloc] init];
     
-    arrayPreset = [NSMutableArray arrayWithArray:app.arrayPreset];
-    effectNum = arrayPreset.count;
+    // Init tone
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"tone" ofType:@"plist"];
+    arrayTone = [NSArray arrayWithContentsOfFile:path];
+    effectNum = arrayTone.count;
     
     effectPreview = [[NSMutableArray alloc] init];
     for (int i=0; i < effectNum; i++) {
@@ -246,20 +255,58 @@
         labelEffect.center = CGPointMake(buttonEffect.center.x, 62);
         labelEffect.textAlignment = NSTextAlignmentCenter;
         
-        [buttonEffect addTarget:self action:@selector(setEffect:) forControlEvents:UIControlEventTouchUpInside];
+        [buttonEffect addTarget:self action:@selector(setTone:) forControlEvents:UIControlEventTouchUpInside];
         buttonEffect.layer.cornerRadius = 5;
         buttonEffect.clipsToBounds = YES;
         buttonEffect.tag = i;
-        labelEffect.text = arrayPreset[i][@"title"];
+        labelEffect.text = arrayTone[i][@"title"];
         [scrollEffect addSubview:buttonEffect];
         [scrollEffect addSubview:labelEffect];
         [effectPreview addObject:viewPreset];
     }
     scrollEffect.contentSize = CGSizeMake(effectNum*75+10, 70);
     
+    //Init preset
+    arrayPreset = [NSMutableArray arrayWithArray:app.arrayPreset];
+    effectPreviewPreset = [[NSMutableArray alloc] init];
+    for (int i=0; i < arrayPreset.count; i++) {
+        UILabel *labelEffect = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 70, 12)];
+        labelEffect.backgroundColor = [UIColor clearColor];
+        labelEffect.textColor = [UIColor whiteColor];
+        labelEffect.shadowColor = [UIColor blackColor];
+        labelEffect.shadowOffset = CGSizeMake(0.0, 1.0);
+        labelEffect.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:11];
+        labelEffect.userInteractionEnabled = NO;
+        UIButton *buttonEffect = [[UIButton alloc] initWithFrame:CGRectMake(5+75*i, 0, 70, 70)];
+        
+        GPUImageView *viewPreset = [[GPUImageView alloc] initWithFrame:buttonEffect.bounds];
+        viewPreset.fillMode = kGPUImageFillModePreserveAspectRatioAndFill;
+        viewPreset.userInteractionEnabled = NO;
+        [buttonEffect addSubview:viewPreset];
+        
+        UIView *labelBack = [[UIView alloc] initWithFrame:CGRectMake(0, 53, 70, 20)];
+        labelBack.userInteractionEnabled = NO;
+        labelBack.backgroundColor = [UIColor blackColor];
+        labelBack.alpha = 0.4;
+        //[buttonEffect addSubview:labelBack];
+        
+        labelEffect.center = CGPointMake(buttonEffect.center.x, 62);
+        labelEffect.textAlignment = NSTextAlignmentCenter;
+        
+        [buttonEffect addTarget:self action:@selector(setPreset:) forControlEvents:UIControlEventTouchUpInside];
+        buttonEffect.layer.cornerRadius = 5;
+        buttonEffect.clipsToBounds = YES;
+        buttonEffect.tag = i;
+        labelEffect.text = arrayPreset[i][@"title"];
+        [scrollPreset addSubview:buttonEffect];
+        //[scrollPreset addSubview:labelEffect];
+        [effectPreviewPreset addObject:viewPreset];
+    }
+    
+    scrollPreset.contentSize = CGSizeMake(arrayPreset.count*75+10, 70);
     
     // Blend
-    for (int i=0; i < 7; i++) {
+    for (int i=0; i < 6; i++) {
         UILabel *labelBlend = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 10)];
         labelBlend.backgroundColor = [UIColor clearColor];
         labelBlend.textColor = [UIColor whiteColor];
@@ -297,15 +344,12 @@
             case 5:
                 labelBlend.text = @"Lightblur";
                 break;
-            case 6:
-                labelBlend.text = @"Vintage";
-                break;
         }
         
         [scrollBlend addSubview:buttonBlend];
         [scrollBlend addSubview:labelBlend];
     }
-    scrollBlend.contentSize = CGSizeMake(7*55+10, 60);
+    scrollBlend.contentSize = CGSizeMake(6*55+10, 60);
     
     // Film
     for (int i=0; i < 9; i++) {
@@ -330,12 +374,17 @@
     controllerText.image = _imageOriginal;
     
     [self initPreviewPic];
+    [self initPreviewPreset];
     
     [self switchEditImage];
     
 #if DEBUG
     buttonSavePreset.hidden = NO;
 #endif
+    scrollDetail.contentSize = CGSizeMake(320, 175);
+    scrollBlendLayer.contentSize = CGSizeMake(320, 220);
+    
+    self.modalPresentationStyle = UIModalPresentationCurrentContext;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -424,9 +473,12 @@
 
 - (void)applyFilterSetting {
     filterMain.vignfade = sliderVignette.value;
-    filterMain.brightness = sliderExposure.value;
+    filterMain.exposure = sliderExposure.value;
+    filterMain.brightness = sliderBrightness.value;
+    filterMain.contrast = sliderContrast.value;
     filterMain.clearness = sliderClear.value;
     filterMain.saturation = sliderSaturation.value;
+    buttonBlackWhite.selected = sliderSaturation.value == 0;
     filterMain.sharpness = sliderSharpness.value;
     
     filterMain.toneCurveIntensity = sliderEffectIntensity.value;
@@ -455,10 +507,6 @@
     imageFinalData = nil;
     buttonReset.enabled = true;
     [previewFilter processImage];
-}
-
-- (void)setEffect:(id)sender {
-    [self setPreset:sender];
 }
 
 - (IBAction)changeLens:(UIButton*)sender {
@@ -710,7 +758,9 @@
                             buttonToggleFocus,
                             buttonToggleLens,
                             buttonToggleBlend,
-                            buttonToggleFilm, nil];
+                            buttonToggleFilm,
+                            buttonTogglePreset,
+                            nil];
     for (UIButton *button in arrayButton) {
         button.selected = false;
     }
@@ -733,6 +783,14 @@
         }
     }
     
+    if (currentTab == kTabBasic) {
+        [scrollDetail flashScrollIndicators];
+    }
+    
+    if (currentTab == kTabBlend) {
+        [scrollBlendLayer flashScrollIndicators];
+    }
+    
     [self resizeCameraViewWithAnimation:YES];
     
     viewDraw.hidden = currentTab != kTabBokeh;
@@ -751,7 +809,6 @@
     CGRect frameLens = viewLensControl.frame;
     CGRect frameTopBar = viewTopBar.frame;
     CGRect frameBlend = viewBlendControl.frame;
-    CGRect frameFilm = viewFilmControl.frame;
     CGRect frameCanvas;
     
     
@@ -764,7 +821,7 @@
         posBottom = 480 - 50;
     }
     
-    frameEffect.origin.y = frameBokeh.origin.y = frameBasic.origin.y = frameLens.origin.y = frameBlend.origin.y = frameFilm.origin.y = framePreset.origin.y = posBottom;
+    frameEffect.origin.y = frameBokeh.origin.y = frameBasic.origin.y = frameLens.origin.y = frameBlend.origin.y = framePreset.origin.y = posBottom;
     
     switch (currentTab) {
         case kTabBokeh:
@@ -781,9 +838,6 @@
             break;
         case kTabBlend:
             frameBlend.origin.y = posBottom - 110;
-            break;
-        case kTabFilm:
-            frameFilm.origin.y = posBottom - 110;
             break;
         case kTabPreset:
             framePreset.origin.y = posBottom - 110;
@@ -830,7 +884,6 @@
         viewTopBar.frame = frameTopBar;
         viewCanvas.frame = frameCanvas;
         viewBlendControl.frame = frameBlend;
-        viewFilmControl.frame = frameFilm;
         viewPresetControl.frame = framePreset;
 
     } completion:^(BOOL finished) {
@@ -862,10 +915,11 @@
     
     buttonToggleFocus.selected = false;
     buttonToggleBasic.selected = false;
-    buttonToggleEffect.selected = false;
+    buttonToggleEffect.selected = true;
     buttonToggleLens.selected = false;
     buttonToggleFilm.selected = false;
     buttonToggleBlend.selected = false;
+    buttonTogglePreset.selected = false;
     
     buttonReset.hidden = false;
     currentTab = kTabEffect;
@@ -887,7 +941,7 @@
         GPUImagePicture *gpuimagePreview = [[GPUImagePicture alloc] initWithImage:_imageThumbnail];
         GPUImageView *imageViewPreview = effectPreview[i];
         LXImageFilter *filterSample = [[LXImageFilter alloc] init];
-        [filterSample setValuesForKeysWithDictionary:arrayPreset[i]];
+        [filterSample setValuesForKeysWithDictionary:arrayTone[i]];
         [gpuimagePreview addTarget:filterSample];
         [filterSample addTarget:imageViewPreview atTextureLocation:0];
         [gpuimagePreview processImage];
@@ -895,6 +949,21 @@
     
 //    [self generatePreview];
 }
+
+- (void)initPreviewPreset {
+    for (NSInteger i = 0; i < arrayPreset.count; i++) {
+        GPUImagePicture *gpuimagePreview = [[GPUImagePicture alloc] initWithImage:_imageThumbnail];
+        GPUImageView *imageViewPreview = effectPreviewPreset[i];
+        LXImageFilter *filterSample = [[LXImageFilter alloc] init];
+        [filterSample setValuesForKeysWithDictionary:arrayPreset[i]];
+        [gpuimagePreview addTarget:filterSample];
+        [filterSample addTarget:imageViewPreview atTextureLocation:0];
+        [gpuimagePreview processImage];
+    }
+    
+    //    [self generatePreview];
+}
+
 
 - (void)saveImage:(UIImage*)image {
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
@@ -952,6 +1021,8 @@
 
 - (void)resetSetting {
     sliderExposure.value = 0.0;
+    sliderBrightness.value = 0.0;
+    sliderContrast.value = 1.0;
     sliderClear.value = 0.0;
     sliderSaturation.value = 1.0;
     sliderFeather.value = 10.0;
@@ -970,7 +1041,7 @@
     filterMain.imageFilm = nil;
     
     [self setUIMask:kMaskBlurNone];
-    
+
     buttonLensFish.enabled = true;
     buttonLensWide.enabled = true;
     buttonLensNormal.enabled = false;
@@ -1039,21 +1110,17 @@
     switch (tag) {
         case kMaskBlurNone:
             buttonBlurNone.enabled = false;
-            filterDOF.dofEnable = NO;
             break;
         case kMaskBlurWeak:
             buttonBlurWeak.enabled = false;
-            filterDOF.dofEnable = YES;
             filterDOF.bias = 0.01;
             break;
         case kMaskBlurNormal:
             buttonBlurNormal.enabled = false;
-            filterDOF.dofEnable = YES;
             filterDOF.bias = 0.02;
             break;
         case kMaskBlurStrong:
             buttonBlurStrong.enabled = false;
-            filterDOF.dofEnable = YES;
             filterDOF.bias = 0.03;
             break;
         default:
@@ -1205,6 +1272,8 @@
     NSMutableDictionary *ret = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                          [NSNumber numberWithBool:filterMain.toneEnable], @"toneEnable",
                          [NSNumber numberWithFloat:filterMain.toneCurveIntensity], @"toneCurveIntensity",
+                         [NSNumber numberWithFloat:filterMain.exposure], @"exposure",
+                         [NSNumber numberWithFloat:filterMain.contrast], @"contrast",
                          [NSNumber numberWithFloat:filterMain.brightness], @"brightness",
                          [NSNumber numberWithFloat:filterMain.saturation], @"saturation",
                          [NSNumber numberWithFloat:filterMain.clearness], @"clearness",
@@ -1339,16 +1408,44 @@
     [self processImage];
 }
 
+- (void)setTone:(UIButton*)button {
+    NSDictionary *preset = arrayTone[button.tag];
+    [filterMain setValuesForKeysWithDictionary:preset];
+    [self processImage];
+}
+
 - (void)setPreset:(UIButton*)button {
     currentPreset = button.tag;
     NSDictionary *preset = arrayPreset[button.tag];
     [filterMain setValuesForKeysWithDictionary:preset];
     
-    sliderClear.value = [preset[@"clearness"] floatValue];
-    sliderEffectIntensity.value = [preset[@"toneCurveIntensity"] floatValue];
-    sliderExposure.value = [preset[@"brightness"] floatValue];
-    sliderSaturation.value = [preset[@"saturation"] floatValue];
-    sliderVignette.value = [preset[@"vignfade"] floatValue];
+    if ([preset objectForKey:@"clearness"]) {
+        sliderClear.value = [preset[@"clearness"] floatValue];
+    }
+    
+    if ([preset objectForKey:@"toneCurveIntensity"]) {
+        sliderEffectIntensity.value = [preset[@"toneCurveIntensity"] floatValue];
+    }
+    
+    if ([preset objectForKey:@"brightness"]) {
+        sliderBrightness.value = [preset[@"brightness"] floatValue];
+    }
+    
+    if ([preset objectForKey:@"exposure"]) {
+        sliderExposure.value = [preset[@"exposure"] floatValue];
+    }
+    
+    if ([preset objectForKey:@"contrast"]) {
+        sliderContrast.value = [preset[@"contrast"] floatValue];
+    }
+    
+    if ([preset objectForKey:@"saturation"]) {
+        sliderSaturation.value = [preset[@"saturation"] floatValue];
+    }
+    
+    if ([preset objectForKey:@"vignfade"]) {
+        sliderVignette.value = [preset[@"vignfade"] floatValue];
+    }
     
     if ([preset objectForKey:@"blendImage"]) {
         currentBlend = preset[@"blendImage"];
@@ -1364,8 +1461,6 @@
     
     if ([preset objectForKey:@"saturation"]) {
         buttonBlackWhite.selected = [[preset objectForKey:@"saturation"] floatValue] == 0.0;
-    } else {
-        buttonBlackWhite.selected = NO;
     }
     
     if ([preset objectForKey:@"blendIntensity"]) {
@@ -1439,7 +1534,6 @@
 
 - (void)viewDidUnload {
     [self setScrollFilm:nil];
-    [self setViewFilmControl:nil];
     [self setButtonFilmNone:nil];
     [self setButtonFilmWeak:nil];
     [self setButtonFilmMedium:nil];
@@ -1450,6 +1544,11 @@
     [self setImageNext:nil];
     [self setButtonSavePreset:nil];
     [self setSliderSharpness:nil];
+    [self setScrollDetail:nil];
+    [self setSliderBrightness:nil];
+    [self setSliderContrast:nil];
+    [self setScrollBlendLayer:nil];
+    [self setButtonTogglePreset:nil];
     [super viewDidUnload];
 }
 @end

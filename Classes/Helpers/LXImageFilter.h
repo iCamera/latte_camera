@@ -12,6 +12,8 @@
 
 @property(readwrite, nonatomic) CGFloat vignfade;
 @property(readwrite, nonatomic) CGFloat brightness;
+@property(readwrite, nonatomic) CGFloat contrast;
+@property(readwrite, nonatomic) CGFloat exposure;
 @property(readwrite, nonatomic) CGFloat clearness;
 @property(readwrite, nonatomic) CGFloat saturation;
 @property(readwrite, nonatomic) CGFloat toneCurveIntensity;
@@ -28,5 +30,7 @@
 @property(readwrite, nonatomic) BOOL filmEnable;
 @property(readwrite, nonatomic) BOOL textEnable;
 @property(readwrite, nonatomic) CGFloat sharpness;
+@property(readwrite, nonatomic) int blendMode;
+@property(readwrite, nonatomic) int filmMode;
 
 @end

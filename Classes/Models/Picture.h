@@ -3,14 +3,6 @@
 #import "LXUtils.h"
 #import "User.h"
 
-typedef enum {
-    PictureStatusPrivate = 0,
-    PictureStatusFriendsOnly = 10,
-    PictureStatusFriendsOfFriends = 20,
-    PictureStatusMember = 30,
-    PictureStatusPublic = 40,
-} PictureStatus;
-
 @interface Picture : ModelObject {
     BOOL canComment;
     BOOL canVote;

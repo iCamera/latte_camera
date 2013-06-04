@@ -11,6 +11,8 @@
 @implementation LXImageFilter {
     GLint vignfadeUniform;
     GLint brightnessUniform;
+    GLint exposureUniform;
+    GLint contrastUniform;
     GLint clearnessUniform;
     GLint saturationUniform;
     GLint aspectratioUniform;
@@ -26,6 +28,9 @@
     
     GLint biasUniform;
     GLint gainUniform;
+    
+    GLint blendModeUniform;
+    GLint filmModeUniform;
     
     GLint toneCurveTextureUniform;
     GLuint toneCurveTexture;
@@ -66,6 +71,8 @@
     runSynchronouslyOnVideoProcessingQueue(^{
         vignfadeUniform = [filterProgram uniformIndex:@"vignfade"];
         brightnessUniform = [filterProgram uniformIndex:@"brightness"];
+        exposureUniform = [filterProgram uniformIndex:@"exposure"];
+        contrastUniform = [filterProgram uniformIndex:@"contrast"];
         clearnessUniform = [filterProgram uniformIndex:@"clearness"];
         saturationUniform = [filterProgram uniformIndex:@"saturation"];
         toneIntensityUniform = [filterProgram uniformIndex:@"toneIntensity"];
@@ -86,6 +93,9 @@
         biasUniform = [filterProgram uniformIndex:@"bias"];
         gainUniform = [filterProgram uniformIndex:@"gain"];
         
+        filmModeUniform = [filterProgram uniformIndex:@"filmMode"];
+        blendModeUniform = [filterProgram uniformIndex:@"blendMode"];
+        
         blendTextureCoordinateAttribute = [filterProgram attributeIndex:@"blendTextureCoordinate"];
         filmTextureCoordinateAttribute = [filterProgram attributeIndex:@"filmTextureCoordinate"];
         textTextureCoordinateAttribute = [filterProgram attributeIndex:@"textTextureCoordinate"];
@@ -102,7 +112,10 @@
     
     self.saturation = 1.0;
     self.toneCurveIntensity = 1.0;
-    self.vignfade = 0;
+    self.brightness = 0.0;
+    self.exposure = 0.0;
+    self.contrast = 1.0;
+    self.vignfade = 0.0;
     self.blendRegion = CGRectMake(0, 0, 1, 1);
     self.filmRegion = CGRectMake(0, 0, 1, 1);
     self.toneEnable = NO;
@@ -110,6 +123,8 @@
     self.filmEnable = NO;
     self.textEnable = NO;
     self.sharpness = 0;
+    self.filmMode = 5;
+    self.blendMode = 5;
     
     return self;
 }
@@ -121,6 +136,16 @@
     [filterProgram addAttribute:@"dofTextureCoordinate"];
     [filterProgram addAttribute:@"filmTextureCoordinate"];
     [filterProgram addAttribute:@"textTextureCoordinate"];
+}
+
+- (void)setBlendMode:(int)blendMode {
+    _blendMode = blendMode;
+    [self setInteger:blendMode forUniform:blendModeUniform program:filterProgram];
+}
+
+- (void)setFilmMode:(int)filmMode {
+    _filmMode = filmMode;
+    [self setInteger:filmMode forUniform:filmModeUniform program:filterProgram];
 }
 
 - (void)setVignfade:(CGFloat)aVignfade
@@ -183,8 +208,19 @@
 - (void)setSharpness:(CGFloat)sharpness;
 {
     _sharpness = sharpness;
-    
     [self setFloat:_sharpness forUniform:sharpnessUniform program:filterProgram];
+}
+
+- (void)setExposure:(CGFloat)exposure
+{
+    _exposure = exposure;
+    [self setFloat:_exposure forUniform:exposureUniform program:filterProgram];
+}
+
+- (void)setContrast:(CGFloat)contrast
+{
+    _contrast = contrast;
+    [self setFloat:_contrast forUniform:contrastUniform program:filterProgram];
 }
 
 - (void)setToneCurve:(UIImage *)toneCurve {
