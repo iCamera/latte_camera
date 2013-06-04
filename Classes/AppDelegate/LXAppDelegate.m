@@ -9,6 +9,7 @@
 #import "LXAppDelegate.h"
 #import "LXNotifySideViewController.h"
 #import "LatteAPIClient.h"
+#import "ZipArchive.h"
 
 @implementation LXAppDelegate
 
@@ -114,9 +115,6 @@
         [_viewMainTab showNotify];
     }
     
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"preset" ofType:@"plist"];
-    _arrayPreset = [NSArray arrayWithContentsOfFile:path];
-    
     return YES;
 }
 
@@ -149,28 +147,29 @@
     }
 }
 
-- (void)fetchPreset {    
+- (void)fetchPreset {
     //-------------------------
     NSArray *documentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentFolder = [documentPath objectAtIndex:0];
     
-    //the below variable is an instance of the NSString class and is declared inteh .h file
-    NSString *newPlistFile = [documentFolder stringByAppendingPathComponent:@"preset.plist"];
-    NSArray *tmpPreset = [NSArray arrayWithContentsOfFile:newPlistFile];
+    NSString *stringURL = @"http://latte.la/static/assets.zip";
+    NSURL  *url = [NSURL URLWithString:stringURL];
+    NSData *data = [NSData dataWithContentsOfURL:url];
     
-    if (tmpPreset) {
-        _arrayPreset = tmpPreset;
+    if (data) {
+        NSString *assetsZip = [documentFolder stringByAppendingPathComponent:@"assets.zip"];
+        [data writeToFile:assetsZip atomically:YES];
+        
+        NSString *dataPath = [documentFolder stringByAppendingPathComponent:@"Assets"];
+        NSError *error;
+        if (![[NSFileManager defaultManager] fileExistsAtPath:dataPath])
+            [[NSFileManager defaultManager] createDirectoryAtPath:dataPath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
+        
+        ZipArchive *zipArchive = [[ZipArchive alloc] init];
+        [zipArchive UnzipOpenFile:assetsZip];
+        [zipArchive UnzipFileTo:dataPath overWrite:YES];
+        [zipArchive UnzipCloseFile];
     }
-    
-    LatteAPIClient *api = [LatteAPIClient sharedClient];
-    [api getPath:@"picture/presets"
-      parameters:[NSDictionary dictionaryWithObject:[self getToken] forKey:@"token"]
-         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-             _arrayPreset = JSON[@"presets"];
-             
-             [_arrayPreset writeToFile:newPlistFile atomically:YES];
-             
-         } failure:nil];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

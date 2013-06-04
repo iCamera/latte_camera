@@ -452,4 +452,15 @@ vm_size_t freeMemory(void) {
     }
 }
 
++ (UIImage*)imageNamed:(NSString*)name {
+    NSArray *documentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentFolder = [documentPath objectAtIndex:0];
+    NSString *tonesPath = [documentFolder stringByAppendingPathComponent:@"Assets"];
+    NSString *tonePath = [tonesPath stringByAppendingPathComponent:name];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:tonePath])
+        return [UIImage imageNamed:name];
+    else
+        return [UIImage imageWithContentsOfFile:tonePath];
+}
+
 @end

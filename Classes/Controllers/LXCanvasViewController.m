@@ -227,7 +227,15 @@
     
     // Init tone
     NSString *path = [[NSBundle mainBundle] pathForResource:@"tone" ofType:@"plist"];
-    arrayTone = [NSArray arrayWithContentsOfFile:path];
+    NSArray *documentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentFolder = [documentPath objectAtIndex:0];
+    NSString *assetPath = [documentFolder stringByAppendingPathComponent:@"Assets"];
+    NSString *tonePath = [assetPath stringByAppendingPathComponent:@"tone.plist"];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:tonePath])
+        arrayTone = [NSArray arrayWithContentsOfFile:path];
+    else
+        arrayTone = [NSArray arrayWithContentsOfFile:tonePath];
+    
     effectNum = arrayTone.count;
     
     effectPreview = [[NSMutableArray alloc] init];
@@ -267,7 +275,13 @@
     scrollEffect.contentSize = CGSizeMake(effectNum*75+10, 70);
     
     //Init preset
-    arrayPreset = [NSMutableArray arrayWithArray:app.arrayPreset];
+    NSString *presetBuiltInPath = [[NSBundle mainBundle] pathForResource:@"preset" ofType:@"plist"];
+    NSString *presetPath = [assetPath stringByAppendingPathComponent:@"preset.plist"];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:presetPath])
+        arrayPreset = [NSArray arrayWithContentsOfFile:presetBuiltInPath];
+    else
+        arrayPreset = [NSArray arrayWithContentsOfFile:presetPath];
+
     effectPreviewPreset = [[NSMutableArray alloc] init];
     for (int i=0; i < arrayPreset.count; i++) {
         UILabel *labelEffect = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 70, 12)];
@@ -302,6 +316,7 @@
         //[scrollPreset addSubview:labelEffect];
         [effectPreviewPreset addObject:viewPreset];
     }
+    
     
     scrollPreset.contentSize = CGSizeMake(arrayPreset.count*75+10, 70);
     
@@ -381,7 +396,7 @@
 #if DEBUG
     buttonSavePreset.hidden = NO;
 #endif
-    scrollDetail.contentSize = CGSizeMake(320, 175);
+    scrollDetail.contentSize = CGSizeMake(320, 180);
     scrollBlendLayer.contentSize = CGSizeMake(320, 220);
     
     self.modalPresentationStyle = UIModalPresentationCurrentContext;

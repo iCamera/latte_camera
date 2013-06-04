@@ -29,7 +29,6 @@
 @property (strong, nonatomic) LXMainTabViewController *viewMainTab;
 
 @property (strong, nonatomic) NSMutableArray *uploader;
-@property (readonly, nonatomic) NSArray *arrayPreset;
 
 extern NSString *const FBSessionStateChangedNotification;
 

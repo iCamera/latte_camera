@@ -7,6 +7,7 @@
 //
 
 #import "LXImageFilter.h"
+#import "LXUtils.h"
 
 @implementation LXImageFilter {
     GLint vignfadeUniform;
@@ -528,15 +529,17 @@
 
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key {
     if ([key isEqualToString:@"filmImage"]) {
-        self.imageFilm = [UIImage imageNamed:value];
+        self.imageFilm = [LXUtils imageNamed:value];
     } else if ([key isEqualToString:@"blendImage"]) {
-        self.imageBlend = [UIImage imageNamed:value];
+        self.imageBlend = [LXUtils imageNamed:value];
     } else if ([key isEqualToString:@"toneImage"]) {
-        self.toneCurve = [UIImage imageNamed:value];
+        self.toneCurve = [LXUtils imageNamed:value];
     } else {
         NSLog(@"wtf: %@", key);
     }
 }
+
+
 
 - (void)setBackToNormal {
     preparedToCaptureImage = NO;

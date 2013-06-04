@@ -1013,7 +1013,6 @@ typedef enum {
         
         [progessHUD show:YES];
         
-        
         NSURLRequest *request = [[LatteAPIClient sharedClient] requestWithMethod:@"GET" path:downloadable[alertView.tag][@"url"] parameters:nil];
         
         AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];

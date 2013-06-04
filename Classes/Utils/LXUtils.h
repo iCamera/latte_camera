@@ -46,5 +46,6 @@ typedef enum {
 +(void)logMemUsage;
 + (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
 + (void)showFBAuthError:(NSError*)error;
++ (UIImage*)imageNamed:(NSString*)name;
 
 @end

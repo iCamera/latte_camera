@@ -103,22 +103,35 @@
                 NSDictionary *data = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:filePath] options:0 error:nil];
                 
                 NSLocale *locale = [NSLocale currentLocale];
-                
-                NSArray *countryArray = [NSLocale ISOCountryCodes];
-                countryArray = [countryArray sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+                NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
+                NSMutableArray *countryCodes = [[NSLocale ISOCountryCodes] mutableCopy];
+                NSMutableDictionary *countryDict = [[NSMutableDictionary alloc] init];
                 NSMutableArray *countryString = [[NSMutableArray alloc] init];
-                for (NSString *countryCode in countryArray)
+
+                for (NSString *countryCode in countryCodes)
                 {
                     NSString *displayNameString = [locale displayNameForKey:NSLocaleCountryCode value:countryCode];
-                    [countryString addObject:displayNameString];
+                    [countryDict setObject:displayNameString forKey:countryCode];
                 }
                 
+                countryCodes = [[countryDict keysSortedByValueUsingSelector:@selector(localizedCompare:)] mutableCopy];
+                
+                if ([language isEqualToString:@"ja"]) {
+                    [countryCodes removeObject:@"JP"];
+                    [countryCodes insertObject:@"JP" atIndex:0];
+                }
+                
+                for (NSString *countryCode in countryCodes)
+                {
+                    [countryString addObject:countryDict[countryCode]];
+                }
+
                 root = [[LXRootBuilder new]buildWithObject:data];
                 [root bindToObject:data];
                 QSection *section = root.sections[0];
 //                QRadioElement *eleCountry = [[QRadioElement alloc] initWithDict:countriesDict selected:0 title:NSLocalizedString(@"nationality", @"Nationality")];
                 QRadioElement *eleCountry = [[QRadioElement alloc] initWithItems:countryString selected:0 title:NSLocalizedString(@"nationality", @"Nationality")];
-                eleCountry.values = countryArray;
+                eleCountry.values = countryCodes;
                 eleCountry.key = @"nationality";
                 eleCountry.controllerAction = @"handleUpdateRadio:";
                 
