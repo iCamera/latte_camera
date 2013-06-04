@@ -148,28 +148,30 @@
 }
 
 - (void)fetchPreset {
-    //-------------------------
-    NSArray *documentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentFolder = [documentPath objectAtIndex:0];
+    //-------------------------    
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://latte.la/static/appassets.zip"]];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     
-    NSString *stringURL = @"http://latte.la/static/appassets.zip";
-    NSURL  *url = [NSURL URLWithString:stringURL];
-    NSData *data = [NSData dataWithContentsOfURL:url];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentFolder = [paths objectAtIndex:0];
+    NSString *path = [documentFolder stringByAppendingPathComponent:@"assets.zip"];
+    operation.outputStream = [NSOutputStream outputStreamToFileAtPath:path append:NO];
     
-    if (data) {
-        NSString *assetsZip = [documentFolder stringByAppendingPathComponent:@"assets.zip"];
-        [data writeToFile:assetsZip atomically:YES];
-        
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, NSData* data) {
         NSString *dataPath = [documentFolder stringByAppendingPathComponent:@"Assets"];
         NSError *error;
         if (![[NSFileManager defaultManager] fileExistsAtPath:dataPath])
             [[NSFileManager defaultManager] createDirectoryAtPath:dataPath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
         
         ZipArchive *zipArchive = [[ZipArchive alloc] init];
-        [zipArchive UnzipOpenFile:assetsZip];
+        [zipArchive UnzipOpenFile:path];
         [zipArchive UnzipFileTo:dataPath overWrite:YES];
         [zipArchive UnzipCloseFile];
-    }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+    
+    [operation start];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
