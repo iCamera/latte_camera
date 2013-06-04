@@ -152,7 +152,7 @@
     NSArray *documentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentFolder = [documentPath objectAtIndex:0];
     
-    NSString *stringURL = @"http://latte.la/static/assets.zip";
+    NSString *stringURL = @"http://latte.la/static/appassets.zip";
     NSURL  *url = [NSURL URLWithString:stringURL];
     NSData *data = [NSData dataWithContentsOfURL:url];
     
