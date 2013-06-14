@@ -928,6 +928,13 @@
                                     <scrollView autoresizesSubviews="NO" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="Jqe-oV-WUx" userLabel="Blend Scroll">
                                         <rect key="frame" x="0.0" y="38" width="320" height="72"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <view hidden="YES" contentMode="scaleToFill" id="XdU-H5-Qzc">
+                                                <rect key="frame" x="0.0" y="0.0" width="20" height="1"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                            </view>
+                                        </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </scrollView>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" id="bcl-Dm-Cny">
@@ -1105,6 +1112,7 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="blendIndicator" destination="XdU-H5-Qzc" id="7qU-7d-2XH"/>
                         <outlet property="buttonBackgroundNatual" destination="mDq-Om-Pbw" id="cb2-fc-1Zm"/>
                         <outlet property="buttonBlackWhite" destination="937-WS-znW" id="gGq-1i-JeZ"/>
                         <outlet property="buttonBlendLayer1" destination="qLE-fj-H52" id="NK6-XS-ppi"/>
@@ -2005,6 +2013,7 @@
                 <relationship kind="action" name="touchSave:"/>
                 <relationship kind="action" name="touchText:"/>
                 <relationship kind="action" name="updateFilter:"/>
+                <relationship kind="outlet" name="blendIndicator" candidateClass="UIView"/>
                 <relationship kind="outlet" name="buttonBackgroundNatual" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="buttonBlackWhite" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonBlendLayer1" candidateClass="UIButton"/>

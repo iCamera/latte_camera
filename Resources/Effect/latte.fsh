@@ -2,7 +2,7 @@
  Created by Xuan Dung Bui
  */
 
-precision highp float;
+precision mediump float;
 
 varying highp vec2 textureCoordinate;
 varying highp vec2 blendCoordinate;

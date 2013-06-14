@@ -10,8 +10,10 @@
 #import "HFImageEditorFrameView.h"
 
 @interface LXImageCropViewController : HFImageEditorViewController
-- (IBAction)panSize:(UIPanGestureRecognizer *)sender;
+
 @property (strong, nonatomic) IBOutlet UIImageView *imageCropSize;
+
+- (IBAction)panSize:(UIPanGestureRecognizer *)sender;
 - (IBAction)setCropRatio:(UIButton*)sender;
 
 @end

@@ -37,6 +37,9 @@
     NSString *currentEffect;
     NSString *currentBlend;
     NSString *currentFilm;
+    UIButton* currentBlendButton;
+    UIButton* currentFilmButton;
+
     
     NSInteger effectNum;
     NSMutableArray *arrayPreset;
@@ -129,12 +132,14 @@
 
 @synthesize imageMeta;
 @synthesize imagePreview;
-@synthesize imageFullsize;
+@synthesize imageOrientation;
+@synthesize imageToProcess;
 @synthesize imageSize;
 @synthesize previewFilter;
 
 @synthesize imageNext;
 @synthesize imagePrev;
+@synthesize blendIndicator;
 
 @synthesize buttonSavePreset;
 
@@ -163,7 +168,8 @@
         controllerCrop.doneCallback = ^(UIImage *editedImage, BOOL canceled){
             if(!canceled) {
                 CGSize previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:editedImage.size.width height:editedImage.size.height]);
-                weakController.imageFullsize = editedImage;
+                weakController.imageOrientation = UIImageOrientationUp;
+                weakController.imageToProcess = [[GPUImagePicture alloc] initWithImage:editedImage];
                 weakController.imageSize = editedImage.size;
                 UIImage *edittedImagePreview = [LXUtils imageWithImage:editedImage scaledToSize:previewUISize];
                 weakController.imagePreview = edittedImagePreview;
@@ -373,9 +379,10 @@
     scrollBlend.contentSize = CGSizeMake(9*55+10, 60);
     
     // Set Image
-    imageFullsize = _imageOriginal;
+    imageToProcess = [[GPUImagePicture alloc] initWithImage:_imageOriginal];
     imagePreview = _imageOriginalPreview;
-    imageSize = imageFullsize.size;
+    imageSize = _imageOriginal.size;
+    imageOrientation = _imageOriginal.imageOrientation;
     
     controllerCrop.sourceImage = _imageOriginal;
     controllerCrop.previewImage = _imageOriginalPreview;
@@ -455,7 +462,7 @@
     [pipe addFilter:filterMain];
     
     if (source) {
-        [pipe.filters[0] setInputRotation:[self rotationFromImage:imageFullsize.imageOrientation] atIndex:0];
+        [pipe.filters[0] setInputRotation:[self rotationFromImage:imageOrientation] atIndex:0];
     }
     else {
         [pipe.filters[0] setInputRotation:[self rotationFromImage:imagePreview.imageOrientation] atIndex:0];
@@ -495,7 +502,14 @@
     filterMain.sharpness = sliderSharpness.value;
     
     filterMain.toneCurveIntensity = sliderEffectIntensity.value;
-    filterMain.blendIntensity = sliderBlendIntensity.value;
+    
+    if (!buttonBlendLayer1.enabled) {
+        filterMain.blendIntensity = sliderBlendIntensity.value;
+    }
+    if (!buttonBlendLayer2.enabled) {
+        filterMain.filmIntensity = sliderBlendIntensity.value;
+    }
+    
         
     if (switchGain.on)
         filterDOF.gain = 2.0;
@@ -652,16 +666,15 @@
     
     NSData *jpeg;
     // skip processing if prevew pic same size with fullsize
-    if (CGSizeEqualToSize(imageFullsize.size, imagePreview.size)) {
+    if (CGSizeEqualToSize(imageSize, imagePreview.size)) {
         jpeg = UIImageJPEGRepresentation(imageFinalThumb, 0.9);
     } else {
-        GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:imageFullsize];
-        [self preparePipe:picture];
+        [self preparePipe:imageToProcess];
         
-        [picture processImage];
-        if (MAX(imageFullsize.size.width, imageFullsize.size.height) > 1000) {
-            [filterMain prepareForImageCapture];
-        }
+        [imageToProcess processImage];
+//        if (MAX(imageSize.width, imageSize.height) > 1000) {
+//            [filterMain prepareForImageCapture];
+//        }
         
         // Save to Jpeg NSData
         CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:UIImageOrientationUp];
@@ -669,9 +682,9 @@
         jpeg = UIImageJPEGRepresentation(outputImage, 0.9);
         CGImageRelease(cgImageFromBytes);
         
-        if (MAX(imageFullsize.size.width, imageFullsize.size.height) > 1000) {
-            [filterMain resetCapture];
-        }
+//        if (MAX(imageSize.width, imageSize.height) > 1000) {
+//            [filterMain resetCapture];
+//        }
     
     }
 
@@ -929,6 +942,7 @@
     currentTab = kTabEffect;
     
     buttonReset.enabled = false;
+    blendIndicator.hidden = true;
     
     [self resizeCameraViewWithAnimation:YES];
     
@@ -1015,9 +1029,10 @@
 }
 
 - (IBAction)touchReset:(id)sender {
-    imageFullsize = _imageOriginal;
+    imageToProcess = [[GPUImagePicture alloc] initWithImage:_imageOriginal];
     imagePreview = _imageOriginalPreview;
     imageSize = _imageOriginalPreview.size;
+    imageOrientation = _imageOriginal.imageOrientation;
     
     [self switchEditImage];
     buttonReset.enabled = false;
@@ -1182,7 +1197,9 @@
     }
     
     UIImage *imageBlend = [UIImage imageNamed:currentBlend];
-    [sender setImage:imageBlend forState:UIControlStateNormal];
+    if (0 == sender.tag || sender.tag > 5) {
+        [sender setImage:imageBlend forState:UIControlStateNormal];
+    }
     
     CGSize blendSize = imageBlend.size;
     
@@ -1209,6 +1226,7 @@
         
         filterMain.blendIntensity = sliderBlendIntensity.value;
         filterMain.blendEnable = YES;
+        currentBlendButton = sender;
     }
     
     if (!buttonBlendLayer2.enabled) {
@@ -1217,7 +1235,14 @@
         
         filterMain.filmIntensity = sliderBlendIntensity.value;
         filterMain.filmEnable = YES;
+        currentFilmButton = sender;
     }
+    blendIndicator.hidden = NO;
+    
+    [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
+        CGPoint center = sender.center;
+        blendIndicator.center = CGPointMake(center.x, blendIndicator.center.y);
+    }];
     
     [self processImage];
 }
@@ -1227,10 +1252,14 @@
         buttonBlendLayer1.enabled = false;
         buttonBlendLayer2.enabled = true;
         sliderBlendIntensity.value = filterMain.blendIntensity;
+        blendIndicator.hidden = !filterMain.blendEnable;
+        blendIndicator.center = CGPointMake(currentBlendButton.center.x, blendIndicator.center.y);
     } else {
         buttonBlendLayer1.enabled = true;
         buttonBlendLayer2.enabled = false;
         sliderBlendIntensity.value = filterMain.filmIntensity;
+        blendIndicator.hidden = !filterMain.filmEnable;
+        blendIndicator.center = CGPointMake(currentFilmButton.center.x, blendIndicator.center.y);
     }
 }
 
@@ -1364,6 +1393,10 @@
         sliderSaturation.value = [preset[@"saturation"] floatValue];
     }
     
+    if ([preset objectForKey:@"saturation"]) {
+        buttonBlackWhite.selected = [[preset objectForKey:@"saturation"] floatValue] == 0.0;
+    }
+    
     if ([preset objectForKey:@"vignfade"]) {
         sliderVignette.value = [preset[@"vignfade"] floatValue];
     }
@@ -1380,13 +1413,14 @@
         currentFilm = preset[@"filmImage"];
     }
     
-    if ([preset objectForKey:@"saturation"]) {
-        buttonBlackWhite.selected = [[preset objectForKey:@"saturation"] floatValue] == 0.0;
-    }
-    
     if ([preset objectForKey:@"blendIntensity"]) {
         CGFloat blendIntensity = [preset[@"blendIntensity"] floatValue];
         sliderBlendIntensity.value = blendIntensity;
+    }
+    
+    if ([preset objectForKey:@"filmIntensity"]) {
+        CGFloat filmIntensity = [preset[@"filmIntensity"] floatValue];
+        sliderBlendIntensity.value = filmIntensity;
     }
 
     [self processImage];
@@ -1456,6 +1490,7 @@
     [self setSliderContrast:nil];
     [self setButtonTogglePreset:nil];
     [self setSliderBlendIntensity:nil];
+    [self setBlendIndicator:nil];
     [super viewDidUnload];
 }
 - (IBAction)touchBlendSetting:(id)sender {

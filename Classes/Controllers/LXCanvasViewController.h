@@ -120,6 +120,7 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIImageView *imagePrev;
 @property (strong, nonatomic) IBOutlet UIImageView *imageNext;
 @property (strong, nonatomic) IBOutlet UIButton *buttonSavePreset;
+@property (strong, nonatomic) IBOutlet UIView *blendIndicator;
 
 @property (strong, nonatomic) NSDictionary *dictUpload;
 
@@ -148,7 +149,8 @@ typedef enum {
 @property (strong, nonatomic) NSMutableDictionary *imageMeta;
 @property (strong, nonatomic) UIImage *imagePreview;
 @property (strong, nonatomic) UIImage *imageThumbnail;
-@property (strong, nonatomic) UIImage *imageFullsize;
+@property (readwrite, nonatomic) UIImageOrientation imageOrientation;
 @property (assign, nonatomic) CGSize imageSize;
 @property (strong, nonatomic) GPUImagePicture *previewFilter;
+@property (strong, nonatomic) GPUImagePicture *imageToProcess;
 @end

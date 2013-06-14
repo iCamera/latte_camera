@@ -14,6 +14,7 @@
 #import "UIView+Genie.h"
 #import "MBProgressHUD.h"
 #import "UIApplication+Private.h"
+#import "UIImage+fixOrientation.h"
 //#import "RBVolumeButtons.h"
 
 #define kAccelerometerFrequency        10.0 //Hz
@@ -289,7 +290,7 @@ typedef enum {
         LXCanvasViewController *controllerCanvas = [storyCamera instantiateViewControllerWithIdentifier:@"Canvas"];
         
         controllerCanvas.imageMeta = imageMeta;
-        controllerCanvas.imageOriginalPreview = tmpImagePreview;
+        controllerCanvas.imageOriginalPreview = [tmpImagePreview fixOrientation];
         
         CGFloat height = [LXUtils heightFromWidth:70 width:tmpImagePreview.size.height height:tmpImagePreview.size.height];
         controllerCanvas.imageThumbnail = [LXUtils imageWithImage:tmpImagePreview scaledToSize:CGSizeMake(70, height)];
