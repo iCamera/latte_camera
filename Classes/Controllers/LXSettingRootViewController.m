@@ -305,16 +305,16 @@
                                            
                                            
                                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                           TFLog(@"Something went wrong (Profile)");
+                                           DLog(@"Something went wrong (Profile)");
                                        }];
     };
     
     void (^failUpload)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
         if([operation.response statusCode] != 200){
-            TFLog(@"Upload Failed");
+            DLog(@"Upload Failed");
             return;
         }
-        TFLog(@"error: %@", [operation error]);
+        DLog(@"error: %@", [operation error]);
         progessHUD.mode = MBProgressHUDModeText;
         progessHUD.labelText = @"Error";
         progessHUD.margin = 10.f;

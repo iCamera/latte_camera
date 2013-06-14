@@ -10,6 +10,7 @@
 #import "LXNotifySideViewController.h"
 #import "LatteAPIClient.h"
 #import "ZipArchive.h"
+#import "Flurry.h"
 
 @implementation LXAppDelegate
 
@@ -63,7 +64,7 @@
                                             object:self];
                                        }
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       TFLog(@"Something went wrong (Login check)");
+                                       DLog(@"Something went wrong (Login check)");
                                    }];
 }
 
@@ -74,13 +75,12 @@
 //    NSString *uuid = [[UIDevice currentDevice] uniqueIdentifier];
 //    [TestFlight setDeviceIdentifier:uuid];
 //#endif
+    [Flurry startSession:@"JVFKCT4K3FN8294K96NN"];
     
     [GAI sharedInstance].trackUncaughtExceptions = YES;
     [GAI sharedInstance].dispatchInterval = 20;
     [GAI sharedInstance].debug = NO;
     tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-242292-26"];
-    
-    [TestFlight takeOff:@"7f1fb2cd-bf2d-41bc-bbf7-4a6870785c9e"];
     
     // Check user auth async
     if ([[self getToken] length] > 0) {
@@ -124,7 +124,7 @@
                                   stringByReplacingOccurrencesOfString: @"<" withString: @""]
                                  stringByReplacingOccurrencesOfString: @">" withString: @""]
                                 stringByReplacingOccurrencesOfString: @" " withString: @""];
-    TFLog(@"Register APNS: %@", apns);
+    DLog(@"Register APNS: %@", apns);
     [[LatteAPIClient sharedClient] postPath:@"user/me/update"
                                  parameters:[NSDictionary dictionaryWithObjectsAndKeys:
                                              [self getToken], @"token",
@@ -135,7 +135,7 @@
 }
 
 - (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err {
-    TFLog(@"Error in registration. Error: %@", err);
+    DLog(@"Error in registration. Error: %@", err);
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
@@ -168,7 +168,7 @@
         [zipArchive UnzipFileTo:dataPath overWrite:YES];
         [zipArchive UnzipCloseFile];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        DLog(@"Error: %@", error);
     }];
     
     [operation start];

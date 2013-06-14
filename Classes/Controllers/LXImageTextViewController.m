@@ -14,6 +14,7 @@
 #import "MBProgressHUD.h"
 #import "LatteAPIClient.h"
 #import "UIImageView+loadProgress.h"
+#import <CoreText/CoreText.h>
 
 typedef enum {
     kFontTabRecommend,

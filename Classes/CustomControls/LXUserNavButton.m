@@ -73,7 +73,7 @@
                                        self.notifyCount = [[JSON objectForKey:@"notify_count"] integerValue];
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       TFLog(@"Something went wrong (Notify count)");
+                                       DLog(@"Something went wrong (Notify count)");
                                    }];
 }
 

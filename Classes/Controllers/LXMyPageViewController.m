@@ -237,7 +237,7 @@ typedef enum {
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        [self.tableView reloadData];
                                        [loadIndicator stopAnimating];
-                                       TFLog(@"Something went wrong (Timeline)");
+                                       DLog(@"Something went wrong (Timeline)");
                                        [HUD hide:YES];
                                    }];
 }
@@ -271,7 +271,7 @@ typedef enum {
                                        
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        [self doneLoadingTableViewData];
-                                       TFLog(@"Something went wrong (Profile)");
+                                       DLog(@"Something went wrong (Profile)");
                                    }];
 }
 
@@ -305,7 +305,7 @@ typedef enum {
                                        pagePic += 1;
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        [loadIndicator stopAnimating];
-                                       TFLog(@"Something went wrong (Photolist)");
+                                       DLog(@"Something went wrong (Photolist)");
                                        [self doneLoadingTableViewData];
                                    }];
 }
@@ -348,7 +348,7 @@ typedef enum {
                                        pagePic += 1;
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        [loadIndicator stopAnimating];
-                                       TFLog(@"Something went wrong (Photolist)");
+                                       DLog(@"Something went wrong (Photolist)");
                                        [self doneLoadingTableViewData];
                                    }];
 }
@@ -367,7 +367,7 @@ typedef enum {
                                        [self.tableView reloadData];
                                        
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       TFLog(@"Something went wrong (Follower)");
+                                       DLog(@"Something went wrong (Follower)");
                                        [self doneLoadingTableViewData];
                                        [self.tableView reloadData];
                                    }];
@@ -386,7 +386,7 @@ typedef enum {
                                        [self doneLoadingTableViewData];
                                        [self.tableView reloadData];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       TFLog(@"Something went wrong (Reload Following)");
+                                       DLog(@"Something went wrong (Reload Following)");
                                        [self doneLoadingTableViewData];
                                        [self.tableView reloadData];
                                    }];
@@ -490,7 +490,7 @@ typedef enum {
                                        [loadIndicator stopAnimating];
                                        [self doneLoadingTableViewData];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       TFLog(@"Something went wrong (Timeline)");
+                                       DLog(@"Something went wrong (Timeline)");
                                        [loadIndicator stopAnimating];
                                    }];
 }
@@ -538,7 +538,7 @@ typedef enum {
                                        [HUD hide:YES];
                                        
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       TFLog(@"Something went wrong (User - Calendar)");
+                                       DLog(@"Something went wrong (User - Calendar)");
                                        [HUD hide:YES];
                                    }];
 }
@@ -1211,7 +1211,7 @@ typedef enum {
                                     success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                         [viewHeaderMypage.buttonProfilePic loadBackground:@"" placeholderImage:@"user.gif"];
                                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        TFLog(@"Something went wrong (Delete profile pic)");
+                                        DLog(@"Something went wrong (Delete profile pic)");
                                     }];
 
 }
@@ -1277,10 +1277,10 @@ typedef enum {
     
     void (^failUpload)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
         if([operation.response statusCode] != 200){
-            TFLog(@"Upload Failed");
+            DLog(@"Upload Failed");
             return;
         }
-        TFLog(@"error: %@", [operation error]);
+        DLog(@"error: %@", [operation error]);
         progessHUD.mode = MBProgressHUDModeText;
         progessHUD.labelText = @"Error";
         progessHUD.margin = 10.f;

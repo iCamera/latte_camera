@@ -868,206 +868,77 @@
                                 <rect key="frame" x="0.0" y="430" width="320" height="110"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" indicatorStyle="white" id="Yh9-US-Ybh">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="110"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <subviews>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="強さ" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1DD-n1-gU0">
-                                                <rect key="frame" x="10" y="15" width="52" height="16"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="12"/>
-                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                                <size key="shadowOffset" width="0.0" height="0.0"/>
-                                            </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="qLE-fj-H52">
-                                                <rect key="frame" x="70" y="10" width="60" height="25"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
-                                                <size key="titleShadowOffset" width="0.0" height="1"/>
-                                                <state key="normal" title="なし" backgroundImage="select42_1.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <state key="disabled" backgroundImage="select42_1_on.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <state key="highlighted" backgroundImage="select3_1_on.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="setBlend:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="PaE-mT-4f6"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="4LX-z9-5kq">
-                                                <rect key="frame" x="130" y="10" width="60" height="25"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
-                                                <size key="titleShadowOffset" width="0.0" height="1"/>
-                                                <state key="normal" title="弱" backgroundImage="select42_2.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <state key="disabled" backgroundImage="select42_2_on.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <state key="highlighted" backgroundImage="select42_2_on.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="setBlend:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="bAc-hv-ezj"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" tag="2" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="ZN0-8b-TQa">
-                                                <rect key="frame" x="190" y="10" width="60" height="25"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
-                                                <size key="titleShadowOffset" width="0.0" height="1"/>
-                                                <state key="normal" title="中" backgroundImage="select42_2.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <state key="disabled" backgroundImage="select42_2_on.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <state key="highlighted" backgroundImage="select42_2_on.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="setBlend:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="bNI-x3-sSU"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="O04-ja-gMh">
-                                                <rect key="frame" x="250" y="10" width="60" height="25"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
-                                                <size key="titleShadowOffset" width="0.0" height="1"/>
-                                                <state key="normal" title="強" backgroundImage="select42_3.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <state key="disabled" backgroundImage="select42_3_on.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <state key="highlighted" backgroundImage="select42_3_on.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="setBlend:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="UEP-S7-pnu"/>
-                                                </connections>
-                                            </button>
-                                            <scrollView autoresizesSubviews="NO" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="Jqe-oV-WUx" userLabel="Blend Scroll">
-                                                <rect key="frame" x="0.0" y="38" width="320" height="72"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                            </scrollView>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="強さ" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zp9-vi-UZP">
-                                                <rect key="frame" x="10" y="125" width="52" height="16"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="12"/>
-                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                                <size key="shadowOffset" width="0.0" height="0.0"/>
-                                            </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="j1r-lG-qHI">
-                                                <rect key="frame" x="70" y="120" width="60" height="25"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
-                                                <size key="titleShadowOffset" width="0.0" height="1"/>
-                                                <state key="normal" title="なし" backgroundImage="select42_1.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <state key="disabled" backgroundImage="select42_1_on.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <state key="highlighted" backgroundImage="select3_1_on.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="setFilm:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="Xgu-Lx-VAR"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="Gke-5v-rvG">
-                                                <rect key="frame" x="130" y="120" width="60" height="25"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
-                                                <size key="titleShadowOffset" width="0.0" height="1"/>
-                                                <state key="normal" title="弱" backgroundImage="select42_2.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <state key="disabled" backgroundImage="select42_2_on.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <state key="highlighted" backgroundImage="select42_2_on.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="setFilm:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="GGy-QA-5gz"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" tag="2" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="wlN-SO-fOM">
-                                                <rect key="frame" x="190" y="120" width="60" height="25"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
-                                                <size key="titleShadowOffset" width="0.0" height="1"/>
-                                                <state key="normal" title="中" backgroundImage="select42_2.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <state key="disabled" backgroundImage="select42_2_on.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <state key="highlighted" backgroundImage="select42_2_on.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="setFilm:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="shY-bz-Gtv"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="bAQ-qg-HG2">
-                                                <rect key="frame" x="250" y="120" width="60" height="25"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
-                                                <size key="titleShadowOffset" width="0.0" height="1"/>
-                                                <state key="normal" title="強" backgroundImage="select42_3.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <state key="disabled" backgroundImage="select42_3_on.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <state key="highlighted" backgroundImage="select42_3_on.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="setFilm:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="YXi-BF-PKk"/>
-                                                </connections>
-                                            </button>
-                                            <scrollView autoresizesSubviews="NO" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="gTp-sh-39W" userLabel="Film Scroll">
-                                                <rect key="frame" x="0.0" y="148" width="320" height="72"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                            </scrollView>
-                                        </subviews>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="qLE-fj-H52">
+                                        <rect key="frame" x="8" y="7" width="60" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
+                                        <size key="titleShadowOffset" width="0.0" height="1"/>
+                                        <state key="normal" title="レイヤー1" backgroundImage="select42_1.png">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                        </state>
+                                        <state key="disabled" backgroundImage="select42_1_on.png">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                        </state>
+                                        <state key="highlighted" backgroundImage="select3_1_on.png">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="setBlend:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="PaE-mT-4f6"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="O04-ja-gMh">
+                                        <rect key="frame" x="68" y="7" width="60" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
+                                        <size key="titleShadowOffset" width="0.0" height="1"/>
+                                        <state key="normal" title="レイヤー2" backgroundImage="select42_3.png">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                        </state>
+                                        <state key="disabled" backgroundImage="select42_3_on.png">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                        </state>
+                                        <state key="highlighted" backgroundImage="select42_3_on.png">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="setBlend:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="UEP-S7-pnu"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="ZOX-tz-btE">
+                                        <rect key="frame" x="280" y="0.0" width="40" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" image="icon_setting.png">
+                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="touchBlendSetting:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="3b4-Lv-2BU"/>
+                                        </connections>
+                                    </button>
+                                    <scrollView autoresizesSubviews="NO" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="Jqe-oV-WUx" userLabel="Blend Scroll">
+                                        <rect key="frame" x="0.0" y="38" width="320" height="72"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </scrollView>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" id="bcl-Dm-Cny">
+                                        <rect key="frame" x="136" y="9" width="147" height="23"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="minimumTrackTintColor" red="0.2190684443" green="0.19459484590000001" blue="0.11386880050000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="thumbTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <action selector="changeBlendIntensity:" destination="IgC-G0-Nfq" eventType="valueChanged" id="Z9D-Gg-D6M"/>
+                                        </connections>
+                                    </slider>
                                 </subviews>
                                 <color key="backgroundColor" red="0.21960784310000001" green="0.19215686269999999" blue="0.1137254902" alpha="0.90000000000000002" colorSpace="deviceRGB"/>
                             </view>
@@ -1236,18 +1107,12 @@
                     <connections>
                         <outlet property="buttonBackgroundNatual" destination="mDq-Om-Pbw" id="cb2-fc-1Zm"/>
                         <outlet property="buttonBlackWhite" destination="937-WS-znW" id="gGq-1i-JeZ"/>
-                        <outlet property="buttonBlendMedium" destination="ZN0-8b-TQa" id="nBO-lu-4BB"/>
-                        <outlet property="buttonBlendNone" destination="qLE-fj-H52" id="1lh-pT-SHn"/>
-                        <outlet property="buttonBlendStrong" destination="O04-ja-gMh" id="fdx-sa-We4"/>
-                        <outlet property="buttonBlendWeak" destination="4LX-z9-5kq" id="A5r-gH-klh"/>
+                        <outlet property="buttonBlendLayer1" destination="qLE-fj-H52" id="NK6-XS-ppi"/>
+                        <outlet property="buttonBlendLayer2" destination="O04-ja-gMh" id="05r-RM-ZFM"/>
                         <outlet property="buttonBlurNone" destination="p2t-iH-C3w" id="6gJ-np-sut"/>
                         <outlet property="buttonBlurNormal" destination="wTX-KC-1Os" id="bUv-lk-mFi"/>
                         <outlet property="buttonBlurStrong" destination="x0U-ct-PgK" id="tz0-4W-8yi"/>
                         <outlet property="buttonBlurWeak" destination="tHp-fv-zXm" id="r5T-4G-s2D"/>
-                        <outlet property="buttonFilmMedium" destination="wlN-SO-fOM" id="k9n-6I-vSE"/>
-                        <outlet property="buttonFilmNone" destination="j1r-lG-qHI" id="eAw-Qx-StD"/>
-                        <outlet property="buttonFilmStrong" destination="bAQ-qg-HG2" id="Mtw-Ne-xqe"/>
-                        <outlet property="buttonFilmWeak" destination="Gke-5v-rvG" id="ZZq-nS-nWW"/>
                         <outlet property="buttonLensFish" destination="csa-Pa-nbw" id="Zs1-Nm-Ekd"/>
                         <outlet property="buttonLensNormal" destination="QVO-XY-3L1" id="p8i-70-N1u"/>
                         <outlet property="buttonLensWide" destination="SD5-lJ-lQy" id="DMf-SZ-ubk"/>
@@ -1266,12 +1131,11 @@
                         <outlet property="imageNext" destination="TU5-lO-n3g" id="ouM-YR-g1g"/>
                         <outlet property="imagePrev" destination="5Rc-ai-IPG" id="prd-kG-WpK"/>
                         <outlet property="scrollBlend" destination="Jqe-oV-WUx" id="yuA-R6-fqH"/>
-                        <outlet property="scrollBlendLayer" destination="Yh9-US-Ybh" id="LMH-3i-0wF"/>
                         <outlet property="scrollDetail" destination="bZm-0H-5z8" id="oA6-VX-r1d"/>
                         <outlet property="scrollEffect" destination="EDY-bj-4DP" id="ZFj-H6-qG4"/>
-                        <outlet property="scrollFilm" destination="gTp-sh-39W" id="JHo-4P-opc"/>
                         <outlet property="scrollPreset" destination="yGR-p4-0nM" id="YhK-Og-yfD"/>
                         <outlet property="scrollProcess" destination="bgp-m6-lzX" id="lEc-Dw-VNa"/>
+                        <outlet property="sliderBlendIntensity" destination="bcl-Dm-Cny" id="9ct-ZI-tFe"/>
                         <outlet property="sliderBrightness" destination="wux-10-cav" id="UIG-tu-n3j"/>
                         <outlet property="sliderClear" destination="NDR-PH-ubg" id="rWH-WW-del"/>
                         <outlet property="sliderContrast" destination="bV2-Yo-oA3" id="u6x-hA-BRO"/>
@@ -2082,6 +1946,7 @@
         <image name="icon_quick.png" width="20" height="20"/>
         <image name="icon_reset.png" width="15" height="15"/>
         <image name="icon_save2.png" width="15" height="15"/>
+        <image name="icon_setting.png" width="15" height="16"/>
         <image name="icon_time2.png" width="14" height="15"/>
         <image name="icon_time2_none.png" width="15" height="15"/>
         <image name="preset_bg.png" width="50" height="50"/>
@@ -2123,17 +1988,18 @@
         <class className="LXCanvasViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCanvasViewController.h"/>
             <relationships>
+                <relationship kind="action" name="changeBlendIntensity:"/>
                 <relationship kind="action" name="changeLens:" candidateClass="UIButton"/>
                 <relationship kind="action" name="changePen:" candidateClass="UISlider"/>
                 <relationship kind="action" name="printTemplate:"/>
                 <relationship kind="action" name="setBlend:" candidateClass="UIButton"/>
-                <relationship kind="action" name="setFilm:" candidateClass="UIButton"/>
                 <relationship kind="action" name="setMask:" candidateClass="UIButton"/>
                 <relationship kind="action" name="toggleControl:" candidateClass="UIButton"/>
                 <relationship kind="action" name="toggleFisheye:" candidateClass="UIButton"/>
                 <relationship kind="action" name="toggleGain:" candidateClass="UISwitch"/>
                 <relationship kind="action" name="toggleMaskNatual:" candidateClass="UISwitch"/>
                 <relationship kind="action" name="toggleMono:"/>
+                <relationship kind="action" name="touchBlendSetting:"/>
                 <relationship kind="action" name="touchCrop:"/>
                 <relationship kind="action" name="touchNo:"/>
                 <relationship kind="action" name="touchOpenHelp:"/>
@@ -2143,18 +2009,12 @@
                 <relationship kind="action" name="updateFilter:"/>
                 <relationship kind="outlet" name="buttonBackgroundNatual" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="buttonBlackWhite" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonBlendMedium" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonBlendNone" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonBlendStrong" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonBlendWeak" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonBlendLayer1" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonBlendLayer2" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonBlurNone" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonBlurNormal" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonBlurStrong" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonBlurWeak" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonFilmMedium" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonFilmNone" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonFilmStrong" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonFilmWeak" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonLensFish" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonLensNormal" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonLensWide" candidateClass="UIButton"/>
@@ -2173,12 +2033,11 @@
                 <relationship kind="outlet" name="imageNext" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="imagePrev" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="scrollBlend" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="scrollBlendLayer" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="scrollDetail" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="scrollEffect" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="scrollFilm" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="scrollPreset" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="scrollProcess" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="sliderBlendIntensity" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="sliderBrightness" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="sliderClear" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="sliderContrast" candidateClass="UISlider"/>

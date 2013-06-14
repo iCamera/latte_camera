@@ -90,15 +90,8 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIButton *buttonBlurStrong;
 @property (strong, nonatomic) IBOutlet UIButton *buttonBlurNone;
 
-@property (strong, nonatomic) IBOutlet UIButton *buttonBlendNone;
-@property (strong, nonatomic) IBOutlet UIButton *buttonBlendWeak;
-@property (strong, nonatomic) IBOutlet UIButton *buttonBlendMedium;
-@property (strong, nonatomic) IBOutlet UIButton *buttonBlendStrong;
-
-@property (strong, nonatomic) IBOutlet UIButton *buttonFilmNone;
-@property (strong, nonatomic) IBOutlet UIButton *buttonFilmWeak;
-@property (strong, nonatomic) IBOutlet UIButton *buttonFilmMedium;
-@property (strong, nonatomic) IBOutlet UIButton *buttonFilmStrong;
+@property (strong, nonatomic) IBOutlet UIButton *buttonBlendLayer1;
+@property (strong, nonatomic) IBOutlet UIButton *buttonBlendLayer2;
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonLensNormal;
 @property (strong, nonatomic) IBOutlet UIButton *buttonLensWide;
@@ -117,12 +110,11 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UISlider *sliderContrast;
 @property (strong, nonatomic) IBOutlet UISlider *sliderFeather;
 @property (strong, nonatomic) IBOutlet UISlider *sliderEffectIntensity;
+@property (strong, nonatomic) IBOutlet UISlider *sliderBlendIntensity;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollProcess;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollBlend;
-@property (strong, nonatomic) IBOutlet UIScrollView *scrollFilm;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollPreset;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollDetail;
-@property (strong, nonatomic) IBOutlet UIScrollView *scrollBlendLayer;
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonBlackWhite;
 @property (strong, nonatomic) IBOutlet UIImageView *imagePrev;
@@ -147,8 +139,9 @@ typedef enum {
 - (IBAction)toggleMono:(id)sender;
 - (IBAction)touchCrop:(id)sender;
 - (IBAction)touchText:(id)sender;
-- (IBAction)setFilm:(UIButton *)sender;
 - (IBAction)printTemplate:(id)sender;
+- (IBAction)touchBlendSetting:(id)sender;
+- (IBAction)changeBlendIntensity:(id)sender;
 
 @property (strong, nonatomic) UIImage *imageOriginalPreview;
 @property (strong, nonatomic) UIImage *imageOriginal;

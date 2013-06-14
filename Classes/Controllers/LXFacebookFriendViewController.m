@@ -98,7 +98,7 @@
                                                fbfriends = [User mutableArrayFromDictionary:JSON withKey:@"users"];
                                                [self.tableView reloadData];
                                            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                               TFLog(@"Something went wrong (FB Friends)");
+                                               DLog(@"Something went wrong (FB Friends)");
                                            }];
         }
     }];

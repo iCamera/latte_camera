@@ -84,7 +84,7 @@
                                        [self.tableView reloadData];
                                        [activityLoad stopAnimating];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       TFLog(@"Something went wrong Tag");
+                                       DLog(@"Something went wrong Tag");
                                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
                                                                                        message:error.localizedDescription
                                                                                       delegate:nil

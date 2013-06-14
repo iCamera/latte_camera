@@ -317,7 +317,7 @@ bail:
             [device setExposureMode:AVCaptureExposureModeContinuousAutoExposure];
             [device unlockForConfiguration];
         } else {
-            TFLog(@"ERROR = %@", error);
+            DLog(@"ERROR = %@", error);
         }
     }
 }

@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "LXMainTabViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
-#import "TestFlight.h"
 #import "GAI.h"
 #import "LXSidePanelController.h"
 #import "LXCanvasViewController.h"

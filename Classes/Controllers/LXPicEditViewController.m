@@ -213,7 +213,7 @@
                                                 }];
                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                 [HUD hide:YES];
-                                                TFLog(@"Something went wrong (Login)");
+                                                DLog(@"Something went wrong (Login)");
                                             }];
         }
     }
@@ -389,7 +389,7 @@
                             [tagsPolish componentsJoinedByString:@","], @"tags",
                             nil];
     _picture.descriptionText = textDesc.text;
-    _picture.status = [NSNumber numberWithInteger:imageStatus];
+    _picture.status = imageStatus;
     _picture.showEXIF = switchEXIF.on;
     _picture.showGPS = switchGPS.on;
     _picture.showTakenAt = switchTakenAt.on;
@@ -399,10 +399,7 @@
                                  parameters: params
                                     success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                         [HUD hide:YES];
-                                        
-                                        _picture.descriptionText = textDesc.text;
-                                        _picture.status = [NSNumber numberWithInteger:imageStatus];
-                                        
+                                                                                
                                         [self.navigationController popViewControllerAnimated:YES];
                                         
                                         

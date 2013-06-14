@@ -2,7 +2,7 @@
  Created by Xuan Dung Bui
  */
 
-precision mediump float;
+precision highp float;
 
 varying highp vec2 textureCoordinate;
 varying highp vec2 blendCoordinate;
@@ -177,27 +177,27 @@ vec4 blendexclusion(vec4 base, vec4 overlay)
 }
 
 vec4 blend(vec4 base, vec4 overlay, int mode) {
-    if (mode == 1)
+    if (mode == 0)
         return blenddarken(base, overlay);
-    else if (mode == 2)
+    else if (mode == 1)
         return blendmultiply(base, overlay);
-    else if (mode == 3)
+    else if (mode == 2)
         return blendcolorburn(base, overlay);
-    else if (mode == 4)
+    else if (mode == 3)
         return blendlighten(base, overlay);
-    else if (mode == 5)
+    else if (mode == 4)
         return blendscreen(base, overlay);
-    else if (mode == 6)
+    else if (mode == 5)
         return blendcolordodge(base, overlay);
-    else if (mode == 7)
+    else if (mode == 6)
         return blendoverlay(base, overlay);
-    else if (mode == 8)
+    else if (mode == 7)
         return blendsoftlight(base, overlay);
-    else if (mode == 9)
+    else if (mode == 8)
         return blendhardlight(base, overlay);
-    else if (mode == 10)
+    else if (mode == 9)
         return blenddifference(base, overlay);
-    else if (mode == 11)
+    else if (mode == 10)
         return blendexclusion(base, overlay);
     else
         return blendnormal(base, overlay);
@@ -251,15 +251,13 @@ void main()
     // Blending
     if (blendEnable) {
         mediump vec4 textureBlend = texture2D(inputBlendTexture, blendCoordinate);
-        textureBlend *= blendIntensity;
-        textureColor = blend(textureColor, textureBlend, blendMode);
+        textureColor = mix(textureColor, blend(textureColor, textureBlend, blendMode), blendIntensity);
     }
 
     // Film
     if (filmEnable) {
         mediump vec4 textureFilm = texture2D(inputFilmTexture, filmCoordinate);
-        textureFilm *= filmIntensity;
-        textureColor = blend(textureColor, textureFilm, filmMode);
+        textureColor = mix(textureColor, blend(textureColor, textureFilm, filmMode), filmIntensity);
     }
 
     // Saturation
@@ -272,7 +270,7 @@ void main()
     // Text
     if (textEnable) {
         lowp vec4 textureText = texture2D(inputTextTexture, textCoordinate);
-        textureColor.rgb = mix(textureColor.rgb, textureText.rgb, textureText.a);
+        textureColor = blendnormal(textureColor, textureText);
     }
 
     // Tone Curve Mapping

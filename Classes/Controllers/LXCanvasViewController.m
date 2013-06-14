@@ -18,6 +18,7 @@
 #import "LXFilterDOF.h"
 #import "LXFilterDOF2.h"
 #import "GPUImageFilter+reset.h"
+#import "UIImage+Resize.h"
 
 @interface LXCanvasViewController ()  {
     GPUImageFilterPipeline *pipe;
@@ -28,6 +29,8 @@
     
     BOOL isSaved;
     BOOL isWatingToUpload;
+    BOOL initedPreviewPreset;
+    BOOL initedPreviewTone;
     
     NSInteger currentLens;
     NSInteger currentPreset;
@@ -63,7 +66,6 @@
 @synthesize scrollEffect;
 @synthesize scrollProcess;
 @synthesize scrollBlend;
-@synthesize scrollFilm;
 @synthesize scrollPreset;
 @synthesize scrollDetail;
 
@@ -84,6 +86,8 @@
 @synthesize buttonToggleFilm;
 @synthesize buttonToggleBlend;
 @synthesize buttonTogglePreset;
+@synthesize buttonBlendLayer1;
+@synthesize buttonBlendLayer2;
 
 @synthesize buttonBackgroundNatual;
 @synthesize switchGain;
@@ -92,16 +96,6 @@
 @synthesize buttonBlurNormal;
 @synthesize buttonBlurStrong;
 @synthesize buttonBlurWeak;
-
-@synthesize buttonBlendNone;
-@synthesize buttonBlendWeak;
-@synthesize buttonBlendMedium;
-@synthesize buttonBlendStrong;
-
-@synthesize buttonFilmNone;
-@synthesize buttonFilmWeak;
-@synthesize buttonFilmMedium;
-@synthesize buttonFilmStrong;
 
 @synthesize buttonLensNormal;
 @synthesize buttonLensWide;
@@ -129,6 +123,7 @@
 @synthesize sliderSharpness;
 @synthesize sliderBrightness;
 @synthesize sliderContrast;
+@synthesize sliderBlendIntensity;
 
 @synthesize buttonBlackWhite;
 
@@ -142,7 +137,6 @@
 @synthesize imagePrev;
 
 @synthesize buttonSavePreset;
-@synthesize scrollBlendLayer;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -171,13 +165,14 @@
                 CGSize previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:editedImage.size.width height:editedImage.size.height]);
                 weakController.imageFullsize = editedImage;
                 weakController.imageSize = editedImage.size;
-                weakController.imagePreview = [LXUtils imageWithImage:editedImage scaledToSize:previewUISize];
+                UIImage *edittedImagePreview = [LXUtils imageWithImage:editedImage scaledToSize:previewUISize];
+                weakController.imagePreview = edittedImagePreview;
                 [weakController resizeCameraViewWithAnimation:YES];
                 weakController.previewFilter = [[GPUImagePicture alloc] initWithImage:weakController.imagePreview];
                 [weakController preparePipe];
                 [weakController processImage];
                 
-                weakText.image = editedImage;
+                weakText.image = edittedImagePreview;
             }
             [weakController dismissModalViewControllerAnimated:YES];
         };
@@ -278,9 +273,9 @@
     NSString *presetBuiltInPath = [[NSBundle mainBundle] pathForResource:@"preset" ofType:@"plist"];
     NSString *presetPath = [assetPath stringByAppendingPathComponent:@"preset.plist"];
     if (![[NSFileManager defaultManager] fileExistsAtPath:presetPath])
-        arrayPreset = [NSArray arrayWithContentsOfFile:presetBuiltInPath];
+        arrayPreset = [[NSArray arrayWithContentsOfFile:presetBuiltInPath] mutableCopy];
     else
-        arrayPreset = [NSArray arrayWithContentsOfFile:presetPath];
+        arrayPreset = [[NSArray arrayWithContentsOfFile:presetPath] mutableCopy];
 
     effectPreviewPreset = [[NSMutableArray alloc] init];
     for (int i=0; i < arrayPreset.count; i++) {
@@ -321,12 +316,13 @@
     scrollPreset.contentSize = CGSizeMake(arrayPreset.count*75+10, 70);
     
     // Blend
-    for (int i=0; i < 6; i++) {
+    for (int i=0; i < 9; i++) {
         UILabel *labelBlend = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 10)];
         labelBlend.backgroundColor = [UIColor clearColor];
         labelBlend.textColor = [UIColor whiteColor];
         labelBlend.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:9];
         UIButton *buttonBlend = [[UIButton alloc] initWithFrame:CGRectMake(5+55*i, 5, 50, 50)];
+        buttonBlend.imageView.contentMode = UIViewContentModeScaleAspectFill;
         labelBlend.center = CGPointMake(buttonBlend.center.x, 63);
         labelBlend.textAlignment = NSTextAlignmentCenter;
         UIImage *preview = [UIImage imageNamed:[NSString stringWithFormat:@"blend%d.jpg", i]];
@@ -359,37 +355,32 @@
             case 5:
                 labelBlend.text = @"Lightblur";
                 break;
+            case 6:
+                labelBlend.text = @"Vintage";
+                break;
+            case 7:
+                labelBlend.text = @"Gradient 1";
+                break;
+            case 8:
+                labelBlend.text = @"Gradient 2";
+                break;
+
         }
         
         [scrollBlend addSubview:buttonBlend];
         [scrollBlend addSubview:labelBlend];
     }
-    scrollBlend.contentSize = CGSizeMake(6*55+10, 60);
-    
-    // Film
-    for (int i=0; i < 9; i++) {
-        UIButton *buttonFilm = [[UIButton alloc] initWithFrame:CGRectMake(5+55*i, 5, 50, 50)];
-        UIImage *preview = [UIImage imageNamed:[NSString stringWithFormat:@"print%d.jpg", i+1]];
-        [buttonFilm setImage:preview forState:UIControlStateNormal];
-        [buttonFilm addTarget:self action:@selector(toggleFilm:) forControlEvents:UIControlEventTouchUpInside];
-        buttonFilm.layer.cornerRadius = 5;
-        buttonFilm.clipsToBounds = YES;
-        buttonFilm.tag = i+1;
-        
-        [scrollFilm addSubview:buttonFilm];
-    }
-    scrollFilm.contentSize = CGSizeMake(9*55+10, 60);
+    scrollBlend.contentSize = CGSizeMake(9*55+10, 60);
     
     // Set Image
     imageFullsize = _imageOriginal;
     imagePreview = _imageOriginalPreview;
     imageSize = imageFullsize.size;
-    controllerCrop.previewImage = _imageOriginalPreview;
-    controllerCrop.sourceImage = _imageOriginal;
-    controllerText.image = _imageOriginal;
     
-    [self initPreviewPic];
-    [self initPreviewPreset];
+    controllerCrop.sourceImage = _imageOriginal;
+    controllerCrop.previewImage = _imageOriginalPreview;
+    
+    controllerText.image = _imageOriginalPreview;
     
     [self switchEditImage];
     
@@ -397,9 +388,16 @@
     buttonSavePreset.hidden = NO;
 #endif
     scrollDetail.contentSize = CGSizeMake(320, 180);
-    scrollBlendLayer.contentSize = CGSizeMake(320, 220);
     
     self.modalPresentationStyle = UIModalPresentationCurrentContext;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    if (!initedPreviewTone) {
+        initedPreviewTone = YES;
+        [self initPreviewPic];
+    }
+    [super viewDidAppear:animated];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -497,19 +495,8 @@
     filterMain.sharpness = sliderSharpness.value;
     
     filterMain.toneCurveIntensity = sliderEffectIntensity.value;
-    
-    if (!buttonBlendMedium.enabled) {
-        filterMain.blendIntensity = 0.66;
-    }
-    
-    if (!buttonBlendWeak.enabled) {
-        filterMain.blendIntensity = 0.40;
-    }
-    
-    if (!buttonBlendStrong.enabled) {
-        filterMain.blendIntensity = 0.90;
-    }
-    
+    filterMain.blendIntensity = sliderBlendIntensity.value;
+        
     if (switchGain.on)
         filterDOF.gain = 2.0;
     else
@@ -802,8 +789,11 @@
         [scrollDetail flashScrollIndicators];
     }
     
-    if (currentTab == kTabBlend) {
-        [scrollBlendLayer flashScrollIndicators];
+    if (currentTab == kTabPreset) {
+        if (!initedPreviewPreset) {
+            initedPreviewPreset = YES;
+            [self initPreviewPreset];
+        }
     }
     
     [self resizeCameraViewWithAnimation:YES];
@@ -912,7 +902,6 @@
 
     isWatingToUpload = NO;
 
-    [self setBlendImpl:kBlendNone];
     //    isFixedAspectBlend = NO;
     
     //    uiWrap.frame = CGRectMake(0, 0, previewSize.width, previewSize.height);
@@ -1048,6 +1037,8 @@
     filterMain.toneEnable = NO;
     filterMain.blendEnable = NO;
     filterMain.filmEnable = NO;
+    filterMain.filmMode = 4;
+    filterMain.blendMode = 4;
     
     filterMain.toneCurve = nil;
     filterMain.imageBlend = nil;
@@ -1060,17 +1051,8 @@
     buttonLensFish.enabled = true;
     buttonLensWide.enabled = true;
     buttonLensNormal.enabled = false;
-    
-    buttonBlendNone.enabled = false;
-    buttonBlendMedium.enabled = true;
-    buttonBlendStrong.enabled = true;
-    buttonBlendWeak.enabled = true;
-
-    buttonFilmNone.enabled = false;
-    buttonFilmMedium.enabled = true;
-    buttonFilmStrong.enabled = true;
-    buttonFilmWeak.enabled = true;
-    
+    sliderBlendIntensity.value = 0.0;
+        
     buttonBlackWhite.selected = false;
 }
 
@@ -1186,12 +1168,21 @@
             blendid = 1 + rand() % 25;
             currentBlend = [NSString stringWithFormat:@"print%d.jpg", blendid];
             break;
+        case 7:
+            blendid = 1 + rand() % 88;
+            currentBlend = [NSString stringWithFormat:@"gradient1-%d.png", blendid];
+            break;
+        case 8:
+            blendid = 1 + rand() % 50;
+            currentBlend = [NSString stringWithFormat:@"gradient2-%d.png", blendid];
+            break;
+
         default:
             break;
     }
     
     UIImage *imageBlend = [UIImage imageNamed:currentBlend];
-    filterMain.imageBlend = imageBlend;
+    [sender setImage:imageBlend forState:UIControlStateNormal];
     
     CGSize blendSize = imageBlend.size;
     
@@ -1208,48 +1199,23 @@
         CGFloat sub = (newSize.height - imageSize.height) / newSize.height;
         crop = CGRectMake(0.0, sub/2.0, 1.0, 1.0-sub);
     }
+    if (sliderBlendIntensity.value == 0.0) {
+        sliderBlendIntensity.value = 0.4;
+    }
     
-    filterMain.blendRegion = crop;
-    
-    if (!buttonBlendNone.enabled) {
-        buttonBlendNone.enabled = YES;
-        buttonBlendWeak.enabled = NO;
-        filterMain.blendIntensity = 0.40;
+    if (!buttonBlendLayer1.enabled) {
+        filterMain.imageBlend = imageBlend;
+        filterMain.blendRegion = crop;
+        
+        filterMain.blendIntensity = sliderBlendIntensity.value;
         filterMain.blendEnable = YES;
     }
     
-    
-    [self processImage];
-}
-
-
-- (void)toggleFilm:(UIButton *)sender {
-    currentFilm = [NSString stringWithFormat:@"print%d.jpg", sender.tag];
-    UIImage *imageFilm = [UIImage imageNamed:currentFilm];
-    filterMain.imageFilm = imageFilm;
-    
-    CGSize blendSize = imageFilm.size;
-    
-    CGFloat ratioWidth = blendSize.width / imageSize.width;
-    CGFloat ratioHeight = blendSize.height / imageSize.height;
-    CGRect crop;
-    
-    CGFloat ratio = MIN(ratioWidth, ratioHeight);
-    CGSize newSize = CGSizeMake(blendSize.width / ratio, blendSize.height / ratio);
-    if (newSize.width > imageSize.width) {
-        CGFloat sub = (newSize.width - imageSize.width) / newSize.width;
-        crop = CGRectMake(sub/2.0, 0.0, 1.0-sub, 1.0);
-    } else {
-        CGFloat sub = (newSize.height - imageSize.height) / newSize.height;
-        crop = CGRectMake(0.0, sub/2.0, 1.0, 1.0-sub);
-    }
-    
-    filterMain.filmRegion = crop;
-    
-    if (!buttonFilmNone.enabled) {
-        buttonFilmNone.enabled = YES;
-        buttonFilmWeak.enabled = NO;
-        filterMain.filmIntensity = 0.30;
+    if (!buttonBlendLayer2.enabled) {
+        filterMain.imageFilm = imageBlend;
+        filterMain.filmRegion = crop;
+        
+        filterMain.filmIntensity = sliderBlendIntensity.value;
         filterMain.filmEnable = YES;
     }
     
@@ -1257,13 +1223,15 @@
 }
 
 - (IBAction)setBlend:(UIButton *)sender {
-    [self setBlendImpl:sender.tag];
-    [self processImage];
-}
-
-- (IBAction)setFilm:(UIButton *)sender {
-    [self setFilmImpl:sender.tag];
-    [self processImage];
+    if (sender.tag == 1) {
+        buttonBlendLayer1.enabled = false;
+        buttonBlendLayer2.enabled = true;
+        sliderBlendIntensity.value = filterMain.blendIntensity;
+    } else {
+        buttonBlendLayer1.enabled = true;
+        buttonBlendLayer2.enabled = false;
+        sliderBlendIntensity.value = filterMain.filmIntensity;
+    }
 }
 
 - (IBAction)printTemplate:(id)sender {
@@ -1291,6 +1259,8 @@
                          [NSNumber numberWithFloat:filterMain.contrast], @"contrast",
                          [NSNumber numberWithFloat:filterMain.brightness], @"brightness",
                          [NSNumber numberWithFloat:filterMain.saturation], @"saturation",
+                         [NSNumber numberWithFloat:filterMain.exposure], @"exposure",
+                         [NSNumber numberWithFloat:filterMain.contrast], @"contrast",
                          [NSNumber numberWithFloat:filterMain.clearness], @"clearness",
                          [NSNumber numberWithFloat:filterMain.vignfade], @"vignfade",
                          [NSNumber numberWithBool:filterMain.blendEnable], @"blendEnable",
@@ -1336,70 +1306,6 @@
 
 - (IBAction)touchText:(id)sender {
     [self presentModalViewController:controllerText animated:YES];
-}
-
-- (void)setBlendImpl:(NSInteger)tag {
-    buttonBlendNone.enabled = true;
-    buttonBlendStrong.enabled = true;
-    buttonBlendWeak.enabled = true;
-    buttonBlendMedium.enabled = true;
-    
-    switch (tag) {
-        case kBlendNone:
-            buttonBlendNone.enabled = false;
-            filterMain.blendEnable = NO;
-            filterMain.blendIntensity = 0;
-            break;
-        case kBlendWeak:
-            buttonBlendWeak.enabled = false;
-            filterMain.blendEnable = YES;
-            filterMain.blendIntensity = 0.4;
-            break;
-        case kBlendNormal:
-            buttonBlendMedium.enabled = false;
-            filterMain.blendEnable = YES;
-            filterMain.blendIntensity = 0.66;
-            break;
-        case kBlendStrong:
-            buttonBlendStrong.enabled = false;
-            filterMain.blendEnable = YES;
-            filterMain.blendIntensity = 0.90;
-            break;
-        default:
-            break;
-    }
-}
-
-- (void)setFilmImpl:(NSInteger)tag {
-    buttonFilmNone.enabled = true;
-    buttonFilmStrong.enabled = true;
-    buttonFilmWeak.enabled = true;
-    buttonFilmMedium.enabled = true;
-    
-    switch (tag) {
-        case kBlendNone:
-            buttonFilmNone.enabled = false;
-            filterMain.filmEnable = NO;
-            filterMain.filmIntensity = 0;
-            break;
-        case kBlendWeak:
-            buttonFilmWeak.enabled = false;
-            filterMain.filmEnable = YES;
-            filterMain.filmIntensity = 0.30;
-            break;
-        case kBlendNormal:
-            buttonFilmMedium.enabled = false;
-            filterMain.filmEnable = YES;
-            filterMain.filmIntensity = 0.60;
-            break;
-        case kBlendStrong:
-            buttonFilmStrong.enabled = false;
-            filterMain.filmEnable = YES;
-            filterMain.filmIntensity = 0.90;
-            break;
-        default:
-            break;
-    }
 }
 
 - (void)newMask:(UIImage *)mask {
@@ -1480,16 +1386,7 @@
     
     if ([preset objectForKey:@"blendIntensity"]) {
         CGFloat blendIntensity = [preset[@"blendIntensity"] floatValue];
-        
-        if (blendIntensity == 0.40) {
-            [self setBlendImpl:kBlendWeak];
-        } else if (blendIntensity == 0.66) {
-            [self setBlendImpl:kBlendNormal];
-        } else if (blendIntensity == 0.90) {
-            [self setBlendImpl:kBlendStrong];
-        } else {
-            [self setBlendImpl:kBlendNone];
-        }
+        sliderBlendIntensity.value = blendIntensity;
     }
 
     [self processImage];
@@ -1540,19 +1437,14 @@
     arrayPreset[currentPreset] = [self getState];
     NSArray *documentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentFolder = [documentPath objectAtIndex:0];
-    
-    NSString *newPlistFile = [documentFolder stringByAppendingPathComponent:@"preset.plist"];
+    NSString *assetPath = [documentFolder stringByAppendingPathComponent:@"Assets"];
+    NSString *newPlistFile = [assetPath stringByAppendingPathComponent:@"preset.plist"];
     
     BOOL OK = [arrayPreset writeToFile:newPlistFile atomically:YES];
     NSLog(@"write %d %@", OK, newPlistFile);
 }
 
 - (void)viewDidUnload {
-    [self setScrollFilm:nil];
-    [self setButtonFilmNone:nil];
-    [self setButtonFilmWeak:nil];
-    [self setButtonFilmMedium:nil];
-    [self setButtonFilmStrong:nil];
     [self setViewPresetControl:nil];
     [self setScrollPreset:nil];
     [self setImagePrev:nil];
@@ -1562,8 +1454,72 @@
     [self setScrollDetail:nil];
     [self setSliderBrightness:nil];
     [self setSliderContrast:nil];
-    [self setScrollBlendLayer:nil];
     [self setButtonTogglePreset:nil];
+    [self setSliderBlendIntensity:nil];
     [super viewDidUnload];
+}
+- (IBAction)touchBlendSetting:(id)sender {
+    RDActionSheet *actionSheet = [[RDActionSheet alloc] initWithCancelButtonTitle:NSLocalizedString(@"Cancel", @"")
+                                                               primaryButtonTitle:nil
+                                                           destructiveButtonTitle:nil
+                                                                otherButtonTitles:
+                                  NSLocalizedString(@"Soft Light", @""),
+                                  NSLocalizedString(@"Overlay", @""),
+                                  NSLocalizedString(@"Color Dodge", @""),
+                                  NSLocalizedString(@"Screen", @""),
+                                  NSLocalizedString(@"Lighten", @""),
+                                  NSLocalizedString(@"Normal", @""),
+                                  nil];
+    
+    actionSheet.callbackBlock = ^(RDActionSheetResult result, NSInteger buttonIndex)
+    {
+        switch (result) {
+            case RDActionSheetButtonResultSelected:{
+                NSInteger blendMode = 4;
+                switch (buttonIndex) {
+                    case 0: // Softlight
+                        blendMode = 7;
+                        break;
+                    case 1: // Overlay
+                        blendMode = 6;
+                        break;
+                    case 2: // Color Dodge
+                        blendMode = 5;
+                        break;
+                    case 3: // Screen
+                        blendMode = 4;
+                        break;
+                    case 4: // Lighten
+                        blendMode = 3;
+                        break;
+                    case 5: // Normal
+                        blendMode = 11;
+                        break;
+                }
+                if (!buttonBlendLayer1.enabled)
+                    filterMain.blendMode = blendMode;
+                if (!buttonBlendLayer2.enabled)
+                    filterMain.filmMode = blendMode;
+                [self processImage];
+            }
+                break;
+            case RDActionSheetResultResultCancelled:
+                NSLog(@"Sheet cancelled");
+        }
+    };
+    
+    [actionSheet showFrom:self.view];
+}
+
+- (IBAction)changeBlendIntensity:(id)sender {
+    if (!buttonBlendLayer1.enabled) {
+        filterMain.blendIntensity = sliderBlendIntensity.value;
+        filterMain.blendEnable = sliderBlendIntensity.value > 0;
+    }
+    if (!buttonBlendLayer2.enabled) {
+        filterMain.filmIntensity = sliderBlendIntensity.value;
+        filterMain.filmEnable = sliderBlendIntensity.value > 0;
+    }
+    [self processImage];
 }
 @end

@@ -116,7 +116,7 @@
                                           case FBSessionStateOpen:
                                               if (!error) {
                                                   // We have a valid session
-                                                  TFLog(@"Open fb");
+                                                  DLog(@"Open fb");
                                                   FBAccessTokenData *tokenData = FBSession.activeSession.accessTokenData;
                                                   
                                                   [[LatteAPIClient sharedClient] postPath:@"user/login_facebook"
@@ -125,7 +125,7 @@
                                                                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                                                                       [self processLogin:JSON];
                                                                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                                                                      TFLog(@"Something went wrong (Facebook): %@", error.description);
+                                                                                      DLog(@"Something went wrong (Facebook): %@", error.description);
                                                                                       // Clear FBsession to be sure
                                                                                       [FBSession.activeSession closeAndClearTokenInformation];
                                                                                       [FBSession renewSystemCredentials:^(ACAccountCredentialRenewResult result, NSError *error) {}];
@@ -168,7 +168,7 @@
 				// Grab the initial Twitter account to tweet from.
 //				ACAccount *twitterAccount = [accountsArray objectAtIndex:0];
 				
-				TFLog(@"Got account");
+				DLog(@"Got account");
 			} else {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"エラー")
                                                                 message:NSLocalizedString(@"error_no_twitter", @"Please add one Twitter account in Setting")
@@ -216,7 +216,7 @@
                                                 object:self];
                                            }
                                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                           TFLog(@"Something went wrong (Login check 2)");
+                                           DLog(@"Something went wrong (Login check 2)");
                                        }];
     }
 }

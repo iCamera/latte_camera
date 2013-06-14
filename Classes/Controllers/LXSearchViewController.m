@@ -110,7 +110,7 @@ typedef enum {
                                        tags = [JSON objectForKey:@"tags"];
                                        [self.tableView reloadData];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       TFLog(@"Something went wrong Tag");
+                                       DLog(@"Something went wrong Tag");
                                    }];
 }
 
@@ -317,7 +317,7 @@ typedef enum {
                                        [self.tableView reloadData];
                                        [activityLoad stopAnimating];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       TFLog(@"Something went wrong Tag");
+                                       DLog(@"Something went wrong Tag");
                                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
                                                                                        message:error.localizedDescription
                                                                                       delegate:nil
@@ -355,7 +355,7 @@ typedef enum {
                                        [self.tableView reloadData];
                                        [activityLoad stopAnimating];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       TFLog(@"Something went wrong Tag");
+                                       DLog(@"Something went wrong Tag");
                                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
                                                                                        message:error.localizedDescription
                                                                                       delegate:nil

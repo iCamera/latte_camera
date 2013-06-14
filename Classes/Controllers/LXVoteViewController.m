@@ -78,7 +78,7 @@
                                            
                                            [self.tableView reloadData];
                                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                           TFLog(@"Something went wrong (Get vote)");
+                                           DLog(@"Something went wrong (Get vote)");
                                            
                                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
                                                                                            message:error.localizedDescription

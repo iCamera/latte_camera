@@ -146,7 +146,7 @@ typedef enum {
                                        self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back2.png"]];
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       TFLog(@"Something went wrong (Ranking)");
+                                       DLog(@"Something went wrong (Ranking)");
                                        [loadIndicator stopAnimating];
                                        [HUD hide:YES];
                                        loadEnded = true;
@@ -180,7 +180,7 @@ typedef enum {
                                        [loadIndicator stopAnimating];
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       TFLog(@"Something went wrong (Ranking)");
+                                       DLog(@"Something went wrong (Ranking)");
                                        [loadIndicator stopAnimating];
                                        [HUD hide:YES];
                                        loadEnded = true;
@@ -207,7 +207,7 @@ typedef enum {
                                        self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       TFLog(@"Something went wrong (Ranking)");
+                                       DLog(@"Something went wrong (Ranking)");
                                        [loadIndicator stopAnimating];
                                        [HUD hide:YES];
                                        loadEnded = true;
@@ -247,7 +247,7 @@ typedef enum {
                                        [loadIndicator stopAnimating];
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       TFLog(@"Something went wrong (Ranking)");
+                                       DLog(@"Something went wrong (Ranking)");
                                        [loadIndicator stopAnimating];
                                    }
      ];
@@ -363,7 +363,7 @@ typedef enum {
             if (nil == cellLv2) {
                 cellLv2 = [[LXCellRankLv2 alloc] initWithStyle:UITableViewCellStyleDefault
                                                reuseIdentifier:@"Second"];
-                TFLog(@"New row");
+                DLog(@"New row");
             }
             
             [self initButton:cellLv2.buttonPic2];

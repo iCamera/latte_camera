@@ -196,7 +196,7 @@
                                             buttonSend.enabled = false;
                                             [MBProgressHUD hideHUDForView:self.view.superview.superview.superview animated:YES];
                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                            TFLog(@"Something went wrong (Comment)");
+                                            DLog(@"Something went wrong (Comment)");
                                             [MBProgressHUD hideHUDForView:self.view.superview.superview.superview animated:YES];
                                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
                                                                                             message:error.localizedDescription

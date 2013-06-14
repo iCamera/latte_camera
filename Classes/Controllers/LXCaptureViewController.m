@@ -382,7 +382,11 @@ typedef enum {
         UIImage *imageFullsize = [info objectForKey:UIImagePickerControllerOriginalImage];
         controllerCanvas.delegate = _delegate;
         controllerCanvas.imageOriginalPreview = [UIImage imageWithCGImage:myasset.defaultRepresentation.fullScreenImage];
-        controllerCanvas.imageThumbnail = [UIImage imageWithCGImage:myasset.thumbnail];
+
+        UIImage *thumbNail = [UIImage imageWithCGImage:myasset.thumbnail];
+        CGFloat height = [LXUtils heightFromWidth:70 width:thumbNail.size.height height:thumbNail.size.height];
+        controllerCanvas.imageThumbnail = [LXUtils imageWithImage:thumbNail scaledToSize:CGSizeMake(70, height)];
+        
         controllerCanvas.imageMeta = [NSMutableDictionary dictionaryWithDictionary:myasset.defaultRepresentation.metadata];
         controllerCanvas.imageOriginal = imageFullsize;
         
@@ -468,7 +472,7 @@ typedef enum {
             [device unlockForConfiguration];
         }
     } else {
-        TFLog(@"ERROR = %@", error);
+        DLog(@"ERROR = %@", error);
     }
 }
 

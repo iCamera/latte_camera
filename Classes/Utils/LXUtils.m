@@ -87,7 +87,7 @@
     [[LatteAPIClient sharedClient] postPath:url
                                  parameters:param
                                     success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                        TFLog(@"Submited like");
+                                        DLog(@"Submited like");
                                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
                                                                                         message:error.localizedDescription
@@ -95,7 +95,7 @@
                                                                               cancelButtonTitle:NSLocalizedString(@"close", "Close")
                                                                               otherButtonTitles:nil];
                                         [alert show];
-                                        TFLog(@"Something went wrong (Vote)");
+                                        DLog(@"Something went wrong (Vote)");
                                     }];
     
     //Animation

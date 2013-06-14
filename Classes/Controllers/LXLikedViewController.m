@@ -104,7 +104,7 @@
                                        [self doneLoadingTableViewData];
                                        [loadIndicator stopAnimating];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       TFLog(@"Something went wrong (Fav)");
+                                       DLog(@"Something went wrong (Fav)");
                                        
                                        [self doneLoadingTableViewData];
                                        [loadIndicator stopAnimating];

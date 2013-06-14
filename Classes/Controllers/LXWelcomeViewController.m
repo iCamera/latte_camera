@@ -167,7 +167,7 @@ typedef enum {
                                        [indicator stopAnimating];
                                        [self doneLoadingTableViewData];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       TFLog(@"Something went wrong (Welcome)");
+                                       DLog(@"Something went wrong (Welcome)");
                                        [indicator stopAnimating];
                                        [self doneLoadingTableViewData];
                                    }];
@@ -387,7 +387,7 @@ typedef enum {
 }
 
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSUInteger)section {
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 60.0f;
 }
 

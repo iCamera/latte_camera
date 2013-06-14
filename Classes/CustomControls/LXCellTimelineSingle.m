@@ -121,6 +121,13 @@
     [buttonShare addTarget:self action:@selector(sharePic:) forControlEvents:UIControlEventTouchUpInside];
     
     [LXUtils setNationalityOfUser:feed.user forImage:imageNationality nextToLabel:labelTitle];
+    
+    // Increase counter
+    NSString *urlCounter = [NSString stringWithFormat:@"picture/counter/%d/%d",
+                            [pic.pictureId integerValue],
+                            [pic.userId integerValue]];
+    
+    [[LatteAPIClient sharedClient] getPath:urlCounter parameters:nil success:nil failure:nil];
 }
 
 - (void)submitLike:(id)sender {

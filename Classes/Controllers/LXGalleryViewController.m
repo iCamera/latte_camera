@@ -424,10 +424,7 @@
                      [currentPage.picture.pictureId integerValue],
                      [currentPage.picture.userId integerValue]];
     
-    [[LatteAPIClient sharedClient] getPath:urlCounter
-                                parameters:[NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"]
-                                   success:nil
-                                   failure:nil];
+    [[LatteAPIClient sharedClient] getPath:urlCounter parameters:nil success:nil failure:nil];
     buttonEdit.hidden = !currentPage.picture.isOwner;
 }
 
@@ -536,7 +533,7 @@
                                            currentComments = [Comment mutableArrayFromDictionary:JSON withKey:@"comments"];
                                            viewPicTab.viewComment.comments = currentComments;
                                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                           TFLog(@"Something went wrong PicDetail Gallery");
+                                           DLog(@"Something went wrong PicDetail Gallery");
                                            
                                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
                                                                                            message:error.localizedDescription

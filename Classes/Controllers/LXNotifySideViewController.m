@@ -146,7 +146,7 @@
                                              [self doneLoadingTableViewData];
                                              [activityLoad stopAnimating];
                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                             TFLog(@"Something went wrong (Notify)");
+                                             DLog(@"Something went wrong (Notify)");
                                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
                                                                                              message:error.localizedDescription
                                                                                             delegate:nil
@@ -224,7 +224,7 @@
                                                        
                                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                        [hud hide:YES];
-                                                       TFLog(@"Something went wrong Notify Gallery");
+                                                       DLog(@"Something went wrong Notify Gallery");
                                                        
                                                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
                                                                                                        message:error.localizedDescription

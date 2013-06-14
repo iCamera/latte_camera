@@ -8,7 +8,6 @@
 
 #import "LXAboutViewController.h"
 #import "LatteAPIClient.h"
-#import "TestFlight.h"
 #import "LXButtonBack.h"
 #import "UIDeviceHardware.h"
 

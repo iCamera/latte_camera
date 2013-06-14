@@ -69,6 +69,8 @@
 		return nil;
     }
     
+    uniformStateRestorationBlocks = [[NSMutableDictionary alloc] init];
+    
     runSynchronouslyOnVideoProcessingQueue(^{
         vignfadeUniform = [filterProgram uniformIndex:@"vignfade"];
         brightnessUniform = [filterProgram uniformIndex:@"brightness"];
@@ -124,8 +126,8 @@
     self.filmEnable = NO;
     self.textEnable = NO;
     self.sharpness = 0;
-    self.filmMode = 5;
-    self.blendMode = 5;
+    self.filmMode = 4;
+    self.blendMode = 4;
     
     return self;
 }
@@ -402,6 +404,7 @@
     
     [GPUImageContext setActiveShaderProgram:filterProgram];
     [self setFilterFBO];
+    [self setUniformsForProgramAtIndex:0];
     
     glClearColor(backgroundColorRed, backgroundColorGreen, backgroundColorBlue, backgroundColorAlpha);
     glClear(GL_COLOR_BUFFER_BIT);

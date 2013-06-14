@@ -76,7 +76,7 @@
                                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                         sender.selected = !sender.selected;
                                         _user.isFollowing = sender.selected;
-                                        TFLog(@"Something went wrong (User - follow)");
+                                        DLog(@"Something went wrong (User - follow)");
                                     }];
     
 }

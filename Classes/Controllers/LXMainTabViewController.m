@@ -13,7 +13,6 @@
 #import "LXMainTabViewController.h"
 #import "LXAppDelegate.h"
 #import "LXAboutViewController.h"
-#import "TestFlight.h"
 #import "LXUserNavButton.h"
 #import "LXMyPageViewController.h"
 #import "LXNavMypageController.h"
@@ -65,7 +64,7 @@
     // Tab style
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
     for (UITabBarItem* tab in [self.tabBarController.tabBar items]) {
-        TFLog(@"text");
+        DLog(@"text");
         [tab setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                      [UIColor blackColor], UITextAttributeTextShadowColor,
                                      [NSValue valueWithUIOffset:UIOffsetMake(0, 1)], UITextAttributeTextShadowOffset,
@@ -185,7 +184,7 @@
                                  parameters: [NSDictionary dictionaryWithObject:[app getToken] forKey:@"token" ]
                                     success:nil
                                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        TFLog(@"Something went wrong (Notify Read)");
+                                        DLog(@"Something went wrong (Notify Read)");
                                     }];
     
     viewNotify.view.alpha = 0;
