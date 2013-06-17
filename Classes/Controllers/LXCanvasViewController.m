@@ -639,6 +639,8 @@
 }
 
 - (UIImage*)getFinalThumb {
+    [filterMain resetCapture];
+    [self processImage];
     CGImageRef cgImagePreviewFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:_imageOriginalPreview.imageOrientation];
     UIImage* ret = [UIImage imageWithCGImage:cgImagePreviewFromBytes];
     CGImageRelease(cgImagePreviewFromBytes);
@@ -671,21 +673,17 @@
     } else {
         [self preparePipe:imageToProcess];
         
+        if (MAX(imageSize.width, imageSize.height) > 1000) {
+            [filterMain prepareForImageCapture];
+        }
+        
         [imageToProcess processImage];
-//        if (MAX(imageSize.width, imageSize.height) > 1000) {
-//            [filterMain prepareForImageCapture];
-//        }
         
         // Save to Jpeg NSData
         CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:UIImageOrientationUp];
         UIImage *outputImage = [UIImage imageWithCGImage:cgImageFromBytes];
         jpeg = UIImageJPEGRepresentation(outputImage, 0.9);
         CGImageRelease(cgImageFromBytes);
-        
-//        if (MAX(imageSize.width, imageSize.height) > 1000) {
-//            [filterMain resetCapture];
-//        }
-    
     }
 
     
