@@ -111,16 +111,20 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UISlider *sliderFeather;
 @property (strong, nonatomic) IBOutlet UISlider *sliderEffectIntensity;
 @property (strong, nonatomic) IBOutlet UISlider *sliderBlendIntensity;
+@property (strong, nonatomic) IBOutlet UISlider *sliderFilmIntensity;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollProcess;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollBlend;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollFilm;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollPreset;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollDetail;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollLayer;
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonBlackWhite;
 @property (strong, nonatomic) IBOutlet UIImageView *imagePrev;
 @property (strong, nonatomic) IBOutlet UIImageView *imageNext;
 @property (strong, nonatomic) IBOutlet UIButton *buttonSavePreset;
 @property (strong, nonatomic) IBOutlet UIView *blendIndicator;
+@property (strong, nonatomic) IBOutlet UIView *filmIndicator;
 
 @property (strong, nonatomic) NSDictionary *dictUpload;
 
@@ -143,6 +147,7 @@ typedef enum {
 - (IBAction)printTemplate:(id)sender;
 - (IBAction)touchBlendSetting:(id)sender;
 - (IBAction)changeBlendIntensity:(id)sender;
+- (IBAction)changeFilmIntensity:(id)sender;
 
 @property (strong, nonatomic) UIImage *imageOriginalPreview;
 @property (strong, nonatomic) UIImage *imageOriginal;

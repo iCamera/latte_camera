@@ -8,6 +8,7 @@
 
 #import "AVCamCaptureManager.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+#import <CoreLocation/CoreLocation.h>
 
 @protocol LXCamCaptureManagerDelegate <AVCamCaptureManagerDelegate>
 @required

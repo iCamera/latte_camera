@@ -865,19 +865,19 @@
                                 <color key="backgroundColor" red="0.21960784310000001" green="0.19215686269999999" blue="0.1137254902" alpha="0.90000000000000002" colorSpace="deviceRGB"/>
                             </view>
                             <view contentMode="scaleToFill" id="yLN-6N-gZo" userLabel="Blending Control">
-                                <rect key="frame" x="0.0" y="430" width="320" height="110"/>
+                                <rect key="frame" x="0.0" y="200" width="320" height="110"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="qLE-fj-H52">
-                                        <rect key="frame" x="8" y="7" width="60" height="25"/>
+                                        <rect key="frame" x="8" y="28" width="60" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                                         <size key="titleShadowOffset" width="0.0" height="1"/>
-                                        <state key="normal" title="Lớp 1" backgroundImage="select42_1.png">
+                                        <state key="normal" title="Lớp 1" backgroundImage="bg_camera_bt3.png">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                         </state>
-                                        <state key="disabled" backgroundImage="select42_1_on.png">
+                                        <state key="disabled" backgroundImage="bg_camera_bt3_on.png">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                         </state>
@@ -890,15 +890,15 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="O04-ja-gMh">
-                                        <rect key="frame" x="68" y="7" width="60" height="25"/>
+                                        <rect key="frame" x="8" y="61" width="60" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                                         <size key="titleShadowOffset" width="0.0" height="1"/>
-                                        <state key="normal" title="Lớp 2" backgroundImage="select42_3.png">
+                                        <state key="normal" title="Lớp 2" backgroundImage="bg_camera_bt3.png">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                         </state>
-                                        <state key="disabled" backgroundImage="select42_3_on.png">
+                                        <state key="disabled" backgroundImage="bg_camera_bt3_on.png">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                         </state>
@@ -910,42 +910,88 @@
                                             <action selector="setBlend:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="UEP-S7-pnu"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="ZOX-tz-btE">
-                                        <rect key="frame" x="280" y="0.0" width="40" height="40"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="icon_setting.png">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="touchBlendSetting:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="3b4-Lv-2BU"/>
-                                        </connections>
-                                    </button>
-                                    <scrollView autoresizesSubviews="NO" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="Jqe-oV-WUx" userLabel="Blend Scroll">
-                                        <rect key="frame" x="0.0" y="38" width="320" height="72"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" tag="10" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" bouncesZoom="NO" id="Xcs-el-e83" userLabel="Scroll Layer">
+                                        <rect key="frame" x="75" y="0.0" width="245" height="110"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <subviews>
-                                            <view hidden="YES" contentMode="scaleToFill" id="XdU-H5-Qzc">
-                                                <rect key="frame" x="0.0" y="0.0" width="20" height="1"/>
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="ZOX-tz-btE" userLabel="Button Blend Layer 1">
+                                                <rect key="frame" x="205" y="0.0" width="40" height="40"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                            </view>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" image="icon_setting.png">
+                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="highlighted">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="touchBlendSetting:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="3b4-Lv-2BU"/>
+                                                </connections>
+                                            </button>
+                                            <scrollView autoresizesSubviews="NO" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="Jqe-oV-WUx" userLabel="Blend Layer 1 Scroll">
+                                                <rect key="frame" x="0.0" y="38" width="245" height="72"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <subviews>
+                                                    <view hidden="YES" contentMode="scaleToFill" id="XdU-H5-Qzc">
+                                                        <rect key="frame" x="0.0" y="0.0" width="20" height="1"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                    </view>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </scrollView>
+                                            <slider opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" id="bcl-Dm-Cny" userLabel="Horizontal Slider Layer 1">
+                                                <rect key="frame" x="6" y="9" width="201" height="23"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="minimumTrackTintColor" red="0.2190684443" green="0.19459484590000001" blue="0.11386880050000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="thumbTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <connections>
+                                                    <action selector="changeBlendIntensity:" destination="IgC-G0-Nfq" eventType="valueChanged" id="Z9D-Gg-D6M"/>
+                                                </connections>
+                                            </slider>
+                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="1hb-mK-gkR" userLabel="Button Blend Layer 2">
+                                                <rect key="frame" x="205" y="110" width="40" height="40"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" image="icon_setting.png">
+                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="highlighted">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="touchBlendSetting:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="Ga4-nf-JmV"/>
+                                                </connections>
+                                            </button>
+                                            <scrollView autoresizesSubviews="NO" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="Vm3-IB-ELW" userLabel="Blend Layer 2 Scroll">
+                                                <rect key="frame" x="0.0" y="148" width="245" height="72"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <subviews>
+                                                    <view hidden="YES" contentMode="scaleToFill" id="duH-OJ-eIq">
+                                                        <rect key="frame" x="0.0" y="0.0" width="20" height="1"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                    </view>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </scrollView>
+                                            <slider opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" id="QHX-vf-wxZ" userLabel="Horizontal Slider Layer 2">
+                                                <rect key="frame" x="6" y="120" width="201" height="23"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="minimumTrackTintColor" red="0.2190684443" green="0.19459484590000001" blue="0.11386880050000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="thumbTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <connections>
+                                                    <action selector="changeBlendIntensity:" destination="IgC-G0-Nfq" eventType="valueChanged" id="S2d-od-Ov8"/>
+                                                    <action selector="changeFilmIntensity:" destination="IgC-G0-Nfq" eventType="valueChanged" id="bIp-6b-uMO"/>
+                                                </connections>
+                                            </slider>
                                         </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    </scrollView>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" id="bcl-Dm-Cny">
-                                        <rect key="frame" x="136" y="9" width="147" height="23"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="minimumTrackTintColor" red="0.2190684443" green="0.19459484590000001" blue="0.11386880050000001" alpha="1" colorSpace="calibratedRGB"/>
-                                        <color key="thumbTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
-                                            <action selector="changeBlendIntensity:" destination="IgC-G0-Nfq" eventType="valueChanged" id="Z9D-Gg-D6M"/>
+                                            <outlet property="delegate" destination="IgC-G0-Nfq" id="YmL-OG-U0q"/>
                                         </connections>
-                                    </slider>
+                                    </scrollView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.21960784310000001" green="0.19215686269999999" blue="0.1137254902" alpha="0.90000000000000002" colorSpace="deviceRGB"/>
                             </view>
@@ -1135,12 +1181,15 @@
                         <outlet property="buttonToggleLens" destination="7us-9q-ShY" id="Rpc-ht-gN6"/>
                         <outlet property="buttonTogglePreset" destination="tdU-ch-Rq1" id="ovC-Is-1c3"/>
                         <outlet property="buttonYes" destination="4Vx-ae-rPd" id="92t-VS-mKB"/>
+                        <outlet property="filmIndicator" destination="duH-OJ-eIq" id="iMR-H2-yNk"/>
                         <outlet property="gesturePan" destination="pVG-Rs-BE8" id="0hN-6m-1cZ"/>
                         <outlet property="imageNext" destination="TU5-lO-n3g" id="ouM-YR-g1g"/>
                         <outlet property="imagePrev" destination="5Rc-ai-IPG" id="prd-kG-WpK"/>
                         <outlet property="scrollBlend" destination="Jqe-oV-WUx" id="yuA-R6-fqH"/>
                         <outlet property="scrollDetail" destination="bZm-0H-5z8" id="oA6-VX-r1d"/>
                         <outlet property="scrollEffect" destination="EDY-bj-4DP" id="ZFj-H6-qG4"/>
+                        <outlet property="scrollFilm" destination="Vm3-IB-ELW" id="FVb-UR-X1X"/>
+                        <outlet property="scrollLayer" destination="Xcs-el-e83" id="Jlk-yo-x9x"/>
                         <outlet property="scrollPreset" destination="yGR-p4-0nM" id="YhK-Og-yfD"/>
                         <outlet property="scrollProcess" destination="bgp-m6-lzX" id="lEc-Dw-VNa"/>
                         <outlet property="sliderBlendIntensity" destination="bcl-Dm-Cny" id="9ct-ZI-tFe"/>
@@ -1150,6 +1199,7 @@
                         <outlet property="sliderEffectIntensity" destination="9Fr-lg-rCi" id="xH8-Dr-vc6"/>
                         <outlet property="sliderExposure" destination="4kj-V5-0KA" id="Kin-5h-tDn"/>
                         <outlet property="sliderFeather" destination="gkz-os-k9A" id="eoG-D2-tKR"/>
+                        <outlet property="sliderFilmIntensity" destination="QHX-vf-wxZ" id="K5Q-h8-eC5"/>
                         <outlet property="sliderSaturation" destination="NeX-zm-jiQ" id="wHc-K0-EZR"/>
                         <outlet property="sliderSharpness" destination="v68-J1-M9J" id="yyj-Io-VTL"/>
                         <outlet property="sliderVignette" destination="biM-cn-8dS" id="doL-7N-KXf"/>
@@ -1995,6 +2045,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCanvasViewController.h"/>
             <relationships>
                 <relationship kind="action" name="changeBlendIntensity:"/>
+                <relationship kind="action" name="changeFilmIntensity:"/>
                 <relationship kind="action" name="changeLens:" candidateClass="UIButton"/>
                 <relationship kind="action" name="changePen:" candidateClass="UISlider"/>
                 <relationship kind="action" name="printTemplate:"/>
@@ -2036,12 +2087,15 @@
                 <relationship kind="outlet" name="buttonToggleLens" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonTogglePreset" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonYes" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="filmIndicator" candidateClass="UIView"/>
                 <relationship kind="outlet" name="gesturePan" candidateClass="UIPanGestureRecognizer"/>
                 <relationship kind="outlet" name="imageNext" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="imagePrev" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="scrollBlend" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="scrollDetail" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="scrollEffect" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="scrollFilm" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="scrollLayer" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="scrollPreset" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="scrollProcess" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="sliderBlendIntensity" candidateClass="UISlider"/>
@@ -2051,6 +2105,7 @@
                 <relationship kind="outlet" name="sliderEffectIntensity" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="sliderExposure" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="sliderFeather" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderFilmIntensity" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="sliderSaturation" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="sliderSharpness" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="sliderVignette" candidateClass="UISlider"/>

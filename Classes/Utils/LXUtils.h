@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <ImageIO/ImageIO.h>
-
+#import <CoreLocation/CoreLocation.h>
 @class Feed, Picture, User;
 
 typedef enum {

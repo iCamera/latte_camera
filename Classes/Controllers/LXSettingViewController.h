@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
+#import "QuickDialog.h"
 
 @interface LXSettingViewController : QuickDialogController<QuickDialogStyleProvider, QuickDialogEntryElementDelegate> {
     MBProgressHUD *HUD;

@@ -13,7 +13,6 @@
 #import "LXCanvasViewController.h"
 #import "UIView+Genie.h"
 #import "MBProgressHUD.h"
-#import "UIApplication+Private.h"
 #import "UIImage+fixOrientation.h"
 //#import "RBVolumeButtons.h"
 
