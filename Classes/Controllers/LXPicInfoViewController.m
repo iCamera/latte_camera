@@ -129,30 +129,23 @@
         }
     
     LXCellDataField *cell = [tableView dequeueReusableCellWithIdentifier:@"Profile"];
-    cell.imageHide.hidden = !_picture.isOwner;
+
     if (indexPath.section == 0)
     {
         NSString *key = [keyBasic objectAtIndex:indexPath.row];
         if ([key isEqualToString:@"taken_at"]) {
-            if (_picture.isOwner) {
-                cell.imageHide.highlighted = _picture.showTakenAt;
-            }
             
             cell.labelField.text = NSLocalizedString(@"taken_date", @"撮影月日") ;
             cell.labelDetail.text = [LXUtils dateToString:_picture.takenAt];
         }
         if ([[keyBasic objectAtIndex:indexPath.row] isEqualToString:@"created_at"]) {
-            cell.imageHide.hidden = true;
+
             cell.labelField.text = NSLocalizedString(@"uploaded_date", @"追加月日");
             cell.labelDetail.text = [LXUtils dateToString:_picture.createdAt];
         }
     }
     if (indexPath.section == 1) {
         if (_picture.exif.count > 0) {
-            if (_picture.isOwner) {
-                cell.imageHide.highlighted = _picture.showEXIF;
-            }
-            
             cell.labelField.text = NSLocalizedString([keyExif objectAtIndex:indexPath.row], @"");
             cell.labelDetail.text = [_picture.exif objectForKey:[keyExif objectAtIndex:indexPath.row]];
         }
@@ -160,7 +153,6 @@
     
     if (((indexPath.section == 1) && (_picture.exif.count == 0) && (_picture.isOwner)) ||
         (indexPath.section == 2)) {
-        cell.imageHide.hidden = true;
         PictureStatus status = 0;
         NSString *text;
         switch (indexPath.row) {
@@ -170,15 +162,15 @@
                 break;
             case 1:
                 text = NSLocalizedString(@"Show camera EXIF", "");
-                status = _picture.showEXIF?40:0;
+                status = _picture.showEXIF;
                 break;
             case 2:
                 text = NSLocalizedString(@"Show location", "");
-                status = _picture.showGPS?40:0;
+                status = _picture.showGPS;
                 break;
             case 3:
                 text = NSLocalizedString(@"Show taken date", "");
-                status = _picture.showTakenAt?40:0;
+                status = _picture.showTakenAt;
                 break;
             default:
                 break;

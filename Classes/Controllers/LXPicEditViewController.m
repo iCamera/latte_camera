@@ -19,6 +19,9 @@
 
 @implementation LXPicEditViewController {
     PictureStatus imageStatus;
+    PictureStatus imageGPSStatus;
+    PictureStatus imageExifStatus;
+    PictureStatus imageTakenAtStatus;
     LXShare *share;
     NSMutableArray *tags;
 }
@@ -26,13 +29,14 @@
 @synthesize imagePic;
 @synthesize textDesc;
 @synthesize gestureTap;
-@synthesize switchGPS;
-@synthesize switchEXIF;
+
 @synthesize labelStatus;
 @synthesize buttonDelete;
 @synthesize viewDelete;
 @synthesize labelTag;
-@synthesize switchTakenAt;
+@synthesize labelEXIFStatus;
+@synthesize labelGPSStatus;
+@synthesize labelTakenDateStatus;
 @synthesize buttonFacebook;
 @synthesize buttonTwitter;
 
@@ -82,9 +86,9 @@
         textDesc.text = _picture.descriptionText;
         
         imageStatus = _picture.status;
-        switchGPS.on = _picture.showGPS;
-        switchEXIF.on = _picture.showEXIF;
-        switchTakenAt.on = _picture.showTakenAt;
+        imageGPSStatus = _picture.showGPS;
+        imageExifStatus = _picture.showEXIF;
+        imageTakenAtStatus = _picture.showTakenAt;
         tags = [NSMutableArray arrayWithArray:_picture.tagsOld];
         buttonDelete.hidden = false;
     } else {
@@ -94,15 +98,19 @@
         LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
         imagePic.image = _preview;
         imageStatus = app.currentUser.pictureStatus;
-        switchGPS.on = app.currentUser.defaultShowGPS;
-        switchEXIF.on = app.currentUser.defaultShowEXIF;
-        switchTakenAt.on = app.currentUser.defaultShowTakenAt;
+        imageGPSStatus = app.currentUser.defaultShowGPS;
+        imageExifStatus = app.currentUser.defaultShowEXIF;
+        imageTakenAtStatus = app.currentUser.defaultShowTakenAt;
         buttonFacebook.selected = app.currentUser.pictureAutoFacebookUpload;
         buttonTwitter.selected = app.currentUser.pictureAutoTweet;
         
         tags = [[NSMutableArray alloc]init];
     }
-    [self setStatusLabel];
+    
+    [self setStatusLabel:labelStatus status:imageStatus];
+    [self setStatusLabel:labelEXIFStatus status:imageExifStatus];
+    [self setStatusLabel:labelGPSStatus status:imageGPSStatus];
+    [self setStatusLabel:labelTakenDateStatus status:imageTakenAtStatus];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -111,19 +119,19 @@
     [super viewWillAppear:animated];
 }
 
-- (void)setStatusLabel {
-    switch (imageStatus) {
+- (void)setStatusLabel:(UILabel*)label status:(PictureStatus)status {
+    switch (status) {
         case PictureStatusPrivate:
-            labelStatus.text = NSLocalizedString(@"status_private", @"非公開");
+            label.text = NSLocalizedString(@"status_private", @"非公開");
             break;
         case PictureStatusFriendsOnly:
-            labelStatus.text = NSLocalizedString(@"status_friends", @"友達まで");
+            label.text = NSLocalizedString(@"status_friends", @"友達まで");
             break;
         case PictureStatusMember:
-            labelStatus.text = NSLocalizedString(@"status_members", @"会員まで");
+            label.text = NSLocalizedString(@"status_members", @"会員まで");
             break;
         case PictureStatusPublic:
-            labelStatus.text = NSLocalizedString(@"status_public", @"公開");
+            label.text = NSLocalizedString(@"status_public", @"公開");
             break;
         default:
             break;
@@ -140,7 +148,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if ((indexPath.section == 1) && (indexPath.row == 2))
+    if ((indexPath.section == 1) && (indexPath.row > 1))
     {
         UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"privacy_setting", @"公開設定")
                                                            delegate:self
@@ -152,7 +160,7 @@
                                 NSLocalizedString(@"status_members", @"会員まで"),
                                 NSLocalizedString(@"status_public", @"公開"), nil];
         sheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
-        sheet.tag = 0;
+        sheet.tag = indexPath.row;
         if (self.tabBarController != nil) {
             [sheet showFromTabBar:self.tabBarController.tabBar];
             sheet.delegate = self;
@@ -171,26 +179,54 @@
     }
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {    
-    if (actionSheet.tag == 0) {
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    UILabel *label;
+
+    
+    if (actionSheet.tag > 1 && actionSheet.tag < 10) {
+        PictureStatus status;
         switch (buttonIndex) {
             case 0:
-                imageStatus = 0;
+                status = PictureStatusPrivate;
                 break;
             case 1:
-                imageStatus = 10;
+                status = PictureStatusFriendsOnly;
                 break;
             case 2:
-                imageStatus = 30;
+                status = PictureStatusMember;
                 break;
             case 3:
-                imageStatus = 40;
+                status = PictureStatusPublic;
                 break;
             default:
                 break;
         }
-        [self setStatusLabel];
-    } else {
+        
+        switch (actionSheet.tag) {
+            case 2:
+                label = labelStatus;
+                imageStatus = status;
+                break;
+            case 3:
+                label = labelEXIFStatus;
+                imageExifStatus = status;
+                break;
+            case 4:
+                label = labelGPSStatus;
+                imageGPSStatus = status;
+                break;
+            case 5:
+                label = labelTakenDateStatus;
+                imageTakenAtStatus = status;
+                break;
+            default:
+                break;
+        }
+        
+        [self setStatusLabel:label status:status];
+    }
+    
+    if (actionSheet.tag == 10) {
         if (buttonIndex == 0) { // Remove Pic
             MBProgressHUD* HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
             [self.navigationController.view addSubview:HUD];
@@ -246,7 +282,7 @@
                                               cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
                                          destructiveButtonTitle:NSLocalizedString(@"delete_photo", @"この写真を削除する")
                                               otherButtonTitles:nil];
-    sheet.tag = 1;
+    sheet.tag = 10;
     sheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
     [sheet showInView:self.navigationController.view];
 }
@@ -382,17 +418,17 @@
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             [app getToken], @"token",
                             textDesc.text, @"comment",
-                            [NSNumber numberWithBool:switchEXIF.on], @"show_exif",
-                            [NSNumber numberWithBool:switchGPS.on], @"show_gps",
-                            [NSNumber numberWithBool:switchTakenAt.on], @"show_taken_at",
+                            [NSNumber numberWithInteger:imageExifStatus], @"show_exif",
+                            [NSNumber numberWithInteger:imageGPSStatus], @"show_gps",
+                            [NSNumber numberWithInteger:imageTakenAtStatus], @"show_taken_at",
                             [NSNumber numberWithInteger:imageStatus], @"status",
                             [tagsPolish componentsJoinedByString:@","], @"tags",
                             nil];
     _picture.descriptionText = textDesc.text;
     _picture.status = imageStatus;
-    _picture.showEXIF = switchEXIF.on;
-    _picture.showGPS = switchGPS.on;
-    _picture.showTakenAt = switchTakenAt.on;
+    _picture.showEXIF = imageExifStatus;
+    _picture.showGPS = imageGPSStatus;
+    _picture.showTakenAt = imageTakenAtStatus;
     _picture.tagsOld = tags;
     
     [[LatteAPIClient sharedClient] postPath:url
@@ -445,9 +481,9 @@
     uploadLatte.imageFile = _imageData;
     uploadLatte.imagePreview = _preview;
     uploadLatte.imageDescription = textDesc.text;
-    uploadLatte.showEXIF = switchEXIF.on;
-    uploadLatte.showGPS = switchGPS.on;
-    uploadLatte.showTakenAt = switchTakenAt.on;
+    uploadLatte.showEXIF = imageExifStatus;
+    uploadLatte.showGPS = imageGPSStatus;
+    uploadLatte.showTakenAt = imageTakenAtStatus;
     uploadLatte.tags = tags;
     uploadLatte.status = imageStatus;
     
@@ -502,6 +538,9 @@
     [self setTextDesc:nil];
     [self setButtonFacebook:nil];
     [self setButtonTwitter:nil];
+    [self setLabelGPSStatus:nil];
+    [self setLabelEXIFStatus:nil];
+    [self setLabelTakenDateStatus:nil];
     [super viewDidUnload];
 }
 @end

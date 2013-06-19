@@ -59,12 +59,12 @@
 @property (nonatomic, copy) NSString *urlOrg;
 @property (nonatomic, copy) NSNumber *voteCount;
 @property (nonatomic, copy) NSNumber *width;
-@property (nonatomic, assign) PictureStatus status;
 @property (nonatomic, copy) NSDictionary *exif;
 @property (nonatomic, copy) NSMutableArray *tagsOld;
-@property (nonatomic, assign) BOOL showGPS;
-@property (nonatomic, assign) BOOL showEXIF;
-@property (nonatomic, assign) BOOL showTakenAt;
+@property (nonatomic, assign) PictureStatus status;
+@property (nonatomic, assign) PictureStatus showGPS;
+@property (nonatomic, assign) PictureStatus showEXIF;
+@property (nonatomic, assign) PictureStatus showTakenAt;
 @property (nonatomic, copy) NSString *urlWeb;
 
 @property (nonatomic, strong) User *user;
