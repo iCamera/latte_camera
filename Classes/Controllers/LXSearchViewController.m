@@ -35,6 +35,7 @@ typedef enum {
     NSInteger page;
     BOOL loadEnded;
     UITapGestureRecognizer *gestureTap;
+    NSString *type;
 }
 
 @synthesize textKeyword;
@@ -42,6 +43,11 @@ typedef enum {
 @synthesize buttonSearchPhoto;
 @synthesize activityLoad;
 @synthesize buttonSearch;
+@synthesize buttonSearchCamera;
+@synthesize buttonSearchLatest;
+@synthesize buttonSearchLens;
+@synthesize buttonSearchTrend;
+@synthesize viewHeader;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -82,6 +88,7 @@ typedef enum {
     [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];
     
     [app.tracker sendView:@"Search Screen"];
+    type = @"popular";
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification
@@ -104,7 +111,8 @@ typedef enum {
     NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
                            [app getToken], @"token",
                            textKeyword.text, @"keyword", nil];
-    [[LatteAPIClient sharedClient] getPath:@"picture/trending"
+    NSString *url = [NSString stringWithFormat:@"picture/trending/%@", type];
+    [[LatteAPIClient sharedClient] getPath:url
                                 parameters:param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        tags = [JSON objectForKey:@"tags"];
@@ -241,7 +249,7 @@ typedef enum {
         if (pictures.count > 0) {
             return 104;
         } else {
-            return 36;
+            return 30;
         }
         
     } else {
@@ -278,8 +286,16 @@ typedef enum {
 
 - (IBAction)textChanged:(id)sender {
     [textKeyword resignFirstResponder];
+    
     loadEnded = false;
     page = 1;
+    
+    CGRect rect = viewHeader.frame;
+    rect.size.height = 90;
+    viewHeader.frame = rect;
+    self.tableView.tableHeaderView = viewHeader;
+    
+    
     [self loadMore];
 }
 
@@ -395,6 +411,7 @@ typedef enum {
 
 - (IBAction)editChanged:(id)sender {
     buttonSearch.enabled = textKeyword.text.length > 0;
+    
     if (textKeyword.text.length == 0) {
         if (tableMode == kSearchPhoto) {
             pictures = nil;
@@ -404,7 +421,43 @@ typedef enum {
             users = nil;
             [self.tableView reloadData];
         }
-
+        
+        CGRect rect = viewHeader.frame;
+        rect.size.height = 158;
+        viewHeader.frame = rect;
+        self.tableView.tableHeaderView = viewHeader;
     }
+
+}
+
+- (IBAction)switchTab:(UIButton *)sender {
+    buttonSearchTrend.selected = NO;
+    buttonSearchLatest.selected = NO;
+    buttonSearchCamera.selected = NO;
+    buttonSearchLens.selected = NO;
+    sender.selected = YES;
+    switch (sender.tag) {
+        case 0:
+            type = @"popular";
+            break;
+        case 1:
+            type = @"newest";
+            break;
+        case 2:
+            type = @"model";
+            break;
+        case 3:
+            type = @"lens";
+            break;
+    }
+    [self reloadTags];
+}
+- (void)viewDidUnload {
+    [self setButtonSearchTrend:nil];
+    [self setButtonSearchLatest:nil];
+    [self setButtonSearchCamera:nil];
+    [self setButtonSearchLens:nil];
+    [self setViewHeader:nil];
+    [super viewDidUnload];
 }
 @end

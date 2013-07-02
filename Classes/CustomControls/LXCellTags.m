@@ -30,11 +30,4 @@
     // Configure the view for the selected state
 }
 
-- (void)drawRect:(CGRect)rect {
-    [LXUtils globalShadow:buttonTag];
-    buttonTag.layer.cornerRadius = 5.0;
-    [super drawRect:rect];
-}
-
-
 @end

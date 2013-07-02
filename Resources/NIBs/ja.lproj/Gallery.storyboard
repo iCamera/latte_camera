@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="cpi-oe-1tO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="4457.9" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" initialViewController="cpi-oe-1tO">
     <dependencies>
         <deployment version="1280" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
+        <development version="4600" identifier="xcode"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3682.9"/>
     </dependencies>
     <scenes>
         <!--Gallery View Controller-->
@@ -194,6 +195,7 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="qLV-rU-cV4"/>
                     <connections>
                         <outlet property="buttonComment" destination="JNz-uA-38y" id="B9d-yy-ghq"/>
@@ -235,6 +237,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.81568627449999997" green="0.80392156859999997" blue="0.76862745099999996" alpha="1" colorSpace="deviceRGB"/>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
@@ -249,6 +252,7 @@
         <scene sceneID="k1Z-Zm-DcJ">
             <objects>
                 <navigationController wantsFullScreenLayout="YES" definesPresentationContext="YES" modalTransitionStyle="crossDissolve" navigationBarHidden="YES" id="cpi-oe-1tO" customClass="LXNavGalleryViewController" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="CJY-7h-e10" customClass="LXNavBar">
                         <autoresizingMask key="autoresizingMask"/>
@@ -270,7 +274,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="Info" wantsFullScreenLayout="YES" id="1Vb-iL-LK1" customClass="LXPicInfoViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="oDe-n4-Wi3">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="r2l-nB-Hee">
@@ -356,6 +360,7 @@
                             <outlet property="delegate" destination="1Vb-iL-LK1" id="8Fh-Zc-s4Y"/>
                         </connections>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fah-AR-fTU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -385,6 +390,7 @@
                             <outlet property="delegate" destination="AMa-BM-PBo" id="8wV-Lj-4BF"/>
                         </connections>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                 </tableViewController>
@@ -397,11 +403,11 @@
             <objects>
                 <viewController storyboardIdentifier="Map" wantsFullScreenLayout="YES" id="59n-9u-wT7" customClass="LXPicMapViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nua-ee-116">
-                        <rect key="frame" x="0.0" y="44" width="320" height="524"/>
+                        <rect key="frame" x="0.0" y="44" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="9Ih-x9-5Dk">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
+                                <rect key="frame" x="0.0" y="22" width="320" height="524"/>
                                 <connections>
                                     <outlet property="delegate" destination="59n-9u-wT7" id="Xwc-hV-NtU"/>
                                 </connections>
@@ -423,6 +429,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="bDs-D2-cPu"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
@@ -531,11 +538,11 @@
                                                             <rect key="frame" x="128" y="5" width="16" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="spI-ig-vIB">
-                                                            <rect key="frame" x="259" y="0.0" width="43" height="25"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="spI-ig-vIB">
+                                                            <rect key="frame" x="273" y="28" width="35" height="30"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
-                                                            <state key="normal" title="" image="icon_reply_m.png">
+                                                            <state key="normal" title="" image="icon_reply_s.png">
                                                                 <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
@@ -598,6 +605,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <connections>
                         <outlet property="activityLoad" destination="8gt-nq-4Hs" id="J8f-jd-pk7"/>
                         <outlet property="buttonSend" destination="IGt-sZ-7Eg" id="FtK-x8-BZv"/>
@@ -645,6 +653,7 @@
                             <outlet property="delegate" destination="FVi-JD-j3D" id="Idd-Jf-52s"/>
                         </connections>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="VGA-R6-8GE"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pgp-yC-gcb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -656,7 +665,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="PicEdit" wantsFullScreenLayout="YES" id="ghy-6n-Ga3" customClass="LXPicEditViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="4L9-jn-tpV">
-                        <rect key="frame" x="0.0" y="44" width="320" height="524"/>
+                        <rect key="frame" x="0.0" y="44" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <color key="separatorColor" red="0.73725490199999999" green="0.72156862749999995" blue="0.66274509800000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -911,6 +920,7 @@
                             <outlet property="delegate" destination="ghy-6n-Ga3" id="SuU-iD-frs"/>
                         </connections>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" title="Latte" id="FxI-2W-E1d">
                         <barButtonItem key="rightBarButtonItem" style="done" id="uJo-l1-etQ">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="y9J-Aa-5mW">
@@ -970,146 +980,10 @@
         <image name="icon_iine_ss.png" width="10" height="10"/>
         <image name="icon_map_s.png" width="12" height="15"/>
         <image name="icon_plus_s.png" width="11" height="11"/>
-        <image name="icon_reply_m.png" width="16" height="12"/>
+        <image name="icon_reply_s.png" width="12" height="9"/>
         <image name="icon_setting_m_ocher.png" width="15" height="15"/>
         <image name="user.gif" width="100" height="100"/>
     </resources>
-    <classes>
-        <class className="HPGrowingTextView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/HPGrowingTextView.h"/>
-        </class>
-        <class className="LXButtonBrown30" superclassName="UIButton">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonBrown30.h"/>
-        </class>
-        <class className="LXCellComment" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellComment.h"/>
-            <relationships>
-                <relationship kind="outlet" name="buttonLike" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonReply" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="imageLike" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="imageNationality" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="labelAuthor" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelDate" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelLike" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="textComment" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="viewBack" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="LXCellDataField" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellDataField.h"/>
-            <relationships>
-                <relationship kind="outlet" name="labelDetail" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelField" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="LXCellGridUser" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellGridUser.h"/>
-        </class>
-        <class className="LXCellInfoTag" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellInfoTag.h"/>
-            <relationships>
-                <relationship kind="outlet" name="scrollTag" candidateClass="UIScrollView"/>
-            </relationships>
-        </class>
-        <class className="LXCellTag" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellTag.h"/>
-            <relationships>
-                <relationship kind="outlet" name="textTag" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="LXGalleryViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXGalleryViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="dragTab:" candidateClass="UIPanGestureRecognizer"/>
-                <relationship kind="action" name="switchTab:" candidateClass="UIButton"/>
-                <relationship kind="action" name="toggleLike:" candidateClass="UIButton"/>
-                <relationship kind="action" name="touchClose:"/>
-                <relationship kind="action" name="touchShare:"/>
-                <relationship kind="action" name="touchUser:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonComment" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonEdit" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonLike" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonMap" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="imageNationality" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="labelComment" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelLike" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelNickname" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelView" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="viewDesc" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="viewInfoTop" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewTab" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="LXNavBar" superclassName="UINavigationBar">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavBar.h"/>
-        </class>
-        <class className="LXNavGalleryViewController" superclassName="UINavigationController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavGalleryViewController.h"/>
-        </class>
-        <class className="LXPicCommentViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicCommentViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="touchSend:"/>
-                <relationship kind="outlet" name="activityLoad" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="buttonSend" candidateClass="LXButtonBrown30"/>
-                <relationship kind="outlet" name="growingComment" candidateClass="HPGrowingTextView"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="viewHeader" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="LXPicDetailTabViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicDetailTabViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="scrollTab" candidateClass="UIScrollView"/>
-            </relationships>
-        </class>
-        <class className="LXPicDumbTabViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicDumbTabViewController.h"/>
-        </class>
-        <class className="LXPicEditViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicEditViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="touchBackground:"/>
-                <relationship kind="action" name="touchDelete:"/>
-                <relationship kind="action" name="touchFacebook:"/>
-                <relationship kind="action" name="touchPost:"/>
-                <relationship kind="action" name="touchTwitter:"/>
-                <relationship kind="outlet" name="buttonDelete" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonFacebook" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonTwitter" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="gestureTap" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="outlet" name="imagePic" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="labelEXIFStatus" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelGPSStatus" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelStatus" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelTag" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelTakenDateStatus" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="textDesc" candidateClass="LXTextView"/>
-                <relationship kind="outlet" name="viewDelete" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="LXPicInfoViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicInfoViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="touchReport:"/>
-            </relationships>
-        </class>
-        <class className="LXPicMapViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicMapViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="mapPic" candidateClass="MKMapView"/>
-                <relationship kind="outlet" name="viewHidden" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="LXTextView" superclassName="UITextView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXTextView.h"/>
-        </class>
-        <class className="LXVoteViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXVoteViewController.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="cxD-TB-4Px">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="4457.9" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" initialViewController="cxD-TB-4Px">
     <dependencies>
         <deployment version="1280" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
+        <development version="4600" identifier="xcode"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3682.9"/>
     </dependencies>
     <scenes>
         <!--Setting Root View Controller - 設定-->
@@ -316,6 +317,7 @@
                             </tableViewSection>
                         </sections>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" title="設定" id="S5j-P1-F9V">
                         <barButtonItem key="rightBarButtonItem" style="done" id="aST-um-dFS">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="BF7-k2-8Xx" customClass="LXButtonBrown30">
@@ -352,6 +354,7 @@
         <scene sceneID="VKt-pI-gkB">
             <objects>
                 <navigationController definesPresentationContext="YES" id="cxD-TB-4Px" customClass="LXNavigationController" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="1J3-PY-CDA" customClass="LXNavBar">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -422,6 +425,7 @@ iPhoneの「設定」＞「位置情報サービス」を開いてください�
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="Pdp-Wp-ne8"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g6H-xe-xgQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -517,6 +521,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
                             <outlet property="delegate" destination="yf1-Mj-Etk" id="Fb7-sp-Tf4"/>
                         </connections>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" title="機能要望・ご意見" id="vxy-Cf-zG3"/>
                     <connections>
                         <outlet property="textEmail" destination="y9H-Ag-JdV" id="Plo-2t-yRx"/>
@@ -530,7 +535,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
         <!--Setting Notify View Controller-->
         <scene sceneID="fZN-Av-uTo">
             <objects>
-                <tableViewController id="130-si-waG" customClass="LXSettingNotifyViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="Notification" id="130-si-waG" customClass="LXSettingNotifyViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="qLH-jV-a7F">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -719,6 +724,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
                             <outlet property="delegate" destination="130-si-waG" id="DX9-LN-xhu"/>
                         </connections>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="OQt-UR-7Xb"/>
                     <connections>
                         <outlet property="buttonMailComment" destination="CGD-f2-egb" id="X4J-mJ-kMq"/>
@@ -746,51 +752,6 @@ Latteについて、「こんな機能があったら良い」、「この機能
         <image name="icon_mail_l_off.jpg" width="22" height="16"/>
         <image name="user.gif" width="100" height="100"/>
     </resources>
-    <classes>
-        <class className="LXAboutViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXAboutViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="touchSend:"/>
-                <relationship kind="outlet" name="textEmail" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="textForm" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="LXButtonBrown30" superclassName="UIButton">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonBrown30.h"/>
-        </class>
-        <class className="LXButtonNormal" superclassName="UIButton">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonNormal.h"/>
-        </class>
-        <class className="LXNavBar" superclassName="UINavigationBar">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavBar.h"/>
-        </class>
-        <class className="LXNavigationController" superclassName="UINavigationController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavigationController.h"/>
-        </class>
-        <class className="LXSettingNotifyViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXSettingNotifyViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="toggleNotify:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonMailComment" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonMailFollow" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonMailLike" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonPushComment" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonPushFollow" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonPushLike" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="LXSettingRootViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXSettingRootViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="touchClose:"/>
-                <relationship kind="action" name="touchSetPicture:"/>
-                <relationship kind="outlet" name="imageProfile" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="labelVersion" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="viewHeader" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewWrapHeader" candidateClass="UIView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

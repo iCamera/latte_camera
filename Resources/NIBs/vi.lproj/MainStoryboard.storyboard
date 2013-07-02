@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="Ydg-c4-h7a">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="Ydg-c4-h7a">
     <dependencies>
         <deployment version="1280" identifier="iOS"/>
+        <development version="4600" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
@@ -525,8 +526,8 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.69411764710000001" green="0.6705882353" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="POL-ZM-7ga">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="98"/>
+                        <view key="tableHeaderView" clipsSubviews="YES" contentMode="scaleToFill" id="POL-ZM-7ga">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="158"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="tab2_body2.png" id="Glm-5M-ftc">
@@ -592,11 +593,105 @@
                                         <action selector="textChanged:" destination="oup-QU-2wo" eventType="touchUpInside" id="1KJ-ph-HRW"/>
                                     </connections>
                                 </button>
+                                <view contentMode="scaleToFill" id="eK3-Yp-EEl">
+                                    <rect key="frame" x="0.0" y="94" width="320" height="64"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="center" image="seach_tag_bg.png" id="TfE-YF-0ke">
+                                            <rect key="frame" x="0.0" y="22" width="320" height="42"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                        <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="v1t-ja-Pue">
+                                            <rect key="frame" x="12" y="34" width="74" height="24"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                            <state key="normal" title="Nóng nhất" backgroundImage="seach_tag_select_left.png">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="titleShadowColor" red="0.2190684443" green="0.19459484590000001" blue="0.11386880050000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <state key="selected" backgroundImage="seach_tag_select_left_on.png">
+                                                <color key="titleColor" red="0.2190684443" green="0.19459484590000001" blue="0.11386880050000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <state key="highlighted" backgroundImage="seach_tag_select_left_on.png">
+                                                <color key="titleColor" red="0.2190684443" green="0.19459484590000001" blue="0.11386880050000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="switchTab:" destination="oup-QU-2wo" eventType="touchUpInside" id="4fq-Ay-Ea4"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="UiM-Ue-eDP">
+                                            <rect key="frame" x="160" y="34" width="74" height="24"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                            <state key="normal" title="Máy" backgroundImage="seach_tag_select_middle.png">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="titleShadowColor" red="0.2190684443" green="0.19459484590000001" blue="0.11386880050000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <state key="selected" backgroundImage="seach_tag_select_middle_on.png">
+                                                <color key="titleColor" red="0.2190684443" green="0.19459484590000001" blue="0.11386880050000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <state key="highlighted" backgroundImage="seach_tag_select_middle_on.png">
+                                                <color key="titleColor" red="0.2190684443" green="0.19459484590000001" blue="0.11386880050000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="switchTab:" destination="oup-QU-2wo" eventType="touchUpInside" id="hvU-R8-Ffl"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="tal-YK-o31">
+                                            <rect key="frame" x="86" y="34" width="74" height="24"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                            <state key="normal" title="Mới nhất" backgroundImage="seach_tag_select_middle.png">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="titleShadowColor" red="0.2190684443" green="0.19459484590000001" blue="0.11386880050000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <state key="selected" backgroundImage="seach_tag_select_middle_on.png">
+                                                <color key="titleColor" red="0.2190684443" green="0.19459484590000001" blue="0.11386880050000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <state key="highlighted" backgroundImage="seach_tag_select_middle_on.png">
+                                                <color key="titleColor" red="0.2190684443" green="0.19459484590000001" blue="0.11386880050000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="switchTab:" destination="oup-QU-2wo" eventType="touchUpInside" id="zfl-B3-ZcS"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="kj5-vQ-DDi">
+                                            <rect key="frame" x="234" y="34" width="74" height="24"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                            <state key="normal" title="Ống" backgroundImage="seach_tag_select_right.png">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="titleShadowColor" red="0.2190684443" green="0.19459484590000001" blue="0.11386880050000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <state key="selected" backgroundImage="seach_tag_select_right_on.png">
+                                                <color key="titleColor" red="0.2190684443" green="0.19459484590000001" blue="0.11386880050000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <state key="highlighted" backgroundImage="seach_tag_select_right_on.png">
+                                                <color key="titleColor" red="0.2190684443" green="0.19459484590000001" blue="0.11386880050000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="switchTab:" destination="oup-QU-2wo" eventType="touchUpInside" id="hR2-bc-XUb"/>
+                                            </connections>
+                                        </button>
+                                        <imageView userInteractionEnabled="NO" contentMode="center" image="box_tag.png" id="YhR-VF-yr4">
+                                            <rect key="frame" x="6" y="0.0" width="22" height="22"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Search" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="B1D-zq-Tax">
+                                            <rect key="frame" x="36" y="1" width="272" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
+                                            <color key="textColor" red="0.2190684443" green="0.19459484590000001" blue="0.11386880050000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="UoP-3C-vtX">
-                            <rect key="frame" x="0.0" y="361" width="320" height="44"/>
+                            <rect key="frame" x="0.0" y="415" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="gray" id="fre-cb-D46">
@@ -608,7 +703,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="User" rowHeight="79" id="YPH-2j-5eh" customClass="LXCellSearchUser">
-                                <rect key="frame" x="0.0" y="120" width="320" height="79"/>
+                                <rect key="frame" x="0.0" y="180" width="320" height="79"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="78"/>
@@ -803,7 +898,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="FacebookSearch" rowHeight="86" id="sLy-l0-Nln" customClass="LXCellSearchConnection">
-                                <rect key="frame" x="0.0" y="199" width="320" height="86"/>
+                                <rect key="frame" x="0.0" y="259" width="320" height="86"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="85"/>
@@ -847,21 +942,21 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="Tags" rowHeight="36" id="LzS-1k-5Kb" customClass="LXCellTags">
-                                <rect key="frame" x="0.0" y="285" width="320" height="36"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="Tags" rowHeight="30" id="LzS-1k-5Kb" customClass="LXCellTags">
+                                <rect key="frame" x="0.0" y="345" width="320" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="35"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="29"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="wUn-JY-ouz">
-                                            <rect key="frame" x="6" y="3" width="308" height="30"/>
+                                            <rect key="frame" x="6" y="0.0" width="308" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
-                                            <inset key="contentEdgeInsets" minX="6" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                            <inset key="contentEdgeInsets" minX="3" minY="0.0" maxX="0.0" maxY="0.0"/>
                                             <inset key="titleEdgeInsets" minX="6" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                            <state key="normal" title="Tag" image="icon_tag_m.png">
+                                            <state key="normal" title="Tag">
                                                 <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
@@ -869,6 +964,15 @@
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                         </button>
+                                        <imageView userInteractionEnabled="NO" contentMode="center" image="arrow_right.png" id="ZgS-ke-rxE">
+                                            <rect key="frame" x="292" y="6" width="22" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                        <view contentMode="scaleToFill" id="t7B-rE-jof">
+                                            <rect key="frame" x="6" y="29" width="308" height="1"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" red="0.87843137250000003" green="0.87450980389999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        </view>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
@@ -877,7 +981,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Grid" id="yZ6-CQ-Shg" customClass="LXCellGrid">
-                                <rect key="frame" x="0.0" y="321" width="320" height="40"/>
+                                <rect key="frame" x="0.0" y="375" width="320" height="40"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="39"/>
@@ -910,9 +1014,14 @@
                     <connections>
                         <outlet property="activityLoad" destination="fre-cb-D46" id="5qr-fJ-Cfy"/>
                         <outlet property="buttonSearch" destination="ZxW-tl-Lq2" id="BRQ-0D-Z3H"/>
+                        <outlet property="buttonSearchCamera" destination="UiM-Ue-eDP" id="q9L-6R-nnV"/>
+                        <outlet property="buttonSearchLatest" destination="tal-YK-o31" id="yMd-pW-4VY"/>
+                        <outlet property="buttonSearchLens" destination="kj5-vQ-DDi" id="FwK-pm-DA5"/>
                         <outlet property="buttonSearchPeople" destination="nue-dm-wqX" id="s5m-ea-17b"/>
                         <outlet property="buttonSearchPhoto" destination="4e4-Vc-2K1" id="TT5-m0-7X0"/>
+                        <outlet property="buttonSearchTrend" destination="v1t-ja-Pue" id="WFE-6W-og1"/>
                         <outlet property="textKeyword" destination="nMY-bS-9B4" id="6lC-UP-Pvt"/>
+                        <outlet property="viewHeader" destination="POL-ZM-7ga" id="PFk-Z5-Zv9"/>
                         <segue destination="Hea-mo-ou6" kind="push" identifier="ShowTag" id="Z4t-Jz-nB3"/>
                     </connections>
                 </tableViewController>
@@ -2072,80 +2181,19 @@
                             <view contentMode="scaleToFill" id="Esd-1q-7Dc">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="notify_title.png" id="2nY-Ef-Sit">
-                                        <rect key="frame" x="6" y="50" width="308" height="35"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="7YN-Lz-5WT">
-                                        <rect key="frame" x="6" y="84" width="60" height="35"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="notify_all.png" backgroundImage="notify_tab.png">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Opz-OC-YcY">
-                                        <rect key="frame" x="67" y="84" width="61" height="35"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="notify_like.png" backgroundImage="notify_tab.png">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="F3i-1E-zk2">
-                                        <rect key="frame" x="129" y="84" width="61" height="35"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="notify_comment.png" backgroundImage="notify_tab.png">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="cNT-Eu-t3f">
-                                        <rect key="frame" x="191" y="84" width="61" height="35"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="notify_follow.png" backgroundImage="notify_tab.png">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="IiJ-QJ-bOr">
-                                        <rect key="frame" x="253" y="84" width="61" height="35"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="notify_info.png" backgroundImage="notify_tab.png">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
-                                </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="9sI-4E-wkB" appends="YES" id="FDu-SP-iLU"/>
                                 </connections>
                             </view>
+                            <webView contentMode="scaleToFill" id="wht-Ot-tCn">
+                                <rect key="frame" x="6" y="120" width="308" height="306"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </webView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="40" sectionHeaderHeight="22" sectionFooterHeight="22" id="3dW-kw-rWO">
-                                <rect key="frame" x="6" y="120" width="308" height="314"/>
+                                <rect key="frame" x="6" y="120" width="308" height="306"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                 <color key="separatorColor" red="0.73725491759999995" green="0.72156864399999998" blue="0.66274511810000003" alpha="1" colorSpace="deviceRGB"/>
@@ -2207,7 +2255,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <progressView opaque="NO" contentMode="scaleToFill" id="tR4-nw-bGQ">
-                                                    <rect key="frame" x="44" y="16" width="190" height="9"/>
+                                                    <rect key="frame" x="44" y="16" width="190" height="2"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="progressTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="trackTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -2242,6 +2290,120 @@
                                     <outlet property="delegate" destination="G7c-9N-bed" id="vDi-10-I1u"/>
                                 </connections>
                             </tableView>
+                            <imageView contentMode="scaleToFill" image="notify_title.png" id="2nY-Ef-Sit">
+                                <rect key="frame" x="6" y="49" width="308" height="35"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="center" image="icon_info.png" id="dg7-v2-pR2">
+                                <rect key="frame" x="6" y="51" width="41" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Notification" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="O5n-ag-3fM">
+                                <rect key="frame" x="44" y="56" width="222" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" image="bg_menu.png" id="op6-dh-FkO">
+                                <rect key="frame" x="6" y="84" width="308" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="Djq-2H-yxr">
+                                <rect key="frame" x="279" y="50" width="35" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" image="icon_setting.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="touchSetting:" destination="G7c-9N-bed" eventType="touchUpInside" id="CYk-LN-9vU"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="7YN-Lz-5WT">
+                                <rect key="frame" x="6" y="85" width="60" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" image="notify_all.png" backgroundImage="notify_tab.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" backgroundImage="notify_tab_on.png"/>
+                                <state key="highlighted" backgroundImage="notify_tab_on.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="switchTab:" destination="G7c-9N-bed" eventType="touchUpInside" id="YM4-yV-G5i"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="Opz-OC-YcY">
+                                <rect key="frame" x="67" y="85" width="61" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" image="notify_like.png" backgroundImage="notify_tab.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" backgroundImage="notify_tab_on.png"/>
+                                <state key="highlighted" backgroundImage="notify_tab_on.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="switchTab:" destination="G7c-9N-bed" eventType="touchUpInside" id="Rhl-T4-WoG"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="F3i-1E-zk2">
+                                <rect key="frame" x="129" y="85" width="61" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" image="notify_comment.png" backgroundImage="notify_tab.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" backgroundImage="notify_tab_on.png"/>
+                                <state key="highlighted" backgroundImage="notify_tab_on.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="switchTab:" destination="G7c-9N-bed" eventType="touchUpInside" id="w33-UG-oq3"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="cNT-Eu-t3f">
+                                <rect key="frame" x="191" y="85" width="61" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" image="notify_follow.png" backgroundImage="notify_tab.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" backgroundImage="notify_tab_on.png"/>
+                                <state key="highlighted" backgroundImage="notify_tab_on.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="switchTab:" destination="G7c-9N-bed" eventType="touchUpInside" id="8PA-dB-gyp"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="IiJ-QJ-bOr">
+                                <rect key="frame" x="253" y="85" width="61" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" image="notify_info.png" backgroundImage="notify_tab.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" backgroundImage="notify_tab_on.png"/>
+                                <state key="highlighted" backgroundImage="notify_tab_on.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="switchTab:" destination="G7c-9N-bed" eventType="touchUpInside" id="Cke-hd-fGr"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="0.25" colorSpace="deviceRGB"/>
                         <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
@@ -2250,7 +2412,13 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="activityLoad" destination="5qL-rK-W7v" id="x6j-Xc-8bw"/>
+                        <outlet property="buttonAnnounce" destination="IiJ-QJ-bOr" id="gkK-uo-Vzw"/>
+                        <outlet property="buttonNotifyAll" destination="7YN-Lz-5WT" id="a67-XJ-I7V"/>
+                        <outlet property="buttonNotifyComment" destination="F3i-1E-zk2" id="qON-iV-uGN"/>
+                        <outlet property="buttonNotifyFollow" destination="cNT-Eu-t3f" id="A2A-uG-kU2"/>
+                        <outlet property="buttonNotifyLike" destination="Opz-OC-YcY" id="mn2-rd-BNp"/>
                         <outlet property="tableNotify" destination="3dW-kw-rWO" id="EOR-kh-kK5"/>
+                        <outlet property="webAnnounce" destination="wht-Ot-tCn" id="kY2-J9-YCS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1FI-dy-wHB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2465,6 +2633,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow_right.png" width="8" height="13"/>
+        <image name="bg_menu.png" width="260" height="40"/>
         <image name="bg_rank1.png" width="20" height="21"/>
         <image name="bg_rank2.png" width="20" height="21"/>
         <image name="bg_rank3-9.png" width="20" height="21"/>
@@ -2481,6 +2651,7 @@
         <image name="box_praivacy.png" width="22" height="22"/>
         <image name="box_profile.png" width="22" height="22"/>
         <image name="box_regist.png" width="22" height="22"/>
+        <image name="box_tag.png" width="22" height="22"/>
         <image name="bt_follow.png" width="80" height="26"/>
         <image name="bt_following.png" width="80" height="26"/>
         <image name="bt_help.png" width="110" height="30"/>
@@ -2499,6 +2670,7 @@
         <image name="icon_friend_m_white.png" width="19" height="14"/>
         <image name="icon_iine_s.png" width="12" height="12"/>
         <image name="icon_iine_s_on.png" width="12" height="12"/>
+        <image name="icon_info.png" width="17" height="16"/>
         <image name="icon_login.png" width="13" height="16"/>
         <image name="icon_map_s.png" width="12" height="15"/>
         <image name="icon_mypage.png" width="20" height="21"/>
@@ -2511,6 +2683,7 @@
         <image name="icon_profile_s.png" width="12" height="12"/>
         <image name="icon_rank.png" width="20" height="21"/>
         <image name="icon_search_l.png" width="20" height="20"/>
+        <image name="icon_setting.png" width="15" height="16"/>
         <image name="icon_tag_m.png" width="16" height="16"/>
         <image name="menu3_2.png" width="104" height="42"/>
         <image name="menu3_3.png" width="108" height="42"/>
@@ -2532,13 +2705,276 @@
         <image name="notify_info.png" width="15" height="15"/>
         <image name="notify_like.png" width="15" height="15"/>
         <image name="notify_tab.png" width="320" height="35"/>
+        <image name="notify_tab_on.png" width="320" height="35"/>
         <image name="notify_title.png" width="308" height="35"/>
+        <image name="seach_tag_bg.png" width="320" height="42"/>
+        <image name="seach_tag_select_left.png" width="74" height="24"/>
+        <image name="seach_tag_select_left_on.png" width="74" height="24"/>
+        <image name="seach_tag_select_middle.png" width="74" height="24"/>
+        <image name="seach_tag_select_middle_on.png" width="74" height="24"/>
+        <image name="seach_tag_select_right.png" width="74" height="24"/>
+        <image name="seach_tag_select_right_on.png" width="74" height="24"/>
         <image name="side_menu_bg2.png" width="320" height="32"/>
         <image name="tab2_body2.png" width="314" height="52"/>
         <image name="tab2_off.png" width="157" height="33"/>
         <image name="tab2_on.png" width="157" height="33"/>
         <image name="user.gif" width="100" height="100"/>
     </resources>
+    <classes>
+        <class className="LXButtonBrown30" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonBrown30.h"/>
+        </class>
+        <class className="LXButtonNormal" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonNormal.h"/>
+        </class>
+        <class className="LXCellDataField" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellDataField.h"/>
+            <relationships>
+                <relationship kind="outlet" name="labelDetail" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelField" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="LXCellFacebook" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellFacebook.h"/>
+            <relationships>
+                <relationship kind="action" name="toggleFollow:" candidateClass="UIButton"/>
+                <relationship kind="action" name="touchUser:"/>
+                <relationship kind="outlet" name="buttonFollow" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="labelIntro" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelNickname" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="LXCellFriend" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellFriend.h"/>
+            <relationships>
+                <relationship kind="outlet" name="imageNationality" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="imageUser" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="labelIntro" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="viewBackground" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXCellGrid" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellGrid.h"/>
+        </class>
+        <class className="LXCellNotify" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellNotify.h"/>
+            <relationships>
+                <relationship kind="outlet" name="labelDate" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelNotify" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="viewImage" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="LXCellRankLv1" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellRankLv1.h"/>
+            <relationships>
+                <relationship kind="outlet" name="buttonPic1" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="LXCellRankLv2" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellRankLv2.h"/>
+            <relationships>
+                <relationship kind="outlet" name="buttonPic2" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonPic3" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonPic4" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="imageBg1" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="imageBg2" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="label1st" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="label2nd" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="label3rd" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="LXCellSearchConnection" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellSearchConnection.h"/>
+            <relationships>
+                <relationship kind="action" name="touchInvite:"/>
+            </relationships>
+        </class>
+        <class className="LXCellSearchUser" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellSearchUser.h"/>
+            <relationships>
+                <relationship kind="action" name="toggleFollow:" candidateClass="UIButton"/>
+                <relationship kind="action" name="touchFollower:"/>
+                <relationship kind="action" name="touchFollowing:"/>
+                <relationship kind="action" name="touchPhoto:"/>
+                <relationship kind="action" name="touchProfile:"/>
+                <relationship kind="outlet" name="buttonFollow" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonFollower" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonFollowing" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonPhoto" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonProfile" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="imageNationality" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="labelLike" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelView" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="viewStats" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewStatsButton" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXCellTags" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellTags.h"/>
+            <relationships>
+                <relationship kind="outlet" name="buttonTag" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="LXCellTimelineMulti" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellTimelineMulti.h"/>
+            <relationships>
+                <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="imageNationality" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="labelTitle" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelUserDate" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="scrollPic" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="viewBackground" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXCellTimelineSingle" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellTimelineSingle.h"/>
+            <relationships>
+                <relationship kind="outlet" name="buttonComment" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonInfo" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonLike" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonMap" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonPic" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonShare" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="imageNationality" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="labelAccess" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelLike" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelTitle" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelUser" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="viewBackground" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXCellUpload" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellUpload.h"/>
+            <relationships>
+                <relationship kind="action" name="touchInfo:"/>
+                <relationship kind="outlet" name="buttonError" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="imageupload" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="progressUpload" candidateClass="UIProgressView"/>
+            </relationships>
+        </class>
+        <class className="LXFacebookFriendViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXFacebookFriendViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="activityLoad" candidateClass="UIActivityIndicatorView"/>
+            </relationships>
+        </class>
+        <class className="LXLeftGuestViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXLeftGuestViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="touchBanner:"/>
+                <relationship kind="outlet" name="buttonBanner" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="viewBanner" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXLeftSideUserViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXLeftSideUserViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="touchBanner:"/>
+                <relationship kind="outlet" name="buttonBanner" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="imageProfilepic" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="labelUsername" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="viewBanner" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXLikedViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXLikedViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="loadIndicator" candidateClass="UIActivityIndicatorView"/>
+            </relationships>
+        </class>
+        <class className="LXMainTabViewController" superclassName="UITabBarController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXMainTabViewController.h"/>
+        </class>
+        <class className="LXMyPageViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXMyPageViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="loadIndicator" candidateClass="UIActivityIndicatorView"/>
+            </relationships>
+        </class>
+        <class className="LXNavBar" superclassName="UINavigationBar">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavBar.h"/>
+        </class>
+        <class className="LXNavigationController" superclassName="UINavigationController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavigationController.h"/>
+        </class>
+        <class className="LXNotifySideViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNotifySideViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="switchTab:" candidateClass="UIButton"/>
+                <relationship kind="action" name="touchBackground:"/>
+                <relationship kind="action" name="touchSetting:"/>
+                <relationship kind="outlet" name="activityLoad" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="buttonAnnounce" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonNotifyAll" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonNotifyComment" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonNotifyFollow" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonNotifyLike" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="tableNotify" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="webAnnounce" candidateClass="UIWebView"/>
+            </relationships>
+        </class>
+        <class className="LXRankingViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXRankingViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="touchTab:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonCalendar" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonDaily" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonMonthly" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonWeekly" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="loadIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="viewTab" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXSearchViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXSearchViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="editChanged:"/>
+                <relationship kind="action" name="switchTab:" candidateClass="UIButton"/>
+                <relationship kind="action" name="textChanged:"/>
+                <relationship kind="action" name="touchTab:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="activityLoad" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="buttonSearch" candidateClass="LXButtonBrown30"/>
+                <relationship kind="outlet" name="buttonSearchCamera" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonSearchLatest" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonSearchLens" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonSearchPeople" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonSearchPhoto" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonSearchTrend" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="textKeyword" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="viewHeader" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXTagViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXTagViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="activityLoad" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="labelTag" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="viewHeader" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXWelcomeViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXWelcomeViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="loginPressed:"/>
+                <relationship kind="action" name="touchCloseLogin:"/>
+                <relationship kind="action" name="touchLogin:"/>
+                <relationship kind="action" name="touchReg:"/>
+                <relationship kind="action" name="touchTab:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonGrid" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonTimeline" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="indicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="tablePic" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="viewBack" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewHeader" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewLogin" candidateClass="UIView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
