@@ -23,6 +23,7 @@
 @implementation LXPicCommentViewController {
     UITapGestureRecognizer *gestureTap;
     NSInteger heightHeader;
+    NSMutableArray *userTag;
 }
 
 @synthesize viewHeader;
@@ -71,6 +72,8 @@
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];
+    
+    userTag = [[NSMutableArray alloc] init];
     
     [LXUtils globalShadow:viewHeader];
 }
@@ -152,6 +155,11 @@
 
 - (void)growingTextViewDidChange:(HPGrowingTextView *)growingTextView {
     buttonSend.enabled = growingTextView.text.length > 0;
+    
+    // Remove all user tag if empty
+    if (growingTextView.text.length == 0) {
+        userTag = [[NSMutableArray alloc] init];
+    }
 }
 
 - (void)growingTextView:(HPGrowingTextView *)growingTextView willChangeHeight:(float)height
@@ -167,6 +175,7 @@
 
 - (void)setComments:(NSMutableArray *)comments {
     _comments = comments;
+    
     [self.tableView reloadData];
     [activityLoad stopAnimating];
 }
@@ -175,9 +184,15 @@
     if (growingComment.text.length < 3000) {
         // Submit comment
         LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-        NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
+        
+        NSMutableDictionary *param = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                [app getToken], @"token",
-                               growingComment.text, @"description", nil];
+                               growingComment.text, @"description",
+                               nil];
+        if (userTag.count > 0) {
+            NSString* mention = [userTag componentsJoinedByString:@","];
+            [param setObject:mention forKey:@"mention"];
+        }
         
         NSString *url = [NSString stringWithFormat:@"picture/%d/comment_post", [_picture.pictureId integerValue]];
         
@@ -193,6 +208,7 @@
                                             [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationRight];
                                             [self.tableView scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionTop animated:YES];
                                             growingComment.text = @"";
+                                            userTag = [[NSMutableArray alloc] init];
                                             buttonSend.enabled = false;
                                             [MBProgressHUD hideHUDForView:self.view.superview.superview.superview animated:YES];
                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -274,10 +290,22 @@
     if (!comment.user.isUnregister) {
         cellComment.buttonUser.tag = indexPath.row;
         cellComment.buttonLike.tag = indexPath.row;
+        cellComment.buttonReply.tag = indexPath.row;
         [cellComment.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
+        [cellComment.buttonReply addTarget:self action:@selector(touchReply:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     return cellComment;
+}
+
+- (void)touchReply:(UIButton*)sender {
+    Comment *comment = _comments[sender.tag];
+    NSString *append = [NSString stringWithFormat:@"> %@: ", comment.user.name];
+    growingComment.text = [growingComment.text stringByAppendingString:append];
+    if ([userTag indexOfObject:comment.user.userId] == NSNotFound)
+        [userTag addObject:comment.user.userId];
+    
+    [growingComment becomeFirstResponder];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

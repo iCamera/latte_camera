@@ -15,8 +15,9 @@ static NSString * const kLatteAPIBaseURLString = @"http://dev-latte.luxeys.co.jp
 //static NSString * const kLatteAPIBaseURLString = @"http://local-latte.la/api/";
 #else
 static NSString * const kLatteAPIBaseURLString = @"https://latte.la/api/";
-#endif
 //static NSString * const kLatteAPIBaseURLString = @"http://beta.latte.la/api/";
+#endif
+
 //static NSString * const kLatteAPIBaseURLString = @"http://192.168.2.118:5000/api/";
 
 

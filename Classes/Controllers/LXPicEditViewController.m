@@ -184,7 +184,7 @@
 
     
     if (actionSheet.tag > 1 && actionSheet.tag < 10) {
-        PictureStatus status;
+        PictureStatus status = PictureStatusPublic;
         switch (buttonIndex) {
             case 0:
                 status = PictureStatusPrivate;

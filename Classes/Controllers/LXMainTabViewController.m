@@ -17,6 +17,8 @@
 #import "LXMyPageViewController.h"
 #import "LXNavMypageController.h"
 #import "LXNotifySideViewController.h"
+#import "LXUploadObject.h"
+#import "MBProgressHUD.h"
 
 @interface LXMainTabViewController ()
 
@@ -28,6 +30,8 @@
 
     LXNotifySideViewController *viewNotify;
     LXUserNavButton *viewNav;
+
+    MBRoundProgressView *hudUpload;
 }
 
 
@@ -52,6 +56,10 @@
                                              selector:@selector(receiveLoggedOut:)
                                                  name:@"LoggedOut"
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadSuccess:) name:@"LXUploaderSuccess" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadProgess:) name:@"LXUploaderProgress" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadStart:) name:@"LXUploaderStart" object:nil];
     
     isFirst = true;
     return self;
@@ -173,6 +181,10 @@
     [self.view addSubview:viewNotify.view];
     [viewNotify didMoveToParentViewController:self];
     viewNotify.view.hidden = true;
+    
+    hudUpload = [[MBRoundProgressView alloc] initWithFrame:CGRectMake(50, 5, 30, 30)];
+    hudUpload.progress = 0.5;
+    [self.view addSubview:hudUpload];
 }
 
 - (void)showNotify {
@@ -305,5 +317,26 @@
         self.selectedIndex = 0;
     }
 }
+
+- (void)uploadStart:(NSNotification *) notification {
+    hudUpload.hidden = NO;
+}
+
+- (void)uploadSuccess:(NSNotification *) notification {
+    LXUploadObject *uploader = notification.object;
+    LXAppDelegate* app = [LXAppDelegate currentDelegate];
+    [app.uploader removeObject:uploader];
+    hudUpload.hidden = app.uploader.count == 0;
+}
+
+- (void)uploadProgess:(NSNotification *) notification {
+    float percent = 0;
+    LXAppDelegate* app = [LXAppDelegate currentDelegate];
+    for (LXUploadObject *uploader in app.uploader) {
+        percent += uploader.percent;
+    }
+    hudUpload.progress = percent/app.uploader.count;
+}
+
 
 @end

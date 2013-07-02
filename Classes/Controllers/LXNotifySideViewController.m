@@ -29,12 +29,20 @@
     
     int page;
     int limit;
+    int currentTab;
     EGORefreshTableHeaderView *refreshHeaderView;
     BOOL reloading;
     BOOL loadEnded;
 }
+
 @synthesize tableNotify;
 @synthesize activityLoad;
+@synthesize buttonAnnounce;
+@synthesize buttonNotifyAll;
+@synthesize buttonNotifyComment;
+@synthesize buttonNotifyFollow;
+@synthesize buttonNotifyLike;
+@synthesize webAnnounce;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -62,11 +70,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveLoggedIn:) name:@"LoggedIn" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive:) name:@"BecomeActive" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive:) name:@"ReceivedPushNotify" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadSuccess:) name:@"LXUploaderSuccess" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadStart:) name:@"LXUploaderStart" object:nil];
-    
-    tableNotify.layer.cornerRadius = 5.0;
-    tableNotify.layer.masksToBounds = YES;
     
     // Do any additional setup after loading the view from its nib.
     refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - tableNotify.bounds.size.height, tableNotify.frame.size.width, tableNotify.bounds.size.height)];
@@ -75,7 +78,7 @@
     loadEnded = false;
 
     limit = 30;
-
+    currentTab = 0;
 }
 
 - (void)didReceiveMemoryWarning
@@ -98,18 +101,17 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    LXAppDelegate *app = [LXAppDelegate currentDelegate];
-    if (indexPath.section == 0) {
-        LXCellUpload* cellUpload = [tableView dequeueReusableCellWithIdentifier:@"Upload"];
-        cellUpload.uploader = app.uploader[indexPath.row];
-        return cellUpload;
-    } if (indexPath.section == 1) {
-        LXCellNotify* cellNotify = [tableView dequeueReusableCellWithIdentifier:@"Notify"];
-        NSDictionary *notify = [notifies objectAtIndex:indexPath.row];
-        [cellNotify setNotify:notify];
-        return cellNotify;
-    } else
-        return nil;
+    LXCellNotify* cellNotify = [tableView dequeueReusableCellWithIdentifier:@"Notify"];
+    NSDictionary *notify = [notifies objectAtIndex:indexPath.row];
+    [cellNotify setNotify:notify];
+    return cellNotify;
+    
+//    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+//    if (indexPath.section == 0) {
+//        LXCellUpload* cellUpload = [tableView dequeueReusableCellWithIdentifier:@"Upload"];
+//        cellUpload.uploader = app.uploader[indexPath.row];
+//        return cellUpload;
+//    }
 }
 
 - (void)reloadView {
@@ -126,6 +128,7 @@
                            [app getToken], @"token",
                            [NSNumber numberWithInt:page], @"page",
                            [NSNumber numberWithInt:limit], @"limit",
+                           [NSNumber numberWithInt:currentTab], @"tab",
                            nil];
 
     [[LatteAPIClient sharedClient] getPath:@"user/me/notify"
@@ -156,17 +159,6 @@
                                              [self doneLoadingTableViewData];
                                              [activityLoad stopAnimating];
                                          }];
-}
-
-- (void)uploadStart:(NSNotification *) notification {
-    [tableNotify reloadData];
-}
-
-- (void)uploadSuccess:(NSNotification *) notification {
-    LXUploadObject *uploader = notification.object;
-    LXAppDelegate* app = [LXAppDelegate currentDelegate];
-    [app.uploader removeObject:uploader];
-    [tableNotify reloadData];
 }
 
 - (void)receiveLoggedIn:(NSNotification *) notification {
@@ -270,11 +262,7 @@
 }
 
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-        return 42;
-    }
-    
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {    
     NSString *stringNotify = [LXUtils stringFromNotify:notifies[indexPath.row]];
     
     CGSize labelSize = [stringNotify sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:11]
@@ -303,39 +291,6 @@
         }
     }
 }
-
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *view = [[UIView alloc] init];
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 260, 30)];
-    label.text = [self tableView:tableView titleForHeaderInSection:section];
-    label.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:14];
-    label.shadowOffset = CGSizeMake(0, 1);
-    label.textColor = [UIColor whiteColor];
-    label.shadowColor = [UIColor blackColor];
-    label.backgroundColor = [UIColor clearColor];
-    view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bt_menu_title.png"]];
-    [view addSubview:label];
-    return view;
-}
-
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    switch (section) {
-        case 0:
-            return NSLocalizedString(@"upload_status", @"");
-            break;
-        case 1:
-            return NSLocalizedString(@"notification", @"");
-            break;
-        default:
-            break;
-    }
-    return nil;
-}
-
-
 
 - (void)reloadTableViewDataSource{
 	//  should be calling your tableviews data source model to reload
@@ -366,19 +321,45 @@
 	[refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 30;
-}
-
-
 - (void)viewDidUnload {
+    [self setButtonNotifyAll:nil];
+    [self setButtonNotifyLike:nil];
+    [self setButtonNotifyComment:nil];
+    [self setButtonNotifyFollow:nil];
+    [self setButtonAnnounce:nil];
+    [self setWebAnnounce:nil];
     [super viewDidUnload];
 }
+
 - (IBAction)touchBackground:(id)sender {
     [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
         self.view.alpha = 0;
     } completion:^(BOOL finished) {
         self.view.hidden = true;
     }];
+}
+
+- (IBAction)switchTab:(UIButton *)sender {
+    currentTab = sender.tag;
+    buttonNotifyLike.selected = NO;
+    buttonNotifyFollow.selected = NO;
+    buttonAnnounce.selected = NO;
+    buttonNotifyAll.selected = NO;
+    buttonNotifyComment.selected = NO;
+    sender.selected = YES;
+    if (sender == buttonAnnounce) {
+        webAnnounce.hidden = NO;
+        tableNotify.hidden = YES;
+        [webAnnounce loadRequest:[[LatteAPIClient sharedClient] requestWithMethod:@"GET" path:@"mypage/announce" parameters:nil]];
+    } else {
+        webAnnounce.hidden = YES;
+        tableNotify.hidden = NO;
+        [self reloadView];
+    }
+}
+
+- (IBAction)touchSetting:(id)sender {
+    UIStoryboard *storySetting = [UIStoryboard storyboardWithName:@"Setting" bundle:nil];
+    UIViewController* controlerNotify = [storySetting instantiateViewControllerWithIdentifier:@"Notification"];
 }
 @end

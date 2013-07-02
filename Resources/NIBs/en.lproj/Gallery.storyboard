@@ -531,11 +531,11 @@
                                                             <rect key="frame" x="128" y="5" width="16" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="spI-ig-vIB">
-                                                            <rect key="frame" x="259" y="0.0" width="43" height="25"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="spI-ig-vIB">
+                                                            <rect key="frame" x="273" y="28" width="35" height="30"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
-                                                            <state key="normal" title="Reply">
+                                                            <state key="normal" image="icon_reply_s.png">
                                                                 <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
@@ -551,6 +551,7 @@
                                         </view>
                                         <connections>
                                             <outlet property="buttonLike" destination="rxu-4E-T7t" id="qal-Ce-LvK"/>
+                                            <outlet property="buttonReply" destination="spI-ig-vIB" id="1CB-Kc-0wg"/>
                                             <outlet property="buttonUser" destination="v4G-Ph-f9B" id="WYh-us-dbE"/>
                                             <outlet property="imageLike" destination="iIi-OS-MeM" id="ulN-Le-vJo"/>
                                             <outlet property="imageNationality" destination="E2z-bN-F6K" id="JsK-iB-6Yn"/>
@@ -607,7 +608,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hL8-Gj-MT3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2381" y="-1941"/>
+            <point key="canvasLocation" x="-2383" y="-1941"/>
         </scene>
         <!--Pic Dumb Tab View Controller-->
         <scene sceneID="Oda-k2-cr5">
@@ -969,6 +970,7 @@
         <image name="icon_iine_ss.png" width="10" height="10"/>
         <image name="icon_map_s.png" width="12" height="15"/>
         <image name="icon_plus_s.png" width="11" height="11"/>
+        <image name="icon_reply_s.png" width="12" height="9"/>
         <image name="icon_setting_m_ocher.png" width="15" height="15"/>
         <image name="user.gif" width="100" height="100"/>
     </resources>
@@ -983,6 +985,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellComment.h"/>
             <relationships>
                 <relationship kind="outlet" name="buttonLike" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonReply" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="imageLike" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="imageNationality" candidateClass="UIImageView"/>
@@ -996,7 +999,6 @@
         <class className="LXCellDataField" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellDataField.h"/>
             <relationships>
-                <relationship kind="outlet" name="imageHide" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="labelDetail" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="labelField" candidateClass="UILabel"/>
             </relationships>
@@ -1084,9 +1086,6 @@
                 <relationship kind="outlet" name="labelStatus" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="labelTag" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="labelTakenDateStatus" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="switchEXIF" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="switchGPS" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="switchTakenAt" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="textDesc" candidateClass="LXTextView"/>
                 <relationship kind="outlet" name="viewDelete" candidateClass="UIView"/>
             </relationships>

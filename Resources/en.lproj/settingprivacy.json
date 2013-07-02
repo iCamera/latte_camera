@@ -14,9 +14,9 @@
         },
         { "title":"PHOTO PRIVACY SETTINGS", "footer":"- All these settings will be default.", "elements": [
                 { "type":"QRadioElement", "key":"picture_status", "title":"Photo", "items":["Only Me", "Mutual Follow", "Members", "Public"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QBooleanElement", "key":"default_show_exif", "title":"Show EXIF information", "boolValue":0, "controllerAction":"handleUpdateBool:"},
-                { "type":"QBooleanElement", "key":"default_show_gps", "title":"Show location information", "boolValue":0, "controllerAction":"handleUpdateBool:"},
-                { "type":"QBooleanElement", "key":"default_show_taken_at", "title":"Show taken date", "boolValue":0, "controllerAction":"handleUpdateBool:"}
+                { "type":"QBooleanElement", "key":"default_show_exif", "title":"Show EXIF information", "items":["Only Me", "Mutual Follow", "Members", "Public"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QBooleanElement", "key":"default_show_gps", "title":"Show location information", "items":["Only Me", "Mutual Follow", "Members", "Public"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QBooleanElement", "key":"default_show_taken_at", "title":"Show taken date", "items":["Only Me", "Mutual Follow", "Members", "Public"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"}
             ]
         }
     ]

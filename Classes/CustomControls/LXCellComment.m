@@ -19,6 +19,7 @@
 @synthesize labelLike;
 @synthesize imageLike;
 @synthesize imageNationality;
+@synthesize buttonReply;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -51,11 +52,13 @@
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
     if (app.currentUser != nil) {
         buttonLike.hidden = [comment.user.userId integerValue] == [app.currentUser.userId integerValue];
+        buttonReply.hidden = [comment.user.userId integerValue] == [app.currentUser.userId integerValue];
         buttonLike.selected = comment.isVoted;
         buttonLike.enabled = true;
     }
     else {
         buttonLike.hidden = false;
+        buttonReply.hidden = YES;
 //        buttonLike.selected = comment.isVoted;
         buttonLike.enabled = !comment.isVoted;
     }

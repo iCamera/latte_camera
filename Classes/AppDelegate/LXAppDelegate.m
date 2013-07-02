@@ -10,7 +10,6 @@
 #import "LXNotifySideViewController.h"
 #import "LatteAPIClient.h"
 #import "ZipArchive.h"
-#import "Flurry.h"
 
 @implementation LXAppDelegate
 
@@ -75,8 +74,6 @@
 //    NSString *uuid = [[UIDevice currentDevice] uniqueIdentifier];
 //    [TestFlight setDeviceIdentifier:uuid];
 //#endif
-    [Flurry startSession:@"JVFKCT4K3FN8294K96NN"];
-    
     [GAI sharedInstance].trackUncaughtExceptions = YES;
     [GAI sharedInstance].dispatchInterval = 20;
     [GAI sharedInstance].debug = NO;
