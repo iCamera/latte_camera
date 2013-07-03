@@ -22,6 +22,7 @@
     PictureStatus imageGPSStatus;
     PictureStatus imageExifStatus;
     PictureStatus imageTakenAtStatus;
+    PictureStatus imageShowOriginal;
     LXShare *share;
     NSMutableArray *tags;
 }
@@ -37,6 +38,7 @@
 @synthesize labelEXIFStatus;
 @synthesize labelGPSStatus;
 @synthesize labelTakenDateStatus;
+@synthesize labelShowOriginalStatus;
 @synthesize buttonFacebook;
 @synthesize buttonTwitter;
 
@@ -89,6 +91,7 @@
         imageGPSStatus = _picture.showGPS;
         imageExifStatus = _picture.showEXIF;
         imageTakenAtStatus = _picture.showTakenAt;
+        imageShowOriginal = _picture.showLarge;
         tags = [NSMutableArray arrayWithArray:_picture.tagsOld];
         buttonDelete.hidden = false;
     } else {
@@ -101,6 +104,7 @@
         imageGPSStatus = app.currentUser.defaultShowGPS;
         imageExifStatus = app.currentUser.defaultShowEXIF;
         imageTakenAtStatus = app.currentUser.defaultShowTakenAt;
+        imageShowOriginal = app.currentUser.defaultShowLarge;
         buttonFacebook.selected = app.currentUser.pictureAutoFacebookUpload;
         buttonTwitter.selected = app.currentUser.pictureAutoTweet;
         
@@ -111,6 +115,8 @@
     [self setStatusLabel:labelEXIFStatus status:imageExifStatus];
     [self setStatusLabel:labelGPSStatus status:imageGPSStatus];
     [self setStatusLabel:labelTakenDateStatus status:imageTakenAtStatus];
+    [self setStatusLabel:labelShowOriginalStatus status:imageShowOriginal];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -208,16 +214,20 @@
                 imageStatus = status;
                 break;
             case 3:
+                label = labelTakenDateStatus;
+                imageTakenAtStatus = status;
+                break;
+            case 4:
                 label = labelEXIFStatus;
                 imageExifStatus = status;
                 break;
-            case 4:
+            case 5:
                 label = labelGPSStatus;
                 imageGPSStatus = status;
                 break;
-            case 5:
-                label = labelTakenDateStatus;
-                imageTakenAtStatus = status;
+            case 6:
+                label = labelShowOriginalStatus;
+                imageShowOriginal = status;
                 break;
             default:
                 break;
@@ -421,6 +431,7 @@
                             [NSNumber numberWithInteger:imageExifStatus], @"show_exif",
                             [NSNumber numberWithInteger:imageGPSStatus], @"show_gps",
                             [NSNumber numberWithInteger:imageTakenAtStatus], @"show_taken_at",
+                            [NSNumber numberWithInteger:imageShowOriginal], @"show_large",
                             [NSNumber numberWithInteger:imageStatus], @"status",
                             [tagsPolish componentsJoinedByString:@","], @"tags",
                             nil];
@@ -429,6 +440,7 @@
     _picture.showEXIF = imageExifStatus;
     _picture.showGPS = imageGPSStatus;
     _picture.showTakenAt = imageTakenAtStatus;
+    _picture.showLarge = imageShowOriginal;
     _picture.tagsOld = tags;
     
     [[LatteAPIClient sharedClient] postPath:url
@@ -489,6 +501,7 @@
     uploadLatte.showEXIF = imageExifStatus;
     uploadLatte.showGPS = imageGPSStatus;
     uploadLatte.showTakenAt = imageTakenAtStatus;
+    uploadLatte.showLarge = imageShowOriginal;
     uploadLatte.tags = tags;
     uploadLatte.status = imageStatus;
     
@@ -539,6 +552,28 @@
 
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    UIFont *font = [UIFont fontWithName:@"HelveticaNeue-Light" size:11];
+    NSString *title = [self tableView:tableView titleForFooterInSection:section];
+    CGSize size = [title sizeWithFont:font constrainedToSize:CGSizeMake(300, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, size.height + 20)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 300, size.height)];
+    label.font = font;
+    label.lineBreakMode = NSLineBreakByWordWrapping;
+    label.numberOfLines = 0;
+    label.backgroundColor = [UIColor clearColor];
+    label.text = title;
+    [view addSubview:label];
+    return  view;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    UIFont *font = [UIFont fontWithName:@"HelveticaNeue-Light" size:11];
+    NSString *title = [self tableView:tableView titleForFooterInSection:section];
+    CGSize size = [title sizeWithFont:font constrainedToSize:CGSizeMake(300, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
+    return size.height;
+}
+
 - (void)viewDidUnload {
     [self setTextDesc:nil];
     [self setButtonFacebook:nil];
@@ -546,6 +581,7 @@
     [self setLabelGPSStatus:nil];
     [self setLabelEXIFStatus:nil];
     [self setLabelTakenDateStatus:nil];
+    [self setLabelShowOriginalStatus:nil];
     [super viewDidUnload];
 }
 @end

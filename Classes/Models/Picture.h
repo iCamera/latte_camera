@@ -65,6 +65,7 @@
 @property (nonatomic, assign) PictureStatus showGPS;
 @property (nonatomic, assign) PictureStatus showEXIF;
 @property (nonatomic, assign) PictureStatus showTakenAt;
+@property (nonatomic, assign) PictureStatus showLarge;
 @property (nonatomic, copy) NSString *urlWeb;
 
 @property (nonatomic, strong) User *user;

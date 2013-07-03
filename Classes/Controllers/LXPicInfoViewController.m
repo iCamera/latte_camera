@@ -110,7 +110,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (((section == 1) && (keyExif.count == 0)) || (section == 2)) {
-        return 4;
+        return 5;
     }
     if (section == 1)
     {
@@ -157,20 +157,24 @@
         NSString *text;
         switch (indexPath.row) {
             case 0:
-                text = NSLocalizedString(@"Photo", "");
+                text = NSLocalizedString(@"Photo privacy", "");
                 status = _picture.status;
                 break;
             case 1:
+                text = NSLocalizedString(@"Show taken date", "");
+                status = _picture.showTakenAt;
+                break;
+            case 2:
                 text = NSLocalizedString(@"Show camera EXIF", "");
                 status = _picture.showEXIF;
                 break;
-            case 2:
+            case 3:
                 text = NSLocalizedString(@"Show location", "");
                 status = _picture.showGPS;
                 break;
-            case 3:
-                text = NSLocalizedString(@"Show taken date", "");
-                status = _picture.showTakenAt;
+            case 4:
+                text = NSLocalizedString(@"Show original file", "");
+                status = _picture.showLarge;
                 break;
             default:
                 break;

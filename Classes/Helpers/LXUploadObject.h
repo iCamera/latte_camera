@@ -31,9 +31,10 @@ typedef enum {
 @property (strong, nonatomic) NSData *imageFile;
 @property (strong, nonatomic) NSString *imageDescription;
 @property (strong, nonatomic) NSMutableArray *tags;
-@property (assign, nonatomic) BOOL showEXIF;
-@property (assign, nonatomic) BOOL showGPS;
-@property (assign, nonatomic) BOOL showTakenAt;
+@property (assign, nonatomic) PictureStatus showEXIF;
+@property (assign, nonatomic) PictureStatus showGPS;
+@property (assign, nonatomic) PictureStatus showTakenAt;
+@property (assign, nonatomic) PictureStatus showLarge;
 @property (assign, nonatomic) BOOL facebook;
 @property (assign, nonatomic) PictureStatus status;
 @property (readonly, nonatomic) float percent;

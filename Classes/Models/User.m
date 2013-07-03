@@ -122,6 +122,8 @@
         [self setValue:value forKey:@"_defaultShowEXIF"];
     } else if ([key isEqualToString:@"default_show_taken_at"]) {
         [self setValue:value forKey:@"_defaultShowTakenAt"];
+    } else if ([key isEqualToString:@"default_show_large"]) {
+        [self setValue:value forKey:@"_defaultShowLarge"];
     } else if ([key isEqualToString:@"nationality"]) {
         [self setValue:value forKey:@"_nationality"];
     } else if ([key isEqualToString:@"picture_auto_facebook_upload"]) {

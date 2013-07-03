@@ -58,7 +58,8 @@
                                @"nationality_public",
                                @"default_show_exif",
                                @"default_show_gps",
-                               @"default_show_taken_at"
+                               @"default_show_taken_at",
+                               @"default_show_large"
                                , nil];
         
 

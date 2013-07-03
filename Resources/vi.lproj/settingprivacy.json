@@ -12,11 +12,12 @@
                 { "type":"QRadioElement", "key":"nationality_public", "title":"Quốc tịch", "items":["Cá nhân", "Bạn bè", "Thành viên", "Công khai"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"}
             ]
         },
-        { "title":"CHÍNH SÁCH RIÊNG TƯ CHO ẢNH", "footer":"- Những thiết lập ở đây sẽ trở thành mặc định lúc gửi ảnh.", "elements": [
+        { "title":"CHÍNH SÁCH RIÊNG TƯ CHO ẢNH", "footer":"- Những thiết lập ở đây sẽ trở thành mặc định lúc gửi ảnh.\n- Ảnh gốc chỉ được hiện trên trang web Latte.", "elements": [
                 { "type":"QRadioElement", "key":"picture_status", "title":"Ảnh", "items":["Cá nhân", "Bạn bè", "Thành viên", "Công khai"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QRadioElement", "key":"default_show_taken_at", "title":"Hiển thị ngày chụp", "items":["Cá nhân", "Bạn bè", "Thành viên", "Công khai"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
                 { "type":"QRadioElement", "key":"default_show_exif", "title":"Hiển thị thông tin máy ảnh", "items":["Cá nhân", "Bạn bè", "Thành viên", "Công khai"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
                 { "type":"QRadioElement", "key":"default_show_gps", "title":"Hiển thị thông tin định vị", "items":["Cá nhân", "Bạn bè", "Thành viên", "Công khai"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QRadioElement", "key":"default_show_taken_at", "title":"Hiển thị ngày chụp", "items":["Cá nhân", "Bạn bè", "Thành viên", "Công khai"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"}
+                { "type":"QRadioElement", "key":"default_show_large", "title":"Cho phép xem ảnh gốc (web)", "items":["Cá nhân", "Bạn bè", "Thành viên", "Công khai"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"}
             ]
         }
     ]

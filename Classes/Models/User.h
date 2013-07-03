@@ -94,6 +94,7 @@
 @property (nonatomic, assign) BOOL defaultShowGPS;
 @property (nonatomic, assign) BOOL defaultShowEXIF;
 @property (nonatomic, assign) BOOL defaultShowTakenAt;
+@property (nonatomic, assign) BOOL defaultShowLarge;
 
 @property (nonatomic, assign) BOOL pictureAutoFacebookUpload;
 @property (nonatomic, assign) BOOL pictureAutoTweet;

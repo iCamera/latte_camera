@@ -29,6 +29,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *labelEXIFStatus;
 @property (strong, nonatomic) IBOutlet UILabel *labelGPSStatus;
 @property (strong, nonatomic) IBOutlet UILabel *labelTakenDateStatus;
+@property (strong, nonatomic) IBOutlet UILabel *labelShowOriginalStatus;
 @property (strong, nonatomic) IBOutlet UIView *viewDelete;
 @property (strong, nonatomic) IBOutlet UILabel *labelTag;
 @property (strong, nonatomic) IBOutlet UIButton *buttonFacebook;

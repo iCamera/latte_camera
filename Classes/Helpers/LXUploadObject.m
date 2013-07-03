@@ -141,9 +141,10 @@
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             [app getToken], @"token",
                             _imageDescription, @"comment",
-                            [NSNumber numberWithBool:_showEXIF], @"show_exif",
-                            [NSNumber numberWithBool:_showGPS], @"show_gps",
-                            [NSNumber numberWithBool:_showTakenAt], @"show_taken_at",
+                            [NSNumber numberWithInteger:_showEXIF], @"show_exif",
+                            [NSNumber numberWithInteger:_showGPS], @"show_gps",
+                            [NSNumber numberWithInteger:_showTakenAt], @"show_taken_at",
+                            [NSNumber numberWithInteger:_showLarge], @"show_large",
                             [NSNumber numberWithInteger:_status], @"picture_status",
                             [tagsPolish componentsJoinedByString:@","], @"tags",
                             nil];

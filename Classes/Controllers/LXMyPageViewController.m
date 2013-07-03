@@ -671,12 +671,19 @@ typedef enum {
             label.textAlignment = NSTextAlignmentCenter;
             
             UIImageView *imagePrev = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow_left2.png"]];
-            imagePrev.frame = CGRectMake(5, 16, 5, 8);
+            imagePrev.frame = CGRectMake(5, 14, 5, 8);
             UIImageView *imageNext = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow_right2.png"]];
-            imageNext.frame = CGRectMake(310, 16, 5, 8);
+            imageNext.frame = CGRectMake(310, 14, 5, 8);
             
-            UIButton *prev = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 60, 30)];
-            UIButton *next = [[UIButton alloc] initWithFrame:CGRectMake(255, 5, 60, 30)];
+            UIButton *prevYear = [[UIButton alloc] initWithFrame:CGRectMake(50, 3, 60, 30)];
+            UIButton *nextYear = [[UIButton alloc] initWithFrame:CGRectMake(205, 3, 60, 30)];
+            [prevYear setImage:[UIImage imageNamed:@"arrow_left3.png"] forState:UIControlStateNormal];
+            [nextYear setImage:[UIImage imageNamed:@"arrow_right3.png"] forState:UIControlStateNormal];
+            [prevYear addTarget:self action:@selector(prevYear:) forControlEvents:UIControlEventTouchUpInside];
+            [nextYear addTarget:self action:@selector(nextYear:) forControlEvents:UIControlEventTouchUpInside];
+            
+            UIButton *prev = [[UIButton alloc] initWithFrame:CGRectMake(5, 3, 60, 30)];
+            UIButton *next = [[UIButton alloc] initWithFrame:CGRectMake(255, 3, 60, 30)];
             [prev addTarget:self action:@selector(prevMonth:) forControlEvents:UIControlEventTouchUpInside];
             [next addTarget:self action:@selector(nextMonth:) forControlEvents:UIControlEventTouchUpInside];
             [prev setTitle:@"PREV" forState:UIControlStateNormal];
@@ -697,6 +704,8 @@ typedef enum {
             [label setFont:[UIFont fontWithName:@"HelveticaNeue-UltraLight" size:20]];
             [view addSubview:prev];
             [view addSubview:next];
+//            [view addSubview:prevYear];
+//            [view addSubview:nextYear];
             [view addSubview:label];
             [view addSubview:imagePrev];
             [view addSubview:imageNext];
@@ -838,6 +847,23 @@ typedef enum {
     currentMonth = [calendar dateByAddingComponents:dateComponents toDate:currentMonth options:0];
     [self reloadCalendar];
 }
+
+- (void)nextYear:(id)sender {
+    NSDateComponents* dateComponents = [[NSDateComponents alloc]init];
+    [dateComponents setYear:1];
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+    currentMonth = [calendar dateByAddingComponents:dateComponents toDate:currentMonth options:0];
+    [self reloadCalendar];
+}
+
+- (void)prevYear:(id)sender {
+    NSDateComponents* dateComponents = [[NSDateComponents alloc]init];
+    [dateComponents setYear:-1];
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+    currentMonth = [calendar dateByAddingComponents:dateComponents toDate:currentMonth options:0];
+    [self reloadCalendar];
+}
+
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

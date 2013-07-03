@@ -131,6 +131,7 @@
                                              
                                              if (page == 1) {
                                                  notifies = [NSMutableArray arrayWithArray:newData];
+                                                 [tableNotify scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
                                              } else {
                                                  [notifies addObjectsFromArray:newData];
                                              }

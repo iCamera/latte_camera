@@ -12,11 +12,12 @@
                 { "type":"QRadioElement", "key":"nationality_public", "title":"国籍公開", "items":["非公開", "友達（相互フォロー）まで", "会員まで", "全体"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"}
             ]
         },
-        { "title":"写真公開設定", "footer":"●　ここで設定したものがデフォルトに設定されます。", "elements": [
+        { "title":"写真公開設定", "footer":"●　ここで設定したものがデフォルトに設定されます。\n●　元サイズを公開にすると、パソコンから見た場合、実際のイメージ サイズの写真も公開されます", "elements": [
                 { "type":"QRadioElement", "key":"picture_status", "title":"写真", "items":["非公開", "友達（相互フォロー）まで", "会員まで", "全体"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QRadioElement", "key":"default_show_exif", "title":"カメラ情報表示", "items":["非公開", "友達（相互フォロー）まで", "会員まで", "全体"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QRadioElement", "key":"default_show_gps", "title":"位置情報表示", "items":["非公開", "友達（相互フォロー）まで", "会員まで", "全体"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QRadioElement", "key":"default_show_taken_at", "title":"撮影日表示", "items":["非公開", "友達（相互フォロー）まで", "会員まで", "全体"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"}
+                { "type":"QRadioElement", "key":"default_show_taken_at", "title":"撮影日", "items":["非公開", "友達（相互フォロー）まで", "会員まで", "全体"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QRadioElement", "key":"default_show_exif", "title":"カメラ情報", "items":["非公開", "友達（相互フォロー）まで", "会員まで", "全体"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QRadioElement", "key":"default_show_gps", "title":"位置情報", "items":["非公開", "友達（相互フォロー）まで", "会員まで", "全体"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QRadioElement", "key":"default_show_large", "title":"元サイズ", "items":["非公開", "友達（相互フォロー）まで", "会員まで", "全体"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"}
             ]
         }
     ]

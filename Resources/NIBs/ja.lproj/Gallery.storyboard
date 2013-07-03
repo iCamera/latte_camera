@@ -670,7 +670,7 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <color key="separatorColor" red="0.73725490199999999" green="0.72156862749999995" blue="0.66274509800000003" alpha="1" colorSpace="calibratedRGB"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="nht-dt-cUR">
-                            <rect key="frame" x="0.0" y="676" width="320" height="63"/>
+                            <rect key="frame" x="0.0" y="770" width="320" height="63"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="qDo-Im-f02">
@@ -710,7 +710,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection id="aGL-4f-OVV">
+                            <tableViewSection footerTitle="元サイズを公開にすると、パソコンから見た場合、実際のイメージ サイズの写真も公開されます" id="aGL-4f-OVV">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="79" id="pDD-lo-7Db">
                                         <rect key="frame" x="0.0" y="231" width="320" height="80"/>
@@ -778,54 +778,8 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="aHO-DB-r6E">
-                                        <rect key="frame" x="0.0" y="399" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="0.0" width="280" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="カメラ情報" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" id="7pN-aP-oer">
-                                                    <rect key="frame" x="10" y="14" width="198" height="16"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Public" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" id="rvx-in-aP7">
-                                                    <rect key="frame" x="181" y="14" width="93" height="16"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </label>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="BoQ-e1-egx">
-                                        <rect key="frame" x="0.0" y="443" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="0.0" width="280" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="位置情報" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" id="EW2-hV-rqO">
-                                                    <rect key="frame" x="10" y="14" width="197" height="16"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Public" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" id="Xxj-9S-9gc">
-                                                    <rect key="frame" x="181" y="14" width="93" height="16"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </label>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="9Ml-a9-t0h">
-                                        <rect key="frame" x="0.0" y="487" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="399" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -837,7 +791,76 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Public" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" id="mkb-oT-Z0d">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="公開" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" id="mkb-oT-Z0d">
+                                                    <rect key="frame" x="181" y="14" width="93" height="16"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="aHO-DB-r6E">
+                                        <rect key="frame" x="0.0" y="443" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="280" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="カメラ情報" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" id="7pN-aP-oer">
+                                                    <rect key="frame" x="10" y="14" width="198" height="16"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="公開" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" id="rvx-in-aP7">
+                                                    <rect key="frame" x="181" y="14" width="93" height="16"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="BoQ-e1-egx">
+                                        <rect key="frame" x="0.0" y="487" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="280" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="位置情報" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" id="EW2-hV-rqO">
+                                                    <rect key="frame" x="10" y="14" width="197" height="16"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="公開" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" id="Xxj-9S-9gc">
+                                                    <rect key="frame" x="181" y="14" width="93" height="16"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="OqW-yb-JoR">
+                                        <rect key="frame" x="0.0" y="531" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="280" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="元サイズ" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" id="cY9-aA-1uy">
+                                                    <rect key="frame" x="10" y="14" width="198" height="16"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="公開" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" id="HXn-9I-y8J">
                                                     <rect key="frame" x="181" y="14" width="93" height="16"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -852,7 +875,7 @@
                             <tableViewSection headerTitle="SHARE" id="2t8-JW-Cbd">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="311-MP-pdQ">
-                                        <rect key="frame" x="0.0" y="577" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="671" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
@@ -896,7 +919,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="IT1-cf-7Qa">
-                                        <rect key="frame" x="0.0" y="622" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="716" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -949,6 +972,7 @@
                         <outlet property="imagePic" destination="Drg-vc-LUr" id="c6U-Z9-vw5"/>
                         <outlet property="labelEXIFStatus" destination="rvx-in-aP7" id="9zt-kj-l9e"/>
                         <outlet property="labelGPSStatus" destination="Xxj-9S-9gc" id="5HN-hw-1QC"/>
+                        <outlet property="labelShowOriginalStatus" destination="HXn-9I-y8J" id="OX3-CD-w2S"/>
                         <outlet property="labelStatus" destination="Rjg-UP-7Ie" id="cPn-ee-XaI"/>
                         <outlet property="labelTag" destination="gM3-aX-JaO" id="D1A-8W-JeZ"/>
                         <outlet property="labelTakenDateStatus" destination="mkb-oT-Z0d" id="wdR-ZP-y7z"/>
@@ -984,6 +1008,143 @@
         <image name="icon_setting_m_ocher.png" width="15" height="15"/>
         <image name="user.gif" width="100" height="100"/>
     </resources>
+    <classes>
+        <class className="HPGrowingTextView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HPGrowingTextView.h"/>
+        </class>
+        <class className="LXButtonBrown30" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonBrown30.h"/>
+        </class>
+        <class className="LXCellComment" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellComment.h"/>
+            <relationships>
+                <relationship kind="outlet" name="buttonLike" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonReply" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="imageLike" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="imageNationality" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="labelAuthor" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelDate" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelLike" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="textComment" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="viewBack" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXCellDataField" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellDataField.h"/>
+            <relationships>
+                <relationship kind="outlet" name="labelDetail" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelField" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="LXCellGridUser" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellGridUser.h"/>
+        </class>
+        <class className="LXCellInfoTag" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellInfoTag.h"/>
+            <relationships>
+                <relationship kind="outlet" name="scrollTag" candidateClass="UIScrollView"/>
+            </relationships>
+        </class>
+        <class className="LXCellTag" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellTag.h"/>
+            <relationships>
+                <relationship kind="outlet" name="textTag" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="LXGalleryViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXGalleryViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="dragTab:" candidateClass="UIPanGestureRecognizer"/>
+                <relationship kind="action" name="switchTab:" candidateClass="UIButton"/>
+                <relationship kind="action" name="toggleLike:" candidateClass="UIButton"/>
+                <relationship kind="action" name="touchClose:"/>
+                <relationship kind="action" name="touchShare:"/>
+                <relationship kind="action" name="touchUser:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonComment" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonEdit" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonLike" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonMap" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonUser" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="imageNationality" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="labelComment" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelLike" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelNickname" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelView" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="viewDesc" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="viewInfoTop" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewTab" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXNavBar" superclassName="UINavigationBar">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavBar.h"/>
+        </class>
+        <class className="LXNavGalleryViewController" superclassName="UINavigationController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavGalleryViewController.h"/>
+        </class>
+        <class className="LXPicCommentViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicCommentViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="touchSend:"/>
+                <relationship kind="outlet" name="activityLoad" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="buttonSend" candidateClass="LXButtonBrown30"/>
+                <relationship kind="outlet" name="growingComment" candidateClass="HPGrowingTextView"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="viewHeader" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXPicDetailTabViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicDetailTabViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="scrollTab" candidateClass="UIScrollView"/>
+            </relationships>
+        </class>
+        <class className="LXPicDumbTabViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicDumbTabViewController.h"/>
+        </class>
+        <class className="LXPicEditViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicEditViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="touchBackground:"/>
+                <relationship kind="action" name="touchDelete:"/>
+                <relationship kind="action" name="touchFacebook:"/>
+                <relationship kind="action" name="touchPost:"/>
+                <relationship kind="action" name="touchTwitter:"/>
+                <relationship kind="outlet" name="buttonDelete" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonFacebook" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonTwitter" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="gestureTap" candidateClass="UITapGestureRecognizer"/>
+                <relationship kind="outlet" name="imagePic" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="labelEXIFStatus" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelGPSStatus" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelShowOriginalStatus" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelStatus" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelTag" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelTakenDateStatus" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="textDesc" candidateClass="LXTextView"/>
+                <relationship kind="outlet" name="viewDelete" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXPicInfoViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicInfoViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="touchReport:"/>
+            </relationships>
+        </class>
+        <class className="LXPicMapViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXPicMapViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="mapPic" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="viewHidden" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXTextView" superclassName="UITextView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXTextView.h"/>
+        </class>
+        <class className="LXVoteViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXVoteViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

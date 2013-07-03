@@ -130,6 +130,8 @@
         [self setValue:value forKey:@"_showEXIF"];
     } else if ([key isEqualToString:@"show_taken_at"]) {
         [self setValue:value forKey:@"_showTakenAt"];
+    } else if ([key isEqualToString:@"show_large"]) {
+        [self setValue:value forKey:@"_showLarge"];
     } else if ([key isEqualToString:@"url_absolute"]) {
         [self setValue:value forKey:@"_urlWeb"];
     } else {
