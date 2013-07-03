@@ -366,6 +366,22 @@
             </objects>
             <point key="canvasLocation" x="-1375" y="-912"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="4vT-lJ-YdE">
+            <objects>
+                <navigationController storyboardIdentifier="Notification" definesPresentationContext="YES" id="MnB-ZM-rSH" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="dHl-WP-tRw" customClass="LXNavBar">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="130-si-waG" kind="relationship" relationship="rootViewController" id="PVC-qt-Mi9"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qJD-1q-bOK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1290" y="-285"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="2UR-51-eWh">
             <objects>
@@ -498,7 +514,7 @@ Gửi lời chào thân mến từ đất nước Nhật Bản.</string>
         <!--Setting Notify View Controller-->
         <scene sceneID="fZN-Av-uTo">
             <objects>
-                <tableViewController storyboardIdentifier="Notification" id="130-si-waG" customClass="LXSettingNotifyViewController" sceneMemberID="viewController">
+                <tableViewController id="130-si-waG" customClass="LXSettingNotifyViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="qLH-jV-a7F">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -688,7 +704,27 @@ Gửi lời chào thân mến từ đất nước Nhật Bản.</string>
                         </connections>
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="OQt-UR-7Xb"/>
+                    <navigationItem key="navigationItem" id="OQt-UR-7Xb">
+                        <barButtonItem key="rightBarButtonItem" style="done" id="mL0-h1-lQ5">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="wcT-2L-ZhT" customClass="LXButtonBrown30">
+                                <rect key="frame" x="255" y="7" width="60" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="15"/>
+                                <size key="titleShadowOffset" width="0.0" height="1"/>
+                                <state key="normal" title="CLOSE">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="touchClose:" destination="130-si-waG" eventType="touchUpInside" id="arz-ry-qnU"/>
+                                    <action selector="touchClose:" destination="BA8-7X-K8C" eventType="touchUpInside" id="dLO-fQ-rBd"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="buttonMailComment" destination="CGD-f2-egb" id="X4J-mJ-kMq"/>
                         <outlet property="buttonMailFollow" destination="uUa-uP-vik" id="w9f-4p-mT2"/>
@@ -715,9 +751,58 @@ Gửi lời chào thân mến từ đất nước Nhật Bản.</string>
         <image name="icon_mail_l_off.jpg" width="22" height="16"/>
         <image name="user.gif" width="100" height="100"/>
     </resources>
+    <classes>
+        <class className="LXAboutViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXAboutViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="touchSend:"/>
+                <relationship kind="outlet" name="textEmail" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="textForm" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="LXButtonBrown30" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonBrown30.h"/>
+        </class>
+        <class className="LXButtonNormal" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonNormal.h"/>
+        </class>
+        <class className="LXNavBar" superclassName="UINavigationBar">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavBar.h"/>
+        </class>
+        <class className="LXNavigationController" superclassName="UINavigationController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavigationController.h"/>
+        </class>
+        <class className="LXSettingNotifyViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXSettingNotifyViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="toggleNotify:" candidateClass="UIButton"/>
+                <relationship kind="action" name="touchClose:"/>
+                <relationship kind="outlet" name="buttonMailComment" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonMailFollow" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonMailLike" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonPushComment" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonPushFollow" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonPushLike" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="LXSettingRootViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXSettingRootViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="touchClose:"/>
+                <relationship kind="action" name="touchSetPicture:"/>
+                <relationship kind="outlet" name="imageProfile" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="labelVersion" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="viewHeader" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewWrapHeader" candidateClass="UIView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="PVC-qt-Mi9"/>
+    </inferredMetricsTieBreakers>
 </document>

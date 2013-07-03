@@ -53,8 +53,7 @@
                           [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderFail" object:self];
                           _uploadState = kUploadStateFail;
                       } else {
-                          [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderSuccess" object:self];
-                          _uploadState = kUploadStateSuccess;
+                          [self finishedUpload];
                       }
                       NSLog(@"Twitter response, HTTP response: %i", [urlResponse statusCode]);
                   }];
@@ -90,9 +89,7 @@
                                              [alert show];
                                          }
                                          else {
-                                             [_delegate uploader:self success:nil];
-                                             [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderSuccess" object:self];
-                                             _uploadState = kUploadStateSuccess;
+                                             [self finishedUpload];
                                          }
                                      }];
     } else {
@@ -119,9 +116,7 @@
                                       [alert show];
                                   }
                                   else {
-                                      [_delegate uploader:self success:nil];
-                                      [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderSuccess" object:self];
-                                      _uploadState = kUploadStateSuccess;
+                                      [self finishedUpload];
                                   }
                               }];
         
@@ -167,9 +162,7 @@
             picture = [Picture instanceFromDictionary:JSON[@"pic"]];
             [self uploadFacebook];
         } else {
-            [_delegate uploader:self success:data];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderSuccess" object:self];
-            _uploadState = kUploadStateSuccess;
+            [self finishedUpload];
         }
     };
     
@@ -198,6 +191,15 @@
         [self uploadFacebook];
     } else
         [self uploadLatte];
+}
+
+- (void)finishedUpload {
+    LXAppDelegate* app = [LXAppDelegate currentDelegate];
+    [app.uploader removeObject:self];
+    
+    [_delegate uploader:self success:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderSuccess" object:self];
+    _uploadState = kUploadStateSuccess;
 }
 
 @end

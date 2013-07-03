@@ -269,9 +269,15 @@ typedef enum {
     
     sender.enabled = false;
     textKeyword.text = @"";
+
+    CGRect rect = viewHeader.frame;
+    rect.size.height = 93;
     
     switch (sender.tag) {
         case 1:
+            if (textKeyword.text.length == 0) {
+                rect.size.height = 158;
+            }
             tableMode = kSearchPhoto;
             break;
         case 2:
@@ -281,6 +287,8 @@ typedef enum {
             break;
     }
     
+    viewHeader.frame = rect;
+    self.tableView.tableHeaderView = viewHeader;
     [self.tableView reloadData];
 }
 
@@ -291,10 +299,9 @@ typedef enum {
     page = 1;
     
     CGRect rect = viewHeader.frame;
-    rect.size.height = 90;
+    rect.size.height = 93;
     viewHeader.frame = rect;
     self.tableView.tableHeaderView = viewHeader;
-    
     
     [self loadMore];
 }

@@ -116,6 +116,7 @@
                 break;
         }
     } else {
+        NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
         switch (indexPath.row) {
             case 0: {
                 UIStoryboard *storySetting = [UIStoryboard storyboardWithName:@"Setting" bundle:nil];
@@ -132,7 +133,10 @@
                 break;
             }
             case 2:
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/company/policy"]];
+                if ([language isEqualToString:@"ja"])
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/company/policy"]];
+                else
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://en.latte.la/company/policy"]];
                 break;
             default:
                 break;

@@ -1470,6 +1470,8 @@
 		88FB7CF01782A5480038B067 /* seach_tag_select_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88FB7CDE1782A5480038B067 /* seach_tag_select_right@2x.png */; };
 		88FB7CF11782A5480038B067 /* search_tag_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 88FB7CDF1782A5480038B067 /* search_tag_bg.png */; };
 		88FB7CF21782A5480038B067 /* search_tag_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88FB7CE01782A5480038B067 /* search_tag_bg@2x.png */; };
+		88FB7CF61782DD590038B067 /* LXUploadStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88FB7CF51782DD590038B067 /* LXUploadStatusViewController.m */; };
+		88FB7CFC1782FFAB0038B067 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88FB7CF81782FFAA0038B067 /* libTestFlight.a */; };
 		88FE2818162FEBB700C6E5CD /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88FE2817162FEBB700C6E5CD /* ImageIO.framework */; };
 		88FE4197166C93D7004DCE53 /* blend1.png in Resources */ = {isa = PBXBuildFile; fileRef = 88FE3FA0166C93D6004DCE53 /* blend1.png */; };
 		88FE41A1166C93D7004DCE53 /* 37x-Checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 88FE3FAC166C93D6004DCE53 /* 37x-Checkmark.png */; };
@@ -3467,6 +3469,10 @@
 		88FB7CDE1782A5480038B067 /* seach_tag_select_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seach_tag_select_right@2x.png"; sourceTree = "<group>"; };
 		88FB7CDF1782A5480038B067 /* search_tag_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search_tag_bg.png; sourceTree = "<group>"; };
 		88FB7CE01782A5480038B067 /* search_tag_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search_tag_bg@2x.png"; sourceTree = "<group>"; };
+		88FB7CF41782DD590038B067 /* LXUploadStatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXUploadStatusViewController.h; sourceTree = "<group>"; };
+		88FB7CF51782DD590038B067 /* LXUploadStatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXUploadStatusViewController.m; sourceTree = "<group>"; };
+		88FB7CF81782FFAA0038B067 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		88FB7CFB1782FFAB0038B067 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		88FE2817162FEBB700C6E5CD /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		88FE3FA0166C93D6004DCE53 /* blend1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blend1.png; path = ../Effect/blend1.png; sourceTree = "<group>"; };
 		88FE3FAC166C93D6004DCE53 /* 37x-Checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "37x-Checkmark.png"; sourceTree = "<group>"; };
@@ -3814,6 +3820,7 @@
 				88D9864E15B8F97800858AD6 /* CoreData.framework in Frameworks */,
 				8881666C16B902260089106D /* libGoogleAnalytics.a in Frameworks */,
 				88418F2B1743674F004EFBA1 /* FacebookSDK.framework in Frameworks */,
+				88FB7CFC1782FFAB0038B067 /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4771,6 +4778,8 @@
 				8883EED3173212EC00AA2D5E /* LXImageTextViewController.m */,
 				8883EED5173220E900AA2D5E /* LXTextTemplateViewController.h */,
 				8883EED6173220E900AA2D5E /* LXTextTemplateViewController.m */,
+				88FB7CF41782DD590038B067 /* LXUploadStatusViewController.h */,
+				88FB7CF51782DD590038B067 /* LXUploadStatusViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -5258,6 +5267,7 @@
 		88D4B5BE15D4B66B00FC4FBB /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				88FB7CF71782FFAA0038B067 /* TestFlightSDK1.2.6 */,
 				88A2FC9C177032CB00978564 /* GPUImage */,
 				884D214D175C9BEF002FF853 /* ZipArchive */,
 				88CE8A03174E10B500C6A6B6 /* UIColor+MLPFlatColors */,
@@ -5494,6 +5504,15 @@
 				88EDBEC2170A7EE3003D7B15 /* leak9.jpg */,
 			);
 			path = leak;
+			sourceTree = "<group>";
+		};
+		88FB7CF71782FFAA0038B067 /* TestFlightSDK1.2.6 */ = {
+			isa = PBXGroup;
+			children = (
+				88FB7CF81782FFAA0038B067 /* libTestFlight.a */,
+				88FB7CFB1782FFAB0038B067 /* TestFlight.h */,
+			);
+			path = TestFlightSDK1.2.6;
 			sourceTree = "<group>";
 		};
 		88FE3F9E166C93D6004DCE53 /* Resources */ = {
@@ -8055,6 +8074,7 @@
 				88A2009F177034AB00978564 /* GPUImageOutput.m in Sources */,
 				88A200A4177034E100978564 /* GPUImageTwoPassFilter.m in Sources */,
 				88A200A5177034E100978564 /* GPUImageTwoPassTextureSamplingFilter.m in Sources */,
+				88FB7CF61782DD590038B067 /* LXUploadStatusViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8252,6 +8272,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Vendor/GoogleAnalyticsiOS_2.0beta4/Library\"",
 					"\"$(SRCROOT)/Vendor/Flurry\"",
+					"\"$(SRCROOT)/Vendor/TestFlightSDK1.2.6\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -8288,6 +8309,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Vendor/GoogleAnalyticsiOS_2.0beta4/Library\"",
 					"\"$(SRCROOT)/Vendor/Flurry\"",
+					"\"$(SRCROOT)/Vendor/TestFlightSDK1.2.6\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",

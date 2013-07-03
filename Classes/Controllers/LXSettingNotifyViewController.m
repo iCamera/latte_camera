@@ -136,6 +136,10 @@
 
 }
 
+- (IBAction)touchClose:(id)sender {
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)viewDidUnload {
     [self setButtonMailComment:nil];
     [self setButtonPushComment:nil];

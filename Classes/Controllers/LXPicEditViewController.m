@@ -452,7 +452,12 @@
 }
 
 - (void)backToCamera {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    UIViewController *tmp2 = self.navigationController.presentingViewController;
+    [self.navigationController dismissModalViewControllerAnimated:NO];
+    
+    if (tmp2 != self.navigationController) {
+        [tmp2 dismissModalViewControllerAnimated:YES];
+    }
 }
 
 - (void)saveImage {

@@ -16,5 +16,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonMailFollow;
 @property (strong, nonatomic) IBOutlet UIButton *buttonPushFollow;
 - (IBAction)toggleNotify:(UIButton *)sender;
+- (IBAction)touchClose:(id)sender;
 
 @end

@@ -526,7 +526,7 @@
         filterMain.blendIntensity = sliderBlendIntensity.value;
     }
     if (!buttonBlendLayer2.enabled) {
-        filterMain.filmIntensity = sliderBlendIntensity.value;
+        filterMain.filmIntensity = sliderFilmIntensity.value;
     }
     
         

@@ -17,6 +17,7 @@
 #import "LXMyPageViewController.h"
 #import "LXNavMypageController.h"
 #import "LXNotifySideViewController.h"
+#import "LXUploadStatusViewController.h"
 #import "LXUploadObject.h"
 #import "MBProgressHUD.h"
 
@@ -29,9 +30,14 @@
     BOOL isFirst;
 
     LXNotifySideViewController *viewNotify;
+    LXUploadStatusViewController *viewUpload;
     LXUserNavButton *viewNav;
-
+    UIButton *buttonUploadStatus;
     MBRoundProgressView *hudUpload;
+    
+    UINavigationController *navTop;
+    UINavigationController *navRank;
+    UINavigationController *navSearch;
 }
 
 
@@ -69,6 +75,15 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    // Init View
+    UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    viewNotify = [storyMain instantiateViewControllerWithIdentifier:@"Notification"];
+    viewUpload = [storyMain instantiateViewControllerWithIdentifier:@"UploadStatus"];
+    navTop = [storyMain instantiateViewControllerWithIdentifier:@"NavigationTop"];
+    navRank = [storyMain instantiateViewControllerWithIdentifier:@"NavigationRank"];
+    navSearch = [storyMain instantiateViewControllerWithIdentifier:@"NavigationSearch"];
+
+    
     // Tab style
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
     for (UITabBarItem* tab in [self.tabBarController.tabBar items]) {
@@ -171,10 +186,6 @@
                                       forState:UIControlStateNormal];
     }
     
-    // Init Notify
-    UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    viewNotify = [storyMain instantiateViewControllerWithIdentifier:@"Notification"];
-    
     viewNotify.view.frame = self.view.bounds;
     viewNotify.parent = self;
     [self addChildViewController:viewNotify];
@@ -182,9 +193,21 @@
     [viewNotify didMoveToParentViewController:self];
     viewNotify.view.hidden = true;
     
-    hudUpload = [[MBRoundProgressView alloc] initWithFrame:CGRectMake(50, 5, 30, 30)];
-    hudUpload.progress = 0.5;
-    [self.view addSubview:hudUpload];
+    viewUpload.view.frame = self.view.bounds;
+    [self addChildViewController:viewUpload];
+    [self.view addSubview:viewUpload.view];
+    [viewUpload didMoveToParentViewController:self];
+    viewUpload.view.hidden = true;
+    
+    UIScreen *screen = [UIScreen mainScreen];
+    
+    buttonUploadStatus = [[UIButton alloc] initWithFrame:CGRectMake(280, screen.bounds.size.height-110, 30, 30)];
+    [buttonUploadStatus addTarget:self action:@selector(toggleUpload:) forControlEvents:UIControlEventTouchUpInside];
+    hudUpload = [[MBRoundProgressView alloc] initWithFrame:buttonUploadStatus.bounds];
+    hudUpload.userInteractionEnabled = NO;
+    [buttonUploadStatus addSubview:hudUpload];
+    [self.view addSubview:buttonUploadStatus];
+    buttonUploadStatus.hidden = YES;
 }
 
 - (void)showNotify {
@@ -201,6 +224,8 @@
     
     viewNotify.view.alpha = 0;
     viewNotify.view.hidden = false;
+    [viewNotify switchTab:viewNotify.buttonNotifyAll];
+    
     [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
         viewNotify.view.alpha = 1;
     }];
@@ -319,14 +344,12 @@
 }
 
 - (void)uploadStart:(NSNotification *) notification {
-    hudUpload.hidden = NO;
+    buttonUploadStatus.hidden = NO;
 }
 
 - (void)uploadSuccess:(NSNotification *) notification {
-    LXUploadObject *uploader = notification.object;
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
-    [app.uploader removeObject:uploader];
-    hudUpload.hidden = app.uploader.count == 0;
+    buttonUploadStatus.hidden = app.uploader.count == 0;
 }
 
 - (void)uploadProgess:(NSNotification *) notification {
@@ -336,6 +359,22 @@
         percent += uploader.percent;
     }
     hudUpload.progress = percent/app.uploader.count;
+}
+
+- (void)toggleUpload:(id)sender {
+    if (viewUpload.view.hidden) {
+        viewUpload.view.alpha = 0;
+        viewUpload.view.hidden = false;
+        [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
+            viewUpload.view.alpha = 1;
+        }];
+    } else {
+        [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
+            viewUpload.view.alpha = 0;
+        } completion:^(BOOL finished) {
+            viewUpload.view.hidden = true;
+        }];
+    }
 }
 
 

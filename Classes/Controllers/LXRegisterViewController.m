@@ -97,7 +97,11 @@
 }
 
 - (IBAction)touchPolicy:(id)sender {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/company/policy"]];
+    NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
+    if ([language isEqualToString:@"ja"])
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/company/policy"]];
+    else
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://en.latte.la/company/policy"]];
 
 }
 

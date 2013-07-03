@@ -175,7 +175,11 @@
     } else if (indexPath.section == 2) {
         [lxShare inviteFriend];
     } else if (indexPath.section == 3) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/company/policy"]];
+        NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
+        if ([language isEqualToString:@"ja"])
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/company/policy"]];
+        else
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://en.latte.la/company/policy"]];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     } else if (indexPath.section == 4) {
         LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
