@@ -583,7 +583,7 @@ typedef enum {
         case kTableFollower:
             return followers.count;
         case kTableProfile:
-            return [showField count];
+            return [showField count] + 1;
     }
     return 0;
 }
@@ -612,6 +612,9 @@ typedef enum {
                 return 1;
         }
     } else if (tableMode == kTableProfile) {
+        if (indexPath.row == showField.count) {
+            return 22;
+        }
         NSString* strKey = [showField objectAtIndex:indexPath.row];
         
         if ([strKey isEqualToString:@"hobby"]|| [strKey isEqualToString:@"introduction"]) {
@@ -960,6 +963,21 @@ typedef enum {
             LXCellDataField *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
             if (cell == nil) {
                 cell = [[LXCellDataField alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            }
+            if (indexPath.row == showField.count) {
+                cell.labelField.text = @"URL";
+                NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
+                if ([language isEqualToString:@"ja"]) {
+                    cell.labelDetail.text = [NSString stringWithFormat:@"http://latte.la/user/%d", [_user.userId integerValue]];
+                } else {
+                    cell.labelDetail.text = [NSString stringWithFormat:@"http://en.latte.la/user/%d", [_user.userId integerValue]];
+                }
+                cell.labelDetail.highlighted = YES;
+                cell.imageDisclose.hidden = NO;
+                return cell;
+            } else {
+                cell.imageDisclose.hidden = YES;
+                cell.labelDetail.highlighted = NO;
             }
             
             NSString* strKey = [showField objectAtIndex:indexPath.row];
@@ -1406,6 +1424,20 @@ typedef enum {
         case kTableFollowings:
             viewUserPage.user = followings[indexPath.row];
             break;
+        case kTableProfile: {
+            if (indexPath.row == showField.count) {
+                NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
+                if ([language isEqualToString:@"ja"]) {
+                    NSString *url = [NSString stringWithFormat:@"http://latte.la/user/%d", [_user.userId integerValue]];
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+                } else {
+                    NSString *url = [NSString stringWithFormat:@"http://en.latte.la/user/%d", [_user.userId integerValue]];
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+                }
+            }
+            return;
+            break;
+        }
         default:
             return;
     }

@@ -124,6 +124,7 @@
     MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.view];
     [self.view addSubview:hud];
     hud.mode = MBProgressHUDModeIndeterminate;
+    hud.userInteractionEnabled = NO;
     [hud show:YES];
     [[LatteAPIClient sharedClient] getPath:@"user/me/notify"
                                       parameters: params
@@ -255,7 +256,7 @@
             break;
     }
     
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 
@@ -329,6 +330,14 @@
 }
 
 - (IBAction)touchBackground:(id)sender {
+    LXAppDelegate* app = [LXAppDelegate currentDelegate];
+    [[LatteAPIClient sharedClient] postPath:@"user/me/read_notify"
+                                 parameters: [NSDictionary dictionaryWithObject:[app getToken] forKey:@"token" ]
+                                    success:nil
+                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                        DLog(@"Something went wrong (Notify Read)");
+                                    }];
+    
     [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
         self.view.alpha = 0;
     } completion:^(BOOL finished) {
@@ -360,7 +369,6 @@
     UIStoryboard *storySetting = [UIStoryboard storyboardWithName:@"Setting" bundle:nil];
     UIViewController* controlerNotify = [storySetting instantiateViewControllerWithIdentifier:@"Notification"];
     [_parent presentViewController:controlerNotify animated:YES completion:nil];
-    
 }
 
 @end

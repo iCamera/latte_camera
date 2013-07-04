@@ -1482,40 +1482,42 @@
 
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (scrollView.contentOffset.x  < 50) {
-        [UIView animateWithDuration:kGlobalAnimationSpeed
-                              delay:0
-                            options:UIViewAnimationOptionCurveEaseInOut
-                         animations:^{
-                             imagePrev.alpha = 0;
-                         }
-                         completion:nil];
-    } else {
-        [UIView animateWithDuration:kGlobalAnimationSpeed
-                              delay:0
-                            options:UIViewAnimationOptionCurveEaseInOut
-                         animations:^{
-                             imagePrev.alpha = 1;
-                         }
-                         completion:nil];
-    }
-    
-    if (scrollView.contentOffset.x  > scrollView.contentSize.width-scrollView.bounds.size.width-50) {
-        [UIView animateWithDuration:kGlobalAnimationSpeed
-                              delay:0
-                            options:UIViewAnimationOptionCurveEaseInOut
-                         animations:^{
-                             imageNext.alpha = 0;
-                         }
-                         completion:nil];
-    } else {
-        [UIView animateWithDuration:kGlobalAnimationSpeed
-                              delay:0
-                            options:UIViewAnimationOptionCurveEaseInOut
-                         animations:^{
-                             imageNext.alpha = 1;
-                         }
-                         completion:nil];
+    if (scrollView.tag == 9) {
+        if (scrollView.contentOffset.x  < 50) {
+            [UIView animateWithDuration:kGlobalAnimationSpeed
+                                  delay:0
+                                options:UIViewAnimationOptionCurveEaseInOut
+                             animations:^{
+                                 imagePrev.alpha = 0;
+                             }
+                             completion:nil];
+        } else {
+            [UIView animateWithDuration:kGlobalAnimationSpeed
+                                  delay:0
+                                options:UIViewAnimationOptionCurveEaseInOut
+                             animations:^{
+                                 imagePrev.alpha = 1;
+                             }
+                             completion:nil];
+        }
+        
+        if (scrollView.contentOffset.x  > scrollView.contentSize.width-scrollView.bounds.size.width-50) {
+            [UIView animateWithDuration:kGlobalAnimationSpeed
+                                  delay:0
+                                options:UIViewAnimationOptionCurveEaseInOut
+                             animations:^{
+                                 imageNext.alpha = 0;
+                             }
+                             completion:nil];
+        } else {
+            [UIView animateWithDuration:kGlobalAnimationSpeed
+                                  delay:0
+                                options:UIViewAnimationOptionCurveEaseInOut
+                             animations:^{
+                                 imageNext.alpha = 1;
+                             }
+                             completion:nil];
+        }
     }
 }
 

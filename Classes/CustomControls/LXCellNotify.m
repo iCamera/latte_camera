@@ -28,7 +28,7 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
     
 }
@@ -73,7 +73,13 @@
                 break;
         }
     }
-    self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg_menu.png"]];
+    NSNumber *read = notify[@"read"];
+    if ([read boolValue]) {
+        self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg_menu_on.png"]];
+    } else {
+        self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg_menu.png"]];
+    }
+    
     [self setSelectedBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg_menu_on.png"]]];
 }
 

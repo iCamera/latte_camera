@@ -1414,16 +1414,21 @@
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Desc" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="s6A-4b-zyj">
-                                            <rect key="frame" x="94" y="4" width="212" height="21"/>
+                                            <rect key="frame" x="94" y="4" width="212" height="16"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="highlightedColor" red="0.18090890849999999" green="0.29160622089999999" blue="0.49214504079999999" alpha="1" colorSpace="calibratedRGB"/>
                                         </label>
+                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" image="arrow_right.png" id="VWA-JF-Wqd">
+                                            <rect key="frame" x="290" y="1" width="20" height="20"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <connections>
+                                    <outlet property="imageDisclose" destination="VWA-JF-Wqd" id="qNq-gO-qYI"/>
                                     <outlet property="labelDetail" destination="s6A-4b-zyj" id="gH6-lG-3kk"/>
                                     <outlet property="labelField" destination="N18-BY-4O6" id="03d-63-btG"/>
                                 </connections>
@@ -2213,7 +2218,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </webView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="40" sectionHeaderHeight="22" sectionFooterHeight="22" id="3dW-kw-rWO">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsMultipleSelection="YES" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="40" sectionHeaderHeight="22" sectionFooterHeight="22" id="3dW-kw-rWO">
                                 <rect key="frame" x="6" y="120" width="308" height="306"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
@@ -2818,6 +2823,7 @@
         <class className="LXCellDataField" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellDataField.h"/>
             <relationships>
+                <relationship kind="outlet" name="imageDisclose" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="labelDetail" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="labelField" candidateClass="UILabel"/>
             </relationships>

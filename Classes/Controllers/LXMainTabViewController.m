@@ -213,14 +213,6 @@
 - (void)showNotify {
     viewNav.notifyCount = 0;
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-    LXAppDelegate* app = [LXAppDelegate currentDelegate];
-    
-    [[LatteAPIClient sharedClient] postPath:@"user/me/read_notify"
-                                 parameters: [NSDictionary dictionaryWithObject:[app getToken] forKey:@"token" ]
-                                    success:nil
-                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        DLog(@"Something went wrong (Notify Read)");
-                                    }];
     
     viewNotify.view.alpha = 0;
     viewNotify.view.hidden = false;
@@ -235,7 +227,6 @@
     if (viewNotify.view.hidden) {
         [self showNotify];
     } else {
-        
         [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
             viewNotify.view.alpha = 0;
         } completion:^(BOOL finished) {
