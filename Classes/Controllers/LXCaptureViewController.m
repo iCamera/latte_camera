@@ -184,26 +184,30 @@ typedef enum {
     
 //    UIApplication *app = [UIApplication sharedApplication];
 //    [app setSystemVolumeHUDEnabled:NO];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidDisappear:animated];
     [self startCamera];
 }
 
 - (void)startCamera {
     // Start the session. This is done asychronously since -startRunning doesn't return until the session is running.
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [[captureManager session] startRunning];
-        dispatch_async(dispatch_get_main_queue(), ^{
+//        dispatch_async(dispatch_get_main_queue(), ^{
             buttonCapture.enabled = YES;
             isReady = YES;
-        });
-    });
+//        });
+//    });
 }
 
 - (void)stopCamera {
     isReady = NO;
     buttonCapture.enabled = NO;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [[captureManager session] stopRunning];
-    });
+//    });
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -215,12 +219,16 @@ typedef enum {
     UIAccelerometer* a = [UIAccelerometer sharedAccelerometer];
     a.delegate = nil;
     
-    [self stopCamera];
 
 //    UIApplication *app = [UIApplication sharedApplication];
 //    [app setSystemVolumeHUDEnabled:YES];
     
     [super viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self stopCamera];
 }
 
 - (void)didReceiveMemoryWarning

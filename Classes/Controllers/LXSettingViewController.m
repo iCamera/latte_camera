@@ -64,7 +64,7 @@
         
 
         for (NSString *aKey in permission) {
-            NSArray *status = [NSArray arrayWithObjects:@"0", @"10", @"30", @"40", nil];
+            NSArray *status = [NSArray arrayWithObjects:@"40", @"30", @"10", @"0", nil];
             ((QRadioElement *)[self.root elementWithKey:aKey]).selected = [status indexOfObject:[[userDict objectForKey:aKey] stringValue]];
         }
         

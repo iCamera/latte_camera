@@ -161,10 +161,10 @@
                                                   cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
                                              destructiveButtonTitle:nil
                                                   otherButtonTitles:
-                                NSLocalizedString(@"status_private", @"非公開"),
-                                NSLocalizedString(@"status_friends", @"友達まで"),
+                                NSLocalizedString(@"status_public", @"公開"),
                                 NSLocalizedString(@"status_members", @"会員まで"),
-                                NSLocalizedString(@"status_public", @"公開"), nil];
+                                NSLocalizedString(@"status_friends", @"友達まで"),
+                                NSLocalizedString(@"status_private", @"非公開"), nil];
         sheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
         sheet.tag = indexPath.row;
         if (self.tabBarController != nil) {
@@ -193,16 +193,16 @@
         PictureStatus status = PictureStatusPublic;
         switch (buttonIndex) {
             case 0:
-                status = PictureStatusPrivate;
+                status = PictureStatusPublic;
                 break;
             case 1:
-                status = PictureStatusFriendsOnly;
-                break;
-            case 2:
                 status = PictureStatusMember;
                 break;
+            case 2:
+                status = PictureStatusFriendsOnly;
+                break;
             case 3:
-                status = PictureStatusPublic;
+                status = PictureStatusPrivate;
                 break;
             default:
                 return;
