@@ -4,20 +4,20 @@
     "controllerName": "luxeysSettingViewController",
     "sections": [
         { "title":"プロフィール公開設定", "elements": [
-                { "type":"QRadioElement", "key":"gender_public", "title":"性別公開", "items":["非公開", "友達（相互フォロー）まで", "会員まで", "全体"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QRadioElement", "key":"current_residence_public", "title":"現住所公開", "items":["非公開", "友達（相互フォロー）まで", "会員まで", "全体"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QRadioElement", "key":"hometown_public", "title":"出身地公開", "items":["非公開", "友達（相互フォロー）まで", "会員まで", "全体"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QRadioElement", "key":"birthyear_public", "title":"年齢公開", "items":["非公開", "友達（相互フォロー）まで", "会員まで", "全体"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QRadioElement", "key":"birthdate_public", "title":"誕生日公開", "items":["非公開", "友達（相互フォロー）まで", "会員まで", "全体"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QRadioElement", "key":"nationality_public", "title":"国籍公開", "items":["非公開", "友達（相互フォロー）まで", "会員まで", "全体"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"}
+                { "type":"QRadioElement", "key":"gender_public", "title":"性別公開", "items":["全体", "会員まで", "友達（相互フォロー）まで", "非公開"], "values":[40, 30, 10, 0], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QRadioElement", "key":"current_residence_public", "title":"現住所公開", "items":["全体", "会員まで", "友達（相互フォロー）まで", "非公開"], "values":[40, 30, 10, 0], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QRadioElement", "key":"hometown_public", "title":"出身地公開", "items":["全体", "会員まで", "友達（相互フォロー）まで", "非公開"], "values":[40, 30, 10, 0], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QRadioElement", "key":"birthyear_public", "title":"年齢公開", "items":["全体", "会員まで", "友達（相互フォロー）まで", "非公開"], "values":[40, 30, 10, 0], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QRadioElement", "key":"birthdate_public", "title":"誕生日公開", "items":["全体", "会員まで", "友達（相互フォロー）まで", "非公開"], "values":[40, 30, 10, 0], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QRadioElement", "key":"nationality_public", "title":"国籍公開", "items":["全体", "会員まで", "友達（相互フォロー）まで", "非公開"], "values":[40, 30, 10, 0], "controllerAction":"handleUpdateRadio:"}
             ]
         },
         { "title":"写真公開設定", "footer":"●　ここで設定したものがデフォルトに設定されます。\n●　元サイズを公開にすると、パソコンから見た場合、実際のイメージ サイズの写真も公開されます", "elements": [
-                { "type":"QRadioElement", "key":"picture_status", "title":"写真", "items":["非公開", "友達（相互フォロー）まで", "会員まで", "全体"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QRadioElement", "key":"default_show_taken_at", "title":"撮影日", "items":["非公開", "友達（相互フォロー）まで", "会員まで", "全体"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QRadioElement", "key":"default_show_exif", "title":"カメラ情報", "items":["非公開", "友達（相互フォロー）まで", "会員まで", "全体"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QRadioElement", "key":"default_show_gps", "title":"位置情報", "items":["非公開", "友達（相互フォロー）まで", "会員まで", "全体"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QRadioElement", "key":"default_show_large", "title":"元サイズ", "items":["非公開", "友達（相互フォロー）まで", "会員まで", "全体"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"}
+                { "type":"QRadioElement", "key":"picture_status", "title":"写真", "items":["全体", "会員まで", "友達（相互フォロー）まで", "非公開"], "values":[40, 30, 10, 0], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QRadioElement", "key":"default_show_taken_at", "title":"撮影日", "items":["全体", "会員まで", "友達（相互フォロー）まで", "非公開"], "values":[40, 30, 10, 0], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QRadioElement", "key":"default_show_exif", "title":"カメラ情報", "items":["全体", "会員まで", "友達（相互フォロー）まで", "非公開"], "values":[40, 30, 10, 0], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QRadioElement", "key":"default_show_gps", "title":"位置情報", "items":["全体", "会員まで", "友達（相互フォロー）まで", "非公開"], "values":[40, 30, 10, 0], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QRadioElement", "key":"default_show_large", "title":"元サイズ", "items":["全体", "会員まで", "友達（相互フォロー）まで", "非公開"], "values":[40, 30, 10, 0], "controllerAction":"handleUpdateRadio:"}
             ]
         }
     ]

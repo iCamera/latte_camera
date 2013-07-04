@@ -205,6 +205,7 @@
                 status = PictureStatusPublic;
                 break;
             default:
+                return;
                 break;
         }
         

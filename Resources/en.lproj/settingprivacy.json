@@ -4,20 +4,20 @@
     "controllerName": "luxeysSettingViewController",
     "sections": [
         { "title":"PROFILE PRIVACY SETTINGS", "elements": [
-                { "type":"QRadioElement", "key":"gender_public", "title":"Gender", "items":["Only Me", "Mutual Follow", "Members", "Public"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QRadioElement", "key":"current_residence_public", "title":"Current Address", "items":["Only Me", "Mutual Follow", "Members", "Public"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QRadioElement", "key":"hometown_public", "title":"Hometown", "items":["Only Me", "Mutual Follow", "Members", "Public"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QRadioElement", "key":"birthyear_public", "title":"Age", "items":["Only Me", "Mutual Follow", "Members", "Public"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QRadioElement", "key":"birthdate_public", "title":"Birthday", "items":["Only Me", "Mutual Follow", "Members", "Public"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QRadioElement", "key":"nationality_public", "title":"Nationality", "items":["Only Me", "Mutual Follow", "Members", "Public"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"}
+                { "type":"QRadioElement", "key":"gender_public", "title":"Gender", "items":["Public", "Members", "Mutual Follow", "Only Me"], "values":[40, 30, 10, 0], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QRadioElement", "key":"current_residence_public", "title":"Current Address", "items":["Public", "Members", "Mutual Follow", "Only Me"], "values":[40, 30, 10, 0], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QRadioElement", "key":"hometown_public", "title":"Hometown", "items":["Public", "Members", "Mutual Follow", "Only Me"], "values":[40, 30, 10, 0], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QRadioElement", "key":"birthyear_public", "title":"Age", "items":["Public", "Members", "Mutual Follow", "Only Me"], "values":[40, 30, 10, 0], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QRadioElement", "key":"birthdate_public", "title":"Birthday", "items":["Public", "Members", "Mutual Follow", "Only Me"], "values":[40, 30, 10, 0], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QRadioElement", "key":"nationality_public", "title":"Nationality", "items":["Public", "Members", "Mutual Follow", "Only Me"], "values":[40, 30, 10, 0], "controllerAction":"handleUpdateRadio:"}
             ]
         },
-        { "title":"PHOTO PRIVACY SETTINGS", "footer":"- All these settings will be default.\n- Original file is photo with full resolution. Can be viewed on web version of Latte.", "elements": [
-                { "type":"QRadioElement", "key":"picture_status", "title":"Photo", "items":["Only Me", "Mutual Follow", "Members", "Public"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QRadioElement", "key":"default_show_taken_at", "title":"Show taken date", "items":["Only Me", "Mutual Follow", "Members", "Public"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QRadioElement", "key":"default_show_exif", "title":"Show EXIF information", "items":["Only Me", "Mutual Follow", "Members", "Public"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QRadioElement", "key":"default_show_gps", "title":"Show location information", "items":["Only Me", "Mutual Follow", "Members", "Public"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"},
-                { "type":"QRadioElement", "key":"default_show_large", "title":"Show original file", "items":["Only Me", "Mutual Follow", "Members", "Public"], "values":[0, 10, 30, 40], "controllerAction":"handleUpdateRadio:"}
+        { "title":"PHOTO PRIVACY SETTINGS", "footer":"- All photo privacy settings are only a photo's default settings, and as such can be modified later.\n- Original file is photo with full resolution. Can be viewed on web version of Latte.", "elements": [
+                { "type":"QRadioElement", "key":"picture_status", "title":"Photo", "items":["Public", "Members", "Mutual Follow", "Only Me"], "values":[40, 30, 10, 0], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QRadioElement", "key":"default_show_taken_at", "title":"Show taken date", "items":["Public", "Members", "Mutual Follow", "Only Me"], "values":[40, 30, 10, 0], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QRadioElement", "key":"default_show_exif", "title":"Show EXIF information", "items":["Public", "Members", "Mutual Follow", "Only Me"], "values":[40, 30, 10, 0], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QRadioElement", "key":"default_show_gps", "title":"Show location information", "items":["Public", "Members", "Mutual Follow", "Only Me"], "values":[40, 30, 10, 0], "controllerAction":"handleUpdateRadio:"},
+                { "type":"QRadioElement", "key":"default_show_large", "title":"Show original file", "items":["Public", "Members", "Mutual Follow", "Only Me"], "values":[40, 30, 10, 0], "controllerAction":"handleUpdateRadio:"}
             ]
         }
     ]

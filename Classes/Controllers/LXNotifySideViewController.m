@@ -121,6 +121,10 @@
                            [NSNumber numberWithInt:currentTab], @"tab",
                            nil];
 
+    MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:hud];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    [hud show:YES];
     [[LatteAPIClient sharedClient] getPath:@"user/me/notify"
                                       parameters: params
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -131,7 +135,6 @@
                                              
                                              if (page == 1) {
                                                  notifies = [NSMutableArray arrayWithArray:newData];
-                                                 [tableNotify scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
                                              } else {
                                                  [notifies addObjectsFromArray:newData];
                                              }
@@ -139,6 +142,11 @@
                                              [tableNotify reloadData];
                                              [self doneLoadingTableViewData];
                                              [activityLoad stopAnimating];
+                                             
+                                             if (page == 1) {
+                                                 [self.tableNotify setContentOffset:CGPointZero animated:YES];
+                                             }
+                                             [hud hide:YES];
                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                              DLog(@"Something went wrong (Notify)");
                                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
@@ -149,6 +157,7 @@
                                              [alert show];
                                              [self doneLoadingTableViewData];
                                              [activityLoad stopAnimating];
+                                             [hud hide:YES];
                                          }];
 }
 

@@ -194,8 +194,8 @@
             case PictureStatusPublic:
                 cell.labelDetail.text = NSLocalizedString(@"status_public", @"");
                 break;
-                
             default:
+                cell.labelDetail.text = NSLocalizedString(@"status_public", @"");
                 break;
         }
     }
