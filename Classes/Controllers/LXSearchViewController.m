@@ -268,7 +268,6 @@ typedef enum {
     buttonSearchPeople.enabled = true;
     
     sender.enabled = false;
-    textKeyword.text = @"";
 
     CGRect rect = viewHeader.frame;
     rect.size.height = 93;

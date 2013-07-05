@@ -166,7 +166,7 @@
     [viewNav.buttonNotify addTarget:self action:@selector(toggleNotify:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:viewNav.view];
-    [self addChildViewController:viewNav];
+//    [self addChildViewController:viewNav];
     [viewNav didMoveToParentViewController:self];
     
     for(UIViewController *tab in self.viewControllers) {
@@ -188,13 +188,13 @@
     
     viewNotify.view.frame = self.view.bounds;
     viewNotify.parent = self;
-    [self addChildViewController:viewNotify];
+//    [self addChildViewController:viewNotify];
     [self.view addSubview:viewNotify.view];
     [viewNotify didMoveToParentViewController:self];
     viewNotify.view.hidden = true;
     
     viewUpload.view.frame = self.view.bounds;
-    [self addChildViewController:viewUpload];
+//    [self addChildViewController:viewUpload];
     [self.view addSubview:viewUpload.view];
     [viewUpload didMoveToParentViewController:self];
     viewUpload.view.hidden = true;
