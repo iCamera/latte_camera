@@ -1179,7 +1179,7 @@
             blend = [NSString stringWithFormat:@"leak%d.jpg", blendid];
             break;
         case 1:
-            blendid = 1 + rand() % 35;
+            blendid = 1 + rand() % 30;
             blend = [NSString stringWithFormat:@"bokehcircle-%d.jpg", blendid];
             break;
         case 2:
@@ -1203,7 +1203,7 @@
             blend = [NSString stringWithFormat:@"print%d.jpg", blendid];
             break;
         case 7:
-            blendid = 1 + rand() % 88;
+            blendid = 1 + rand() % 150;
             blend = [NSString stringWithFormat:@"gradient1-%d.png", blendid];
             break;
         case 8:

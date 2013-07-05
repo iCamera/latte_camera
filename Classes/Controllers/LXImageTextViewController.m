@@ -580,7 +580,7 @@ typedef enum {
     UILabel *newLabel = [[UILabel alloc] init];
     newLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:25];
     newLabel.text = @"Sample Text";
-    newLabel.layer.shadowOpacity = 1;
+    newLabel.layer.shadowOpacity = 0;
     newLabel.layer.shadowOffset = CGSizeZero;
     newLabel.center = CGPointMake(activeTemplate.bounds.size.width/2, activeTemplate.bounds.size.height/2);
     newLabel.backgroundColor = [UIColor clearColor];
