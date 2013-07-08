@@ -41,11 +41,6 @@
     self.notifyCount = [UIApplication sharedApplication].applicationIconBadgeNumber;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(receivePushNotify:)
-                                                 name:@"ReceivedPushNotify"
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(receiveLoggedIn:)
                                                  name:@"LoggedIn"
                                                object:nil];
@@ -93,17 +88,6 @@
 - (void)receiveLoggedOut:(NSNotification *) notification {
     labelCount.hidden = true;
     buttonNotify.hidden = true;
-}
-
-- (void)receivePushNotify:(NSNotification*)notify {
-    NSDictionary *userInfo = notify.object;
-    if ([userInfo objectForKey:@"aps"]) {
-        NSDictionary *aps = [userInfo objectForKey:@"aps"];
-        if ([aps objectForKey:@"badge"]) {
-            NSNumber *count = [aps objectForKey:@"badge"];
-            self.notifyCount = [count integerValue];
-        }
-    }
 }
 
 - (void)didReceiveMemoryWarning

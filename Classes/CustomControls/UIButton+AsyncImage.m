@@ -43,9 +43,11 @@
 }
 
 - (void)loadBackground:(NSString *)url placeholderImage:(NSString *)placeHolder {
-    [self setBackgroundColor:[UIColor grayColor]];
     if (placeHolder != nil) {
         [self setBackgroundImage:[UIImage imageNamed:placeHolder] forState:UIControlStateNormal];
+    } else {
+        [self setBackgroundImage:nil forState:UIControlStateNormal];
+        [self setBackgroundColor:[UIColor grayColor]];
     }
     
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]

@@ -63,6 +63,11 @@
                                                  name:@"LoggedOut"
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receivePushNotify:)
+                                                 name:@"ReceivedPushNotify"
+                                               object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadSuccess:) name:@"LXUploaderSuccess" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadProgess:) name:@"LXUploaderProgress" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadStart:) name:@"LXUploaderStart" object:nil];
@@ -208,6 +213,21 @@
     [buttonUploadStatus addSubview:hudUpload];
     [self.view addSubview:buttonUploadStatus];
     buttonUploadStatus.hidden = YES;
+}
+
+- (void)receivePushNotify:(NSNotification*)notify {
+    if (viewNotify.view.hidden) {
+        NSDictionary *userInfo = notify.object;
+        if ([userInfo objectForKey:@"aps"]) {
+            NSDictionary *aps = [userInfo objectForKey:@"aps"];
+            if ([aps objectForKey:@"badge"]) {
+                NSNumber *count = [aps objectForKey:@"badge"];
+                viewNav.notifyCount = [count integerValue];
+            }
+        }
+    } else {
+        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    }
 }
 
 - (void)showNotify {

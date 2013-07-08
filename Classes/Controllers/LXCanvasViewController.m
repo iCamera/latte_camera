@@ -835,6 +835,14 @@
 
 - (void)resizeCameraViewWithAnimation:(BOOL)animation {
     CGRect screen = [[UIScreen mainScreen] bounds];
+    NSArray *controls = [NSArray arrayWithObjects:
+                         viewPresetControl,
+                         viewEffectControl,
+                         viewFocusControl,
+                         viewBasicControl,
+                         viewLensControl,
+                         viewBlendControl,
+                         nil];
     
     CGRect frame = viewCameraWraper.frame;
     CGRect framePreset = viewPresetControl.frame;
@@ -856,26 +864,36 @@
         posBottom = 480 - 50;
     }
     
+    for (UIView *control in controls) {
+        control.userInteractionEnabled = NO;
+    }
+    
     frameEffect.origin.y = frameBokeh.origin.y = frameBasic.origin.y = frameLens.origin.y = frameBlend.origin.y = framePreset.origin.y = posBottom;
     
     switch (currentTab) {
         case kTabBokeh:
             frameBokeh.origin.y = posBottom - 110;
+            viewFocusControl.userInteractionEnabled = YES;
             break;
         case kTabEffect:
             frameEffect.origin.y = posBottom - 110;
+            viewEffectControl.userInteractionEnabled = YES;
             break;
         case kTabLens:
             frameLens.origin.y = posBottom - 110;
+            viewLensControl.userInteractionEnabled = YES;
             break;
         case kTabBasic:
             frameBasic.origin.y = posBottom - 110;
+            viewBasicControl.userInteractionEnabled = YES;
             break;
         case kTabBlend:
             frameBlend.origin.y = posBottom - 110;
+            viewBlendControl.userInteractionEnabled = YES;
             break;
         case kTabPreset:
             framePreset.origin.y = posBottom - 110;
+            viewPresetControl.userInteractionEnabled = YES;
             break;
         case kTabPreview:
             break;
