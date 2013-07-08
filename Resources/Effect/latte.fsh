@@ -270,7 +270,9 @@ void main()
     // Text
     if (textEnable) {
         lowp vec4 textureText = texture2D(inputTextTexture, textCoordinate);
-        textureColor = blendnormal(textureColor, textureText);
+        //textureColor.rgb = mix(textureColor.rgb, textureText.rgb, textureText.a);
+        //fix premultiplied
+        textureColor.rgb = textureText.rgb + (1.0 - textureText.a) * textureColor.rgb;
     }
 
     // Tone Curve Mapping
