@@ -417,6 +417,16 @@ typedef enum {
                   failureBlock:failureblock];
 }
 
+- (void)navigationController:(UINavigationController *)navigationController
+      willShowViewController:(UIViewController *)viewController
+                    animated:(BOOL)animated {
+    
+    if ([navigationController isKindOfClass:[UIImagePickerController class]] &&
+        ((UIImagePickerController *)navigationController).sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
+        [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    }
+}
+
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [picker dismissModalViewControllerAnimated:NO];
 }
