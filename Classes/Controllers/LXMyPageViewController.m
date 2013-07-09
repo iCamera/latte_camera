@@ -968,9 +968,9 @@ typedef enum {
                 cell.labelField.text = @"URL";
                 NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
                 if ([language isEqualToString:@"ja"]) {
-                    cell.labelDetail.text = [NSString stringWithFormat:@"http://latte.la/user/%d", [_user.userId integerValue]];
+                    cell.labelDetail.text = [NSString stringWithFormat:@"http://latte.la/picture/user/%d", [_user.userId integerValue]];
                 } else {
-                    cell.labelDetail.text = [NSString stringWithFormat:@"http://en.latte.la/user/%d", [_user.userId integerValue]];
+                    cell.labelDetail.text = [NSString stringWithFormat:@"http://en.latte.la/picture/user/%d", [_user.userId integerValue]];
                 }
                 cell.labelDetail.highlighted = YES;
                 cell.imageDisclose.hidden = NO;
@@ -1428,10 +1428,10 @@ typedef enum {
             if (indexPath.row == showField.count) {
                 NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
                 if ([language isEqualToString:@"ja"]) {
-                    NSString *url = [NSString stringWithFormat:@"http://latte.la/user/%d", [_user.userId integerValue]];
+                    NSString *url = [NSString stringWithFormat:@"http://latte.la/picture/user/%d", [_user.userId integerValue]];
                     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
                 } else {
-                    NSString *url = [NSString stringWithFormat:@"http://en.latte.la/user/%d", [_user.userId integerValue]];
+                    NSString *url = [NSString stringWithFormat:@"http://en.latte.la/picture/user/%d", [_user.userId integerValue]];
                     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
                 }
             }
