@@ -502,6 +502,10 @@ typedef enum {
     [LXUtils toggleLike:sender ofPicture:pic];
 }
 
+- (UITableView *)tableView {
+    return tablePic;
+}
+
 
 - (void)didReceiveMemoryWarning
 {

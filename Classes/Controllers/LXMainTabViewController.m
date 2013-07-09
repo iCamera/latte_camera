@@ -341,16 +341,10 @@
 
 
 - (void)touchTitle:(id)sender {
-    LXAppDelegate* app = [LXAppDelegate currentDelegate];
-    if (app.currentUser != nil) {
-        if (self.selectedIndex == 4) {
-            UINavigationController *nav = (UINavigationController*)self.viewControllers[4];
-            LXMyPageViewController *controllerMyPage = (LXMyPageViewController*)nav.viewControllers[0];
-            [controllerMyPage.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
-        } else
-            self.selectedIndex = 4;
-    } else {
-        self.selectedIndex = 0;
+    UINavigationController *nav = (UINavigationController*)self.selectedViewController;
+    UITableViewController *view = (UITableViewController*)nav.visibleViewController;
+    if ([view respondsToSelector:@selector(tableView)]) {
+        [view.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
     }
 }
 
