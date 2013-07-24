@@ -136,7 +136,9 @@ typedef enum {
     [param setObject:[app getToken] forKey:@"token"];
     
     if (!reset) {
-        [param setObject:feed.feedID forKey:@"last_id"];
+        if (feed) {
+            [param setObject:feed.feedID forKey:@"last_id"];
+        }
     }
     
     [[LatteAPIClient sharedClient] getPath:@"user/everyone/timeline"
