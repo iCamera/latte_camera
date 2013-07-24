@@ -177,6 +177,10 @@
     _comments = comments;
     
     [self.tableView reloadData];
+    if (comments.count > 0) {
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(comments.count-1) inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    }
+    
     [activityLoad stopAnimating];
 }
 

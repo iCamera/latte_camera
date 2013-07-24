@@ -15,6 +15,7 @@
 #import "LatteAPIClient.h"
 #import "UIImageView+loadProgress.h"
 #import <CoreText/CoreText.h>
+#import "AFHTTPRequestOperation.h"
 
 typedef enum {
     kFontTabRecommend,

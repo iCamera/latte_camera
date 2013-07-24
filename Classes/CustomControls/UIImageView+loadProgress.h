@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AFNetworking.h"
 
 @interface UIImageView (loadProgress)
 - (void)loadProgess:(NSString *)url;

@@ -8,7 +8,6 @@
 
 #import "LXCellTimelineSingle.h"
 #import "Picture.h"
-#import "UIButton+AsyncImage.h"
 #import "Comment.h"
 #import "LXCellComment.h"
 #import "LXAppDelegate.h"
