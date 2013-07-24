@@ -58,8 +58,6 @@ typedef enum {
         //Add some text to it however you want
         if (text)
             [emailBody appendString:[NSString stringWithFormat:@"<p>%@</p>", text]];
-        if (url)
-            [emailBody appendString:[NSString stringWithFormat:@"<p>%@</p>", url]];
         
         //close the HTML formatting
         [emailBody appendString:@"</body></html>"];

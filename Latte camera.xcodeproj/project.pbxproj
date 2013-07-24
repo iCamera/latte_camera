@@ -1091,6 +1091,7 @@
 		889093FF16F8959400E98DF4 /* follow_mutual_m@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 889093FB16F8959400E98DF4 /* follow_mutual_m@2x.png */; };
 		8890B9D616E03B1F008EDFBF /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890B9BB16E03B1F008EDFBF /* HPGrowingTextView.m */; };
 		8890B9D716E03B1F008EDFBF /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890B9BD16E03B1F008EDFBF /* HPTextViewInternal.m */; };
+		88979100179FD64B00BDC803 /* LXFAQViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 889790FF179FD64A00BDC803 /* LXFAQViewController.m */; };
 		88A20017177032D200978564 /* GPUImageMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A2FE8B177032D000978564 /* GPUImageMovie.m */; };
 		88A2002A177032D200978564 /* GPUImageRawDataInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A2FEB1177032D100978564 /* GPUImageRawDataInput.m */; };
 		88A2002B177032D200978564 /* GPUImageRawDataOutput.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A2FEB3177032D100978564 /* GPUImageRawDataOutput.m */; };
@@ -3099,6 +3100,8 @@
 		8890B9BB16E03B1F008EDFBF /* HPGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPGrowingTextView.m; sourceTree = "<group>"; };
 		8890B9BC16E03B1F008EDFBF /* HPTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPTextViewInternal.h; sourceTree = "<group>"; };
 		8890B9BD16E03B1F008EDFBF /* HPTextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewInternal.m; sourceTree = "<group>"; };
+		889790FE179FD64A00BDC803 /* LXFAQViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFAQViewController.h; sourceTree = "<group>"; };
+		889790FF179FD64A00BDC803 /* LXFAQViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFAQViewController.m; sourceTree = "<group>"; };
 		88A2009D177034AB00978564 /* GPUImageOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageOutput.h; sourceTree = "<group>"; };
 		88A2009E177034AB00978564 /* GPUImageOutput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageOutput.m; sourceTree = "<group>"; };
 		88A200A0177034E100978564 /* GPUImageTwoPassFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageTwoPassFilter.h; sourceTree = "<group>"; };
@@ -4913,6 +4916,8 @@
 				8883EED6173220E900AA2D5E /* LXTextTemplateViewController.m */,
 				88FB7CF41782DD590038B067 /* LXUploadStatusViewController.h */,
 				88FB7CF51782DD590038B067 /* LXUploadStatusViewController.m */,
+				889790FE179FD64A00BDC803 /* LXFAQViewController.h */,
+				889790FF179FD64A00BDC803 /* LXFAQViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -8339,6 +8344,7 @@
 				88A200A4177034E100978564 /* GPUImageTwoPassFilter.m in Sources */,
 				88A200A5177034E100978564 /* GPUImageTwoPassTextureSamplingFilter.m in Sources */,
 				88FB7CF61782DD590038B067 /* LXUploadStatusViewController.m in Sources */,
+				88979100179FD64B00BDC803 /* LXFAQViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

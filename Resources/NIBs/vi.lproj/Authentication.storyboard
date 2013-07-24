@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="4457.9" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" initialViewController="EFt-fq-8DL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="EFt-fq-8DL">
     <dependencies>
         <deployment version="1280" identifier="iOS"/>
-        <development version="4600" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3682.9"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
         <!--Login View Controller-->
@@ -121,7 +120,6 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="hmJ-uv-mAd">
                         <barButtonItem key="leftBarButtonItem" style="done" id="ygM-LV-hZG">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="lp7-e6-FQb">
@@ -265,7 +263,6 @@
                             <outlet property="delegate" destination="HJM-KD-2sg" id="AnM-Mq-ta9"/>
                         </connections>
                     </tableView>
-                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" title="Latte" id="Z2S-Bj-hnJ"/>
                     <connections>
                         <outlet property="textMail" destination="sLO-Tu-vem" id="dmK-fV-Bk5"/>
@@ -281,7 +278,6 @@
         <scene sceneID="cI2-Th-REi">
             <objects>
                 <navigationController storyboardIdentifier="LoginModal" definesPresentationContext="YES" id="EFt-fq-8DL" customClass="LXNavigationController" sceneMemberID="viewController">
-                    <extendedEdge key="edgesForExtendedLayout"/>
                     <tabBarItem key="tabBarItem" title="Đăng nhập" image="icon_login.png" id="9cH-yt-cfi"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="90R-k6-oCe" customClass="LXNavBar">

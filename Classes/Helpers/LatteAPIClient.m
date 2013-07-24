@@ -44,22 +44,14 @@
     return _sharedClient;
 }
 
-- (void)getPath:(NSString *)path parameters:(NSDictionary *)parameters success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure {
+- (NSMutableURLRequest *)requestWithMethod:(NSString *)method path:(NSString *)path parameters:(NSDictionary *)parameters {
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:parameters];
     if ([app getToken]) {
         [params setObject:[app getToken] forKey:@"token"];
     }
-    [super getPath:path parameters:params success:success failure:failure];
-}
-
-- (void)postPath:(NSString *)path parameters:(NSDictionary *)parameters success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure {
-    LXAppDelegate *app = [LXAppDelegate currentDelegate];
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:parameters];
-    if ([app getToken]) {
-        [params setObject:[app getToken] forKey:@"token"];
-    }
-    [super postPath:path parameters:params success:success failure:failure];
+    
+    return [super requestWithMethod:method path:path parameters:params];
 }
 
 - (id)initWithBaseURL:(NSURL *)url {

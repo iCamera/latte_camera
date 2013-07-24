@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="4457.9" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" initialViewController="cxD-TB-4Px">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="cxD-TB-4Px">
     <dependencies>
         <deployment version="1280" identifier="iOS"/>
-        <development version="4600" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3682.9"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
         <!--Setting Root View Controller - 設定-->
@@ -317,7 +316,6 @@
                             </tableViewSection>
                         </sections>
                     </tableView>
-                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" title="設定" id="S5j-P1-F9V">
                         <barButtonItem key="rightBarButtonItem" style="done" id="aST-um-dFS">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="BF7-k2-8Xx" customClass="LXButtonBrown30">
@@ -354,7 +352,6 @@
         <scene sceneID="VKt-pI-gkB">
             <objects>
                 <navigationController definesPresentationContext="YES" id="cxD-TB-4Px" customClass="LXNavigationController" sceneMemberID="viewController">
-                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="1J3-PY-CDA" customClass="LXNavBar">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -370,7 +367,6 @@
         <scene sceneID="4vT-lJ-YdE">
             <objects>
                 <navigationController storyboardIdentifier="Notification" definesPresentationContext="YES" id="MnB-ZM-rSH" sceneMemberID="viewController">
-                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="dHl-WP-tRw" customClass="LXNavBar">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -385,68 +381,28 @@
         <!--View Controller-->
         <scene sceneID="2UR-51-eWh">
             <objects>
-                <viewController id="Dyz-N0-aFo" sceneMemberID="viewController">
+                <viewController id="Dyz-N0-aFo" customClass="LXFAQViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ElV-56-4T2">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="wpZ-3e-7ad">
+                            <webView contentMode="scaleToFill" id="JX0-i2-kqL">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                <string key="text">★登録確認メールが届かない
-------------------------------
-登録確認メールが届かない場合、以下をご確認ください。
-
-・迷惑メールフォルダに振り分けられていないか、ご確認ください
-・携帯電話のメールアドレスの場合、Latte事務局（mail@latte.la）からのメールが受信できるようになっているか、携帯電話の受信設定をご確認ください。
-
-※また、既にLatteに登録されているメールアドレスを利用して、新規会員登録することは出来ません。
-
-★パスワードを忘れてしまった
-------------------------------
-ログインボタンの下にある「ログインパスワードをお忘れの方」をタップしてください。
-パスワードの再設定のページから新パスワードへ変更する手続きが行えます。
-
-★iPhoneのカメラロールにアクセスできない
-------------------------------
-「このAppには写真およびビデオへのアクセス権がありません。」
-または「ユーザーによるアクセス拒否」等と表示され、iPhoneのカメラロールにアクセスできない場合、以下をご確認ください。
-
-・iOS6の場合
-iPhoneの「設定」＞「プライバシー」＞「写真」を開いてください。
-項目の中にあるLatte cameraをオンにしてください。
-
-・iOS5の場合
-iPhoneの「設定」＞「位置情報サービス」を開いてください。
-項目の中にあるLatte cameraをオンにしてください。
-
-★アップロードした写真を削除したい
-------------------------------
-削除したい写真を選択してください。次に右上にある編集アイコンをタップしてください。
-画面の一番下にある「写真を削除する」＞「この写真を削除する」をタップすると写真を削除できます。
-
-★投稿したコメントを削除したい
-------------------------------
-投稿したコメントを左右どちらかにスライドしてください。
-マイナス印のアイコンが表示されますのでタップしてください。
-表示された削除ボタンをタップするとコメントを削除できます。
-
-</string>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
-                            </textView>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                            </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="Pdp-Wp-ne8"/>
+                    <connections>
+                        <outlet property="viewWeb" destination="JX0-i2-kqL" id="pxc-lg-V2b"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g6H-xe-xgQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-279" y="-323"/>
+            <point key="canvasLocation" x="-192" y="-323"/>
         </scene>
         <!--About View Controller - 機能要望・ご意見-->
         <scene sceneID="e7i-I8-8V7">
@@ -537,7 +493,6 @@ Latteについて、「こんな機能があったら良い」、「この機能
                             <outlet property="delegate" destination="yf1-Mj-Etk" id="Fb7-sp-Tf4"/>
                         </connections>
                     </tableView>
-                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" title="機能要望・ご意見" id="vxy-Cf-zG3"/>
                     <connections>
                         <outlet property="textEmail" destination="y9H-Ag-JdV" id="Plo-2t-yRx"/>
@@ -551,7 +506,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
         <!--Setting Notify View Controller-->
         <scene sceneID="fZN-Av-uTo">
             <objects>
-                <tableViewController id="130-si-waG" customClass="LXSettingNotifyViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="" id="130-si-waG" customClass="LXSettingNotifyViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="qLH-jV-a7F">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -740,7 +695,6 @@ Latteについて、「こんな機能があったら良い」、「この機能
                             <outlet property="delegate" destination="130-si-waG" id="DX9-LN-xhu"/>
                         </connections>
                     </tableView>
-                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="OQt-UR-7Xb">
                         <barButtonItem key="rightBarButtonItem" style="done" id="mL0-h1-lQ5">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="wcT-2L-ZhT" customClass="LXButtonBrown30">
@@ -802,6 +756,12 @@ Latteについて、「こんな機能があったら良い」、「この機能
         </class>
         <class className="LXButtonNormal" superclassName="UIButton">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonNormal.h"/>
+        </class>
+        <class className="LXFAQViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXFAQViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="viewWeb" candidateClass="UIWebView"/>
+            </relationships>
         </class>
         <class className="LXNavBar" superclassName="UINavigationBar">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavBar.h"/>
