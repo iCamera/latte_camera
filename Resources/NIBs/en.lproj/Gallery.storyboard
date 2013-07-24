@@ -603,6 +603,7 @@
                         <outlet property="buttonSend" destination="IGt-sZ-7Eg" id="FtK-x8-BZv"/>
                         <outlet property="growingComment" destination="gJw-LX-gFU" id="IM8-sh-PqY"/>
                         <outlet property="tableView" destination="2dA-O6-tna" id="OjB-Vk-c2J"/>
+                        <outlet property="viewFooter" destination="97n-FP-h8h" id="I6c-Rf-ffj"/>
                         <outlet property="viewHeader" destination="fVy-Ab-ZMG" id="uVL-xZ-Lsx"/>
                     </connections>
                 </viewController>
@@ -1081,6 +1082,7 @@
                 <relationship kind="outlet" name="buttonSend" candidateClass="LXButtonBrown30"/>
                 <relationship kind="outlet" name="growingComment" candidateClass="HPGrowingTextView"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="viewFooter" candidateClass="UIView"/>
                 <relationship kind="outlet" name="viewHeader" candidateClass="UIView"/>
             </relationships>
         </class>

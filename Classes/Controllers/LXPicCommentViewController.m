@@ -180,8 +180,8 @@
     if (comments.count > 0) {
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(comments.count-1) inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }
-    
     [activityLoad stopAnimating];
+    self.tableView.tableFooterView = nil;
 }
 
 - (BOOL)sendComment {
@@ -329,4 +329,8 @@
     return ([comment.user.userId integerValue] == [app.currentUser.userId integerValue]) || _picture.isOwner;
 }
 
+- (void)viewDidUnload {
+    [self setViewFooter:nil];
+    [super viewDidUnload];
+}
 @end

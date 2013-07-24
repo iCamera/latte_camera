@@ -21,5 +21,6 @@
 @property (strong, nonatomic) Picture *picture;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityLoad;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UIView *viewFooter;
 @property (strong, nonatomic) NSMutableArray *comments;
 @end

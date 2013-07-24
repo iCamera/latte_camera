@@ -520,6 +520,7 @@
     } else {
         NSString *urlDetail = [NSString stringWithFormat:@"picture/%d", [currentPage.picture.pictureId integerValue]];
         [viewPicTab.viewComment.activityLoad startAnimating];
+        viewPicTab.viewComment.tableView.tableFooterView = viewPicTab.viewComment.viewFooter;
         [[LatteAPIClient sharedClient] getPath:urlDetail
                                     parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                        success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
