@@ -67,7 +67,7 @@
     } else if ([key isEqualToString:@"created_at"]) {
         self.createdAt = [LXUtils dateFromJSON:value];
     } else if ([key isEqualToString:@"taken_at"]) {
-        self.takenAt = [LXUtils dateFromJSON:value];
+        self.takenAt = [LXUtils dateFromJSON:value timezone:NO];
     } else if ([key isEqualToString:@"tags"]) {
         if ([value isKindOfClass:[NSArray class]]) {
             self.tagsOld = [NSMutableArray arrayWithArray:value];

@@ -31,8 +31,10 @@ typedef enum {
 + (NSInteger)heightFromWidth:(CGFloat)newwidth width:(CGFloat)width height:(CGFloat)height;
 + (NSString *)timeDeltaFromNow:(NSDate *)aDate;
 + (NSDate *)dateFromJSON:(NSString *)aDate;
++ (NSDate *)dateFromJSON:(NSString *)aDate timezone:(BOOL)timezone;
 + (NSDictionary *)getGPSDictionaryForLocation:(CLLocation *)location;
 + (NSString *)dateToString:(NSDate*)aDate;
+
 + (NSString *)stringFromNotify:(NSDictionary *)notify;
 + (CGSize)newSizeOfPicture:(Picture *)picture withWidth:(CGFloat)width;
 + (Picture *)picFromPicID:(long)picID of:(NSArray *)feeds;

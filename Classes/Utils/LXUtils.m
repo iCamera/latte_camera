@@ -217,13 +217,19 @@
                                           timeStyle:NSDateFormatterShortStyle];
 }
 
-
 + (NSDate *)dateFromJSON:(NSString *)aDate {
+    return [LXUtils dateFromJSON:aDate timezone:YES];
+}
+
++ (NSDate *)dateFromJSON:(NSString *)aDate timezone:(BOOL)timezone {
     NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
     
-    NSTimeZone *gmt = [NSTimeZone timeZoneWithAbbreviation:@"JST"];
-    [dateFormatter setTimeZone:gmt];
+    if (timezone) {
+        NSTimeZone *gmt = [NSTimeZone timeZoneWithAbbreviation:@"JST"];
+        [dateFormatter setTimeZone:gmt];
+    }
+
     NSDate *date = [dateFormatter dateFromString:aDate];
     
     return date;

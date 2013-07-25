@@ -87,15 +87,19 @@
                                                    delegate:self
                                           cancelButtonTitle:NSLocalizedString(@"cancel", @"")
                                           otherButtonTitles:NSLocalizedString(@"report", @"report"), nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    UITextField *commentField = [alert textFieldAtIndex:0];
+    commentField.placeholder = NSLocalizedString(@"Message", @"");
     [alert show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
         NSString *path = [NSString stringWithFormat:@"user/report_abuse/%@/%d", @"picture", [_picture.pictureId integerValue]];
+        UITextField *commentField = [alertView textFieldAtIndex:0];
         
         [[LatteAPIClient sharedClient] postPath:path
-                                     parameters:nil
+                                     parameters:[NSDictionary dictionaryWithObject:commentField.text forKey:@"report_comment"]
                                         success:nil
                                         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                             NSLog(@"[HTTPClient Error]: %@", error.localizedDescription);
