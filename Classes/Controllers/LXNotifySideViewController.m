@@ -209,7 +209,7 @@
                                                    viewGallery.picture = [Picture instanceFromDictionary:[JSON objectForKey:@"picture"]];
                                                    
                                                    
-                                                   [self presentViewController:navGalerry animated:YES completion:^{
+                                                   [_parent presentViewController:navGalerry animated:YES completion:^{
                                                        viewGallery.currentTab = kGalleryTabComment;
                                                    }];
                                                    
@@ -236,7 +236,7 @@
             UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
             LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
             viewGallery.picture = pic;
-            [self presentViewController:navGalerry animated:YES completion:nil];
+            [_parent presentViewController:navGalerry animated:YES completion:nil];
             break;
         }
         case kNotifyTargetUser: {

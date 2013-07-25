@@ -203,7 +203,7 @@
 
 + (NSString *)timeDeltaFromNow:(NSDate*)aDate {
     NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
     [dateFormatter setLocale:[NSLocale currentLocale]];
     
@@ -221,7 +221,12 @@
 + (NSDate *)dateFromJSON:(NSString *)aDate {
     NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
-    return [dateFormatter dateFromString:aDate];
+    
+    NSTimeZone *gmt = [NSTimeZone timeZoneWithAbbreviation:@"JST"];
+    [dateFormatter setTimeZone:gmt];
+    NSDate *date = [dateFormatter dateFromString:aDate];
+    
+    return date;
 }
 
 + (NSDictionary *)getGPSDictionaryForLocation:(CLLocation *)location {
