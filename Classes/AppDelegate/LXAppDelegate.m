@@ -109,6 +109,8 @@
         [_viewMainTab showNotify];
     }
     
+    [self fetchPreset];
+    
     return YES;
 }
 
@@ -194,8 +196,6 @@
     [self clearNotification];
 
     [[NSNotificationCenter defaultCenter] postNotificationName:@"BecomeActive" object:self];
-    
-    [self fetchPreset];
 }
 
 - (void)clearNotification {

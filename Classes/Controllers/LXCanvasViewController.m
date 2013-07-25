@@ -346,8 +346,6 @@
     buttonSavePreset.hidden = NO;
 #endif
     scrollDetail.contentSize = CGSizeMake(320, 180);
-    
-    self.modalPresentationStyle = UIModalPresentationCurrentContext;
 }
 
 - (void)addBlendButton:(UIScrollView*)scroll target:(SEL)target {
@@ -572,9 +570,17 @@
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
             
-            imageFinalThumb = [self getFinalThumb];
-            imageFinalData = [self getFinalImage];
-            [self saveImageToLib:imageFinalData];
+            if (buttonReset.enabled) {
+                imageFinalThumb = [self getFinalThumb];
+                imageFinalData = [self getFinalImage];
+                [self saveImageToLib:imageFinalData];
+            } else {
+                NSData *jpeg = UIImageJPEGRepresentation(_imageOriginal, 0.9);
+                imageFinalThumb = _imageOriginalPreview;
+                imageFinalData = [self mergeMetaIntoData:jpeg];
+                [HUD hide:YES];
+            }
+            
             
             [[UIApplication sharedApplication] endIgnoringInteractionEvents];
             [self processSavedData];
@@ -667,7 +673,6 @@
 }
 
 - (NSData*)getFinalImage {
-    NSData* ret;
 //    NSDictionary *state = [self getState];
     // Prepare meta data
     if (imageMeta == nil) {
@@ -708,6 +713,11 @@
     
     //[filterMain setValuesForKeysWithDictionary:state];
     
+    return [self mergeMetaIntoData:jpeg];
+}
+
+- (NSData*)mergeMetaIntoData:(NSData*)jpeg {
+    NSData* ret;
     // Write EXIF to NSData
     CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)jpeg, NULL);
     
@@ -976,7 +986,6 @@
     buttonReset.hidden = false;
     currentTab = kTabEffect;
     
-    buttonReset.enabled = false;
     blendIndicator.hidden = true;
     filmIndicator.hidden = true;
     
@@ -988,6 +997,8 @@
     [self applyFilterSetting];
     
     [self processImage];
+    
+    buttonReset.enabled = false;
 }
 
 - (void)initPreviewPic {
