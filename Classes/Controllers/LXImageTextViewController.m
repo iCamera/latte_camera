@@ -448,7 +448,7 @@ typedef enum {
     buttonFinishEdit.hidden = NO;
     buttonRotate.hidden = NO;
     
-    buttonShadow.selected = editingObject.layer.shadowOpacity == 1.0;
+    buttonShadow.selected = editingObject.layer.shadowOpacity > 0;
     
     for (UIView* viewSub in activeTemplate.subviews) {
         for (UIGestureRecognizer* gesture in viewSub.gestureRecognizers) {
@@ -688,7 +688,7 @@ typedef enum {
     editingObject.layer.shadowColor = [UIColor blackColor].CGColor;
     editingObject.layer.shadowOffset = CGSizeZero;
     editingObject.layer.shadowRadius = 2;
-    editingObject.layer.shadowOpacity = !editingObject.layer.shadowOpacity;
+    editingObject.layer.shadowOpacity = editingObject.layer.shadowOpacity?0:0.5;
     buttonShadow.selected = !buttonShadow.selected;
 }
 

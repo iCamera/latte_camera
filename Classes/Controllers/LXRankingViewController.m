@@ -65,7 +65,7 @@ typedef enum {
                                                  name:@"BecomeActive" object:nil];
     
     loadEnded = FALSE;
-    ranktype = @"daily";
+    ranktype = @"trend";
     rankpage = 1;
     
     
@@ -277,19 +277,19 @@ typedef enum {
         }
             break;
         case 2: {
-            ranktype = @"daily";
+            ranktype = @"trend";
             rankpage = 1;
             [self loadRanking];
         }
             break;
         case 3: {
-            ranktype = @"weekly";
+            ranktype = @"daily";
             rankpage = 1;
             [self loadRanking];
         }
             break;
         case 4: {
-            ranktype = @"monthly";
+            ranktype = @"weekly";
             rankpage = 1;
             [self loadRanking];
         }

@@ -61,7 +61,7 @@
                                 <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="mt2-aX-3UQ">
                                     <rect key="frame" x="161" y="0.0" width="77" height="42"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                    <state key="normal" title="Weekly" backgroundImage="menu4_3_off.png">
+                                    <state key="normal" title="Daily" backgroundImage="menu4_3_off.png">
                                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <state key="selected" backgroundImage="menu4_3.png">
@@ -77,10 +77,10 @@
                                 <button opaque="NO" tag="2" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="0RE-kC-asB">
                                     <rect key="frame" x="85" y="0.0" width="77" height="42"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                    <state key="normal" title="Daily" backgroundImage="menu4_2_off.png">
+                                    <state key="normal" image="icon_trend_off.png" backgroundImage="menu4_2_off.png">
                                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
-                                    <state key="selected" backgroundImage="menu4_2.png">
+                                    <state key="selected" image="icon_trend.png" backgroundImage="menu4_2.png">
                                         <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                     </state>
                                     <state key="highlighted" backgroundImage="menu3_2.png">
@@ -94,7 +94,7 @@
                                     <rect key="frame" x="237" y="0.0" width="83" height="42"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                     <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="5" maxY="0.0"/>
-                                    <state key="normal" title="Monthly" backgroundImage="menu4_4_off.png">
+                                    <state key="normal" title="Weekly" backgroundImage="menu4_4_off.png">
                                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <state key="selected" backgroundImage="menu4_4.png">
@@ -2375,8 +2375,8 @@
                                     <action selector="switchTab:" destination="G7c-9N-bed" eventType="touchUpInside" id="Cke-hd-fGr"/>
                                 </connections>
                             </button>
-                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="20" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="4" id="9pY-Jc-eei">
-                                <rect key="frame" x="256" y="87" width="16" height="16"/>
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="4" id="9pY-Jc-eei">
+                                <rect key="frame" x="261" y="90" width="16" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.035351606610000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="9"/>
@@ -2769,6 +2769,8 @@
         <image name="icon_search_l.png" width="20" height="20"/>
         <image name="icon_setting.png" width="15" height="16"/>
         <image name="icon_tag_m.png" width="16" height="16"/>
+        <image name="icon_trend.png" width="13" height="15"/>
+        <image name="icon_trend_off.png" width="13" height="15"/>
         <image name="menu3_2.png" width="104" height="42"/>
         <image name="menu3_3.png" width="108" height="42"/>
         <image name="menu4_1.png" width="83" height="42"/>
