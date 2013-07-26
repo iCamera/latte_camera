@@ -184,6 +184,7 @@
     } else if (indexPath.section == 4) {
         LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
         
+        [[FBSession activeSession] closeAndClearTokenInformation];
         [[LatteAPIClient sharedClient] postPath:@"user/logout"
                                      parameters:[NSDictionary dictionaryWithObjectsAndKeys:
                                                  [app getToken], @"token", nil]

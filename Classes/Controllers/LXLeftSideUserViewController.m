@@ -10,6 +10,7 @@
 #import "LXAppDelegate.h"
 #import "UIImageView+loadProgress.h"
 #import "UIButton+AsyncImage.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface LXLeftSideUserViewController ()
 
@@ -136,6 +137,8 @@
             break;
         }
         case 5: {
+            [[FBSession activeSession] closeAndClearTokenInformation];
+            
             LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
             
             [[LatteAPIClient sharedClient] postPath:@"user/logout"

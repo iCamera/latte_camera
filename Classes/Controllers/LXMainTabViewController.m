@@ -238,6 +238,16 @@
     viewNotify.view.hidden = false;
     [viewNotify switchTab:viewNotify.buttonNotifyAll];
     
+    [[LatteAPIClient sharedClient] getPath:@"user/me/unread_announcement"
+                                parameters: nil
+                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       viewNotify.notifyCount = [[JSON objectForKey:@"announcement_count"] integerValue];
+                                   }
+                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       DLog(@"Something went wrong (Announcement count)");
+                                   }];
+
+    
     [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
         viewNotify.view.alpha = 1;
     }];

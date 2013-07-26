@@ -44,6 +44,7 @@
 @synthesize buttonNotifyFollow;
 @synthesize buttonNotifyLike;
 @synthesize webAnnounce;
+@synthesize labelCount;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -80,6 +81,9 @@
 
     limit = 30;
     currentTab = 0;
+    
+    labelCount.layer.cornerRadius = 5.0;
+    labelCount.layer.masksToBounds = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -326,6 +330,7 @@
     [self setButtonNotifyFollow:nil];
     [self setButtonAnnounce:nil];
     [self setWebAnnounce:nil];
+    [self setLabelCount:nil];
     [super viewDidUnload];
 }
 
@@ -356,6 +361,7 @@
     if (sender == buttonAnnounce) {
         webAnnounce.hidden = NO;
         tableNotify.hidden = YES;
+        self.notifyCount = 0;
         [webAnnounce loadRequest:[[LatteAPIClient sharedClient] requestWithMethod:@"GET" path:@"user/announce" parameters:nil]];
     } else {
         webAnnounce.hidden = YES;
@@ -369,6 +375,11 @@
     UIStoryboard *storySetting = [UIStoryboard storyboardWithName:@"Setting" bundle:nil];
     UIViewController* controlerNotify = [storySetting instantiateViewControllerWithIdentifier:@"Notification"];
     [_parent presentViewController:controlerNotify animated:YES completion:nil];
+}
+
+- (void)setNotifyCount:(NSInteger)notifyCount {
+    labelCount.hidden = notifyCount == 0;
+    labelCount.text = [NSString stringWithFormat:@"%d", notifyCount];
 }
 
 @end

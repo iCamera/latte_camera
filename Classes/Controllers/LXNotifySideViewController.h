@@ -24,8 +24,12 @@
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityLoad;
 @property (strong, nonatomic) IBOutlet UIWebView *webAnnounce;
 @property (weak, nonatomic) LXMainTabViewController *parent;
+@property (strong, nonatomic) IBOutlet UILabel *labelCount;
+@property (assign, nonatomic) NSInteger notifyCount;
+
 - (IBAction)touchBackground:(id)sender;
 - (IBAction)switchTab:(UIButton *)sender;
 - (IBAction)touchSetting:(id)sender;
+
 
 @end

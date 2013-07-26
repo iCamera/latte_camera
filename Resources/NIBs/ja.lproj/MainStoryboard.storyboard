@@ -2377,6 +2377,14 @@
                                     <action selector="switchTab:" destination="G7c-9N-bed" eventType="touchUpInside" id="Cke-hd-fGr"/>
                                 </connections>
                             </button>
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="20" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="4" id="9pY-Jc-eei">
+                                <rect key="frame" x="256" y="87" width="16" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.035351606610000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="9"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="0.25" colorSpace="deviceRGB"/>
                         <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
@@ -2390,6 +2398,7 @@
                         <outlet property="buttonNotifyComment" destination="F3i-1E-zk2" id="qON-iV-uGN"/>
                         <outlet property="buttonNotifyFollow" destination="cNT-Eu-t3f" id="A2A-uG-kU2"/>
                         <outlet property="buttonNotifyLike" destination="Opz-OC-YcY" id="mn2-rd-BNp"/>
+                        <outlet property="labelCount" destination="9pY-Jc-eei" id="JTA-yl-Y2s"/>
                         <outlet property="tableNotify" destination="3dW-kw-rWO" id="EOR-kh-kK5"/>
                         <outlet property="webAnnounce" destination="wht-Ot-tCn" id="kY2-J9-YCS"/>
                     </connections>
@@ -2992,6 +3001,7 @@
                 <relationship kind="outlet" name="buttonNotifyComment" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonNotifyFollow" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonNotifyLike" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="labelCount" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="tableNotify" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="webAnnounce" candidateClass="UIWebView"/>
             </relationships>
