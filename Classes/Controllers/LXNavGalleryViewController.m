@@ -8,6 +8,7 @@
 
 #import "LXNavGalleryViewController.h"
 #import "LXButtonBack.h"
+#import "MTStatusBarOverlay.h"
 
 @interface LXNavGalleryViewController ()
 
@@ -54,6 +55,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:animated];
+//    MTStatusBarOverlay *overlay = [MTStatusBarOverlay sharedInstance];
+//    [overlay hideTemporary];
     [super viewWillAppear:animated];
 }
 

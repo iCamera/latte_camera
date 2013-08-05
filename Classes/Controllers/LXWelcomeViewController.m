@@ -28,6 +28,7 @@ typedef enum {
     NSMutableArray *feeds;
     BOOL loadEnded;
     BOOL reloading;
+    NSString *area;
     EGORefreshTableHeaderView *refreshHeaderView;
     UIPanGestureRecognizer *navigationBarPanGestureRecognizer;
     WelcomeTableMode tableMode;
@@ -40,6 +41,8 @@ typedef enum {
 @synthesize viewBack;
 @synthesize viewLogin;
 @synthesize indicator;
+@synthesize buttonAreaLocal;
+@synthesize buttonAreaWorld;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -110,6 +113,20 @@ typedef enum {
     UIButton *buttonSide = (UIButton*)navLeftItem.customView;
     [buttonSide addTarget:app.controllerSide action:@selector(toggleLeftPanel:) forControlEvents:UIControlEventTouchUpInside];
     
+    area = [[NSUserDefaults standardUserDefaults] objectForKey:@"timeline_area"];
+    if (!area) {
+        area = @"world";
+    }
+    
+    if ([area isEqualToString:@"world"]) {
+        buttonAreaWorld.selected = YES;
+        buttonAreaLocal.selected = NO;
+    } else {
+        buttonAreaWorld.selected = NO;
+        buttonAreaLocal.selected = YES;
+    }
+    
+    
     [self reloadView];
 }
 
@@ -128,12 +145,11 @@ typedef enum {
     }
 
     [indicator startAnimating];
-    LXAppDelegate* app = [LXAppDelegate currentDelegate];
     
     Feed *feed = feeds.lastObject;
     
     NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
-    [param setObject:[app getToken] forKey:@"token"];
+    [param setObject:area forKey:@"area"];
     
     if (!reset) {
         if (feed) {
@@ -508,6 +524,26 @@ typedef enum {
     return tablePic;
 }
 
+- (IBAction)touchArea:(UIButton*)sender {
+    buttonAreaWorld.selected = NO;
+    buttonAreaLocal.selected = NO;
+    sender.selected = YES;
+    switch (sender.tag) {
+        case 0:
+            area = @"local";
+            break;
+        case 1:
+            area = @"world";
+            break;
+        default:
+            break;
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:area forKey:@"timeline_area"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [self loadMore:YES];
+}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -523,6 +559,8 @@ typedef enum {
     [self setViewBack:nil];
     [self setViewLogin:nil];
     [self setIndicator:nil];
+    [self setButtonAreaLocal:nil];
+    [self setButtonAreaWorld:nil];
     [super viewDidUnload];
 }
 @end

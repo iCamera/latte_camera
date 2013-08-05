@@ -69,13 +69,21 @@
         
         void (^successBlock)(AFHTTPRequestOperation *, NSDictionary *) = ^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
             [HUD hide:YES];
+            
             UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"register_sent_email", @"登録確認メールを送信しました。")
                                                             message:NSLocalizedString(@"register_click_the_link", @"メールに記載されたURLをクリックして、手続きを行ってください。") delegate:nil
                                                   cancelButtonTitle:NSLocalizedString(@"close", @"閉じる")
                                                   otherButtonTitles:nil];
             [alert show];
-            [self.navigationController popViewControllerAnimated:YES];
+
             
+            LXAppDelegate *app = [LXAppDelegate currentDelegate];
+            [app setToken:[JSON objectForKey:@"token"]];
+            app.currentUser = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
+            
+            [[NSNotificationCenter defaultCenter]
+             postNotificationName:@"LoggedIn"
+             object:self];
         };
         
         void (^failureBlock)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -89,7 +97,7 @@
             [alert show];
         };
         
-        [[LatteAPIClient sharedClient] postPath:@"user/register"
+        [[LatteAPIClient sharedClient] postPath:@"user/register2"
                                      parameters:params
                                         success:successBlock
                                         failure:failureBlock];

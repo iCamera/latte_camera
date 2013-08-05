@@ -130,6 +130,10 @@
         [self setValue:value forKey:@"_pictureAutoFacebookUpload"];
     } else if ([key isEqualToString:@"picture_auto_tweet"]) {
         [self setValue:value forKey:@"_pictureAutoTweet"];
+    } else if ([key isEqualToString:@"verified"]) {
+        [self setValue:value forKey:@"_verified"];
+    } else if ([key isEqualToString:@"mail"]) {
+        [self setValue:value forKey:@"_mail"];
     }
     
     else {

@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MTStatusBarOverlay.h"
 
 #define kAnimationDuration .3
 
-@interface LXMainTabViewController : UITabBarController<UINavigationControllerDelegate>
+@interface LXMainTabViewController : UITabBarController<UINavigationControllerDelegate, MTStatusBarOverlayDelegate>
 
 @property (strong, nonatomic) NSMutableArray *notifies;
 

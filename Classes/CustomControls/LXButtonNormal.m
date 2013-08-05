@@ -40,9 +40,9 @@
     // Drawing code
     UIImage *imageOrg;
     if (self.state == UIControlStateNormal)
-        imageOrg = [UIImage imageNamed:@"bg_bt2.png"];
+        imageOrg = [UIImage imageNamed:@"bt_normal.png"];
     else
-        imageOrg = [UIImage imageNamed:@"bg_bt2_on.png"];
+        imageOrg = [UIImage imageNamed:@"bt_normal_on.png"];
     
     CGRect cropLeft = CGRectMake(0, 0, (rect.size.width-5)*imageOrg.scale, imageOrg.size.height*imageOrg.scale);
     CGImageRef imageRefLeft = CGImageCreateWithImageInRect([imageOrg CGImage], cropLeft);

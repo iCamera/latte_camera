@@ -27,7 +27,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="gmF-a8-Ouk" customClass="LXButtonOrange">
-                                <rect key="frame" x="85" y="226" width="150" height="40"/>
+                                <rect key="frame" x="85" y="226" width="150" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="16"/>
                                 <state key="normal" title="ĐĂNG KÍ">
@@ -42,7 +42,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="SuX-qX-ZSg" customClass="LXButtonNormal">
-                                <rect key="frame" x="85" y="140" width="150" height="40"/>
+                                <rect key="frame" x="85" y="140" width="150" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="16"/>
                                 <state key="normal" title="ĐĂNG NHẬP">
@@ -101,7 +101,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="wdy-hk-pci">
-                                <rect key="frame" x="85" y="281" width="150" height="40"/>
+                                <rect key="frame" x="85" y="281" width="150" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="16"/>
                                 <inset key="contentEdgeInsets" minX="40" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -294,13 +294,53 @@
     </scenes>
     <resources>
         <image name="bg_input_back.png" width="320" height="170"/>
-        <image name="bt_facebook2.png" width="150" height="40"/>
-        <image name="bt_facebook2_on.png" width="150" height="40"/>
+        <image name="bt_facebook2.png" width="150" height="35"/>
+        <image name="bt_facebook2_on.png" width="150" height="35"/>
         <image name="bt_twitter2.png" width="150" height="40"/>
         <image name="bt_twitter2_on.png" width="150" height="40"/>
         <image name="hicon_menu.png" width="20" height="17"/>
         <image name="icon_login.png" width="13" height="16"/>
     </resources>
+    <classes>
+        <class className="LXButtonNormal" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonNormal.h"/>
+        </class>
+        <class className="LXButtonOrange" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonOrange.h"/>
+        </class>
+        <class className="LXLoginViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXLoginViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="login:"/>
+                <relationship kind="action" name="singleTap:"/>
+                <relationship kind="action" name="touchFacebook:"/>
+                <relationship kind="action" name="touchForgot:"/>
+                <relationship kind="action" name="touchTwitter:"/>
+                <relationship kind="outlet" name="tapView" candidateClass="UITapGestureRecognizer"/>
+                <relationship kind="outlet" name="textPass" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="textUser" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="LXNavBar" superclassName="UINavigationBar">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavBar.h"/>
+        </class>
+        <class className="LXNavigationController" superclassName="UINavigationController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavigationController.h"/>
+        </class>
+        <class className="LXRegisterViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXRegisterViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="touchPolicy:"/>
+                <relationship kind="action" name="touchReg:"/>
+                <relationship kind="outlet" name="textMail" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="textName" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="textPassword" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="LXTextField" superclassName="UITextField">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXTextField.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

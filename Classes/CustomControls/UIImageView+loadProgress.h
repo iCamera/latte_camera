@@ -10,4 +10,5 @@
 
 @interface UIImageView (loadProgress)
 - (void)loadProgess:(NSString *)url;
+- (void)loadProgess:(NSString *)url placeholderImage:(UIImage*)placeholder;
 @end

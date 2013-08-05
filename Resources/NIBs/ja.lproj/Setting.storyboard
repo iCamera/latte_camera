@@ -108,6 +108,9 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <connections>
+                                            <segue destination="OKq-80-TQ2" kind="push" id="Sla-bR-V6e"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="JNL-iD-KgT">
                                         <rect key="frame" x="0.0" y="209" width="320" height="44"/>
@@ -376,12 +379,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qJD-1q-bOK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1290" y="-285"/>
+            <point key="canvasLocation" x="-888" y="-1507"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="2UR-51-eWh">
             <objects>
-                <viewController id="Dyz-N0-aFo" customClass="LXFAQViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WebFAQ" id="Dyz-N0-aFo" customClass="LXFAQViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ElV-56-4T2">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -402,7 +405,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g6H-xe-xgQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-192" y="-323"/>
+            <point key="canvasLocation" x="-882" y="-255"/>
         </scene>
         <!--About View Controller - 機能要望・ご意見-->
         <scene sceneID="e7i-I8-8V7">
@@ -501,7 +504,7 @@ Latteについて、「こんな機能があったら良い」、「この機能
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EnL-NQ-J0o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-192" y="-1626"/>
+            <point key="canvasLocation" x="-1304" y="-249"/>
         </scene>
         <!--Setting Notify View Controller-->
         <scene sceneID="fZN-Av-uTo">
@@ -727,7 +730,323 @@ Latteについて、「こんな機能があったら良い」、「この機能
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qv4-ds-8Lu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-192" y="-912"/>
+            <point key="canvasLocation" x="-312" y="-912"/>
+        </scene>
+        <!--Setting Account Controller-->
+        <scene sceneID="SLa-f5-3PL">
+            <objects>
+                <tableViewController storyboardIdentifier="" id="OKq-80-TQ2" customClass="LXSettingAccountController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="KjL-ht-CC0">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="TIg-NB-PjS">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="37"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="box_acount.png" id="lUO-Ov-Jye">
+                                    <rect key="frame" x="15" y="15" width="22" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </imageView>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="アカウント" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Unt-vF-DXO">
+                                    <rect key="frame" x="45" y="15" width="205" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                    <color key="textColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </view>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="GK2-Np-XOX">
+                            <rect key="frame" x="0.0" y="146" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </view>
+                        <sections>
+                            <tableViewSection id="qLQ-Zb-oDJ">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="1bl-QM-6EB">
+                                        <rect key="frame" x="0.0" y="47" width="320" height="45"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="メールアドレス" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EaQ-MW-r35">
+                                                    <rect key="frame" x="12" y="11" width="135" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="sample@mail.com" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CMs-Oh-Uxh">
+                                                    <rect key="frame" x="132" y="11" width="158" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Q6T-2v-lgv">
+                                        <rect key="frame" x="0.0" y="92" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="パスワード" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mzs-tz-dJM">
+                                                    <rect key="frame" x="12" y="11" width="212" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="●●●●●●●●●" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2ap-tt-TE7">
+                                                    <rect key="frame" x="145" y="11" width="147" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="OKq-80-TQ2" id="dfe-1Z-iUP"/>
+                            <outlet property="delegate" destination="OKq-80-TQ2" id="X9m-rf-Fnz"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="PKu-FM-XLE"/>
+                    <connections>
+                        <outlet property="textEmail" destination="CMs-Oh-Uxh" id="dJZ-l1-Rhu"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nnA-y2-APT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-312" y="-255"/>
+        </scene>
+        <!--Change Password View Controller-->
+        <scene sceneID="xVq-3g-EII">
+            <objects>
+                <viewController storyboardIdentifier="ChangePassword" id="H3I-MU-f1X" customClass="LXChangePasswordViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Eaq-Dm-uCt">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="fsQ-nt-6dc">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" id="Vvv-0u-arx">
+                                        <rect key="frame" x="6" y="101" width="308" height="187"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bt_input.png" id="Ul0-Ne-6sh">
+                                                <rect key="frame" x="54" y="39" width="200" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bt_input.png" id="jwc-Jy-LGM">
+                                                <rect key="frame" x="55" y="69" width="200" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bt_input.png" id="kHc-XC-NHJ">
+                                                <rect key="frame" x="55" y="99" width="200" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="現在のパスワード" minimumFontSize="17" id="MlO-bw-GJB">
+                                                <rect key="frame" x="62" y="39" width="189" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                            </textField>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="新しいパスワード" minimumFontSize="17" id="owN-3r-Gtf">
+                                                <rect key="frame" x="62" y="69" width="189" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                            </textField>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="新しいパスワード（確認用）" minimumFontSize="17" id="ViL-LB-sRN">
+                                                <rect key="frame" x="62" y="99" width="189" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                            </textField>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="パスワードの設定" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rBB-YA-uBg">
+                                                <rect key="frame" x="65" y="9" width="181" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="20"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="dkJ-Cm-2tQ" customClass="LXButtonOrange">
+                                                <rect key="frame" x="79" y="138" width="150" height="35"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="16"/>
+                                                <state key="normal" title="変更を保存する">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="highlighted">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="touchChange:" destination="H3I-MU-f1X" eventType="touchUpInside" id="DCJ-N8-23o"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="qMy-OM-XLD">
+                                                <rect key="frame" x="264" y="0.0" width="41" height="38"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" image="icon_escape.png">
+                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="highlighted">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="tapBackground:" destination="H3I-MU-f1X" eventType="touchUpInside" id="kHa-Ve-TO2"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.97999999999999998" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="OU0-AT-mv3" appends="YES" id="GwU-kE-fPf"/>
+                                </connections>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="textConfirmPassword" destination="ViL-LB-sRN" id="139-aY-zsz"/>
+                        <outlet property="textCurrentPassword" destination="MlO-bw-GJB" id="gRo-q1-J6u"/>
+                        <outlet property="textNewPassword" destination="owN-3r-Gtf" id="yFP-VN-ALq"/>
+                        <outlet property="viewSub" destination="Vvv-0u-arx" id="Hjy-cO-O61"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oqR-zt-btS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="OU0-AT-mv3">
+                    <connections>
+                        <action selector="tapBackground:" destination="H3I-MU-f1X" id="YeC-Sy-jh8"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="184" y="-255"/>
+        </scene>
+        <!--Change Email View Controller-->
+        <scene sceneID="qtd-6G-haa">
+            <objects>
+                <viewController storyboardIdentifier="ChangeEmail" id="IZY-wv-2hl" customClass="LXChangeEmailViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="eXD-lV-wc9">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="VJR-dM-KXP">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" id="0ui-gZ-Mds">
+                                        <rect key="frame" x="6" y="114" width="308" height="150"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bt_input.png" id="jvq-qM-Hnp">
+                                                <rect key="frame" x="54" y="39" width="200" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bt_input.png" id="afe-H3-NNN">
+                                                <rect key="frame" x="55" y="69" width="200" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="現在のパスワード" minimumFontSize="17" id="DgN-2L-ldg">
+                                                <rect key="frame" x="62" y="39" width="189" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                            </textField>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="新しいメールアドレス" minimumFontSize="17" id="1yC-Qr-b9P">
+                                                <rect key="frame" x="62" y="69" width="189" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="メールアドレスの変更" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Kcc-Gg-yUO">
+                                                <rect key="frame" x="65" y="9" width="181" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="20"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="yod-2u-jk2" customClass="LXButtonOrange">
+                                                <rect key="frame" x="79" y="103" width="150" height="35"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="16"/>
+                                                <state key="normal" title="変更を保存する">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="highlighted">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="touchChange:" destination="IZY-wv-2hl" eventType="touchUpInside" id="77J-ba-fx8"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="8nW-dX-ILa">
+                                                <rect key="frame" x="264" y="0.0" width="41" height="38"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" image="icon_escape.png">
+                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="highlighted">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="tapBackground:" destination="IZY-wv-2hl" eventType="touchUpInside" id="6LL-8d-Bz1"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.97999999999999998" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="4z0-tq-gGf" appends="YES" id="0yk-rC-lh5"/>
+                                </connections>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="textMail" destination="1yC-Qr-b9P" id="PKl-Ia-OqD"/>
+                        <outlet property="textPassword" destination="DgN-2L-ldg" id="RGo-VQ-Oi8"/>
+                        <outlet property="viewSub" destination="0ui-gZ-Mds" id="MCD-cb-iUi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SY5-lx-orX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="4z0-tq-gGf">
+                    <connections>
+                        <action selector="tapBackground:" destination="IZY-wv-2hl" id="MAO-Np-ka9"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="184" y="338"/>
         </scene>
     </scenes>
     <resources>
@@ -736,6 +1055,8 @@ Latteについて、「こんな機能があったら良い」、「この機能
         <image name="box_notice.png" width="22" height="22"/>
         <image name="box_praivacy.png" width="22" height="22"/>
         <image name="box_profile.png" width="22" height="22"/>
+        <image name="bt_input.png" width="320" height="45"/>
+        <image name="icon_escape.png" width="15" height="15"/>
         <image name="icon_iphone_l.jpg" width="12" height="22"/>
         <image name="icon_iphone_l_off.jpg" width="12" height="22"/>
         <image name="icon_mail_l.jpg" width="22" height="16"/>
@@ -757,6 +1078,30 @@ Latteについて、「こんな機能があったら良い」、「この機能
         <class className="LXButtonNormal" superclassName="UIButton">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonNormal.h"/>
         </class>
+        <class className="LXButtonOrange" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXButtonOrange.h"/>
+        </class>
+        <class className="LXChangeEmailViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXChangeEmailViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="tapBackground:"/>
+                <relationship kind="action" name="touchChange:"/>
+                <relationship kind="outlet" name="textMail" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="textPassword" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="viewSub" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXChangePasswordViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXChangePasswordViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="tapBackground:"/>
+                <relationship kind="action" name="touchChange:"/>
+                <relationship kind="outlet" name="textConfirmPassword" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="textCurrentPassword" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="textNewPassword" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="viewSub" candidateClass="UIView"/>
+            </relationships>
+        </class>
         <class className="LXFAQViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXFAQViewController.h"/>
             <relationships>
@@ -768,6 +1113,12 @@ Latteについて、「こんな機能があったら良い」、「この機能
         </class>
         <class className="LXNavigationController" superclassName="UINavigationController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavigationController.h"/>
+        </class>
+        <class className="LXSettingAccountController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXSettingAccountController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="textEmail" candidateClass="UILabel"/>
+            </relationships>
         </class>
         <class className="LXSettingNotifyViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXSettingNotifyViewController.h"/>

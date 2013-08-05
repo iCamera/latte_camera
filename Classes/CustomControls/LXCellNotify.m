@@ -7,7 +7,6 @@
 //
 
 #import "LXCellNotify.h"
-#import "UIImageView+AFNetworking.h"
 #import "UIImageView+loadProgress.h"
 
 @implementation LXCellNotify
@@ -52,19 +51,19 @@
         switch (notifyTarget) {
             case kNotifyTargetPicture: {
                 Picture *pic = [Picture instanceFromDictionary:target];
-                [viewImage setImageWithURL:[NSURL URLWithString:pic.urlSquare]];
+                [viewImage loadProgess:pic.urlSquare];
                 break;
             }
             case kNotifyTargetUser: {
                 User *user = [User instanceFromDictionary:target];
-                [viewImage setImageWithURL:[NSURL URLWithString:user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
+                [viewImage loadProgess:user.profilePicture placeholderImage:[UIImage imageNamed:@"user.gif"]];
                 break;
             }
             case kNotifyTargetComment: {
                 NSMutableArray *users = [User mutableArrayFromDictionary:notify withKey:@"users"];
                 for (User *user in users) {
                     if (user.name != nil) {
-                        [viewImage setImageWithURL:[NSURL URLWithString:user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
+                        [viewImage loadProgess:user.profilePicture placeholderImage:[UIImage imageNamed:@"user.gif"]];
                     }
                 }
             }

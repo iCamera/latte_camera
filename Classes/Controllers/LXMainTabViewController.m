@@ -20,6 +20,7 @@
 #import "LXUploadStatusViewController.h"
 #import "LXUploadObject.h"
 #import "MBProgressHUD.h"
+#import "LXTableConfirmEmailController.h"
 
 @interface LXMainTabViewController ()
 
@@ -73,6 +74,14 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadStart:) name:@"LXUploaderStart" object:nil];
     
     isFirst = true;
+    
+    MTStatusBarOverlay *overlay = [MTStatusBarOverlay sharedInstance];
+    overlay.animation = MTStatusBarOverlayAnimationFallDown;  // MTStatusBarOverlayAnimationShrink
+    overlay.detailView = nil;
+    //overlay.backgroundView.backgroundColor = [UIColor redColor];
+    overlay.defaultStatusBarImage = [UIImage imageNamed:@"bg_interim.png"];
+    overlay.delegate = self;
+
     return self;
 }
 
@@ -267,7 +276,16 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
+    MTStatusBarOverlay *overlay = [MTStatusBarOverlay sharedInstance];
+    [overlay show];
     [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    MTStatusBarOverlay *overlay = [MTStatusBarOverlay sharedInstance];
+    [overlay hideTemporary];
+    
+    [super viewWillDisappear:animated];
 }
 
 - (void)showSetting:(id)sender {
@@ -390,6 +408,13 @@
             viewUpload.view.hidden = true;
         }];
     }
+}
+
+- (void)statusBarOverlayDidRecognizeGesture:(UIGestureRecognizer *)gestureRecognizer {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    UINavigationController *viewConfirm = [mainStoryboard instantiateViewControllerWithIdentifier:@"NavConfirmEmail"];
+    [self presentViewController:viewConfirm animated:YES completion:nil];
 }
 
 

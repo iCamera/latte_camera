@@ -11,10 +11,10 @@
 #import "LatteAPIClient.h"
 #import "ZipArchive.h"
 #import "TestFlight.h"
+#import "MTStatusBarOverlay.h"
 
 @implementation LXAppDelegate
 
-@synthesize currentUser;
 @synthesize window;
 @synthesize tracker;
 
@@ -53,15 +53,16 @@
 - (void)checkTokenValidity {
     //FIX ME
     [[LatteAPIClient sharedClient] getPath:@"user/me"
-                                parameters:[NSDictionary dictionaryWithObjectsAndKeys:
-                                            [self getToken], @"token", nil]
+                                parameters:nil
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        if ([[JSON objectForKey:@"status"] integerValue] == 1) {
-                                           currentUser = [User instanceFromDictionary:[JSON objectForKey:@"user"]];                                           
+                                           self.currentUser = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
                                            
                                            [[NSNotificationCenter defaultCenter]
                                             postNotificationName:@"LoggedIn"
                                             object:self];
+                                       } else {
+                                           
                                        }
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        DLog(@"Something went wrong (Login check)");
@@ -170,6 +171,21 @@
     [operation start];
 }
 
+- (void)setCurrentUser:(User *)currentUser {
+    _currentUser = currentUser;
+    MTStatusBarOverlay *overlay = [MTStatusBarOverlay sharedInstance];
+    
+    if (currentUser) {
+        if (!_currentUser.verified) {
+            [overlay postImmediateErrorMessage:@"Your registration has not yet been completed" duration:9999 animated:YES];
+        } else {
+            [overlay hide];
+        }
+    } else {
+        [overlay hide];
+    }
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -196,6 +212,16 @@
     [self clearNotification];
 
     [[NSNotificationCenter defaultCenter] postNotificationName:@"BecomeActive" object:self];
+    
+    if (_currentUser && !_currentUser.verified) {
+        [[LatteAPIClient sharedClient] getPath:@"user/me"
+                                    parameters:nil
+                                       success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                           self.currentUser = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
+                                       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                           DLog(@"Something went wrong (Login check)");
+                                       }];
+    }
 }
 
 - (void)clearNotification {

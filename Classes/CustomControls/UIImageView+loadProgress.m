@@ -11,6 +11,10 @@
 
 @implementation UIImageView (loadProgress)
 - (void)loadProgess:(NSString *)url {
-    [self setImageWithURL:[NSURL URLWithString:url] placeholderImage:[[UIImage alloc] init] options:SDWebImageProgressiveDownload];
+    [self loadProgess:url placeholderImage:nil];
+}
+
+- (void)loadProgess:(NSString *)url placeholderImage:(UIImage*)placeholder {
+    [self setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeholder options:SDWebImageProgressiveDownload];
 }
 @end

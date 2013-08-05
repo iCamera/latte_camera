@@ -46,7 +46,11 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
     labelUsername.text = app.currentUser.name;
-    [imageProfilepic loadProgess:app.currentUser.profilePicture];
+    
+    if (app.currentUser.profilePicture) {
+        [imageProfilepic loadProgess:app.currentUser.profilePicture];
+    }
+    
     imageProfilepic.layer.cornerRadius = 5.0;
     imageProfilepic.layer.masksToBounds = YES;
     

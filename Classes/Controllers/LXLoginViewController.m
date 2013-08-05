@@ -99,7 +99,11 @@
 }
 
 - (IBAction)touchForgot:(id)sender {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/user/reset_password"]];
+    NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
+    if ([language isEqualToString:@"ja"])
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/user/reset_password"]];
+    else
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://en.latte.la/user/reset_password"]];
 }
 
 - (IBAction)touchFacebook:(id)sender {
@@ -136,6 +140,7 @@
                                               break;
                                           case FBSessionStateClosed:
                                           case FBSessionStateClosedLoginFailed:
+                                              [HUD hide:YES];
                                               [FBSession.activeSession closeAndClearTokenInformation];
                                               [FBSession renewSystemCredentials:^(ACAccountCredentialRenewResult result, NSError *error) {}];
                                               break;
@@ -202,7 +207,6 @@
                                        success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                            if ([[JSON objectForKey:@"status"] integerValue] == 1) {
                                                app.currentUser = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
-                                               
                                                
                                                [self.navigationController popViewControllerAnimated:YES];
                                                [self.navigationController dismissViewControllerAnimated:YES completion:nil];

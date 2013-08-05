@@ -84,6 +84,7 @@
 @property (nonatomic, copy) NSString *profilePicture;
 @property (nonatomic, copy) NSString *profilePictureHi;
 @property (nonatomic, copy) NSString *nationality;
+@property (nonatomic, copy) NSString *mail;
 @property (nonatomic, copy) NSNumber *voteCount;
 @property (nonatomic, copy) NSNumber *pageViews;
 
@@ -99,6 +100,7 @@
 @property (nonatomic, assign) BOOL pictureAutoFacebookUpload;
 @property (nonatomic, assign) BOOL pictureAutoTweet;
 
+@property (nonatomic, assign) BOOL verified;
 
 @property (nonatomic, strong) UserMailAccept *mailAccepts;
 @property (nonatomic, strong) UserPushAccept *notifyAccepts;

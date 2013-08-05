@@ -39,9 +39,9 @@
     // Drawing code
     UIImage *imageOrg;
     if (self.state == UIControlStateNormal)
-        imageOrg = [UIImage imageNamed:@"bg_bt3.png"];
+        imageOrg = [UIImage imageNamed:@"bg_bt3new.png"];
     else
-        imageOrg = [UIImage imageNamed:@"bg_bt3_on.png"];
+        imageOrg = [UIImage imageNamed:@"bg_bt3new_on.png"];
     
     CGRect cropLeft = CGRectMake(0, 0, (rect.size.width-5)*imageOrg.scale, imageOrg.size.height*imageOrg.scale);
     CGImageRef imageRefLeft = CGImageCreateWithImageInRect([imageOrg CGImage], cropLeft);

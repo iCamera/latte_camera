@@ -97,7 +97,7 @@
                                         [alert show];
                                         DLog(@"Something went wrong (Vote)");
                                     }];
-    
+        
     //Animation
     sender.imageView.transform = CGAffineTransformIdentity;
 

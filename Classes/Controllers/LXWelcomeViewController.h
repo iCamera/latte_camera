@@ -27,12 +27,15 @@
 @property (strong, nonatomic) IBOutlet UIView *viewBack;
 @property (strong, nonatomic) IBOutlet UIView *viewLogin;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicator;
+@property (strong, nonatomic) IBOutlet UIButton *buttonAreaLocal;
+@property (strong, nonatomic) IBOutlet UIButton *buttonAreaWorld;
 
 - (IBAction)loginPressed:(id)sender;
 - (IBAction)touchTab:(UIButton*)sender;
 - (IBAction)touchCloseLogin:(id)sender;
 - (IBAction)touchReg:(id)sender;
 - (IBAction)touchLogin:(id)sender;
+- (IBAction)touchArea:(UIButton*)sender;
 - (void)reloadView;
 
 @end
