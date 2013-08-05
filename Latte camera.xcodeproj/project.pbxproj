@@ -653,6 +653,7 @@
 		8837737D17AB9000005B0826 /* bt_submit_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8837737317AB9000005B0826 /* bt_submit_on@2x.png */; };
 		8837737E17AB9000005B0826 /* bt_submit.png in Resources */ = {isa = PBXBuildFile; fileRef = 8837737417AB9000005B0826 /* bt_submit.png */; };
 		8837737F17AB9000005B0826 /* bt_submit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8837737517AB9000005B0826 /* bt_submit@2x.png */; };
+		8837738517AF9C50005B0826 /* LXReportAbuseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8837738417AF9C4F005B0826 /* LXReportAbuseViewController.m */; };
 		883C9404179E690700594BA4 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C9403179E690700594BA4 /* SDWebImage.framework */; };
 		88418F2B1743674F004EFBA1 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88418F2A1743674F004EFBA1 /* FacebookSDK.framework */; };
 		88418F2D17436760004EFBA1 /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 88418F2C17436760004EFBA1 /* FacebookSDKResources.bundle */; };
@@ -2628,6 +2629,8 @@
 		8837737317AB9000005B0826 /* bt_submit_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bt_submit_on@2x.png"; sourceTree = "<group>"; };
 		8837737417AB9000005B0826 /* bt_submit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bt_submit.png; sourceTree = "<group>"; };
 		8837737517AB9000005B0826 /* bt_submit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bt_submit@2x.png"; sourceTree = "<group>"; };
+		8837738317AF9C4E005B0826 /* LXReportAbuseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXReportAbuseViewController.h; sourceTree = "<group>"; };
+		8837738417AF9C4F005B0826 /* LXReportAbuseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXReportAbuseViewController.m; sourceTree = "<group>"; };
 		883C9403179E690700594BA4 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDWebImage.framework; path = Vendor/SDWebImage.framework; sourceTree = "<group>"; };
 		88418F2A1743674F004EFBA1 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		88418F2C17436760004EFBA1 /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = ../../../Documents/FacebookSDK/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle; sourceTree = "<group>"; };
@@ -5054,6 +5057,8 @@
 				8837736A17AA81A4005B0826 /* LXChangeEmailViewController.m */,
 				8837736617AA7B1F005B0826 /* LXChangePasswordViewController.h */,
 				8837736717AA7B1F005B0826 /* LXChangePasswordViewController.m */,
+				8837738317AF9C4E005B0826 /* LXReportAbuseViewController.h */,
+				8837738417AF9C4F005B0826 /* LXReportAbuseViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -8591,6 +8596,7 @@
 				8837736517AA5AD9005B0826 /* LXTableConfirmEmailController.m in Sources */,
 				8837736817AA7B20005B0826 /* LXChangePasswordViewController.m in Sources */,
 				8837736B17AA81A5005B0826 /* LXChangeEmailViewController.m in Sources */,
+				8837738517AF9C50005B0826 /* LXReportAbuseViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

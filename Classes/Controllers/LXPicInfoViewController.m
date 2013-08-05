@@ -14,6 +14,7 @@
 #import "LXAppDelegate.h"
 #import "AFNetworking.h"
 #import "LatteAPIClient.h"
+#import "LXReportAbuseViewController.h"
 
 @interface LXPicInfoViewController ()
 @end
@@ -82,29 +83,13 @@
 }
 
 - (IBAction)touchReport:(id)sender {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"report", @"")
-                                                    message:NSLocalizedString(@"report_confirm", @"")
-                                                   delegate:self
-                                          cancelButtonTitle:NSLocalizedString(@"cancel", @"")
-                                          otherButtonTitles:NSLocalizedString(@"report", @"report"), nil];
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    UITextField *commentField = [alert textFieldAtIndex:0];
-    commentField.placeholder = NSLocalizedString(@"Message", @"");
-    [alert show];
+    UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery" bundle:nil];
+    LXReportAbuseViewController *controllerReport = [storyGallery instantiateViewControllerWithIdentifier:@"Report"];
+    controllerReport.picture = _picture;
+    [_parent.navigationController pushViewController:controllerReport animated:YES];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        NSString *path = [NSString stringWithFormat:@"user/report_abuse/%@/%d", @"picture", [_picture.pictureId integerValue]];
-        UITextField *commentField = [alertView textFieldAtIndex:0];
-        
-        [[LatteAPIClient sharedClient] postPath:path
-                                     parameters:[NSDictionary dictionaryWithObject:commentField.text forKey:@"report_comment"]
-                                        success:nil
-                                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                            NSLog(@"[HTTPClient Error]: %@", error.localizedDescription);
-                                        }];
-    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

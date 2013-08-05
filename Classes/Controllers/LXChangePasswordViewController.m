@@ -100,12 +100,20 @@
         
         [api postPath:@"user/change_password" parameters:params success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
             [HUD hide:YES];
-            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Password", @"")
-                                                            message:NSLocalizedString(@"New password saved", @"") delegate:nil
-                                                  cancelButtonTitle:NSLocalizedString(@"close", @"閉じる")
-                                                  otherButtonTitles:nil];
-            [alert show];
-            [self hide];
+            if ([JSON[@"status"] boolValue] == true) {
+                UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Password", @"")
+                                                                message:NSLocalizedString(@"New password saved", @"") delegate:nil
+                                                      cancelButtonTitle:NSLocalizedString(@"close", @"閉じる")
+                                                      otherButtonTitles:nil];
+                [alert show];
+                [self hide];
+            } else {
+                UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"エラー")
+                                                                message:NSLocalizedString(@"Please enter your current password again", @"") delegate:nil
+                                                      cancelButtonTitle:NSLocalizedString(@"close", @"閉じる")
+                                                      otherButtonTitles:nil];
+                [alert show];
+            }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [HUD hide:YES];
             

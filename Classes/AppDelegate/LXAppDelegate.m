@@ -177,7 +177,7 @@
     
     if (currentUser) {
         if (!_currentUser.verified) {
-            [overlay postImmediateErrorMessage:@"Your registration has not yet been completed" duration:9999 animated:YES];
+            [overlay postImmediateErrorMessage:NSLocalizedString(@"Your registration has not been completed yet", @"") duration:9999 animated:YES];
         } else {
             [overlay hide];
         }
@@ -213,7 +213,7 @@
 
     [[NSNotificationCenter defaultCenter] postNotificationName:@"BecomeActive" object:self];
     
-    if (_currentUser && !_currentUser.verified) {
+    if (_currentUser) {
         [[LatteAPIClient sharedClient] getPath:@"user/me"
                                     parameters:nil
                                        success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
