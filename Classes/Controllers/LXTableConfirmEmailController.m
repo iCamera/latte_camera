@@ -64,7 +64,6 @@
         [UIView animateWithDuration:0.3 animations:^{
             viewChangePassword.view.alpha = 1;
         }];
-
     }
 }
 

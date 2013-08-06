@@ -16,6 +16,8 @@
 
 @implementation LXLoginViewController
 
+@synthesize viewTextBox;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,6 +31,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
 	// Do any additional setup after loading the view.
     //[self.navigationController setNavigationBarHidden:true];
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
@@ -43,11 +46,10 @@
     isPreload = true;
     isPreload2 = true;
     
-    
-    
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
 	[self.view addSubview:HUD];
-    
+    viewTextBox.layer.cornerRadius = 5;
+    [LXUtils globalShadow:viewTextBox];
     
     
     // Check the session for a cached token to show the proper authenticated
@@ -69,8 +71,7 @@
 }
 
 - (IBAction)singleTap:(id)sender {
-    [self.textUser resignFirstResponder];
-    [self.textPass resignFirstResponder];
+    [self.view endEditing:YES];
 }
 
 - (IBAction)login:(id)sender {
@@ -226,4 +227,8 @@
 }
 
 
+- (void)viewDidUnload {
+    [self setViewTextBox:nil];
+    [super viewDidUnload];
+}
 @end

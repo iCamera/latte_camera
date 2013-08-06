@@ -23,6 +23,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *textPass;
 @property (strong, nonatomic) IBOutlet UITextField *textUser;
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapView;
+@property (strong, nonatomic) IBOutlet UIView *viewTextBox;
 
 - (IBAction)singleTap:(id)sender;
 - (IBAction)login:(id)sender;
