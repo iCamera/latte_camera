@@ -145,22 +145,11 @@
             
             LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
             
-            [[LatteAPIClient sharedClient] postPath:@"user/logout"
-                                         parameters:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                     [app getToken], @"token", nil]
-                                            success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                                [app setToken:@""];
-                                                app.currentUser = nil;
-                                               
-                                                [[NSNotificationCenter defaultCenter] postNotificationName:@"LoggedOut" object:self];
-                                            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
-                                                                                                message:error.localizedDescription
-                                                                                               delegate:nil
-                                                                                      cancelButtonTitle:NSLocalizedString(@"close", "Close")
-                                                                                      otherButtonTitles:nil];
-                                                [alert show];
-                                            }];
+            [app setToken:@""];
+            app.currentUser = nil;
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"LoggedOut" object:self];
+            [[LatteAPIClient sharedClient] postPath:@"user/logout" parameters:nil success:nil failure:nil];
+            
             break;
         }
         default:

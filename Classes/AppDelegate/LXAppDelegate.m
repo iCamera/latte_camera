@@ -177,7 +177,9 @@
     
     if (currentUser) {
         if (!_currentUser.verified) {
-            [overlay postImmediateErrorMessage:NSLocalizedString(@"Your registration has not been completed yet", @"") duration:9999 animated:YES];
+            if (!_viewMainTab.presentedViewController) {
+                [overlay postImmediateErrorMessage:NSLocalizedString(@"Your registration has not been completed yet", @"") duration:9999 animated:YES];
+            }
         } else {
             [overlay hide];
         }

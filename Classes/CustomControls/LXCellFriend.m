@@ -34,8 +34,7 @@
 }
 
 - (void)setUser:(User *)user {
-    imageUser.image = [UIImage imageNamed:@"user.gif"];
-    [imageUser loadProgess:user.profilePicture];
+    [imageUser loadProgess:user.profilePicture placeholderImage:[UIImage imageNamed:@"user.gif"]];
     labelIntro.text = user.introduction;
     labelName.text = user.name;
     [LXUtils setNationalityOfUser:user forImage:imageNationality nextToLabel:labelName];

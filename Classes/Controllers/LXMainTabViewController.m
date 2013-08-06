@@ -276,8 +276,14 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
-    MTStatusBarOverlay *overlay = [MTStatusBarOverlay sharedInstance];
-    [overlay show];
+    
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    if (app.currentUser) {
+        if (!app.currentUser.verified) {
+            MTStatusBarOverlay *overlay = [MTStatusBarOverlay sharedInstance];
+            [overlay show];
+        }
+    }
     [super viewWillAppear:animated];
 }
 

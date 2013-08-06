@@ -177,22 +177,12 @@
         LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
         
         [[FBSession activeSession] closeAndClearTokenInformation];
-        [[LatteAPIClient sharedClient] postPath:@"user/logout"
-                                     parameters:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                 [app getToken], @"token", nil]
-                                        success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                            [app setToken:@""];
-                                            app.currentUser = nil;
-                                            [self dismissViewControllerAnimated:YES completion:nil];
-                                            [[NSNotificationCenter defaultCenter] postNotificationName:@"LoggedOut" object:self];
-                                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
-                                                                                            message:error.localizedDescription
-                                                                                           delegate:nil
-                                                                                  cancelButtonTitle:NSLocalizedString(@"close", "Close")
-                                                                                  otherButtonTitles:nil];
-                                            [alert show];
-                                        }];
+        
+        [[LatteAPIClient sharedClient] postPath:@"user/logout" parameters:nil success:nil failure:nil];
+        [app setToken:@""];
+        app.currentUser = nil;
+        [self dismissViewControllerAnimated:YES completion:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"LoggedOut" object:self];
     }
     
 }
