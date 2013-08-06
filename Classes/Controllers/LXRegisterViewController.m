@@ -162,6 +162,10 @@
         error = NSLocalizedString(@"register_error_password_require", @"パスワードを入力してください");
     } else  if (textName.text.length == 0) {
         error = NSLocalizedString(@"register_error_username_require", @"ニックネームを入力してください");
+    } else  if (textName.text.length == 0) {
+        error = NSLocalizedString(@"register_error_username_require", @"ニックネームを入力してください");
+    } else  if (textPassword.text.length < 5) {
+        error = NSLocalizedString(@"Password must be at least 5 characters", "");
     }
     
     if (error != nil) {

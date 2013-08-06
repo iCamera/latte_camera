@@ -137,6 +137,8 @@
         error = NSLocalizedString(@"register_error_password_require", @"パスワードを入力してください");
     } else if (![textConfirmPassword.text isEqualToString:textNewPassword.text]) {
         error = NSLocalizedString(@"register_error_password_require", @"パスワードを入力してください");
+    } else if (textNewPassword.text.length < 5) {
+        error = NSLocalizedString(@"Password must be at least 5 characters", "");
     }
     
     if (error != nil) {
