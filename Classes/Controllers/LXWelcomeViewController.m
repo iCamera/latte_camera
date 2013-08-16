@@ -97,6 +97,8 @@ typedef enum {
     [self.navigationController.view addSubview:viewLogin];
     if ([app getToken].length == 0) {
         viewLogin.hidden = false;
+    } else {
+        viewLogin.hidden = true;
     }
     
     if (app.currentUser != nil) {
@@ -115,7 +117,7 @@ typedef enum {
     
     area = [[NSUserDefaults standardUserDefaults] objectForKey:@"timeline_area"];
     if (!area) {
-        area = @"world";
+        area = @"local";
     }
     
     if ([area isEqualToString:@"world"]) {

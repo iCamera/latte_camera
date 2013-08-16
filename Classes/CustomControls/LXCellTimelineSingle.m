@@ -120,8 +120,13 @@
     [buttonShare addTarget:self action:@selector(sharePic:) forControlEvents:UIControlEventTouchUpInside];
     
     [LXUtils setNationalityOfUser:feed.user forImage:imageNationality nextToLabel:labelTitle];
-    
+
+    [self increaseCounter];
+}
+
+- (void)increaseCounter {
     // Increase counter
+    Picture *pic = _feed.targets[0];
     NSString *urlCounter = [NSString stringWithFormat:@"picture/counter/%d/%d",
                             [pic.pictureId integerValue],
                             [pic.userId integerValue]];

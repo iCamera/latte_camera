@@ -378,7 +378,9 @@
     UINavigationController *nav = (UINavigationController*)self.selectedViewController;
     UITableViewController *view = (UITableViewController*)nav.visibleViewController;
     if ([view respondsToSelector:@selector(tableView)]) {
-        [view.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+        
+        // No animation to prevent too much pageview counter request
+        [view.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
     }
 }
 
