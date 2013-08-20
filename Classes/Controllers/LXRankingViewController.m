@@ -83,8 +83,7 @@ typedef enum {
     rankLayout = kLayoutNormal;
     
     // Do any additional setup after loading the view.
-    viewTab.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     
     //setup left button
     UIBarButtonItem *navLeftItem = self.navigationItem.leftBarButtonItem;
@@ -135,15 +134,19 @@ typedef enum {
     [[LatteAPIClient sharedClient] getPath:url
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       days = [NSMutableArray arrayWithArray:[JSON objectForKey:@"days"]];
-                                       pics = [self flatPictureArray];
+                                       days = [[NSMutableArray alloc] init];
+                                       for (NSDictionary *day in JSON[@"days"]) {
+                                           NSMutableDictionary *dayInfo = [day mutableCopy];
+                                           [dayInfo setObject:[Picture mutableArrayFromDictionary:day withKey:@"pictures"] forKey:@"pictures"];
+                                           [days addObject:dayInfo];
+                                       }
                                        
+                                       pics = [self flatPictureArray];
                                        rankLayout = kLayoutCalendar;
                                        
                                        [self.tableView reloadData];
                                        [loadIndicator stopAnimating];
                                        [HUD hide:YES];
-                                       self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back2.png"]];
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        DLog(@"Something went wrong (Ranking)");
@@ -172,7 +175,13 @@ typedef enum {
                                            loadEnded = true;
                                        }
                                        else {
-                                           [days addObjectsFromArray:newDays];
+                                           
+                                           for (NSDictionary *day in JSON[@"days"]) {
+                                               NSMutableDictionary *dayInfo = [day mutableCopy];
+                                               [dayInfo setObject:[Picture mutableArrayFromDictionary:day withKey:@"pictures"] forKey:@"pictures"];
+                                               [days addObject:dayInfo];
+                                           }
+                                           
                                            pics = [self flatPictureArray];
                                            [self.tableView reloadData];
                                        }
@@ -204,7 +213,6 @@ typedef enum {
                                        [self.tableView reloadData];
                                        [loadIndicator stopAnimating];
                                        [HUD hide:YES];
-                                       self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        DLog(@"Something went wrong (Ranking)");
@@ -405,7 +413,7 @@ typedef enum {
         }
     } else {
         NSDictionary *dayInfo = days[indexPath.section];
-        NSArray *pictures = [Picture mutableArrayFromDictionary:dayInfo withKey:@"pictures"];
+        NSArray *pictures = dayInfo[@"pictures"];
         
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Grid"];
 
@@ -421,7 +429,6 @@ typedef enum {
             if (index >= pictures.count)
                 break;
             pic = pictures[index];
-            
             
             UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(6 + 104*i, 3, 98, 98)];
             
@@ -449,8 +456,8 @@ typedef enum {
 - (NSMutableArray*)flatPictureArray {
     NSMutableArray *ret = [[NSMutableArray alloc] init];
     for (NSDictionary *day in days) {
-        for (NSDictionary *pic in [day objectForKey:@"pictures"]) {
-            [ret addObject:[Picture instanceFromDictionary:pic]];
+        for (Picture *pic in [day objectForKey:@"pictures"]) {
+            [ret addObject:pic];
         }
     }
     return ret;
