@@ -71,11 +71,13 @@
     NSString *majorVersion = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
     NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
     NSString * build = [[NSBundle mainBundle] objectForInfoDictionaryKey: (NSString *)kCFBundleVersionKey];
+    NSTimeZone *timeZone = [NSTimeZone localTimeZone];
     [self setDefaultHeader:@"Latte-version" value:majorVersion];
     [self setDefaultHeader:@"Latte-build" value:build];
     [self setDefaultHeader:@"Latte-ios" value:[[UIDevice currentDevice] systemVersion]];
     [self setDefaultHeader:@"Latte-device" value:[device platformString]];
     [self setDefaultHeader:@"Latte-language" value:language];
+    [self setDefaultHeader:@"Latte-timezone" value:[NSString stringWithFormat:@"%d", [timeZone secondsFromGMT]]];
     
     return self;
 }
