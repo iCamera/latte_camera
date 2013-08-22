@@ -97,19 +97,13 @@ typedef enum {
     [self.navigationController.view addSubview:viewLogin];
     if ([app getToken].length == 0) {
         viewLogin.hidden = false;
-    } else {
-        viewLogin.hidden = true;
-    }
-    
-    if (app.currentUser != nil) {
-        [self receiveLoggedIn:nil];
-    } else {
-        viewLogin.hidden = false;
         [UIView animateWithDuration:0.3 animations:^{
             viewLogin.alpha = 1;
         }];
+    } else {
+        viewLogin.hidden = true;
     }
-    
+        
     //setup left button
     UIBarButtonItem *navLeftItem = self.navigationItem.leftBarButtonItem;
     UIButton *buttonSide = (UIButton*)navLeftItem.customView;

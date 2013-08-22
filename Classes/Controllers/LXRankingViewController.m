@@ -16,7 +16,6 @@
 #import "UIButton+AsyncImage.h"
 #import "LXUtils.h"
 #import "LatteAPIClient.h"
-#import "LXButtonBrown30.h"
 
 
 typedef enum {

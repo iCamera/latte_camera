@@ -14,6 +14,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.titleLabel.shadowOffset = CGSizeMake(0, 1);
+        self.titleLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:16];
     }
     return self;
 }

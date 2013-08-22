@@ -17,7 +17,6 @@
     if (self) {
         [self setTitle:NSLocalizedString(@"back", @"戻る")  forState:UIControlStateNormal];
         [self setContentEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
-//        [self setS]
         self.titleLabel.shadowOffset = CGSizeMake(0, 1);
         self.titleLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:16];
     }

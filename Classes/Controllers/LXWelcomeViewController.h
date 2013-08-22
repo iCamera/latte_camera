@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LXButtonBrown30.h"
 #import "LXLoginViewController.h"
 #import "Feed.h"
 #import "Picture.h"

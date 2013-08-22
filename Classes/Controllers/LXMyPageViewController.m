@@ -18,7 +18,6 @@
 #import "UIButton+AsyncImage.h"
 #import "LXPicInfoViewController.h"
 #import "LXPicMapViewController.h"
-#import "LXButtonBrown30.h"
 #import "Feed.h"
 #import "User.h"
 #import "Picture.h"
@@ -1395,18 +1394,21 @@ typedef enum {
             break;
     }
     
-    [self presentViewController:navGalerry animated:YES completion:^{
-        switch (tab) {
-            case kGalleryTabComment:
-            case kGalleryTabInfo:
-            case kGalleryTabVote:
-                viewGallery.currentTab = tab;
-                break;
-            default:
-                break;
-        }
-    }];
-
+    if (self.navigationController.presentingViewController) {
+        [self.navigationController pushViewController:viewGallery animated:YES];
+    } else {
+        [self presentViewController:navGalerry animated:YES completion:^{
+            switch (tab) {
+                case kGalleryTabComment:
+                case kGalleryTabInfo:
+                case kGalleryTabVote:
+                    viewGallery.currentTab = tab;
+                    break;
+                default:
+                    break;
+            }
+        }];
+    }
 }
 
 - (void)showPic:(UIButton*)sender {

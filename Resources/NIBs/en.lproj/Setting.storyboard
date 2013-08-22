@@ -319,26 +319,7 @@
                             </tableViewSection>
                         </sections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Setting" id="S5j-P1-F9V">
-                        <barButtonItem key="rightBarButtonItem" style="done" id="aST-um-dFS">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="BF7-k2-8Xx" customClass="LXButtonBrown30">
-                                <rect key="frame" x="255" y="7" width="60" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="15"/>
-                                <size key="titleShadowOffset" width="0.0" height="1"/>
-                                <state key="normal" title="CLOSE">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="touchClose:" destination="BA8-7X-K8C" eventType="touchUpInside" id="kwi-J8-0Y7"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Setting" id="S5j-P1-F9V"/>
                     <connections>
                         <outlet property="imageProfile" destination="XwR-XJ-W7g" id="hNB-mM-gg8"/>
                         <outlet property="labelVersion" destination="cQb-06-rty" id="Zew-yT-YMj"/>
@@ -351,10 +332,10 @@
             </objects>
             <point key="canvasLocation" x="-867" y="-912"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Modal Navigation Controller-->
         <scene sceneID="VKt-pI-gkB">
             <objects>
-                <navigationController definesPresentationContext="YES" id="cxD-TB-4Px" customClass="LXNavigationController" sceneMemberID="viewController">
+                <navigationController definesPresentationContext="YES" id="cxD-TB-4Px" customClass="LXModalNavigationController" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="1J3-PY-CDA" customClass="LXNavBar">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -366,10 +347,10 @@
             </objects>
             <point key="canvasLocation" x="-1375" y="-912"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Modal Navigation Controller-->
         <scene sceneID="4vT-lJ-YdE">
             <objects>
-                <navigationController storyboardIdentifier="Notification" definesPresentationContext="YES" id="MnB-ZM-rSH" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="Notification" definesPresentationContext="YES" id="MnB-ZM-rSH" customClass="LXModalNavigationController" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="dHl-WP-tRw" customClass="LXNavBar">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -699,27 +680,7 @@ We improve our services to the best of our ability, but please understand that n
                             <outlet property="delegate" destination="130-si-waG" id="DX9-LN-xhu"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="OQt-UR-7Xb">
-                        <barButtonItem key="rightBarButtonItem" style="done" id="mL0-h1-lQ5">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="wcT-2L-ZhT" customClass="LXButtonBrown30">
-                                <rect key="frame" x="255" y="7" width="60" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="15"/>
-                                <size key="titleShadowOffset" width="0.0" height="1"/>
-                                <state key="normal" title="CLOSE">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="touchClose:" destination="130-si-waG" eventType="touchUpInside" id="arz-ry-qnU"/>
-                                    <action selector="touchClose:" destination="BA8-7X-K8C" eventType="touchUpInside" id="dLO-fQ-rBd"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="OQt-UR-7Xb"/>
                     <connections>
                         <outlet property="buttonMailComment" destination="CGD-f2-egb" id="X4J-mJ-kMq"/>
                         <outlet property="buttonMailFollow" destination="uUa-uP-vik" id="w9f-4p-mT2"/>
@@ -1105,11 +1066,11 @@ We improve our services to the best of our ability, but please understand that n
                 <relationship kind="outlet" name="viewWeb" candidateClass="UIWebView"/>
             </relationships>
         </class>
+        <class className="LXModalNavigationController" superclassName="UINavigationController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXModalNavigationController.h"/>
+        </class>
         <class className="LXNavBar" superclassName="UINavigationBar">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavBar.h"/>
-        </class>
-        <class className="LXNavigationController" superclassName="UINavigationController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavigationController.h"/>
         </class>
         <class className="LXSettingAccountController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXSettingAccountController.h"/>
@@ -1148,6 +1109,6 @@ We improve our services to the best of our ability, but please understand that n
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="PVC-qt-Mi9"/>
+        <segue reference="psS-hn-o4m"/>
     </inferredMetricsTieBreakers>
 </document>

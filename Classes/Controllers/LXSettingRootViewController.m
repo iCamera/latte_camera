@@ -15,7 +15,6 @@
 #import "LXShare.h"
 #import "UIImageView+loadProgress.h"
 #import "LXCaptureViewController.h"
-#import "LXButtonBrown30.h"
 
 @interface LXSettingRootViewController ()
 

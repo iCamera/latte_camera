@@ -2758,26 +2758,7 @@ Or you can resend confirmation email.</string>
                             <outlet property="delegate" destination="76v-eQ-01z" id="POI-Z2-eJU"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="THM-IG-82U">
-                        <barButtonItem key="rightBarButtonItem" style="done" id="mLt-N7-Tyu">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="Ilg-vg-V3s" customClass="LXButtonBrown30">
-                                <rect key="frame" x="255" y="7" width="60" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="15"/>
-                                <size key="titleShadowOffset" width="0.0" height="1"/>
-                                <state key="normal" title="CLOSE">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="touchClose:" destination="76v-eQ-01z" eventType="touchUpInside" id="GMB-rM-Kbt"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="THM-IG-82U"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="labelEmail" destination="sUh-yN-TTT" id="GfM-nf-t92"/>
@@ -2891,10 +2872,10 @@ Or you can resend confirmation email.</string>
             </objects>
             <point key="canvasLocation" x="-2113" y="-89"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Modal Navigation Controller-->
         <scene sceneID="vfy-jk-CYy">
             <objects>
-                <navigationController storyboardIdentifier="NavConfirmEmail" definesPresentationContext="YES" id="q80-Fd-ifV" customClass="LXNavigationController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NavConfirmEmail" definesPresentationContext="YES" id="q80-Fd-ifV" customClass="LXModalNavigationController" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="zN9-8P-HLi" customClass="LXNavBar">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -3186,6 +3167,9 @@ Or you can resend confirmation email.</string>
         </class>
         <class className="LXMainTabViewController" superclassName="UITabBarController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXMainTabViewController.h"/>
+        </class>
+        <class className="LXModalNavigationController" superclassName="UINavigationController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXModalNavigationController.h"/>
         </class>
         <class className="LXMyPageViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXMyPageViewController.h"/>
