@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LXModalNavigationController.h"
 
-@interface LXNavGalleryViewController : UINavigationController<UINavigationControllerDelegate>
+@interface LXNavGalleryViewController : LXModalNavigationController
 
 @end
