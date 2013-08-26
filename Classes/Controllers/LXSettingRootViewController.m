@@ -153,6 +153,8 @@
             case 3:
                 [self performSegueWithIdentifier:@"Notification" sender:self];
                 return;
+            case 4:
+                return;
             default:
                 break;
         }

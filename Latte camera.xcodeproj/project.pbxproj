@@ -1389,6 +1389,13 @@
 		88CE8A45174F102000C6A6B6 /* TextTemplate.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88CE8A44174F102000C6A6B6 /* TextTemplate.xib */; };
 		88CE8A47174F375800C6A6B6 /* icon_save2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88CE8A46174F375800C6A6B6 /* icon_save2@2x.png */; };
 		88CE8A49174F376B00C6A6B6 /* icon_save2.png in Resources */ = {isa = PBXBuildFile; fileRef = 88CE8A48174F376B00C6A6B6 /* icon_save2.png */; };
+		88D86DC717CB41DE00EC62A2 /* box_share.png in Resources */ = {isa = PBXBuildFile; fileRef = 88D86DC117CB41DD00EC62A2 /* box_share.png */; };
+		88D86DC817CB41DE00EC62A2 /* box_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88D86DC217CB41DD00EC62A2 /* box_share@2x.png */; };
+		88D86DC917CB41DE00EC62A2 /* box_social.png in Resources */ = {isa = PBXBuildFile; fileRef = 88D86DC317CB41DD00EC62A2 /* box_social.png */; };
+		88D86DCA17CB41DE00EC62A2 /* box_social@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88D86DC417CB41DD00EC62A2 /* box_social@2x.png */; };
+		88D86DCB17CB41DE00EC62A2 /* box_twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 88D86DC517CB41DD00EC62A2 /* box_twitter.png */; };
+		88D86DCC17CB41DE00EC62A2 /* box_twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88D86DC617CB41DE00EC62A2 /* box_twitter@2x.png */; };
+		88D86DD017CB446400EC62A2 /* LXSocialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D86DCF17CB446400EC62A2 /* LXSocialViewController.m */; };
 		88D9864815B8F97800858AD6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D9864715B8F97800858AD6 /* UIKit.framework */; };
 		88D9864A15B8F97800858AD6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D9864915B8F97800858AD6 /* Foundation.framework */; };
 		88D9864C15B8F97800858AD6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D9864B15B8F97800858AD6 /* CoreGraphics.framework */; };
@@ -3516,6 +3523,14 @@
 		88CE8A46174F375800C6A6B6 /* icon_save2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_save2@2x.png"; sourceTree = "<group>"; };
 		88CE8A48174F376B00C6A6B6 /* icon_save2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_save2.png; sourceTree = "<group>"; };
 		88D4B5D015D4B9F200FC4FBB /* Latte.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Latte.entitlements; sourceTree = "<group>"; };
+		88D86DC117CB41DD00EC62A2 /* box_share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box_share.png; sourceTree = "<group>"; };
+		88D86DC217CB41DD00EC62A2 /* box_share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "box_share@2x.png"; sourceTree = "<group>"; };
+		88D86DC317CB41DD00EC62A2 /* box_social.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box_social.png; sourceTree = "<group>"; };
+		88D86DC417CB41DD00EC62A2 /* box_social@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "box_social@2x.png"; sourceTree = "<group>"; };
+		88D86DC517CB41DD00EC62A2 /* box_twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box_twitter.png; sourceTree = "<group>"; };
+		88D86DC617CB41DE00EC62A2 /* box_twitter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "box_twitter@2x.png"; sourceTree = "<group>"; };
+		88D86DCE17CB446400EC62A2 /* LXSocialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXSocialViewController.h; sourceTree = "<group>"; };
+		88D86DCF17CB446400EC62A2 /* LXSocialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXSocialViewController.m; sourceTree = "<group>"; };
 		88D9864315B8F97800858AD6 /* Latte camera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Latte camera.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		88D9864715B8F97800858AD6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		88D9864915B8F97800858AD6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -5065,6 +5080,8 @@
 				8837738417AF9C4F005B0826 /* LXReportAbuseViewController.m */,
 				8837738617B0C15F005B0826 /* LXEmailConfirmPopupController.h */,
 				8837738717B0C161005B0826 /* LXEmailConfirmPopupController.m */,
+				88D86DCE17CB446400EC62A2 /* LXSocialViewController.h */,
+				88D86DCF17CB446400EC62A2 /* LXSocialViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -5915,6 +5932,12 @@
 		88FE3FAB166C93D6004DCE53 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				88D86DC117CB41DD00EC62A2 /* box_share.png */,
+				88D86DC217CB41DD00EC62A2 /* box_share@2x.png */,
+				88D86DC317CB41DD00EC62A2 /* box_social.png */,
+				88D86DC417CB41DD00EC62A2 /* box_social@2x.png */,
+				88D86DC517CB41DD00EC62A2 /* box_twitter.png */,
+				88D86DC617CB41DE00EC62A2 /* box_twitter@2x.png */,
 				8837736C17AB8FFF005B0826 /* box_question_mini.png */,
 				8837736D17AB8FFF005B0826 /* box_question_mini@2x.png */,
 				8837736E17AB8FFF005B0826 /* bt_normal_on.png */,
@@ -8420,6 +8443,12 @@
 				8837737D17AB9000005B0826 /* bt_submit_on@2x.png in Resources */,
 				8837737E17AB9000005B0826 /* bt_submit.png in Resources */,
 				8837737F17AB9000005B0826 /* bt_submit@2x.png in Resources */,
+				88D86DC717CB41DE00EC62A2 /* box_share.png in Resources */,
+				88D86DC817CB41DE00EC62A2 /* box_share@2x.png in Resources */,
+				88D86DC917CB41DE00EC62A2 /* box_social.png in Resources */,
+				88D86DCA17CB41DE00EC62A2 /* box_social@2x.png in Resources */,
+				88D86DCB17CB41DE00EC62A2 /* box_twitter.png in Resources */,
+				88D86DCC17CB41DE00EC62A2 /* box_twitter@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8605,6 +8634,7 @@
 				8837738517AF9C50005B0826 /* LXReportAbuseViewController.m in Sources */,
 				8837738817B0C164005B0826 /* LXEmailConfirmPopupController.m in Sources */,
 				88C67F3A17C5B324002A5D56 /* LXModalNavigationController.m in Sources */,
+				88D86DD017CB446400EC62A2 /* LXSocialViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
