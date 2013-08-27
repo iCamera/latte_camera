@@ -1395,7 +1395,7 @@
             <relationships>
                 <relationship kind="action" name="touchReport:"/>
                 <relationship kind="outlet" name="textComment" candidateClass="LXTextView"/>
-                <relationship kind="outlet" name="textOriginal" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="textOriginal" candidateClass="LXTextView"/>
             </relationships>
         </class>
         <class className="LXReportAbuseViewController" superclassName="UITableViewController">

@@ -1132,7 +1132,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="このコメントを事務局に報告します" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OQk-AC-QWZ">
-                                    <rect key="frame" x="41" y="12" width="273" height="21"/>
+                                    <rect key="frame" x="41" y="12" width="252" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
                                     <color key="textColor" red="0.2190684443" green="0.19459484590000001" blue="0.11386880050000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -1401,7 +1401,7 @@
             <relationships>
                 <relationship kind="action" name="touchReport:"/>
                 <relationship kind="outlet" name="textComment" candidateClass="LXTextView"/>
-                <relationship kind="outlet" name="textOriginal" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="textOriginal" candidateClass="LXTextView"/>
             </relationships>
         </class>
         <class className="LXReportAbuseViewController" superclassName="UITableViewController">
