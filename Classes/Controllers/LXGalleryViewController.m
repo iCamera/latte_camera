@@ -12,7 +12,6 @@
 
 #import "LXPicDetailTabViewController.h"
 #import "LXPicCommentViewController.h"
-#import "LXPicInfoViewController.h"
 #import "LXPicMapViewController.h"
 #import "LXPicEditViewController.h"
 #import "LXMyPageViewController.h"

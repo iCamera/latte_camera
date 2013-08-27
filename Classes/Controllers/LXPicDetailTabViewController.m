@@ -68,6 +68,7 @@
     scrollTab.contentOffset = CGPointMake(320, 0);
     
     viewInfo.parent = _parent;
+    _viewComment.parent = _parent;
     if (_picture != nil) {
         viewInfo.picture = _picture;
     }

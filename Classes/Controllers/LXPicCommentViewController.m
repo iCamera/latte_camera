@@ -15,6 +15,7 @@
 #import "LXCommentControllViewController.h"
 #import "LXButtonBack.h"
 #import "MBProgressHUD.h"
+#import "LXReportAbuseCommentViewController.h"
 
 @interface LXPicCommentViewController ()
 
@@ -295,8 +296,10 @@
         cellComment.buttonUser.tag = indexPath.row;
         cellComment.buttonLike.tag = indexPath.row;
         cellComment.buttonReply.tag = indexPath.row;
+        cellComment.buttonReport.tag = indexPath.row;
         [cellComment.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
         [cellComment.buttonReply addTarget:self action:@selector(touchReply:) forControlEvents:UIControlEventTouchUpInside];
+        [cellComment.buttonReport addTarget:self action:@selector(touchReport:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     return cellComment;
@@ -311,6 +314,15 @@
     
     [growingComment becomeFirstResponder];
 }
+
+- (void)touchReport:(UIButton*)sender {
+    Comment *comment = _comments[sender.tag];
+    UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery" bundle:nil];
+    LXReportAbuseCommentViewController *controllerReport = [storyGallery instantiateViewControllerWithIdentifier:@"ReportComment"];
+    controllerReport.comment = comment;
+    [_parent.navigationController pushViewController:controllerReport animated:YES];
+}
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     Comment *comment = _comments[indexPath.row];

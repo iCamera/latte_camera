@@ -10,6 +10,7 @@
 #import "Picture.h"
 #import "HPGrowingTextView.h"
 #import "LXButtonBrown30.h"
+#import "LXGalleryViewController.h"
 
 //#import "SideSwipeTableViewController.h"
 @interface LXPicCommentViewController : UIViewController<HPGrowingTextViewDelegate, UITableViewDataSource, UITableViewDelegate>
@@ -23,4 +24,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIView *viewFooter;
 @property (strong, nonatomic) NSMutableArray *comments;
+
+@property (weak, nonatomic) LXGalleryViewController *parent;
+
 @end
