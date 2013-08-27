@@ -20,6 +20,7 @@
 @synthesize imageLike;
 @synthesize imageNationality;
 @synthesize buttonReply;
+@synthesize buttonReport;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -53,6 +54,7 @@
     if (app.currentUser != nil) {
         buttonLike.hidden = [comment.user.userId integerValue] == [app.currentUser.userId integerValue];
         buttonReply.hidden = [comment.user.userId integerValue] == [app.currentUser.userId integerValue];
+        buttonReport.hidden = [comment.user.userId integerValue] == [app.currentUser.userId integerValue];
         buttonLike.selected = comment.isVoted;
         buttonLike.enabled = true;
     }
