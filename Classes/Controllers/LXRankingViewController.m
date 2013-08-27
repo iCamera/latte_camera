@@ -36,6 +36,7 @@ typedef enum {
     NSInteger rankLayout;
     BOOL reloading;
     MBProgressHUD *HUD;
+    NSString *area;
 }
 
 @synthesize buttonWeekly;
@@ -44,6 +45,8 @@ typedef enum {
 @synthesize viewTab;
 @synthesize loadIndicator;
 @synthesize buttonDaily;
+@synthesize buttonAreaLocal;
+@synthesize buttonAreaWorld;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -89,6 +92,19 @@ typedef enum {
     UIButton *buttonSide = (UIButton*)navLeftItem.customView;
     [buttonSide addTarget:app.controllerSide action:@selector(toggleLeftPanel:) forControlEvents:UIControlEventTouchUpInside];
     
+    area = [[NSUserDefaults standardUserDefaults] objectForKey:@"timeline_area"];
+    if (!area) {
+        area = @"local";
+    }
+    
+    if ([area isEqualToString:@"world"]) {
+        buttonAreaWorld.selected = YES;
+        buttonAreaLocal.selected = NO;
+    } else {
+        buttonAreaWorld.selected = NO;
+        buttonAreaLocal.selected = YES;
+    }
+    
     [self reloadView];
 }
 
@@ -129,9 +145,12 @@ typedef enum {
     [loadIndicator startAnimating];
     [HUD show:YES];
     loadEnded = false;
-    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    
+    NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
+    [param setObject:area forKey:@"area"];
+    
     [[LatteAPIClient sharedClient] getPath:url
-                                parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                parameters: param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        days = [[NSMutableArray alloc] init];
                                        for (NSDictionary *day in JSON[@"days"]) {
@@ -163,9 +182,12 @@ typedef enum {
     [loadIndicator startAnimating];
     [HUD show:YES];
     loadEnded = false;
-    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    
+    NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
+    [param setObject:area forKey:@"area"];
+    
     [[LatteAPIClient sharedClient] getPath:url
-                                parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                parameters: param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        [HUD hide:YES];
                                        
@@ -203,9 +225,11 @@ typedef enum {
     [HUD show:YES];
     loadEnded = false;
     
-    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
+    [param setObject:area forKey:@"area"];
+    
     [[LatteAPIClient sharedClient] getPath:url
-                                parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                parameters: param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        pics = [Picture mutableArrayFromDictionary:JSON withKey:@"pics"];
                                        rankLayout = kLayoutNormal;
@@ -227,10 +251,12 @@ typedef enum {
     NSString* url = [NSString stringWithFormat:@"picture/ranking/%@/%d", ranktype, rankpage];
     
     [loadIndicator startAnimating];
-    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    
+    NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
+    [param setObject:area forKey:@"area"];
     
     [[LatteAPIClient sharedClient] getPath:url
-                                parameters:[NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                parameters:param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        [self.tableView beginUpdates];
                                        int rowCountPrev = [self.tableView numberOfRowsInSection:0];
@@ -579,5 +605,26 @@ typedef enum {
     }
     return nil;
 }
+
+- (IBAction)touchArea:(UIButton*)sender {
+    buttonAreaWorld.selected = NO;
+    buttonAreaLocal.selected = NO;
+    sender.selected = YES;
+    switch (sender.tag) {
+        case 0:
+            area = @"local";
+            break;
+        case 1:
+            area = @"world";
+            break;
+        default:
+            break;
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:area forKey:@"timeline_area"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [self reloadView];
+}
+
 
 @end

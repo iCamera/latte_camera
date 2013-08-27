@@ -132,7 +132,10 @@
             [lxShare inviteFriend];
             break;
         }
-        case 4: {
+        case 4:
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://luxeys.co.jp/recruits/"]];
+            break;
+        case 5: {
             [[FBSession activeSession] closeAndClearTokenInformation];
             
             LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;

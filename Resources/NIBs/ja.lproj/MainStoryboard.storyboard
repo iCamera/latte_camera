@@ -59,15 +59,15 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="mt2-aX-3UQ">
-                                    <rect key="frame" x="161" y="0.0" width="77" height="42"/>
+                                    <rect key="frame" x="205" y="0.0" width="56" height="42"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                    <state key="normal" title="Daily" backgroundImage="menu4_3_off.png">
-                                        <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <state key="normal" title="Daily" backgroundImage="menu5b_4_off.png">
+                                        <color key="titleColor" red="0.62745098039215685" green="0.56862745098039214" blue="0.34509803921568627" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
-                                    <state key="selected" backgroundImage="menu4_3.png">
-                                        <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                    <state key="selected" backgroundImage="menu5b_4.png">
+                                        <color key="titleColor" red="0.15686274510000001" green="0.41176470590000003" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
-                                    <state key="highlighted" backgroundImage="menu3_2.png">
+                                    <state key="highlighted">
                                         <color key="titleColor" red="0.40000003579999999" green="0.36470589040000001" blue="0.22352942819999999" alpha="1" colorSpace="deviceRGB"/>
                                     </state>
                                     <connections>
@@ -75,15 +75,16 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" tag="2" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="0RE-kC-asB">
-                                    <rect key="frame" x="85" y="0.0" width="77" height="42"/>
+                                    <rect key="frame" x="150" y="0.0" width="56" height="42"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                    <state key="normal" title="" image="icon_trend_off.png" backgroundImage="menu4_2_off.png">
+                                    <state key="normal" title="" image="icon_trend_ltrend.png" backgroundImage="menu5b_4_off.png">
                                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
-                                    <state key="selected" image="icon_trend.png" backgroundImage="menu4_2.png">
-                                        <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                    <state key="selected" image="icon_trend_blue.png" backgroundImage="menu5b_4.png">
+                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleShadowColor" red="0.15686274510000001" green="0.41176470590000003" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
-                                    <state key="highlighted" backgroundImage="menu3_2.png">
+                                    <state key="highlighted">
                                         <color key="titleColor" red="0.40000003579999999" green="0.36470589040000001" blue="0.22352942819999999" alpha="1" colorSpace="deviceRGB"/>
                                     </state>
                                     <connections>
@@ -91,16 +92,16 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="NCN-vp-0Dk">
-                                    <rect key="frame" x="237" y="0.0" width="83" height="42"/>
+                                    <rect key="frame" x="260" y="0.0" width="60" height="42"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                     <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="5" maxY="0.0"/>
-                                    <state key="normal" title="Weekly" backgroundImage="menu4_4_off.png">
-                                        <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <state key="normal" title="Weekly" backgroundImage="menu5b_5_off.png">
+                                        <color key="titleColor" red="0.62745098039215685" green="0.56862745098039214" blue="0.34509803921568627" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
-                                    <state key="selected" backgroundImage="menu4_4.png">
-                                        <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                    <state key="selected" backgroundImage="menu5b_5.png">
+                                        <color key="titleColor" red="0.15686274510000001" green="0.41176470590000003" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
-                                    <state key="highlighted" backgroundImage="menu3_3.png">
+                                    <state key="highlighted">
                                         <color key="titleColor" red="0.40000003579999999" green="0.36470589040000001" blue="0.22352942819999999" alpha="1" colorSpace="deviceRGB"/>
                                     </state>
                                     <connections>
@@ -108,18 +109,61 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="cRx-Kj-UqQ" userLabel="Button - Calendar">
-                                    <rect key="frame" x="3" y="0.0" width="83" height="42"/>
+                                    <rect key="frame" x="94" y="0.0" width="57" height="42"/>
                                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="14"/>
-                                    <inset key="contentEdgeInsets" minX="7" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    <state key="normal" image="icon_calender_off.png" backgroundImage="menu4_1_off.png">
+                                    <inset key="contentEdgeInsets" minX="4" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <state key="normal" image="icon_calendar_lbrown.png" backgroundImage="menu5b_3_off.png">
                                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
-                                    <state key="selected" image="icon_calender.png" backgroundImage="menu4_1.png"/>
-                                    <state key="highlighted" backgroundImage="menu3_3.png">
+                                    <state key="selected" image="icon_calendar_blue.png" backgroundImage="menu5b_3.png">
+                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleShadowColor" red="0.15686274510000001" green="0.41176470590000003" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                    <state key="highlighted">
                                         <color key="titleColor" red="0.40000003579999999" green="0.36470589040000001" blue="0.22352942819999999" alpha="1" colorSpace="deviceRGB"/>
                                     </state>
                                     <connections>
                                         <action selector="touchTab:" destination="HL7-KM-o46" eventType="touchUpInside" id="skb-u2-DWJ"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="9CN-bx-f14">
+                                    <rect key="frame" x="0.0" y="0.0" width="47" height="42"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                    <inset key="contentEdgeInsets" minX="6" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <state key="normal" image="icon_area_lbrown.png" backgroundImage="menu4b_1_off.png">
+                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                    <state key="selected" image="icon_area_blue.png" backgroundImage="menu4b_1.png">
+                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleShadowColor" red="0.15686274510000001" green="0.41176470590000003" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                    <state key="highlighted">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="touchArea:" destination="HL7-KM-o46" eventType="touchUpInside" id="Fcu-h8-yhI"/>
+                                        <action selector="touchArea:" destination="hGM-oV-eEH" eventType="touchUpInside" id="aoH-Wr-zRx"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="0rM-k2-UaH">
+                                    <rect key="frame" x="46" y="0.0" width="44" height="42"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                    <inset key="contentEdgeInsets" minX="-2" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <state key="normal" image="icon_earch_lbrown.png" backgroundImage="menu4b_2_off.png">
+                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                    <state key="selected" image="icon_earch_blue.png" backgroundImage="menu4b_2.png">
+                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleShadowColor" red="0.15686274510000001" green="0.41176470590000003" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                    <state key="highlighted">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="touchArea:" destination="hGM-oV-eEH" eventType="touchUpInside" id="CMg-3K-3xg"/>
+                                        <action selector="touchArea:" destination="HL7-KM-o46" eventType="touchUpInside" id="SP7-2O-RUa"/>
                                     </connections>
                                 </button>
                             </subviews>
@@ -303,6 +347,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="buttonAreaLocal" destination="9CN-bx-f14" id="ZCv-mN-Ddg"/>
+                        <outlet property="buttonAreaWorld" destination="0rM-k2-UaH" id="6xF-dX-ohL"/>
                         <outlet property="buttonCalendar" destination="cRx-Kj-UqQ" id="c5Y-75-Vvl"/>
                         <outlet property="buttonDaily" destination="0RE-kC-asB" id="kNj-WA-Mri"/>
                         <outlet property="buttonMonthly" destination="NCN-vp-0Dk" id="6u7-U4-Zlg"/>
@@ -1550,11 +1596,11 @@
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                             <inset key="contentEdgeInsets" minX="2" minY="0.0" maxX="0.0" maxY="0.0"/>
                                             <size key="titleShadowOffset" width="2" height="0.0"/>
-                                            <state key="normal" image="icon_grid_m_off.png" backgroundImage="menu4b_3_off.png">
+                                            <state key="normal" image="icon_grid_lbrown.png" backgroundImage="menu4b_3_off.png">
                                                 <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
-                                            <state key="selected" image="icon_grid.png" backgroundImage="menu4b_3.png"/>
+                                            <state key="selected" image="icon_grid_blue.png" backgroundImage="menu4b_3.png"/>
                                             <state key="highlighted" backgroundImage="menu4b_3_off.png">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
@@ -1567,11 +1613,11 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                             <inset key="contentEdgeInsets" minX="-4" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                            <state key="normal" image="icon_timeline_off.png" backgroundImage="menu4b_4_off.png">
+                                            <state key="normal" image="icon_timeline_lbrown.png" backgroundImage="menu4b_4_off.png">
                                                 <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
-                                            <state key="selected" image="icon_timeline.png" backgroundImage="menu4b_4.png"/>
+                                            <state key="selected" image="icon_timeline_blue.png" backgroundImage="menu4b_4.png"/>
                                             <state key="highlighted" backgroundImage="menu4b_4_off.png">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
@@ -1584,11 +1630,11 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                             <inset key="contentEdgeInsets" minX="6" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                            <state key="normal" image="icon_area_off.png" backgroundImage="menu4b_1_off.png">
+                                            <state key="normal" image="icon_area_lbrown.png" backgroundImage="menu4b_1_off.png">
                                                 <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
-                                            <state key="selected" image="icon_area.png" backgroundImage="menu4b_1.png"/>
+                                            <state key="selected" image="icon_area_blue.png" backgroundImage="menu4b_1.png"/>
                                             <state key="highlighted" backgroundImage="menu4b_1.png">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
@@ -1601,11 +1647,11 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                             <inset key="contentEdgeInsets" minX="-2" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                            <state key="normal" image="icon_world_off.png" backgroundImage="menu4b_2_off.png">
+                                            <state key="normal" image="icon_earch_lbrown.png" backgroundImage="menu4b_2_off.png">
                                                 <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
-                                            <state key="selected" image="icon_world.png" backgroundImage="menu4b_2.png"/>
+                                            <state key="selected" image="icon_earch_blue.png" backgroundImage="menu4b_2.png"/>
                                             <state key="highlighted" backgroundImage="menu4b_2.png">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
@@ -2055,7 +2101,7 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="o3Q-XC-ezE">
-                            <rect key="frame" x="0.0" y="224" width="320" height="213"/>
+                            <rect key="frame" x="0.0" y="256" width="320" height="213"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="fU8-9E-hvP">
@@ -2183,8 +2229,34 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="pf1-Jw-xNg">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="a6b-Z2-nsr">
                                         <rect key="frame" x="0.0" y="192" width="320" height="32"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="31"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="TopLeft" image="side_menu_bg2.png" id="aQ8-L3-nLZ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="32"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="box_recruit.png" id="qBL-AR-uMU">
+                                                    <rect key="frame" x="7" y="7" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Latte cameraスタッフ募集" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="28R-mH-P6f">
+                                                    <rect key="frame" x="33" y="7" width="239" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="pf1-Jw-xNg">
+                                        <rect key="frame" x="0.0" y="224" width="320" height="32"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="31"/>
@@ -2482,7 +2554,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="A8e-Mh-zvM">
-                            <rect key="frame" x="0.0" y="204" width="320" height="213"/>
+                            <rect key="frame" x="0.0" y="236" width="320" height="213"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="DND-VO-acN">
@@ -2630,6 +2702,32 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="プライバシーポリシー" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rFt-jk-nkg">
+                                                    <rect key="frame" x="33" y="7" width="239" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="SU1-cZ-XzH">
+                                        <rect key="frame" x="0.0" y="204" width="320" height="32"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="31"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="TopLeft" image="side_menu_bg2.png" id="D5f-ep-zdi">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="32"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="box_recruit.png" id="rCw-Ho-FGL">
+                                                    <rect key="frame" x="7" y="7" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Latte cameraスタッフ募集" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YMB-lA-mVo">
                                                     <rect key="frame" x="33" y="7" width="239" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
@@ -2940,6 +3038,7 @@
         <image name="box_praivacy.png" width="22" height="22"/>
         <image name="box_profile.png" width="22" height="22"/>
         <image name="box_question.png" width="22" height="22"/>
+        <image name="box_recruit.png" width="22" height="22"/>
         <image name="box_regist.png" width="22" height="22"/>
         <image name="box_tag.png" width="22" height="22"/>
         <image name="box_warning.png" width="22" height="22"/>
@@ -2950,19 +3049,21 @@
         <image name="bt_info.png" width="25" height="25"/>
         <image name="hicon_menu.png" width="20" height="17"/>
         <image name="icon_addfollow_s.png" width="12" height="12"/>
-        <image name="icon_area.png" width="15" height="15"/>
-        <image name="icon_area_off.png" width="15" height="15"/>
-        <image name="icon_calender.png" width="15" height="15"/>
-        <image name="icon_calender_off.png" width="15" height="15"/>
+        <image name="icon_area_blue.png" width="15" height="15"/>
+        <image name="icon_area_lbrown.png" width="15" height="15"/>
+        <image name="icon_calendar_blue.png" width="15" height="15"/>
+        <image name="icon_calendar_lbrown.png" width="15" height="15"/>
         <image name="icon_comment_s.png" width="12" height="12"/>
+        <image name="icon_earch_blue.png" width="15" height="15"/>
+        <image name="icon_earch_lbrown.png" width="15" height="15"/>
         <image name="icon_escape2.png" width="15" height="15"/>
         <image name="icon_follow_s.png" width="14" height="12"/>
         <image name="icon_follower_s.png" width="14" height="12"/>
         <image name="icon_followon_s.png" width="9" height="12"/>
         <image name="icon_friend_m.png" width="19" height="14"/>
         <image name="icon_friend_m_white.png" width="19" height="14"/>
-        <image name="icon_grid.png" width="15" height="15"/>
-        <image name="icon_grid_m_off.png" width="15" height="15"/>
+        <image name="icon_grid_blue.png" width="15" height="15"/>
+        <image name="icon_grid_lbrown.png" width="15" height="15"/>
         <image name="icon_iine_s.png" width="12" height="12"/>
         <image name="icon_iine_s_on.png" width="12" height="12"/>
         <image name="icon_info.png" width="17" height="16"/>
@@ -2982,22 +3083,10 @@
         <image name="icon_setting.png" width="15" height="16"/>
         <image name="icon_setting_m_ocher.png" width="15" height="15"/>
         <image name="icon_tag_m.png" width="16" height="16"/>
-        <image name="icon_timeline.png" width="19" height="15"/>
-        <image name="icon_timeline_off.png" width="19" height="15"/>
-        <image name="icon_trend.png" width="13" height="15"/>
-        <image name="icon_trend_off.png" width="13" height="15"/>
-        <image name="icon_world.png" width="15" height="15"/>
-        <image name="icon_world_off.png" width="15" height="15"/>
-        <image name="menu3_2.png" width="104" height="42"/>
-        <image name="menu3_3.png" width="108" height="42"/>
-        <image name="menu4_1.png" width="83" height="42"/>
-        <image name="menu4_1_off.png" width="83" height="42"/>
-        <image name="menu4_2.png" width="77" height="42"/>
-        <image name="menu4_2_off.png" width="77" height="42"/>
-        <image name="menu4_3.png" width="77" height="42"/>
-        <image name="menu4_3_off.png" width="77" height="42"/>
-        <image name="menu4_4.png" width="83" height="42"/>
-        <image name="menu4_4_off.png" width="83" height="42"/>
+        <image name="icon_timeline_blue.png" width="19" height="15"/>
+        <image name="icon_timeline_lbrown.png" width="19" height="15"/>
+        <image name="icon_trend_blue.png" width="13" height="15"/>
+        <image name="icon_trend_ltrend.png" width="13" height="15"/>
         <image name="menu4b_1.png" width="47" height="42"/>
         <image name="menu4b_1_off.png" width="47" height="42"/>
         <image name="menu4b_2.png" width="44" height="42"/>
@@ -3006,6 +3095,12 @@
         <image name="menu4b_3_off.png" width="113" height="42"/>
         <image name="menu4b_4.png" width="116" height="42"/>
         <image name="menu4b_4_off.png" width="116" height="42"/>
+        <image name="menu5b_3.png" width="57" height="42"/>
+        <image name="menu5b_3_off.png" width="57" height="42"/>
+        <image name="menu5b_4.png" width="56" height="42"/>
+        <image name="menu5b_4_off.png" width="56" height="42"/>
+        <image name="menu5b_5.png" width="60" height="42"/>
+        <image name="menu5b_5_off.png" width="60" height="42"/>
         <image name="notify_all.png" width="19" height="15"/>
         <image name="notify_comment.png" width="15" height="15"/>
         <image name="notify_follow.png" width="15" height="15"/>
@@ -3238,7 +3333,10 @@
         <class className="LXRankingViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXRankingViewController.h"/>
             <relationships>
+                <relationship kind="action" name="touchArea:" candidateClass="UIButton"/>
                 <relationship kind="action" name="touchTab:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonAreaLocal" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonAreaWorld" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonCalendar" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonDaily" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="buttonMonthly" candidateClass="UIButton"/>

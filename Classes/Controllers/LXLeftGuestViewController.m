@@ -138,6 +138,9 @@
                 else
                     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://en.latte.la/company/policy"]];
                 break;
+            case 3:
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://luxeys.co.jp/recruits/"]];
+                break;
             default:
                 break;
         }
