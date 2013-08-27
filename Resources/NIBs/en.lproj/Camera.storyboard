@@ -5,10 +5,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
-        <!--Modal Navigation Controller-->
+        <!--Nav Gallery View Controller-->
         <scene sceneID="VJh-m3-gUj">
             <objects>
-                <navigationController modalTransitionStyle="crossDissolve" id="zt6-HI-rL4" customClass="LXModalNavigationController" sceneMemberID="viewController">
+                <navigationController modalTransitionStyle="crossDissolve" id="zt6-HI-rL4" customClass="LXNavGalleryViewController" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="QIN-94-go3" customClass="LXNavBar">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -2026,6 +2026,224 @@
         <image name="tool_next.png" width="30" height="50"/>
         <image name="tool_prev.png" width="30" height="50"/>
     </resources>
+    <classes>
+        <class className="GPUImageView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GPUImageView.h"/>
+        </class>
+        <class className="HFImageEditorFrameView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HFImageEditorFrameView.h"/>
+        </class>
+        <class className="HFImageEditorViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HFImageEditorViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="frameView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="panRecognizer" candidateClass="UIPanGestureRecognizer"/>
+                <relationship kind="outlet" name="pinchRecognizer" candidateClass="UIPinchGestureRecognizer"/>
+                <relationship kind="outlet" name="rotationRecognizer" candidateClass="UIRotationGestureRecognizer"/>
+                <relationship kind="outlet" name="tapRecognizer" candidateClass="UITapGestureRecognizer"/>
+            </relationships>
+        </class>
+        <class className="LXCanvasViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCanvasViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="changeBlendIntensity:"/>
+                <relationship kind="action" name="changeFilmIntensity:"/>
+                <relationship kind="action" name="changeLens:" candidateClass="UIButton"/>
+                <relationship kind="action" name="changePen:" candidateClass="UISlider"/>
+                <relationship kind="action" name="printTemplate:"/>
+                <relationship kind="action" name="setBlend:" candidateClass="UIButton"/>
+                <relationship kind="action" name="setMask:" candidateClass="UIButton"/>
+                <relationship kind="action" name="toggleControl:" candidateClass="UIButton"/>
+                <relationship kind="action" name="toggleFisheye:" candidateClass="UIButton"/>
+                <relationship kind="action" name="toggleGain:" candidateClass="UISwitch"/>
+                <relationship kind="action" name="toggleMaskNatual:" candidateClass="UISwitch"/>
+                <relationship kind="action" name="toggleMono:"/>
+                <relationship kind="action" name="touchBlendSetting:"/>
+                <relationship kind="action" name="touchCrop:"/>
+                <relationship kind="action" name="touchNo:"/>
+                <relationship kind="action" name="touchOpenHelp:"/>
+                <relationship kind="action" name="touchReset:"/>
+                <relationship kind="action" name="touchSave:"/>
+                <relationship kind="action" name="touchText:"/>
+                <relationship kind="action" name="updateFilter:"/>
+                <relationship kind="outlet" name="blendIndicator" candidateClass="UIView"/>
+                <relationship kind="outlet" name="buttonBackgroundNatual" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="buttonBlackWhite" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonBlendLayer1" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonBlendLayer2" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonBlurNone" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonBlurNormal" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonBlurStrong" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonBlurWeak" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonLensFish" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonLensNormal" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonLensWide" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonNo" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonReset" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonSavePreset" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonToggleBasic" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonToggleBlend" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonToggleEffect" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonToggleFilm" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonToggleFocus" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonToggleLens" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonTogglePreset" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonYes" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="filmIndicator" candidateClass="UIView"/>
+                <relationship kind="outlet" name="gesturePan" candidateClass="UIPanGestureRecognizer"/>
+                <relationship kind="outlet" name="imageNext" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="imagePrev" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="scrollBlend" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="scrollDetail" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="scrollEffect" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="scrollFilm" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="scrollLayer" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="scrollPreset" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="scrollProcess" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="sliderBlendIntensity" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderBrightness" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderClear" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderContrast" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderEffectIntensity" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderExposure" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderFeather" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderFilmIntensity" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderSaturation" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderSharpness" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderVignette" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="switchGain" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="viewBasicControl" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewBlendControl" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewBottomBar" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewCamera" candidateClass="GPUImageView"/>
+                <relationship kind="outlet" name="viewCameraWraper" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewCanvas" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="viewDraw" candidateClass="LXDrawView"/>
+                <relationship kind="outlet" name="viewEffectControl" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewFocusControl" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewLensControl" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewPresetControl" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewTopBar" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXCaptureViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCaptureViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="capture:"/>
+                <relationship kind="action" name="changeFlash:"/>
+                <relationship kind="action" name="close:"/>
+                <relationship kind="action" name="flipCamera:"/>
+                <relationship kind="action" name="setTimer:"/>
+                <relationship kind="action" name="touchPick:"/>
+                <relationship kind="action" name="touchQuick:" candidateClass="UIButton"/>
+                <relationship kind="action" name="touchTimer:"/>
+                <relationship kind="outlet" name="buttonCapture" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonFlash" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonFlash35" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonPick" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonQuick" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonSetNoTimer" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonSetTimer5s" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="imageAutoFocus" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="imagePreview" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="viewCamera" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewCameraWraper" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewCanvas" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="viewFlash" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewTimer" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewTopBar" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewTopBar35" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXCellFont" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellFont.h"/>
+            <relationships>
+                <relationship kind="outlet" name="imageDownloaded" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="labelFontName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelSample" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="viewSelectIndicator" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXCellFontPreview" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellFontPreview.h"/>
+            <relationships>
+                <relationship kind="outlet" name="imageFont" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="LXDrawView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXDrawView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="drawImageView" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="LXHelpBokehViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXHelpBokehViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="touchClose:"/>
+                <relationship kind="outlet" name="viewHelp" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewPopupHelp" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXImageCropViewController" superclassName="HFImageEditorViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXImageCropViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="panSize:" candidateClass="UIPanGestureRecognizer"/>
+                <relationship kind="action" name="setCropRatio:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="imageCropSize" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="LXImageTextViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXImageTextViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="opacityChanged:" candidateClass="UISlider"/>
+                <relationship kind="action" name="pageChanged:" candidateClass="UIPageControl"/>
+                <relationship kind="action" name="sizeChanged:"/>
+                <relationship kind="action" name="toggleVertical:"/>
+                <relationship kind="action" name="touchAddText:"/>
+                <relationship kind="action" name="touchClose:"/>
+                <relationship kind="action" name="touchCloseFont:"/>
+                <relationship kind="action" name="touchDelete:"/>
+                <relationship kind="action" name="touchDoneEdit:"/>
+                <relationship kind="action" name="touchEditText:"/>
+                <relationship kind="action" name="touchFontTab:" candidateClass="UIButton"/>
+                <relationship kind="action" name="touchOK:"/>
+                <relationship kind="action" name="touchResetRotate:"/>
+                <relationship kind="action" name="touchSelectFont:"/>
+                <relationship kind="action" name="touchShadow:"/>
+                <relationship kind="outlet" name="buttonCloseFont" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonDelete" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonFinishEdit" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonFontAll" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonFontDown" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonFontFav" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonFontList" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonRotate" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonShadow" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonVertical" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="imagePreview" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="pageControl" candidateClass="UIPageControl"/>
+                <relationship kind="outlet" name="scrollCanvas" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="scrollColor" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="scrollTemplate" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="slideOpacity" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="slideSize" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="tableFont" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="viewControlObject" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewControlText" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewFontControl" candidateClass="UIView"/>
+                <relationship kind="outlet" name="viewTextControl" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LXModalNavigationController" superclassName="UINavigationController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXModalNavigationController.h"/>
+        </class>
+        <class className="LXNavBar" superclassName="UINavigationBar">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavBar.h"/>
+        </class>
+        <class className="LXNavGalleryViewController" superclassName="LXModalNavigationController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavGalleryViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
