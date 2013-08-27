@@ -381,7 +381,9 @@
                          
                          [labelDesc setText:currentPage.picture.descriptionText];
                      }
-                     completion:nil];
+                     completion:^(BOOL finished) {
+                         [viewDesc flashScrollIndicators];
+                     }];
     
     viewPicTab.picture = currentPage.picture;
     viewPicTab.viewComment.comments = nil;

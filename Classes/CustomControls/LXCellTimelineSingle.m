@@ -34,12 +34,22 @@
 @synthesize viewBackground;
 @synthesize buttonShare;
 @synthesize imageNationality;
+@synthesize labelDesc;
+@synthesize viewDesc;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        // Initialization code
+        NSLog(@"Created");
+    }
+    return self;
+}
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        
     }
     return self;
 }
@@ -55,16 +65,7 @@
     _feed = feed;
     
     Picture *pic = feed.targets[0];
-    CGRect frame = buttonPic.frame;
-    frame.size.height = [LXUtils heightFromWidth:308.0 width:[pic.width floatValue] height:[pic.height floatValue]];
-    buttonPic.frame = frame;
-    UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:buttonPic.bounds];
-    buttonPic.layer.masksToBounds = NO;
-    buttonPic.layer.shadowColor = [UIColor blackColor].CGColor;
-    buttonPic.layer.shadowOffset = CGSizeMake(0.0, 0.0);
-    buttonPic.layer.shadowOpacity = 0.5f;
-    buttonPic.layer.shadowRadius = 1.5f;
-    buttonPic.layer.shadowPath = shadowPathPic.CGPath;
+
     [buttonPic loadBackground:pic.urlMedium];
         
     buttonPic.tag = [pic.pictureId integerValue];
@@ -120,8 +121,58 @@
     [buttonShare addTarget:self action:@selector(sharePic:) forControlEvents:UIControlEventTouchUpInside];
     
     [LXUtils setNationalityOfUser:feed.user forImage:imageNationality nextToLabel:labelTitle];
+    
+    labelDesc.text = pic.descriptionText;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showDesc) name:@"TimelineShowDesc" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideDesc) name:@"TimelineHideDesc" object:nil];
 
     [self increaseCounter];
+}
+
+- (void)layoutSubviews {
+    Picture *pic = _feed.targets[0];
+    
+    [super layoutSubviews];
+    
+    CGRect framePic = buttonPic.frame;
+    framePic.size.height = [LXUtils heightFromWidth:308.0 width:[pic.width floatValue] height:[pic.height floatValue]];
+    buttonPic.frame = framePic;
+    UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:buttonPic.bounds];
+    buttonPic.layer.masksToBounds = NO;
+    buttonPic.layer.shadowColor = [UIColor blackColor].CGColor;
+    buttonPic.layer.shadowOffset = CGSizeMake(0.0, 0.0);
+    buttonPic.layer.shadowOpacity = 0.5f;
+    buttonPic.layer.shadowRadius = 1.5f;
+    buttonPic.layer.shadowPath = shadowPathPic.CGPath;
+    
+    CGSize size = [pic.descriptionText sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0]
+                                  constrainedToSize:CGSizeMake(296, 138)
+                                      lineBreakMode:labelDesc.lineBreakMode];
+    CGRect frameDesc = viewDesc.frame;
+    CGRect frameDescLabel = labelDesc.frame;
+    frameDesc.size.height = MIN(size.height+12, framePic.size.height);
+    if (pic.descriptionText.length == 0) {
+        frameDesc.size.height = 0;
+    }
+    
+    frameDesc.origin.y = framePic.origin.y + framePic.size.height - frameDesc.size.height;
+    frameDescLabel.size.height = frameDesc.size.height - 12;
+    frameDescLabel.origin.y = 6;
+    
+    labelDesc.frame = frameDescLabel;
+    viewDesc.frame = frameDesc;
+}
+- (void)showDesc {
+    [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
+        viewDesc.alpha = 1;
+    }];
+}
+
+- (void)hideDesc {
+    [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
+        viewDesc.alpha = 0;
+    }];
 }
 
 - (void)increaseCounter {

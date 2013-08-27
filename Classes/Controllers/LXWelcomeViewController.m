@@ -509,6 +509,11 @@ typedef enum {
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
     [refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+    if (!decelerate) {
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:@"TimelineHideDesc"
+         object:self];
+    }
 }
 
 - (void)submitLike:(UIButton*)sender {
@@ -538,6 +543,18 @@ typedef enum {
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self loadMore:YES];
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"TimelineShowDesc"
+     object:self];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"TimelineHideDesc"
+     object:self];
 }
 
 

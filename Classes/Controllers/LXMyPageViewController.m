@@ -1667,6 +1667,23 @@ typedef enum {
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
     [refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+    if (!decelerate) {
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:@"TimelineHideDesc"
+         object:self];
+    }
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"TimelineShowDesc"
+     object:self];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"TimelineHideDesc"
+     object:self];
 }
 
 @end

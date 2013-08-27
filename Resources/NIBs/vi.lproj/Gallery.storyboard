@@ -13,7 +13,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="dcl-lB-O6o" userLabel="Scroll View Description">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="dcl-lB-O6o" userLabel="Scroll View Description">
                                 <rect key="frame" x="0.0" y="537" width="320" height="0.0"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
@@ -1183,10 +1183,13 @@
                 <relationship kind="outlet" name="viewTab" candidateClass="UIView"/>
             </relationships>
         </class>
+        <class className="LXModalNavigationController" superclassName="UINavigationController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXModalNavigationController.h"/>
+        </class>
         <class className="LXNavBar" superclassName="UINavigationBar">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavBar.h"/>
         </class>
-        <class className="LXNavGalleryViewController" superclassName="UINavigationController">
+        <class className="LXNavGalleryViewController" superclassName="LXModalNavigationController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavGalleryViewController.h"/>
         </class>
         <class className="LXPicCommentViewController" superclassName="UIViewController">
