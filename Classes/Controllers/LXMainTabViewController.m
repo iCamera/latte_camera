@@ -391,6 +391,13 @@
 - (void)uploadSuccess:(NSNotification *) notification {
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
     buttonUploadStatus.hidden = app.uploader.count == 0;
+    if (app.uploader.count == 0) {
+        self.selectedIndex = 4;
+        UINavigationController *navMypage = (UINavigationController*)self.selectedViewController;
+        if ([navMypage.viewControllers[0] respondsToSelector:@selector(reloadView)]) {
+            [navMypage.viewControllers[0] performSelector:@selector(reloadView)];
+        }
+    }
 }
 
 - (void)uploadProgess:(NSNotification *) notification {
