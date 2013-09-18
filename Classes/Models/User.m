@@ -132,6 +132,8 @@
         [self setValue:value forKey:@"_pictureAutoTweet"];
     } else if ([key isEqualToString:@"verified"]) {
         [self setValue:value forKey:@"_verified"];
+    } else if ([key isEqualToString:@"is_locked"]) {
+        [self setValue:value forKey:@"_isLocked"];
     } else if ([key isEqualToString:@"mail"]) {
         [self setValue:value forKey:@"_mail"];
     }

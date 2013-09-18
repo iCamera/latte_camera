@@ -7,7 +7,7 @@
 //
 
 #import "UIButton+AsyncImage.h"
-#import <SDWebImage/UIButton+WebCache.h>
+#import "AFNetworking.h"
 
 @implementation UIButton (AsyncImage)
 
@@ -27,7 +27,28 @@
         [self setBackgroundColor:[UIColor grayColor]];
     }
     
-    [self setImageWithURL:[NSURL URLWithString:url] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:placeHolder] options:SDWebImageProgressiveDownload];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]
+                                             cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                         timeoutInterval:60.0];
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    
+    void (^successDownload)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        UIImage *loadedImage = [UIImage imageWithData:responseObject];
+        [self setBackgroundImage:loadedImage forState:UIControlStateNormal];
+    };
+    
+    
+    void (^failDownload)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
+    };
+    
+    [operation setCompletionBlockWithSuccess: successDownload failure: failDownload];
+    
+    [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+    }];
+    
+    
+    [operation start];
 }
 
 

@@ -101,6 +101,7 @@
 @property (nonatomic, assign) BOOL pictureAutoTweet;
 
 @property (nonatomic, assign) BOOL verified;
+@property (nonatomic, assign) BOOL isLocked;
 
 @property (nonatomic, strong) UserMailAccept *mailAccepts;
 @property (nonatomic, strong) UserPushAccept *notifyAccepts;

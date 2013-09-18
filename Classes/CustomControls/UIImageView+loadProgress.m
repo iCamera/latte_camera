@@ -7,7 +7,7 @@
 //
 
 #import "UIImageView+loadProgress.h"
-#import <SDWebImage/UIImageView+WebCache.h>
+#import "AFNetworking.h"
 
 @implementation UIImageView (loadProgress)
 - (void)loadProgess:(NSString *)url {
@@ -15,6 +15,40 @@
 }
 
 - (void)loadProgess:(NSString *)url placeholderImage:(UIImage*)placeholder {
-    [self setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeholder options:SDWebImageProgressiveDownload];
+    UIProgressView *progess = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
+    progess.progressTintColor = [UIColor whiteColor];
+    progess.trackTintColor = [UIColor darkGrayColor];
+    CGRect frame = self.frame;
+    frame.origin.x = 10;
+    frame.origin.y = frame.size.height/2-3;
+    frame.size.width -= 20;
+    
+    progess.frame = frame;
+    progess.progress = 0;
+    [self addSubview:progess];
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]
+                                             cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                         timeoutInterval:60.0];
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    
+    void (^successDownload)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self setImage:[UIImage imageWithData:responseObject]];
+        [progess removeFromSuperview];
+    };
+    
+    void (^failDownload)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
+        [progess removeFromSuperview];
+    };
+    
+    [operation setCompletionBlockWithSuccess: successDownload failure: failDownload];
+    
+    [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+        progess.progress = (float)totalBytesRead/(float)totalBytesExpectedToRead;
+    }];
+    
+    
+    [operation start];
 }
 @end

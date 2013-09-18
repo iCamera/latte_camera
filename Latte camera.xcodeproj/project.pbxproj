@@ -655,7 +655,6 @@
 		8837737F17AB9000005B0826 /* bt_submit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8837737517AB9000005B0826 /* bt_submit@2x.png */; };
 		8837738517AF9C50005B0826 /* LXReportAbuseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8837738417AF9C4F005B0826 /* LXReportAbuseViewController.m */; };
 		8837738817B0C164005B0826 /* LXEmailConfirmPopupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8837738717B0C161005B0826 /* LXEmailConfirmPopupController.m */; };
-		883C9404179E690700594BA4 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C9403179E690700594BA4 /* SDWebImage.framework */; };
 		88418F2B1743674F004EFBA1 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88418F2A1743674F004EFBA1 /* FacebookSDK.framework */; };
 		88418F40174382F8004EFBA1 /* print10.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88418F2E174382F8004EFBA1 /* print10.jpg */; };
 		88418F41174382F8004EFBA1 /* print11.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88418F2F174382F8004EFBA1 /* print11.jpg */; };
@@ -2680,7 +2679,6 @@
 		8837738417AF9C4F005B0826 /* LXReportAbuseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXReportAbuseViewController.m; sourceTree = "<group>"; };
 		8837738617B0C15F005B0826 /* LXEmailConfirmPopupController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXEmailConfirmPopupController.h; sourceTree = "<group>"; };
 		8837738717B0C161005B0826 /* LXEmailConfirmPopupController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXEmailConfirmPopupController.m; sourceTree = "<group>"; };
-		883C9403179E690700594BA4 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDWebImage.framework; path = Vendor/SDWebImage.framework; sourceTree = "<group>"; };
 		88418F2A1743674F004EFBA1 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		88418F2E174382F8004EFBA1 /* print10.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = print10.jpg; sourceTree = "<group>"; };
 		88418F2F174382F8004EFBA1 /* print11.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = print11.jpg; sourceTree = "<group>"; };
@@ -4176,7 +4174,6 @@
 				8881666C16B902260089106D /* libGoogleAnalytics.a in Frameworks */,
 				88418F2B1743674F004EFBA1 /* FacebookSDK.framework in Frameworks */,
 				88FB7CFC1782FFAB0038B067 /* libTestFlight.a in Frameworks */,
-				883C9404179E690700594BA4 /* SDWebImage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5759,7 +5756,6 @@
 		88D9864615B8F97800858AD6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				883C9403179E690700594BA4 /* SDWebImage.framework */,
 				88C0FF4717212C0600F8CA2D /* Accelerate.framework */,
 				887E40CE1626CE300060623C /* Accounts.framework */,
 				887E40CF1626CE330060623C /* AdSupport.framework */,

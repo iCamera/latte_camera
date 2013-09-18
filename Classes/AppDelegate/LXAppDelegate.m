@@ -181,8 +181,9 @@
                 [overlay postImmediateErrorMessage:NSLocalizedString(@"Your registration has not been completed yet", @"") duration:9999 animated:YES];
                 [overlay show];
             }
-        } else {
-            [overlay hide];
+        } else if (_currentUser.isLocked) {
+            [overlay postImmediateErrorMessage:NSLocalizedString(@"Your account has been temporarily locked", @"") duration:9999 animated:YES];
+            [overlay show];
         }
     } else {
         [overlay hide];
