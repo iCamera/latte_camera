@@ -29,7 +29,6 @@ typedef enum {
     BOOL loadEnded;
     BOOL reloading;
     NSString *area;
-    EGORefreshTableHeaderView *refreshHeaderView;
     UIPanGestureRecognizer *navigationBarPanGestureRecognizer;
     WelcomeTableMode tableMode;
 }
@@ -85,10 +84,6 @@ typedef enum {
     tablePic.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     
     tablePic.frame = CGRectMake(0, 0, 320, self.view.frame.size.height-44);
-    
-    refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - tablePic.bounds.size.height, self.view.frame.size.width, tablePic.bounds.size.height)];
-    refreshHeaderView.delegate = self;
-    [tablePic addSubview:refreshHeaderView];
     
     [viewLogin removeFromSuperview];
     viewLogin.layer.cornerRadius = 5;
@@ -467,7 +462,7 @@ typedef enum {
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
-    [refreshHeaderView egoRefreshScrollViewDidScroll:aScrollView];
+//    [refreshHeaderView egoRefreshScrollViewDidScroll:aScrollView];
 
     if (loadEnded)
         return;
@@ -490,25 +485,25 @@ typedef enum {
 
 - (void)doneLoadingTableViewData{
     reloading = NO;
-    [refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:tablePic];
+//    [refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:tablePic];
 }
 
-- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
-    [self reloadTableViewDataSource];
-    
-    [self reloadView];
-}
-
-- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
-    return reloading; // should return if data source model is reloading
-}
-
-- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
-    return [NSDate date]; // should return date data source was last changed
-}
+//- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
+//    [self reloadTableViewDataSource];
+//    
+//    [self reloadView];
+//}
+//
+//- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+//    return reloading; // should return if data source model is reloading
+//}
+//
+//- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+//    return [NSDate date]; // should return date data source was last changed
+//}
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    [refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+//    [refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
     if (!decelerate) {
         [[NSNotificationCenter defaultCenter]
          postNotificationName:@"TimelineHideDesc"

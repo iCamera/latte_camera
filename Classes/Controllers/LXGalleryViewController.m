@@ -616,4 +616,9 @@
     return screenRect.size.height - frameTab.origin.y - frameTab.size.height > 0;
 }
 
+- (BOOL)prefersStatusBarHidden {
+    return YES;
+}
+
+
 @end

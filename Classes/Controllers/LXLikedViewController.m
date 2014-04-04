@@ -21,7 +21,6 @@
 @implementation LXLikedViewController {
     NSMutableArray *pictures;
     BOOL reloading;
-    EGORefreshTableHeaderView *refreshHeaderView;
     NSInteger page;
     BOOL loadEnded;
 }
@@ -46,9 +45,9 @@
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     // Do any additional setup after loading the view.
-    refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
-    refreshHeaderView.delegate = self;
-    [self.tableView addSubview:refreshHeaderView];
+//    refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
+//    refreshHeaderView.delegate = self;
+//    [self.tableView addSubview:refreshHeaderView];
     
     [self reloadFav];
 
@@ -191,30 +190,30 @@
 
 - (void)doneLoadingTableViewData{
     reloading = NO;
-    [refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+//    [refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 }
 
-- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
-    [self reloadTableViewDataSource];
-    
-    [self reloadFav];
-}
-
-- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
-    
-    return reloading; // should return if data source model is reloading
-    
-}
-
-- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
-    
-    return [NSDate date]; // should return date data source was last changed
-    
-}
+//- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
+//    [self reloadTableViewDataSource];
+//    
+//    [self reloadFav];
+//}
+//
+//- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+//    
+//    return reloading; // should return if data source model is reloading
+//    
+//}
+//
+//- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+//    
+//    return [NSDate date]; // should return date data source was last changed
+//    
+//}
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    [refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
-        
+//    [refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+    
     if (loadEnded)
         return;
 
@@ -235,7 +234,7 @@
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    [refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+//    [refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
 }
 
 - (void)viewDidUnload {

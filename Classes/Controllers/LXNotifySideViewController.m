@@ -31,7 +31,6 @@
     int page;
     int limit;
     int currentTab;
-    EGORefreshTableHeaderView *refreshHeaderView;
     BOOL reloading;
     BOOL loadEnded;
 }
@@ -74,9 +73,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive:) name:@"ReceivedPushNotify" object:nil];
     
     // Do any additional setup after loading the view from its nib.
-    refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - tableNotify.bounds.size.height, tableNotify.frame.size.width, tableNotify.bounds.size.height)];
-    refreshHeaderView.delegate = self;
-    [tableNotify addSubview:refreshHeaderView];
     loadEnded = false;
 
     limit = 30;
@@ -275,7 +271,7 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
-    [refreshHeaderView egoRefreshScrollViewDidScroll:aScrollView];
+//    [refreshHeaderView egoRefreshScrollViewDidScroll:aScrollView];
     
     if (loadEnded)
         return;
@@ -303,25 +299,25 @@
 - (void)doneLoadingTableViewData{
 	//  model should call this when its done loading
 	reloading = NO;
-	[refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableNotify];
+//	[refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableNotify];
 }
 
-- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
-	[self reloadTableViewDataSource];
-	[self reloadView];
-}
+//- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
+//	[self reloadTableViewDataSource];
+//	[self reloadView];
+//}
 
-- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
-	return reloading; // should return if data source model is reloading
-}
+//- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+//	return reloading; // should return if data source model is reloading
+//}
 
-- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
-	return [NSDate date]; // should return date data source was last changed
-}
+//- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+//	return [NSDate date]; // should return date data source was last changed
+//}
 
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-	[refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
-}
+//- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+//	[refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+//}
 
 - (void)viewDidUnload {
     [self setButtonNotifyAll:nil];

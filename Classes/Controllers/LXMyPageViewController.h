@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 #import "LXGalleryViewController.h"
-#import "EGORefreshTableHeaderView.h"
 #import "MBProgressHUD.h"
 #import "LXCanvasViewController.h"
 
@@ -30,7 +29,7 @@ typedef enum {
 
 @class User;
 
-@interface LXMyPageViewController : UITableViewController <EGORefreshTableHeaderDelegate, MBProgressHUDDelegate, UIActionSheetDelegate, LXImagePickerDelegate, LXGalleryViewControllerDataSource>
+@interface LXMyPageViewController : UITableViewController <MBProgressHUDDelegate, UIActionSheetDelegate, LXImagePickerDelegate, LXGalleryViewControllerDataSource>
 
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadIndicator;
 

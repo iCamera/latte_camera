@@ -25,7 +25,6 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:animated];
     [super viewWillAppear:animated];
 }
 

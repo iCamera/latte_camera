@@ -70,7 +70,7 @@ typedef enum {
     NSMutableDictionary *currentDayPics;
     NSDate *selectedCalendarDate;
     NSMutableArray *currentMonthPicsFlat;
-    EGORefreshTableHeaderView *refreshHeaderView;
+//    EGORefreshTableHeaderView *refreshHeaderView;
     MBProgressHUD *HUD;
     
     LXViewHeaderMypage *viewHeaderMypage;
@@ -180,10 +180,10 @@ typedef enum {
     HUD.margin = 10.f;
     HUD.yOffset = 150.f;
     
-    refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
-    refreshHeaderView.delegate = self;
-    [self.tableView addSubview:refreshHeaderView];
-    
+//    refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
+//    refreshHeaderView.delegate = self;
+//    [self.tableView addSubview:refreshHeaderView];
+//    
 //    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     
     [self reloadView];
@@ -1608,29 +1608,29 @@ typedef enum {
 
 - (void)doneLoadingTableViewData{
     reloading = NO;
-    [refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+//    [refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 }
 
-- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
-    [self reloadTableViewDataSource];
-    
-    [self reloadView];
-}
-
-- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
-    
-    return reloading; // should return if data source model is reloading
-    
-}
-
-- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
-    
-    return [NSDate date]; // should return date data source was last changed
-    
-}
+//- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
+//    [self reloadTableViewDataSource];
+//    
+//    [self reloadView];
+//}
+//
+//- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+//    
+//    return reloading; // should return if data source model is reloading
+//    
+//}
+//
+//- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+//    
+//    return [NSDate date]; // should return date data source was last changed
+//    
+//}
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    [refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+//    [refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
     
     //Load more
     switch (tableMode) {
@@ -1666,7 +1666,7 @@ typedef enum {
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    [refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+//    [refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
     if (!decelerate) {
         [[NSNotificationCenter defaultCenter]
          postNotificationName:@"TimelineHideDesc"

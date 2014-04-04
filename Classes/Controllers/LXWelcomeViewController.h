@@ -12,12 +12,11 @@
 #import "Picture.h"
 #import "LatteAPIClient.h"
 #import "LXAppDelegate.h"
-#import "EGORefreshTableHeaderView.h"
 #import "LXCellTimelineSingle.h"
 #import "LXCellTimelineMulti.h"
 #import "LXGalleryViewController.h"
 
-@interface LXWelcomeViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,EGORefreshTableHeaderDelegate, LXGalleryViewControllerDataSource>
+@interface LXWelcomeViewController : UIViewController<UITableViewDataSource,UITableViewDelegate, LXGalleryViewControllerDataSource>
 
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
 @property (strong, nonatomic) IBOutlet UIButton *buttonGrid;

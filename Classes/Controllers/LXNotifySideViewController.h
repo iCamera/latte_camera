@@ -8,11 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-#import "EGORefreshTableHeaderView.h"
 #import "LXMainTabViewController.h"
 
 
-@interface LXNotifySideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, EGORefreshTableHeaderDelegate>
+@interface LXNotifySideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonNotifyAll;

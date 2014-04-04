@@ -7,10 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "EGORefreshTableHeaderView.h"
 #import "LXGalleryViewController.h"
 
-@interface LXLikedViewController : UITableViewController<EGORefreshTableHeaderDelegate, LXGalleryViewControllerDataSource>
+@interface LXLikedViewController : UITableViewController<LXGalleryViewControllerDataSource>
 
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadIndicator;
 
