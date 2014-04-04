@@ -92,14 +92,14 @@
 
     
     // Tab style
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
-    for (UITabBarItem* tab in [self.tabBarController.tabBar items]) {
-        DLog(@"text");
-        [tab setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                     [UIColor blackColor], UITextAttributeTextShadowColor,
-                                     [NSValue valueWithUIOffset:UIOffsetMake(0, 1)], UITextAttributeTextShadowOffset,
-                                     nil] forState:UIControlStateNormal];
-    }
+//    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
+//    for (UITabBarItem* tab in [self.tabBarController.tabBar items]) {
+//        DLog(@"text");
+//        [tab setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+//                                     [UIColor blackColor], UITextAttributeTextShadowColor,
+//                                     [NSValue valueWithUIOffset:UIOffsetMake(0, 1)], UITextAttributeTextShadowOffset,
+//                                     nil] forState:UIControlStateNormal];
+//    }
 
     
     UILabel *labelCamera = [[UILabel alloc] init];
@@ -147,17 +147,17 @@
     [self.view addSubview:viewCamera];
     
 
-    self.tabBar.selectionIndicatorImage = [UIImage imageNamed:@"bg_bottom_on.png"];
-    self.tabBar.backgroundImage = [UIImage imageNamed: @"bg_bottom.png"];
+//    self.tabBar.selectionIndicatorImage = [UIImage imageNamed:@"bg_bottom_on.png"];
+//    self.tabBar.backgroundImage = [UIImage imageNamed: @"bg_bottom.png"];
     
     // add the drop shadow
-    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:self.tabBar.bounds];
-    self.tabBar.layer.masksToBounds = NO;
-    self.tabBar.layer.shadowColor = [UIColor blackColor].CGColor;
-    self.tabBar.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-    self.tabBar.layer.shadowOpacity = 0.8f;
-    self.tabBar.layer.shadowRadius = 2.5f;
-    self.tabBar.layer.shadowPath = shadowPath.CGPath;
+//    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:self.tabBar.bounds];
+//    self.tabBar.layer.masksToBounds = NO;
+//    self.tabBar.layer.shadowColor = [UIColor blackColor].CGColor;
+//    self.tabBar.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+//    self.tabBar.layer.shadowOpacity = 0.8f;
+//    self.tabBar.layer.shadowRadius = 2.5f;
+//    self.tabBar.layer.shadowPath = shadowPath.CGPath;
     
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
     if (app.currentUser != nil) {
@@ -176,22 +176,22 @@
 //    [self addChildViewController:viewNav];
     [viewNav didMoveToParentViewController:self];
     
-    for(UIViewController *tab in self.viewControllers) {
-        
-        UIFont *font;
-
-        font = [UIFont fontWithName:@"HelveticaNeue" size:9];
-        
-        NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    font, UITextAttributeFont,
-                                    [UIColor whiteColor], UITextAttributeTextColor,
-                                    [NSValue valueWithCGSize:CGSizeMake(0, 1)], UITextAttributeTextShadowOffset,
-                                    [UIColor blackColor], UITextAttributeTextShadowColor,
-                                    nil];
-        
-        [tab.tabBarItem setTitleTextAttributes:attributes
-                                      forState:UIControlStateNormal];
-    }
+//    for(UIViewController *tab in self.viewControllers) {
+//        
+//        UIFont *font;
+//
+//        font = [UIFont fontWithName:@"HelveticaNeue" size:9];
+//        
+//        NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+//                                    font, UITextAttributeFont,
+//                                    [UIColor whiteColor], UITextAttributeTextColor,
+//                                    [NSValue valueWithCGSize:CGSizeMake(0, 1)], UITextAttributeTextShadowOffset,
+//                                    [UIColor blackColor], UITextAttributeTextShadowColor,
+//                                    nil];
+//        
+//        [tab.tabBarItem setTitleTextAttributes:attributes
+//                                      forState:UIControlStateNormal];
+//    }
     
     viewNotify.view.frame = self.view.bounds;
     viewNotify.parent = self;

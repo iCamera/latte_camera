@@ -33,7 +33,7 @@
 }
 
 - (void)closeModal:(id)sender {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissModalViewControllerAnimated:YES ];
 }
 
 - (void)popViewController:(id)sender {
@@ -48,12 +48,12 @@
         [buttonClose addTarget:self action:@selector(closeModal:) forControlEvents:UIControlEventTouchUpInside];
     }
     
-    if (navigationController.viewControllers[0] != viewController) {
-        LXButtonBack *buttonBack = [[LXButtonBack alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
-        [buttonBack setTitle:NSLocalizedString(@"back", @"BACK") forState:UIControlStateNormal];
-        viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonBack];
-        [buttonBack addTarget:self action:@selector(popViewController:) forControlEvents:UIControlEventTouchUpInside];
-    }
+//    if (navigationController.viewControllers[0] != viewController) {
+//        LXButtonBack *buttonBack = [[LXButtonBack alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
+//        [buttonBack setTitle:NSLocalizedString(@"back", @"BACK") forState:UIControlStateNormal];
+//        viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonBack];
+//        [buttonBack addTarget:self action:@selector(popViewController:) forControlEvents:UIControlEventTouchUpInside];
+//    }
 }
 
 

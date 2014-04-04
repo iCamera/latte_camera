@@ -23,29 +23,29 @@
 {
     self = [super initWithCoder:aDecoder];
     
-    UIFont *font = [UIFont fontWithName:@"Futura-CondensedMedium" size:22];
-    self.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                font, UITextAttributeFont,
-                                [UIColor whiteColor], UITextAttributeTextColor,
-                                [NSValue valueWithCGSize:CGSizeMake(0, 1)], UITextAttributeTextShadowOffset,
-                                [UIColor blackColor], UITextAttributeTextShadowColor,
-                                nil];
+//    UIFont *font = [UIFont fontWithName:@"Futura-CondensedMedium" size:22];
+//    self.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+//                                font, UITextAttributeFont,
+//                                [UIColor whiteColor], UITextAttributeTextColor,
+//                                [NSValue valueWithCGSize:CGSizeMake(0, 1)], UITextAttributeTextShadowOffset,
+//                                [UIColor blackColor], UITextAttributeTextShadowColor,
+//                                nil];
     return self;
 }
 
 
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-    UIImage *image = [UIImage imageNamed: @"bg_head.png"];
-    [image drawInRect:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
-}
+//- (void)drawRect:(CGRect)rect
+//{
+//    // Drawing code
+//    UIImage *image = [UIImage imageNamed: @"bg_head.png"];
+//    [image drawInRect:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+//}
 
 -(void)willMoveToWindow:(UIWindow *)newWindow{
     [super willMoveToWindow:newWindow];
-    [self applyDefaultStyle];
+//    [self applyDefaultStyle];
 }
 
 - (void)applyDefaultStyle {

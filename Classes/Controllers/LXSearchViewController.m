@@ -72,7 +72,7 @@ typedef enum {
     textKeyword.leftView = imageSearch;
     textKeyword.leftViewMode = UITextFieldViewModeAlways;
     
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
+//    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
 
     gestureTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchBackground:)];
     tableMode = kSearchPhoto;

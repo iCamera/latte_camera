@@ -85,7 +85,7 @@ typedef enum {
     rankLayout = kLayoutNormal;
     
     // Do any additional setup after loading the view.
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
+//    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     
     //setup left button
     UIBarButtonItem *navLeftItem = self.navigationItem.leftBarButtonItem;

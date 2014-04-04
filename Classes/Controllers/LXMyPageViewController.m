@@ -145,8 +145,8 @@ typedef enum {
         
         
         //setup left button
-        UIBarButtonItem *navLeftItem = self.navigationItem.leftBarButtonItem;
-        UIButton *buttonSide = (UIButton*)navLeftItem.customView;
+//        UIBarButtonItem *navLeftItem = self.navigationItem.leftBarButtonItem;
+//        UIButton *buttonSide = (UIButton*)navLeftItem.customView;
 //        [buttonSide addTarget:app.controllerSide action:@selector(toggleLeftPanel:) forControlEvents:UIControlEventTouchUpInside];
         
     } else {
@@ -184,7 +184,7 @@ typedef enum {
     refreshHeaderView.delegate = self;
     [self.tableView addSubview:refreshHeaderView];
     
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
+//    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     
     [self reloadView];
 }
