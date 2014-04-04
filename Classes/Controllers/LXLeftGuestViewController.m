@@ -105,7 +105,7 @@
 {
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
     
-    [app.controllerSide showCenterPanelAnimated:YES];
+//    [app.controllerSide showCenterPanelAnimated:YES];
     if (indexPath.section == 0) {
         switch (indexPath.row) {
             case 0:

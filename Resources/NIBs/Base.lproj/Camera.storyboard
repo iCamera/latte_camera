@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="zt6-HI-rL4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="zt6-HI-rL4">
     <dependencies>
-        <deployment version="1280" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
+        <deployment version="1280" defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
         <!--Nav Gallery View Controller-->
@@ -174,12 +174,9 @@
                                         <rect key="frame" x="5" y="5" width="58" height="30"/>
                                         <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                         <state key="normal" image="icon_time2.png" backgroundImage="bg_camera_bt3.png">
-                                            <color key="titleColor" red="0.1960784314" green="0.30980392159999998" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <state key="highlighted" backgroundImage="bg_camera_bt3_on.png">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
+                                        <state key="highlighted" backgroundImage="bg_camera_bt3_on.png"/>
                                         <connections>
                                             <action selector="touchTimer:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="BrC-kw-NGp"/>
                                             <action selector="touchTimer:" destination="z2T-vS-fgP" eventType="touchUpInside" id="kor-R0-wX1"/>
@@ -416,7 +413,7 @@
                                         <rect key="frame" x="73" y="5" width="50" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="15"/>
-                                        <state key="normal" title="" image="icon_crop.png" backgroundImage="bg_camera_bt3.png">
+                                        <state key="normal" image="icon_crop.png" backgroundImage="bg_camera_bt3.png">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -464,14 +461,14 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="120"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="強さ" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EW2-at-bHQ">
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Intensity" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EW2-at-bHQ">
                                                 <rect key="frame" x="10" y="38" width="52" height="16"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="12"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="ぼかし" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="r6N-UU-dSl">
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Feather" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="r6N-UU-dSl">
                                                 <rect key="frame" x="10" y="8" width="52" height="16"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="12"/>
@@ -479,7 +476,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <switch opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="mDq-Om-Pbw" userLabel="Switch Natual">
-                                                <rect key="frame" x="70" y="70" width="79" height="27"/>
+                                                <rect key="frame" x="70" y="70" width="51" height="31"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="onTintColor" red="0.60226004460000004" green="0.53549094019999999" blue="0.31669781419999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
@@ -487,7 +484,7 @@
                                                 </connections>
                                             </switch>
                                             <switch opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="ouN-2N-Jdj" userLabel="Switch Gain">
-                                                <rect key="frame" x="170" y="70" width="79" height="27"/>
+                                                <rect key="frame" x="170" y="70" width="51" height="31"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="onTintColor" red="0.60226004460000004" green="0.53549094019999999" blue="0.31669781419999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
@@ -499,7 +496,7 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                                                 <size key="titleShadowOffset" width="0.0" height="1"/>
-                                                <state key="normal" title="なし" backgroundImage="select42_1.png">
+                                                <state key="normal" title="None" backgroundImage="select42_1.png">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                 </state>
@@ -520,7 +517,7 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                                                 <size key="titleShadowOffset" width="0.0" height="1"/>
-                                                <state key="normal" title="弱" backgroundImage="select42_2.png">
+                                                <state key="normal" title="Weak" backgroundImage="select42_2.png">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                 </state>
@@ -541,7 +538,7 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                                                 <size key="titleShadowOffset" width="0.0" height="1"/>
-                                                <state key="normal" title="中" backgroundImage="select42_2.png">
+                                                <state key="normal" title="Medium" backgroundImage="select42_2.png">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                 </state>
@@ -562,7 +559,7 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                                                 <size key="titleShadowOffset" width="0.0" height="1"/>
-                                                <state key="normal" title="強" backgroundImage="select42_3.png">
+                                                <state key="normal" title="Strong" backgroundImage="select42_3.png">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="titleShadowColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                 </state>
@@ -579,7 +576,7 @@
                                                 </connections>
                                             </button>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="5" maxValue="45" continuous="NO" id="gkz-os-k9A" userLabel="Brush Slider">
-                                                <rect key="frame" x="70" y="5" width="240" height="23"/>
+                                                <rect key="frame" x="70" y="5" width="240" height="29"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="minimumTrackTintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                 <color key="thumbTintColor" red="0.60226004460000004" green="0.53549094019999999" blue="0.31669781419999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -624,7 +621,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="110"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="露出" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" id="yCW-eE-e1c" userLabel="Label - Exposure">
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Exposure" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" id="yCW-eE-e1c" userLabel="Label - Exposure">
                                                 <rect key="frame" x="3" y="113" width="60" height="16"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="12"/>
@@ -632,7 +629,7 @@
                                                 <nil key="highlightedColor"/>
                                                 <size key="shadowOffset" width="0.0" height="0.0"/>
                                             </label>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="鮮明さ" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" id="Rrv-lD-foL">
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Dynamic" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" id="Rrv-lD-foL">
                                                 <rect key="frame" x="3" y="81" width="60" height="16"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="12"/>
@@ -640,7 +637,7 @@
                                                 <nil key="highlightedColor"/>
                                                 <size key="shadowOffset" width="0.0" height="0.0"/>
                                             </label>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="明るさ" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" id="tJD-dS-gMN" userLabel="Label - Brightness">
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Brightness" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" id="tJD-dS-gMN" userLabel="Label - Brightness">
                                                 <rect key="frame" x="3" y="15" width="60" height="16"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="12"/>
@@ -648,7 +645,7 @@
                                                 <nil key="highlightedColor"/>
                                                 <size key="shadowOffset" width="0.0" height="0.0"/>
                                             </label>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="彩度" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" id="qRZ-0S-6mw" userLabel="Label - Saturation">
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Saturation" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" id="qRZ-0S-6mw" userLabel="Label - Saturation">
                                                 <rect key="frame" x="3" y="48" width="60" height="16"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="12"/>
@@ -656,7 +653,7 @@
                                                 <nil key="highlightedColor"/>
                                                 <size key="shadowOffset" width="0.0" height="0.0"/>
                                             </label>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="コントラスト" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" id="VgB-fC-qFd" userLabel="Label - Contrast">
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Contrast" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" id="VgB-fC-qFd" userLabel="Label - Contrast">
                                                 <rect key="frame" x="3" y="148" width="60" height="16"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="12"/>
@@ -665,7 +662,7 @@
                                                 <size key="shadowOffset" width="0.0" height="0.0"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-1.5" maxValue="1.5" id="4kj-V5-0KA" userLabel="Slider Exposure">
-                                                <rect key="frame" x="71" y="110" width="240" height="23"/>
+                                                <rect key="frame" x="71" y="110" width="240" height="29"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="minimumTrackTintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                 <color key="thumbTintColor" red="0.60226004460000004" green="0.53549094019999999" blue="0.31669781419999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -674,7 +671,7 @@
                                                 </connections>
                                             </slider>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-0.5" maxValue="0.5" id="wux-10-cav" userLabel="Slider Brightness">
-                                                <rect key="frame" x="71" y="11" width="240" height="23"/>
+                                                <rect key="frame" x="71" y="11" width="240" height="29"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="minimumTrackTintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                 <color key="thumbTintColor" red="0.60226004460000004" green="0.53549094019999999" blue="0.31669781419999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -683,7 +680,7 @@
                                                 </connections>
                                             </slider>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.75" maxValue="1.25" id="bV2-Yo-oA3" userLabel="Slider Contrast">
-                                                <rect key="frame" x="71" y="145" width="240" height="23"/>
+                                                <rect key="frame" x="71" y="145" width="240" height="29"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="minimumTrackTintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                 <color key="thumbTintColor" red="0.60226004460000004" green="0.53549094019999999" blue="0.31669781419999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -692,7 +689,7 @@
                                                 </connections>
                                             </slider>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" id="NDR-PH-ubg" userLabel="Slider Clearness">
-                                                <rect key="frame" x="71" y="78" width="240" height="23"/>
+                                                <rect key="frame" x="71" y="78" width="240" height="29"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="minimumTrackTintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                 <color key="thumbTintColor" red="0.60226004460000004" green="0.53549094019999999" blue="0.31669781419999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -701,7 +698,7 @@
                                                 </connections>
                                             </slider>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="2" id="NeX-zm-jiQ" userLabel="Slider Saturation">
-                                                <rect key="frame" x="71" y="45" width="240" height="23"/>
+                                                <rect key="frame" x="71" y="45" width="240" height="29"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="minimumTrackTintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                 <color key="thumbTintColor" red="0.60226004460000004" green="0.53549094019999999" blue="0.31669781419999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -718,7 +715,7 @@
                                 <rect key="frame" x="0.0" y="430" width="320" height="110"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="レンズ" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aUP-TE-lcA">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Lens" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aUP-TE-lcA">
                                         <rect key="frame" x="10" y="15" width="52" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="12"/>
@@ -726,7 +723,7 @@
                                         <nil key="highlightedColor"/>
                                         <size key="shadowOffset" width="0.0" height="0.0"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="装飾模様" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="28K-O8-d8W">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Vignette" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="28K-O8-d8W">
                                         <rect key="frame" x="10" y="48" width="52" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="12"/>
@@ -734,7 +731,7 @@
                                         <nil key="highlightedColor"/>
                                         <size key="shadowOffset" width="0.0" height="0.0"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="鋭さ" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ofh-Jj-x7u">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Sharpness" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ofh-Jj-x7u">
                                         <rect key="frame" x="12" y="79" width="52" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="12"/>
@@ -746,14 +743,12 @@
                                         <rect key="frame" x="70" y="10" width="75" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
-                                        <state key="normal" title="普通" backgroundImage="select3_1.png">
+                                        <state key="normal" title="Normal" backgroundImage="select3_1.png">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <state key="disabled" backgroundImage="select3_1_on.png"/>
-                                        <state key="highlighted" backgroundImage="select3_1_on.png">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
+                                        <state key="highlighted" backgroundImage="select3_1_on.png"/>
                                         <connections>
                                             <action selector="changeLens:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="aYC-Si-SYG"/>
                                         </connections>
@@ -762,14 +757,12 @@
                                         <rect key="frame" x="145" y="10" width="75" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
-                                        <state key="normal" title="ワイド" backgroundImage="select3_2.png">
+                                        <state key="normal" title="Wide Angle" backgroundImage="select3_2.png">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <state key="disabled" backgroundImage="select3_2_on.png"/>
-                                        <state key="highlighted" backgroundImage="select3_2_on.png">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
+                                        <state key="highlighted" backgroundImage="select3_2_on.png"/>
                                         <connections>
                                             <action selector="changeLens:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="bs1-Fz-ouE"/>
                                         </connections>
@@ -778,20 +771,18 @@
                                         <rect key="frame" x="220" y="10" width="75" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
-                                        <state key="normal" title="魚眼" backgroundImage="select3_3.png">
+                                        <state key="normal" title="Fish Eye" backgroundImage="select3_3.png">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <state key="disabled" backgroundImage="select3_3_on.png"/>
-                                        <state key="highlighted" backgroundImage="select3_3_on.png">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
+                                        <state key="highlighted" backgroundImage="select3_3_on.png"/>
                                         <connections>
                                             <action selector="changeLens:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="qvL-7e-rEI"/>
                                         </connections>
                                     </button>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" id="biM-cn-8dS" userLabel="Slider Vignette">
-                                        <rect key="frame" x="70" y="45" width="240" height="23"/>
+                                        <rect key="frame" x="70" y="45" width="240" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="minimumTrackTintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                         <color key="thumbTintColor" red="0.60226004460000004" green="0.53549094019999999" blue="0.31669781419999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -800,7 +791,7 @@
                                         </connections>
                                     </slider>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="2" id="v68-J1-M9J" userLabel="Slider Sharpness">
-                                        <rect key="frame" x="70" y="76" width="240" height="23"/>
+                                        <rect key="frame" x="70" y="76" width="240" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="minimumTrackTintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                         <color key="thumbTintColor" red="0.60226004460000004" green="0.53549094019999999" blue="0.31669781419999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -815,7 +806,7 @@
                                 <rect key="frame" x="0.0" y="430" width="320" height="110"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="強さ" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Sv4-qO-kBK">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Intensity" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Sv4-qO-kBK">
                                         <rect key="frame" x="4" y="8" width="52" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="12"/>
@@ -823,7 +814,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" id="9Fr-lg-rCi" userLabel="Brush Slider">
-                                        <rect key="frame" x="62" y="5" width="200" height="23"/>
+                                        <rect key="frame" x="62" y="5" width="200" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="minimumTrackTintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                         <color key="thumbTintColor" red="0.60226004460000004" green="0.53549094019999999" blue="0.31669781419999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -942,7 +933,7 @@
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             </scrollView>
                                             <slider opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" id="bcl-Dm-Cny" userLabel="Horizontal Slider Layer 1">
-                                                <rect key="frame" x="6" y="9" width="201" height="23"/>
+                                                <rect key="frame" x="6" y="9" width="201" height="29"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="minimumTrackTintColor" red="0.2190684443" green="0.19459484590000001" blue="0.11386880050000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="thumbTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -978,7 +969,7 @@
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             </scrollView>
                                             <slider opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" id="QHX-vf-wxZ" userLabel="Horizontal Slider Layer 2">
-                                                <rect key="frame" x="6" y="120" width="201" height="23"/>
+                                                <rect key="frame" x="6" y="120" width="201" height="29"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="minimumTrackTintColor" red="0.2190684443" green="0.19459484590000001" blue="0.11386880050000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="thumbTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1138,13 +1129,8 @@
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0jV-MA-2rR">
                                 <rect key="frame" x="0.0" y="50" width="73" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Save">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="printTemplate:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="Cxg-aC-dJe"/>
@@ -1235,16 +1221,16 @@
             <objects>
                 <viewController storyboardIdentifier="Crop" definesPresentationContext="YES" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Hd8-gk-RP3" customClass="LXImageCropViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ohk-By-S5t">
-                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" id="VVW-PV-ZKH" customClass="HFImageEditorFrameView">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="409"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="429"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bg_camera_bottom.png" id="U5x-4Q-D5D">
-                                <rect key="frame" x="0.0" y="410" width="320" height="50"/>
+                                <rect key="frame" x="0.0" y="430" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                             </imageView>
                             <imageView contentMode="center" image="crop_rb.png" id="iZq-QN-mz3">
@@ -1256,75 +1242,60 @@
                                 </connections>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ADu-ii-K9h">
-                                <rect key="frame" x="254" y="415" width="58" height="40"/>
+                                <rect key="frame" x="254" y="435" width="58" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
-                                <state key="normal" title="" image="icon_ok.png" backgroundImage="bg_camera_bt2.png">
+                                <state key="normal" image="icon_ok.png" backgroundImage="bg_camera_bt2.png">
                                     <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="doneAction:" destination="Hd8-gk-RP3" eventType="touchUpInside" id="DoI-at-CS6"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jwU-4F-egW">
-                                <rect key="frame" x="5" y="415" width="58" height="40"/>
+                                <rect key="frame" x="5" y="435" width="58" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
-                                <state key="normal" title="" image="icon_escape.png" backgroundImage="bg_camera_bt2.png">
+                                <state key="normal" image="icon_escape.png" backgroundImage="bg_camera_bt2.png">
                                     <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="cancelAction:" destination="Hd8-gk-RP3" eventType="touchUpInside" id="n2U-eN-p2f"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="J5R-ie-A2f">
-                                <rect key="frame" x="68" y="415" width="58" height="40"/>
+                                <rect key="frame" x="68" y="435" width="58" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="1:1" backgroundImage="bg_camera_bt2.png">
                                     <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
                                 <connections>
                                     <action selector="setCropRatio:" destination="Hd8-gk-RP3" eventType="touchUpInside" id="aaf-dC-YEz"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vne-VC-Tts">
-                                <rect key="frame" x="131" y="415" width="58" height="40"/>
+                                <rect key="frame" x="131" y="435" width="58" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="4:3" backgroundImage="bg_camera_bt2.png">
                                     <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
                                 <connections>
                                     <action selector="setCropRatio:" destination="Hd8-gk-RP3" eventType="touchUpInside" id="NOL-jB-Ljh"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="xdk-dO-8q3">
-                                <rect key="frame" x="194" y="415" width="58" height="40"/>
+                                <rect key="frame" x="194" y="435" width="58" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="3:4" backgroundImage="bg_camera_bt2.png">
                                     <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="setCropRatio:" destination="Hd8-gk-RP3" eventType="touchUpInside" id="Vll-N7-l5V"/>
@@ -1398,16 +1369,14 @@
                                 <rect key="frame" x="10" y="50" width="300" height="270"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="6" id="owJ-cd-Vz3">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Select the in-focus area with your finger. You can also adjust bokeh settings in the control panel below." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="6" id="owJ-cd-Vz3">
                                         <rect key="frame" x="10" y="30" width="280" height="35"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <string key="text">ぼかしたくない場所を指で囲い
-下のパネルからぼかし具合を調節しましょう</string>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="11"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="ぼかし" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3hh-ui-RYl">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="SLR-like BOKEH" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3hh-ui-RYl">
                                         <rect key="frame" x="27" y="5" width="161" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
@@ -1533,9 +1502,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <state key="highlighted" backgroundImage="bg_camera_bt3_on.png">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <state key="highlighted" backgroundImage="bg_camera_bt3_on.png"/>
                                 <connections>
                                     <action selector="touchAddText:" destination="bke-ye-End" eventType="touchUpInside" id="PFi-rJ-A0F"/>
                                 </connections>
@@ -1556,7 +1523,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="1NV-jt-8PJ">
-                                                <rect key="frame" x="71" y="14" width="187" height="23"/>
+                                                <rect key="frame" x="71" y="14" width="187" height="29"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="minimumTrackTintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                 <connections>
@@ -1575,7 +1542,7 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
                                                 <inset key="contentEdgeInsets" minX="0.0" minY="15" maxX="0.0" maxY="0.0"/>
-                                                <state key="normal" title="" image="edit_fonts.png">
+                                                <state key="normal" image="edit_fonts.png">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
@@ -1591,7 +1558,7 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
                                                 <inset key="contentEdgeInsets" minX="0.0" minY="15" maxX="0.0" maxY="0.0"/>
-                                                <state key="normal" title="" image="edit_text.png">
+                                                <state key="normal" image="edit_text.png">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
@@ -1607,7 +1574,7 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
                                                 <inset key="contentEdgeInsets" minX="0.0" minY="15" maxX="0.0" maxY="0.0"/>
-                                                <state key="normal" title="" image="edit_radio.png">
+                                                <state key="normal" image="edit_radio.png">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
@@ -1650,7 +1617,7 @@
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Font" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9yU-dq-msM">
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Fonts" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9yU-dq-msM">
                                                 <rect key="frame" x="193" y="4" width="61" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="12"/>
@@ -1664,7 +1631,7 @@
                                         <rect key="frame" x="258" y="8" width="58" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
-                                        <state key="normal" title="" image="edit_tickbt.png">
+                                        <state key="normal" image="edit_tickbt.png">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -1690,13 +1657,11 @@
                                 <rect key="frame" x="254" y="435" width="58" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
-                                <state key="normal" title="" image="icon_save2.png" backgroundImage="bg_camera_bt2.png">
+                                <state key="normal" image="icon_save2.png" backgroundImage="bg_camera_bt2.png">
                                     <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <state key="highlighted" backgroundImage="bg_camera_bt2_on.png">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <state key="highlighted" backgroundImage="bg_camera_bt2_on.png"/>
                                 <connections>
                                     <action selector="touchOK:" destination="bke-ye-End" eventType="touchUpInside" id="wpw-Nm-a6j"/>
                                 </connections>
@@ -1709,9 +1674,7 @@
                                     <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <state key="highlighted" backgroundImage="bg_camera_bt2_on.png">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <state key="highlighted" backgroundImage="bg_camera_bt2_on.png"/>
                                 <connections>
                                     <action selector="touchClose:" destination="bke-ye-End" eventType="touchUpInside" id="dOR-sO-hbC"/>
                                 </connections>
@@ -1735,7 +1698,7 @@
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Font" id="R95-Vx-VG0" customClass="LXCellFont">
                                                 <rect key="frame" x="0.0" y="22" width="220" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
-                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="R95-Vx-VG0" id="meU-Ht-G3h">
                                                     <rect key="frame" x="0.0" y="0.0" width="220" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
@@ -1763,8 +1726,7 @@
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                </view>
+                                                </tableViewCellContentView>
                                                 <connections>
                                                     <outlet property="imageDownloaded" destination="QT1-un-PYi" id="A4d-NE-1mg"/>
                                                     <outlet property="labelFontName" destination="JAn-KS-tMe" id="nnh-Ki-tg3"/>
@@ -1775,7 +1737,7 @@
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FontDownload" id="NRd-9e-ulD" customClass="LXCellFontPreview">
                                                 <rect key="frame" x="0.0" y="66" width="220" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
-                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NRd-9e-ulD" id="9vM-1I-Khq">
                                                     <rect key="frame" x="0.0" y="0.0" width="220" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
@@ -1784,8 +1746,7 @@
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                </view>
+                                                </tableViewCellContentView>
                                                 <connections>
                                                     <outlet property="imageFont" destination="aez-Bs-s4V" id="edU-Bu-vQC"/>
                                                 </connections>
@@ -1818,14 +1779,14 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
                                     </view>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="10" maxValue="150" id="dyM-bK-hZP">
-                                        <rect key="frame" x="52" y="444" width="155" height="23"/>
+                                        <rect key="frame" x="52" y="438" width="155" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="minimumTrackTintColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                         <connections>
                                             <action selector="sizeChanged:" destination="bke-ye-End" eventType="valueChanged" id="fhe-mw-IWZ"/>
                                         </connections>
                                     </slider>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="サイズ" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tq9-m9-IS4">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Size" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tq9-m9-IS4">
                                         <rect key="frame" x="7" y="445" width="39" height="17"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="12"/>
@@ -2028,224 +1989,6 @@
         <image name="tool_next.png" width="30" height="50"/>
         <image name="tool_prev.png" width="30" height="50"/>
     </resources>
-    <classes>
-        <class className="GPUImageView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GPUImageView.h"/>
-        </class>
-        <class className="HFImageEditorFrameView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/HFImageEditorFrameView.h"/>
-        </class>
-        <class className="HFImageEditorViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/HFImageEditorViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="frameView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="panRecognizer" candidateClass="UIPanGestureRecognizer"/>
-                <relationship kind="outlet" name="pinchRecognizer" candidateClass="UIPinchGestureRecognizer"/>
-                <relationship kind="outlet" name="rotationRecognizer" candidateClass="UIRotationGestureRecognizer"/>
-                <relationship kind="outlet" name="tapRecognizer" candidateClass="UITapGestureRecognizer"/>
-            </relationships>
-        </class>
-        <class className="LXCanvasViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCanvasViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="changeBlendIntensity:"/>
-                <relationship kind="action" name="changeFilmIntensity:"/>
-                <relationship kind="action" name="changeLens:" candidateClass="UIButton"/>
-                <relationship kind="action" name="changePen:" candidateClass="UISlider"/>
-                <relationship kind="action" name="printTemplate:"/>
-                <relationship kind="action" name="setBlend:" candidateClass="UIButton"/>
-                <relationship kind="action" name="setMask:" candidateClass="UIButton"/>
-                <relationship kind="action" name="toggleControl:" candidateClass="UIButton"/>
-                <relationship kind="action" name="toggleFisheye:" candidateClass="UIButton"/>
-                <relationship kind="action" name="toggleGain:" candidateClass="UISwitch"/>
-                <relationship kind="action" name="toggleMaskNatual:" candidateClass="UISwitch"/>
-                <relationship kind="action" name="toggleMono:"/>
-                <relationship kind="action" name="touchBlendSetting:"/>
-                <relationship kind="action" name="touchCrop:"/>
-                <relationship kind="action" name="touchNo:"/>
-                <relationship kind="action" name="touchOpenHelp:"/>
-                <relationship kind="action" name="touchReset:"/>
-                <relationship kind="action" name="touchSave:"/>
-                <relationship kind="action" name="touchText:"/>
-                <relationship kind="action" name="updateFilter:"/>
-                <relationship kind="outlet" name="blendIndicator" candidateClass="UIView"/>
-                <relationship kind="outlet" name="buttonBackgroundNatual" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="buttonBlackWhite" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonBlendLayer1" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonBlendLayer2" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonBlurNone" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonBlurNormal" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonBlurStrong" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonBlurWeak" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonLensFish" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonLensNormal" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonLensWide" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonNo" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonReset" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonSavePreset" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonToggleBasic" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonToggleBlend" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonToggleEffect" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonToggleFilm" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonToggleFocus" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonToggleLens" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonTogglePreset" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonYes" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="filmIndicator" candidateClass="UIView"/>
-                <relationship kind="outlet" name="gesturePan" candidateClass="UIPanGestureRecognizer"/>
-                <relationship kind="outlet" name="imageNext" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="imagePrev" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="scrollBlend" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="scrollDetail" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="scrollEffect" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="scrollFilm" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="scrollLayer" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="scrollPreset" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="scrollProcess" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="sliderBlendIntensity" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderBrightness" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderClear" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderContrast" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderEffectIntensity" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderExposure" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderFeather" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderFilmIntensity" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderSaturation" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderSharpness" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderVignette" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="switchGain" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="viewBasicControl" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewBlendControl" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewBottomBar" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewCamera" candidateClass="GPUImageView"/>
-                <relationship kind="outlet" name="viewCameraWraper" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewCanvas" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="viewDraw" candidateClass="LXDrawView"/>
-                <relationship kind="outlet" name="viewEffectControl" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewFocusControl" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewLensControl" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewPresetControl" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewTopBar" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="LXCaptureViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCaptureViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="capture:"/>
-                <relationship kind="action" name="changeFlash:"/>
-                <relationship kind="action" name="close:"/>
-                <relationship kind="action" name="flipCamera:"/>
-                <relationship kind="action" name="setTimer:"/>
-                <relationship kind="action" name="touchPick:"/>
-                <relationship kind="action" name="touchQuick:" candidateClass="UIButton"/>
-                <relationship kind="action" name="touchTimer:"/>
-                <relationship kind="outlet" name="buttonCapture" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonFlash" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonFlash35" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonPick" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonQuick" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonSetNoTimer" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonSetTimer5s" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="imageAutoFocus" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="imagePreview" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="viewCamera" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewCameraWraper" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewCanvas" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="viewFlash" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewTimer" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewTopBar" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewTopBar35" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="LXCellFont" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellFont.h"/>
-            <relationships>
-                <relationship kind="outlet" name="imageDownloaded" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="labelFontName" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelSample" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="viewSelectIndicator" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="LXCellFontPreview" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXCellFontPreview.h"/>
-            <relationships>
-                <relationship kind="outlet" name="imageFont" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="LXDrawView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXDrawView.h"/>
-            <relationships>
-                <relationship kind="outlet" name="drawImageView" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="LXHelpBokehViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXHelpBokehViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="touchClose:"/>
-                <relationship kind="outlet" name="viewHelp" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewPopupHelp" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="LXImageCropViewController" superclassName="HFImageEditorViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXImageCropViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="panSize:" candidateClass="UIPanGestureRecognizer"/>
-                <relationship kind="action" name="setCropRatio:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="imageCropSize" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="LXImageTextViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXImageTextViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="opacityChanged:" candidateClass="UISlider"/>
-                <relationship kind="action" name="pageChanged:" candidateClass="UIPageControl"/>
-                <relationship kind="action" name="sizeChanged:"/>
-                <relationship kind="action" name="toggleVertical:"/>
-                <relationship kind="action" name="touchAddText:"/>
-                <relationship kind="action" name="touchClose:"/>
-                <relationship kind="action" name="touchCloseFont:"/>
-                <relationship kind="action" name="touchDelete:"/>
-                <relationship kind="action" name="touchDoneEdit:"/>
-                <relationship kind="action" name="touchEditText:"/>
-                <relationship kind="action" name="touchFontTab:" candidateClass="UIButton"/>
-                <relationship kind="action" name="touchOK:"/>
-                <relationship kind="action" name="touchResetRotate:"/>
-                <relationship kind="action" name="touchSelectFont:"/>
-                <relationship kind="action" name="touchShadow:"/>
-                <relationship kind="outlet" name="buttonCloseFont" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonDelete" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonFinishEdit" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonFontAll" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonFontDown" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonFontFav" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonFontList" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonRotate" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonShadow" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="buttonVertical" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="imagePreview" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="pageControl" candidateClass="UIPageControl"/>
-                <relationship kind="outlet" name="scrollCanvas" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="scrollColor" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="scrollTemplate" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="slideOpacity" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="slideSize" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="tableFont" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="viewControlObject" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewControlText" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewFontControl" candidateClass="UIView"/>
-                <relationship kind="outlet" name="viewTextControl" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="LXModalNavigationController" superclassName="UINavigationController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXModalNavigationController.h"/>
-        </class>
-        <class className="LXNavBar" superclassName="UINavigationBar">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavBar.h"/>
-        </class>
-        <class className="LXNavGalleryViewController" superclassName="LXModalNavigationController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LXNavGalleryViewController.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

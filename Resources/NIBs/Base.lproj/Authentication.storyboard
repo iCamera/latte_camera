@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="EFt-fq-8DL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="EFt-fq-8DL">
     <dependencies>
-        <deployment version="1280" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
+        <deployment version="1280" defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
         <!--Email Confirm Popup Controller-->
@@ -10,11 +10,11 @@
             <objects>
                 <viewController storyboardIdentifier="ConfirmPopup" id="FkE-So-SDO" customClass="LXEmailConfirmPopupController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TAN-D9-dXF">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" id="8zE-ae-Ybm">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
@@ -90,11 +90,11 @@
             <objects>
                 <viewController storyboardIdentifier="Login" id="Qbv-S2-pdO" customClass="LXLoginViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mbT-9B-9wl">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" id="LHN-Nc-sCH">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="center" image="box_login.png" id="1pj-s8-fuc">
@@ -198,9 +198,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" red="0.096989388440000004" green="0.19518149509999999" blue="0.24730947070000001" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
-                                <state key="highlighted" backgroundImage="bt_twitter2_on.png">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <state key="highlighted" backgroundImage="bt_twitter2_on.png"/>
                                 <connections>
                                     <action selector="touchTwitter:" destination="Qbv-S2-pdO" eventType="touchUpInside" id="5EP-gv-aOf"/>
                                 </connections>
@@ -215,9 +213,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" red="0.096989388440000004" green="0.19518149509999999" blue="0.24730947070000001" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
-                                <state key="highlighted" backgroundImage="bt_facebook2_on.png">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <state key="highlighted" backgroundImage="bt_facebook2_on.png"/>
                                 <connections>
                                     <action selector="touchFacebook:" destination="Qbv-S2-pdO" eventType="touchUpInside" id="3x0-zN-vLm"/>
                                 </connections>
@@ -228,7 +224,7 @@
                     <navigationItem key="navigationItem" id="hmJ-uv-mAd">
                         <barButtonItem key="leftBarButtonItem" style="done" id="ygM-LV-hZG">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="lp7-e6-FQb">
-                                <rect key="frame" x="5" y="5" width="40" height="33"/>
+                                <rect key="frame" x="16" y="5" width="40" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" image="hicon_menu.png">
@@ -262,19 +258,19 @@
             <objects>
                 <viewController id="Sv6-cd-mvS" customClass="LXRegisterViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0L8-k6-fXG">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="0Bu-Ad-iFk">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" id="mEE-QY-CIy">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="DU2-gf-aqZ">
-                                                <rect key="frame" x="0.0" y="300" width="320" height="150"/>
+                                                <rect key="frame" x="0.0" y="300" width="320" height="263"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <color key="textColor" red="0.18039215689999999" green="0.15686274510000001" blue="0.098039215690000001" alpha="1" colorSpace="calibratedRGB"/>

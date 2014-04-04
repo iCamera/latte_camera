@@ -81,7 +81,7 @@ typedef enum {
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
     UIBarButtonItem *navLeftItem = self.navigationItem.leftBarButtonItem;
     UIButton *buttonSide = (UIButton*)navLeftItem.customView;
-    [buttonSide addTarget:app.controllerSide action:@selector(toggleLeftPanel:) forControlEvents:UIControlEventTouchUpInside];
+//    [buttonSide addTarget:app.controllerSide action:@selector(toggleLeftPanel:) forControlEvents:UIControlEventTouchUpInside];
     
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];

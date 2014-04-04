@@ -104,10 +104,7 @@
             LXAppDelegate *app = [LXAppDelegate currentDelegate];
             [app setToken:[JSON objectForKey:@"token"]];
             app.currentUser = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
-            
-            MTStatusBarOverlay *overlay = [MTStatusBarOverlay sharedInstance];
-            [overlay postImmediateErrorMessage:NSLocalizedString(@"Your registration has not been completed yet", @"") duration:9999 animated:YES];
-            
+                        
             UIStoryboard *storyAuth = [UIStoryboard storyboardWithName:@"Authentication"
                                                                 bundle:nil];
             UIViewController *viewConfirm = [storyAuth instantiateViewControllerWithIdentifier:@"ConfirmPopup"];

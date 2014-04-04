@@ -10,19 +10,16 @@
 #import "LXMainTabViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "GAI.h"
-#import "LXSidePanelController.h"
 #import "LXCanvasViewController.h"
 #import "User.h"
 
 #define APPDELEGATE (AppDelegate *)[UIApplication sharedApplication].delegate
 
 @interface LXAppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate> {
-    LXSidePanelController *revealController;
     id<GAITracker> tracker;
 }
 
 @property(nonatomic, retain) id<GAITracker> tracker;
-@property(strong, nonatomic) LXSidePanelController *controllerSide;
 
 @property (strong, nonatomic) User *currentUser;
 @property (strong, nonatomic) LXMainTabViewController *viewMainTab;

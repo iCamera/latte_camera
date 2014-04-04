@@ -107,7 +107,7 @@ typedef enum {
     //setup left button
     UIBarButtonItem *navLeftItem = self.navigationItem.leftBarButtonItem;
     UIButton *buttonSide = (UIButton*)navLeftItem.customView;
-    [buttonSide addTarget:app.controllerSide action:@selector(toggleLeftPanel:) forControlEvents:UIControlEventTouchUpInside];
+//    [buttonSide addTarget:app.controllerSide action:@selector(toggleLeftPanel:) forControlEvents:UIControlEventTouchUpInside];
     
     area = [[NSUserDefaults standardUserDefaults] objectForKey:@"timeline_area"];
     if (!area) {

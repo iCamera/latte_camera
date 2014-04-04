@@ -11,7 +11,6 @@
 #import "LatteAPIClient.h"
 #import "ZipArchive.h"
 #import "TestFlight.h"
-#import "MTStatusBarOverlay.h"
 
 @implementation LXAppDelegate
 
@@ -96,11 +95,11 @@
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
     
-    _controllerSide = [[LXSidePanelController alloc] init];
+//    _controllerSide = [[LXSidePanelController alloc] init];
     _viewMainTab = [mainStoryboard instantiateViewControllerWithIdentifier:@"MainTab"];
-    _controllerSide.centerPanel = _viewMainTab;
+//    _controllerSide.centerPanel = _viewMainTab;
     
-    window.rootViewController = _controllerSide;
+    window.rootViewController = _viewMainTab;
     [window makeKeyAndVisible];
     
     NSDictionary *remoteNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
@@ -169,25 +168,6 @@
     }];
     
     [operation start];
-}
-
-- (void)setCurrentUser:(User *)currentUser {
-    _currentUser = currentUser;
-    MTStatusBarOverlay *overlay = [MTStatusBarOverlay sharedInstance];
-    
-    if (currentUser) {
-        if (!_currentUser.verified) {
-            if (!_viewMainTab.presentedViewController) {
-                [overlay postImmediateErrorMessage:NSLocalizedString(@"Your registration has not been completed yet", @"") duration:9999 animated:YES];
-                [overlay show];
-            }
-        } else if (_currentUser.isLocked) {
-            [overlay postImmediateErrorMessage:NSLocalizedString(@"Your account has been temporarily locked", @"") duration:9999 animated:YES];
-            [overlay show];
-        }
-    } else {
-        [overlay hide];
-    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

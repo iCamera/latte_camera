@@ -19,7 +19,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedClient = [[LatteAPIClient alloc] initWithBaseURL:[NSURL URLWithString:kLatteAPIBaseURLString]];
-        if (![kLatteAPIBaseURLString isEqualToString:@"https://latte.la/api/"]) {
+        if (![kLatteAPIBaseURLString isEqualToString:@"http://latte.la/api/"]) {
             [_sharedClient setAuthorizationHeaderWithUsername:@"luxeys" password:@"13579"];
         }
         

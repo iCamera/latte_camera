@@ -111,7 +111,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
-    [app.controllerSide showCenterPanelAnimated:YES];
+//    [app.controllerSide showCenterPanelAnimated:YES];
     switch (indexPath.row) {
         case 0:
             app.viewMainTab.selectedIndex = 4;
