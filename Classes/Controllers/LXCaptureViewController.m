@@ -669,6 +669,10 @@ typedef enum {
     });
 }
 
+- (BOOL)prefersStatusBarHidden {
+    return YES;
+}
+
 - (void)viewDidUnload {
     [self setImagePreview:nil];
     [self setViewFlash:nil];

@@ -42,10 +42,7 @@
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     if (!viewController.navigationItem.rightBarButtonItem) {
-        LXButtonBrown30 *buttonClose = [[LXButtonBrown30 alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
-        [buttonClose setTitle:NSLocalizedString(@"CLOSE", @"CLOSE") forState:UIControlStateNormal];
-        viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonClose];
-        [buttonClose addTarget:self action:@selector(closeModal:) forControlEvents:UIControlEventTouchUpInside];
+        viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(closeModal:)];
     }
     
 //    if (navigationController.viewControllers[0] != viewController) {

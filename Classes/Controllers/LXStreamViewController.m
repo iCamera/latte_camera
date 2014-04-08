@@ -1,0 +1,209 @@
+//
+//  LXStreamViewController.m
+//  Latte camera
+//
+//  Created by Bui Xuan Dung on 4/4/14.
+//  Copyright (c) 2014 LUXEYS. All rights reserved.
+//
+
+#import "LXStreamViewController.h"
+#import "LXStreamBrickCell.h"
+#import "Feed.h"
+#import "Picture.h"
+#import "LatteAPIClient.h"
+
+typedef enum {
+    kWelcomeTableTimeline,
+    kWelcomeTableGrid,
+} WelcomeTableMode;
+
+
+@interface LXStreamViewController ()
+
+@end
+
+@implementation LXStreamViewController {
+    NSMutableArray *feeds;
+    BOOL loadEnded;
+    BOOL reloading;
+    NSString *area;
+    WelcomeTableMode tableMode;
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    [self loadMore:YES];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)becomeActive:(id)sender {
+    [self reloadView];
+}
+
+
+- (void)reloadView {
+    [self loadMore:YES];
+}
+
+- (void)loadMore:(BOOL)reset {
+//    if (indicator.isAnimating || loadEnded) {
+//        return;
+//    }
+//    
+//    [indicator startAnimating];
+    
+    Feed *feed = feeds.lastObject;
+    
+    NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
+    area = @"local";
+    [param setObject:area forKey:@"area"];
+    
+    if (!reset) {
+        if (feed) {
+            [param setObject:feed.feedID forKey:@"last_id"];
+        }
+    }
+    
+    [[LatteAPIClient sharedClient] getPath:@"user/everyone/timeline"
+                                parameters: param
+                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       if (reset) {
+                                           feeds = [Feed mutableArrayFromDictionary:JSON withKey:@"feeds"];
+                                       } else {
+                                           NSMutableArray *newFeeds = [Feed mutableArrayFromDictionary:JSON withKey:@"feeds"];
+                                           [feeds addObjectsFromArray:newFeeds];
+                                       }
+                                       loadEnded = true;
+                                       [self.collectionView reloadData];
+                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       DLog(@"Something went wrong (Welcome)");
+                                   }];
+}
+
+- (NSMutableArray*)flatPictureArray {
+    NSMutableArray *ret = [[NSMutableArray alloc] init];
+    for (Feed *feed in feeds) {
+        for (Picture *picture in feed.targets) {
+            [ret addObject:picture];
+        }
+    }
+    return ret;
+}
+
+
+- (NSDictionary *)pictureAfterPicture:(Picture *)picture {
+    if (tableMode == kWelcomeTableGrid) {
+        Feed *feed = [LXUtils feedFromPicID:[picture.pictureId longValue] of:feeds];
+        NSUInteger current = [feeds indexOfObject:feed];
+        if (current == NSNotFound || current == feeds.count-1) {
+            return nil;
+        }
+        Feed *feedNext = feeds[current+1];
+        NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
+                             feedNext.targets[0], @"picture",
+                             feedNext.user, @"user",
+                             nil];
+        
+        // Loadmore
+        if (current > feeds.count - 6)
+            [self loadMore:NO];
+        return ret;
+    } else if (tableMode == kWelcomeTableTimeline) {
+        NSArray *flatPictures = [self flatPictureArray];
+        NSUInteger current = [flatPictures indexOfObject:picture];
+        if (current != NSNotFound && current < flatPictures.count-1) {
+            Picture *nextPic = flatPictures[current+1];
+            Feed* feed = [LXUtils feedFromPicID:[nextPic.pictureId integerValue] of:feeds];
+            NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 nextPic,  @"picture",
+                                 feed.user, @"user",
+                                 nil];
+            
+            // Loadmore
+            if (current > flatPictures.count - 6)
+                [self loadMore:NO];
+            
+            return ret;
+        }
+    }
+    return nil;
+}
+
+- (NSDictionary *)pictureBeforePicture:(Picture *)picture {
+    if (tableMode == kWelcomeTableGrid) {
+        Feed *feed = [LXUtils feedFromPicID:[picture.pictureId longValue] of:feeds];
+        NSUInteger current = [feeds indexOfObject:feed];
+        if (current == NSNotFound || current == 0) {
+            return nil;
+        }
+        Feed *feedPrev = feeds[current-1];
+        NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
+                             feedPrev.targets[0], @"picture",
+                             feedPrev.user, @"user",
+                             nil];
+        return ret;
+    } else if (tableMode == kWelcomeTableTimeline) {
+        NSArray *flatPictures = [self flatPictureArray];
+        NSUInteger current = [flatPictures indexOfObject:picture];
+        if (current != NSNotFound && current > 0) {
+            Picture *prevPic = flatPictures[current-1];
+            Feed* feed = [LXUtils feedFromPicID:[prevPic.pictureId integerValue] of:feeds];
+            NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 prevPic,  @"picture",
+                                 feed.user, @"user",
+                                 nil];
+            
+            return ret;
+        }
+    }
+    return nil;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    Feed *feed = feeds[indexPath.item];
+    LXStreamBrickCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Brick" forIndexPath:indexPath];
+    cell.picture = feed.targets[0];
+    return cell;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return feeds.count;
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CGSizeMake(152, 152);
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

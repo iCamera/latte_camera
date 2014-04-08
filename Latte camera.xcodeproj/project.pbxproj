@@ -673,6 +673,9 @@
 		88418F4F174382F8004EFBA1 /* print25.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88418F3D174382F8004EFBA1 /* print25.jpg */; };
 		88418F5317438302004EFBA1 /* blend6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88418F5217438302004EFBA1 /* blend6.jpg */; };
 		8847564217212718005CA201 /* RNBlurModalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8847563217212718005CA201 /* RNBlurModalView.m */; };
+		884ACB1E18EEB4C000B2924B /* LXStreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 884ACB1D18EEB4C000B2924B /* LXStreamViewController.m */; };
+		884ACB2118EEB7F600B2924B /* LXStreamViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 884ACB2018EEB7F600B2924B /* LXStreamViewLayout.m */; };
+		884ACB2418EEB8F900B2924B /* LXStreamBrickCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 884ACB2318EEB8F900B2924B /* LXStreamBrickCell.m */; };
 		884C54D516B22EF500DA318E /* LXHelpBokehViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 884C54D416B22EF500DA318E /* LXHelpBokehViewController.m */; };
 		884D215A175C9BF0002FF853 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 884D2150175C9BEF002FF853 /* ioapi.c */; };
 		884D215B175C9BF0002FF853 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 884D2152175C9BF0002FF853 /* mztools.c */; };
@@ -2692,6 +2695,12 @@
 		884ACB1918EE7DC800B2924B /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
 		884ACB1A18EE7DCD00B2924B /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Setting.strings; sourceTree = "<group>"; };
 		884ACB1B18EE7DD000B2924B /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Setting.strings; sourceTree = "<group>"; };
+		884ACB1C18EEB4C000B2924B /* LXStreamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXStreamViewController.h; sourceTree = "<group>"; };
+		884ACB1D18EEB4C000B2924B /* LXStreamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXStreamViewController.m; sourceTree = "<group>"; };
+		884ACB1F18EEB7F600B2924B /* LXStreamViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXStreamViewLayout.h; sourceTree = "<group>"; };
+		884ACB2018EEB7F600B2924B /* LXStreamViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXStreamViewLayout.m; sourceTree = "<group>"; };
+		884ACB2218EEB8F900B2924B /* LXStreamBrickCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXStreamBrickCell.h; sourceTree = "<group>"; };
+		884ACB2318EEB8F900B2924B /* LXStreamBrickCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXStreamBrickCell.m; sourceTree = "<group>"; };
 		884C54D316B22EF500DA318E /* LXHelpBokehViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHelpBokehViewController.h; sourceTree = "<group>"; };
 		884C54D416B22EF500DA318E /* LXHelpBokehViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHelpBokehViewController.m; sourceTree = "<group>"; };
 		884D214F175C9BEF002FF853 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
@@ -5124,6 +5133,12 @@
 				8837738717B0C161005B0826 /* LXEmailConfirmPopupController.m */,
 				88D86DCE17CB446400EC62A2 /* LXSocialViewController.h */,
 				88D86DCF17CB446400EC62A2 /* LXSocialViewController.m */,
+				884ACB1C18EEB4C000B2924B /* LXStreamViewController.h */,
+				884ACB1D18EEB4C000B2924B /* LXStreamViewController.m */,
+				884ACB1F18EEB7F600B2924B /* LXStreamViewLayout.h */,
+				884ACB2018EEB7F600B2924B /* LXStreamViewLayout.m */,
+				884ACB2218EEB8F900B2924B /* LXStreamBrickCell.h */,
+				884ACB2318EEB8F900B2924B /* LXStreamBrickCell.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -8587,6 +8602,7 @@
 				88B47B3C15DE522F00FD9C72 /* AFXMLRequestOperation.m in Sources */,
 				88B47B3D15DE522F00FD9C72 /* UIImageView+AFNetworking.m in Sources */,
 				880C4B17161C2A1400252C6A /* MBProgressHUD.m in Sources */,
+				884ACB1E18EEB4C000B2924B /* LXStreamViewController.m in Sources */,
 				889072BC16770EBB0013DF7A /* LXAppDelegate.m in Sources */,
 				889072BD16770EBB0013DF7A /* LXCanvasViewController.m in Sources */,
 				889072C016770EBB0013DF7A /* LXLoginViewController.m in Sources */,
@@ -8675,6 +8691,7 @@
 				886E540B16FC469B00629D76 /* LXLikedViewController.m in Sources */,
 				88673B6616FF5219007CF6BD /* LXCellSearchConnection.m in Sources */,
 				883274D9170146FA0053C8A2 /* LXCellTags.m in Sources */,
+				884ACB2118EEB7F600B2924B /* LXStreamViewLayout.m in Sources */,
 				88675373170C274A009B5BBE /* LXImageFilter.m in Sources */,
 				8880F00C170D69C700478E42 /* LXImageLens.m in Sources */,
 				8835FCC1171BEB3700A48346 /* NSDate+TKCategory.m in Sources */,
@@ -8714,6 +8731,7 @@
 				88A2FFEF177032D200978564 /* GPUImageFilterPipeline.m in Sources */,
 				88A20017177032D200978564 /* GPUImageMovie.m in Sources */,
 				88A2002A177032D200978564 /* GPUImageRawDataInput.m in Sources */,
+				884ACB2418EEB8F900B2924B /* LXStreamBrickCell.m in Sources */,
 				88A2002B177032D200978564 /* GPUImageRawDataOutput.m in Sources */,
 				88A20041177032D200978564 /* GPUImageStillCamera.m in Sources */,
 				88A20042177032D200978564 /* GPUImageStretchDistortionFilter.m in Sources */,
