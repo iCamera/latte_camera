@@ -31,7 +31,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
 	// Do any additional setup after loading the view.
     //[self.navigationController setNavigationBarHidden:true];
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;

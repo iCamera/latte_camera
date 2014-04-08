@@ -43,7 +43,6 @@
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     [app.tracker sendView:@"Liked Screen"];
     
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     // Do any additional setup after loading the view.
 //    refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
 //    refreshHeaderView.delegate = self;

@@ -89,6 +89,7 @@
 		880E5110172A16C900D584EE /* LXCamCaptureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E510F172A16C900D584EE /* LXCamCaptureManager.m */; };
 		881015D61700270A00AE81E1 /* hicon_menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 881015D41700270A00AE81E1 /* hicon_menu.png */; };
 		881015D71700270A00AE81E1 /* hicon_menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 881015D51700270A00AE81E1 /* hicon_menu@2x.png */; };
+		88120A0D18F3D20D000BFB5E /* CHTCollectionViewWaterfallLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 881209ED18F3D20D000BFB5E /* CHTCollectionViewWaterfallLayout.m */; };
 		88144259172F9CCF00A5B3FF /* UIView+Genie.m in Sources */ = {isa = PBXBuildFile; fileRef = 88144248172F9CCF00A5B3FF /* UIView+Genie.m */; };
 		8818860916F17B61009A9266 /* LXCommentControllViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8818860816F17B60009A9266 /* LXCommentControllViewController.m */; };
 		8818861116F1F039009A9266 /* LXCellSearchUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8818861016F1F039009A9266 /* LXCellSearchUser.m */; };
@@ -2071,6 +2072,8 @@
 		880E510F172A16C900D584EE /* LXCamCaptureManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCamCaptureManager.m; sourceTree = "<group>"; };
 		881015D41700270A00AE81E1 /* hicon_menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hicon_menu.png; sourceTree = "<group>"; };
 		881015D51700270A00AE81E1 /* hicon_menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hicon_menu@2x.png"; sourceTree = "<group>"; };
+		881209EC18F3D20D000BFB5E /* CHTCollectionViewWaterfallLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHTCollectionViewWaterfallLayout.h; sourceTree = "<group>"; };
+		881209ED18F3D20D000BFB5E /* CHTCollectionViewWaterfallLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHTCollectionViewWaterfallLayout.m; sourceTree = "<group>"; };
 		88144247172F9CCF00A5B3FF /* UIView+Genie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Genie.h"; sourceTree = "<group>"; };
 		88144248172F9CCF00A5B3FF /* UIView+Genie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Genie.m"; sourceTree = "<group>"; };
 		8818860716F17B60009A9266 /* LXCommentControllViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCommentControllViewController.h; sourceTree = "<group>"; };
@@ -4219,6 +4222,15 @@
 			path = AVCam;
 			sourceTree = "<group>";
 		};
+		881209EA18F3D20D000BFB5E /* CHTCollectionViewWaterfallLayout */ = {
+			isa = PBXGroup;
+			children = (
+				881209EC18F3D20D000BFB5E /* CHTCollectionViewWaterfallLayout.h */,
+				881209ED18F3D20D000BFB5E /* CHTCollectionViewWaterfallLayout.m */,
+			);
+			path = CHTCollectionViewWaterfallLayout;
+			sourceTree = "<group>";
+		};
 		8814422B172F9CCF00A5B3FF /* BCGenieEffect */ = {
 			isa = PBXGroup;
 			children = (
@@ -5686,6 +5698,7 @@
 		88D4B5BE15D4B66B00FC4FBB /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				881209EA18F3D20D000BFB5E /* CHTCollectionViewWaterfallLayout */,
 				88B47AFC15DE503F00FD9C72 /* AFNetworking */,
 				8814422B172F9CCF00A5B3FF /* BCGenieEffect */,
 				888165F816B902260089106D /* GoogleAnalyticsiOS_2.0beta4 */,
@@ -8616,6 +8629,7 @@
 				889072CB16770EBB0013DF7A /* LXSettingViewController.m in Sources */,
 				889072CC16770EBB0013DF7A /* LXMainTabViewController.m in Sources */,
 				889072CE16770EBB0013DF7A /* LXWelcomeViewController.m in Sources */,
+				88120A0D18F3D20D000BFB5E /* CHTCollectionViewWaterfallLayout.m in Sources */,
 				889072CF16770EBB0013DF7A /* LXButtonBack.m in Sources */,
 				889072D016770EBB0013DF7A /* LXButtonBrown30.m in Sources */,
 				889072D116770EBB0013DF7A /* LXButtonNormal.m in Sources */,

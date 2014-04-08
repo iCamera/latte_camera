@@ -184,7 +184,7 @@ typedef enum {
 //    refreshHeaderView.delegate = self;
 //    [self.tableView addSubview:refreshHeaderView];
 //    
-//    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
+
     
     [self reloadView];
 }

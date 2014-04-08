@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "Picture.h"
+#import "LXGalleryViewController.h"
 
 @interface LXStreamBrickCell : UICollectionViewCell
+
+@property (weak, nonatomic) id <LXGalleryViewControllerDataSource> delegate;
 @property (strong, nonatomic) Picture* picture;
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonPicture;

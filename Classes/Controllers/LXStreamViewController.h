@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CHTCollectionViewWaterfallLayout.h"
+#import "LXGalleryViewController.h"
 
-@interface LXStreamViewController : UICollectionViewController
+@interface LXStreamViewController : UICollectionViewController <CHTCollectionViewDelegateWaterfallLayout, LXGalleryViewControllerDataSource>
 
 @end

@@ -12,11 +12,6 @@
 #import "Picture.h"
 #import "LatteAPIClient.h"
 
-typedef enum {
-    kWelcomeTableTimeline,
-    kWelcomeTableGrid,
-} WelcomeTableMode;
-
 
 @interface LXStreamViewController ()
 
@@ -25,9 +20,8 @@ typedef enum {
 @implementation LXStreamViewController {
     NSMutableArray *feeds;
     BOOL loadEnded;
-    BOOL reloading;
     NSString *area;
-    WelcomeTableMode tableMode;
+    UIRefreshControl *refresh;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -43,6 +37,15 @@ typedef enum {
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    CHTCollectionViewWaterfallLayout *layout = (CHTCollectionViewWaterfallLayout*)self.collectionViewLayout;
+    layout.minimumColumnSpacing = 4;
+    layout.minimumInteritemSpacing = 4;
+    layout.sectionInset = UIEdgeInsetsMake(6, 6, 6, 6);
+    
+    refresh = [[UIRefreshControl alloc] init];
+    [refresh addTarget:self action:@selector(loadMore:) forControlEvents:UIControlEventValueChanged];
+    [self.collectionView addSubview:refresh];
+     
     [self loadMore:YES];
 }
 
@@ -62,11 +65,11 @@ typedef enum {
 }
 
 - (void)loadMore:(BOOL)reset {
-//    if (indicator.isAnimating || loadEnded) {
-//        return;
-//    }
-//    
-//    [indicator startAnimating];
+    if (refresh.refreshing || loadEnded) {
+        return;
+    }
+    
+    [refresh beginRefreshing];
     
     Feed *feed = feeds.lastObject;
     
@@ -80,20 +83,20 @@ typedef enum {
         }
     }
     
-    [[LatteAPIClient sharedClient] getPath:@"user/everyone/timeline"
-                                parameters: param
-                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       if (reset) {
-                                           feeds = [Feed mutableArrayFromDictionary:JSON withKey:@"feeds"];
-                                       } else {
-                                           NSMutableArray *newFeeds = [Feed mutableArrayFromDictionary:JSON withKey:@"feeds"];
-                                           [feeds addObjectsFromArray:newFeeds];
-                                       }
-                                       loadEnded = true;
-                                       [self.collectionView reloadData];
-                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       DLog(@"Something went wrong (Welcome)");
-                                   }];
+    [[LatteAPIClient sharedClient] getPath:@"user/everyone/timeline" parameters: param success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+        if (reset) {
+            feeds = [Feed mutableArrayFromDictionary:JSON withKey:@"feeds"];
+        } else {
+            NSMutableArray *newFeeds = [Feed mutableArrayFromDictionary:JSON withKey:@"feeds"];
+            [feeds addObjectsFromArray:newFeeds];
+        }
+        loadEnded = true;
+        [self.collectionView reloadData];
+        [refresh endRefreshing];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [refresh endRefreshing];
+        DLog(@"Something went wrong (Welcome)");
+    }];
 }
 
 - (NSMutableArray*)flatPictureArray {
@@ -108,77 +111,45 @@ typedef enum {
 
 
 - (NSDictionary *)pictureAfterPicture:(Picture *)picture {
-    if (tableMode == kWelcomeTableGrid) {
-        Feed *feed = [LXUtils feedFromPicID:[picture.pictureId longValue] of:feeds];
-        NSUInteger current = [feeds indexOfObject:feed];
-        if (current == NSNotFound || current == feeds.count-1) {
-            return nil;
-        }
-        Feed *feedNext = feeds[current+1];
-        NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
-                             feedNext.targets[0], @"picture",
-                             feedNext.user, @"user",
-                             nil];
-        
-        // Loadmore
-        if (current > feeds.count - 6)
-            [self loadMore:NO];
-        return ret;
-    } else if (tableMode == kWelcomeTableTimeline) {
-        NSArray *flatPictures = [self flatPictureArray];
-        NSUInteger current = [flatPictures indexOfObject:picture];
-        if (current != NSNotFound && current < flatPictures.count-1) {
-            Picture *nextPic = flatPictures[current+1];
-            Feed* feed = [LXUtils feedFromPicID:[nextPic.pictureId integerValue] of:feeds];
-            NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
-                                 nextPic,  @"picture",
-                                 feed.user, @"user",
-                                 nil];
-            
-            // Loadmore
-            if (current > flatPictures.count - 6)
-                [self loadMore:NO];
-            
-            return ret;
-        }
+    Feed *feed = [LXUtils feedFromPicID:[picture.pictureId longValue] of:feeds];
+    NSUInteger current = [feeds indexOfObject:feed];
+    if (current == NSNotFound || current == feeds.count-1) {
+        return nil;
     }
+    Feed *feedNext = feeds[current+1];
+    NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
+                         feedNext.targets[0], @"picture",
+                         feedNext.user, @"user",
+                         nil];
+    
+    // Loadmore
+    if (current > feeds.count - 6)
+        [self loadMore:NO];
+    return ret;
+    
     return nil;
 }
 
 - (NSDictionary *)pictureBeforePicture:(Picture *)picture {
-    if (tableMode == kWelcomeTableGrid) {
-        Feed *feed = [LXUtils feedFromPicID:[picture.pictureId longValue] of:feeds];
-        NSUInteger current = [feeds indexOfObject:feed];
-        if (current == NSNotFound || current == 0) {
-            return nil;
-        }
-        Feed *feedPrev = feeds[current-1];
-        NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
-                             feedPrev.targets[0], @"picture",
-                             feedPrev.user, @"user",
-                             nil];
-        return ret;
-    } else if (tableMode == kWelcomeTableTimeline) {
-        NSArray *flatPictures = [self flatPictureArray];
-        NSUInteger current = [flatPictures indexOfObject:picture];
-        if (current != NSNotFound && current > 0) {
-            Picture *prevPic = flatPictures[current-1];
-            Feed* feed = [LXUtils feedFromPicID:[prevPic.pictureId integerValue] of:feeds];
-            NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
-                                 prevPic,  @"picture",
-                                 feed.user, @"user",
-                                 nil];
-            
-            return ret;
-        }
+    Feed *feed = [LXUtils feedFromPicID:[picture.pictureId longValue] of:feeds];
+    NSUInteger current = [feeds indexOfObject:feed];
+    if (current == NSNotFound || current == 0) {
+        return nil;
     }
-    return nil;
+    Feed *feedPrev = feeds[current-1];
+    NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
+                         feedPrev.targets[0], @"picture",
+                         feedPrev.user, @"user",
+                         nil];
+    return ret;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     Feed *feed = feeds[indexPath.item];
     LXStreamBrickCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Brick" forIndexPath:indexPath];
     cell.picture = feed.targets[0];
+    cell.buttonPicture.tag = indexPath.item;
+    cell.delegate = self;
     return cell;
 }
 
@@ -192,7 +163,25 @@ typedef enum {
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(152, 152);
+    Feed *feed = feeds[indexPath.item];
+    Picture *picture = feed.targets[0];
+    NSInteger height = [LXUtils heightFromWidth:152 width:[picture.width floatValue] height:[picture.height floatValue]];
+    return CGSizeMake(152, height);
+}
+
+- (void)showPic:(UIButton*)sender {
+    UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
+                                                           bundle:nil];
+    UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
+    LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
+    viewGallery.delegate = self;
+    
+    Feed *feed = feeds[sender.tag];
+    Picture *picture = feed.targets[0];
+    viewGallery.user = feed.user;
+    viewGallery.picture = picture;
+    
+    [self presentViewController:navGalerry animated:YES completion:nil];
 }
 
 /*

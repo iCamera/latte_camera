@@ -12,7 +12,7 @@
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Cei-Sk-F12">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
                         <color key="separatorColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="Fie-4u-OsU">
                             <rect key="frame" x="0.0" y="64" width="320" height="110"/>
@@ -343,12 +343,13 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pcB-wR-Hh0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1004" y="-912"/>
+            <point key="canvasLocation" x="-1034" y="-964"/>
         </scene>
         <!--Modal Navigation Controller-->
         <scene sceneID="VKt-pI-gkB">
             <objects>
                 <navigationController definesPresentationContext="YES" id="cxD-TB-4Px" customClass="LXModalNavigationController" sceneMemberID="viewController">
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="1J3-PY-CDA">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -368,6 +369,7 @@
                 <navigationController storyboardIdentifier="Notification" definesPresentationContext="YES" id="MnB-ZM-rSH" customClass="LXModalNavigationController" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="dHl-WP-tRw" customClass="LXNavBar">
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="barTintColor" red="0.2156862745" green="0.19215686269999999" blue="0.13725490200000001" alpha="1" colorSpace="deviceRGB"/>
                     </navigationBar>
                     <connections>
@@ -393,7 +395,7 @@
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </webView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="FAQ" id="Pdp-Wp-ne8"/>
                     <connections>
@@ -509,7 +511,7 @@ We improve our services to the best of our ability, but please understand that n
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="C03-4H-YV9">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.87843137250000003" green="0.87450980389999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
                         <color key="separatorColor" red="0.74901960779999999" green="0.72549019609999998" blue="0.67450980390000004" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
                             <tableViewSection id="jh2-W7-tkX">
@@ -595,7 +597,7 @@ We improve our services to the best of our ability, but please understand that n
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="qLH-jV-a7F">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
                         <sections>
                             <tableViewSection id="U8E-0E-hxf">
                                 <cells>
@@ -775,7 +777,7 @@ We improve our services to the best of our ability, but please understand that n
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="KjL-ht-CC0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
                         <sections>
                             <tableViewSection id="qLQ-Zb-oDJ">
                                 <cells>
@@ -1079,6 +1081,6 @@ We improve our services to the best of our ability, but please understand that n
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="psS-hn-o4m"/>
+        <segue reference="PVC-qt-Mi9"/>
     </inferredMetricsTieBreakers>
 </document>

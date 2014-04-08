@@ -52,7 +52,6 @@
     viewHeader.layer.cornerRadius = 5.0;
     labelTag.text = _keyword;
     
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
     page = 1;
     loadEnded = false;
     [self loadMore];

@@ -39,8 +39,6 @@
 {
     [super viewDidLoad];
     
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
-    
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
     NSDictionary *params = [NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"];
     [[LatteAPIClient sharedClient] getPath:@"user/me" parameters:params  success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {

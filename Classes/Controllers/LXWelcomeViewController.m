@@ -80,8 +80,7 @@ typedef enum {
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     [app.tracker sendView:@"Welcome Screen"];
-    
-    tablePic.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
+
     
     tablePic.frame = CGRectMake(0, 0, 320, self.view.frame.size.height-44);
     
@@ -98,11 +97,6 @@ typedef enum {
     } else {
         viewLogin.hidden = true;
     }
-        
-    //setup left button
-    UIBarButtonItem *navLeftItem = self.navigationItem.leftBarButtonItem;
-    UIButton *buttonSide = (UIButton*)navLeftItem.customView;
-//    [buttonSide addTarget:app.controllerSide action:@selector(toggleLeftPanel:) forControlEvents:UIControlEventTouchUpInside];
     
     area = [[NSUserDefaults standardUserDefaults] objectForKey:@"timeline_area"];
     if (!area) {

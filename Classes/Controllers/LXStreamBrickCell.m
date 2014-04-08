@@ -20,21 +20,23 @@
     return self;
 }
 
-/*
+
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
-    // Drawing code
+    [super drawRect:rect];
+    _buttonPicture.layer.cornerRadius = 2;
+    _buttonPicture.layer.masksToBounds = true;
 }
-*/
 
 - (void)setPicture:(Picture *)picture {
     _picture = picture;
-    [_buttonPicture loadBackground:picture.urlSquare];
+    [_buttonPicture loadBackground:picture.urlMedium];
 }
 
 - (IBAction)touchPicture:(UIButton *)sender {
+    [_delegate showPic:sender];
 }
 
 @end

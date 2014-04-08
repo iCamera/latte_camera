@@ -32,8 +32,6 @@
     [self.navigationController.view addSubview:HUD];
     HUD.mode = MBProgressHUDModeIndeterminate;
     
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
-    
     viewText1.layer.cornerRadius = 5;
     viewText2.layer.cornerRadius = 5;
     [LXUtils globalShadow:viewText1];

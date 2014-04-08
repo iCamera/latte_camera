@@ -69,10 +69,7 @@
         [HUD2 show:YES];
         [HUD2 hide:YES afterDelay:1];
     }];
-    
-    self.tableView.backgroundView = nil;
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
-    
+        
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];

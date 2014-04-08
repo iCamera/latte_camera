@@ -19,6 +19,8 @@ typedef enum {
 @class Picture, User;
 
 @protocol LXGalleryViewControllerDataSource <NSObject>
+- (void)showPic:(UIButton*)sender;
+
 @required
 - (NSDictionary*)pictureBeforePicture:(Picture *)picture;
 - (NSDictionary*)pictureAfterPicture:(Picture *)picture;

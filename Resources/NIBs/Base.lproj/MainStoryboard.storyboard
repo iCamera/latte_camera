@@ -35,11 +35,11 @@
             <objects>
                 <navigationController storyboardIdentifier="NavigationRank" definesPresentationContext="YES" id="xio-iO-9Qi" customClass="LXNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Ranking" image="icon_rank.png" id="FCv-Eh-u4w"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="e2T-D0-L2O" customClass="LXNavBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="e2T-D0-L2O" customClass="LXNavBar">
                         <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.2156862745" green="0.19215686269999999" blue="0.13725490200000001" alpha="1" colorSpace="deviceRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="HL7-KM-o46" kind="relationship" relationship="rootViewController" id="UAU-S8-gfE"/>
@@ -54,11 +54,11 @@
             <objects>
                 <tableViewController title="Latte" id="HL7-KM-o46" customClass="LXRankingViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="vfX-a7-nyP">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
                         <view key="tableHeaderView" autoresizesSubviews="NO" contentMode="scaleToFill" id="qhJ-TB-csr">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="46"/>
+                            <rect key="frame" x="0.0" y="64" width="320" height="46"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="mt2-aX-3UQ">
@@ -172,7 +172,7 @@
                             </subviews>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="xvn-h8-jAx">
-                            <rect key="frame" x="0.0" y="291" width="320" height="40"/>
+                            <rect key="frame" x="0.0" y="355" width="320" height="40"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="gray" id="9Bq-Yq-rnc">
@@ -183,7 +183,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="First" rowHeight="75" id="UqI-Pl-YSe" customClass="LXCellRankLv1">
-                                <rect key="frame" x="0.0" y="68" width="320" height="75"/>
+                                <rect key="frame" x="0.0" y="132" width="320" height="75"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UqI-Pl-YSe" id="w5h-nJ-oh1">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="75"/>
@@ -226,7 +226,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="Second" rowHeight="104" id="xvo-FL-hZi" customClass="LXCellRankLv2">
-                                <rect key="frame" x="0.0" y="143" width="320" height="104"/>
+                                <rect key="frame" x="0.0" y="207" width="320" height="104"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xvo-FL-hZi" id="9cO-cY-zS4">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="104"/>
@@ -315,7 +315,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Grid" id="Hnr-RE-Pgt" userLabel="Cell Grid" customClass="LXCellGrid">
-                                <rect key="frame" x="0.0" y="247" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="311" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Hnr-RE-Pgt" id="pCP-Z2-psj">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -364,11 +364,11 @@
             <objects>
                 <tableViewController storyboardIdentifier="FacebookFriend" id="WmZ-e1-knK" customClass="LXFacebookFriendViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="3XF-qc-UX4">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="tGC-oX-Z0p">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="34"/>
+                            <rect key="frame" x="0.0" y="64" width="320" height="34"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="box_facebook.png" id="ntc-qi-YRc">
@@ -384,12 +384,12 @@
                             </subviews>
                         </view>
                         <activityIndicatorView key="tableFooterView" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" animating="YES" style="gray" id="o2p-wl-OIy">
-                            <rect key="frame" x="0.0" y="151" width="320" height="20"/>
+                            <rect key="frame" x="0.0" y="215" width="320" height="20"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </activityIndicatorView>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FacebookFriend" rowHeight="52" id="Wji-Le-Ukp" customClass="LXCellFacebook">
-                                <rect key="frame" x="0.0" y="89" width="320" height="52"/>
+                                <rect key="frame" x="0.0" y="153" width="320" height="52"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Wji-Le-Ukp" id="Sak-Yp-rF6">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="51"/>
@@ -467,10 +467,10 @@
             <objects>
                 <tableViewController storyboardIdentifier="Tag" id="Hea-mo-ou6" customClass="LXTagViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="hcL-f7-mKI">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="q8F-ni-nnZ">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="48"/>
+                            <rect key="frame" x="0.0" y="64" width="320" height="48"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <view contentMode="scaleToFill" id="ieY-g0-jYH">
@@ -493,12 +493,12 @@
                             </subviews>
                         </view>
                         <activityIndicatorView key="tableFooterView" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" animating="YES" style="gray" id="tTQ-Zj-A8T">
-                            <rect key="frame" x="0.0" y="114" width="320" height="20"/>
+                            <rect key="frame" x="0.0" y="178" width="320" height="20"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </activityIndicatorView>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Grid" id="UPI-cd-4wL" customClass="LXCellGrid">
-                                <rect key="frame" x="0.0" y="70" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="134" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UPI-cd-4wL" id="Yng-RP-Ppw">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -527,10 +527,11 @@
             <objects>
                 <navigationController storyboardIdentifier="NavigationSearch" definesPresentationContext="YES" id="R8R-B1-oGH" customClass="LXNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Search" image="icon_search_l.png" id="EL7-vA-SxW"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="bzG-xf-D2f" customClass="LXNavBar">
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="bzG-xf-D2f" customClass="LXNavBar">
                         <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.2156862745" green="0.19215686269999999" blue="0.13725490200000001" alpha="1" colorSpace="deviceRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="oup-QU-2wo" kind="relationship" relationship="rootViewController" id="PLx-Md-9fW"/>
@@ -545,10 +546,11 @@
             <objects>
                 <tableViewController id="oup-QU-2wo" customClass="LXSearchViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="40" sectionHeaderHeight="22" sectionFooterHeight="22" id="6zW-xw-jVs">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
                         <view key="tableHeaderView" clipsSubviews="YES" contentMode="scaleToFill" id="POL-ZM-7ga">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="158"/>
+                            <rect key="frame" x="0.0" y="64" width="320" height="158"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="tab2_body2.png" id="Glm-5M-ftc">
@@ -717,10 +719,9 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="UoP-3C-vtX">
-                            <rect key="frame" x="0.0" y="415" width="320" height="44"/>
+                            <rect key="frame" x="0.0" y="479" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="gray" id="fre-cb-D46">
@@ -732,7 +733,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="User" rowHeight="79" id="YPH-2j-5eh" customClass="LXCellSearchUser">
-                                <rect key="frame" x="0.0" y="180" width="320" height="79"/>
+                                <rect key="frame" x="0.0" y="244" width="320" height="79"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YPH-2j-5eh" id="GPk-dW-bA3">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="79"/>
@@ -926,7 +927,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="FacebookSearch" rowHeight="86" id="sLy-l0-Nln" customClass="LXCellSearchConnection">
-                                <rect key="frame" x="0.0" y="259" width="320" height="86"/>
+                                <rect key="frame" x="0.0" y="323" width="320" height="86"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sLy-l0-Nln" id="3FY-nu-9Ep">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="86"/>
@@ -970,7 +971,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="Tags" rowHeight="30" id="LzS-1k-5Kb" customClass="LXCellTags">
-                                <rect key="frame" x="0.0" y="345" width="320" height="30"/>
+                                <rect key="frame" x="0.0" y="409" width="320" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LzS-1k-5Kb" id="UER-Ax-ob1">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
@@ -1007,7 +1008,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Grid" id="yZ6-CQ-Shg" customClass="LXCellGrid">
-                                <rect key="frame" x="0.0" y="375" width="320" height="40"/>
+                                <rect key="frame" x="0.0" y="439" width="320" height="40"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yZ6-CQ-Shg" id="UpJ-ez-j3t">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
@@ -1044,11 +1045,11 @@
             <objects>
                 <tableViewController storyboardIdentifier="UserPage" id="Ftc-ZZ-Upd" customClass="LXMyPageViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" directionalLockEnabled="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="tGY-T3-2g4">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="1oo-9S-rhk">
-                            <rect key="frame" x="0.0" y="533" width="320" height="40"/>
+                            <rect key="frame" x="0.0" y="597" width="320" height="40"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="gray" id="30b-0d-qAV">
@@ -1060,7 +1061,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="User" rowHeight="48" id="lG4-Yr-yla" customClass="LXCellFriend">
-                                <rect key="frame" x="0.0" y="22" width="320" height="48"/>
+                                <rect key="frame" x="0.0" y="86" width="320" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lG4-Yr-yla" id="37b-bo-JGT">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="48"/>
@@ -1107,7 +1108,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Multi" rowHeight="259" id="R1Z-3b-wp1" customClass="LXCellTimelineMulti">
-                                <rect key="frame" x="0.0" y="70" width="320" height="259"/>
+                                <rect key="frame" x="0.0" y="134" width="320" height="259"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="R1Z-3b-wp1" id="kvi-ak-ax0">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="259"/>
@@ -1162,7 +1163,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Single" rowHeight="130" id="eDN-OG-rBE" customClass="LXCellTimelineSingle">
-                                <rect key="frame" x="0.0" y="329" width="320" height="130"/>
+                                <rect key="frame" x="0.0" y="393" width="320" height="130"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eDN-OG-rBE" id="EDf-R0-3Az">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="130"/>
@@ -1363,7 +1364,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Grid" id="liC-nb-Hfa" userLabel="Cell Grid" customClass="LXCellGrid">
-                                <rect key="frame" x="0.0" y="459" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="523" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="liC-nb-Hfa" id="Sqt-nY-dZi">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -1371,7 +1372,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Profile" rowHeight="30" id="8Pi-wq-vqY" customClass="LXCellDataField">
-                                <rect key="frame" x="0.0" y="503" width="320" height="30"/>
+                                <rect key="frame" x="0.0" y="567" width="320" height="30"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8Pi-wq-vqY" id="xoM-q4-oFZ">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="29"/>
@@ -1450,16 +1451,16 @@
             <objects>
                 <tableViewController storyboardIdentifier="Liked" id="7yj-1F-nfZ" customClass="LXLikedViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="lOk-JK-2WD">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <activityIndicatorView key="tableFooterView" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" animating="YES" style="gray" id="fox-5y-7Kq">
-                            <rect key="frame" x="0.0" y="66" width="320" height="20"/>
+                            <rect key="frame" x="0.0" y="130" width="320" height="20"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </activityIndicatorView>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Grid" id="9Xp-em-Bvd" customClass="LXCellGrid">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9Xp-em-Bvd" id="kub-ym-Ama">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1486,11 +1487,11 @@
             <objects>
                 <navigationController storyboardIdentifier="MyPage" definesPresentationContext="YES" id="xVP-9E-OKe" customClass="LXNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" tag="5" title="Home" image="icon_mypage.png" id="SW9-u7-WQa"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="TbP-bX-20h" customClass="LXNavBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="TbP-bX-20h" customClass="LXNavBar">
                         <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.20784313725490194" green="0.18823529411764706" blue="0.13333333333333333" alpha="1" colorSpace="deviceRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="Ftc-ZZ-Upd" kind="relationship" relationship="rootViewController" id="QTP-fA-z3u"/>
@@ -1972,25 +1973,20 @@
             <objects>
                 <collectionViewController autoresizesArchivedViewToFullSize="NO" id="qmv-g0-Tf4" customClass="LXStreamViewController" sceneMemberID="viewController">
                     <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" keyboardDismissMode="interactive" dataMode="prototypes" id="5Av-RC-rwD">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="4" minimumInteritemSpacing="4" id="Dre-hh-4Rl">
-                            <size key="itemSize" width="150" height="150"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="6" minY="6" maxX="6" maxY="6"/>
-                        </collectionViewFlowLayout>
+                        <color key="backgroundColor" red="0.95294117647058818" green="0.94901960784313721" blue="0.92941176470588238" alpha="1" colorSpace="deviceRGB"/>
+                        <collectionViewLayout key="collectionViewLayout" id="alQ-sD-Fus" customClass="CHTCollectionViewWaterfallLayout"/>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Brick" id="jzd-7n-ALa" customClass="LXStreamBrickCell">
-                                <rect key="frame" x="6" y="6" width="150" height="150"/>
+                                <rect key="frame" x="0.0" y="64" width="152" height="152"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="152" height="152"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Qlf-ws-s2t">
-                                            <rect key="frame" x="0.0" y="0.0" width="250" height="250"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <state key="normal">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -2002,6 +1998,7 @@
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <size key="customSize" width="152" height="152"/>
                                 <connections>
                                     <outlet property="buttonPicture" destination="Qlf-ws-s2t" id="5so-lr-Mec"/>
                                 </connections>
@@ -2478,10 +2475,11 @@
             <objects>
                 <navigationController storyboardIdentifier="NavigationTop" definesPresentationContext="YES" id="eyD-El-Dp8" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Stream" image="icon_newpict_l.png" id="oj4-fP-8Qc"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="yi1-gW-lHf" customClass="LXNavBar">
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="yi1-gW-lHf" customClass="LXNavBar">
                         <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.20784313725490194" green="0.18823529411764706" blue="0.13725490196078433" alpha="1" colorSpace="deviceRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="qmv-g0-Tf4" kind="relationship" relationship="rootViewController" id="Ou9-Om-9n9"/>

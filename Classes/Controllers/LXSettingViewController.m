@@ -100,10 +100,6 @@
 - (void)setQuickDialogTableView:(QuickDialogTableView *)aQuickDialogTableView {
     [super setQuickDialogTableView:aQuickDialogTableView];
     
-//    if (self.quickDialogTableView.style == UITableViewStyleGrouped) {
-//        self.quickDialogTableView.backgroundView = nil;
-//        self.quickDialogTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_sub_back.png"]];
-//    }
     self.quickDialogTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.quickDialogTableView.styleProvider = self;
     
