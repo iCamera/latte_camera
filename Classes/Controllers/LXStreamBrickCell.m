@@ -32,7 +32,7 @@
 
 - (void)setPicture:(Picture *)picture {
     _picture = picture;
-    [_buttonPicture loadBackground:picture.urlMedium];
+    [_buttonPicture loadBackground:picture.urlSmall];
 }
 
 - (IBAction)touchPicture:(UIButton *)sender {

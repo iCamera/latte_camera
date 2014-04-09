@@ -35,16 +35,17 @@
     [super viewDidLoad];
     [buttonImage loadBackground:_pic.urlSquare];
     
-    UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:buttonImage.bounds];
-    buttonImage.layer.masksToBounds = NO;
-    buttonImage.layer.shadowColor = [UIColor blackColor].CGColor;
-    buttonImage.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-    buttonImage.layer.shadowOpacity = 0.5f;
-    buttonImage.layer.shadowRadius = 1.5f;
-    buttonImage.layer.shadowPath = shadowPathPic.CGPath;
+//    UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:buttonImage.bounds];
+//    buttonImage.layer.masksToBounds = NO;
+//    buttonImage.layer.shadowColor = [UIColor blackColor].CGColor;
+//    buttonImage.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+//    buttonImage.layer.shadowOpacity = 0.5f;
+//    buttonImage.layer.shadowRadius = 1.5f;
+//    buttonImage.layer.shadowPath = shadowPathPic.CGPath;
     
-    buttonComment.layer.cornerRadius = 5;
-    buttonVote.layer.cornerRadius = 5;
+    buttonImage.layer.cornerRadius = 2;
+    buttonComment.layer.cornerRadius = 2;
+    buttonVote.layer.cornerRadius = 2;
     
     [buttonComment setTitle:[_pic.commentCount stringValue] forState:UIControlStateNormal];
     [buttonVote setTitle:[_pic.voteCount stringValue] forState:UIControlStateNormal];

@@ -142,13 +142,6 @@ typedef enum {
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTimeline:) name:@"LoggedIn" object:nil];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive:) name:@"BecomeActive" object:nil];
         }
-        
-        
-        //setup left button
-//        UIBarButtonItem *navLeftItem = self.navigationItem.leftBarButtonItem;
-//        UIButton *buttonSide = (UIButton*)navLeftItem.customView;
-//        [buttonSide addTarget:app.controllerSide action:@selector(toggleLeftPanel:) forControlEvents:UIControlEventTouchUpInside];
-        
     } else {
         viewHeaderUserpage = [storyComponent instantiateViewControllerWithIdentifier:@"HeaderUserpPage"];
         [self.tableView.tableHeaderView addSubview:viewHeaderUserpage.view];
@@ -169,6 +162,8 @@ typedef enum {
                                     parameters:[NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"]
                                        success:nil
                                        failure:nil];
+
+        self.navigationItem.leftBarButtonItem = nil;
     }
     
     HUD = [[MBProgressHUD alloc] initWithView:app.viewMainTab.view];
@@ -602,10 +597,10 @@ typedef enum {
         } else {
             Feed *feed = feeds[indexPath.row];
             if (feed.targets.count > 1) {
-                return 244;
+                return 206;
             } else if (feed.targets.count == 1) {
                 Picture *pic = feed.targets[0];
-                CGFloat feedHeight = [LXUtils heightFromWidth:308.0 width:[pic.width floatValue] height:[pic.height floatValue]] + 3+6+30+6+6+31+3;
+                CGFloat feedHeight = [LXUtils heightFromWidth:320.0 width:[pic.width floatValue] height:[pic.height floatValue]] + 3+6+30+6+6+31+3;
                 return feedHeight;
             } else
                 return 1;

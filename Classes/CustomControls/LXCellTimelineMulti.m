@@ -46,7 +46,7 @@
         [subview removeFromSuperview];
     }
     
-    CGSize size = CGSizeMake(6, 190);
+    CGSize size = CGSizeMake(6, 152);
     UIStoryboard *storyComponent = [UIStoryboard storyboardWithName:@"Component"
                                                              bundle:nil];
     for (Picture *pic in feed.targets) {
@@ -55,10 +55,10 @@
         
         viewPic.pic = pic;
         viewPic.parent = viewController;
-        viewPic.view.frame = CGRectMake(size.width, 0, 190, 190);
+        viewPic.view.frame = CGRectMake(size.width, 0, 152, 152);
         [scrollPic addSubview:viewPic.view];
         
-        size.width += 196;
+        size.width += 158;
     }
     scrollPic.contentOffset = CGPointZero;
     scrollPic.contentSize = size;

@@ -13,6 +13,7 @@
 @interface LXMainTabViewController : UITabBarController<UINavigationControllerDelegate>
 
 @property (strong, nonatomic) NSMutableArray *notifies;
+@property (strong, nonatomic) UIBarButtonItem *sharedRightButton;
 
 - (void)showSetting:(id)sender;
 - (void)toggleNotify:(id)sender;

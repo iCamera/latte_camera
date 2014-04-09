@@ -167,14 +167,10 @@
     }
     
     viewNav = [[LXUserNavButton alloc] init];
-    viewNav.view.frame = CGRectMake(210, 0, 110, 60);
+    viewNav.view.frame = CGRectMake(0, 0, 70, 42);
 
     [viewNav.buttonSetting addTarget:self action:@selector(showSetting:) forControlEvents:UIControlEventTouchUpInside];
     [viewNav.buttonNotify addTarget:self action:@selector(toggleNotify:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.view addSubview:viewNav.view];
-//    [self addChildViewController:viewNav];
-    [viewNav didMoveToParentViewController:self];
     
 //    for(UIViewController *tab in self.viewControllers) {
 //        
@@ -215,6 +211,9 @@
     [buttonUploadStatus addSubview:hudUpload];
     [self.view addSubview:buttonUploadStatus];
     buttonUploadStatus.hidden = YES;
+    
+    
+    _sharedRightButton = [[UIBarButtonItem alloc] initWithCustomView:viewNav.view];
 }
 
 - (void)receivePushNotify:(NSNotification*)notify {

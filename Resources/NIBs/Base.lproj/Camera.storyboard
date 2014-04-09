@@ -9,8 +9,10 @@
         <scene sceneID="VJh-m3-gUj">
             <objects>
                 <navigationController modalTransitionStyle="crossDissolve" id="zt6-HI-rL4" customClass="LXNavGalleryViewController" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="QIN-94-go3" customClass="LXNavBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="QIN-94-go3">
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.20784313730000001" green="0.18823529410000001" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="z2T-vS-fgP" kind="relationship" relationship="rootViewController" id="o7H-p3-oAj"/>

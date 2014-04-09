@@ -8,6 +8,7 @@
 
 #import "LXStreamViewController.h"
 #import "LXStreamBrickCell.h"
+#import "LXMainTabViewController.h"
 #import "Feed.h"
 #import "Picture.h"
 #import "LatteAPIClient.h"
@@ -20,6 +21,7 @@
 @implementation LXStreamViewController {
     NSMutableArray *feeds;
     BOOL loadEnded;
+    BOOL loading;
     NSString *area;
     UIRefreshControl *refresh;
 }
@@ -45,6 +47,11 @@
     refresh = [[UIRefreshControl alloc] init];
     [refresh addTarget:self action:@selector(loadMore:) forControlEvents:UIControlEventValueChanged];
     [self.collectionView addSubview:refresh];
+//    self.collectionView.alwaysBounceVertical = YES;
+    loadEnded = false;
+    loading = false;
+    LXMainTabViewController *tabBarController = (LXMainTabViewController *)self.tabBarController;
+    self.navigationItem.rightBarButtonItem = tabBarController.sharedRightButton;
      
     [self loadMore:YES];
 }
@@ -65,11 +72,9 @@
 }
 
 - (void)loadMore:(BOOL)reset {
-    if (refresh.refreshing || loadEnded) {
+    if (loading || loadEnded) {
         return;
     }
-    
-    [refresh beginRefreshing];
     
     Feed *feed = feeds.lastObject;
     
@@ -83,17 +88,33 @@
         }
     }
     
+    loading = true;
+    [refresh beginRefreshing];
     [[LatteAPIClient sharedClient] getPath:@"user/everyone/timeline" parameters: param success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
         if (reset) {
             feeds = [Feed mutableArrayFromDictionary:JSON withKey:@"feeds"];
+            loadEnded = false;
+            [self.collectionView reloadData];
         } else {
             NSMutableArray *newFeeds = [Feed mutableArrayFromDictionary:JSON withKey:@"feeds"];
-            [feeds addObjectsFromArray:newFeeds];
+            
+            if (newFeeds.count > 0) {
+                NSMutableArray *indexes = [[NSMutableArray alloc] init];
+                for (NSInteger i = feeds.count; i < feeds.count + newFeeds.count; i++) {
+                    NSIndexPath *index = [NSIndexPath indexPathForItem:i inSection:0];
+                    [indexes addObject:index];
+                }
+                
+                [feeds addObjectsFromArray:newFeeds];
+                [self.collectionView insertItemsAtIndexPaths:indexes];
+            } else {
+                loadEnded = true;
+            }
         }
-        loadEnded = true;
-        [self.collectionView reloadData];
+        loading = false;
         [refresh endRefreshing];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        loading = false;
         [refresh endRefreshing];
         DLog(@"Something went wrong (Welcome)");
     }];
@@ -183,6 +204,25 @@
     
     [self presentViewController:navGalerry animated:YES completion:nil];
 }
+
+- (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
+    //    [refreshHeaderView egoRefreshScrollViewDidScroll:aScrollView];
+    
+    if (loadEnded)
+        return;
+    CGPoint offset = aScrollView.contentOffset;
+    CGRect bounds = aScrollView.bounds;
+    CGSize size = aScrollView.contentSize;
+    UIEdgeInsets inset = aScrollView.contentInset;
+    float y = offset.y + bounds.size.height - inset.bottom;
+    float h = size.height;
+    
+    float reload_distance = -100;
+    if(y > h + reload_distance) {
+        [self loadMore:NO];
+    }
+}
+
 
 /*
 #pragma mark - Navigation

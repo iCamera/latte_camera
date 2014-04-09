@@ -136,7 +136,7 @@
     [super layoutSubviews];
     
     CGRect framePic = buttonPic.frame;
-    framePic.size.height = [LXUtils heightFromWidth:308.0 width:[pic.width floatValue] height:[pic.height floatValue]];
+    framePic.size.height = [LXUtils heightFromWidth:320 width:[pic.width floatValue] height:[pic.height floatValue]];
     buttonPic.frame = framePic;
     UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:buttonPic.bounds];
     buttonPic.layer.masksToBounds = NO;
@@ -147,7 +147,7 @@
     buttonPic.layer.shadowPath = shadowPathPic.CGPath;
     
     CGSize size = [pic.descriptionText sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0]
-                                  constrainedToSize:CGSizeMake(296, 138)
+                                  constrainedToSize:CGSizeMake(308, 138)
                                       lineBreakMode:labelDesc.lineBreakMode];
     CGRect frameDesc = viewDesc.frame;
     CGRect frameDescLabel = labelDesc.frame;

@@ -355,15 +355,15 @@ typedef enum {
 }
 
 - (void)initButton:(UIButton*)button {
-    button.layer.borderColor = [[UIColor whiteColor] CGColor];
-    button.layer.borderWidth = 3;
-    UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:button.bounds];
-    button.layer.masksToBounds = NO;
-    button.layer.shadowColor = [UIColor blackColor].CGColor;
-    button.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-    button.layer.shadowOpacity = 0.5f;
-    button.layer.shadowRadius = 1.5f;
-    button.layer.shadowPath = shadowPathPic.CGPath;
+//    button.layer.borderColor = [[UIColor whiteColor] CGColor];
+//    button.layer.borderWidth = 3;
+//    UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:button.bounds];
+//    button.layer.masksToBounds = NO;
+//    button.layer.shadowColor = [UIColor blackColor].CGColor;
+//    button.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+//    button.layer.shadowOpacity = 0.5f;
+//    button.layer.shadowRadius = 1.5f;
+//    button.layer.shadowPath = shadowPathPic.CGPath;
     
     [button addTarget:self action:@selector(didSelectPic:) forControlEvents:UIControlEventTouchUpInside];
 }
@@ -380,7 +380,7 @@ typedef enum {
             Picture *pic = [pics objectAtIndex:0];
             
             CGRect frame = cellLv1.buttonPic1.frame;
-            frame.size.height = [LXUtils heightFromWidth:308
+            frame.size.height = [LXUtils heightFromWidth:320
                                                    width:[pic.width floatValue]
                                                   height:[pic.height floatValue]];
             cellLv1.buttonPic1.frame = frame;
@@ -540,7 +540,7 @@ typedef enum {
         if (indexPath.row == 0) {
             Picture *pic = [pics objectAtIndex:0];
             
-            float newheight = [LXUtils heightFromWidth:308
+            float newheight = [LXUtils heightFromWidth:320
                                                  width:[pic.width floatValue]
                                                 height:[pic.height floatValue]];
             return newheight + 6;
