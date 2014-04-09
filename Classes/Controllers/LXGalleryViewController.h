@@ -16,10 +16,11 @@ typedef enum {
     kGalleryTabInfo = 3,
 } GalleryTab;
 
-@class Picture, User;
+@class Picture, User, LXGalleryViewController;
 
 @protocol LXGalleryViewControllerDataSource <NSObject>
 - (void)showPic:(UIButton*)sender;
+- (void)showUser:(User*)user fromGallery:(LXGalleryViewController*)gallery;
 
 @required
 - (NSDictionary*)pictureBeforePicture:(Picture *)picture;

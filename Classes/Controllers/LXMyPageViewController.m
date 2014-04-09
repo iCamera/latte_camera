@@ -70,7 +70,7 @@ typedef enum {
     NSMutableDictionary *currentDayPics;
     NSDate *selectedCalendarDate;
     NSMutableArray *currentMonthPicsFlat;
-//    EGORefreshTableHeaderView *refreshHeaderView;
+    UIRefreshControl *refresh;
     MBProgressHUD *HUD;
     
     LXViewHeaderMypage *viewHeaderMypage;
@@ -175,10 +175,9 @@ typedef enum {
     HUD.margin = 10.f;
     HUD.yOffset = 150.f;
     
-//    refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
-//    refreshHeaderView.delegate = self;
-//    [self.tableView addSubview:refreshHeaderView];
-//    
+    refresh = [[UIRefreshControl alloc] init];
+    [refresh addTarget:self action:@selector(loadMore:) forControlEvents:UIControlEventValueChanged];
+    [self setRefreshControl:refresh];
 
     
     [self reloadView];

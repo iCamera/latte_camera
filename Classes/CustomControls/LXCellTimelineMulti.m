@@ -58,7 +58,7 @@
         viewPic.view.frame = CGRectMake(size.width, 0, 152, 152);
         [scrollPic addSubview:viewPic.view];
         
-        size.width += 158;
+        size.width += 156;
     }
     scrollPic.contentOffset = CGPointZero;
     scrollPic.contentSize = size;

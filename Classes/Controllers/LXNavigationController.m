@@ -53,6 +53,9 @@
 //        viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonBack];
 //        [buttonBack addTarget:self action:@selector(popViewController) forControlEvents:UIControlEventTouchUpInside];
 //    }
+    
+    LXMainTabViewController *tabBarController = (LXMainTabViewController *)self.tabBarController;
+    viewController.navigationItem.rightBarButtonItem = tabBarController.sharedRightButton;
 }
 
 - (void)popViewController {

@@ -29,7 +29,7 @@
 }
 
 - (void)setPictures:(NSArray *)pictures forRow:(NSInteger)row {
-    for(UIView *subview in [self subviews]) {
+    for(UIView *subview in self.contentView.subviews) {
         [subview removeFromSuperview];
     }
     
@@ -43,23 +43,16 @@
         pic = pictures[index];
         
         
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(6 + 104*i, 3, 98, 98)];
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(6 + 104*i, 3, 100, 100)];
         
         [button loadBackground:pic.urlSquare];
-        button.layer.borderColor = [[UIColor whiteColor] CGColor];
-        button.layer.borderWidth = 3;
         
-        UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:button.bounds];
-        button.layer.masksToBounds = NO;
-        button.layer.shadowColor = [UIColor blackColor].CGColor;
-        button.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-        button.layer.shadowOpacity = 0.5f;
-        button.layer.shadowRadius = 1.5f;
-        button.layer.shadowPath = shadowPath.CGPath;
+        button.layer.masksToBounds = YES;
+        button.layer.cornerRadius = 2;
         
         button.tag = index;
         [button addTarget:_viewController action:@selector(showPic:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:button];
+        [self.contentView addSubview:button];
     }
 }
 

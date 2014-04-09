@@ -8,10 +8,10 @@
 
 #import "LXStreamViewController.h"
 #import "LXStreamBrickCell.h"
-#import "LXMainTabViewController.h"
 #import "Feed.h"
 #import "Picture.h"
 #import "LatteAPIClient.h"
+#import "LXMyPageViewController.h"
 
 
 @interface LXStreamViewController ()
@@ -50,8 +50,6 @@
 //    self.collectionView.alwaysBounceVertical = YES;
     loadEnded = false;
     loading = false;
-    LXMainTabViewController *tabBarController = (LXMainTabViewController *)self.tabBarController;
-    self.navigationItem.rightBarButtonItem = tabBarController.sharedRightButton;
      
     [self loadMore:YES];
 }
@@ -203,6 +201,14 @@
     viewGallery.picture = picture;
     
     [self presentViewController:navGalerry animated:YES completion:nil];
+}
+
+- (void)showUser:(User *)user fromGallery:(LXGalleryViewController *)gallery {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    LXMyPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    viewUserPage.user = user;
+    [self.navigationController pushViewController:viewUserPage animated:YES];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {

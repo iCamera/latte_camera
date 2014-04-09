@@ -37,6 +37,7 @@ typedef enum {
     BOOL reloading;
     MBProgressHUD *HUD;
     NSString *area;
+    UIRefreshControl *refresh;
 }
 
 @synthesize buttonWeekly;
@@ -87,9 +88,6 @@ typedef enum {
     // Do any additional setup after loading the view.
     
     //setup left button
-    UIBarButtonItem *navLeftItem = self.navigationItem.leftBarButtonItem;
-    UIButton *buttonSide = (UIButton*)navLeftItem.customView;
-//    [buttonSide addTarget:app.controllerSide action:@selector(toggleLeftPanel:) forControlEvents:UIControlEventTouchUpInside];
     
     area = [[NSUserDefaults standardUserDefaults] objectForKey:@"timeline_area"];
     if (!area) {
@@ -103,6 +101,10 @@ typedef enum {
         buttonAreaWorld.selected = NO;
         buttonAreaLocal.selected = YES;
     }
+    
+    refresh = [[UIRefreshControl alloc] init];
+    [refresh addTarget:self action:@selector(loadMore:) forControlEvents:UIControlEventValueChanged];
+    [self setRefreshControl:refresh];
     
     [self reloadView];
 }
@@ -355,15 +357,8 @@ typedef enum {
 }
 
 - (void)initButton:(UIButton*)button {
-//    button.layer.borderColor = [[UIColor whiteColor] CGColor];
-//    button.layer.borderWidth = 3;
-//    UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:button.bounds];
-//    button.layer.masksToBounds = NO;
-//    button.layer.shadowColor = [UIColor blackColor].CGColor;
-//    button.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-//    button.layer.shadowOpacity = 0.5f;
-//    button.layer.shadowRadius = 1.5f;
-//    button.layer.shadowPath = shadowPathPic.CGPath;
+    button.layer.cornerRadius = 2;
+    button.layer.masksToBounds = YES;
     
     [button addTarget:self action:@selector(didSelectPic:) forControlEvents:UIControlEventTouchUpInside];
 }
@@ -454,19 +449,12 @@ typedef enum {
                 break;
             pic = pictures[index];
             
-            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(6 + 104*i, 3, 98, 98)];
+            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(6 + 104*i, 3, 100, 100)];
             
             [button loadBackground:pic.urlSquare];
-            button.layer.borderColor = [[UIColor whiteColor] CGColor];
-            button.layer.borderWidth = 3;
-            
-            UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:button.bounds];
-            button.layer.masksToBounds = NO;
-            button.layer.shadowColor = [UIColor blackColor].CGColor;
-            button.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-            button.layer.shadowOpacity = 0.5f;
-            button.layer.shadowRadius = 1.5f;
-            button.layer.shadowPath = shadowPath.CGPath;
+
+            button.layer.masksToBounds = YES;
+            button.layer.cornerRadius = 2;
             
             button.tag = [pic.pictureId integerValue];
             [button addTarget:self action:@selector(showPic:) forControlEvents:UIControlEventTouchUpInside];
