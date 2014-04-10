@@ -28,9 +28,12 @@
 
 - (void)viewDidLoad
 {
-    LatteAPIClient *api = [LatteAPIClient sharedClient];
     [super viewDidLoad];
-    [viewWeb loadRequest:[api requestWithMethod:@"GET" path:@"user/help" parameters:nil]];
+    LatteAPIClient *api = [LatteAPIClient sharedClient];
+    [viewWeb loadRequest:[api.requestSerializer requestWithMethod:@"GET"
+                                                        URLString:[[NSURL URLWithString:@"user/help" relativeToURL:api.baseURL] absoluteString]
+                                                       parameters:nil
+                                                            error:nil]];
 	// Do any additional setup after loading the view.
 }
 

@@ -70,7 +70,7 @@
         url = [NSString stringWithFormat:@"user/unfollow/%d", [_user.userId integerValue]];
     }
     
-    [[LatteAPIClient sharedClient] postPath:url
+    [[LatteAPIClient sharedClient] POST:url
                                  parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                     success:nil
                                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {

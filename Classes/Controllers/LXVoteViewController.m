@@ -48,7 +48,7 @@
         NSString *url = [NSString stringWithFormat:@"picture/%d/votes", [picture.pictureId integerValue]];
         LXAppDelegate* app = (LXAppDelegate*)[[UIApplication sharedApplication] delegate];
         
-        [[LatteAPIClient sharedClient] getPath:url
+        [[LatteAPIClient sharedClient] GET:url
                                     parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                        success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                            NSMutableArray *votes = [User mutableArrayFromDictionary:JSON withKey:@"votes"];

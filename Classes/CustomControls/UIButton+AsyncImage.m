@@ -44,9 +44,8 @@
     
     [operation setCompletionBlockWithSuccess: successDownload failure: failDownload];
     
-    [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+    [operation setDownloadProgressBlock:^(NSUInteger bytesRead, NSInteger totalBytesRead, NSInteger totalBytesExpectedToRead) {
     }];
-    
     
     [operation start];
 }

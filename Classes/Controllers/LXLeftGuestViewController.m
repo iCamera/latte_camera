@@ -65,7 +65,7 @@
     LatteAPIClient *api = [LatteAPIClient sharedClient];
     NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
     NSDictionary *params = [NSDictionary dictionaryWithObject:language forKey:@"language"];
-    [api getPath:@"user/ads"
+    [api GET:@"user/ads"
       parameters:params
          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
              [buttonBanner loadBackground:JSON[@"image"]];

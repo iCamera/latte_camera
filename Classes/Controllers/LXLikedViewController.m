@@ -69,7 +69,7 @@
                             [NSNumber numberWithInt:30], @"limit",
                             nil];
     
-    [[LatteAPIClient sharedClient] getPath:@"picture/user/me/voted"
+    [[LatteAPIClient sharedClient] GET:@"picture/user/me/voted"
                                 parameters: params
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        NSMutableArray *newData = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];

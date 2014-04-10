@@ -71,7 +71,7 @@
     LatteAPIClient *api = [LatteAPIClient sharedClient];
     NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
     NSDictionary *params = [NSDictionary dictionaryWithObject:language forKey:@"language"];
-    [api getPath:@"user/ads"
+    [api GET:@"user/ads"
       parameters:params
          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
              [buttonBanner loadBackground:JSON[@"image"]];
@@ -143,7 +143,7 @@
             [app setToken:@""];
             app.currentUser = nil;
             [[NSNotificationCenter defaultCenter] postNotificationName:@"LoggedOut" object:self];
-            [[LatteAPIClient sharedClient] postPath:@"user/logout" parameters:nil success:nil failure:nil];
+            [[LatteAPIClient sharedClient] POST:@"user/logout" parameters:nil success:nil failure:nil];
             
             break;
         }

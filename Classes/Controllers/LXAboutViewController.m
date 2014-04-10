@@ -63,7 +63,7 @@
     }
     
     
-    [[LatteAPIClient sharedClient] postPath:@"user/inqury"
+    [[LatteAPIClient sharedClient] POST:@"user/inqury"
                                  parameters:params
                                     success:nil
                                     failure:nil];

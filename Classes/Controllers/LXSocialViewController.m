@@ -146,7 +146,7 @@
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             [NSNumber numberWithBool:value], field, nil];
     
-    [[LatteAPIClient sharedClient] postPath:@"user/me/update"
+    [[LatteAPIClient sharedClient] POST:@"user/me/update"
                                  parameters: params
                                     success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                         if ([[JSON objectForKey:@"status"] integerValue] == 0) {

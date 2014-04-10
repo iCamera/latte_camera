@@ -150,7 +150,7 @@ typedef enum {
     NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
     [param setObject:area forKey:@"area"];
     
-    [[LatteAPIClient sharedClient] getPath:url
+    [[LatteAPIClient sharedClient] GET:url
                                 parameters: param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        days = [[NSMutableArray alloc] init];
@@ -187,7 +187,7 @@ typedef enum {
     NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
     [param setObject:area forKey:@"area"];
     
-    [[LatteAPIClient sharedClient] getPath:url
+    [[LatteAPIClient sharedClient] GET:url
                                 parameters: param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        [HUD hide:YES];
@@ -229,7 +229,7 @@ typedef enum {
     NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
     [param setObject:area forKey:@"area"];
     
-    [[LatteAPIClient sharedClient] getPath:url
+    [[LatteAPIClient sharedClient] GET:url
                                 parameters: param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        pics = [Picture mutableArrayFromDictionary:JSON withKey:@"pics"];
@@ -256,7 +256,7 @@ typedef enum {
     NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
     [param setObject:area forKey:@"area"];
     
-    [[LatteAPIClient sharedClient] getPath:url
+    [[LatteAPIClient sharedClient] GET:url
                                 parameters:param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        [self.tableView beginUpdates];

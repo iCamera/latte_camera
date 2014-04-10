@@ -126,7 +126,7 @@
 //    hud.mode = MBProgressHUDModeIndeterminate;
 //    hud.userInteractionEnabled = NO;
 //    [hud show:YES];
-    [[LatteAPIClient sharedClient] getPath:@"user/me/notify"
+    [[LatteAPIClient sharedClient] GET:@"user/me/notify"
                                       parameters: params
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                              NSArray *newData = [JSON objectForKey:@"notifies"];
@@ -194,7 +194,7 @@
                 hud.mode = MBProgressHUDModeIndeterminate;
                 [hud show:YES];
                 
-                [[LatteAPIClient sharedClient] getPath:urlDetail
+                [[LatteAPIClient sharedClient] GET:urlDetail
                                             parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                                success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                                    [hud hide:YES];
@@ -332,7 +332,7 @@
 
 - (IBAction)touchBackground:(id)sender {
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
-    [[LatteAPIClient sharedClient] postPath:@"user/me/read_notify"
+    [[LatteAPIClient sharedClient] POST:@"user/me/read_notify"
                                  parameters: [NSDictionary dictionaryWithObject:[app getToken] forKey:@"token" ]
                                     success:nil
                                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -358,7 +358,12 @@
         webAnnounce.hidden = NO;
         tableNotify.hidden = YES;
         self.notifyCount = 0;
-        [webAnnounce loadRequest:[[LatteAPIClient sharedClient] requestWithMethod:@"GET" path:@"user/announce" parameters:nil]];
+        LatteAPIClient *api = [LatteAPIClient sharedClient];
+        NSURLRequest* request = [api.requestSerializer requestWithMethod:@"GET"
+                                                               URLString:[[NSURL URLWithString:@"user/announce" relativeToURL:api.baseURL] absoluteString]
+                                                              parameters:nil
+                                                                   error:nil];
+        [webAnnounce loadRequest:request];
     } else {
         webAnnounce.hidden = YES;
         tableNotify.hidden = NO;

@@ -425,7 +425,7 @@
                      [currentPage.picture.pictureId integerValue],
                      [currentPage.picture.userId integerValue]];
     
-    [[LatteAPIClient sharedClient] getPath:urlCounter parameters:nil success:nil failure:nil];
+    [[LatteAPIClient sharedClient] GET:urlCounter parameters:nil success:nil failure:nil];
     buttonEdit.hidden = !currentPage.picture.isOwner;
 }
 
@@ -522,7 +522,7 @@
         NSString *urlDetail = [NSString stringWithFormat:@"picture/%d", [currentPage.picture.pictureId integerValue]];
         [viewPicTab.viewComment.activityLoad startAnimating];
         viewPicTab.viewComment.tableView.tableFooterView = viewPicTab.viewComment.viewFooter;
-        [[LatteAPIClient sharedClient] getPath:urlDetail
+        [[LatteAPIClient sharedClient] GET:urlDetail
                                     parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                        success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                            if (currentPage.user == nil) {

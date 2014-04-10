@@ -14,7 +14,6 @@
 #import "Picture.h"
 #import "LXLoginViewController.h"
 #import "UIImageView+AFNetworking.h"
-#import "AFHTTPClient.h"
 #import "LXShare.h"
 #import "LXTextView.h"
 

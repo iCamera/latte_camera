@@ -66,7 +66,7 @@
                            [NSNumber numberWithInt:page], @"page",
                            nil];
     
-    [[LatteAPIClient sharedClient] getPath:@"picture/tag"
+    [[LatteAPIClient sharedClient] GET:@"picture/tag"
                                 parameters:param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        

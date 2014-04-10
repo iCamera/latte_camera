@@ -94,7 +94,7 @@
                                textMail.text, @"mail",
                                textPassword.text, @"cur_password",
                                nil];
-        [api postPath:@"user/change_mail" parameters:params success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+        [api POST:@"user/change_mail" parameters:params success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
             [HUD hide:YES];
             if ([JSON[@"status"] boolValue] == true) {
                 UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"register_sent_email", @"登録確認メールを送信しました。")

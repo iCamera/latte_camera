@@ -182,7 +182,7 @@
                             [pic.pictureId integerValue],
                             [pic.userId integerValue]];
     
-    [[LatteAPIClient sharedClient] getPath:urlCounter parameters:nil success:nil failure:nil];
+    [[LatteAPIClient sharedClient] GET:urlCounter parameters:nil success:nil failure:nil];
 }
 
 - (void)submitLike:(id)sender {

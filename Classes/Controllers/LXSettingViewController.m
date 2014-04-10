@@ -34,7 +34,7 @@
     [HUD show:YES];
     
     NSDictionary *params = [NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"];
-    [[LatteAPIClient sharedClient] getPath:@"user/me" parameters:params  success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+    [[LatteAPIClient sharedClient] GET:@"user/me" parameters:params  success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
         
         NSMutableDictionary *userDict = [NSMutableDictionary dictionaryWithDictionary:[JSON objectForKey:@"user"]];
         // Fixbug
@@ -195,7 +195,7 @@
         app.currentUser.defaultShowTakenAt = [[dict objectForKey:@"default_show_taken_at"] boolValue];
     }*/
     
-    [[LatteAPIClient sharedClient] postPath:@"user/me/update"
+    [[LatteAPIClient sharedClient] POST:@"user/me/update"
                                  parameters: dict
                                     success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                         if ([[JSON objectForKey:@"status"] integerValue] == 0) {

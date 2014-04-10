@@ -642,7 +642,7 @@ typedef enum {
         } else {
             LatteAPIClient *api = [LatteAPIClient sharedClient];
             [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            [api getPath:@"picture/fonts"
+            [api GET:@"picture/fonts"
               parameters:nil
                  success:^(AFHTTPRequestOperation *operation, NSDictionary* JSON) {
                      downloadable = JSON[@"fonts"];
@@ -1015,7 +1015,11 @@ typedef enum {
         
         [progessHUD show:YES];
         
-        NSURLRequest *request = [[LatteAPIClient sharedClient] requestWithMethod:@"GET" path:downloadable[alertView.tag][@"url"] parameters:nil];
+        LatteAPIClient *api = [LatteAPIClient sharedClient];
+        NSURLRequest *request = [api.requestSerializer requestWithMethod:@"GET"
+                                                               URLString: [[NSURL URLWithString:downloadable[alertView.tag][@"url"] relativeToURL:api.baseURL] absoluteString]
+                                                              parameters:nil
+                                                                   error:nil];
         
         AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
         
@@ -1047,7 +1051,7 @@ typedef enum {
         
         [operation setCompletionBlockWithSuccess: successUpload failure: failDownload];
         
-        [operation setDownloadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+        [operation setDownloadProgressBlock:^(NSUInteger bytesWritten, NSInteger totalBytesWritten, NSInteger totalBytesExpectedToWrite) {
             progessHUD.progress = (float)totalBytesWritten/(float)totalBytesExpectedToWrite;
         }];
         

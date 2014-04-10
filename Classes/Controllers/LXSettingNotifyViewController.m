@@ -41,7 +41,7 @@
     
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
     NSDictionary *params = [NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"];
-    [[LatteAPIClient sharedClient] getPath:@"user/me" parameters:params  success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+    [[LatteAPIClient sharedClient] GET:@"user/me" parameters:params  success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
         NSDictionary *userDict = [JSON objectForKey:@"user"];
         User* user = [User instanceFromDictionary:userDict];
         
@@ -108,7 +108,7 @@
     [params setObject:[NSNumber numberWithBool:sender.selected] forKey:key];
 
     
-    [[LatteAPIClient sharedClient] postPath:@"user/me/update"
+    [[LatteAPIClient sharedClient] POST:@"user/me/update"
                                  parameters: params
                                     success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                         if ([[JSON objectForKey:@"status"] integerValue] == 0) {

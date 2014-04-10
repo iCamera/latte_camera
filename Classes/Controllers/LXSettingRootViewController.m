@@ -177,7 +177,7 @@
         
         [[FBSession activeSession] closeAndClearTokenInformation];
         
-        [[LatteAPIClient sharedClient] postPath:@"user/logout" parameters:nil success:nil failure:nil];
+        [[LatteAPIClient sharedClient] POST:@"user/logout" parameters:nil success:nil failure:nil];
         [app setToken:@""];
         app.currentUser = nil;
         [self dismissViewControllerAnimated:YES completion:nil];
@@ -225,7 +225,7 @@
 }
 - (IBAction)touchSetPicture:(id)sender {
     LatteAPIClient *api = [LatteAPIClient sharedClient];
-    if (api.networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable) {
+    if (api.reachabilityManager.networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"")
                                                         message:NSLocalizedString(@"Network connectivity is not available", @"")
                                                        delegate:nil
@@ -268,10 +268,13 @@
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             [app getToken], @"token", nil];
     
-    NSURLRequest *request = [[LatteAPIClient sharedClient] multipartFormRequestWithMethod:@"POST"
-                                                                                     path:@"user/me/profile_picture"
-                                                                               parameters:params
-                                                                constructingBodyWithBlock:createForm];
+    
+    LatteAPIClient *api = [LatteAPIClient sharedClient];
+    NSURLRequest *request = [api.requestSerializer multipartFormRequestWithMethod:@"POST"
+                                                                        URLString:[[NSURL URLWithString:@"user/me/profile_picture" relativeToURL:api.baseURL] absoluteString]
+                                                                       parameters:params
+                                                        constructingBodyWithBlock:createForm
+                                                                            error:nil];
     
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     
@@ -282,7 +285,7 @@
         
         imageProfile.image = [info objectForKey:@"preview"];
         
-        [[LatteAPIClient sharedClient] getPath:@"user/me"
+        [[LatteAPIClient sharedClient] GET:@"user/me"
                                     parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                        success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                            
@@ -311,7 +314,7 @@
     
     [operation setCompletionBlockWithSuccess: successUpload failure: failUpload];
     
-    [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+    [operation setUploadProgressBlock:^(NSUInteger bytesWritten, NSInteger totalBytesWritten, NSInteger totalBytesExpectedToWrite) {
         progessHUD.progress = (float)totalBytesWritten/(float)totalBytesExpectedToWrite;
     }];
     

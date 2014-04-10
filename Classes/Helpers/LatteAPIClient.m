@@ -7,7 +7,6 @@
 //
 
 #import "LatteAPIClient.h"
-#import "AFJSONRequestOperation.h"
 #import "UIDeviceHardware.h"
 #import "LXAppDelegate.h"
 
@@ -20,22 +19,25 @@
     dispatch_once(&onceToken, ^{
         _sharedClient = [[LatteAPIClient alloc] initWithBaseURL:[NSURL URLWithString:kLatteAPIBaseURLString]];
         if (![kLatteAPIBaseURLString isEqualToString:@"http://latte.la/api/"]) {
-            [_sharedClient setAuthorizationHeaderWithUsername:@"luxeys" password:@"13579"];
+            [_sharedClient.requestSerializer setAuthorizationHeaderFieldWithUsername:@"luxeys" password:@"13579"];
         }
         
-        [_sharedClient setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        NSOperationQueue *operationQueue = _sharedClient.operationQueue;
+        [_sharedClient.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
             switch (status) {
+                case AFNetworkReachabilityStatusReachableViaWWAN:
+                case AFNetworkReachabilityStatusReachableViaWiFi:
+                    [operationQueue setSuspended:NO];
+                    [[NSNotificationCenter defaultCenter]
+                     postNotificationName:@"ConnectedInternet"
+                     object:_sharedClient];
+                    break;
                 case AFNetworkReachabilityStatusNotReachable:
                     [[NSNotificationCenter defaultCenter]
                      postNotificationName:@"NoConnection"
                      object:_sharedClient];
-                    
-                    break;
                 default:
-                    [[NSNotificationCenter defaultCenter]
-                     postNotificationName:@"ConnectedInternet"
-                     object:_sharedClient];
-                    
+                    [operationQueue setSuspended:YES];
                     break;
             }
         }];
@@ -44,14 +46,25 @@
     return _sharedClient;
 }
 
-- (NSMutableURLRequest *)requestWithMethod:(NSString *)method path:(NSString *)path parameters:(NSDictionary *)parameters {
+- (AFHTTPRequestOperation *)GET:(NSString *)URLString parameters:(NSDictionary *)parameters success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure {
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:parameters];
     if ([app getToken]) {
         [params setObject:[app getToken] forKey:@"token"];
     }
     
-    return [super requestWithMethod:method path:path parameters:params];
+    return [super GET:URLString parameters:params success:success failure:failure];
+}
+
+- (AFHTTPRequestOperation *)POST:(NSString *)URLString parameters:(NSDictionary *)parameters success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure {
+    
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    if ([app getToken]) {
+        [params setObject:[app getToken] forKey:@"token"];
+    }
+    
+    return [super POST:URLString parameters:params success:success failure:failure];
 }
 
 - (id)initWithBaseURL:(NSURL *)url {
@@ -60,10 +73,9 @@
         return nil;
     }
     
-    [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
-    
     // Accept HTTP Header; see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.1
-	[self setDefaultHeader:@"Accept" value:@"application/json"];
+	// [self setDefaultHeader:@"Accept" value:@"application/json"];
+    
 
     UIDeviceHardware *device = [[UIDeviceHardware alloc] init];
     
@@ -72,12 +84,14 @@
     NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
     NSString * build = [[NSBundle mainBundle] objectForInfoDictionaryKey: (NSString *)kCFBundleVersionKey];
     NSTimeZone *timeZone = [NSTimeZone localTimeZone];
-    [self setDefaultHeader:@"Latte-version" value:majorVersion];
-    [self setDefaultHeader:@"Latte-build" value:build];
-    [self setDefaultHeader:@"Latte-ios" value:[[UIDevice currentDevice] systemVersion]];
-    [self setDefaultHeader:@"Latte-device" value:[device platformString]];
-    [self setDefaultHeader:@"Latte-language" value:language];
-    [self setDefaultHeader:@"Latte-timezone" value:[NSString stringWithFormat:@"%d", [timeZone secondsFromGMT]]];
+    
+    [self.requestSerializer setValue:majorVersion forHTTPHeaderField:@"Latte-version"];
+    [self.requestSerializer setValue:build forHTTPHeaderField:@"Latte-build"];
+    [self.requestSerializer setValue:[[UIDevice currentDevice] systemVersion] forHTTPHeaderField:@"Latte-ios"];
+    [self.requestSerializer setValue:[device platformString] forHTTPHeaderField:@"Latte-device"];
+    [self.requestSerializer setValue:language forHTTPHeaderField:@"Latte-language"];
+    [self.requestSerializer setValue:majorVersion forHTTPHeaderField:@"Latte-timezone"];
+    [self.requestSerializer setValue:[NSString stringWithFormat:@"%d", [timeZone secondsFromGMT]] forHTTPHeaderField:@"Latte-version"];
     
     return self;
 }

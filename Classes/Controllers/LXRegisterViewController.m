@@ -127,7 +127,7 @@
             [alert show];
         };
         
-        [[LatteAPIClient sharedClient] postPath:@"user/register2"
+        [[LatteAPIClient sharedClient] POST:@"user/register2"
                                      parameters:params
                                         success:successBlock
                                         failure:failureBlock];

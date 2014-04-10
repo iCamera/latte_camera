@@ -84,7 +84,7 @@
     
     
     NSString *url = [NSString stringWithFormat:@"picture/%d/vote_post", [pic.pictureId integerValue]];
-    [[LatteAPIClient sharedClient] postPath:url
+    [[LatteAPIClient sharedClient] POST:url
                                  parameters:param
                                     success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                         DLog(@"Submited like");

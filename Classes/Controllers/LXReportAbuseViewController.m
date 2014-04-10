@@ -67,7 +67,7 @@
 - (IBAction)touchReport:(id)sender {
     NSString *path = [NSString stringWithFormat:@"user/report_abuse/%@/%d", @"picture", [_picture.pictureId integerValue]];
     
-    [[LatteAPIClient sharedClient] postPath:path
+    [[LatteAPIClient sharedClient] POST:path
                                  parameters:[NSDictionary dictionaryWithObject:textComment.text forKey:@"report_comment"]
                                     success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Report", @"")

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AFHTTPClient.h"
+#import "AFHTTPRequestOperationManager.h"
 
 
 #ifdef DEBUG
@@ -22,7 +22,7 @@ static NSString * const kLatteAPIBaseURLString = @"http://latte.la/api/";
 //static NSString * const kLatteAPIBaseURLString = @"http://192.168.2.118:5000/api/";
 
 
-@interface LatteAPIClient : AFHTTPClient
+@interface LatteAPIClient : AFHTTPRequestOperationManager
 
 + (LatteAPIClient *)sharedClient;
 

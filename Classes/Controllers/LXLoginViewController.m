@@ -81,7 +81,7 @@
     [defaults setObject:self.textPass.text forKey:@"latte_password"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    [[LatteAPIClient sharedClient] postPath:@"user/login"
+    [[LatteAPIClient sharedClient] POST:@"user/login"
                                  parameters:[NSDictionary dictionaryWithObjectsAndKeys:
                                              self.textUser.text, @"mail",
                                              self.textPass.text, @"password", nil]
@@ -123,7 +123,7 @@
                                                   DLog(@"Open fb");
                                                   FBAccessTokenData *tokenData = FBSession.activeSession.accessTokenData;
                                                   
-                                                  [[LatteAPIClient sharedClient] postPath:@"user/login_facebook"
+                                                  [[LatteAPIClient sharedClient] POST:@"user/login_facebook"
                                                                                parameters:[NSDictionary dictionaryWithObjectsAndKeys:
                                                                                            tokenData.accessToken, @"facebook_token", nil]
                                                                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -201,7 +201,7 @@
         [alert show];
     } else {
         [app setToken:[JSON objectForKey:@"token"]];
-        [[LatteAPIClient sharedClient] getPath:@"user/me"
+        [[LatteAPIClient sharedClient] GET:@"user/me"
                                     parameters:[NSDictionary dictionaryWithObjectsAndKeys:
                                                 [app getToken], @"token", nil]
                                        success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {

@@ -51,7 +51,7 @@
 
 - (void)checkTokenValidity {
     //FIX ME
-    [[LatteAPIClient sharedClient] getPath:@"user/me"
+    [[LatteAPIClient sharedClient] GET:@"user/me"
                                 parameters:nil
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        if ([[JSON objectForKey:@"status"] integerValue] == 1) {
@@ -121,7 +121,7 @@
                                  stringByReplacingOccurrencesOfString: @">" withString: @""]
                                 stringByReplacingOccurrencesOfString: @" " withString: @""];
     DLog(@"Register APNS: %@", apns);
-    [[LatteAPIClient sharedClient] postPath:@"user/me/update"
+    [[LatteAPIClient sharedClient] POST:@"user/me/update"
                                  parameters:[NSDictionary dictionaryWithObjectsAndKeys:
                                              [self getToken], @"token",
                                              apns, @"apns",
@@ -198,7 +198,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"BecomeActive" object:self];
     
     if (_currentUser) {
-        [[LatteAPIClient sharedClient] getPath:@"user/me"
+        [[LatteAPIClient sharedClient] GET:@"user/me"
                                     parameters:nil
                                        success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                            self.currentUser = [User instanceFromDictionary:[JSON objectForKey:@"user"]];

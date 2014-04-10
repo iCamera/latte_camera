@@ -204,7 +204,7 @@
         [MBProgressHUD showHUDAddedTo:self.view.superview.superview.superview animated:YES];
         [growingComment resignFirstResponder];
         
-        [[LatteAPIClient sharedClient] postPath:url
+        [[LatteAPIClient sharedClient] POST:url
                                      parameters:param
                                         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                             Comment *comment = [Comment instanceFromDictionary:[JSON objectForKey:@"comment"]];
@@ -260,7 +260,7 @@
         LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
         
         NSString *url = [NSString stringWithFormat:@"picture/comment/%d/delete", [comment.commentId integerValue]];
-        [[LatteAPIClient sharedClient] postPath:url
+        [[LatteAPIClient sharedClient] POST:url
                                      parameters:[NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"]
                                         success:nil
                                         failure:^(AFHTTPRequestOperation *operation, NSError *error) {

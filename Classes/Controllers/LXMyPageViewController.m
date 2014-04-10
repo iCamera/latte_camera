@@ -158,7 +158,7 @@ typedef enum {
         // Increase count
         NSString *url = [NSString stringWithFormat:@"user/counter/%d",[_user.userId integerValue]];
         
-        [[LatteAPIClient sharedClient] getPath:url
+        [[LatteAPIClient sharedClient] GET:url
                                     parameters:[NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"]
                                        success:nil
                                        failure:nil];
@@ -209,7 +209,7 @@ typedef enum {
     else
         url = [NSString stringWithFormat:@"user/%d/timeline", [_user.userId integerValue]];
     
-    [[LatteAPIClient sharedClient] getPath:url
+    [[LatteAPIClient sharedClient] GET:url
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:
                                              [app getToken], @"token",
                                              [NSNumber numberWithInteger:timelineKind], @"listtype",
@@ -239,7 +239,7 @@ typedef enum {
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
     NSString *url = [NSString stringWithFormat:@"user/%d", [_user.userId integerValue]];
-    [[LatteAPIClient sharedClient] getPath:url
+    [[LatteAPIClient sharedClient] GET:url
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        userDict = [JSON objectForKey:@"user"];
@@ -282,7 +282,7 @@ typedef enum {
                            nil];
     NSString *url = [NSString stringWithFormat:@"picture/user/%d", [_user.userId integerValue]];
     
-    [[LatteAPIClient sharedClient] getPath:url
+    [[LatteAPIClient sharedClient] GET:url
                                 parameters: param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        pictures = [Picture mutableArrayFromDictionary:JSON
@@ -314,7 +314,7 @@ typedef enum {
         nil];
 
     NSString *url = [NSString stringWithFormat:@"picture/user/%d", [_user.userId integerValue]];
-    [[LatteAPIClient sharedClient] getPath:url
+    [[LatteAPIClient sharedClient] GET:url
                                 parameters: param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        NSArray *newPics = [Picture mutableArrayFromDictionary:JSON
@@ -350,7 +350,7 @@ typedef enum {
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
     NSString *url = [NSString stringWithFormat:@"user/%d/follower", [_user.userId integerValue]];
-    [[LatteAPIClient sharedClient] getPath:url
+    [[LatteAPIClient sharedClient] GET:url
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        followers = [User mutableArrayFromDictionary:JSON
@@ -370,7 +370,7 @@ typedef enum {
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
     NSString *url = [NSString stringWithFormat:@"user/%d/following", [_user.userId integerValue]];
-    [[LatteAPIClient sharedClient] getPath:url
+    [[LatteAPIClient sharedClient] GET:url
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        followings = [User mutableArrayFromDictionary:JSON
@@ -448,7 +448,7 @@ typedef enum {
             return;
     }
     
-    [[LatteAPIClient sharedClient] getPath: url
+    [[LatteAPIClient sharedClient] GET: url
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:
                                              [app getToken], @"token",
                                              [NSNumber numberWithInteger:timelineKind], @"listtype",
@@ -496,7 +496,7 @@ typedef enum {
     
     NSString* urlPhotos = [NSString stringWithFormat:@"picture/album/by_month/%@/%d", [dateFormat stringFromDate:currentMonth], [_user.userId integerValue]];
     [HUD show:YES];
-    [[LatteAPIClient sharedClient] getPath:urlPhotos
+    [[LatteAPIClient sharedClient] GET:urlPhotos
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        currentMonthPicsFlat = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
@@ -1242,7 +1242,7 @@ typedef enum {
 - (void)deleteProfilePic {
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
-    [[LatteAPIClient sharedClient] postPath:@"user/me/profile_picture_delete"
+    [[LatteAPIClient sharedClient] POST:@"user/me/profile_picture_delete"
                                  parameters:[NSDictionary dictionaryWithObjectsAndKeys:
                                              [app getToken], @"token", nil]
                                     success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -1255,7 +1255,7 @@ typedef enum {
 
 - (void)pickPhoto {
     LatteAPIClient *api = [LatteAPIClient sharedClient];
-    if (api.networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable) {
+    if (api.reachabilityManager.networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"")
                                                         message:NSLocalizedString(@"Network connectivity is not available", @"")
                                                        delegate:nil
@@ -1297,10 +1297,11 @@ typedef enum {
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             [app getToken], @"token", nil];
     
-    NSURLRequest *request = [[LatteAPIClient sharedClient] multipartFormRequestWithMethod:@"POST"
-                                                                                     path:@"user/me/profile_picture"
-                                                                               parameters:params
-                                                                constructingBodyWithBlock:createForm];
+    LatteAPIClient *api = [LatteAPIClient sharedClient];
+    NSMutableURLRequest *request = [api.requestSerializer multipartFormRequestWithMethod:@"POST"
+                                                URLString:[[NSURL URLWithString:@"user/me/profile_picture" relativeToURL:api.baseURL] absoluteString]
+                                               parameters:params
+                                constructingBodyWithBlock:createForm error:nil];
     
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     
@@ -1329,7 +1330,7 @@ typedef enum {
     
     [operation setCompletionBlockWithSuccess: successUpload failure: failUpload];
     
-    [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+    [operation setUploadProgressBlock:^(NSUInteger bytesWritten, NSInteger totalBytesWritten, NSInteger totalBytesExpectedToWrite) {
         progessHUD.progress = (float)totalBytesWritten/(float)totalBytesExpectedToWrite;
     }];
     

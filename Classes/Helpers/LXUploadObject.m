@@ -149,10 +149,12 @@
                             [tagsPolish componentsJoinedByString:@","], @"tags",
                             nil];
     
-    NSURLRequest *request = [[LatteAPIClient sharedClient] multipartFormRequestWithMethod:@"POST"
-                                                                                     path:@"picture/upload"
-                                                                               parameters:params
-                                                                constructingBodyWithBlock:createForm];
+    LatteAPIClient *api = [LatteAPIClient sharedClient];
+    NSURLRequest *request = [api.requestSerializer multipartFormRequestWithMethod:@"POST"
+                                                                        URLString:[[NSURL URLWithString:@"picture/upload" relativeToURL:api.baseURL] absoluteString]
+                                                                       parameters:params
+                                                        constructingBodyWithBlock:createForm
+                                                                            error:nil];
     
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     
@@ -176,7 +178,7 @@
     [operation setCompletionBlockWithSuccess: successUpload
                                      failure: failUpload];
     
-    [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+    [operation setUploadProgressBlock:^(NSUInteger bytesWritten, NSInteger totalBytesWritten, NSInteger totalBytesExpectedToWrite) {
         _percent = (float)totalBytesWritten/(float)totalBytesExpectedToWrite;
         [_delegate uploader:self progress:_percent];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderProgress" object:self];

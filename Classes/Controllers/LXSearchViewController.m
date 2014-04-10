@@ -110,7 +110,7 @@ typedef enum {
                            [app getToken], @"token",
                            textKeyword.text, @"keyword", nil];
     NSString *url = [NSString stringWithFormat:@"picture/trending/%@", type];
-    [[LatteAPIClient sharedClient] getPath:url
+    [[LatteAPIClient sharedClient] GET:url
                                 parameters:param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        tags = [JSON objectForKey:@"tags"];
@@ -321,7 +321,7 @@ typedef enum {
                            [NSNumber numberWithInt:page], @"page",
                            nil];
     
-    [[LatteAPIClient sharedClient] getPath:@"picture/tag"
+    [[LatteAPIClient sharedClient] GET:@"picture/tag"
                                 parameters:param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        NSMutableArray *data = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
@@ -358,7 +358,7 @@ typedef enum {
                            [NSNumber numberWithInt:page], @"page",
                            nil];
     
-    [[LatteAPIClient sharedClient] getPath:url
+    [[LatteAPIClient sharedClient] GET:url
                                 parameters:param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
 

@@ -239,7 +239,7 @@
     viewNotify.view.hidden = false;
     [viewNotify switchTab:viewNotify.buttonNotifyAll];
     
-    [[LatteAPIClient sharedClient] getPath:@"user/me/unread_announcement"
+    [[LatteAPIClient sharedClient] GET:@"user/me/unread_announcement"
                                 parameters: nil
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        viewNotify.notifyCount = [[JSON objectForKey:@"announcement_count"] integerValue];

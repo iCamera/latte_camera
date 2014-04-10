@@ -7,7 +7,7 @@
 //
 
 #import "LXStreamBrickCell.h"
-#import "UIButton+AsyncImage.h"
+#import "UIButton+AFNetworking.h"
 
 @implementation LXStreamBrickCell
 
@@ -32,7 +32,8 @@
 
 - (void)setPicture:(Picture *)picture {
     _picture = picture;
-    [_buttonPicture loadBackground:picture.urlSmall];
+
+    [_buttonPicture setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:picture.urlSmall] placeholderImage:nil];
 }
 
 - (IBAction)touchPicture:(UIButton *)sender {

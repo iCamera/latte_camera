@@ -84,7 +84,7 @@
     HUD.mode = MBProgressHUDModeIndeterminate;
     [HUD show:YES];
     
-    [api postPath:@"user/resend_confirm" parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+    [api POST:@"user/resend_confirm" parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
         [HUD hide:YES];
         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"register_sent_email", @"登録確認メールを送信しました。")
                                                         message:NSLocalizedString(@"register_click_the_link", @"メールに記載されたURLをクリックして、手続きを行ってください。") delegate:nil

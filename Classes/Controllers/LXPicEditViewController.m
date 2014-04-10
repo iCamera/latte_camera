@@ -246,7 +246,7 @@
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                                     [app getToken], @"token", nil];
             
-            [[LatteAPIClient sharedClient] postPath:url
+            [[LatteAPIClient sharedClient] POST:url
                                          parameters: params
                                             success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                                 [HUD hide:YES];
@@ -343,7 +343,7 @@
     _picture.showLarge = imageShowOriginal;
     _picture.tagsOld = tags;
     
-    [[LatteAPIClient sharedClient] postPath:url
+    [[LatteAPIClient sharedClient] POST:url
                                  parameters: params
                                     success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                         [HUD hide:YES];

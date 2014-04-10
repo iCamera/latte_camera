@@ -98,7 +98,7 @@
                                 textCurrentPassword.text,  @"cur_password",
                                 nil];
         
-        [api postPath:@"user/change_password" parameters:params success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+        [api POST:@"user/change_password" parameters:params success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
             [HUD hide:YES];
             if ([JSON[@"status"] boolValue] == true) {
                 UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Password", @"")

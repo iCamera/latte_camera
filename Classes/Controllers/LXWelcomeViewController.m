@@ -142,7 +142,7 @@ typedef enum {
         }
     }
     
-    [[LatteAPIClient sharedClient] getPath:@"user/everyone/timeline"
+    [[LatteAPIClient sharedClient] GET:@"user/everyone/timeline"
                                 parameters: param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        if (reset) {

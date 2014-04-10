@@ -87,7 +87,7 @@
         
         if (tmp.count > 0) {
             LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-            [[LatteAPIClient sharedClient] getPath:@"user/friends/facebook_unadded_friend"
+            [[LatteAPIClient sharedClient] GET:@"user/friends/facebook_unadded_friend"
                                         parameters: [NSDictionary dictionaryWithObjectsAndKeys:
                                                      [app getToken], @"token",
                                                      [tmp componentsJoinedByString:@","], @"fbids",

@@ -39,7 +39,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    CHTCollectionViewWaterfallLayout *layout = (CHTCollectionViewWaterfallLayout*)self.collectionViewLayout;
+    CHTCollectionViewWaterfallLayout *layout = (CHTCollectionViewWaterfallLayout*)self.collectionView.collectionViewLayout;
     layout.minimumColumnSpacing = 4;
     layout.minimumInteritemSpacing = 4;
     layout.sectionInset = UIEdgeInsetsMake(6, 6, 6, 6);
@@ -88,7 +88,7 @@
     
     loading = true;
     [refresh beginRefreshing];
-    [[LatteAPIClient sharedClient] getPath:@"user/everyone/timeline" parameters: param success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+    [[LatteAPIClient sharedClient] GET:@"user/everyone/timeline" parameters: param success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
         if (reset) {
             feeds = [Feed mutableArrayFromDictionary:JSON withKey:@"feeds"];
             loadEnded = false;
