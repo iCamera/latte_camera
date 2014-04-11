@@ -347,7 +347,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-3027" y="-31"/>
+            <point key="canvasLocation" x="-3019" y="-43"/>
         </scene>
         <!--Canvas View Controller-->
         <scene sceneID="Cfe-N5-SPi">
@@ -1217,6 +1217,18 @@
                 <tapGestureRecognizer enabled="NO" id="fyN-OV-Nho"/>
             </objects>
             <point key="canvasLocation" x="-2560" y="-31"/>
+        </scene>
+        <!--Image Picker Controller-->
+        <scene sceneID="5Z4-bG-q4h">
+            <objects>
+                <navigationController storyboardIdentifier="Picker" definesPresentationContext="YES" id="qXw-ew-39U" customClass="LXImagePickerController" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Wq0-sX-lLS">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MUt-8A-Iyz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3487" y="544"/>
         </scene>
         <!--Image Crop View Controller-->
         <scene sceneID="jje-Wo-hob">

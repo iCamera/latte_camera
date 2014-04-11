@@ -395,22 +395,31 @@
     
 }
 
-- (void)renderToTextureWithVertices:(const GLfloat *)vertices textureCoordinates:(const GLfloat *)textureCoordinates sourceTexture:(GLuint)sourceTexture;
-{
+- (void)renderToTextureWithVertices:(const GLfloat *)vertices textureCoordinates:(const GLfloat *)textureCoordinates {
     if (self.preventRendering)
     {
+        [firstInputFramebuffer unlock];
         return;
     }
     
+    GLuint currentTexture = [firstInputFramebuffer texture];
+    
     [GPUImageContext setActiveShaderProgram:filterProgram];
-    //[self setFilterFBO];
+    
+    outputFramebuffer = [[GPUImageContext sharedFramebufferCache] fetchFramebufferForSize:[self sizeOfFBO] textureOptions:self.outputTextureOptions onlyTexture:NO];
+    [outputFramebuffer activateFramebuffer];
+    if (usingNextFrameForImageCapture)
+    {
+        [outputFramebuffer lock];
+    }
+    
     [self setUniformsForProgramAtIndex:0];
     
     glClearColor(backgroundColorRed, backgroundColorGreen, backgroundColorBlue, backgroundColorAlpha);
     glClear(GL_COLOR_BUFFER_BIT);
     
   	glActiveTexture(GL_TEXTURE2);
-  	glBindTexture(GL_TEXTURE_2D, sourceTexture);
+  	glBindTexture(GL_TEXTURE_2D, currentTexture);
   	glUniform1i(filterInputTextureUniform, 2);
     
     glActiveTexture(GL_TEXTURE3);
@@ -436,6 +445,13 @@
     glVertexAttribPointer(textTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, [LXImageFilter textureCoordinatesForRotation:kGPUImageNoRotation]);
     
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    
+    [firstInputFramebuffer unlock];
+
+    if (usingNextFrameForImageCapture)
+    {
+        dispatch_semaphore_signal(imageCaptureSemaphore);
+    }
 }
 
 

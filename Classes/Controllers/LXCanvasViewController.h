@@ -149,13 +149,8 @@ typedef enum {
 - (IBAction)changeBlendIntensity:(id)sender;
 - (IBAction)changeFilmIntensity:(id)sender;
 
-@property (strong, nonatomic) UIImage *imageOriginalPreview;
-@property (strong, nonatomic) UIImage *imageOriginal;
-@property (strong, nonatomic) NSMutableDictionary *imageMeta;
-@property (strong, nonatomic) UIImage *imagePreview;
-@property (strong, nonatomic) UIImage *imageThumbnail;
 @property (readwrite, nonatomic) UIImageOrientation imageOrientation;
-@property (assign, nonatomic) CGSize imageSize;
+@property (strong, nonatomic) NSDictionary *info;
 @property (strong, nonatomic) GPUImagePicture *previewFilter;
 @property (strong, nonatomic) GPUImagePicture *imageToProcess;
 @end

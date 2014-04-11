@@ -10,7 +10,7 @@
 
 #define kAnimationDuration .3
 
-@interface LXMainTabViewController : UITabBarController<UINavigationControllerDelegate>
+@interface LXMainTabViewController : UITabBarController<UINavigationControllerDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate>
 
 @property (strong, nonatomic) NSMutableArray *notifies;
 @property (strong, nonatomic) UIBarButtonItem *sharedRightButton;

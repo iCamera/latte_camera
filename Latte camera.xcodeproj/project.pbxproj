@@ -73,6 +73,7 @@
 		880AC53C1786B6C4001E4365 /* gradient1-149.png in Resources */ = {isa = PBXBuildFile; fileRef = 880AC4FE1786B6C4001E4365 /* gradient1-149.png */; };
 		880AC53D1786B6C4001E4365 /* gradient1-150.png in Resources */ = {isa = PBXBuildFile; fileRef = 880AC4FF1786B6C4001E4365 /* gradient1-150.png */; };
 		880B978718F78AEB0084D79D /* libQuickDialog.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 880B978418F78AAB0084D79D /* libQuickDialog.a */; };
+		880B978A18F79C460084D79D /* LXImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 880B978918F79C460084D79D /* LXImagePickerController.m */; };
 		880C4B17161C2A1400252C6A /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 880C4AFC161C2A1400252C6A /* MBProgressHUD.m */; };
 		880E35A816A7BECA0097B97F /* LXAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E35A716A7BECA0097B97F /* LXAboutViewController.m */; };
 		880E50BD17252A9F00D584EE /* icon_iine_ss_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 880E50BB17252A9F00D584EE /* icon_iine_ss_on.png */; };
@@ -2046,6 +2047,8 @@
 		880AC4FE1786B6C4001E4365 /* gradient1-149.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gradient1-149.png"; sourceTree = "<group>"; };
 		880AC4FF1786B6C4001E4365 /* gradient1-150.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gradient1-150.png"; sourceTree = "<group>"; };
 		880B977C18F78AAB0084D79D /* QuickDialog.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QuickDialog.xcodeproj; path = Vendor/QuickDialog/QuickDialog.xcodeproj; sourceTree = "<group>"; };
+		880B978818F79C460084D79D /* LXImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXImagePickerController.h; sourceTree = "<group>"; };
+		880B978918F79C460084D79D /* LXImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXImagePickerController.m; sourceTree = "<group>"; };
 		880C4AFB161C2A1400252C6A /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		880C4AFC161C2A1400252C6A /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		880E35A616A7BECA0097B97F /* LXAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXAboutViewController.h; sourceTree = "<group>"; };
@@ -5119,24 +5122,34 @@
 		8890722F16770EBB0013DF7A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				88FCB2D317CC83CA0010169E /* LXReportAbuseCommentViewController.h */,
-				88FCB2D417CC83CA0010169E /* LXReportAbuseCommentViewController.m */,
 				880E35A616A7BECA0097B97F /* LXAboutViewController.h */,
 				880E35A716A7BECA0097B97F /* LXAboutViewController.m */,
-				880E50FE1728E50300D584EE /* LXCaptureViewController.h */,
-				880E50FF1728E50300D584EE /* LXCaptureViewController.m */,
 				8890723016770EBB0013DF7A /* LXCanvasViewController.h */,
 				8890723116770EBB0013DF7A /* LXCanvasViewController.m */,
+				880E50FE1728E50300D584EE /* LXCaptureViewController.h */,
+				880E50FF1728E50300D584EE /* LXCaptureViewController.m */,
+				8837736917AA81A4005B0826 /* LXChangeEmailViewController.h */,
+				8837736A17AA81A4005B0826 /* LXChangeEmailViewController.m */,
+				8837736617AA7B1F005B0826 /* LXChangePasswordViewController.h */,
+				8837736717AA7B1F005B0826 /* LXChangePasswordViewController.m */,
 				8818860716F17B60009A9266 /* LXCommentControllViewController.h */,
 				8818860816F17B60009A9266 /* LXCommentControllViewController.m */,
+				8837738617B0C15F005B0826 /* LXEmailConfirmPopupController.h */,
+				8837738717B0C161005B0826 /* LXEmailConfirmPopupController.m */,
 				882E14A316EF0BF100839B92 /* LXFacebookFriendViewController.h */,
 				882E14A416EF0BF100839B92 /* LXFacebookFriendViewController.m */,
+				889790FE179FD64A00BDC803 /* LXFAQViewController.h */,
+				889790FF179FD64A00BDC803 /* LXFAQViewController.m */,
 				8883C07B16DCBCE0003510A1 /* LXGalleryViewController.h */,
 				8883C07C16DCBCE1003510A1 /* LXGalleryViewController.m */,
 				884C54D316B22EF500DA318E /* LXHelpBokehViewController.h */,
 				884C54D416B22EF500DA318E /* LXHelpBokehViewController.m */,
 				880E50FB1728C63600D584EE /* LXImageCropViewController.h */,
 				880E50FC1728C63600D584EE /* LXImageCropViewController.m */,
+				880B978818F79C460084D79D /* LXImagePickerController.h */,
+				880B978918F79C460084D79D /* LXImagePickerController.m */,
+				8883EED2173212EC00AA2D5E /* LXImageTextViewController.h */,
+				8883EED3173212EC00AA2D5E /* LXImageTextViewController.m */,
 				888F651416FC09DF00ED74BB /* LXLeftGuestViewController.h */,
 				888F651516FC09E000ED74BB /* LXLeftGuestViewController.m */,
 				888F651116FBFB8D00ED74BB /* LXLeftSideUserViewController.h */,
@@ -5173,48 +5186,40 @@
 				8890724516770EBB0013DF7A /* LXRankingViewController.m */,
 				8890724616770EBB0013DF7A /* LXRegisterViewController.h */,
 				8890724716770EBB0013DF7A /* LXRegisterViewController.m */,
+				88FCB2D317CC83CA0010169E /* LXReportAbuseCommentViewController.h */,
+				88FCB2D417CC83CA0010169E /* LXReportAbuseCommentViewController.m */,
+				8837738317AF9C4E005B0826 /* LXReportAbuseViewController.h */,
+				8837738417AF9C4F005B0826 /* LXReportAbuseViewController.m */,
 				8866D30216E9EE4200CAE6E5 /* LXSearchViewController.h */,
 				8866D30316E9EE4300CAE6E5 /* LXSearchViewController.m */,
+				8837734417A90A5D005B0826 /* LXSettingAccountController.h */,
+				8837734517A90A5E005B0826 /* LXSettingAccountController.m */,
 				88F0074E16E4A29A0071369C /* LXSettingNotifyViewController.h */,
 				88F0074F16E4A29B0071369C /* LXSettingNotifyViewController.m */,
 				88A5F41616E11D8B00118996 /* LXSettingRootViewController.h */,
 				88A5F41716E11D8B00118996 /* LXSettingRootViewController.m */,
 				8890724C16770EBB0013DF7A /* LXSettingViewController.h */,
 				8890724D16770EBB0013DF7A /* LXSettingViewController.m */,
-				882E14C016F09B4A00839B92 /* LXTagViewController.h */,
-				882E14C116F09B4A00839B92 /* LXTagViewController.m */,
-				88B37BF416E719B700AB682C /* LXVoteViewController.h */,
-				88B37BF516E719B700AB682C /* LXVoteViewController.m */,
-				8890725216770EBB0013DF7A /* LXWelcomeViewController.h */,
-				8890725316770EBB0013DF7A /* LXWelcomeViewController.m */,
-				8883EED2173212EC00AA2D5E /* LXImageTextViewController.h */,
-				8883EED3173212EC00AA2D5E /* LXImageTextViewController.m */,
-				8883EED5173220E900AA2D5E /* LXTextTemplateViewController.h */,
-				8883EED6173220E900AA2D5E /* LXTextTemplateViewController.m */,
-				88FB7CF41782DD590038B067 /* LXUploadStatusViewController.h */,
-				88FB7CF51782DD590038B067 /* LXUploadStatusViewController.m */,
-				889790FE179FD64A00BDC803 /* LXFAQViewController.h */,
-				889790FF179FD64A00BDC803 /* LXFAQViewController.m */,
-				8837734417A90A5D005B0826 /* LXSettingAccountController.h */,
-				8837734517A90A5E005B0826 /* LXSettingAccountController.m */,
-				8837736317AA5AD8005B0826 /* LXTableConfirmEmailController.h */,
-				8837736417AA5AD9005B0826 /* LXTableConfirmEmailController.m */,
-				8837736917AA81A4005B0826 /* LXChangeEmailViewController.h */,
-				8837736A17AA81A4005B0826 /* LXChangeEmailViewController.m */,
-				8837736617AA7B1F005B0826 /* LXChangePasswordViewController.h */,
-				8837736717AA7B1F005B0826 /* LXChangePasswordViewController.m */,
-				8837738317AF9C4E005B0826 /* LXReportAbuseViewController.h */,
-				8837738417AF9C4F005B0826 /* LXReportAbuseViewController.m */,
-				8837738617B0C15F005B0826 /* LXEmailConfirmPopupController.h */,
-				8837738717B0C161005B0826 /* LXEmailConfirmPopupController.m */,
 				88D86DCE17CB446400EC62A2 /* LXSocialViewController.h */,
 				88D86DCF17CB446400EC62A2 /* LXSocialViewController.m */,
+				884ACB2218EEB8F900B2924B /* LXStreamBrickCell.h */,
+				884ACB2318EEB8F900B2924B /* LXStreamBrickCell.m */,
 				884ACB1C18EEB4C000B2924B /* LXStreamViewController.h */,
 				884ACB1D18EEB4C000B2924B /* LXStreamViewController.m */,
 				884ACB1F18EEB7F600B2924B /* LXStreamViewLayout.h */,
 				884ACB2018EEB7F600B2924B /* LXStreamViewLayout.m */,
-				884ACB2218EEB8F900B2924B /* LXStreamBrickCell.h */,
-				884ACB2318EEB8F900B2924B /* LXStreamBrickCell.m */,
+				8837736317AA5AD8005B0826 /* LXTableConfirmEmailController.h */,
+				8837736417AA5AD9005B0826 /* LXTableConfirmEmailController.m */,
+				882E14C016F09B4A00839B92 /* LXTagViewController.h */,
+				882E14C116F09B4A00839B92 /* LXTagViewController.m */,
+				8883EED5173220E900AA2D5E /* LXTextTemplateViewController.h */,
+				8883EED6173220E900AA2D5E /* LXTextTemplateViewController.m */,
+				88FB7CF41782DD590038B067 /* LXUploadStatusViewController.h */,
+				88FB7CF51782DD590038B067 /* LXUploadStatusViewController.m */,
+				88B37BF416E719B700AB682C /* LXVoteViewController.h */,
+				88B37BF516E719B700AB682C /* LXVoteViewController.m */,
+				8890725216770EBB0013DF7A /* LXWelcomeViewController.h */,
+				8890725316770EBB0013DF7A /* LXWelcomeViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -8589,6 +8594,7 @@
 				889072D516770EBB0013DF7A /* LXCellFriend.m in Sources */,
 				889072D616770EBB0013DF7A /* LXCellFriendRequest.m in Sources */,
 				889072D716770EBB0013DF7A /* LXCellNotify.m in Sources */,
+				880B978A18F79C460084D79D /* LXImagePickerController.m in Sources */,
 				889072DA16770EBB0013DF7A /* LXCellDataField.m in Sources */,
 				889072DB16770EBB0013DF7A /* LXCellRankLv1.m in Sources */,
 				889072DC16770EBB0013DF7A /* LXCellRankLv2.m in Sources */,

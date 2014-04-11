@@ -21,6 +21,7 @@
 #import "LXUploadObject.h"
 #import "MBProgressHUD.h"
 #import "LXTableConfirmEmailController.h"
+#import "LXImagePickerController.h"
 
 @interface LXMainTabViewController ()
 
@@ -191,13 +192,11 @@
     
     viewNotify.view.frame = self.view.bounds;
     viewNotify.parent = self;
-//    [self addChildViewController:viewNotify];
     [self.view addSubview:viewNotify.view];
     [viewNotify didMoveToParentViewController:self];
     viewNotify.view.hidden = true;
     
     viewUpload.view.frame = self.view.bounds;
-//    [self addChildViewController:viewUpload];
     [self.view addSubview:viewUpload.view];
     [viewUpload didMoveToParentViewController:self];
     viewUpload.view.hidden = true;
@@ -274,13 +273,46 @@
 
 
 - (void)cameraView:(id)sender {
-    UIStoryboard* storySetting = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
-    [self presentViewController:[storySetting instantiateInitialViewController] animated:YES completion:nil];
+    UIActionSheet *actionUpload = [[UIActionSheet alloc] initWithTitle:@""
+                                                              delegate:self cancelButtonTitle:@"Cancel"
+                                                destructiveButtonTitle:nil
+                                                     otherButtonTitles:@"Camera", @"Photo Library", nil];
+    [actionUpload showFromTabBar:self.tabBar];
 }
 
-- (void)imagePickerController:(LXCanvasViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info {
-    [picker performSegueWithIdentifier:@"Edit" sender:info];
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        UIStoryboard* storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
+        
+        if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            
+            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                  message:@"Device has no camera"
+                                                                 delegate:nil
+                                                        cancelButtonTitle:@"OK"
+                                                        otherButtonTitles: nil];
+            
+            [myAlertView show];
+            
+        } else {
+            LXImagePickerController *imagePicker = [storyCamera instantiateViewControllerWithIdentifier:@"Picker"];
+            imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            imagePicker.delegate = imagePicker;
+            [self presentViewController:imagePicker animated:YES completion:nil];
+        }
+    } else if (buttonIndex == 1) {
+        UIStoryboard* storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
+        //LXImagePickerController *imagePicker = [storyCamera instantiateViewControllerWithIdentifier:@"Picker"];
+        LXImagePickerController *imagePicker = [[LXImagePickerController alloc] init];
+        imagePicker.delegate = imagePicker;
+        imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        [self presentViewController:imagePicker animated:YES completion:nil];
+    }
 }
+
+//- (void)imagePickerController:(LXCanvasViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info {
+//    [picker performSegueWithIdentifier:@"Edit" sender:info];
+//}
 
 - (void)didReceiveMemoryWarning
 {

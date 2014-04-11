@@ -60,6 +60,13 @@
     
     LXImageCropViewController *controllerCrop;
     LXImageTextViewController *controllerText;
+    
+    NSMutableDictionary *imageMeta;
+    CGSize imageSize;
+    UIImage *imagePreview;
+    UIImage *imageOriginal;
+    UIImage *imageThumbnail;
+    UIImage *imageOriginalPreview;
 }
 
 @end
@@ -133,11 +140,8 @@
 
 @synthesize buttonBlackWhite;
 
-@synthesize imageMeta;
-@synthesize imagePreview;
 @synthesize imageOrientation;
 @synthesize imageToProcess;
-@synthesize imageSize;
 @synthesize previewFilter;
 
 @synthesize imageNext;
@@ -169,23 +173,23 @@
         
         __weak LXCanvasViewController *weakController = self;
         __weak LXImageTextViewController *weakText = controllerText;
-        controllerCrop.doneCallback = ^(UIImage *editedImage, BOOL canceled){
-            if(!canceled) {
-                CGSize previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:editedImage.size.width height:editedImage.size.height]);
-                weakController.imageOrientation = UIImageOrientationUp;
-                weakController.imageToProcess = [[GPUImagePicture alloc] initWithImage:editedImage];
-                weakController.imageSize = editedImage.size;
-                UIImage *edittedImagePreview = [LXUtils imageWithImage:editedImage scaledToSize:previewUISize];
-                weakController.imagePreview = edittedImagePreview;
-                [weakController resizeCameraViewWithAnimation:YES];
-                weakController.previewFilter = [[GPUImagePicture alloc] initWithImage:weakController.imagePreview];
-                [weakController preparePipe];
-                [weakController processImage];
-                
-                weakText.image = edittedImagePreview;
-            }
-            [weakController dismissViewControllerAnimated:YES completion:nil];
-        };
+//        controllerCrop.doneCallback = ^(UIImage *editedImage, BOOL canceled){
+//            if(!canceled) {
+//                CGSize previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:editedImage.size.width height:editedImage.size.height]);
+//                weakController.imageOrientation = UIImageOrientationUp;
+//                weakController.imageToProcess = [[GPUImagePicture alloc] initWithImage:editedImage];
+//                weakController.imageSize = editedImage.size;
+//                UIImage *edittedImagePreview = [LXUtils imageWithImage:editedImage scaledToSize:previewUISize];
+//                weakController.imagePreview = edittedImagePreview;
+//                [weakController resizeCameraViewWithAnimation:YES];
+//                weakController.previewFilter = [[GPUImagePicture alloc] initWithImage:weakController.imagePreview];
+//                [weakController preparePipe];
+//                [weakController processImage];
+//                
+//                weakText.image = edittedImagePreview;
+//            }
+//            [weakController dismissViewControllerAnimated:YES completion:nil];
+//        };
     }
     return self;
 }
@@ -334,15 +338,19 @@
     
     // Set Image
     
-    imagePreview = _imageOriginalPreview;
-    imageSize = _imageOriginal.size;
-    imageOrientation = _imageOriginal.imageOrientation;
+    imageOriginal = _info[UIImagePickerControllerOriginalImage];
+    imageOrientation = imageOriginal.imageOrientation;
+    CGFloat heightThumb = [LXUtils heightFromWidth:70 width:imageOriginal.size.height height:imageOriginal.size.height];
+    CGFloat heightPreview = [LXUtils heightFromWidth:320 width:imageOriginal.size.height height:imageOriginal.size.height];
+    imageThumbnail = [LXUtils imageWithImage:imageOriginal scaledToSize:CGSizeMake(70, heightThumb)];
+    imagePreview = [LXUtils imageWithImage:imageOriginal scaledToSize:CGSizeMake(320, heightPreview)];
+    imageSize = imageOriginal.size;
     scrollLayer.contentSize = CGSizeMake(245, 220);
     
-    controllerCrop.sourceImage = _imageOriginal;
-    controllerCrop.previewImage = _imageOriginalPreview;
+    controllerCrop.sourceImage = imageOriginal;
+    //controllerCrop.previewImage = _imageOriginalPreview;
     
-    controllerText.image = _imageOriginalPreview;
+    controllerText.image = imageOriginal;
     
     [self switchEditImage];
     
@@ -422,7 +430,7 @@
         [self initPreviewPic];
         
         buttonYes.enabled = NO;
-        imageToProcess = [[GPUImagePicture alloc] initWithImage:_imageOriginal];
+        imageToProcess = [[GPUImagePicture alloc] initWithImage:imageOriginal];
         buttonYes.enabled = YES;
     }
     [super viewDidAppear:animated];
@@ -579,8 +587,8 @@
                 imageFinalData = [self getFinalImage];
                 [self saveImageToLib:imageFinalData];
             } else {
-                NSData *jpeg = UIImageJPEGRepresentation(_imageOriginal, 0.9);
-                imageFinalThumb = _imageOriginalPreview;
+                NSData *jpeg = UIImageJPEGRepresentation(imageOriginal, 0.9);
+                imageFinalThumb = imageOriginalPreview;
                 imageFinalData = [self mergeMetaIntoData:jpeg];
                 [HUD hide:YES];
             }
@@ -696,12 +704,12 @@
     
     NSData *jpeg;
     // skip processing if prevew pic same size with fullsize
-    if (CGSizeEqualToSize(imageSize, imagePreview.size)) {
+    if (CGSizeEqualToSize(imageOriginal.size, imagePreview.size)) {
         jpeg = UIImageJPEGRepresentation(imageFinalThumb, 0.9);
     } else {
         [self preparePipe:imageToProcess];
         
-        if (MAX(imageSize.width, imageSize.height) > 1000) {
+        if (MAX(imageOriginal.size.width, imageOriginal.size.height) > 1000) {
             //[filterMain prepareForImageCapture];
         }
         
@@ -1007,7 +1015,7 @@
 
 - (void)initPreviewPic {
     for (NSInteger i = 0; i < effectNum; i++) {
-        GPUImagePicture *gpuimagePreview = [[GPUImagePicture alloc] initWithImage:_imageThumbnail];
+        GPUImagePicture *gpuimagePreview = [[GPUImagePicture alloc] initWithImage:imageThumbnail];
         GPUImageView *imageViewPreview = effectPreview[i];
         LXImageFilter *filterSample = [[LXImageFilter alloc] init];
         [filterSample setValuesForKeysWithDictionary:arrayTone[i]];
@@ -1021,7 +1029,7 @@
 
 - (void)initPreviewPreset {
     for (NSInteger i = 0; i < arrayPreset.count; i++) {
-        GPUImagePicture *gpuimagePreview = [[GPUImagePicture alloc] initWithImage:_imageThumbnail];
+        GPUImagePicture *gpuimagePreview = [[GPUImagePicture alloc] initWithImage:imageThumbnail];
         GPUImageView *imageViewPreview = effectPreviewPreset[i];
         LXImageFilter *filterSample = [[LXImageFilter alloc] init];
         [filterSample setValuesForKeysWithDictionary:arrayPreset[i]];
@@ -1080,10 +1088,10 @@
 }
 
 - (IBAction)touchReset:(id)sender {
-    imageToProcess = [[GPUImagePicture alloc] initWithImage:_imageOriginal];
-    imagePreview = _imageOriginalPreview;
-    imageSize = _imageOriginalPreview.size;
-    imageOrientation = _imageOriginal.imageOrientation;
+    imageToProcess = [[GPUImagePicture alloc] initWithImage:imageOriginal];
+    imagePreview = imageOriginalPreview;
+    imageSize = imageOriginalPreview.size;
+    imageOrientation = imageOriginal.imageOrientation;
     
     [self switchEditImage];
     buttonReset.enabled = false;
@@ -1648,5 +1656,9 @@
     filterMain.filmIntensity = sliderFilmIntensity.value;
     filterMain.filmEnable = sliderFilmIntensity.value > 0;
     [self processImage];
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return YES;
 }
 @end

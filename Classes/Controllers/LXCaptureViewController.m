@@ -296,14 +296,14 @@ typedef enum {
         UIStoryboard *storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
         LXCanvasViewController *controllerCanvas = [storyCamera instantiateViewControllerWithIdentifier:@"Canvas"];
         
-        controllerCanvas.imageMeta = imageMeta;
-        controllerCanvas.imageOriginalPreview = [tmpImagePreview fixOrientation];
+//        controllerCanvas.imageMeta = imageMeta;
+//        controllerCanvas.imageOriginalPreview = [tmpImagePreview fixOrientation];
         
         CGFloat height = [LXUtils heightFromWidth:70 width:tmpImagePreview.size.height height:tmpImagePreview.size.height];
-        controllerCanvas.imageThumbnail = [LXUtils imageWithImage:tmpImagePreview scaledToSize:CGSizeMake(70, height)];
+//        controllerCanvas.imageThumbnail = [LXUtils imageWithImage:tmpImagePreview scaledToSize:CGSizeMake(70, height)];
         tmpImagePreview = nil;
         controllerCanvas.delegate = _delegate;
-        controllerCanvas.imageOriginal = image;
+//        controllerCanvas.imageOriginal = image;
         [self.navigationController pushViewController:controllerCanvas animated:YES];
     }
 }
@@ -389,14 +389,14 @@ typedef enum {
         
         UIImage *imageFullsize = [info objectForKey:UIImagePickerControllerOriginalImage];
         controllerCanvas.delegate = _delegate;
-        controllerCanvas.imageOriginalPreview = [UIImage imageWithCGImage:myasset.defaultRepresentation.fullScreenImage];
+//        controllerCanvas.imageOriginalPreview = [UIImage imageWithCGImage:myasset.defaultRepresentation.fullScreenImage];
 
         UIImage *thumbNail = [UIImage imageWithCGImage:myasset.thumbnail];
         CGFloat height = [LXUtils heightFromWidth:70 width:thumbNail.size.height height:thumbNail.size.height];
-        controllerCanvas.imageThumbnail = [LXUtils imageWithImage:thumbNail scaledToSize:CGSizeMake(70, height)];
+//        controllerCanvas.imageThumbnail = [LXUtils imageWithImage:thumbNail scaledToSize:CGSizeMake(70, height)];
         
-        controllerCanvas.imageMeta = [NSMutableDictionary dictionaryWithDictionary:myasset.defaultRepresentation.metadata];
-        controllerCanvas.imageOriginal = imageFullsize;
+//        controllerCanvas.imageMeta = [NSMutableDictionary dictionaryWithDictionary:myasset.defaultRepresentation.metadata];
+//        controllerCanvas.imageOriginal = imageFullsize;
         
         [picker pushViewController:controllerCanvas animated:YES];
     };
