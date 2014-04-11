@@ -16,6 +16,7 @@
 #import "UIButton+AsyncImage.h"
 #import "LXUtils.h"
 #import "LatteAPIClient.h"
+#import "LXMyPageViewController.h"
 
 
 typedef enum {
@@ -73,7 +74,11 @@ typedef enum {
     
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    [app.tracker sendView:@"Ranking Screen"];
+    
+    [app.tracker set:kGAIScreenName
+               value:@"Ranking Screen"];
+    
+    [app.tracker send:[[GAIDictionaryBuilder createAppView] build]];
     
     HUD = [[MBProgressHUD alloc] initWithView:self.tableView];
     [self.tableView addSubview:HUD];
@@ -103,7 +108,7 @@ typedef enum {
     }
     
     refresh = [[UIRefreshControl alloc] init];
-    [refresh addTarget:self action:@selector(loadMore:) forControlEvents:UIControlEventValueChanged];
+    [refresh addTarget:self action:@selector(reloadView) forControlEvents:UIControlEventValueChanged];
     [self setRefreshControl:refresh];
     
     [self reloadView];
@@ -236,11 +241,13 @@ typedef enum {
                                        rankLayout = kLayoutNormal;
                                        [self.tableView reloadData];
                                        [loadIndicator stopAnimating];
+                                       [refresh endRefreshing];
                                        [HUD hide:YES];
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        DLog(@"Something went wrong (Ranking)");
                                        [loadIndicator stopAnimating];
+                                       [refresh endRefreshing];
                                        [HUD hide:YES];
                                        loadEnded = true;
                                    }
@@ -260,7 +267,7 @@ typedef enum {
                                 parameters:param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        [self.tableView beginUpdates];
-                                       int rowCountPrev = [self.tableView numberOfRowsInSection:0];
+                                       NSInteger rowCountPrev = [self.tableView numberOfRowsInSection:0];
                                        NSArray *newPics = [JSON objectForKey:@"pics"];
                                        for (NSDictionary *pic in newPics) {
                                            [pics addObject:[Picture instanceFromDictionary:pic]];
@@ -379,7 +386,7 @@ typedef enum {
                                                    width:[pic.width floatValue]
                                                   height:[pic.height floatValue]];
             cellLv1.buttonPic1.frame = frame;
-            [self initButton:cellLv1.buttonPic1];
+            [cellLv1.buttonPic1 addTarget:self action:@selector(didSelectPic:) forControlEvents:UIControlEventTouchUpInside];
             
             [cellLv1.buttonPic1 loadBackground:pic.urlMedium];
             cellLv1.buttonPic1.tag = [pic.pictureId integerValue];
@@ -436,7 +443,7 @@ typedef enum {
         
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Grid"];
 
-        for(UIView *subview in [cell subviews]) {
+        for(UIView *subview in [cell.contentView subviews]) {
             [subview removeFromSuperview];
         }
         
@@ -458,7 +465,7 @@ typedef enum {
             
             button.tag = [pic.pictureId integerValue];
             [button addTarget:self action:@selector(showPic:) forControlEvents:UIControlEventTouchUpInside];
-            [cell addSubview:button];
+            [cell.contentView addSubview:button];
         }
         
         return cell;
@@ -580,6 +587,14 @@ typedef enum {
         return ret;
     }
     return nil;
+}
+
+- (void)showUser:(User *)user fromGallery:(LXGalleryViewController *)gallery {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    LXMyPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    viewUserPage.user = user;
+    [self.navigationController pushViewController:viewUserPage animated:YES];
 }
 
 - (NSDictionary *)pictureBeforePicture:(Picture *)picture {

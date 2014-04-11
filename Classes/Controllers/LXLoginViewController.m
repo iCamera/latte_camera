@@ -35,7 +35,11 @@
     //[self.navigationController setNavigationBarHidden:true];
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
-    [app.tracker sendView:@"Login Screen"];
+    [app.tracker set:kGAIScreenName
+           value:@"Login Screen"];
+    
+    [app.tracker send:[[GAIDictionaryBuilder createAppView] build]];
+
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     

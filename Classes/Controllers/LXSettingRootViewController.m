@@ -9,7 +9,6 @@
 #import "LXSettingRootViewController.h"
 #import "LXSettingViewController.h"
 #import "LXAppDelegate.h"
-#import "LXRootBuilder.h"
 #import "LatteAPIClient.h"
 #import "LXUtils.h"
 #import "LXShare.h"
@@ -50,7 +49,12 @@
     labelVersion.text = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
     
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
-    [app.tracker sendView:@"Setting Screen"];
+    
+    [app.tracker set:kGAIScreenName
+               value:@"Setting Screen"];
+    
+    [app.tracker send:[[GAIDictionaryBuilder createAppView] build]];
+    
     lxShare = [[LXShare alloc] init];
     lxShare.controller = self;
     
@@ -123,8 +127,8 @@
                     [countryString addObject:countryDict[countryCode]];
                 }
 
-                root = [[LXRootBuilder new]buildWithObject:data];
-                [root bindToObject:data];
+                root = [[QRootElement alloc] initWithJSONFile:@"settingprofile"];
+//                [root bindToObject:data];
                 QSection *section = root.sections[0];
 //                QRadioElement *eleCountry = [[QRadioElement alloc] initWithDict:countriesDict selected:0 title:NSLocalizedString(@"nationality", @"Nationality")];
                 QRadioElement *eleCountry = [[QRadioElement alloc] initWithItems:countryString selected:0 title:NSLocalizedString(@"nationality", @"Nationality")];
@@ -142,10 +146,10 @@
             }
                 break;
             case 2: {
-                NSString *filePath = [[NSBundle mainBundle] pathForResource:@"settingprivacy" ofType:@"json"];
-                NSDictionary *data = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:filePath] options:0 error:nil];
-                root = [[LXRootBuilder new]buildWithObject:data];
-                [root bindToObject:data];
+                //NSString *filePath = [[NSBundle mainBundle] pathForResource:@"settingprivacy" ofType:@"json"];
+                //NSDictionary *data = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:filePath] options:0 error:nil];
+                root = [[QRootElement alloc] initWithJSONFile:@"settingprivacy"];
+                //[root bindToObject:data];
                 break;
             }
             case 3:
@@ -244,10 +248,10 @@
 
 - (void)imagePickerController:(LXCanvasViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info {
     UIViewController *tmp2 = picker.navigationController.presentingViewController;
-    [picker dismissModalViewControllerAnimated:NO];
+    [picker dismissViewControllerAnimated:NO completion:nil];
     
     if (tmp2 != self.navigationController) {
-        [tmp2 dismissModalViewControllerAnimated:YES];
+        [tmp2 dismissViewControllerAnimated:YES completion:nil];
     }
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;

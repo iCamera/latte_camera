@@ -41,7 +41,11 @@
     [super viewDidLoad];
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    [app.tracker sendView:@"Liked Screen"];
+    
+    [app.tracker set:kGAIScreenName
+               value:@"Liked Screen"];
+    
+    [app.tracker send:[[GAIDictionaryBuilder createAppView] build]];
     
     // Do any additional setup after loading the view.
 //    refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];

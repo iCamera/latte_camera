@@ -14,6 +14,7 @@
 #import "LXButtonBack.h"
 #import "LXUtils.h"
 #import "Picture.h"
+#import "LXMyPageViewController.h"
 
 @interface LXTagViewController ()
 
@@ -99,6 +100,14 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)showUser:(User *)user fromGallery:(LXGalleryViewController *)gallery {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    LXMyPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    viewUserPage.user = user;
+    [self.navigationController pushViewController:viewUserPage animated:YES];
 }
 
 

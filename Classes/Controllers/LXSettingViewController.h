@@ -10,7 +10,7 @@
 #import "MBProgressHUD.h"
 #import "QuickDialog.h"
 
-@interface LXSettingViewController : QuickDialogController<QuickDialogStyleProvider, QuickDialogEntryElementDelegate> {
+@interface LXSettingViewController : QuickDialogController<QuickDialogEntryElementDelegate> {
     MBProgressHUD *HUD;
 }
 

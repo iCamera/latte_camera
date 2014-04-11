@@ -11,7 +11,7 @@
 @implementation GPUImageFilter (reset)
 
 - (void)resetCapture {
-    preparedToCaptureImage = NO;
+    //preparedToCaptureImage = NO;
 }
 
 @end

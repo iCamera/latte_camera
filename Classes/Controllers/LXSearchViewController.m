@@ -17,6 +17,7 @@
 #import "Picture.h"
 #import "LXCellSearchConnection.h"
 #import "LXTagViewController.h"
+#import "LXMyPageViewController.h"
 
 typedef enum {
     kSearchPhoto,
@@ -85,7 +86,10 @@ typedef enum {
     [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];
     
-    [app.tracker sendView:@"Search Screen"];
+    [app.tracker set:kGAIScreenName
+               value:@"Search Screen"];
+    
+    [app.tracker send:[[GAIDictionaryBuilder createAppView] build]];
     type = @"popular";
 }
 
@@ -385,6 +389,14 @@ typedef enum {
                                        loadEnded = true;
                                        [activityLoad stopAnimating];
                                    }];
+}
+
+- (void)showUser:(User *)user fromGallery:(LXGalleryViewController *)gallery {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    LXMyPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    viewUserPage.user = user;
+    [self.navigationController pushViewController:viewUserPage animated:YES];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {

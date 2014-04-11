@@ -12,6 +12,7 @@
 #import "LXCanvasViewController.h"
 #import "LXPicDumbTabViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import "GAI.h"
 
 @interface LXPicEditViewController ()
 
@@ -56,7 +57,11 @@
     [super viewDidLoad];
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    [app.tracker sendView:@"Picture Edit Screen"];
+    
+    [app.tracker set:kGAIScreenName
+           value:@"Picture Edit Screen"];
+    
+    [app.tracker send:[[GAIDictionaryBuilder createAppView] build]];
     
     share = [[LXShare alloc] init];
     share.controller = self;
@@ -365,10 +370,10 @@
 
 - (void)backToCamera {
     UIViewController *tmp2 = self.navigationController.presentingViewController;
-    [self.navigationController dismissModalViewControllerAnimated:NO];
+    [self.navigationController dismissViewControllerAnimated:NO completion:nil];
     
     if (tmp2 != self.navigationController) {
-        [tmp2 dismissModalViewControllerAnimated:YES];
+        [tmp2 dismissViewControllerAnimated:YES completion:nil];
     }
 }
 

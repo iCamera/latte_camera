@@ -54,7 +54,11 @@
     [super viewDidLoad];
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    [app.tracker sendView:@"Picture Map Screen"];
+    
+    [app.tracker set:kGAIScreenName
+               value:@"Picture Map Screen"];
+    
+    [app.tracker send:[[GAIDictionaryBuilder createAppView] build]];
     
     MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(pin.coordinate, 0.5*METERS_PER_MILE, 0.5*METERS_PER_MILE);    
     MKCoordinateRegion adjustedRegion = [mapPic regionThatFits:viewRegion];

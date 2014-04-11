@@ -72,7 +72,6 @@
 {
     [GAI sharedInstance].trackUncaughtExceptions = YES;
     [GAI sharedInstance].dispatchInterval = 20;
-    [GAI sharedInstance].debug = NO;
     tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-242292-26"];
     [TestFlight takeOff:@"7f91e13e-a760-4471-aa7f-8168d62aa690"];
     

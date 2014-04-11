@@ -66,7 +66,7 @@
 }
 
 - (IBAction)touchClose:(id)sender {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)touchHelp:(id)sender {
@@ -91,7 +91,7 @@
                                               cancelButtonTitle:NSLocalizedString(@"close", @"閉じる")
                                               otherButtonTitles:nil];
         [alert show];
-        [self dismissModalViewControllerAnimated:YES];
+        [self dismissViewControllerAnimated:YES completion:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [HUD hide:YES];
         

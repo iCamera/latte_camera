@@ -26,7 +26,11 @@
     [super viewDidLoad];
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    [app.tracker sendView:@"Register Screen"];
+    
+    [app.tracker set:kGAIScreenName
+               value:@"Register Screen"];
+    
+    [app.tracker send:[[GAIDictionaryBuilder createAppView] build]];
     
     HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:HUD];

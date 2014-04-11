@@ -184,7 +184,7 @@
                 
                 weakText.image = edittedImagePreview;
             }
-            [weakController dismissModalViewControllerAnimated:YES];
+            [weakController dismissViewControllerAnimated:YES completion:nil];
         };
     }
     return self;
@@ -195,7 +195,11 @@
     [super viewDidLoad];
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    [app.tracker sendView:@"Camera Screen"];
+    
+    [app.tracker set:kGAIScreenName
+               value:@"Camera Screen"];
+    
+    [app.tracker send:[[GAIDictionaryBuilder createAppView] build]];
     
     // LAShare
     laSharekit = [[LXShare alloc] init];
@@ -666,7 +670,7 @@
 - (UIImage*)getFinalThumb {
     [filterMain resetCapture];
     [self processImage];
-    CGImageRef cgImagePreviewFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:_imageOriginalPreview.imageOrientation];
+    CGImageRef cgImagePreviewFromBytes = [pipe newCGImageFromCurrentFilteredFrame];
     UIImage* ret = [UIImage imageWithCGImage:cgImagePreviewFromBytes];
     CGImageRelease(cgImagePreviewFromBytes);
     return ret;
@@ -698,13 +702,13 @@
         [self preparePipe:imageToProcess];
         
         if (MAX(imageSize.width, imageSize.height) > 1000) {
-            [filterMain prepareForImageCapture];
+            //[filterMain prepareForImageCapture];
         }
         
         [imageToProcess processImage];
         
         // Save to Jpeg NSData
-        CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrameWithOrientation:UIImageOrientationUp];
+        CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrame];
         UIImage *outputImage = [UIImage imageWithCGImage:cgImageFromBytes];
         jpeg = UIImageJPEGRepresentation(outputImage, 0.9);
         CGImageRelease(cgImageFromBytes);
@@ -1048,7 +1052,7 @@
         [filterSample setValuesForKeysWithDictionary:arrayPreset[i]];
         [pic addTarget:filterSample];
         [pic processImage];
-        UIImage *result = [filterSample imageFromCurrentlyProcessedOutput];
+        UIImage *result = [filterSample imageFromCurrentFramebuffer];
         [self performSelector:@selector(saveImage:) withObject:result afterDelay:i];
     }
 }
@@ -1127,7 +1131,7 @@
             break;
         case 2:
             if (buttonIndex == 1) {
-                [self.navigationController dismissModalViewControllerAnimated:YES];
+                [self.navigationController dismissViewControllerAnimated:YES completion:nil];
             }
             break;
         default:
@@ -1412,11 +1416,11 @@
 }
 
 - (IBAction)touchCrop:(id)sender {
-    [self presentModalViewController:controllerCrop animated:YES];
+    [self presentViewController:controllerCrop animated:YES completion:nil];
 }
 
 - (IBAction)touchText:(id)sender {
-    [self presentModalViewController:controllerText animated:YES];
+    [self presentViewController:controllerText animated:YES completion:nil];
 }
 
 - (void)newMask:(UIImage *)mask {

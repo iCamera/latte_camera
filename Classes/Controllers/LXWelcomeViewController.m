@@ -79,7 +79,11 @@ typedef enum {
     tableMode = kWelcomeTableGrid;
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    [app.tracker sendView:@"Welcome Screen"];
+    
+    [app.tracker set:kGAIScreenName
+               value:@"Welcome Screen"];
+    
+    [app.tracker send:[[GAIDictionaryBuilder createAppView] build]];
 
     
     tablePic.frame = CGRectMake(0, 0, 320, self.view.frame.size.height-44);

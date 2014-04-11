@@ -34,7 +34,11 @@
     [super viewDidLoad];
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    [app.tracker sendView:@"About Screen"];
+    
+    [app.tracker set:kGAIScreenName
+               value:@"About Screen"];
+    
+    [app.tracker send:[[GAIDictionaryBuilder createAppView] build]];
 	// Do any additional setup after loading the view.
 }
 

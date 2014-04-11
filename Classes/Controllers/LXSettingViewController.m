@@ -21,7 +21,11 @@
     [super viewDidLoad];
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    [app.tracker sendView:@"Setting Screen"];
+    
+    [app.tracker set:kGAIScreenName
+               value:@"Setting Screen"];
+    
+    [app.tracker send:[[GAIDictionaryBuilder createAppView] build]];
     
     //Style
     self.resizeWhenKeyboardPresented = YES;
@@ -101,7 +105,7 @@
     [super setQuickDialogTableView:aQuickDialogTableView];
     
     self.quickDialogTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    self.quickDialogTableView.styleProvider = self;
+    //self.quickDialogTableView.styleProvider = self;
     
     ((QEntryElement *)[self.root elementWithKey:@"name"]).delegate = self;
     ((QEntryElement *)[self.root elementWithKey:@"current_residence"]).delegate = self;

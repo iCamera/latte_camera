@@ -50,18 +50,23 @@
 //    self.collectionView.alwaysBounceVertical = YES;
     loadEnded = false;
     loading = false;
-     
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(becomeActive:)
+                                                 name:@"BecomeActive" object:nil];
+    
     [self loadMore:YES];
 }
+
+- (void)becomeActive:(id)sender {
+    [self reloadView];
+}
+
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)becomeActive:(id)sender {
-    [self reloadView];
 }
 
 

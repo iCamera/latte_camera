@@ -540,12 +540,12 @@ typedef enum {
 
 - (IBAction)touchClose:(id)sender {
     [self resignAllFocus];
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)touchOK:(id)sender {
     [self resignAllFocus];
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
     [_delegate newTextImage:[self exportText]];
 }
 

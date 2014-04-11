@@ -175,7 +175,11 @@
     lxShare.controller = self;
     
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
-    [app.tracker sendView:@"Gallery Screen"];
+    
+    [app.tracker set:kGAIScreenName
+               value:@"Gallery Screen"];
+    
+    [app.tracker send:[[GAIDictionaryBuilder createAppView] build]];
     
     //Setup Auto Animation
     CATransition *animation = [CATransition animation];

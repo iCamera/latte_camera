@@ -123,10 +123,10 @@
     UIGraphicsEndImageContext();
     
     
-    GPUImageFastBlurFilter *blur = [[GPUImageFastBlurFilter alloc] init];
-    [blur prepareForImageCapture];
-    blur.blurSize = lineWidth/2.0;
-    blur.blurPasses = 4;
+    GPUImageGaussianBlurFilter *blur = [[GPUImageGaussianBlurFilter alloc] init];
+    //[blur prepareForImageCapture];
+    //blur.blurSize = lineWidth/2.0;
+    //blur.blurPasses = 4;
     
     CGImageRef newMask = [blur newCGImageByFilteringImage:viewImage];
     mask = [UIImage imageWithCGImage:newMask];

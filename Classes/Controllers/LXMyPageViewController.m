@@ -24,7 +24,6 @@
 #import "UIActionSheet+ButtonState.h"
 #import "LXCellTimelineSingle.h"
 #import "LXCellTimelineMulti.h"
-#import "LXRootBuilder.h"
 #import "LXVoteViewController.h"
 
 #import "LXViewHeaderMypage.h"
@@ -134,7 +133,11 @@ typedef enum {
             [self.tableView.tableHeaderView addSubview:viewHeaderMypage.view];
             [self addChildViewController:viewHeaderMypage];
             [viewHeaderMypage didMoveToParentViewController:self];
-            [app.tracker sendView:@"Mypage Screen"];
+            
+            [app.tracker set:kGAIScreenName
+                   value:@"Mypage Screen"];
+            
+            [app.tracker send:[[GAIDictionaryBuilder createAppView] build]];
             
             photoMode = kPhotoTimeline;
             isMypage = true;
@@ -150,7 +153,10 @@ typedef enum {
         viewHeaderUserpage.user = _user;
         viewHeaderUserpage.parent = self;
         
-        [app.tracker sendView:@"User Screen"];
+        [app.tracker set:kGAIScreenName
+                   value:@"User Screen"];
+        
+        [app.tracker send:[[GAIDictionaryBuilder createAppView] build]];
         
         photoMode = kPhotoMyphoto;
         isMypage = false;
@@ -176,7 +182,7 @@ typedef enum {
     HUD.yOffset = 150.f;
     
     refresh = [[UIRefreshControl alloc] init];
-    [refresh addTarget:self action:@selector(loadMore:) forControlEvents:UIControlEventValueChanged];
+    [refresh addTarget:self action:@selector(reloadView) forControlEvents:UIControlEventValueChanged];
     [self setRefreshControl:refresh];
 
     
@@ -358,11 +364,13 @@ typedef enum {
                                        
                                        [self doneLoadingTableViewData];
                                        [self.tableView reloadData];
+                                       [refresh endRefreshing];
                                        
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        DLog(@"Something went wrong (Follower)");
                                        [self doneLoadingTableViewData];
                                        [self.tableView reloadData];
+                                       
                                    }];
 }
 
@@ -1276,8 +1284,8 @@ typedef enum {
 
 - (void)imagePickerController:(LXCanvasViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info {
     UIViewController *tmp2 = picker.navigationController.presentingViewController;    
-    [picker dismissModalViewControllerAnimated:NO];
-    [tmp2 dismissModalViewControllerAnimated:YES];
+    [picker dismissViewControllerAnimated:NO completion:nil];
+    [tmp2 dismissViewControllerAnimated:YES completion:nil];
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
@@ -1603,6 +1611,7 @@ typedef enum {
 
 - (void)doneLoadingTableViewData{
     reloading = NO;
+    [refresh endRefreshing];
 //    [refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 }
 
@@ -1654,6 +1663,14 @@ typedef enum {
     if(y > h + reload_distance) {
         [self loadMore];
     }
+}
+
+- (void)showUser:(User *)user fromGallery:(LXGalleryViewController *)gallery {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    LXMyPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    viewUserPage.user = user;
+    [self.navigationController pushViewController:viewUserPage animated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

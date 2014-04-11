@@ -428,7 +428,7 @@ typedef enum {
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [picker dismissModalViewControllerAnimated:NO];
+    [picker dismissViewControllerAnimated:NO completion:nil];
 }
 
 
@@ -548,7 +548,7 @@ typedef enum {
 
 - (void)close:(id)sender {
     [self stopCamera];
-    [self.navigationController dismissModalViewControllerAnimated:YES];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (CGPoint)convertToPointOfInterestFromViewCoordinates:(CGPoint)viewCoordinates

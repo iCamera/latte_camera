@@ -403,7 +403,7 @@
     }
     
     [GPUImageContext setActiveShaderProgram:filterProgram];
-    [self setFilterFBO];
+    //[self setFilterFBO];
     [self setUniformsForProgramAtIndex:0];
     
     glClearColor(backgroundColorRed, backgroundColorGreen, backgroundColorBlue, backgroundColorAlpha);
@@ -545,7 +545,7 @@
 
 
 - (void)setBackToNormal {
-    preparedToCaptureImage = NO;
+    //preparedToCaptureImage = NO;
 }
 
 @end

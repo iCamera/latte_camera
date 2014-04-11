@@ -62,7 +62,7 @@
         labelUser.shadowColor = [UIColor blackColor];
         labelUser.shadowOffset = CGSizeMake(0, 1);
         labelUser.backgroundColor = [UIColor clearColor];
-        labelUser.minimumFontSize = 5;
+        labelUser.minimumScaleFactor = 0.5;
         labelUser.userInteractionEnabled = NO;
         
         labelUser.text = user.name;

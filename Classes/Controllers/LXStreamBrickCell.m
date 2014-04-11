@@ -33,7 +33,7 @@
 - (void)setPicture:(Picture *)picture {
     _picture = picture;
 
-    [_buttonPicture setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:picture.urlSmall] placeholderImage:nil];
+    [_buttonPicture setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:picture.urlSmall] placeholderImage:nil];
 }
 
 - (IBAction)touchPicture:(UIButton *)sender {
