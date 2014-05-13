@@ -13,10 +13,8 @@
 #import "LXMainTabViewController.h"
 #import "LXAppDelegate.h"
 #import "LXAboutViewController.h"
-#import "LXUserNavButton.h"
 #import "LXMyPageViewController.h"
 #import "LXNavMypageController.h"
-#import "LXNotifySideViewController.h"
 #import "LXUploadStatusViewController.h"
 #import "LXUploadObject.h"
 #import "MBProgressHUD.h"
@@ -31,9 +29,7 @@
     UIView *viewCamera;
     BOOL isFirst;
 
-    LXNotifySideViewController *viewNotify;
     LXUploadStatusViewController *viewUpload;
-    LXUserNavButton *viewNav;
     UIButton *buttonUploadStatus;
     MBRoundProgressView *hudUpload;
     
@@ -85,13 +81,12 @@
 	// Do any additional setup after loading the view.
     // Init View
     UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    viewNotify = [storyMain instantiateViewControllerWithIdentifier:@"Notification"];
     viewUpload = [storyMain instantiateViewControllerWithIdentifier:@"UploadStatus"];
     navTop = [storyMain instantiateViewControllerWithIdentifier:@"NavigationTop"];
     navRank = [storyMain instantiateViewControllerWithIdentifier:@"NavigationRank"];
     navSearch = [storyMain instantiateViewControllerWithIdentifier:@"NavigationSearch"];
 
-    
+    self.delegate = self;
     // Tab style
 //    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
 //    for (UITabBarItem* tab in [self.tabBarController.tabBar items]) {
@@ -102,51 +97,6 @@
 //                                     nil] forState:UIControlStateNormal];
 //    }
 
-    
-    UILabel *labelCamera = [[UILabel alloc] init];
-    labelCamera.frame = CGRectMake(0.0, 0.0, 60, 14);
-    
-    labelCamera.font = [UIFont fontWithName:@"HelveticaNeue" size:9];
-
-    labelCamera.text = NSLocalizedString(@"start_camera", @"写真を追加");
-    labelCamera.backgroundColor = [UIColor clearColor];
-    labelCamera.textColor = [UIColor whiteColor];
-    labelCamera.shadowColor = [UIColor blackColor];
-    labelCamera.shadowOffset = CGSizeMake(0, 1);
-    labelCamera.textAlignment = NSTextAlignmentCenter;
-
-    UIButton *buttonCamera = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage* buttonImage = [UIImage imageNamed:@"camera.png"];
-    UIImage* buttonBg = [UIImage imageNamed:@"bg_bottom_center.png"];
-
-    viewCamera = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, buttonBg.size.width, buttonBg.size.height)];
-    viewCamera.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
-    buttonCamera.frame = viewCamera.frame;
-    buttonCamera.showsTouchWhenHighlighted = YES;
-
-    [buttonCamera setImage:buttonImage forState:UIControlStateNormal];
-    [buttonCamera setImage:buttonImage forState:UIControlStateHighlighted];
-    [buttonCamera setBackgroundImage:buttonBg forState:UIControlStateNormal];
-    [buttonCamera setBackgroundImage:buttonBg forState:UIControlStateHighlighted];
-    
-    CGFloat heightDifference = buttonBg.size.height - self.tabBar.frame.size.height;
-    if (heightDifference < 0)
-        viewCamera.center = self.tabBar.center;
-    else
-    {
-        CGPoint center = self.tabBar.center;
-        center.y = center.y - heightDifference/2.0 + 1;
-        viewCamera.center = center;
-    }
-    [buttonCamera addTarget:self action:@selector(cameraView:) forControlEvents:UIControlEventTouchUpInside];
-
-    [viewCamera addSubview:buttonCamera];
-    CGPoint center = buttonCamera.center;
-    center.y += 20;
-    labelCamera.center = center;
-    [viewCamera addSubview:labelCamera];
-    [self.view addSubview:viewCamera];
-    
 
 //    self.tabBar.selectionIndicatorImage = [UIImage imageNamed:@"bg_bottom_on.png"];
 //    self.tabBar.backgroundImage = [UIImage imageNamed: @"bg_bottom.png"];
@@ -167,12 +117,6 @@
         [self setGuest];
     }
     
-    viewNav = [[LXUserNavButton alloc] init];
-    viewNav.view.frame = CGRectMake(0, 0, 70, 42);
-
-    [viewNav.buttonSetting addTarget:self action:@selector(showSetting:) forControlEvents:UIControlEventTouchUpInside];
-    [viewNav.buttonNotify addTarget:self action:@selector(toggleNotify:) forControlEvents:UIControlEventTouchUpInside];
-    
 //    for(UIViewController *tab in self.viewControllers) {
 //        
 //        UIFont *font;
@@ -190,12 +134,6 @@
 //                                      forState:UIControlStateNormal];
 //    }
     
-    viewNotify.view.frame = self.view.bounds;
-    viewNotify.parent = self;
-    [self.view addSubview:viewNotify.view];
-    [viewNotify didMoveToParentViewController:self];
-    viewNotify.view.hidden = true;
-    
     viewUpload.view.frame = self.view.bounds;
     [self.view addSubview:viewUpload.view];
     [viewUpload didMoveToParentViewController:self];
@@ -211,18 +149,18 @@
     [self.view addSubview:buttonUploadStatus];
     buttonUploadStatus.hidden = YES;
     
-    
-    _sharedRightButton = [[UIBarButtonItem alloc] initWithCustomView:viewNav.view];
+    [[UITabBar appearance] setTintColor:[UIColor redColor]];
 }
 
 - (void)receivePushNotify:(NSNotification*)notify {
-    if (viewNotify.view.hidden) {
+    if (self.selectedIndex != 3) {
         NSDictionary *userInfo = notify.object;
         if ([userInfo objectForKey:@"aps"]) {
             NSDictionary *aps = [userInfo objectForKey:@"aps"];
             if ([aps objectForKey:@"badge"]) {
                 NSNumber *count = [aps objectForKey:@"badge"];
-                viewNav.notifyCount = [count integerValue];
+                UIViewController* notifyView = self.viewControllers[3];
+                notifyView.tabBarItem.badgeValue = [count stringValue];
             }
         }
     } else {
@@ -231,38 +169,17 @@
 }
 
 - (void)showNotify {
-    viewNav.notifyCount = 0;
-    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+
     
-    viewNotify.view.alpha = 0;
-    viewNotify.view.hidden = false;
-    [viewNotify switchTab:viewNotify.buttonNotifyAll];
     
     [[LatteAPIClient sharedClient] GET:@"user/me/unread_announcement"
                                 parameters: nil
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       viewNotify.notifyCount = [[JSON objectForKey:@"announcement_count"] integerValue];
+                                       //viewNotify.notifyCount = [[JSON objectForKey:@"announcement_count"] integerValue];
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        DLog(@"Something went wrong (Announcement count)");
                                    }];
-
-    
-    [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
-        viewNotify.view.alpha = 1;
-    }];
-}
-
-- (void)toggleNotify:(id)sender {
-    if (viewNotify.view.hidden) {
-        [self showNotify];
-    } else {
-        [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
-            viewNotify.view.alpha = 0;
-        } completion:^(BOOL finished) {
-            viewNotify.view.hidden = true;
-        }];
-    }
 }
 
 - (void)showSetting:(id)sender {
@@ -273,11 +190,7 @@
 
 
 - (void)cameraView:(id)sender {
-    UIActionSheet *actionUpload = [[UIActionSheet alloc] initWithTitle:@""
-                                                              delegate:self cancelButtonTitle:@"Cancel"
-                                                destructiveButtonTitle:nil
-                                                     otherButtonTitles:@"Camera", @"Photo Library", nil];
-    [actionUpload showFromTabBar:self.tabBar];
+    
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -301,7 +214,7 @@
             [self presentViewController:imagePicker animated:YES completion:nil];
         }
     } else if (buttonIndex == 1) {
-        UIStoryboard* storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
+//        UIStoryboard* storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
         //LXImagePickerController *imagePicker = [storyCamera instantiateViewControllerWithIdentifier:@"Picker"];
         LXImagePickerController *imagePicker = [[LXImagePickerController alloc] init];
         imagePicker.delegate = imagePicker;
@@ -351,9 +264,6 @@
 
 - (void)receiveLoggedOut:(NSNotification *) notification {
     [self setGuest];
-    if (!viewNotify.view.hidden) {
-        [self toggleNotify:nil];
-    }
 }
 
 - (void)showUser:(NSNotification *)notify {
@@ -426,5 +336,17 @@
     [self presentViewController:viewConfirm animated:YES completion:nil];
 }
 
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController NS_AVAILABLE_IOS(3_0) {
+    if (viewController == tabBarController.viewControllers[2]) {
+        UIActionSheet *actionUpload = [[UIActionSheet alloc] initWithTitle:@""
+                                                                  delegate:self cancelButtonTitle:@"Cancel"
+                                                    destructiveButtonTitle:nil
+                                                         otherButtonTitles:@"Camera", @"Photo Library", nil];
+        [actionUpload showFromTabBar:self.tabBar];
+        return false;
+    }
+    
+    return true;
+}
 
 @end

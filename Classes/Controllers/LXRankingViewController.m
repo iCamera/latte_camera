@@ -9,7 +9,6 @@
 #import "LXRankingViewController.h"
 #import "LXAppDelegate.h"
 #import "LXCellGrid.h"
-#import "MBProgressHUD.h"
 #import "Picture.h"
 #import "LXCellRankLv1.h"
 #import "LXCellRankLv2.h"
@@ -36,9 +35,7 @@ typedef enum {
     NSMutableArray *days;
     NSInteger rankLayout;
     BOOL reloading;
-    MBProgressHUD *HUD;
     NSString *area;
-    UIRefreshControl *refresh;
 }
 
 @synthesize buttonWeekly;
@@ -80,14 +77,6 @@ typedef enum {
     
     [app.tracker send:[[GAIDictionaryBuilder createAppView] build]];
     
-    HUD = [[MBProgressHUD alloc] initWithView:self.tableView];
-    [self.tableView addSubview:HUD];
-    HUD.mode = MBProgressHUDModeText;
-    HUD.labelText = NSLocalizedString(@"Loading...", @"Loading...") ;
-    HUD.labelFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
-    HUD.margin = 10.f;
-    HUD.yOffset = 150.f;
-    
     rankLayout = kLayoutNormal;
     
     // Do any additional setup after loading the view.
@@ -106,10 +95,6 @@ typedef enum {
         buttonAreaWorld.selected = NO;
         buttonAreaLocal.selected = YES;
     }
-    
-    refresh = [[UIRefreshControl alloc] init];
-    [refresh addTarget:self action:@selector(reloadView) forControlEvents:UIControlEventValueChanged];
-    [self setRefreshControl:refresh];
     
     [self reloadView];
 }
@@ -149,7 +134,6 @@ typedef enum {
     NSString* url = [NSString stringWithFormat:@"picture/ranking/calendar"];
     
     [loadIndicator startAnimating];
-    [HUD show:YES];
     loadEnded = false;
     
     NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
@@ -170,12 +154,10 @@ typedef enum {
                                        
                                        [self.tableView reloadData];
                                        [loadIndicator stopAnimating];
-                                       [HUD hide:YES];
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        DLog(@"Something went wrong (Ranking)");
                                        [loadIndicator stopAnimating];
-                                       [HUD hide:YES];
                                        loadEnded = true;
                                    }
      ];
@@ -186,7 +168,6 @@ typedef enum {
     NSString* url = [NSString stringWithFormat:@"picture/ranking/calendar/%d", rankpage];
     
     [loadIndicator startAnimating];
-    [HUD show:YES];
     loadEnded = false;
     
     NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
@@ -195,7 +176,6 @@ typedef enum {
     [[LatteAPIClient sharedClient] GET:url
                                 parameters: param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       [HUD hide:YES];
                                        
                                        NSArray *newDays = [JSON objectForKey:@"days"];
                                        if (newDays.count == 0) {
@@ -218,7 +198,6 @@ typedef enum {
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        DLog(@"Something went wrong (Ranking)");
                                        [loadIndicator stopAnimating];
-                                       [HUD hide:YES];
                                        loadEnded = true;
                                    }
      ];
@@ -228,7 +207,6 @@ typedef enum {
     NSString* url = [NSString stringWithFormat:@"picture/ranking/%@/%d", ranktype, rankpage];
     
     [loadIndicator startAnimating];
-    [HUD show:YES];
     loadEnded = false;
     
     NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
@@ -241,14 +219,12 @@ typedef enum {
                                        rankLayout = kLayoutNormal;
                                        [self.tableView reloadData];
                                        [loadIndicator stopAnimating];
-                                       [refresh endRefreshing];
-                                       [HUD hide:YES];
+                                       [self.refreshControl endRefreshing];
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        DLog(@"Something went wrong (Ranking)");
                                        [loadIndicator stopAnimating];
-                                       [refresh endRefreshing];
-                                       [HUD hide:YES];
+                                       [self.refreshControl endRefreshing];
                                        loadEnded = true;
                                    }
      ];
@@ -300,7 +276,7 @@ typedef enum {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (IBAction)touchTab:(UIButton*)sender {
+- (IBAction)touchTab:(UISegmentedControl*)sender {
     loadEnded = false;
     
     buttonDaily.selected = false;
@@ -310,26 +286,26 @@ typedef enum {
     
     sender.selected = true;
     
-    switch (sender.tag) {
-        case 1:{
+    switch (sender.selectedSegmentIndex) {
+        case 0:{
             ranktype = @"calendar";
             rankpage = 1;
             [self loadCalendar];
         }
             break;
-        case 2: {
+        case 1: {
             ranktype = @"trend";
             rankpage = 1;
             [self loadRanking];
         }
             break;
-        case 3: {
+        case 2: {
             ranktype = @"daily";
             rankpage = 1;
             [self loadRanking];
         }
             break;
-        case 4: {
+        case 3: {
             ranktype = @"weekly";
             rankpage = 1;
             [self loadRanking];
@@ -628,5 +604,8 @@ typedef enum {
     [self reloadView];
 }
 
+- (IBAction)refresh:(id)sender {
+    [self reloadView];
+}
 
 @end

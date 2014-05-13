@@ -172,6 +172,7 @@
     Feed *feed = feeds[indexPath.item];
     LXStreamBrickCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Brick" forIndexPath:indexPath];
     cell.picture = feed.targets[0];
+    cell.user = feed.user;
     cell.buttonPicture.tag = indexPath.item;
     cell.delegate = self;
     return cell;

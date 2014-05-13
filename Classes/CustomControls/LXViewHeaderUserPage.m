@@ -143,10 +143,10 @@
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
     
     if (_user.isFollowing) {
-        url = [NSString stringWithFormat:@"user/follow/%d", [_user.userId integerValue]];
+        url = [NSString stringWithFormat:@"user/follow/%ld", [_user.userId longValue]];
 
     } else {
-        url = [NSString stringWithFormat:@"user/unfollow/%d", [_user.userId integerValue]];
+        url = [NSString stringWithFormat:@"user/unfollow/%ld", [_user.userId longValue]];
     }
     
     [[LatteAPIClient sharedClient] POST:url

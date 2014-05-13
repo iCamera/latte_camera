@@ -10,18 +10,20 @@
 
 #import "LXGalleryViewController.h"
 
-@interface LXRankingViewController : UITableViewController <LXGalleryViewControllerDataSource>
+@interface LXRankingViewController : UITableViewController <LXGalleryViewControllerDataSource, UIToolbarDelegate>
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonDaily;
 @property (strong, nonatomic) IBOutlet UIButton *buttonWeekly;
 @property (strong, nonatomic) IBOutlet UIButton *buttonMonthly;
 @property (strong, nonatomic) IBOutlet UIButton *buttonCalendar;
 @property (strong, nonatomic) IBOutlet UIView *viewTab;
+@property (strong, nonatomic) IBOutlet UISegmentedControl *segmentView;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadIndicator;
 @property (strong, nonatomic) IBOutlet UIButton *buttonAreaLocal;
 @property (strong, nonatomic) IBOutlet UIButton *buttonAreaWorld;
 
-- (IBAction)touchTab:(UIButton*)sender;
+- (IBAction)touchTab:(UISegmentedControl*)sender;
 - (IBAction)touchArea:(UIButton*)sender;
+- (IBAction)refresh:(id)sender;
 - (void)reloadView;
 @end

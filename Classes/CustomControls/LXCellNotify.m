@@ -7,7 +7,8 @@
 //
 
 #import "LXCellNotify.h"
-#import "UIImageView+loadProgress.h"
+#import "UIButton+AFNetworking.h"
+#import "UIImageView+AFNetworking.h"
 
 @implementation LXCellNotify
 
@@ -51,19 +52,19 @@
         switch (notifyTarget) {
             case kNotifyTargetPicture: {
                 Picture *pic = [Picture instanceFromDictionary:target];
-                [viewImage loadProgess:pic.urlSquare];
+                [viewImage setImageWithURL:[NSURL URLWithString:pic.urlSquare]];
                 break;
             }
             case kNotifyTargetUser: {
                 User *user = [User instanceFromDictionary:target];
-                [viewImage loadProgess:user.profilePicture placeholderImage:[UIImage imageNamed:@"user.gif"]];
+                [viewImage setImageWithURL:[NSURL URLWithString:user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
                 break;
             }
             case kNotifyTargetComment: {
                 NSMutableArray *users = [User mutableArrayFromDictionary:notify withKey:@"users"];
                 for (User *user in users) {
                     if (user.name != nil) {
-                        [viewImage loadProgess:user.profilePicture placeholderImage:[UIImage imageNamed:@"user.gif"]];
+                        [viewImage setImageWithURL:[NSURL URLWithString:user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
                     }
                 }
             }
@@ -74,19 +75,12 @@
     }
     NSNumber *read = notify[@"read"];
     if ([read boolValue]) {
-        self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg_menu_on.png"]];
+//        self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg_menu_on.png"]];
     } else {
-        self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg_menu.png"]];
+//        self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg_menu.png"]];
     }
     
-    [self setSelectedBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg_menu_on.png"]]];
-}
-
-- (void)drawRect:(CGRect)rect {
-    viewImage.layer.cornerRadius = 3;
-    viewImage.clipsToBounds = YES;
-    
-    [super drawRect:rect];
+//    [self setSelectedBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg_menu_on.png"]]];
 }
 
 @end

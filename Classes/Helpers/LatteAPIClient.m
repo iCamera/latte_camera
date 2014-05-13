@@ -9,6 +9,7 @@
 #import "LatteAPIClient.h"
 #import "UIDeviceHardware.h"
 #import "LXAppDelegate.h"
+#import "AFNetworkActivityIndicatorManager.h"
 
 @implementation LatteAPIClient
 
@@ -18,6 +19,8 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedClient = [[LatteAPIClient alloc] initWithBaseURL:[NSURL URLWithString:kLatteAPIBaseURLString]];
+        [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+        
         if (![kLatteAPIBaseURLString isEqualToString:@"http://latte.la/api/"]) {
             [_sharedClient.requestSerializer setAuthorizationHeaderFieldWithUsername:@"luxeys" password:@"13579"];
         }

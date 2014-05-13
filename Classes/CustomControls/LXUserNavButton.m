@@ -61,15 +61,7 @@
 }
 
 - (void)loadUnread {
-    LXAppDelegate *app = [LXAppDelegate currentDelegate];
-    [[LatteAPIClient sharedClient] GET:@"user/me/unread_notify"
-                                parameters: [NSDictionary dictionaryWithObject:[app getToken] forKey:@"token" ]
-                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       self.notifyCount = [[JSON objectForKey:@"notify_count"] integerValue];
-                                   }
-                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       DLog(@"Something went wrong (Notify count)");
-                                   }];
+    
 }
 
 - (void)becomeActive:(NSNotification *) notification {

@@ -14,7 +14,6 @@
 #import "RDActionSheet.h"
 #import "LXImageFilter.h"
 #import "LXImageLens.h"
-#import "LXImageCropViewController.h"
 #import "LXFilterDOF.h"
 #import "LXFilterDOF2.h"
 #import "GPUImageFilter+reset.h"
@@ -58,7 +57,6 @@
     NSData *imageFinalData;
     UIImage *imageFinalThumb;
     
-    LXImageCropViewController *controllerCrop;
     LXImageTextViewController *controllerText;
     
     NSMutableDictionary *imageMeta;
@@ -123,8 +121,6 @@
 @synthesize viewEffectControl;
 @synthesize viewBlendControl;
 
-@synthesize viewCanvas;
-
 @synthesize viewTopBar;
 
 @synthesize sliderExposure;
@@ -167,29 +163,9 @@
         
         // Init Crop Controller
         UIStoryboard *storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
-        controllerCrop = [storyCamera instantiateViewControllerWithIdentifier:@"Crop"];
+
         controllerText = [storyCamera instantiateViewControllerWithIdentifier:@"Text"];
         controllerText.delegate = self;
-        
-        __weak LXCanvasViewController *weakController = self;
-        __weak LXImageTextViewController *weakText = controllerText;
-//        controllerCrop.doneCallback = ^(UIImage *editedImage, BOOL canceled){
-//            if(!canceled) {
-//                CGSize previewUISize = CGSizeMake(300.0, [LXUtils heightFromWidth:300.0 width:editedImage.size.width height:editedImage.size.height]);
-//                weakController.imageOrientation = UIImageOrientationUp;
-//                weakController.imageToProcess = [[GPUImagePicture alloc] initWithImage:editedImage];
-//                weakController.imageSize = editedImage.size;
-//                UIImage *edittedImagePreview = [LXUtils imageWithImage:editedImage scaledToSize:previewUISize];
-//                weakController.imagePreview = edittedImagePreview;
-//                [weakController resizeCameraViewWithAnimation:YES];
-//                weakController.previewFilter = [[GPUImagePicture alloc] initWithImage:weakController.imagePreview];
-//                [weakController preparePipe];
-//                [weakController processImage];
-//                
-//                weakText.image = edittedImagePreview;
-//            }
-//            [weakController dismissViewControllerAnimated:YES completion:nil];
-//        };
     }
     return self;
 }
@@ -208,17 +184,6 @@
     // LAShare
     laSharekit = [[LXShare alloc] init];
     laSharekit.controller = self;
-    
-    UIImage *imageCanvas = [[UIImage imageNamed:@"bg_canvas.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(8, 8, 8, 8)];
-    viewCanvas.image = imageCanvas;
-    
-    UIBezierPath *shadowPathCamera = [UIBezierPath bezierPathWithRect:viewCameraWraper.bounds];
-    viewCameraWraper.layer.masksToBounds = NO;
-    viewCameraWraper.layer.shadowColor = [UIColor blackColor].CGColor;
-    viewCameraWraper.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-    viewCameraWraper.layer.shadowOpacity = 1.0;
-    viewCameraWraper.layer.shadowRadius = 5.0;
-    viewCameraWraper.layer.shadowPath = shadowPathCamera.CGPath;
     
     viewCamera.fillMode = kGPUImageFillModeStretch;
     
@@ -340,15 +305,15 @@
     
     imageOriginal = _info[UIImagePickerControllerOriginalImage];
     imageOrientation = imageOriginal.imageOrientation;
-    CGFloat heightThumb = [LXUtils heightFromWidth:70 width:imageOriginal.size.height height:imageOriginal.size.height];
-    CGFloat heightPreview = [LXUtils heightFromWidth:320 width:imageOriginal.size.height height:imageOriginal.size.height];
+    CGFloat heightThumb = [LXUtils heightFromWidth:70 width:imageOriginal.size.width height:imageOriginal.size.height];
+    CGFloat heightPreview = [LXUtils heightFromWidth:320 width:imageOriginal.size.width height:imageOriginal.size.height];
     imageThumbnail = [LXUtils imageWithImage:imageOriginal scaledToSize:CGSizeMake(70, heightThumb)];
     imagePreview = [LXUtils imageWithImage:imageOriginal scaledToSize:CGSizeMake(320, heightPreview)];
     imageSize = imageOriginal.size;
     scrollLayer.contentSize = CGSizeMake(245, 220);
     
-    controllerCrop.sourceImage = imageOriginal;
-    //controllerCrop.previewImage = _imageOriginalPreview;
+    _scrollCamera.contentSize = CGSizeMake(320, heightPreview);
+    viewCameraWraper.frame = CGRectMake(0, (_scrollCamera.bounds.size.height - heightPreview) * 0.5, 320, heightPreview);
     
     controllerText.image = imageOriginal;
     
@@ -710,12 +675,13 @@
         [self preparePipe:imageToProcess];
         
         if (MAX(imageOriginal.size.width, imageOriginal.size.height) > 1000) {
-            //[filterMain prepareForImageCapture];
+            [filterMain useNextFrameForImageCapture];
         }
         
         [imageToProcess processImage];
         
         // Save to Jpeg NSData
+        
         CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrame];
         UIImage *outputImage = [UIImage imageWithCGImage:cgImageFromBytes];
         jpeg = UIImageJPEGRepresentation(outputImage, 0.9);
@@ -942,13 +908,7 @@
     CGFloat ratio;
     ratio = MIN(horizontalRatio, verticalRatio);
     
-    frame.size = CGSizeMake(imageSize.width*ratio, imageSize.height*ratio);
-    frame.origin = CGPointMake((320-frame.size.width)/2, (height - frame.size.height)/2 + 50.0);
-    
     viewTopBar.hidden = false;
-    
-    viewCameraWraper.layer.shadowPath = nil;
-    viewCameraWraper.layer.shadowRadius = 5.0;
 
     [UIView animateWithDuration:animation?0.3:0 animations:^{
         viewFocusControl.frame = frameBokeh;
@@ -957,14 +917,10 @@
         viewLensControl.frame = frameLens;
         viewCameraWraper.frame = frame;
         viewTopBar.frame = frameTopBar;
-        viewCanvas.frame = frameCanvas;
         viewBlendControl.frame = frameBlend;
         viewPresetControl.frame = framePreset;
 
-    } completion:^(BOOL finished) {
-        UIBezierPath *shadowPathCamera = [UIBezierPath bezierPathWithRect:viewCameraWraper.bounds];
-        viewCameraWraper.layer.shadowPath = shadowPathCamera.CGPath;
-    }];
+    } completion:nil];
 }
 
 - (void)switchEditImage {
@@ -1003,7 +959,7 @@
     
     [self resizeCameraViewWithAnimation:YES];
     
-    previewFilter = [[GPUImagePicture alloc] initWithImage:imagePreview];
+    previewFilter = [[GPUImagePicture alloc] initWithImage:imagePreview smoothlyScaleOutput:NO];
     
     [self preparePipe];
     [self applyFilterSetting];
@@ -1424,7 +1380,7 @@
 }
 
 - (IBAction)touchCrop:(id)sender {
-    [self presentViewController:controllerCrop animated:YES completion:nil];
+    
 }
 
 - (IBAction)touchText:(id)sender {

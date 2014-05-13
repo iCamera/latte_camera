@@ -11,24 +11,15 @@
 #import "LXMainTabViewController.h"
 
 
-@interface LXNotifySideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface LXNotifySideViewController : UITableViewController
 
-
-@property (strong, nonatomic) IBOutlet UIButton *buttonNotifyAll;
-@property (strong, nonatomic) IBOutlet UIButton *buttonNotifyLike;
-@property (strong, nonatomic) IBOutlet UIButton *buttonNotifyComment;
-@property (strong, nonatomic) IBOutlet UIButton *buttonNotifyFollow;
 @property (strong, nonatomic) IBOutlet UIButton *buttonAnnounce;
-@property (strong, nonatomic) IBOutlet UITableView *tableNotify;
-@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityLoad;
 @property (strong, nonatomic) IBOutlet UIWebView *webAnnounce;
-@property (weak, nonatomic) LXMainTabViewController *parent;
-@property (strong, nonatomic) IBOutlet UILabel *labelCount;
-@property (assign, nonatomic) NSInteger notifyCount;
 
-- (IBAction)touchBackground:(id)sender;
-- (IBAction)switchTab:(UIButton *)sender;
-- (IBAction)touchSetting:(id)sender;
+
+- (IBAction)switchTab:(UISegmentedControl *)sender;
+- (IBAction)touchInfo:(id)sender;
+- (IBAction)refresh:(id)sender;
 
 
 @end

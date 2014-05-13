@@ -83,7 +83,6 @@
 		880E50EF1728C30800D584EE /* HFImageEditorFrameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E50DA1728C30800D584EE /* HFImageEditorFrameView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		880E50F01728C30800D584EE /* HFImageEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E50DD1728C30800D584EE /* HFImageEditorViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		880E50F71728C30800D584EE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 880E50EC1728C30800D584EE /* README.md */; };
-		880E50FD1728C63700D584EE /* LXImageCropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E50FC1728C63600D584EE /* LXImageCropViewController.m */; };
 		880E51001728E50400D584EE /* LXCaptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E50FF1728E50300D584EE /* LXCaptureViewController.m */; };
 		880E510A172A130E00D584EE /* AVCamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E5102172A11AE00D584EE /* AVCamViewController.m */; };
 		880E510B172A130E00D584EE /* AVCamCaptureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E5104172A11AE00D584EE /* AVCamCaptureManager.m */; };
@@ -2064,8 +2063,6 @@
 		880E50DC1728C30800D584EE /* HFImageEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFImageEditorViewController.h; sourceTree = "<group>"; };
 		880E50DD1728C30800D584EE /* HFImageEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFImageEditorViewController.m; sourceTree = "<group>"; };
 		880E50EC1728C30800D584EE /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		880E50FB1728C63600D584EE /* LXImageCropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXImageCropViewController.h; sourceTree = "<group>"; };
-		880E50FC1728C63600D584EE /* LXImageCropViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXImageCropViewController.m; sourceTree = "<group>"; };
 		880E50FE1728E50300D584EE /* LXCaptureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCaptureViewController.h; sourceTree = "<group>"; };
 		880E50FF1728E50300D584EE /* LXCaptureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCaptureViewController.m; sourceTree = "<group>"; };
 		880E5102172A11AE00D584EE /* AVCamViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVCamViewController.m; sourceTree = "<group>"; };
@@ -5144,8 +5141,6 @@
 				8883C07C16DCBCE1003510A1 /* LXGalleryViewController.m */,
 				884C54D316B22EF500DA318E /* LXHelpBokehViewController.h */,
 				884C54D416B22EF500DA318E /* LXHelpBokehViewController.m */,
-				880E50FB1728C63600D584EE /* LXImageCropViewController.h */,
-				880E50FC1728C63600D584EE /* LXImageCropViewController.m */,
 				880B978818F79C460084D79D /* LXImagePickerController.h */,
 				880B978918F79C460084D79D /* LXImagePickerController.m */,
 				8883EED2173212EC00AA2D5E /* LXImageTextViewController.h */,
@@ -8678,7 +8673,6 @@
 				88F621061724E6AE00CDD1EC /* LXFBOpenGraph.m in Sources */,
 				880E50EF1728C30800D584EE /* HFImageEditorFrameView.m in Sources */,
 				880E50F01728C30800D584EE /* HFImageEditorViewController.m in Sources */,
-				880E50FD1728C63700D584EE /* LXImageCropViewController.m in Sources */,
 				880E51001728E50400D584EE /* LXCaptureViewController.m in Sources */,
 				88120B0018F63233000BFB5E /* UIButton+AFNetworking.m in Sources */,
 				880E5110172A16C900D584EE /* LXCamCaptureManager.m in Sources */,

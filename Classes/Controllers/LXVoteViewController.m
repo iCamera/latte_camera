@@ -45,7 +45,7 @@
 - (void)setPicture:(Picture *)picture {
     if (picture.isOwner && ([picture.voteCount integerValue] > 0)) {
 
-        NSString *url = [NSString stringWithFormat:@"picture/%d/votes", [picture.pictureId integerValue]];
+        NSString *url = [NSString stringWithFormat:@"picture/%ld/votes", [picture.pictureId longValue]];
         LXAppDelegate* app = (LXAppDelegate*)[[UIApplication sharedApplication] delegate];
         
         [[LatteAPIClient sharedClient] GET:url
