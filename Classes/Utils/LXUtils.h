@@ -11,18 +11,18 @@
 #import <CoreLocation/CoreLocation.h>
 @class Feed, Picture, User;
 
-typedef enum {
+typedef NS_ENUM(NSInteger, NotifyKind) {
     kNotifyKindComment = 1,
     kNotifyKindLike = 2,
     kNotifyKindFollow = 3,
     kNotifyKindTargetUpdate = 10,
-} NotifyKind;
+} ;
 
-typedef enum {
+typedef NS_ENUM(NSInteger, NotifyTarget) {
     kNotifyTargetPicture = 1,
     kNotifyTargetUser = 2,
     kNotifyTargetComment = 41,
-} NotifyTarget;
+} ;
 
 #define kGlobalAnimationSpeed 0.25
 

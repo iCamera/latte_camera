@@ -9,10 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "Feed.h"
 
-@interface LXCellTimelineSingle : UITableViewCell<UITableViewDataSource, UITableViewDelegate> {
-    UIViewController *viewController;
-    BOOL isExpanded;
-}
+@interface LXCellTimelineSingle : UITableViewCell
+
 @property (strong, nonatomic) IBOutlet UILabel *labelTitle;
 @property (strong, nonatomic) IBOutlet UILabel *labelUser;
 @property (strong, nonatomic) IBOutlet UIButton *buttonUser;
@@ -29,7 +27,7 @@
 @property (strong, nonatomic) IBOutlet UIView *viewDesc;
 @property (strong, nonatomic) IBOutlet UILabel *labelDesc;
 
-@property (strong, nonatomic) UIViewController *viewController;
+@property (weak, nonatomic) UIViewController *viewController;
 @property (strong, nonatomic) Feed *feed;
 
 @end

@@ -14,7 +14,7 @@
 #import "LXButtonBack.h"
 #import "LXUtils.h"
 #import "Picture.h"
-#import "LXMyPageViewController.h"
+#import "LXUserPageViewController.h"
 
 @interface LXTagViewController ()
 
@@ -64,7 +64,7 @@
     NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
                            [app getToken], @"token",
                            _keyword, @"keyword",
-                           [NSNumber numberWithInt:page], @"page",
+                           [NSNumber numberWithInteger:page], @"page",
                            nil];
     
     [[LatteAPIClient sharedClient] GET:@"picture/tag"
@@ -105,7 +105,7 @@
 - (void)showUser:(User *)user fromGallery:(LXGalleryViewController *)gallery {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
-    LXMyPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
     viewUserPage.user = user;
     [self.navigationController pushViewController:viewUserPage animated:YES];
 }

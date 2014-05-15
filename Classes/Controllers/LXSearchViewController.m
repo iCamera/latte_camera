@@ -17,7 +17,7 @@
 #import "Picture.h"
 #import "LXCellSearchConnection.h"
 #import "LXTagViewController.h"
-#import "LXMyPageViewController.h"
+#import "LXUserPageViewController.h"
 
 typedef enum {
     kSearchPhoto,
@@ -78,9 +78,6 @@ typedef enum {
     
     //setup left button
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
-    UIBarButtonItem *navLeftItem = self.navigationItem.leftBarButtonItem;
-    UIButton *buttonSide = (UIButton*)navLeftItem.customView;
-//    [buttonSide addTarget:app.controllerSide action:@selector(toggleLeftPanel:) forControlEvents:UIControlEventTouchUpInside];
     
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
@@ -322,7 +319,7 @@ typedef enum {
     NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
                            [app getToken], @"token",
                            textKeyword.text, @"keyword",
-                           [NSNumber numberWithInt:page], @"page",
+                           [NSNumber numberWithInteger:page], @"page",
                            nil];
     
     [[LatteAPIClient sharedClient] GET:@"picture/tag"
@@ -359,7 +356,7 @@ typedef enum {
     NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
                            [app getToken], @"token",
                            textKeyword.text, @"nick",
-                           [NSNumber numberWithInt:page], @"page",
+                           [NSNumber numberWithInteger:page], @"page",
                            nil];
     
     [[LatteAPIClient sharedClient] GET:url
@@ -394,7 +391,7 @@ typedef enum {
 - (void)showUser:(User *)user fromGallery:(LXGalleryViewController *)gallery {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
-    LXMyPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
     viewUserPage.user = user;
     [self.navigationController pushViewController:viewUserPage animated:YES];
 }

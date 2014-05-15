@@ -8,6 +8,7 @@
 
 #import "LXStreamBrickCell.h"
 #import "UIButton+AFNetworking.h"
+#import "UIImageView+AFNetworking.h"
 
 @implementation LXStreamBrickCell
 
@@ -38,6 +39,8 @@
     _buttonUser.layer.rasterizationScale = [[UIScreen mainScreen] scale];
     _buttonUser.layer.shouldRasterize = YES;
     
+    _buttonPicture.imageView.contentMode = UIViewContentModeScaleAspectFill;
+    
     self.layer.cornerRadius = 2;
     self.layer.masksToBounds = YES;
     self.layer.shouldRasterize = YES;
@@ -54,7 +57,8 @@
 - (void)setPicture:(Picture *)picture {
     _picture = picture;
 
-    [_buttonPicture setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:picture.urlSmall] placeholderImage:nil];
+    [_imagePicture setImageWithURL:[NSURL URLWithString:picture.urlSmall] placeholderImage:nil];
+    
     _labelView.text = [NSString stringWithFormat:@"%ld", [_picture.voteCount longValue]];
 }
 

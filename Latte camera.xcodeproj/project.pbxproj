@@ -117,17 +117,12 @@
 		8818861316F30BEA009A9266 /* mymenu.png in Resources */ = {isa = PBXBuildFile; fileRef = 8818861216F30BEA009A9266 /* mymenu.png */; };
 		8820D82E16634D7000DBBFF9 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8820D82D16634D7000DBBFF9 /* CoreImage.framework */; };
 		8824FAD916F6DD6C00357ADB /* LXCellUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = 8824FAD816F6DD6C00357ADB /* LXCellUpload.m */; };
-		8824FB0816F72A6E00357ADB /* LXUserNavButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8824FB0116F72A5F00357ADB /* LXUserNavButton.m */; };
-		8824FB0916F72A6E00357ADB /* LXViewHeaderMypage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8824FB0316F72A6100357ADB /* LXViewHeaderMypage.m */; };
-		8824FB0A16F72A6E00357ADB /* LXViewHeaderUserPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8824FB0516F72A6500357ADB /* LXViewHeaderUserPage.m */; };
 		8824FB0B16F72A6E00357ADB /* LXZoomPictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8824FB0716F72A6B00357ADB /* LXZoomPictureViewController.m */; };
 		8824FB6C16F72CE700357ADB /* Authentication.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8824FB4616F72CE700357ADB /* Authentication.storyboard */; };
 		8824FB6D16F72CE700357ADB /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8824FB4816F72CE700357ADB /* Camera.storyboard */; };
 		8824FB6E16F72CE700357ADB /* Component.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8824FB4A16F72CE700357ADB /* Component.storyboard */; };
 		8824FB6F16F72CE700357ADB /* Gallery.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8824FB4C16F72CE700357ADB /* Gallery.storyboard */; };
-		8824FB7016F72CE700357ADB /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8824FB4E16F72CE700357ADB /* MainStoryboard.storyboard */; };
 		8824FB7116F72CE700357ADB /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8824FB5016F72CE700357ADB /* Setting.storyboard */; };
-		8824FB7A16F72CE700357ADB /* LXUserNavButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8824FB6216F72CE700357ADB /* LXUserNavButton.xib */; };
 		8824FB7B16F72CE700357ADB /* LXZoomPictureViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8824FB6316F72CE700357ADB /* LXZoomPictureViewController.xib */; };
 		8824FB8216F731B600357ADB /* icon_follow_m2_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 8824FB7E16F731B600357ADB /* icon_follow_m2_off.png */; };
 		8824FB8316F731B600357ADB /* icon_follow_m2_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8824FB7F16F731B600357ADB /* icon_follow_m2_off@2x.png */; };
@@ -695,6 +690,8 @@
 		88418F4F174382F8004EFBA1 /* print25.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88418F3D174382F8004EFBA1 /* print25.jpg */; };
 		88418F5317438302004EFBA1 /* blend6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88418F5217438302004EFBA1 /* blend6.jpg */; };
 		8847564217212718005CA201 /* RNBlurModalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8847563217212718005CA201 /* RNBlurModalView.m */; };
+		88491EBB1921B4A400CAF0A2 /* LXAnouncementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88491EBA1921B4A400CAF0A2 /* LXAnouncementViewController.m */; };
+		88491EC11921BD1700CAF0A2 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88491EBF1921BD1700CAF0A2 /* MainStoryboard.storyboard */; };
 		884ACB1E18EEB4C000B2924B /* LXStreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 884ACB1D18EEB4C000B2924B /* LXStreamViewController.m */; };
 		884ACB2118EEB7F600B2924B /* LXStreamViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 884ACB2018EEB7F600B2924B /* LXStreamViewLayout.m */; };
 		884ACB2418EEB8F900B2924B /* LXStreamBrickCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 884ACB2318EEB8F900B2924B /* LXStreamBrickCell.m */; };
@@ -1120,8 +1117,6 @@
 		889072E516770EBB0013DF7A /* LXTimelineMultiItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890728116770EBB0013DF7A /* LXTimelineMultiItemViewController.m */; };
 		889072E716770EBB0013DF7A /* LXTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890728416770EBB0013DF7A /* LXTextField.m */; };
 		889072E816770EBB0013DF7A /* LXDrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890728616770EBB0013DF7A /* LXDrawView.m */; };
-		889072EB16770EBB0013DF7A /* UIButton+AsyncImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890728C16770EBB0013DF7A /* UIButton+AsyncImage.m */; };
-		889072EC16770EBB0013DF7A /* UIImageView+loadProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890728E16770EBB0013DF7A /* UIImageView+loadProgress.m */; };
 		889072F116770EBB0013DF7A /* LatteAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890729916770EBB0013DF7A /* LatteAPIClient.m */; };
 		889072F416770EBB0013DF7A /* LXFilterFish.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890729F16770EBB0013DF7A /* LXFilterFish.m */; };
 		889072F616770EBB0013DF7A /* UIActionSheet+ButtonState.m in Sources */ = {isa = PBXBuildFile; fileRef = 889072A316770EBB0013DF7A /* UIActionSheet+ButtonState.m */; };
@@ -1313,7 +1308,6 @@
 		88AAA2C01769EC52007610BB /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 88AAA2BF1769EC52007610BB /* UIImage+Resize.m */; };
 		88AB7E1D16BB755F00040C00 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AB7E1B16BB755E00040C00 /* CFNetwork.framework */; };
 		88B08D4415D369EC003CB0D3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B08D4315D369EC003CB0D3 /* Security.framework */; };
-		88B37BEE16E710DD00AB682C /* LXPicCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B37BED16E710DD00AB682C /* LXPicCommentViewController.m */; };
 		88B37BF616E719B700AB682C /* LXVoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B37BF516E719B700AB682C /* LXVoteViewController.m */; };
 		88B3A3AB16F39951002A6BDA /* LXUploadObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B3A3AA16F39951002A6BDA /* LXUploadObject.m */; };
 		88BAA31C174A19AB004E0F63 /* curve19.png in Resources */ = {isa = PBXBuildFile; fileRef = 88BAA31B174A19AB004E0F63 /* curve19.png */; };
@@ -1369,6 +1363,8 @@
 		88CE8A45174F102000C6A6B6 /* TextTemplate.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88CE8A44174F102000C6A6B6 /* TextTemplate.xib */; };
 		88CE8A47174F375800C6A6B6 /* icon_save2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88CE8A46174F375800C6A6B6 /* icon_save2@2x.png */; };
 		88CE8A49174F376B00C6A6B6 /* icon_save2.png in Resources */ = {isa = PBXBuildFile; fileRef = 88CE8A48174F376B00C6A6B6 /* icon_save2.png */; };
+		88D2DC201924A25A0027D88A /* UIButton+AsyncImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D2DC1D1924A25A0027D88A /* UIButton+AsyncImage.m */; };
+		88D2DC211924A25A0027D88A /* UIImageView+loadProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D2DC1F1924A25A0027D88A /* UIImageView+loadProgress.m */; };
 		88D86DC717CB41DE00EC62A2 /* box_share.png in Resources */ = {isa = PBXBuildFile; fileRef = 88D86DC117CB41DD00EC62A2 /* box_share.png */; };
 		88D86DC817CB41DE00EC62A2 /* box_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88D86DC217CB41DD00EC62A2 /* box_share@2x.png */; };
 		88D86DC917CB41DE00EC62A2 /* box_social.png in Resources */ = {isa = PBXBuildFile; fileRef = 88D86DC317CB41DD00EC62A2 /* box_social.png */; };
@@ -1595,6 +1591,10 @@
 		88F59874173908DB000BD186 /* icon_quick.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F5986A173908DA000BD186 /* icon_quick.png */; };
 		88F59875173908DB000BD186 /* icon_quick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F5986B173908DA000BD186 /* icon_quick@2x.png */; };
 		88F621061724E6AE00CDD1EC /* LXFBOpenGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 88F621051724E6AE00CDD1EC /* LXFBOpenGraph.m */; };
+		88FB5C191921E1E20018F757 /* LXStreamHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 88FB5C181921E1E20018F757 /* LXStreamHeader.m */; };
+		88FB5C1E1921E2420018F757 /* LXStreamHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88FB5C1D1921E2420018F757 /* LXStreamHeader.xib */; };
+		88FB5C21192374720018F757 /* LXUserPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88FB5C20192374720018F757 /* LXUserPageViewController.m */; };
+		88FB5C24192461A50018F757 /* LXPicCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88FB5C23192461A50018F757 /* LXPicCommentViewController.m */; };
 		88FB7CE11782A5480038B067 /* box_tag.png in Resources */ = {isa = PBXBuildFile; fileRef = 88FB7CCD1782A5480038B067 /* box_tag.png */; };
 		88FB7CE21782A5480038B067 /* box_tag@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88FB7CCE1782A5480038B067 /* box_tag@2x.png */; };
 		88FB7CE31782A5480038B067 /* seach_tag_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 88FB7CD11782A5480038B067 /* seach_tag_bg.png */; };
@@ -2135,15 +2135,8 @@
 		8820D82D16634D7000DBBFF9 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		8824FAD716F6DD6C00357ADB /* LXCellUpload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCellUpload.h; sourceTree = "<group>"; };
 		8824FAD816F6DD6C00357ADB /* LXCellUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCellUpload.m; sourceTree = "<group>"; };
-		8824FB0016F72A5F00357ADB /* LXUserNavButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXUserNavButton.h; sourceTree = "<group>"; };
-		8824FB0116F72A5F00357ADB /* LXUserNavButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXUserNavButton.m; sourceTree = "<group>"; };
-		8824FB0216F72A6000357ADB /* LXViewHeaderMypage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXViewHeaderMypage.h; sourceTree = "<group>"; };
-		8824FB0316F72A6100357ADB /* LXViewHeaderMypage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXViewHeaderMypage.m; sourceTree = "<group>"; };
-		8824FB0416F72A6300357ADB /* LXViewHeaderUserPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXViewHeaderUserPage.h; sourceTree = "<group>"; };
-		8824FB0516F72A6500357ADB /* LXViewHeaderUserPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXViewHeaderUserPage.m; sourceTree = "<group>"; };
 		8824FB0616F72A6800357ADB /* LXZoomPictureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXZoomPictureViewController.h; sourceTree = "<group>"; };
 		8824FB0716F72A6B00357ADB /* LXZoomPictureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXZoomPictureViewController.m; sourceTree = "<group>"; };
-		8824FB6216F72CE700357ADB /* LXUserNavButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LXUserNavButton.xib; sourceTree = "<group>"; };
 		8824FB6316F72CE700357ADB /* LXZoomPictureViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LXZoomPictureViewController.xib; sourceTree = "<group>"; };
 		8824FB7E16F731B600357ADB /* icon_follow_m2_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_follow_m2_off.png; sourceTree = "<group>"; };
 		8824FB7F16F731B600357ADB /* icon_follow_m2_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_follow_m2_off@2x.png"; sourceTree = "<group>"; };
@@ -2731,11 +2724,15 @@
 		88418F5217438302004EFBA1 /* blend6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = blend6.jpg; sourceTree = "<group>"; };
 		8847563117212718005CA201 /* RNBlurModalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNBlurModalView.h; sourceTree = "<group>"; };
 		8847563217212718005CA201 /* RNBlurModalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNBlurModalView.m; sourceTree = "<group>"; };
+		88491EB91921B4A400CAF0A2 /* LXAnouncementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXAnouncementViewController.h; sourceTree = "<group>"; };
+		88491EBA1921B4A400CAF0A2 /* LXAnouncementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXAnouncementViewController.m; sourceTree = "<group>"; };
+		88491EC01921BD1700CAF0A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		88491EC21921BD2100CAF0A2 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
+		88491EC31921BD2700CAF0A2 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
 		884ACB0A18EE7D7500B2924B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Authentication.storyboard; sourceTree = "<group>"; };
 		884ACB0B18EE7D7600B2924B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Camera.storyboard; sourceTree = "<group>"; };
 		884ACB0C18EE7D7600B2924B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Component.storyboard; sourceTree = "<group>"; };
 		884ACB0D18EE7D7600B2924B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Gallery.storyboard; sourceTree = "<group>"; };
-		884ACB0E18EE7D7600B2924B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		884ACB0F18EE7D7600B2924B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Setting.storyboard; sourceTree = "<group>"; };
 		884ACB1018EE7D9000B2924B /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Authentication.strings; sourceTree = "<group>"; };
 		884ACB1118EE7D9500B2924B /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Authentication.strings; sourceTree = "<group>"; };
@@ -2745,8 +2742,6 @@
 		884ACB1518EE7DAF00B2924B /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Component.strings; sourceTree = "<group>"; };
 		884ACB1618EE7DB500B2924B /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Gallery.strings; sourceTree = "<group>"; };
 		884ACB1718EE7DB900B2924B /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Gallery.strings; sourceTree = "<group>"; };
-		884ACB1818EE7DC300B2924B /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
-		884ACB1918EE7DC800B2924B /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
 		884ACB1A18EE7DCD00B2924B /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Setting.strings; sourceTree = "<group>"; };
 		884ACB1B18EE7DD000B2924B /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Setting.strings; sourceTree = "<group>"; };
 		884ACB1C18EEB4C000B2924B /* LXStreamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXStreamViewController.h; sourceTree = "<group>"; };
@@ -3249,10 +3244,6 @@
 		8890728416770EBB0013DF7A /* LXTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXTextField.m; sourceTree = "<group>"; };
 		8890728516770EBB0013DF7A /* LXDrawView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXDrawView.h; sourceTree = "<group>"; };
 		8890728616770EBB0013DF7A /* LXDrawView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXDrawView.m; sourceTree = "<group>"; };
-		8890728B16770EBB0013DF7A /* UIButton+AsyncImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+AsyncImage.h"; sourceTree = "<group>"; };
-		8890728C16770EBB0013DF7A /* UIButton+AsyncImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+AsyncImage.m"; sourceTree = "<group>"; };
-		8890728D16770EBB0013DF7A /* UIImageView+loadProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+loadProgress.h"; sourceTree = "<group>"; };
-		8890728E16770EBB0013DF7A /* UIImageView+loadProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+loadProgress.m"; sourceTree = "<group>"; };
 		8890729816770EBB0013DF7A /* LatteAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LatteAPIClient.h; sourceTree = "<group>"; };
 		8890729916770EBB0013DF7A /* LatteAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LatteAPIClient.m; sourceTree = "<group>"; };
 		8890729E16770EBB0013DF7A /* LXFilterFish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFilterFish.h; sourceTree = "<group>"; };
@@ -3462,8 +3453,6 @@
 		88AAA2BF1769EC52007610BB /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
 		88AB7E1B16BB755E00040C00 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		88B08D4315D369EC003CB0D3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		88B37BEC16E710DD00AB682C /* LXPicCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXPicCommentViewController.h; sourceTree = "<group>"; };
-		88B37BED16E710DD00AB682C /* LXPicCommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXPicCommentViewController.m; sourceTree = "<group>"; };
 		88B37BF416E719B700AB682C /* LXVoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXVoteViewController.h; sourceTree = "<group>"; };
 		88B37BF516E719B700AB682C /* LXVoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXVoteViewController.m; sourceTree = "<group>"; };
 		88B3A3A916F39951002A6BDA /* LXUploadObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXUploadObject.h; sourceTree = "<group>"; };
@@ -3526,6 +3515,10 @@
 		88CE8A44174F102000C6A6B6 /* TextTemplate.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextTemplate.xib; sourceTree = "<group>"; };
 		88CE8A46174F375800C6A6B6 /* icon_save2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_save2@2x.png"; sourceTree = "<group>"; };
 		88CE8A48174F376B00C6A6B6 /* icon_save2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_save2.png; sourceTree = "<group>"; };
+		88D2DC1C1924A25A0027D88A /* UIButton+AsyncImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+AsyncImage.h"; sourceTree = "<group>"; };
+		88D2DC1D1924A25A0027D88A /* UIButton+AsyncImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+AsyncImage.m"; sourceTree = "<group>"; };
+		88D2DC1E1924A25A0027D88A /* UIImageView+loadProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+loadProgress.h"; sourceTree = "<group>"; };
+		88D2DC1F1924A25A0027D88A /* UIImageView+loadProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+loadProgress.m"; sourceTree = "<group>"; };
 		88D4B5D015D4B9F200FC4FBB /* Latte.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Latte.entitlements; sourceTree = "<group>"; };
 		88D86DC117CB41DD00EC62A2 /* box_share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box_share.png; sourceTree = "<group>"; };
 		88D86DC217CB41DD00EC62A2 /* box_share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "box_share@2x.png"; sourceTree = "<group>"; };
@@ -3761,6 +3754,13 @@
 		88F5986B173908DA000BD186 /* icon_quick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_quick@2x.png"; sourceTree = "<group>"; };
 		88F621041724E6AE00CDD1EC /* LXFBOpenGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFBOpenGraph.h; sourceTree = "<group>"; };
 		88F621051724E6AE00CDD1EC /* LXFBOpenGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFBOpenGraph.m; sourceTree = "<group>"; };
+		88FB5C171921E1E20018F757 /* LXStreamHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LXStreamHeader.h; path = Classes/CustomControls/LXStreamHeader.h; sourceTree = SOURCE_ROOT; };
+		88FB5C181921E1E20018F757 /* LXStreamHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LXStreamHeader.m; path = Classes/CustomControls/LXStreamHeader.m; sourceTree = SOURCE_ROOT; };
+		88FB5C1D1921E2420018F757 /* LXStreamHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LXStreamHeader.xib; sourceTree = "<group>"; };
+		88FB5C1F192374720018F757 /* LXUserPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXUserPageViewController.h; sourceTree = "<group>"; };
+		88FB5C20192374720018F757 /* LXUserPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXUserPageViewController.m; sourceTree = "<group>"; };
+		88FB5C22192461A50018F757 /* LXPicCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXPicCommentViewController.h; sourceTree = "<group>"; };
+		88FB5C23192461A50018F757 /* LXPicCommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXPicCommentViewController.m; sourceTree = "<group>"; };
 		88FB7CCD1782A5480038B067 /* box_tag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box_tag.png; sourceTree = "<group>"; };
 		88FB7CCE1782A5480038B067 /* box_tag@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "box_tag@2x.png"; sourceTree = "<group>"; };
 		88FB7CD11782A5480038B067 /* seach_tag_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seach_tag_bg.png; sourceTree = "<group>"; };
@@ -4329,15 +4329,15 @@
 		8824FB4516F72CE700357ADB /* NIBs */ = {
 			isa = PBXGroup;
 			children = (
+				88491EBF1921BD1700CAF0A2 /* MainStoryboard.storyboard */,
 				8824FB4616F72CE700357ADB /* Authentication.storyboard */,
 				8824FB4816F72CE700357ADB /* Camera.storyboard */,
 				8824FB4A16F72CE700357ADB /* Component.storyboard */,
 				8824FB4C16F72CE700357ADB /* Gallery.storyboard */,
-				8824FB4E16F72CE700357ADB /* MainStoryboard.storyboard */,
 				8824FB5016F72CE700357ADB /* Setting.storyboard */,
-				8824FB6216F72CE700357ADB /* LXUserNavButton.xib */,
 				8824FB6316F72CE700357ADB /* LXZoomPictureViewController.xib */,
 				88CE8A44174F102000C6A6B6 /* TextTemplate.xib */,
+				88FB5C1D1921E2420018F757 /* LXStreamHeader.xib */,
 			);
 			path = NIBs;
 			sourceTree = "<group>";
@@ -5121,6 +5121,8 @@
 			children = (
 				880E35A616A7BECA0097B97F /* LXAboutViewController.h */,
 				880E35A716A7BECA0097B97F /* LXAboutViewController.m */,
+				88491EB91921B4A400CAF0A2 /* LXAnouncementViewController.h */,
+				88491EBA1921B4A400CAF0A2 /* LXAnouncementViewController.m */,
 				8890723016770EBB0013DF7A /* LXCanvasViewController.h */,
 				8890723116770EBB0013DF7A /* LXCanvasViewController.m */,
 				880E50FE1728E50300D584EE /* LXCaptureViewController.h */,
@@ -5165,8 +5167,8 @@
 				8874DBC216E8BF3500FDF60B /* LXNavMypageController.m */,
 				8890724A16770EBB0013DF7A /* LXNotifySideViewController.h */,
 				8890724B16770EBB0013DF7A /* LXNotifySideViewController.m */,
-				88B37BEC16E710DD00AB682C /* LXPicCommentViewController.h */,
-				88B37BED16E710DD00AB682C /* LXPicCommentViewController.m */,
+				88FB5C22192461A50018F757 /* LXPicCommentViewController.h */,
+				88FB5C23192461A50018F757 /* LXPicCommentViewController.m */,
 				8835C77216E6EAED0036BF5E /* LXPicDetailTabViewController.h */,
 				8835C77316E6EAED0036BF5E /* LXPicDetailTabViewController.m */,
 				888F64B416FAD74400ED74BB /* LXPicDumbTabViewController.h */,
@@ -5211,6 +5213,8 @@
 				8883EED6173220E900AA2D5E /* LXTextTemplateViewController.m */,
 				88FB7CF41782DD590038B067 /* LXUploadStatusViewController.h */,
 				88FB7CF51782DD590038B067 /* LXUploadStatusViewController.m */,
+				88FB5C1F192374720018F757 /* LXUserPageViewController.h */,
+				88FB5C20192374720018F757 /* LXUserPageViewController.m */,
 				88B37BF416E719B700AB682C /* LXVoteViewController.h */,
 				88B37BF516E719B700AB682C /* LXVoteViewController.m */,
 				8890725216770EBB0013DF7A /* LXWelcomeViewController.h */,
@@ -5222,6 +5226,10 @@
 		8890725416770EBB0013DF7A /* CustomControls */ = {
 			isa = PBXGroup;
 			children = (
+				88D2DC1C1924A25A0027D88A /* UIButton+AsyncImage.h */,
+				88D2DC1D1924A25A0027D88A /* UIButton+AsyncImage.m */,
+				88D2DC1E1924A25A0027D88A /* UIImageView+loadProgress.h */,
+				88D2DC1F1924A25A0027D88A /* UIImageView+loadProgress.m */,
 				880120B816E5E7BF00B9E3D9 /* ALAssetsLibrary+CustomPhotoAlbum.h */,
 				880120B916E5E7BF00B9E3D9 /* ALAssetsLibrary+CustomPhotoAlbum.m */,
 				8890725516770EBB0013DF7A /* LXButtonBack.h */,
@@ -5278,28 +5286,20 @@
 				88C67F3917C5B324002A5D56 /* LXModalNavigationController.m */,
 				8890727B16770EBB0013DF7A /* LXNavBar.h */,
 				8890727C16770EBB0013DF7A /* LXNavBar.m */,
+				88FB5C171921E1E20018F757 /* LXStreamHeader.h */,
+				88FB5C181921E1E20018F757 /* LXStreamHeader.m */,
 				8890728316770EBB0013DF7A /* LXTextField.h */,
 				8890728416770EBB0013DF7A /* LXTextField.m */,
 				889093F516F88C4600E98DF4 /* LXTextView.h */,
 				889093F616F88C4700E98DF4 /* LXTextView.m */,
 				8890728016770EBB0013DF7A /* LXTimelineMultiItemViewController.h */,
 				8890728116770EBB0013DF7A /* LXTimelineMultiItemViewController.m */,
-				8824FB0016F72A5F00357ADB /* LXUserNavButton.h */,
-				8824FB0116F72A5F00357ADB /* LXUserNavButton.m */,
-				8824FB0216F72A6000357ADB /* LXViewHeaderMypage.h */,
-				8824FB0316F72A6100357ADB /* LXViewHeaderMypage.m */,
-				8824FB0416F72A6300357ADB /* LXViewHeaderUserPage.h */,
-				8824FB0516F72A6500357ADB /* LXViewHeaderUserPage.m */,
 				8824FB0616F72A6800357ADB /* LXZoomPictureViewController.h */,
 				8824FB0716F72A6B00357ADB /* LXZoomPictureViewController.m */,
 				8866D66316EA00C000CAE6E5 /* SideSwipeTableViewCell.h */,
 				8866D66416EA00C000CAE6E5 /* SideSwipeTableViewCell.m */,
 				8866D66516EA00C000CAE6E5 /* SideSwipeTableViewController.h */,
 				8866D66616EA00C000CAE6E5 /* SideSwipeTableViewController.m */,
-				8890728B16770EBB0013DF7A /* UIButton+AsyncImage.h */,
-				8890728C16770EBB0013DF7A /* UIButton+AsyncImage.m */,
-				8890728D16770EBB0013DF7A /* UIImageView+loadProgress.h */,
-				8890728E16770EBB0013DF7A /* UIImageView+loadProgress.m */,
 			);
 			path = CustomControls;
 			sourceTree = "<group>";
@@ -6860,6 +6860,7 @@
 				88FE41C8166C93D7004DCE53 /* bg_camera_bottom.png in Resources */,
 				88FE41C9166C93D7004DCE53 /* bg_camera_bottom@2x.png in Resources */,
 				88FE41CA166C93D7004DCE53 /* bg_camera_bt.png in Resources */,
+				88FB5C1E1921E2420018F757 /* LXStreamHeader.xib in Resources */,
 				88FE41CB166C93D7004DCE53 /* bg_camera_bt2.png in Resources */,
 				88FE41CC166C93D7004DCE53 /* bg_camera_bt2@2x.png in Resources */,
 				88FE41CD166C93D7004DCE53 /* bg_camera_bt2_on.png in Resources */,
@@ -7307,9 +7308,7 @@
 				8824FB6D16F72CE700357ADB /* Camera.storyboard in Resources */,
 				8824FB6E16F72CE700357ADB /* Component.storyboard in Resources */,
 				8824FB6F16F72CE700357ADB /* Gallery.storyboard in Resources */,
-				8824FB7016F72CE700357ADB /* MainStoryboard.storyboard in Resources */,
 				8824FB7116F72CE700357ADB /* Setting.storyboard in Resources */,
-				8824FB7A16F72CE700357ADB /* LXUserNavButton.xib in Resources */,
 				8824FB7B16F72CE700357ADB /* LXZoomPictureViewController.xib in Resources */,
 				8824FB8216F731B600357ADB /* icon_follow_m2_off.png in Resources */,
 				8824FB8316F731B600357ADB /* icon_follow_m2_off@2x.png in Resources */,
@@ -7533,6 +7532,7 @@
 				88327752170173690053C8A2 /* FM@2x.png in Resources */,
 				88327753170173690053C8A2 /* FO.png in Resources */,
 				88327754170173690053C8A2 /* FO@2x.png in Resources */,
+				88491EC11921BD1700CAF0A2 /* MainStoryboard.storyboard in Resources */,
 				88327755170173690053C8A2 /* FR.png in Resources */,
 				88327756170173690053C8A2 /* FR@2x.png in Resources */,
 				88327757170173690053C8A2 /* GA.png in Resources */,
@@ -8601,8 +8601,6 @@
 				889072E816770EBB0013DF7A /* LXDrawView.m in Sources */,
 				88120B0418F63233000BFB5E /* UIWebView+AFNetworking.m in Sources */,
 				88120B0118F63233000BFB5E /* UIImageView+AFNetworking.m in Sources */,
-				889072EB16770EBB0013DF7A /* UIButton+AsyncImage.m in Sources */,
-				889072EC16770EBB0013DF7A /* UIImageView+loadProgress.m in Sources */,
 				889072F116770EBB0013DF7A /* LatteAPIClient.m in Sources */,
 				889072F416770EBB0013DF7A /* LXFilterFish.m in Sources */,
 				889072F616770EBB0013DF7A /* UIActionSheet+ButtonState.m in Sources */,
@@ -8619,7 +8617,9 @@
 				8884E40616A8EB5700DCBAC7 /* DEComposeTextView.m in Sources */,
 				8884E40716A8EB5700DCBAC7 /* REComposeBackgroundView.m in Sources */,
 				8884E40816A8EB5700DCBAC7 /* REComposeSheetView.m in Sources */,
+				88D2DC211924A25A0027D88A /* UIImageView+loadProgress.m in Sources */,
 				8884E40A16A8EB5700DCBAC7 /* REComposeViewController.m in Sources */,
+				88491EBB1921B4A400CAF0A2 /* LXAnouncementViewController.m in Sources */,
 				8884E42D16A8EB6C00DCBAC7 /* RDActionSheet.m in Sources */,
 				8884E45916A9012E00DCBAC7 /* LXShare.m in Sources */,
 				884C54D516B22EF500DA318E /* LXHelpBokehViewController.m in Sources */,
@@ -8631,7 +8631,6 @@
 				88A5F41816E11D8B00118996 /* LXSettingRootViewController.m in Sources */,
 				88F0075016E4A29B0071369C /* LXSettingNotifyViewController.m in Sources */,
 				8835C77416E6EAED0036BF5E /* LXPicDetailTabViewController.m in Sources */,
-				88B37BEE16E710DD00AB682C /* LXPicCommentViewController.m in Sources */,
 				88B37BF616E719B700AB682C /* LXVoteViewController.m in Sources */,
 				8874DBC316E8BF3600FDF60B /* LXNavMypageController.m in Sources */,
 				8874DBD216E8C58200FDF60B /* LXNavGalleryViewController.m in Sources */,
@@ -8645,15 +8644,13 @@
 				8818861116F1F039009A9266 /* LXCellSearchUser.m in Sources */,
 				88B3A3AB16F39951002A6BDA /* LXUploadObject.m in Sources */,
 				8824FAD916F6DD6C00357ADB /* LXCellUpload.m in Sources */,
-				8824FB0816F72A6E00357ADB /* LXUserNavButton.m in Sources */,
-				8824FB0916F72A6E00357ADB /* LXViewHeaderMypage.m in Sources */,
-				8824FB0A16F72A6E00357ADB /* LXViewHeaderUserPage.m in Sources */,
 				8824FB0B16F72A6E00357ADB /* LXZoomPictureViewController.m in Sources */,
 				889093EF16F8714C00E98DF4 /* LXNavigationController.m in Sources */,
 				88120ABD18F63233000BFB5E /* AFURLResponseSerialization.m in Sources */,
 				889093F716F88C4700E98DF4 /* LXTextView.m in Sources */,
 				888F64B616FAD74500ED74BB /* LXPicDumbTabViewController.m in Sources */,
 				888F64B916FAD8D800ED74BB /* LXCellTag.m in Sources */,
+				88FB5C191921E1E20018F757 /* LXStreamHeader.m in Sources */,
 				888F64BC16FB2BB500ED74BB /* LXCellInfoTag.m in Sources */,
 				888F651316FBFB8F00ED74BB /* LXLeftSideUserViewController.m in Sources */,
 				888F651616FC09E100ED74BB /* LXLeftGuestViewController.m in Sources */,
@@ -8671,6 +8668,7 @@
 				8835FCC8171CE31900A48346 /* LXCellGridUser.m in Sources */,
 				8847564217212718005CA201 /* RNBlurModalView.m in Sources */,
 				88F621061724E6AE00CDD1EC /* LXFBOpenGraph.m in Sources */,
+				88FB5C24192461A50018F757 /* LXPicCommentViewController.m in Sources */,
 				880E50EF1728C30800D584EE /* HFImageEditorFrameView.m in Sources */,
 				880E50F01728C30800D584EE /* HFImageEditorViewController.m in Sources */,
 				880E51001728E50400D584EE /* LXCaptureViewController.m in Sources */,
@@ -8703,12 +8701,14 @@
 				88120AFE18F63233000BFB5E /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				88FB7CF61782DD590038B067 /* LXUploadStatusViewController.m in Sources */,
 				88979100179FD64B00BDC803 /* LXFAQViewController.m in Sources */,
+				88FB5C21192374720018F757 /* LXUserPageViewController.m in Sources */,
 				8837734617A90A5E005B0826 /* LXSettingAccountController.m in Sources */,
 				8837736517AA5AD9005B0826 /* LXTableConfirmEmailController.m in Sources */,
 				8837736817AA7B20005B0826 /* LXChangePasswordViewController.m in Sources */,
 				8837736B17AA81A5005B0826 /* LXChangeEmailViewController.m in Sources */,
 				88120ABE18F63233000BFB5E /* AFURLSessionManager.m in Sources */,
 				88120AB718F63233000BFB5E /* AFHTTPRequestOperationManager.m in Sources */,
+				88D2DC201924A25A0027D88A /* UIButton+AsyncImage.m in Sources */,
 				8837738517AF9C50005B0826 /* LXReportAbuseViewController.m in Sources */,
 				8837738817B0C164005B0826 /* LXEmailConfirmPopupController.m in Sources */,
 				88C67F3A17C5B324002A5D56 /* LXModalNavigationController.m in Sources */,
@@ -8773,16 +8773,6 @@
 			name = Gallery.storyboard;
 			sourceTree = "<group>";
 		};
-		8824FB4E16F72CE700357ADB /* MainStoryboard.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				884ACB0E18EE7D7600B2924B /* Base */,
-				884ACB1818EE7DC300B2924B /* ja */,
-				884ACB1918EE7DC800B2924B /* vi */,
-			);
-			name = MainStoryboard.storyboard;
-			sourceTree = "<group>";
-		};
 		8824FB5016F72CE700357ADB /* Setting.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -8811,6 +8801,16 @@
 				8824FBB416F7643E00357ADB /* vi */,
 			);
 			name = settingprofile.json;
+			sourceTree = "<group>";
+		};
+		88491EBF1921BD1700CAF0A2 /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				88491EC01921BD1700CAF0A2 /* Base */,
+				88491EC21921BD2100CAF0A2 /* ja */,
+				88491EC31921BD2700CAF0A2 /* vi */,
+			);
+			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";
 		};
 		887379C01758CC3500C1549B /* fonts.plist */ = {

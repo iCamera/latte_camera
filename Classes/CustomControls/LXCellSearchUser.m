@@ -9,7 +9,7 @@
 #import "LXCellSearchUser.h"
 #import "UIButton+AsyncImage.h"
 #import "LXAppDelegate.h"
-#import "LXMyPageViewController.h"
+#import "LXUserPageViewController.h"
 
 @implementation LXCellSearchUser
 
@@ -125,8 +125,7 @@
 - (void)showUser {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
-    LXMyPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
-    viewUserPage.user = _user;
+    LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
     [_parentNav pushViewController:viewUserPage animated:YES];
 
 }

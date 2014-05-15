@@ -13,11 +13,10 @@
 #import "LXMainTabViewController.h"
 #import "LXAppDelegate.h"
 #import "LXAboutViewController.h"
-#import "LXMyPageViewController.h"
+#import "LXUserPageViewController.h"
 #import "LXNavMypageController.h"
 #import "LXUploadStatusViewController.h"
 #import "LXUploadObject.h"
-#import "MBProgressHUD.h"
 #import "LXTableConfirmEmailController.h"
 #import "LXImagePickerController.h"
 
@@ -33,7 +32,6 @@
     UIButton *buttonUploadStatus;
     MBRoundProgressView *hudUpload;
     
-    UINavigationController *navTop;
     UINavigationController *navRank;
     UINavigationController *navSearch;
 }
@@ -82,10 +80,6 @@
     // Init View
     UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     viewUpload = [storyMain instantiateViewControllerWithIdentifier:@"UploadStatus"];
-    navTop = [storyMain instantiateViewControllerWithIdentifier:@"NavigationTop"];
-    navRank = [storyMain instantiateViewControllerWithIdentifier:@"NavigationRank"];
-    navSearch = [storyMain instantiateViewControllerWithIdentifier:@"NavigationSearch"];
-
     self.delegate = self;
     // Tab style
 //    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
@@ -169,9 +163,6 @@
 }
 
 - (void)showNotify {
-
-    
-    
     [[LatteAPIClient sharedClient] GET:@"user/me/unread_announcement"
                                 parameters: nil
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -223,9 +214,6 @@
     }
 }
 
-//- (void)imagePickerController:(LXCanvasViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info {
-//    [picker performSegueWithIdentifier:@"Edit" sender:info];
-//}
 
 - (void)didReceiveMemoryWarning
 {
@@ -240,7 +228,7 @@
 
 - (void)setGuest {
     LXNavMypageController *navMypage = self.viewControllers[4];
-    navMypage.tabBarItem.image = [UIImage imageNamed:@"icon_login.png"];    
+//    navMypage.tabBarItem.image = [UIImage imageNamed:@"icon_login.png"];    
     UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"Authentication" bundle:nil];
     UIViewController *viewLogin = [storyMain instantiateViewControllerWithIdentifier:@"Login"];
     
@@ -249,9 +237,9 @@
 
 - (void)setUser {
     LXNavMypageController *navMypage = self.viewControllers[4];
-    navMypage.tabBarItem.image = [UIImage imageNamed:@"icon_mypage.png"];
+//    navMypage.tabBarItem.image = [UIImage imageNamed:@"icon_mypage.png"];
     UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    UIViewController *viewMypage = [storyMain instantiateViewControllerWithIdentifier:@"UserPage"];
+    UIViewController *viewMypage = [storyMain instantiateViewControllerWithIdentifier:@"Home"];
     navMypage.viewControllers = [NSArray arrayWithObject:viewMypage];
 }
 
@@ -271,7 +259,7 @@
     UINavigationController *nav = (id)self.selectedViewController;
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
-    LXMyPageViewController *viewUser = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    LXUserPageViewController *viewUser = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
     User *user = notify.object;
     viewUser.user = user;
     [nav pushViewController:viewUser animated:YES];

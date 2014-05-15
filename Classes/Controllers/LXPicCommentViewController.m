@@ -10,7 +10,7 @@
 
 #import "LXCellComment.h"
 #import "LXAppDelegate.h"
-#import "LXMyPageViewController.h"
+#import "LXUserPageViewController.h"
 //#import "SideSwipeTableViewCell.h"
 #import "LXCommentControllViewController.h"
 #import "LXButtonBack.h"
@@ -245,7 +245,7 @@
 - (void)showUser:(UIButton *)sender {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
-    LXMyPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
     Comment *comment = _comments[sender.tag];
     viewUserPage.user = comment.user;
     [self.navigationController pushViewController:viewUserPage animated:YES];

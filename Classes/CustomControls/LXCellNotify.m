@@ -40,13 +40,6 @@
     labelDate.text = [LXUtils timeDeltaFromNow:updatedAt];
     labelNotify.text = [LXUtils stringFromNotify:notify];
     
-    CGRect frame = labelNotify.frame;
-    CGSize labelSize = [labelNotify.text sizeWithFont:labelNotify.font
-                                     constrainedToSize:CGSizeMake(215.0, MAXFLOAT)
-                                         lineBreakMode:NSLineBreakByWordWrapping];
-    frame.size.height = labelSize.height;
-    labelNotify.frame = frame;
-    
     if (target) {
         NotifyTarget notifyTarget = [[notify objectForKey:@"target_model"] integerValue];
         switch (notifyTarget) {
@@ -74,13 +67,7 @@
         }
     }
     NSNumber *read = notify[@"read"];
-    if ([read boolValue]) {
-//        self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg_menu_on.png"]];
-    } else {
-//        self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg_menu.png"]];
-    }
-    
-//    [self setSelectedBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg_menu_on.png"]]];
+    self.highlighted = ![read boolValue];
 }
 
 @end

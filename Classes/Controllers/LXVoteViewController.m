@@ -8,7 +8,7 @@
 
 #import "LXVoteViewController.h"
 #import "LXAppDelegate.h"
-#import "LXMyPageViewController.h"
+#import "LXUserPageViewController.h"
 #import "LXButtonBack.h"
 #import "LXCellGridUser.h"
 
@@ -71,7 +71,7 @@
                                                labelGuestVote.textColor = [UIColor colorWithRed:187.0/255.0 green:184.0/255.0 blue:169.0/255.0 alpha:1];
                                                labelGuestVote.textAlignment = NSTextAlignmentCenter;
                                                labelGuestVote.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:20];
-                                               labelGuestVote.text = [NSString stringWithFormat:@"+%d", guestVoteCount];
+                                               labelGuestVote.text = [NSString stringWithFormat:@"+%ld", guestVoteCount];
                                            } else {
 
                                            }
@@ -105,7 +105,7 @@
 - (void)showUser:(UIButton*)sender {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
-    LXMyPageViewController *viewUser = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    LXUserPageViewController *viewUser = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
     viewUser.user = voters[sender.tag];
     
     [self.navigationController pushViewController:viewUser animated:YES];

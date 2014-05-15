@@ -9,7 +9,7 @@
 #import "LXFacebookFriendViewController.h"
 #import "LXAppDelegate.h"
 #import "LXCellFacebook.h"
-#import "LXMyPageViewController.h"
+#import "LXUserPageViewController.h"
 #import "LXButtonBack.h"
 
 @interface LXFacebookFriendViewController ()
@@ -144,7 +144,7 @@
 - (void)showUser:(User*)user {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
-    LXMyPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
     viewUserPage.user = user;
     [self.navigationController pushViewController:viewUserPage animated:YES];
 }

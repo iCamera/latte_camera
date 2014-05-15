@@ -20,6 +20,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *labelUsername;
 @property (strong, nonatomic) IBOutlet UILabel *labelView;
 @property (strong, nonatomic) IBOutlet UIView *viewBg;
+@property (strong, nonatomic) IBOutlet UIImageView *imagePicture;
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonPicture;
 - (IBAction)touchPicture:(UIButton *)sender;

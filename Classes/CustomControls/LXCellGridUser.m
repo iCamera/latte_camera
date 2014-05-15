@@ -8,7 +8,7 @@
 
 #import "LXCellGridUser.h"
 #import "User.h"
-#import "UIButton+AsyncImage.h"
+#import "UIButton+AFNetworking.h"
 #import "LXUtils.h"
 
 @implementation LXCellGridUser
@@ -46,7 +46,7 @@
         UIView *viewWrap = [[UIView alloc] initWithFrame:CGRectMake(6 + 64*i, 3, 50, 50)];
         UIButton *button = [[UIButton alloc] initWithFrame:viewWrap.bounds];
         
-        [button loadBackground:user.profilePicture placeholderImage:@"user.gif"];
+        [button setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
         
         button.tag = index;
         [button addTarget:_viewController action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];

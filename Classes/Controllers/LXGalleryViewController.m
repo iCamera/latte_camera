@@ -425,7 +425,7 @@
     labelLike.text = [currentPage.picture.voteCount stringValue];
     
     // Increase counter
-    NSString *urlCounter = [NSString stringWithFormat:@"picture/counter/%d/%d",
+    NSString *urlCounter = [NSString stringWithFormat:@"picture/counter/%ld/%ld",
                      [currentPage.picture.pictureId integerValue],
                      [currentPage.picture.userId integerValue]];
     
@@ -523,7 +523,7 @@
     if (viewPicTab.picture.comments) {
         viewPicTab.viewComment.comments = viewPicTab.picture.comments;
     } else {
-        NSString *urlDetail = [NSString stringWithFormat:@"picture/%d", [currentPage.picture.pictureId integerValue]];
+        NSString *urlDetail = [NSString stringWithFormat:@"picture/%ld", [currentPage.picture.pictureId integerValue]];
         [viewPicTab.viewComment.activityLoad startAnimating];
         viewPicTab.viewComment.tableView.tableFooterView = viewPicTab.viewComment.viewFooter;
         [[LatteAPIClient sharedClient] GET:urlDetail

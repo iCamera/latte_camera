@@ -7,9 +7,8 @@
 //
 
 #import "LXZoomPictureViewController.h"
-#import "UIImageView+loadProgress.h"
 #import "UIImageView+AFNetworking.h"
-#import "UIButton+AsyncImage.h"
+#import "UIButton+AFNetworking.h"
 #import "Picture.h"
 
 @interface LXZoomPictureViewController ()
@@ -56,7 +55,7 @@
     
     actualScale = MAX(orgWidth/screenWidth, orgHeight/screenHeight)*2.0;
 
-    [imageZoom loadProgess:_picture.urlMedium];
+    [imageZoom setImageWithURL:[NSURL URLWithString:_picture.urlMedium]];
 
     zoomLevel = [[NSMutableArray alloc]init];
     

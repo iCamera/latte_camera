@@ -11,9 +11,8 @@
 #import "LXAppDelegate.h"
 #import "LatteAPIClient.h"
 #import "LXCellNotify.h"
-#import "UIButton+AsyncImage.h"
 #import "LXGalleryViewController.h"
-#import "LXMyPageViewController.h"
+#import "LXUserPageViewController.h"
 #import "Comment.h"
 #import "User.h"
 #import "Picture.h"
@@ -34,10 +33,6 @@
     
     AFHTTPRequestOperation *currentRequest;
 }
-
-@synthesize buttonAnnounce;
-@synthesize webAnnounce;
-
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -66,13 +61,13 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive:) name:@"BecomeActive" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive:) name:@"ReceivedPushNotify" object:nil];
     
+    // This will remove extra separators from tableview
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
     // Do any additional setup after loading the view from its nib.
     loadEnded = false;
 
     limit = 30;
-    currentTab = 0;
-    
-    [self reloadView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -97,7 +92,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == notifies.count) {
-        [self loadNotify:NO];
+        [self loadNotify:NO setRead:NO];
         UITableViewCell* cellNotify = [tableView dequeueReusableCellWithIdentifier:@"Load" forIndexPath:indexPath];
         return cellNotify;
     }
@@ -110,17 +105,19 @@
 
 - (void)reloadView {
     
-    [self loadNotify:YES];
+    [self loadNotify:YES setRead:NO];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
+    [self loadNotify:YES setRead:YES];
+    
     self.tabBarItem.badgeValue = nil;
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 }
 
-- (void)loadNotify:(BOOL)reset {
+- (void)loadNotify:(BOOL)reset setRead:(BOOL)setRead {
     if (reset) {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         
@@ -148,8 +145,10 @@
                                              loadEnded = newData.count == 0;
                                              
                                              if (reset) {
-                                                 // Reset count
-                                                 [[LatteAPIClient sharedClient] POST:@"user/me/read_notify" parameters:nil success:nil failure:nil];
+                                                 if (setRead) {
+                                                     // Reset count
+                                                     [[LatteAPIClient sharedClient] POST:@"user/me/read_notify" parameters:nil success:nil failure:nil];
+                                                 }
                                                  
                                                  notifies = [NSMutableArray arrayWithArray:newData];
                                                  [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -161,19 +160,17 @@
 
                                              [self.refreshControl endRefreshing];
                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                             loadEnded = true;
+                                             [self.tableView reloadData];
                                              if (reset) {
                                                  [MBProgressHUD hideHUDForView:self.view animated:YES];
                                              }
+                                             [self.refreshControl endRefreshing];
                                          }];
 }
 
 - (void)receiveLoggedIn:(NSNotification *) notification {
     [self reloadView];
-}
-
-- (void)receiveLoggedOut:(NSNotification *)notification {
-    notifies = nil;
-    [self.tableView reloadData];
 }
 
 - (void)becomeActive:(NSNotification *) notification {
@@ -199,7 +196,7 @@
             Comment *comment = [Comment instanceFromDictionary:[notify objectForKey:@"target"]];
             
             if (comment.pictureId != nil) {
-                NSString *urlDetail = [NSString stringWithFormat:@"picture/%d", [comment.pictureId integerValue]];
+                NSString *urlDetail = [NSString stringWithFormat:@"picture/%ld", [comment.pictureId longValue]];
                 MBProgressHUD *hud = [[MBProgressHUD alloc]initWithView:self.view];
 
                 hud.mode = MBProgressHUDModeIndeterminate;
@@ -248,7 +245,7 @@
             
             UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                                    bundle:nil];
-            LXMyPageViewController  *viewMypage = [storyGallery instantiateViewControllerWithIdentifier:@"UserPage"];
+            LXUserPageViewController  *viewMypage = [storyGallery instantiateViewControllerWithIdentifier:@"UserPage"];
             viewMypage.user = user;
             [currentNav pushViewController:viewMypage animated:YES];
             break;
@@ -261,43 +258,11 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 45;
-    NSString *stringNotify = [LXUtils stringFromNotify:notifies[indexPath.row]];
-    
-    CGSize labelSize = [stringNotify sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:11]
-                                constrainedToSize:CGSizeMake(255.0, MAXFLOAT)
-                                    lineBreakMode:NSLineBreakByWordWrapping];
-    
-    return labelSize.height + 26;
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
-    CGPoint offset = aScrollView.contentOffset;
-    CGRect bounds = aScrollView.bounds;
-    CGSize size = aScrollView.contentSize;
-    UIEdgeInsets inset = aScrollView.contentInset;
-    float y = offset.y + bounds.size.height - inset.bottom;
-    float h = size.height;
-    
-    float reload_distance = -100;
-    if(y > h + reload_distance) {
-        [self loadNotify:NO];
-    }
 }
 
 - (IBAction)switchTab:(UISegmentedControl *)sender {
     currentTab = sender.selectedSegmentIndex;
     [self reloadView];
-}
-
-- (IBAction)touchInfo:(id)sender {
-    webAnnounce.hidden = NO;
-    //tableNotify.hidden = YES;
-    LatteAPIClient *api = [LatteAPIClient sharedClient];
-    NSURLRequest* request = [api.requestSerializer requestWithMethod:@"GET"
-                                                           URLString:[[NSURL URLWithString:@"user/announce" relativeToURL:api.baseURL] absoluteString]
-                                                          parameters:nil
-                                                               error:nil];
-    [webAnnounce loadRequest:request];
 }
 
 - (IBAction)refresh:(id)sender {

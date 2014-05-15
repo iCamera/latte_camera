@@ -29,10 +29,6 @@
         NSString *filename = [NSString stringWithFormat:@"%@.png", [user.nationality uppercaseString]];
         imageNationality.image = [UIImage imageNamed:filename];
         imageNationality.hidden = false;
-        CGRect frame = imageNationality.frame;
-        CGSize size = [label.text sizeWithFont:label.font];
-        frame.origin.x = label.frame.origin.x + size.width + 5;
-        imageNationality.frame = frame;
     } else {
         imageNationality.hidden = true;
     }
@@ -83,7 +79,7 @@
     }
     
     
-    NSString *url = [NSString stringWithFormat:@"picture/%d/vote_post", [pic.pictureId integerValue]];
+    NSString *url = [NSString stringWithFormat:@"picture/%ld/vote_post", [pic.pictureId integerValue]];
     [[LatteAPIClient sharedClient] POST:url
                                  parameters:param
                                     success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {

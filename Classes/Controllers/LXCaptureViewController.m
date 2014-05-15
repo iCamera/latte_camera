@@ -457,7 +457,7 @@ typedef enum {
         MBProgressHUD *count = [[MBProgressHUD alloc] initWithView:self.view];
         [self.view addSubview:count];
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
-        label.text = [NSString stringWithFormat:@"%d", timerCount];
+        label.text = [NSString stringWithFormat:@"%ld", timerCount];
         label.textColor = [UIColor whiteColor];
         label.backgroundColor = [UIColor clearColor];
         label.font = [UIFont systemFontOfSize:100];

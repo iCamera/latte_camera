@@ -12,10 +12,10 @@
 #import "Picture.h"
 #import "LXCellRankLv1.h"
 #import "LXCellRankLv2.h"
-#import "UIButton+AsyncImage.h"
+#import "UIButton+AFNetworking.h"
 #import "LXUtils.h"
 #import "LatteAPIClient.h"
-#import "LXMyPageViewController.h"
+#import "LXUserPageViewController.h"
 
 
 typedef enum {
@@ -30,7 +30,7 @@ typedef enum {
 @implementation LXRankingViewController {
     BOOL loadEnded;
     NSString* ranktype;
-    NSInteger rankpage;
+    int rankpage;
     NSMutableArray *pics;
     NSMutableArray *days;
     NSInteger rankLayout;
@@ -204,7 +204,7 @@ typedef enum {
 }
 
 - (void)loadRanking {
-    NSString* url = [NSString stringWithFormat:@"picture/ranking/%@/%d", ranktype, rankpage];
+    NSString* url = [NSString stringWithFormat:@"picture/ranking/%@/%ld", ranktype, rankpage];
     
     [loadIndicator startAnimating];
     loadEnded = false;
@@ -232,7 +232,7 @@ typedef enum {
 
 - (void)loadMoreNormal {
     rankpage += 1;
-    NSString* url = [NSString stringWithFormat:@"picture/ranking/%@/%d", ranktype, rankpage];
+    NSString* url = [NSString stringWithFormat:@"picture/ranking/%@/%ld", ranktype, rankpage];
     
     [loadIndicator startAnimating];
     
@@ -252,7 +252,7 @@ typedef enum {
                                        if (newPics.count == 0)
                                            loadEnded = true;
                                        else {
-                                           int newRows = [self tableView:self.tableView numberOfRowsInSection:0] - rowCountPrev;
+                                           NSInteger newRows = [self tableView:self.tableView numberOfRowsInSection:0] - rowCountPrev;
                                            NSMutableArray *paths = [[NSMutableArray alloc] init];
                                            for (int i = 0; i < newRows ; i++) {
                                                [paths addObject:[NSIndexPath indexPathForRow:i+rowCountPrev inSection:0]];
@@ -364,7 +364,8 @@ typedef enum {
             cellLv1.buttonPic1.frame = frame;
             [cellLv1.buttonPic1 addTarget:self action:@selector(didSelectPic:) forControlEvents:UIControlEventTouchUpInside];
             
-            [cellLv1.buttonPic1 loadBackground:pic.urlMedium];
+            [cellLv1.buttonPic1 setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pic.urlMedium] placeholderImage:nil];
+
             cellLv1.buttonPic1.tag = [pic.pictureId integerValue];
             
             return cellLv1;
@@ -384,9 +385,10 @@ typedef enum {
             
             if (pics.count >= baseIdx + 2) {
                 Picture *pic = [pics objectAtIndex:baseIdx];
-                [cellLv2.buttonPic2 loadBackground:pic.urlSquare];
+                [cellLv2.buttonPic2 setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pic.urlSquare] placeholderImage:nil];
+                
                 cellLv2.buttonPic2.tag = [pic.pictureId integerValue];
-                cellLv2.label1st.text = [NSString stringWithFormat:@"%d", baseIdx+1];
+                cellLv2.label1st.text = [NSString stringWithFormat:@"%ld", baseIdx+1];
                 if (baseIdx == 1)
                     [cellLv2.imageBg1 setImage:[UIImage imageNamed:@"bg_rank2.png"]];
                 else
@@ -395,9 +397,10 @@ typedef enum {
             
             if (pics.count > baseIdx  + 3) {
                 Picture *pic = [pics objectAtIndex:baseIdx + 1];
-                [cellLv2.buttonPic3 loadBackground:pic.urlSquare];
+
+                [cellLv2.buttonPic3 setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pic.urlSquare] placeholderImage:nil];
                 cellLv2.buttonPic3.tag = [pic.pictureId integerValue];
-                cellLv2.label2nd.text = [NSString stringWithFormat:@"%d", baseIdx+2];
+                cellLv2.label2nd.text = [NSString stringWithFormat:@"%ld", baseIdx+2];
                 if (baseIdx == 2)
                     [cellLv2.imageBg2 setImage:[UIImage imageNamed:@"bg_rank3.png"]];
                 else
@@ -406,9 +409,9 @@ typedef enum {
             
             if (pics.count > baseIdx  + 4) {
                 Picture *pic = [pics objectAtIndex:baseIdx + 2];
-                [cellLv2.buttonPic4 loadBackground:pic.urlSquare];
+                [cellLv2.buttonPic4 setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pic.urlSquare] placeholderImage:nil];
                 cellLv2.buttonPic4.tag = [pic.pictureId integerValue];
-                cellLv2.label3rd.text = [NSString stringWithFormat:@"%d", baseIdx+3];
+                cellLv2.label3rd.text = [NSString stringWithFormat:@"%ld", baseIdx+3];
             }
             
             return cellLv2;
@@ -434,7 +437,7 @@ typedef enum {
             
             UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(6 + 104*i, 3, 100, 100)];
             
-            [button loadBackground:pic.urlSquare];
+            [button setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pic.urlSquare] placeholderImage:nil];
 
             button.layer.masksToBounds = YES;
             button.layer.cornerRadius = 2;
@@ -460,7 +463,7 @@ typedef enum {
 
 
 - (void)showPic:(UIButton *)sender {
-    Picture *pic = [[pics filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:[NSString stringWithFormat:@"pictureId == %d", sender.tag]]] lastObject];
+    Picture *pic = [[pics filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:[NSString stringWithFormat:@"pictureId == %ld", sender.tag]]] lastObject];
     
     UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                            bundle:nil];
@@ -545,7 +548,7 @@ typedef enum {
     UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
     LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
     viewGallery.delegate = self;
-    viewGallery.picture = [[pics filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:[NSString stringWithFormat:@"pictureId == %d", buttonImage.tag]]] lastObject];
+    viewGallery.picture = [[pics filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:[NSString stringWithFormat:@"pictureId == %ld", buttonImage.tag]]] lastObject];
     [self presentViewController:navGalerry animated:YES completion:nil];
 }
 
@@ -568,7 +571,7 @@ typedef enum {
 - (void)showUser:(User *)user fromGallery:(LXGalleryViewController *)gallery {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
-    LXMyPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
     viewUserPage.user = user;
     [self.navigationController pushViewController:viewUserPage animated:YES];
 }

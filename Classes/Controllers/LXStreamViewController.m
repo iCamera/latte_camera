@@ -11,7 +11,8 @@
 #import "Feed.h"
 #import "Picture.h"
 #import "LatteAPIClient.h"
-#import "LXMyPageViewController.h"
+#import "LXUserPageViewController.h"
+#import "LXStreamHeader.h"
 
 
 @interface LXStreamViewController ()
@@ -24,6 +25,7 @@
     BOOL loading;
     NSString *area;
     UIRefreshControl *refresh;
+    NSInteger currentTab;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -43,13 +45,13 @@
     layout.minimumColumnSpacing = 4;
     layout.minimumInteritemSpacing = 4;
     layout.sectionInset = UIEdgeInsetsMake(6, 6, 6, 6);
+    layout.headerHeight = 50;
     
-    refresh = [[UIRefreshControl alloc] init];
-    [refresh addTarget:self action:@selector(loadMore:) forControlEvents:UIControlEventValueChanged];
-    [self.collectionView addSubview:refresh];
-//    self.collectionView.alwaysBounceVertical = YES;
+    [self.collectionView registerNib:[UINib nibWithNibName:@"LXStreamHeader" bundle:nil] forSupplementaryViewOfKind:CHTCollectionElementKindSectionHeader withReuseIdentifier:@"Header"];
+    
     loadEnded = false;
     loading = false;
+    currentTab = 0;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(becomeActive:)
@@ -168,6 +170,29 @@
     return ret;
 }
 
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    if ([kind isEqualToString:CHTCollectionElementKindSectionHeader]) {
+        LXStreamHeader *header = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                          withReuseIdentifier:@"Header"
+                                                                 forIndexPath:indexPath];
+        [header.segmentView addTarget:self action:@selector(switchTab:) forControlEvents:UIControlEventValueChanged];
+        [header.buttonRefresh addTarget:self action:@selector(reloadView) forControlEvents:UIControlEventValueChanged];
+        return header;
+    }
+    
+    return nil;
+}
+
+- (void)switchTab:(UISegmentedControl *)sender {
+    currentTab = sender.selectedSegmentIndex;
+    if (currentTab == 0) {
+        ((CHTCollectionViewWaterfallLayout*)self.collectionView.collectionViewLayout).columnCount = 2;
+    } else {
+        ((CHTCollectionViewWaterfallLayout*)self.collectionView.collectionViewLayout).columnCount = 3;
+    }
+    [self.collectionView.collectionViewLayout invalidateLayout];
+}
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     Feed *feed = feeds[indexPath.item];
     LXStreamBrickCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Brick" forIndexPath:indexPath];
@@ -188,10 +213,14 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    Feed *feed = feeds[indexPath.item];
-    Picture *picture = feed.targets[0];
-    NSInteger height = [LXUtils heightFromWidth:152 width:[picture.width floatValue] height:[picture.height floatValue]];
-    return CGSizeMake(152, height);
+    if (currentTab == 1) {
+        return CGSizeMake(100, 100);
+    } else {
+        Feed *feed = feeds[indexPath.item];
+        Picture *picture = feed.targets[0];
+        NSInteger height = [LXUtils heightFromWidth:152 width:[picture.width floatValue] height:[picture.height floatValue]];
+        return CGSizeMake(152, height);
+    }
 }
 
 - (void)showPic:(UIButton*)sender {
@@ -212,14 +241,12 @@
 - (void)showUser:(User *)user fromGallery:(LXGalleryViewController *)gallery {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
-    LXMyPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
     viewUserPage.user = user;
     [self.navigationController pushViewController:viewUserPage animated:YES];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
-    //    [refreshHeaderView egoRefreshScrollViewDidScroll:aScrollView];
-    
     if (loadEnded)
         return;
     CGPoint offset = aScrollView.contentOffset;

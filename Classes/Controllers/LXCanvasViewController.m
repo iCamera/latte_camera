@@ -1168,7 +1168,7 @@
 }
 
 - (NSString*)getNewBlend:(UIButton *)sender {
-    NSInteger blendid;
+    int blendid;
     NSString *blend;
     switch (sender.tag) {
         case 0:

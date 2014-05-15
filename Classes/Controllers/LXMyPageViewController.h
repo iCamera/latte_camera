@@ -9,40 +9,14 @@
 #import <UIKit/UIKit.h>
 
 #import "LXGalleryViewController.h"
-#import "MBProgressHUD.h"
 #import "LXCanvasViewController.h"
-
-typedef enum {
-    kTableProfile = 1,
-    kTablePhoto = 2,
-    kTableFollower = 3,
-    kTableFollowings = 4,
-} MypageTableMode;
-
-typedef enum {
-    kPhotoTimeline,
-    kPhotoFriends,
-    kPhotoFollowing,
-    kPhotoMyphoto,
-    kPhotoCalendar,
-} MypagePhotoMode;
 
 @class User;
 
-@interface LXMyPageViewController : UITableViewController <MBProgressHUDDelegate, UIActionSheetDelegate, LXImagePickerDelegate, LXGalleryViewControllerDataSource>
+@interface LXMyPageViewController : UITableViewController <UIActionSheetDelegate, LXImagePickerDelegate, LXGalleryViewControllerDataSource>
 
-@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadIndicator;
-
-@property (strong, nonatomic) User *user;
-@property (assign, nonatomic) MypageTableMode tableMode;
-@property (strong, nonatomic) NSDate *currentMonth;
-
-- (void)touchTab:(MypageTableMode)mode;
-- (void)touchPhoto:(MypagePhotoMode)mode;
-
-- (void)touchSetProfilePic;
-- (void)expandHeader;
-- (void)collapseHeader;
+- (IBAction)switchTimeline:(UISegmentedControl*)sender;
 - (void)reloadView;
+- (IBAction)refresh:(id)sender;
 
 @end

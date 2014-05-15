@@ -8,7 +8,7 @@
 
 #import "LXWelcomeViewController.h"
 #import "LXAppDelegate.h"
-#import "LXMyPageViewController.h"
+#import "LXUserPageViewController.h"
 #import "LXPicInfoViewController.h"
 #import "LXPicCommentViewController.h"
 #import "LXPicMapViewController.h"
@@ -307,10 +307,21 @@ typedef enum {
 - (void)showUser:(UIButton*)sender {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
-    LXMyPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
     Feed *feed = feeds[sender.tag];
     viewUserPage.user = feed.user;
     [self.navigationController pushViewController:viewUserPage animated:YES];
+}
+
+- (void)showUser:(User *)user fromGallery:(LXGalleryViewController *)gallery {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    viewUserPage.user = user;
+    
+    [gallery dismissViewControllerAnimated:YES completion:^{
+        [self.navigationController pushViewController:viewUserPage animated:YES];
+    }];
 }
 
 

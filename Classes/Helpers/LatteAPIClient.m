@@ -94,7 +94,7 @@
     [self.requestSerializer setValue:[device platformString] forHTTPHeaderField:@"Latte-device"];
     [self.requestSerializer setValue:language forHTTPHeaderField:@"Latte-language"];
     [self.requestSerializer setValue:majorVersion forHTTPHeaderField:@"Latte-timezone"];
-    [self.requestSerializer setValue:[NSString stringWithFormat:@"%d", [timeZone secondsFromGMT]] forHTTPHeaderField:@"Latte-version"];
+    [self.requestSerializer setValue:[NSString stringWithFormat:@"%ld", [timeZone secondsFromGMT]] forHTTPHeaderField:@"Latte-version"];
     
     return self;
 }

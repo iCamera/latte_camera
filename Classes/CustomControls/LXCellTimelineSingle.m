@@ -13,6 +13,7 @@
 #import "LXAppDelegate.h"
 #import "LXShare.h"
 #import "RDActionSheet.h"
+#import "UIButton+AFNetworking.h"
 
 @implementation LXCellTimelineSingle {
     LXShare *lxShare;
@@ -54,6 +55,23 @@
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showDesc) name:@"TimelineShowDesc" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideDesc) name:@"TimelineHideDesc" object:nil];
+    }
+    return self;
+}
+
+- (void)awakeFromNib {
+    buttonUser.layer.cornerRadius = 15;
+    buttonUser.layer.shouldRasterize = YES;
+    buttonUser.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+    
+    [LXUtils globalShadow:viewBackground];
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
@@ -66,7 +84,7 @@
     
     Picture *pic = feed.targets[0];
 
-    [buttonPic loadBackground:pic.urlMedium];
+    [buttonPic setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pic.urlMedium] placeholderImage:nil];
         
     buttonPic.tag = [pic.pictureId integerValue];
     buttonLike.tag = [pic.pictureId integerValue];
@@ -94,8 +112,7 @@
         buttonMap.enabled = NO;
     }
     
-    
-    [buttonUser loadBackground:feed.user.profilePicture placeholderImage:@"user.gif"];
+    [buttonUser setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:feed.user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
 
     labelTitle.text = feed.user.name;
     labelUser.text = [LXUtils timeDeltaFromNow:feed.updatedAt];
@@ -122,51 +139,20 @@
     
     [LXUtils setNationalityOfUser:feed.user forImage:imageNationality nextToLabel:labelTitle];
     
-    labelDesc.text = pic.descriptionText;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showDesc) name:@"TimelineShowDesc" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideDesc) name:@"TimelineHideDesc" object:nil];
+    labelDesc.text = pic.descriptionText;
+    viewDesc.hidden = pic.descriptionText.length == 0;
+    
 
     [self increaseCounter];
 }
 
-- (void)layoutSubviews {
-    Picture *pic = _feed.targets[0];
-    
-    [super layoutSubviews];
-    
-    CGRect framePic = buttonPic.frame;
-    framePic.size.height = [LXUtils heightFromWidth:320 width:[pic.width floatValue] height:[pic.height floatValue]];
-    buttonPic.frame = framePic;
-    UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:buttonPic.bounds];
-    buttonPic.layer.masksToBounds = NO;
-    buttonPic.layer.shadowColor = [UIColor blackColor].CGColor;
-    buttonPic.layer.shadowOffset = CGSizeMake(0.0, 0.0);
-    buttonPic.layer.shadowOpacity = 0.5f;
-    buttonPic.layer.shadowRadius = 1.5f;
-    buttonPic.layer.shadowPath = shadowPathPic.CGPath;
-    
-    CGSize size = [pic.descriptionText sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0]
-                                  constrainedToSize:CGSizeMake(308, 138)
-                                      lineBreakMode:labelDesc.lineBreakMode];
-    CGRect frameDesc = viewDesc.frame;
-    CGRect frameDescLabel = labelDesc.frame;
-    frameDesc.size.height = MIN(size.height+12, framePic.size.height);
-    if (pic.descriptionText.length == 0) {
-        frameDesc.size.height = 0;
-    }
-    
-    frameDesc.origin.y = framePic.origin.y + framePic.size.height - frameDesc.size.height;
-    frameDescLabel.size.height = frameDesc.size.height - 12;
-    frameDescLabel.origin.y = 6;
-    
-    labelDesc.frame = frameDescLabel;
-    viewDesc.frame = frameDesc;
-}
 - (void)showDesc {
-    [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
-        viewDesc.alpha = 1;
-    }];
+    if (labelDesc.text.length > 0) {
+        [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
+            viewDesc.alpha = 1;
+        }];
+    }
 }
 
 - (void)hideDesc {
@@ -178,9 +164,9 @@
 - (void)increaseCounter {
     // Increase counter
     Picture *pic = _feed.targets[0];
-    NSString *urlCounter = [NSString stringWithFormat:@"picture/counter/%d/%d",
-                            [pic.pictureId integerValue],
-                            [pic.userId integerValue]];
+    NSString *urlCounter = [NSString stringWithFormat:@"picture/counter/%ld/%ld",
+                            [pic.pictureId longValue],
+                            [pic.userId longValue]];
     
     [[LatteAPIClient sharedClient] GET:urlCounter parameters:nil success:nil failure:nil];
 }
@@ -230,20 +216,6 @@
     };
     
     [actionSheet showFrom:viewController.navigationController.tabBarController.view];
-
 }
 
-- (void)drawRect:(CGRect)rect {
-    UIBezierPath *shadowPathUser = [UIBezierPath bezierPathWithRect:buttonUser.bounds];
-    buttonUser.layer.masksToBounds = NO;
-    buttonUser.layer.shadowColor = [UIColor blackColor].CGColor;
-    buttonUser.layer.shadowOffset = CGSizeMake(0.0, 0.0);
-    buttonUser.layer.shadowOpacity = 0.5f;
-    buttonUser.layer.shadowRadius = 1.5f;
-    buttonUser.layer.shadowPath = shadowPathUser.CGPath;
-    buttonUser.layer.cornerRadius = 3.0;
-    
-    [LXUtils globalShadow:viewBackground];
-    [super drawRect:rect];
-}
 @end
