@@ -65,9 +65,10 @@
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     // Do any additional setup after loading the view from its nib.
-    loadEnded = false;
 
     limit = 30;
+    
+    [self loadNotify:YES setRead:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -82,10 +83,10 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (loadEnded) {
-        return notifies.count;
-    } else {
+    if (notifies.count > 0 && !loadEnded) {
         return notifies.count + 1;
+    } else {
+        return notifies.count;
     }
     
 }
@@ -111,14 +112,13 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [self loadNotify:YES setRead:YES];
-    
     self.tabBarItem.badgeValue = nil;
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 }
 
 - (void)loadNotify:(BOOL)reset setRead:(BOOL)setRead {
     if (reset) {
+        loadEnded = false;
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         
         page = 1;
@@ -262,11 +262,11 @@
 
 - (IBAction)switchTab:(UISegmentedControl *)sender {
     currentTab = sender.selectedSegmentIndex;
-    [self reloadView];
+    [self loadNotify:YES setRead:YES];
 }
 
 - (IBAction)refresh:(id)sender {
-    [self reloadView];
+    [self loadNotify:YES setRead:YES];
 }
 
 @end

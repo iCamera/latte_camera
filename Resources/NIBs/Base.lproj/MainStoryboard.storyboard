@@ -552,6 +552,9 @@
                             <action selector="refresh:" destination="muX-Hh-Ats" eventType="valueChanged" id="rro-gf-9wc"/>
                         </connections>
                     </refreshControl>
+                    <connections>
+                        <segue destination="Exj-Cm-MJZ" kind="push" id="smk-EV-Xaq"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c8R-3X-3cs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -566,11 +569,11 @@
                         <viewControllerLayoutGuide type="bottom" id="gdB-Yh-JIb"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Q1X-Fv-L59">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vso-y0-ez3">
-                                <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </webView>
@@ -590,7 +593,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jGe-yY-qBG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1519" y="1281"/>
+            <point key="canvasLocation" x="-1474" y="1277"/>
         </scene>
         <!--Navigation Controller - Notification-->
         <scene sceneID="NPe-9h-C9N">
@@ -1261,7 +1264,7 @@
                                                     <rect key="frame" x="0.0" y="59" width="320" height="27"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Description" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="308" translatesAutoresizingMaskIntoConstraints="NO" id="Evx-x3-IZZ">
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Description" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="308" translatesAutoresizingMaskIntoConstraints="NO" id="Evx-x3-IZZ">
                                                             <rect key="frame" x="6" y="6" width="308" height="15"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
