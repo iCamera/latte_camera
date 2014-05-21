@@ -12,4 +12,6 @@
 
 @interface LXStreamViewController : UICollectionViewController <CHTCollectionViewDelegateWaterfallLayout, LXGalleryViewControllerDataSource>
 
+- (IBAction)showMenu;
+
 @end

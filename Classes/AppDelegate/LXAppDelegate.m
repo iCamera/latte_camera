@@ -8,6 +8,7 @@
 
 #import "LXAppDelegate.h"
 #import "LXNotifySideViewController.h"
+#import "REFrostedViewController.h"
 #import "LatteAPIClient.h"
 #import "ZipArchive.h"
 #import "TestFlight.h"
@@ -70,7 +71,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [GAI sharedInstance].trackUncaughtExceptions = YES;
+//    [GAI sharedInstance].trackUncaughtExceptions = YES;
     [GAI sharedInstance].dispatchInterval = 20;
     tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-242292-26"];
     [TestFlight takeOff:@"7f91e13e-a760-4471-aa7f-8168d62aa690"];
@@ -94,11 +95,13 @@
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
     
-//    _controllerSide = [[LXSidePanelController alloc] init];
-    _viewMainTab = [mainStoryboard instantiateViewControllerWithIdentifier:@"MainTab"];
-//    _controllerSide.centerPanel = _viewMainTab;
+    _viewMainTab = [mainStoryboard instantiateViewControllerWithIdentifier:@"contentController"];
+    REFrostedViewController *root = [[REFrostedViewController alloc] init];
+    root.contentViewController = _viewMainTab;
+    root.menuViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"menuController"];
+
     
-    window.rootViewController = _viewMainTab;
+    window.rootViewController = root;
     [window makeKeyAndVisible];
     
     NSDictionary *remoteNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];

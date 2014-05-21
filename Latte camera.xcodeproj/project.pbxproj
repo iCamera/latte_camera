@@ -1365,6 +1365,13 @@
 		88CE8A49174F376B00C6A6B6 /* icon_save2.png in Resources */ = {isa = PBXBuildFile; fileRef = 88CE8A48174F376B00C6A6B6 /* icon_save2.png */; };
 		88D2DC201924A25A0027D88A /* UIButton+AsyncImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D2DC1D1924A25A0027D88A /* UIButton+AsyncImage.m */; };
 		88D2DC211924A25A0027D88A /* UIImageView+loadProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D2DC1F1924A25A0027D88A /* UIImageView+loadProgress.m */; };
+		88D2DC82192C40640027D88A /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D2DC5B192C40640027D88A /* RECommonFunctions.m */; };
+		88D2DC83192C40640027D88A /* REFrostedContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D2DC5D192C40640027D88A /* REFrostedContainerViewController.m */; };
+		88D2DC84192C40640027D88A /* REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D2DC5F192C40640027D88A /* REFrostedViewController.m */; };
+		88D2DC85192C40640027D88A /* UIImage+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D2DC61192C40640027D88A /* UIImage+REFrostedViewController.m */; };
+		88D2DC86192C40640027D88A /* UIView+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D2DC63192C40640027D88A /* UIView+REFrostedViewController.m */; };
+		88D2DC87192C40640027D88A /* UIViewController+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D2DC65192C40640027D88A /* UIViewController+REFrostedViewController.m */; };
+		88D2DC9B192C4B600027D88A /* LXMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D2DC9A192C4B600027D88A /* LXMenuViewController.m */; };
 		88D86DC717CB41DE00EC62A2 /* box_share.png in Resources */ = {isa = PBXBuildFile; fileRef = 88D86DC117CB41DD00EC62A2 /* box_share.png */; };
 		88D86DC817CB41DE00EC62A2 /* box_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88D86DC217CB41DD00EC62A2 /* box_share@2x.png */; };
 		88D86DC917CB41DE00EC62A2 /* box_social.png in Resources */ = {isa = PBXBuildFile; fileRef = 88D86DC317CB41DD00EC62A2 /* box_social.png */; };
@@ -3519,6 +3526,20 @@
 		88D2DC1D1924A25A0027D88A /* UIButton+AsyncImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+AsyncImage.m"; sourceTree = "<group>"; };
 		88D2DC1E1924A25A0027D88A /* UIImageView+loadProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+loadProgress.h"; sourceTree = "<group>"; };
 		88D2DC1F1924A25A0027D88A /* UIImageView+loadProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+loadProgress.m"; sourceTree = "<group>"; };
+		88D2DC5A192C40640027D88A /* RECommonFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RECommonFunctions.h; sourceTree = "<group>"; };
+		88D2DC5B192C40640027D88A /* RECommonFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RECommonFunctions.m; sourceTree = "<group>"; };
+		88D2DC5C192C40640027D88A /* REFrostedContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REFrostedContainerViewController.h; sourceTree = "<group>"; };
+		88D2DC5D192C40640027D88A /* REFrostedContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REFrostedContainerViewController.m; sourceTree = "<group>"; };
+		88D2DC5E192C40640027D88A /* REFrostedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REFrostedViewController.h; sourceTree = "<group>"; };
+		88D2DC5F192C40640027D88A /* REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REFrostedViewController.m; sourceTree = "<group>"; };
+		88D2DC60192C40640027D88A /* UIImage+REFrostedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+REFrostedViewController.h"; sourceTree = "<group>"; };
+		88D2DC61192C40640027D88A /* UIImage+REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+REFrostedViewController.m"; sourceTree = "<group>"; };
+		88D2DC62192C40640027D88A /* UIView+REFrostedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+REFrostedViewController.h"; sourceTree = "<group>"; };
+		88D2DC63192C40640027D88A /* UIView+REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+REFrostedViewController.m"; sourceTree = "<group>"; };
+		88D2DC64192C40640027D88A /* UIViewController+REFrostedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+REFrostedViewController.h"; sourceTree = "<group>"; };
+		88D2DC65192C40640027D88A /* UIViewController+REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+REFrostedViewController.m"; sourceTree = "<group>"; };
+		88D2DC99192C4B600027D88A /* LXMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXMenuViewController.h; sourceTree = "<group>"; };
+		88D2DC9A192C4B600027D88A /* LXMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXMenuViewController.m; sourceTree = "<group>"; };
 		88D4B5D015D4B9F200FC4FBB /* Latte.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Latte.entitlements; sourceTree = "<group>"; };
 		88D86DC117CB41DD00EC62A2 /* box_share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box_share.png; sourceTree = "<group>"; };
 		88D86DC217CB41DD00EC62A2 /* box_share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "box_share@2x.png"; sourceTree = "<group>"; };
@@ -4106,6 +4127,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88C0FF4817212C0600F8CA2D /* Accelerate.framework in Frameworks */,
 				880B978718F78AEB0084D79D /* libQuickDialog.a in Frameworks */,
 				88120B2118F69CE3000BFB5E /* libGPUImage.a in Frameworks */,
 				88A49B8315B8FD5700CEA262 /* QuartzCore.framework in Frameworks */,
@@ -4118,7 +4140,6 @@
 				880E50CC1725703D00D584EE /* AudioToolbox.framework in Frameworks */,
 				880E50CA1725702900D584EE /* MediaPlayer.framework in Frameworks */,
 				88120BF418F6B173000BFB5E /* libTestFlight.a in Frameworks */,
-				88C0FF4817212C0600F8CA2D /* Accelerate.framework in Frameworks */,
 				88A4B43D16BFE73E004FEF05 /* MobileCoreServices.framework in Frameworks */,
 				88AB7E1D16BB755F00040C00 /* CFNetwork.framework in Frameworks */,
 				884FBB90163E24A3006C4359 /* SystemConfiguration.framework in Frameworks */,
@@ -5219,6 +5240,8 @@
 				88B37BF516E719B700AB682C /* LXVoteViewController.m */,
 				8890725216770EBB0013DF7A /* LXWelcomeViewController.h */,
 				8890725316770EBB0013DF7A /* LXWelcomeViewController.m */,
+				88D2DC99192C4B600027D88A /* LXMenuViewController.h */,
+				88D2DC9A192C4B600027D88A /* LXMenuViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -5632,9 +5655,37 @@
 			path = "UIColor+MLPFlatColors";
 			sourceTree = "<group>";
 		};
+		88D2DC22192C40630027D88A /* REFrostedViewController */ = {
+			isa = PBXGroup;
+			children = (
+				88D2DC59192C40640027D88A /* REFrostedViewController */,
+			);
+			path = REFrostedViewController;
+			sourceTree = "<group>";
+		};
+		88D2DC59192C40640027D88A /* REFrostedViewController */ = {
+			isa = PBXGroup;
+			children = (
+				88D2DC5A192C40640027D88A /* RECommonFunctions.h */,
+				88D2DC5B192C40640027D88A /* RECommonFunctions.m */,
+				88D2DC5C192C40640027D88A /* REFrostedContainerViewController.h */,
+				88D2DC5D192C40640027D88A /* REFrostedContainerViewController.m */,
+				88D2DC5E192C40640027D88A /* REFrostedViewController.h */,
+				88D2DC5F192C40640027D88A /* REFrostedViewController.m */,
+				88D2DC60192C40640027D88A /* UIImage+REFrostedViewController.h */,
+				88D2DC61192C40640027D88A /* UIImage+REFrostedViewController.m */,
+				88D2DC62192C40640027D88A /* UIView+REFrostedViewController.h */,
+				88D2DC63192C40640027D88A /* UIView+REFrostedViewController.m */,
+				88D2DC64192C40640027D88A /* UIViewController+REFrostedViewController.h */,
+				88D2DC65192C40640027D88A /* UIViewController+REFrostedViewController.m */,
+			);
+			path = REFrostedViewController;
+			sourceTree = "<group>";
+		};
 		88D4B5BE15D4B66B00FC4FBB /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				88D2DC22192C40630027D88A /* REFrostedViewController */,
 				88120B2618F6B171000BFB5E /* GoogleAnalyticsServicesiOS_3.06 */,
 				88120B9F18F6B173000BFB5E /* TestFlightSDK3.0.0 */,
 				88120A2218F63230000BFB5E /* AFNetworking */,
@@ -8565,12 +8616,14 @@
 				880120BF16E5E80900B9E3D9 /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */,
 				88D9865615B8F97800858AD6 /* main.m in Sources */,
 				880C4B17161C2A1400252C6A /* MBProgressHUD.m in Sources */,
+				88D2DC85192C40640027D88A /* UIImage+REFrostedViewController.m in Sources */,
 				884ACB1E18EEB4C000B2924B /* LXStreamViewController.m in Sources */,
 				889072BC16770EBB0013DF7A /* LXAppDelegate.m in Sources */,
 				889072BD16770EBB0013DF7A /* LXCanvasViewController.m in Sources */,
 				889072C016770EBB0013DF7A /* LXLoginViewController.m in Sources */,
 				889072C116770EBB0013DF7A /* LXMyPageViewController.m in Sources */,
 				889072C416770EBB0013DF7A /* LXPicEditViewController.m in Sources */,
+				88D2DC82192C40640027D88A /* RECommonFunctions.m in Sources */,
 				889072C516770EBB0013DF7A /* LXPicInfoViewController.m in Sources */,
 				889072C616770EBB0013DF7A /* LXPicMapViewController.m in Sources */,
 				889072C716770EBB0013DF7A /* LXRankingViewController.m in Sources */,
@@ -8612,6 +8665,7 @@
 				889072FF16770EBB0013DF7A /* PicturePin.m in Sources */,
 				8890730016770EBB0013DF7A /* User.m in Sources */,
 				8890730116770EBB0013DF7A /* LXUtils.m in Sources */,
+				88D2DC83192C40640027D88A /* REFrostedContainerViewController.m in Sources */,
 				880E35A816A7BECA0097B97F /* LXAboutViewController.m in Sources */,
 				8884E40516A8EB5700DCBAC7 /* DEComposeRuledView.m in Sources */,
 				8884E40616A8EB5700DCBAC7 /* DEComposeTextView.m in Sources */,
@@ -8652,6 +8706,7 @@
 				888F64B916FAD8D800ED74BB /* LXCellTag.m in Sources */,
 				88FB5C191921E1E20018F757 /* LXStreamHeader.m in Sources */,
 				888F64BC16FB2BB500ED74BB /* LXCellInfoTag.m in Sources */,
+				88D2DC84192C40640027D88A /* REFrostedViewController.m in Sources */,
 				888F651316FBFB8F00ED74BB /* LXLeftSideUserViewController.m in Sources */,
 				888F651616FC09E100ED74BB /* LXLeftGuestViewController.m in Sources */,
 				886E540B16FC469B00629D76 /* LXLikedViewController.m in Sources */,
@@ -8668,6 +8723,7 @@
 				8835FCC8171CE31900A48346 /* LXCellGridUser.m in Sources */,
 				8847564217212718005CA201 /* RNBlurModalView.m in Sources */,
 				88F621061724E6AE00CDD1EC /* LXFBOpenGraph.m in Sources */,
+				88D2DC87192C40640027D88A /* UIViewController+REFrostedViewController.m in Sources */,
 				88FB5C24192461A50018F757 /* LXPicCommentViewController.m in Sources */,
 				880E50EF1728C30800D584EE /* HFImageEditorFrameView.m in Sources */,
 				880E50F01728C30800D584EE /* HFImageEditorViewController.m in Sources */,
@@ -8707,6 +8763,8 @@
 				8837736817AA7B20005B0826 /* LXChangePasswordViewController.m in Sources */,
 				8837736B17AA81A5005B0826 /* LXChangeEmailViewController.m in Sources */,
 				88120ABE18F63233000BFB5E /* AFURLSessionManager.m in Sources */,
+				88D2DC9B192C4B600027D88A /* LXMenuViewController.m in Sources */,
+				88D2DC86192C40640027D88A /* UIView+REFrostedViewController.m in Sources */,
 				88120AB718F63233000BFB5E /* AFHTTPRequestOperationManager.m in Sources */,
 				88D2DC201924A25A0027D88A /* UIButton+AsyncImage.m in Sources */,
 				8837738517AF9C50005B0826 /* LXReportAbuseViewController.m in Sources */,

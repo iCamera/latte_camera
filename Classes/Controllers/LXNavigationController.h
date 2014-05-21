@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "REFrostedViewController.h"
+
 @interface LXNavigationController : UINavigationController<UINavigationControllerDelegate>
 
 @end
