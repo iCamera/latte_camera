@@ -111,6 +111,16 @@ typedef enum {
         }
     }
     
+    [[LatteAPIClient sharedClient] GET: @"user/me/timeline"
+                            parameters: params
+                               success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                  
+                               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                   DLog(@"Something went wrong (Timeline)");
+                                   
+                                   [self.refreshControl endRefreshing];
+                               }];
+    
     
     [[LatteAPIClient sharedClient] GET: @"user/me/timeline"
                                 parameters: params

@@ -444,7 +444,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6LQ-bA-eEB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="197" y="1225"/>
+            <point key="canvasLocation" x="197" y="1281"/>
         </scene>
         <!--Notify Side View Controller - Notification-->
         <scene sceneID="kYt-5Z-oXR">
@@ -553,12 +553,12 @@
                         </connections>
                     </refreshControl>
                     <connections>
-                        <segue destination="Exj-Cm-MJZ" kind="push" id="smk-EV-Xaq"/>
+                        <segue destination="Exj-Cm-MJZ" kind="push" identifier="Announcement" id="smk-EV-Xaq"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c8R-3X-3cs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1880" y="1277"/>
+            <point key="canvasLocation" x="-680" y="1281"/>
         </scene>
         <!--Anouncement View Controller - Announcement-->
         <scene sceneID="HaE-IL-7CV">
@@ -593,7 +593,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jGe-yY-qBG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1474" y="1277"/>
+            <point key="canvasLocation" x="-274" y="1281"/>
         </scene>
         <!--Navigation Controller - Notification-->
         <scene sceneID="NPe-9h-C9N">
@@ -615,7 +615,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lQP-pv-rfv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2414" y="1277"/>
+            <point key="canvasLocation" x="-1214" y="1281"/>
         </scene>
         <!--Search View Controller - Search-->
         <scene sceneID="Def-pZ-mYx">
@@ -2088,7 +2088,7 @@ Or you can resend confirmation email.</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o8j-Qd-JPd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-211" y="-9"/>
+            <point key="canvasLocation" x="-250" y="-9"/>
         </scene>
     </scenes>
     <resources>

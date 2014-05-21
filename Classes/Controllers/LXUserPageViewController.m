@@ -140,10 +140,12 @@ typedef enum {
     
     NSString *url = [NSString stringWithFormat:@"user/%ld", [_user.userId longValue]];
     [[LatteAPIClient sharedClient] GET:url
-                                parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                parameters: nil
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       userDict = [JSON objectForKey:@"user"];
+                                       userDict = JSON[@"user"];
                                        User *user = [User instanceFromDictionary:userDict];
+                                       UIButton *button;
+                                       [button setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:user.profilePicture] placeholderImage:nil];
                                        
                                        NSSet *allField = [NSSet setWithArray:[userDict allKeys]];
                                        
