@@ -195,11 +195,8 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    Feed *feed = feeds[indexPath.item];
     LXStreamBrickCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Brick" forIndexPath:indexPath];
-    cell.picture = feed.targets[0];
-    cell.user = feed.user;
-    cell.buttonPicture.tag = indexPath.item;
+    cell.feed = feeds[indexPath.item];
     cell.delegate = self;
     return cell;
 }
@@ -224,28 +221,6 @@
     }
 }
 
-- (void)showPic:(UIButton*)sender {
-    UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
-                                                           bundle:nil];
-    UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
-    LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
-    viewGallery.delegate = self;
-    
-    Feed *feed = feeds[sender.tag];
-    Picture *picture = feed.targets[0];
-    viewGallery.user = feed.user;
-    viewGallery.picture = picture;
-    
-    [self presentViewController:navGalerry animated:YES completion:nil];
-}
-
-- (void)showUser:(User *)user fromGallery:(LXGalleryViewController *)gallery {
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                             bundle:nil];
-    LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
-    viewUserPage.user = user;
-    [self.navigationController pushViewController:viewUserPage animated:YES];
-}
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
     if (loadEnded)

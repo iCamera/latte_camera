@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Feed.h"
+#import "LXGalleryViewController.h"
 
 @interface LXCellTimelineSingle : UITableViewCell
 
@@ -17,7 +18,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonPic;
 @property (strong, nonatomic) IBOutlet UIButton *buttonLike;
 @property (strong, nonatomic) IBOutlet UIButton *buttonComment;
-@property (strong, nonatomic) IBOutlet UIButton *buttonMap;
 @property (strong, nonatomic) IBOutlet UIButton *buttonInfo;
 @property (strong, nonatomic) IBOutlet UILabel *labelAccess;
 @property (strong, nonatomic) IBOutlet UIView *viewBackground;
@@ -27,7 +27,13 @@
 @property (strong, nonatomic) IBOutlet UIView *viewDesc;
 @property (strong, nonatomic) IBOutlet UILabel *labelDesc;
 
-@property (weak, nonatomic) UIViewController *viewController;
+@property (weak, nonatomic) UIViewController<LXGalleryViewControllerDataSource> *viewController;
 @property (strong, nonatomic) Feed *feed;
+
+- (IBAction)showUser:(id)sender;
+- (IBAction)showPicture:(id)sender;
+- (IBAction)showComment:(id)sender;
+- (IBAction)toggleLike:(id)sender;
+- (IBAction)moreAction:(id)sender;
 
 @end

@@ -14,6 +14,7 @@
 #import "LXShare.h"
 #import "RDActionSheet.h"
 #import "UIButton+AFNetworking.h"
+#import "LXUserPageViewController.h"
 
 @implementation LXCellTimelineSingle {
     LXShare *lxShare;
@@ -30,7 +31,6 @@
 
 @synthesize buttonComment;
 @synthesize buttonInfo;
-@synthesize buttonMap;
 @synthesize buttonLike;
 @synthesize viewBackground;
 @synthesize buttonShare;
@@ -85,12 +85,9 @@
     Picture *pic = feed.targets[0];
 
     [buttonPic setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pic.urlMedium] placeholderImage:nil];
-        
-    buttonPic.tag = [pic.pictureId integerValue];
+
     buttonLike.tag = [pic.pictureId integerValue];
-    buttonMap.tag = [pic.pictureId integerValue];
     buttonInfo.tag = [pic.pictureId integerValue];
-    buttonComment.tag = [pic.pictureId integerValue];
     
     [buttonComment setTitle:[pic.commentCount stringValue] forState:UIControlStateNormal];
     labelLike.text = [pic.voteCount stringValue];
@@ -104,41 +101,14 @@
     buttonLike.selected = pic.isVoted;
     labelLike.highlighted = pic.isVoted;
     
-        buttonComment.enabled = pic.canComment;
+    buttonComment.enabled = pic.canComment;
     
-    if ((pic.latitude != nil) && (pic.longitude != nil)) {
-        buttonMap.enabled = YES;
-    } else {
-        buttonMap.enabled = NO;
-    }
-    
-    [buttonUser setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:feed.user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
+    [buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:feed.user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
 
     labelTitle.text = feed.user.name;
     labelUser.text = [LXUtils timeDeltaFromNow:feed.updatedAt];
     
-    self.clipsToBounds = NO;
-    
-    [buttonUser addTarget:viewController action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
-    [buttonPic addTarget:viewController action:@selector(showPic:) forControlEvents:UIControlEventTouchUpInside];
-    [buttonInfo addTarget:viewController action:@selector(showInfo:) forControlEvents:UIControlEventTouchUpInside];
-    [buttonComment addTarget:viewController action:@selector(showComment:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [buttonMap addTarget:viewController action:@selector(showMap:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [buttonLike removeTarget:nil
-                       action:NULL
-             forControlEvents:UIControlEventAllEvents];
-    if (pic.isOwner) {
-        [buttonLike addTarget:viewController action:@selector(showLike:) forControlEvents:UIControlEventTouchUpInside];
-    } else {
-        [buttonLike addTarget:self action:@selector(submitLike:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    
-    [buttonShare addTarget:self action:@selector(sharePic:) forControlEvents:UIControlEventTouchUpInside];
-    
     [LXUtils setNationalityOfUser:feed.user forImage:imageNationality nextToLabel:labelTitle];
-    
     
     labelDesc.text = pic.descriptionText;
     viewDesc.hidden = pic.descriptionText.length == 0;
@@ -171,12 +141,65 @@
     [[LatteAPIClient sharedClient] GET:urlCounter parameters:nil success:nil failure:nil];
 }
 
-- (void)submitLike:(id)sender {
-    Picture *pic = _feed.targets[0];
-    [LXUtils toggleLike:buttonLike ofPicture:pic setCount:labelLike];
+- (IBAction)showUser:(id)sender {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    
+    viewUserPage.user = _feed.user;
+    [viewController.navigationController pushViewController:viewUserPage animated:YES];
 }
 
-- (void)sharePic:(id)sender {
+- (IBAction)showPicture:(id)sender {
+    Picture *pic = _feed.targets[0];
+    
+    UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
+                                                           bundle:nil];
+    UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
+    LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
+    viewGallery.delegate = viewController;
+    viewGallery.user = _feed.user;
+    viewGallery.picture = pic;
+    
+    [viewController presentViewController:navGalerry animated:YES completion:nil];
+}
+
+- (IBAction)showComment:(id)sender {
+    Picture *pic = _feed.targets[0];
+    
+    UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
+                                                           bundle:nil];
+    UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
+    LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
+    viewGallery.delegate = viewController;
+    viewGallery.user = _feed.user;
+    viewGallery.picture = pic;
+    
+    [viewController presentViewController:navGalerry animated:YES completion:^{
+        viewGallery.currentTab = kGalleryTabComment;
+    }];
+}
+
+- (IBAction)toggleLike:(id)sender {
+    Picture *pic = _feed.targets[0];
+    if (pic.isOwner) {
+        UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
+                                                               bundle:nil];
+        UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
+        LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
+        viewGallery.delegate = viewController;
+        viewGallery.user = _feed.user;
+        viewGallery.picture = pic;
+        
+        [viewController presentViewController:navGalerry animated:YES completion:^{
+            viewGallery.currentTab = kGalleryTabVote;
+        }];
+    } else {
+        [LXUtils toggleLike:buttonLike ofPicture:pic setCount:labelLike];
+    }
+}
+
+- (IBAction)moreAction:(id)sender {
     Picture *pic = _feed.targets[0];
     
     RDActionSheet *actionSheet = [[RDActionSheet alloc] initWithCancelButtonTitle:NSLocalizedString(@"Cancel", @"")
@@ -217,5 +240,4 @@
     
     [actionSheet showFrom:viewController.navigationController.tabBarController.view];
 }
-
 @end

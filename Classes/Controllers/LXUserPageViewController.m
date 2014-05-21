@@ -135,9 +135,7 @@ typedef enum {
 
 
 
-- (void)reloadProfile {
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    
+- (void)reloadProfile {    
     NSString *url = [NSString stringWithFormat:@"user/%ld", [_user.userId longValue]];
     [[LatteAPIClient sharedClient] GET:url
                                 parameters: nil

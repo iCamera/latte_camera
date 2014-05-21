@@ -7,18 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Picture.h"
-#import "User.h"
+#import "Feed.h"
 #import "LXGalleryViewController.h"
 
 @interface LXStreamBrickCell : UICollectionViewCell
 
-@property (weak, nonatomic) id <LXGalleryViewControllerDataSource> delegate;
-@property (strong, nonatomic) Picture* picture;
-@property (strong, nonatomic) User* user;
+@property (weak, nonatomic) UIViewController<LXGalleryViewControllerDataSource> *delegate;
+@property (strong, nonatomic) Feed* feed;
 @property (strong, nonatomic) IBOutlet UIButton *buttonUser;
 @property (strong, nonatomic) IBOutlet UILabel *labelUsername;
-@property (strong, nonatomic) IBOutlet UILabel *labelView;
 @property (strong, nonatomic) IBOutlet UIView *viewBg;
 @property (strong, nonatomic) IBOutlet UIImageView *imagePicture;
 

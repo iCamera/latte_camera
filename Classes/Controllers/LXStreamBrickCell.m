@@ -9,6 +9,7 @@
 #import "LXStreamBrickCell.h"
 #import "UIButton+AFNetworking.h"
 #import "UIImageView+AFNetworking.h"
+#import "Picture.h"
 
 @implementation LXStreamBrickCell
 
@@ -54,22 +55,27 @@
 
 }
 
-- (void)setPicture:(Picture *)picture {
-    _picture = picture;
+- (void)setFeed:(Feed *)feed {
+    _feed = feed;
+    Picture *picture = feed.targets[0];
 
     [_imagePicture setImageWithURL:[NSURL URLWithString:picture.urlSmall] placeholderImage:nil];
-    
-    _labelView.text = [NSString stringWithFormat:@"%ld", [_picture.voteCount longValue]];
+    [_buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:feed.user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
+    _labelUsername.text = feed.user.name;
 }
 
-- (void)setUser:(User *)user {
-    _user = user;
-    [_buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
-    _labelUsername.text = user.name;
-}
 
 - (IBAction)touchPicture:(UIButton *)sender {
-    [_delegate showPic:sender];
+    Picture *picture = _feed.targets[0];
+    
+    UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
+                                                           bundle:nil];
+    UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
+    LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
+    viewGallery.delegate = _delegate;
+    viewGallery.picture = picture;
+    
+    [_delegate presentViewController:navGalerry animated:YES completion:nil];
 }
 
 @end

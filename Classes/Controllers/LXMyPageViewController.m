@@ -384,37 +384,6 @@ typedef enum {
     }
 }
 
-- (void)showInfo:(UIButton*)sender {
-    [self showPic:sender withTab:kGalleryTabInfo];
-}
-
-- (void)showPic:(UIButton*)sender withTab:(GalleryTab)tab {
-    UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
-                                                           bundle:nil];
-    UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
-    LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
-    viewGallery.delegate = self;
-    Feed *feed = [LXUtils feedFromPicID:sender.tag of:feeds];
-    viewGallery.user = feed.user;
-    
-    [self presentViewController:navGalerry animated:YES completion:^{
-        switch (tab) {
-            case kGalleryTabComment:
-            case kGalleryTabInfo:
-            case kGalleryTabVote:
-                viewGallery.currentTab = tab;
-                break;
-            default:
-                break;
-        }
-    }];
-}
-
-- (void)showPic:(UIButton*)sender {
-    [self showPic:sender withTab:kGalleryTabNone];
-}
-
-
 - (NSMutableArray*)flatPictureArray {
     NSMutableArray *ret = [[NSMutableArray alloc] init];
     for (Feed *feed in feeds) {
@@ -457,39 +426,6 @@ typedef enum {
         return ret;
     }
     return nil;
-}
-
-- (void)showLike:(UIButton*)sender {
-    [self showPic:sender withTab:kGalleryTabVote];
-}
-
-
-- (void)showComment:(UIButton*)sender {
-    [self showPic:sender withTab:kGalleryTabComment];
-}
-
-- (void)showUser:(UIButton*)sender {
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                             bundle:nil];
-    LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
-    
-    Feed *feed = feeds[sender.tag];
-    viewUserPage.user = feed.user;
-    [self.navigationController pushViewController:viewUserPage animated:YES];
-
-}
-
-- (void)submitLike:(UIButton*)sender {
-    Picture *pic = [LXUtils picFromPicID:sender.tag of:feeds];
-    [LXUtils toggleLike:sender ofPicture:pic];
-}
-
-- (void)showUser:(User *)user fromGallery:(LXGalleryViewController *)gallery {
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                             bundle:nil];
-    LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
-    viewUserPage.user = user;
-    [self.navigationController pushViewController:viewUserPage animated:YES];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{

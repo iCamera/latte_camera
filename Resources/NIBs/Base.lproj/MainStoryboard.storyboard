@@ -599,7 +599,7 @@
         <scene sceneID="NPe-9h-C9N">
             <objects>
                 <navigationController definesPresentationContext="YES" id="VwC-Ow-z6p" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Notification" image="icon_notice.png" id="D39-Yx-4Gc"/>
+                    <tabBarItem key="tabBarItem" enabled="NO" title="Notification" image="icon_notice.png" id="D39-Yx-4Gc"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="JEo-cs-8hT">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1141,7 +1141,7 @@
                                             <rect key="frame" x="0.0" y="3" width="320" height="200"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QuX-YC-weG">
+                                                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QuX-YC-weG">
                                                     <rect key="frame" x="6" y="6" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <state key="normal" backgroundImage="user.gif">
@@ -1197,7 +1197,7 @@
                                             <rect key="frame" x="0.0" y="3" width="320" height="124"/>
                                             <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mU9-xe-QzS">
+                                                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mU9-xe-QzS">
                                                     <rect key="frame" x="6" y="6" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <constraints>
@@ -1207,6 +1207,9 @@
                                                     <state key="normal" backgroundImage="user.gif">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="showUser:" destination="eDN-OG-rBE" eventType="touchUpInside" id="9ck-Ju-d00"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4C5-Yc-O6C">
                                                     <rect key="frame" x="0.0" y="42" width="320" height="44"/>
@@ -1220,6 +1223,9 @@
                                                     <state key="highlighted">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="showPicture:" destination="eDN-OG-rBE" eventType="touchUpInside" id="elV-Fs-MEl"/>
+                                                    </connections>
                                                 </button>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" image="bg_views.png" translatesAutoresizingMaskIntoConstraints="NO" id="TR5-rD-8si">
                                                     <rect key="frame" x="269" y="48" width="51" height="25"/>
@@ -1309,6 +1315,9 @@
                                                             <state key="selected" title="Like" image="icon_iine_s_on.png">
                                                                 <color key="titleColor" red="0.18090890849999999" green="0.29160622089999999" blue="0.49214504079999999" alpha="1" colorSpace="calibratedRGB"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="toggleLike:" destination="eDN-OG-rBE" eventType="touchUpInside" id="kyH-4I-6yY"/>
+                                                            </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="right" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nHF-t0-AEz">
                                                             <rect key="frame" x="104" y="1" width="123" height="30"/>
@@ -1321,6 +1330,9 @@
                                                                 <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                                                 <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="showComment:" destination="eDN-OG-rBE" eventType="touchUpInside" id="28e-hM-rgm"/>
+                                                            </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vps-ge-lJ4">
                                                             <rect key="frame" x="290" y="1" width="30" height="30"/>
@@ -1329,19 +1341,6 @@
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                             <state key="normal" title="i">
                                                                 <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                                <color key="titleShadowColor" red="0.87843137250000003" green="0.87450980389999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                            </state>
-                                                            <state key="highlighted">
-                                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                        </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R0w-Pq-3gc">
-                                                            <rect key="frame" x="259" y="1" width="30" height="30"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                            <color key="backgroundColor" red="0.87843137250000003" green="0.87450980389999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                            <state key="normal" image="icon_map_s.png">
-                                                                <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <color key="titleShadowColor" red="0.87843137250000003" green="0.87450980389999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
                                                             </state>
                                                             <state key="highlighted">
@@ -1360,6 +1359,9 @@
                                                             <state key="highlighted">
                                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="moreAction:" destination="eDN-OG-rBE" eventType="touchUpInside" id="q5j-pU-l8W"/>
+                                                            </connections>
                                                         </button>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="---" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="CIM-Hb-yXQ">
                                                             <rect key="frame" x="77" y="7" width="24" height="18"/>
@@ -1417,7 +1419,6 @@
                                     <outlet property="buttonComment" destination="nHF-t0-AEz" id="K30-14-h4T"/>
                                     <outlet property="buttonInfo" destination="vps-ge-lJ4" id="pYo-WN-c3p"/>
                                     <outlet property="buttonLike" destination="4Gc-gi-8JX" id="J8u-rg-N44"/>
-                                    <outlet property="buttonMap" destination="R0w-Pq-3gc" id="T47-kh-zUe"/>
                                     <outlet property="buttonPic" destination="4C5-Yc-O6C" id="QBT-XH-eH5"/>
                                     <outlet property="buttonShare" destination="pod-DE-4I6" id="k6l-2J-VSr"/>
                                     <outlet property="buttonUser" destination="mU9-xe-QzS" id="mTc-Io-mrC"/>
@@ -1528,21 +1529,9 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GsV-i8-MRg">
-                                            <rect key="frame" x="29" y="129" width="85" height="16"/>
+                                            <rect key="frame" x="29" y="129" width="119" height="16"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
-                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <nil key="highlightedColor"/>
-                                            <color key="shadowColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
-                                            <size key="shadowOffset" width="0.0" height="1"/>
-                                        </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ZmU-Ih-pMP">
-                                            <rect key="frame" x="114" y="115" width="34" height="37"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="34" id="jf6-NL-PQH"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="30"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                             <color key="shadowColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
@@ -1574,11 +1563,9 @@
                                     <constraint firstItem="foj-kx-FLA" firstAttribute="leading" secondItem="jzd-7n-ALa" secondAttribute="leading" id="Zpk-Y1-qEs"/>
                                     <constraint firstItem="GlX-xg-AP5" firstAttribute="leading" secondItem="jzd-7n-ALa" secondAttribute="leading" id="jF0-WT-lNP"/>
                                     <constraint firstAttribute="trailing" secondItem="foj-kx-FLA" secondAttribute="trailing" id="nsy-hC-WfU"/>
-                                    <constraint firstAttribute="trailing" secondItem="ZmU-Ih-pMP" secondAttribute="trailing" constant="4" id="qwk-Dv-zdj"/>
                                     <constraint firstAttribute="bottom" secondItem="GsV-i8-MRg" secondAttribute="bottom" constant="7" id="rEN-tE-cE0"/>
-                                    <constraint firstAttribute="bottom" secondItem="ZmU-Ih-pMP" secondAttribute="bottom" id="rIS-p7-1H0"/>
                                     <constraint firstItem="Qlf-ws-s2t" firstAttribute="top" secondItem="jzd-7n-ALa" secondAttribute="top" id="rqN-uU-Stv"/>
-                                    <constraint firstItem="ZmU-Ih-pMP" firstAttribute="leading" secondItem="GsV-i8-MRg" secondAttribute="trailing" id="su0-Rf-oSP"/>
+                                    <constraint firstAttribute="trailing" secondItem="GsV-i8-MRg" secondAttribute="trailing" constant="4" id="sF0-XH-hb9"/>
                                     <constraint firstItem="GlX-xg-AP5" firstAttribute="top" secondItem="jzd-7n-ALa" secondAttribute="top" id="xGN-nZ-9Gl"/>
                                     <constraint firstItem="GsV-i8-MRg" firstAttribute="leading" secondItem="Zln-KU-lKb" secondAttribute="trailing" constant="5" id="xlI-FH-5v6"/>
                                 </constraints>
@@ -1588,7 +1575,6 @@
                                     <outlet property="buttonUser" destination="Zln-KU-lKb" id="56e-rr-ycM"/>
                                     <outlet property="imagePicture" destination="GlX-xg-AP5" id="rsd-dT-NlL"/>
                                     <outlet property="labelUsername" destination="GsV-i8-MRg" id="Dxm-Kv-sav"/>
-                                    <outlet property="labelView" destination="ZmU-Ih-pMP" id="N4T-1r-taV"/>
                                     <outlet property="viewBg" destination="foj-kx-FLA" id="CwR-OR-LSf"/>
                                 </connections>
                             </collectionViewCell>
@@ -1786,8 +1772,8 @@ Or you can resend confirmation email.</string>
                             <rect key="frame" x="0.0" y="0.0" width="320" height="135"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x6w-Ei-7Oj">
-                                    <rect key="frame" x="110" y="20" width="100" height="100"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x6w-Ei-7Oj">
+                                    <rect key="frame" x="110" y="18" width="100" height="100"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" backgroundImage="user.gif">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1795,6 +1781,10 @@ Or you can resend confirmation email.</string>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="centerY" secondItem="x6w-Ei-7Oj" secondAttribute="centerY" id="Cfm-64-ryb"/>
+                                <constraint firstAttribute="centerX" secondItem="x6w-Ei-7Oj" secondAttribute="centerX" id="cD9-Xc-SQY"/>
+                            </constraints>
                         </view>
                         <sections>
                             <tableViewSection id="oxT-Ou-FtT">
@@ -2220,7 +2210,6 @@ Or you can resend confirmation email.</string>
         <image name="icon_iine_s_on.png" width="12" height="12"/>
         <image name="icon_info.png" width="17" height="16"/>
         <image name="icon_mail.png" width="15" height="11"/>
-        <image name="icon_map_s.png" width="12" height="15"/>
         <image name="icon_menu_l.png" width="19" height="15"/>
         <image name="icon_mypage.png" width="20" height="21"/>
         <image name="icon_newpict_l.png" width="20" height="20"/>

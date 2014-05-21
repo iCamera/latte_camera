@@ -211,12 +211,22 @@
 }
 
 - (void)clearNotification {
-    int badgeCount = [UIApplication sharedApplication].applicationIconBadgeNumber;
+    NSInteger badgeCount = [UIApplication sharedApplication].applicationIconBadgeNumber;
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:badgeCount];
 }
 
+- (void)setCurrentUser:(User *)currentUser {
+    _currentUser = currentUser;
+    if (currentUser == nil) {
+        ((UITabBarItem *)_viewMainTab.tabBar.items[3]).enabled = NO;
+        ((UITabBarItem *)_viewMainTab.tabBar.items[4]).enabled = NO;
+    } else {
+        ((UITabBarItem *)_viewMainTab.tabBar.items[3]).enabled = YES;
+        ((UITabBarItem *)_viewMainTab.tabBar.items[4]).enabled = YES;
+    }
+}
 #pragma mark - Core Data stack
 
 

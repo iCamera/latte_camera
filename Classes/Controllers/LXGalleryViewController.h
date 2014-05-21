@@ -19,8 +19,6 @@ typedef enum {
 @class Picture, User, LXGalleryViewController;
 
 @protocol LXGalleryViewControllerDataSource <NSObject>
-- (void)showPic:(UIButton*)sender;
-- (void)showUser:(User*)user fromGallery:(LXGalleryViewController*)gallery;
 
 @required
 - (NSDictionary*)pictureBeforePicture:(Picture *)picture;
@@ -30,7 +28,7 @@ typedef enum {
 
 @interface LXGalleryViewController : UIViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 
-@property (weak, nonatomic) id <LXGalleryViewControllerDataSource> delegate;
+@property (weak, nonatomic) UIViewController<LXGalleryViewControllerDataSource> *delegate;
 @property (strong, nonatomic) IBOutlet UIButton *buttonLike;
 @property (strong, nonatomic) IBOutlet UIButton *buttonComment;
 @property (strong, nonatomic) IBOutlet UIButton *buttonMap;
