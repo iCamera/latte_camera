@@ -10,11 +10,12 @@
 #import "LXCanvasViewController.h"
 
 @interface LXSettingRootViewController : UITableViewController<LXImagePickerDelegate>
-- (IBAction)touchClose:(id)sender;
+
 @property (strong, nonatomic) IBOutlet UILabel *labelVersion;
 @property (strong, nonatomic) IBOutlet UIImageView *imageProfile;
-- (IBAction)touchSetPicture:(id)sender;
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
 @property (strong, nonatomic) IBOutlet UIView *viewWrapHeader;
+
+- (IBAction)touchSetPicture:(id)sender;
 
 @end

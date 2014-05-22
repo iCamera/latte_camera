@@ -364,7 +364,7 @@ typedef enum {
             cellLv1.buttonPic1.frame = frame;
             [cellLv1.buttonPic1 addTarget:self action:@selector(didSelectPic:) forControlEvents:UIControlEventTouchUpInside];
             
-            [cellLv1.buttonPic1 setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pic.urlMedium] placeholderImage:nil];
+            [cellLv1.buttonPic1 setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pic.urlMedium] placeholderImage:nil];
 
             cellLv1.buttonPic1.tag = [pic.pictureId integerValue];
             
@@ -385,7 +385,7 @@ typedef enum {
             
             if (pics.count >= baseIdx + 2) {
                 Picture *pic = [pics objectAtIndex:baseIdx];
-                [cellLv2.buttonPic2 setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pic.urlSquare] placeholderImage:nil];
+                [cellLv2.buttonPic2 setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pic.urlSquare] placeholderImage:nil];
                 
                 cellLv2.buttonPic2.tag = [pic.pictureId integerValue];
                 cellLv2.label1st.text = [NSString stringWithFormat:@"%ld", baseIdx+1];
@@ -398,7 +398,7 @@ typedef enum {
             if (pics.count > baseIdx  + 3) {
                 Picture *pic = [pics objectAtIndex:baseIdx + 1];
 
-                [cellLv2.buttonPic3 setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pic.urlSquare] placeholderImage:nil];
+                [cellLv2.buttonPic3 setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pic.urlSquare] placeholderImage:nil];
                 cellLv2.buttonPic3.tag = [pic.pictureId integerValue];
                 cellLv2.label2nd.text = [NSString stringWithFormat:@"%ld", baseIdx+2];
                 if (baseIdx == 2)
@@ -409,7 +409,7 @@ typedef enum {
             
             if (pics.count > baseIdx  + 4) {
                 Picture *pic = [pics objectAtIndex:baseIdx + 2];
-                [cellLv2.buttonPic4 setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pic.urlSquare] placeholderImage:nil];
+                [cellLv2.buttonPic4 setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pic.urlSquare] placeholderImage:nil];
                 cellLv2.buttonPic4.tag = [pic.pictureId integerValue];
                 cellLv2.label3rd.text = [NSString stringWithFormat:@"%ld", baseIdx+3];
             }

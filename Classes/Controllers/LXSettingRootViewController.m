@@ -7,7 +7,6 @@
 //
 
 #import "LXSettingRootViewController.h"
-#import "LXSettingViewController.h"
 #import "LXAppDelegate.h"
 #import "LatteAPIClient.h"
 #import "LXUtils.h"
@@ -94,89 +93,11 @@
     }
     
     
-    if (indexPath.section == 0) {
-        
-        QRootElement *root;
-        switch (indexPath.row) {
-            case 0: {
-                NSString *filePath = [[NSBundle mainBundle] pathForResource:@"settingprofile" ofType:@"json"];
-
-                NSDictionary *data = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:filePath] options:0 error:nil];
-                
-                NSLocale *locale = [NSLocale currentLocale];
-                NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
-                NSMutableArray *countryCodes = [[NSLocale ISOCountryCodes] mutableCopy];
-                NSMutableDictionary *countryDict = [[NSMutableDictionary alloc] init];
-                NSMutableArray *countryString = [[NSMutableArray alloc] init];
-
-                for (NSString *countryCode in countryCodes)
-                {
-                    NSString *displayNameString = [locale displayNameForKey:NSLocaleCountryCode value:countryCode];
-                    [countryDict setObject:displayNameString forKey:countryCode];
-                }
-                
-                countryCodes = [[countryDict keysSortedByValueUsingSelector:@selector(localizedCompare:)] mutableCopy];
-                
-                if ([language isEqualToString:@"ja"]) {
-                    [countryCodes removeObject:@"JP"];
-                    [countryCodes insertObject:@"JP" atIndex:0];
-                }
-                
-                for (NSString *countryCode in countryCodes)
-                {
-                    [countryString addObject:countryDict[countryCode]];
-                }
-
-                root = [[QRootElement alloc] initWithJSONFile:@"settingprofile"];
-//                [root bindToObject:data];
-                QSection *section = root.sections[0];
-//                QRadioElement *eleCountry = [[QRadioElement alloc] initWithDict:countriesDict selected:0 title:NSLocalizedString(@"nationality", @"Nationality")];
-                QRadioElement *eleCountry = [[QRadioElement alloc] initWithItems:countryString selected:0 title:NSLocalizedString(@"nationality", @"Nationality")];
-                eleCountry.values = countryCodes;
-                eleCountry.key = @"nationality";
-                eleCountry.controllerAction = @"handleUpdateRadio:";
-                
-                section.headerView = viewWrapHeader;
-                
-                [section addElement:eleCountry];
-                break;
-            }
-            case 1: {
-                return;
-            }
-                break;
-            case 2: {
-                //NSString *filePath = [[NSBundle mainBundle] pathForResource:@"settingprivacy" ofType:@"json"];
-                //NSDictionary *data = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:filePath] options:0 error:nil];
-                root = [[QRootElement alloc] initWithJSONFile:@"settingprivacy"];
-                //[root bindToObject:data];
-                break;
-            }
-            case 3:
-                [self performSegueWithIdentifier:@"Notification" sender:self];
-                return;
-            case 4:
-                return;
-            default:
-                break;
-        }
-        
-        
-        LXSettingViewController* viewSetting = [[LXSettingViewController alloc] initWithRoot:root];
-        
-        [self.navigationController pushViewController:viewSetting animated:YES];
-    } else if (indexPath.section == 1) {
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    } else if (indexPath.section == 2) {
+    if (indexPath.section == 2) {
         [lxShare inviteFriend];
-    } else if (indexPath.section == 3) {
-        NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
-        if ([language isEqualToString:@"ja"])
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/company/policy"]];
-        else
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://en.latte.la/company/policy"]];
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    } else if (indexPath.section == 4) {
+    }
+    
+    if (indexPath.section == 4) {
         LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
         
         [[FBSession activeSession] closeAndClearTokenInformation];
@@ -217,16 +138,13 @@
     }
 }
 
-
-- (IBAction)touchClose:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
 - (void)viewDidUnload {
     [self setImageProfile:nil];
     [self setViewHeader:nil];
     [self setViewWrapHeader:nil];
     [super viewDidUnload];
 }
+
 - (IBAction)touchSetPicture:(id)sender {
     LatteAPIClient *api = [LatteAPIClient sharedClient];
     if (api.reachabilityManager.networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable) {

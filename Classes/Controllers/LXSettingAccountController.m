@@ -46,37 +46,6 @@
 
 #pragma mark - Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row == 0) {
-        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Setting"
-                                                                 bundle:nil];
-        UIViewController *viewChangePassword = [mainStoryboard instantiateViewControllerWithIdentifier:@"ChangeEmail"];
-        viewChangePassword.view.alpha = 0;
-        viewChangePassword.view.frame = self.view.bounds;
-        [self.view addSubview:viewChangePassword.view];
-        [self addChildViewController:viewChangePassword];
-        [viewChangePassword didMoveToParentViewController:self];
-        [UIView animateWithDuration:0.3 animations:^{
-            viewChangePassword.view.alpha = 1;
-        }];        
-    }
-    if (indexPath.row == 1) {
-        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Setting"
-                                                                 bundle:nil];
-        UIViewController *viewChangePassword = [mainStoryboard instantiateViewControllerWithIdentifier:@"ChangePassword"];
-        viewChangePassword.view.alpha = 0;
-        viewChangePassword.view.frame = self.view.bounds;
-        [self.view addSubview:viewChangePassword.view];
-        [self addChildViewController:viewChangePassword];
-        [viewChangePassword didMoveToParentViewController:self];
-        [UIView animateWithDuration:0.3 animations:^{
-            viewChangePassword.view.alpha = 1;
-        }];
-    }
-
-}
-
 - (void)viewDidUnload {
     [self setTextEmail:nil];
     [super viewDidUnload];

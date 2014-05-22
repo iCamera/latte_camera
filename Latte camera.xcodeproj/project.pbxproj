@@ -72,7 +72,6 @@
 		880AC53B1786B6C4001E4365 /* gradient1-148.png in Resources */ = {isa = PBXBuildFile; fileRef = 880AC4FD1786B6C4001E4365 /* gradient1-148.png */; };
 		880AC53C1786B6C4001E4365 /* gradient1-149.png in Resources */ = {isa = PBXBuildFile; fileRef = 880AC4FE1786B6C4001E4365 /* gradient1-149.png */; };
 		880AC53D1786B6C4001E4365 /* gradient1-150.png in Resources */ = {isa = PBXBuildFile; fileRef = 880AC4FF1786B6C4001E4365 /* gradient1-150.png */; };
-		880B978718F78AEB0084D79D /* libQuickDialog.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 880B978418F78AAB0084D79D /* libQuickDialog.a */; };
 		880B978A18F79C460084D79D /* LXImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 880B978918F79C460084D79D /* LXImagePickerController.m */; };
 		880C4B17161C2A1400252C6A /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 880C4AFC161C2A1400252C6A /* MBProgressHUD.m */; };
 		880E35A816A7BECA0097B97F /* LXAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E35A716A7BECA0097B97F /* LXAboutViewController.m */; };
@@ -108,7 +107,6 @@
 		88120B0218F63233000BFB5E /* UIProgressView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 88120AAF18F63233000BFB5E /* UIProgressView+AFNetworking.m */; };
 		88120B0318F63233000BFB5E /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 88120AB118F63233000BFB5E /* UIRefreshControl+AFNetworking.m */; };
 		88120B0418F63233000BFB5E /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 88120AB318F63233000BFB5E /* UIWebView+AFNetworking.m */; };
-		88120B2118F69CE3000BFB5E /* libGPUImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88120B1C18F69C8D000BFB5E /* libGPUImage.a */; };
 		88120BF218F6B173000BFB5E /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88120B9D18F6B173000BFB5E /* libGoogleAnalyticsServices.a */; };
 		88120BF418F6B173000BFB5E /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88120BA018F6B173000BFB5E /* libTestFlight.a */; };
 		88144259172F9CCF00A5B3FF /* UIView+Genie.m in Sources */ = {isa = PBXBuildFile; fileRef = 88144248172F9CCF00A5B3FF /* UIView+Genie.m */; };
@@ -1097,7 +1095,6 @@
 		889072C716770EBB0013DF7A /* LXRankingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890724516770EBB0013DF7A /* LXRankingViewController.m */; };
 		889072C816770EBB0013DF7A /* LXRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890724716770EBB0013DF7A /* LXRegisterViewController.m */; };
 		889072CA16770EBB0013DF7A /* LXNotifySideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890724B16770EBB0013DF7A /* LXNotifySideViewController.m */; };
-		889072CB16770EBB0013DF7A /* LXSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890724D16770EBB0013DF7A /* LXSettingViewController.m */; };
 		889072CC16770EBB0013DF7A /* LXMainTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890724F16770EBB0013DF7A /* LXMainTabViewController.m */; };
 		889072CE16770EBB0013DF7A /* LXWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890725316770EBB0013DF7A /* LXWelcomeViewController.m */; };
 		889072CF16770EBB0013DF7A /* LXButtonBack.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890725616770EBB0013DF7A /* LXButtonBack.m */; };
@@ -1318,7 +1315,6 @@
 		88C095C21739FF64007CED90 /* hicon_lock.png in Resources */ = {isa = PBXBuildFile; fileRef = 88C095B81739FF64007CED90 /* hicon_lock.png */; };
 		88C095C31739FF64007CED90 /* icon_public_s.png in Resources */ = {isa = PBXBuildFile; fileRef = 88C095B91739FF64007CED90 /* icon_public_s.png */; };
 		88C095C8173A47BD007CED90 /* UIImage+fixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 88C095C7173A47BD007CED90 /* UIImage+fixOrientation.m */; };
-		88C095CB173A6767007CED90 /* RBVolumeButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = 88C095CA173A6767007CED90 /* RBVolumeButtons.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		88C0FF4817212C0600F8CA2D /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88C0FF4717212C0600F8CA2D /* Accelerate.framework */; };
 		88C67F3A17C5B324002A5D56 /* LXModalNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88C67F3917C5B324002A5D56 /* LXModalNavigationController.m */; };
 		88CE89ED174E101A00C6A6B6 /* aqua_pfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88CE89DD174E101A00C6A6B6 /* aqua_pfont.ttf */; };
@@ -1598,6 +1594,7 @@
 		88F59874173908DB000BD186 /* icon_quick.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F5986A173908DA000BD186 /* icon_quick.png */; };
 		88F59875173908DB000BD186 /* icon_quick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F5986B173908DA000BD186 /* icon_quick@2x.png */; };
 		88F621061724E6AE00CDD1EC /* LXFBOpenGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 88F621051724E6AE00CDD1EC /* LXFBOpenGraph.m */; };
+		88F8D807192DD61500360560 /* libGPUImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88120B1C18F69C8D000BFB5E /* libGPUImage.a */; };
 		88FB5C191921E1E20018F757 /* LXStreamHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 88FB5C181921E1E20018F757 /* LXStreamHeader.m */; };
 		88FB5C1E1921E2420018F757 /* LXStreamHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88FB5C1D1921E2420018F757 /* LXStreamHeader.xib */; };
 		88FB5C21192374720018F757 /* LXUserPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88FB5C20192374720018F757 /* LXUserPageViewController.m */; };
@@ -1941,27 +1938,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		880B978118F78AAB0084D79D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 880B977C18F78AAB0084D79D /* QuickDialog.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D80B0E3313E052DF00FA85CA;
-			remoteInfo = QuickDialogExample;
-		};
-		880B978318F78AAB0084D79D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 880B977C18F78AAB0084D79D /* QuickDialog.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 2C542393145ADEBD0026A152;
-			remoteInfo = QuickDialog;
-		};
-		880B978518F78AE30084D79D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 880B977C18F78AAB0084D79D /* QuickDialog.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 2C542392145ADEBD0026A152;
-			remoteInfo = QuickDialog;
-		};
 		88120B1B18F69C8D000BFB5E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88120B1518F69C8D000BFB5E /* GPUImage.xcodeproj */;
@@ -2052,7 +2028,6 @@
 		880AC4FD1786B6C4001E4365 /* gradient1-148.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gradient1-148.png"; sourceTree = "<group>"; };
 		880AC4FE1786B6C4001E4365 /* gradient1-149.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gradient1-149.png"; sourceTree = "<group>"; };
 		880AC4FF1786B6C4001E4365 /* gradient1-150.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gradient1-150.png"; sourceTree = "<group>"; };
-		880B977C18F78AAB0084D79D /* QuickDialog.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QuickDialog.xcodeproj; path = Vendor/QuickDialog/QuickDialog.xcodeproj; sourceTree = "<group>"; };
 		880B978818F79C460084D79D /* LXImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXImagePickerController.h; sourceTree = "<group>"; };
 		880B978918F79C460084D79D /* LXImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXImagePickerController.m; sourceTree = "<group>"; };
 		880C4AFB161C2A1400252C6A /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
@@ -3473,8 +3448,6 @@
 		88C095B91739FF64007CED90 /* icon_public_s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_public_s.png; sourceTree = "<group>"; };
 		88C095C6173A47BD007CED90 /* UIImage+fixOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+fixOrientation.h"; sourceTree = "<group>"; };
 		88C095C7173A47BD007CED90 /* UIImage+fixOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+fixOrientation.m"; sourceTree = "<group>"; };
-		88C095C9173A6767007CED90 /* RBVolumeButtons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBVolumeButtons.h; sourceTree = "<group>"; };
-		88C095CA173A6767007CED90 /* RBVolumeButtons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBVolumeButtons.m; sourceTree = "<group>"; };
 		88C0FF4717212C0600F8CA2D /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		88C67F3817C5B324002A5D56 /* LXModalNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXModalNavigationController.h; sourceTree = "<group>"; };
 		88C67F3917C5B324002A5D56 /* LXModalNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXModalNavigationController.m; sourceTree = "<group>"; };
@@ -4127,9 +4100,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88F8D807192DD61500360560 /* libGPUImage.a in Frameworks */,
 				88C0FF4817212C0600F8CA2D /* Accelerate.framework in Frameworks */,
-				880B978718F78AEB0084D79D /* libQuickDialog.a in Frameworks */,
-				88120B2118F69CE3000BFB5E /* libGPUImage.a in Frameworks */,
 				88A49B8315B8FD5700CEA262 /* QuartzCore.framework in Frameworks */,
 				88A49B7F15B8FD5700CEA262 /* AVFoundation.framework in Frameworks */,
 				88A49B8215B8FD5700CEA262 /* OpenGLES.framework in Frameworks */,
@@ -4166,15 +4138,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		880B977D18F78AAB0084D79D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				880B978218F78AAB0084D79D /* QuickDialogExample.app */,
-				880B978418F78AAB0084D79D /* libQuickDialog.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		880C4AE1161C2A1400252C6A /* MBProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
@@ -5358,8 +5321,6 @@
 				8835FCC3171BEB6300A48346 /* NSDate+CalendarGrid.m */,
 				8835FCBF171BEB3700A48346 /* NSDate+TKCategory.h */,
 				8835FCC0171BEB3700A48346 /* NSDate+TKCategory.m */,
-				88C095C9173A6767007CED90 /* RBVolumeButtons.h */,
-				88C095CA173A6767007CED90 /* RBVolumeButtons.m */,
 				889072A216770EBB0013DF7A /* UIActionSheet+ButtonState.h */,
 				889072A316770EBB0013DF7A /* UIActionSheet+ButtonState.m */,
 				885C061B16BB69B0000820E7 /* UIDeviceHardware.h */,
@@ -5729,7 +5690,6 @@
 		88D9864615B8F97800858AD6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				880B977C18F78AAB0084D79D /* QuickDialog.xcodeproj */,
 				88120B1518F69C8D000BFB5E /* GPUImage.xcodeproj */,
 				88C0FF4717212C0600F8CA2D /* Accelerate.framework */,
 				887E40CE1626CE300060623C /* Accounts.framework */,
@@ -6747,7 +6707,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				880B978618F78AE30084D79D /* PBXTargetDependency */,
 				88120B2018F69CD6000BFB5E /* PBXTargetDependency */,
 			);
 			name = "Latte camera";
@@ -6816,10 +6775,6 @@
 					ProductGroup = 88120B1618F69C8D000BFB5E /* Products */;
 					ProjectRef = 88120B1518F69C8D000BFB5E /* GPUImage.xcodeproj */;
 				},
-				{
-					ProductGroup = 880B977D18F78AAB0084D79D /* Products */;
-					ProjectRef = 880B977C18F78AAB0084D79D /* QuickDialog.xcodeproj */;
-				},
 			);
 			projectRoot = "";
 			targets = (
@@ -6829,20 +6784,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		880B978218F78AAB0084D79D /* QuickDialogExample.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = QuickDialogExample.app;
-			remoteRef = 880B978118F78AAB0084D79D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		880B978418F78AAB0084D79D /* libQuickDialog.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libQuickDialog.a;
-			remoteRef = 880B978318F78AAB0084D79D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		88120B1C18F69C8D000BFB5E /* libGPUImage.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -8629,7 +8570,6 @@
 				889072C716770EBB0013DF7A /* LXRankingViewController.m in Sources */,
 				889072C816770EBB0013DF7A /* LXRegisterViewController.m in Sources */,
 				889072CA16770EBB0013DF7A /* LXNotifySideViewController.m in Sources */,
-				889072CB16770EBB0013DF7A /* LXSettingViewController.m in Sources */,
 				889072CC16770EBB0013DF7A /* LXMainTabViewController.m in Sources */,
 				889072CE16770EBB0013DF7A /* LXWelcomeViewController.m in Sources */,
 				88120A0D18F3D20D000BFB5E /* CHTCollectionViewWaterfallLayout.m in Sources */,
@@ -8737,7 +8677,6 @@
 				8883EEF51732256B00AA2D5E /* YISSTextView.m in Sources */,
 				88C095C8173A47BD007CED90 /* UIImage+fixOrientation.m in Sources */,
 				88120AB818F63233000BFB5E /* AFHTTPSessionManager.m in Sources */,
-				88C095CB173A6767007CED90 /* RBVolumeButtons.m in Sources */,
 				88E617BE173BD0C000E6E909 /* LXFilterDOF.m in Sources */,
 				8855F9BF173CD452006892FD /* GPUImageFilter+reset.m in Sources */,
 				88CE8A06174E10B500C6A6B6 /* UIColor+MLPFlatColors.m in Sources */,
@@ -8778,11 +8717,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		880B978618F78AE30084D79D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = QuickDialog;
-			targetProxy = 880B978518F78AE30084D79D /* PBXContainerItemProxy */;
-		};
 		88120B2018F69CD6000BFB5E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = GPUImage;
@@ -8981,7 +8915,7 @@
 				PRODUCT_NAME = "Latte camera";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Vendor/GPUImage\"/** \"$(SRCROOT)/Vendor/QuickDialog\"/**";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Vendor/GPUImage\"/**";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
@@ -9014,7 +8948,7 @@
 				PRODUCT_NAME = "Latte camera";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Vendor/GPUImage\"/** \"$(SRCROOT)/Vendor/QuickDialog\"/**";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Vendor/GPUImage\"/**";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};
