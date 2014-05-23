@@ -27,6 +27,8 @@
     NSString *area;
     UIRefreshControl *refresh;
     NSInteger currentTab;
+    UICollectionViewLayout *layoutGrid;
+    CHTCollectionViewWaterfallLayout *layoutWaterfall;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -42,13 +44,18 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    CHTCollectionViewWaterfallLayout *layout = (CHTCollectionViewWaterfallLayout*)self.collectionView.collectionViewLayout;
-    layout.minimumColumnSpacing = 4;
-    layout.minimumInteritemSpacing = 4;
-    layout.sectionInset = UIEdgeInsetsMake(6, 6, 6, 6);
-    layout.headerHeight = 50;
+    layoutGrid = self.collectionView.collectionViewLayout;
+    layoutWaterfall = [[CHTCollectionViewWaterfallLayout alloc] init];
+    layoutWaterfall.minimumColumnSpacing = 4;
+    layoutWaterfall.minimumInteritemSpacing = 4;
+    layoutWaterfall.sectionInset = UIEdgeInsetsMake(6, 6, 6, 6);
+    layoutWaterfall.headerHeight = 44;
+    
+//    UICollectionViewFlowLayout
+    [self.collectionView setCollectionViewLayout:layoutWaterfall animated:NO];
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"LXStreamHeader" bundle:nil] forSupplementaryViewOfKind:CHTCollectionElementKindSectionHeader withReuseIdentifier:@"Header"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"LXStreamHeader" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"Header"];
     
     loadEnded = false;
     loading = false;
@@ -181,17 +188,27 @@
         return header;
     }
     
+    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
+        LXStreamHeader *header = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                                    withReuseIdentifier:@"Header"
+                                                                           forIndexPath:indexPath];
+        [header.segmentView addTarget:self action:@selector(switchTab:) forControlEvents:UIControlEventValueChanged];
+        [header.buttonRefresh addTarget:self action:@selector(reloadView) forControlEvents:UIControlEventValueChanged];
+        header.segmentView.selectedSegmentIndex = 1;
+        return header;
+    }
+    
     return nil;
 }
 
 - (void)switchTab:(UISegmentedControl *)sender {
     currentTab = sender.selectedSegmentIndex;
     if (currentTab == 0) {
-        ((CHTCollectionViewWaterfallLayout*)self.collectionView.collectionViewLayout).columnCount = 2;
+        [self.collectionView selectItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+        [self.collectionView setCollectionViewLayout:layoutWaterfall animated:YES];
     } else {
-        ((CHTCollectionViewWaterfallLayout*)self.collectionView.collectionViewLayout).columnCount = 3;
+        [self.collectionView setCollectionViewLayout:layoutGrid animated:YES];
     }
-    [self.collectionView.collectionViewLayout invalidateLayout];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -207,6 +224,10 @@
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    return CGSizeMake(320, layoutWaterfall.headerHeight);
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath

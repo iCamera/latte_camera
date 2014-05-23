@@ -78,4 +78,10 @@
     [_delegate presentViewController:navGalerry animated:YES completion:nil];
 }
 
+- (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {
+    [UIView animateWithDuration:0.3 animations:^{
+        [self layoutIfNeeded];
+    }];
+}
+
 @end
