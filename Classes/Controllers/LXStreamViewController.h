@@ -13,5 +13,6 @@
 @interface LXStreamViewController : UICollectionViewController <CHTCollectionViewDelegateWaterfallLayout, LXGalleryViewControllerDataSource>
 
 - (IBAction)showMenu;
+- (IBAction)selectCountry:(id)sender;
 
 @end

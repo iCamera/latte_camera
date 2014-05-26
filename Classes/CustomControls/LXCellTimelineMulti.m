@@ -39,6 +39,12 @@
     // Configure the view for the selected state
 }
 
+- (void)awakeFromNib {
+    buttonUser.layer.cornerRadius = 15;
+    buttonUser.layer.shouldRasterize = YES;
+    buttonUser.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+}
+
 - (void)setFeed:(Feed *)feed {
     [buttonUser loadBackground:feed.user.profilePicture placeholderImage:@"user.gif"];
     
@@ -70,27 +76,6 @@
     [LXUtils setNationalityOfUser:feed.user forImage:imageNationality nextToLabel:labelTitle];
 
     [buttonUser addTarget:viewController action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
-}
-
-- (void)drawRect:(CGRect)rect {
-    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:viewBackground.bounds];
-    viewBackground.layer.masksToBounds = NO;
-    viewBackground.layer.shadowColor = [UIColor blackColor].CGColor;
-    viewBackground.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-    viewBackground.layer.shadowOpacity = 0.5f;
-    viewBackground.layer.shadowRadius = 3.0f;
-    viewBackground.layer.shadowPath = shadowPath.CGPath;
-    
-    UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:buttonUser.bounds];
-    buttonUser.layer.masksToBounds = NO;
-    buttonUser.layer.shadowColor = [UIColor blackColor].CGColor;
-    buttonUser.layer.shadowOffset = CGSizeMake(0.0, 0.0);
-    buttonUser.layer.shadowOpacity = 0.5f;
-    buttonUser.layer.shadowRadius = 1.5f;
-    buttonUser.layer.shadowPath = shadowPathPic.CGPath;
-    buttonUser.layer.cornerRadius = 3.0;
-    
-    [super drawRect:rect];
 }
 
 @end

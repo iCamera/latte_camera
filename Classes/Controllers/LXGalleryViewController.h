@@ -46,7 +46,6 @@ typedef enum {
 
 @property (strong, nonatomic) Picture* picture;
 @property (strong, nonatomic) User* user;
-
 @property (assign, nonatomic) GalleryTab currentTab;;
 
 - (IBAction)touchClose:(id)sender;

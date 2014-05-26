@@ -197,7 +197,7 @@
         header.segmentView.selectedSegmentIndex = 1;
         return header;
     }
-    
+
     return nil;
 }
 
@@ -269,6 +269,10 @@
     // Present the view controller
     //
     [self.frostedViewController presentMenuViewController];
+}
+
+- (IBAction)selectCountry:(id)sender {
+    
 }
 
 

@@ -18,7 +18,6 @@
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
 @property (strong, nonatomic) IBOutlet HPGrowingTextView *growingComment;
 @property (strong, nonatomic) IBOutlet LXButtonBrown30 *buttonSend;
-- (IBAction)touchSend:(id)sender;
 @property (strong, nonatomic) Picture *picture;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityLoad;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -26,5 +25,9 @@
 @property (strong, nonatomic) NSMutableArray *comments;
 
 @property (weak, nonatomic) LXGalleryViewController *parent;
+
+- (IBAction)touchSend:(id)sender;
+- (IBAction)touchReport:(id)sender;
+- (IBAction)touchReply:(id)sender;
 
 @end

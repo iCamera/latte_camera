@@ -27,5 +27,6 @@
 @property (strong, nonatomic) IBOutlet UIImageView *imageNationality;
 
 @property (strong, nonatomic) Comment *comment;
+- (IBAction)toggleLike:(UIButton*)sender;
 
 @end

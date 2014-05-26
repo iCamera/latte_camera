@@ -29,7 +29,6 @@
 
 @implementation LXGalleryViewController {
     UIPageViewController *pageController;
-    LXPicDetailTabViewController *viewPicTab;
     UITapGestureRecognizer *tapPage;
     UITapGestureRecognizer *tapDouble;
     NSMutableArray *currentComments;
@@ -82,23 +81,12 @@
                                                      navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
                                                                    options:nil];
     
-    UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
-                                                           bundle:nil];
-    viewPicTab = [storyGallery instantiateViewControllerWithIdentifier:@"DetailScroll"];
-    viewPicTab.parent = self;
-    CGRect frameTab = [[UIScreen mainScreen] bounds];
-    frameTab.origin.y = frameTab.size.height;
-
-    viewPicTab.view.frame = frameTab;
-    [self.view insertSubview:viewPicTab.view atIndex:1]; // Above description
-    [self addChildViewController:viewPicTab];
-    [viewPicTab didMoveToParentViewController:self];
     
     pageController.dataSource = self;
     pageController.delegate = self;
     CGRect frame = self.view.bounds;
-    frame.size.height -= 35;
-    pageController.view.frame = frame;
+
+    pageController.view.frame = self.view.bounds;
 
     tapPage = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapScrollImage:)];
     tapPage.numberOfTapsRequired = 1;
@@ -168,11 +156,12 @@
 
     [self setPicture];
     
-    buttonUser.layer.cornerRadius = 5;
-    buttonUser.clipsToBounds = YES;
+    buttonUser.layer.cornerRadius = 15;
+    buttonUser.layer.shouldRasterize = YES;
+    buttonUser.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+
     
     lxShare = [[LXShare alloc] init];
-    
     lxShare.controller = self;
     
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
@@ -181,71 +170,14 @@
                value:@"Gallery Screen"];
     
     [app.tracker send:[[GAIDictionaryBuilder createAppView] build]];
-    
-    //Setup Auto Animation
-    CATransition *animation = [CATransition animation];
-    animation.duration = 1.0;
-    animation.type = kCATransitionFade;
-    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    [labelDesc.layer addAnimation:animation forKey:@"changeTextTransition"];
 }
 
-- (void)setCurrentTab:(GalleryTab)currentTab {
-    LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
-    if (currentTab == kGalleryTabVote) { //Vote button
-        if (!currentPage.picture.isOwner)
-            return;
-    }
-    
-    if (![self isShowingContainer]) {
-        [self toggleFrame];
-        if (_currentTab != currentTab) {
-            _currentTab = currentTab;
-            viewPicTab.tab = currentTab;
-        }
-    } else {
-        if (currentTab == _currentTab) {
-            [self toggleFrame];
-        } else {
-            viewPicTab.tab = currentTab;
-            _currentTab = currentTab;
-        }
-    }
-}
 
 - (void)tapZoom:(UITapGestureRecognizer*)sender {
     LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
     [currentPage performSelector:@selector(tapZoom:) withObject:sender];
 }
 
-- (void)keyboardWillShow:(NSNotification *)notification
-{
-    CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    
-    if (screenRect.size.height - viewTab.frame.origin.y - 100 < keyboardSize.height) {
-        [self setTabHeight:keyboardSize.height + 100];
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationCurve:[[[notification userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
-        [UIView setAnimationDuration:[[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue]];
-        
-        
-        [UIView commitAnimations];
-    }
-}
-
-- (void)keyboardWillHide:(NSNotification *)notification
-{
- 
-}
-
-- (void)tapScrollImage:(UITapGestureRecognizer*)sender {
-    if ([self isShowingContainer]) {
-        [self toggleFrame];
-    } else {
-        [self toggleInfo];
-    }
-}
 
 - (void)toggleInfo {
     [UIView animateWithDuration:kGlobalAnimationSpeed
@@ -260,11 +192,6 @@
                              viewDesc.alpha = 1;
                          }
                      }];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [LXUtils globalShadow:viewTab];
-    [super viewDidAppear:animated];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -296,6 +223,9 @@
     } else if ([segue.identifier isEqualToString:@"Edit"]) {
         LXPicEditViewController *viewEdit = segue.destinationViewController;
         viewEdit.picture = currentPage.picture;
+    } else if ([segue.identifier isEqualToString:@"Detail"]) {
+        LXPicDetailTabViewController *viewPicTab = segue.destinationViewController;
+        viewPicTab.picture = currentPage.picture;
     }
 }
 
@@ -338,10 +268,6 @@
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed {
-    if ([self isShowingContainer]) {
-        [self toggleFrame];
-    }
-    
     if (completed) {
         [self setPicture];
     }
@@ -352,9 +278,7 @@
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers {
-    if ([self isShowingContainer]) {
-        [self toggleFrame];
-    }
+
 }
 
 - (void)setPicture {
@@ -388,9 +312,6 @@
                      completion:^(BOOL finished) {
                          [viewDesc flashScrollIndicators];
                      }];
-    
-    viewPicTab.picture = currentPage.picture;
-    viewPicTab.viewComment.comments = nil;
     
     
     if (currentPage.user) {
@@ -482,35 +403,7 @@
             frameTab.origin.y = screenRect.size.height - frameTab.size.height;
         }
         
-        CGRect frameContainer = viewPicTab.view.frame;
-        frameContainer.origin.y = frameTab.origin.y + frameTab.size.height;
-        
-        viewTab.frame = frameTab;
-        viewPicTab.view.frame = frameContainer;
-        
-//        [viewPicTab updateContent];
-        
         [sender setTranslation:CGPointZero inView:self.view];
-    }
-}
-
-- (void)setTabHeight:(CGFloat)height {
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    CGRect frameTab = viewTab.frame;
-    frameTab.origin = CGPointMake(0, screenRect.size.height - height - viewTab.frame.size.height);
-    CGRect frameContainer = viewPicTab.view.frame;
-    frameContainer.origin.y = screenRect.size.height - height;
-    
-    [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
-        viewTab.frame = frameTab;
-        viewPicTab.view.frame = frameContainer;
-    } completion:^(BOOL finished) {
-//        [viewPicTab updateContent];
-    }];
-    
-    // Start loading extra info if rollup tab
-    if (!loadedInfo) {
-        [self loadInfo];
     }
 }
 
@@ -518,38 +411,6 @@
     loadedInfo = true;
     LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
-    
-    viewPicTab.picture = currentPage.picture;
-    viewPicTab.viewVote.picture = currentPage.picture;
-    if (viewPicTab.picture.comments) {
-        viewPicTab.viewComment.comments = viewPicTab.picture.comments;
-    } else {
-        NSString *urlDetail = [NSString stringWithFormat:@"picture/%ld", [currentPage.picture.pictureId integerValue]];
-        [viewPicTab.viewComment.activityLoad startAnimating];
-        viewPicTab.viewComment.tableView.tableFooterView = viewPicTab.viewComment.viewFooter;
-        [[LatteAPIClient sharedClient] GET:urlDetail
-                                    parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
-                                       success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                           if (currentPage.user == nil) {
-                                               currentPage.user = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
-                                               labelNickname.text = currentPage.user.name;
-                                               [buttonUser loadBackground:currentPage.user.profilePicture placeholderImage:@"user.gif"];
-                                               [LXUtils setNationalityOfUser:currentPage.user forImage:imageNationality nextToLabel:labelNickname];
-                                           }
-                                           
-                                           currentComments = [Comment mutableArrayFromDictionary:JSON withKey:@"comments"];
-                                           viewPicTab.viewComment.comments = currentComments;
-                                       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                           DLog(@"Something went wrong PicDetail Gallery");
-                                           
-                                           UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
-                                                                                           message:error.localizedDescription
-                                                                                          delegate:nil
-                                                                                 cancelButtonTitle:NSLocalizedString(@"close", "Close")
-                                                                                 otherButtonTitles:nil];
-                                           [alert show];
-                                       }];
-    }
 }
 
 - (IBAction)touchUser:(UIButton *)sender {
@@ -607,24 +468,14 @@
     [actionSheet showFrom:self.view];
 }
 
-- (void)toggleFrame {
-    if (![self isShowingContainer]) {
-        [self setTabHeight:320];
-    } else {
-        [self setTabHeight:0];
-        [viewPicTab.viewComment.growingComment resignFirstResponder];
-    }
-}
-
-- (BOOL)isShowingContainer {
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    CGRect frameTab = viewTab.frame;
-
-    return screenRect.size.height - frameTab.origin.y - frameTab.size.height > 0;
-}
 
 - (BOOL)prefersStatusBarHidden {
     return YES;
+}
+
+- (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
+    
+    return UIStatusBarAnimationFade;
 }
 
 

@@ -110,7 +110,6 @@
 		88120BF218F6B173000BFB5E /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88120B9D18F6B173000BFB5E /* libGoogleAnalyticsServices.a */; };
 		88120BF418F6B173000BFB5E /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88120BA018F6B173000BFB5E /* libTestFlight.a */; };
 		88144259172F9CCF00A5B3FF /* UIView+Genie.m in Sources */ = {isa = PBXBuildFile; fileRef = 88144248172F9CCF00A5B3FF /* UIView+Genie.m */; };
-		8818860916F17B61009A9266 /* LXCommentControllViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8818860816F17B60009A9266 /* LXCommentControllViewController.m */; };
 		8818861116F1F039009A9266 /* LXCellSearchUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8818861016F1F039009A9266 /* LXCellSearchUser.m */; };
 		8818861316F30BEA009A9266 /* mymenu.png in Resources */ = {isa = PBXBuildFile; fileRef = 8818861216F30BEA009A9266 /* mymenu.png */; };
 		8820D82E16634D7000DBBFF9 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8820D82D16634D7000DBBFF9 /* CoreImage.framework */; };
@@ -2109,8 +2108,6 @@
 		88120BA518F6B173000BFB5E /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		88144247172F9CCF00A5B3FF /* UIView+Genie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Genie.h"; sourceTree = "<group>"; };
 		88144248172F9CCF00A5B3FF /* UIView+Genie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Genie.m"; sourceTree = "<group>"; };
-		8818860716F17B60009A9266 /* LXCommentControllViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCommentControllViewController.h; sourceTree = "<group>"; };
-		8818860816F17B60009A9266 /* LXCommentControllViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCommentControllViewController.m; sourceTree = "<group>"; };
 		8818860F16F1F039009A9266 /* LXCellSearchUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCellSearchUser.h; sourceTree = "<group>"; };
 		8818861016F1F039009A9266 /* LXCellSearchUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCellSearchUser.m; sourceTree = "<group>"; };
 		8818861216F30BEA009A9266 /* mymenu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mymenu.png; sourceTree = "<group>"; };
@@ -5115,8 +5112,6 @@
 				8837736A17AA81A4005B0826 /* LXChangeEmailViewController.m */,
 				8837736617AA7B1F005B0826 /* LXChangePasswordViewController.h */,
 				8837736717AA7B1F005B0826 /* LXChangePasswordViewController.m */,
-				8818860716F17B60009A9266 /* LXCommentControllViewController.h */,
-				8818860816F17B60009A9266 /* LXCommentControllViewController.m */,
 				8837738617B0C15F005B0826 /* LXEmailConfirmPopupController.h */,
 				8837738717B0C161005B0826 /* LXEmailConfirmPopupController.m */,
 				882E14A316EF0BF100839B92 /* LXFacebookFriendViewController.h */,
@@ -8634,7 +8629,6 @@
 				882E14AD16EF0FDE00839B92 /* LXCellFacebook.m in Sources */,
 				882E14BF16F0928700839B92 /* LXCellGrid.m in Sources */,
 				882E14C216F09B4C00839B92 /* LXTagViewController.m in Sources */,
-				8818860916F17B61009A9266 /* LXCommentControllViewController.m in Sources */,
 				8818861116F1F039009A9266 /* LXCellSearchUser.m in Sources */,
 				88B3A3AB16F39951002A6BDA /* LXUploadObject.m in Sources */,
 				8824FAD916F6DD6C00357ADB /* LXCellUpload.m in Sources */,

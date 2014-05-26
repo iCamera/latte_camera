@@ -10,6 +10,8 @@
 
 #import "LXPicInfoViewController.h"
 #import "LXPicCommentViewController.h"
+#import "LXVoteViewController.h"
+
 
 
 @interface LXPicDetailTabViewController () {
@@ -19,6 +21,8 @@
 @end
 
 @implementation LXPicDetailTabViewController {
+    LXPicCommentViewController *viewComment;
+    LXVoteViewController *viewVote;
     LXPicInfoViewController *viewInfo;
 }
 
@@ -36,58 +40,38 @@
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery" bundle:nil];
-        _viewVote = [storyGallery instantiateViewControllerWithIdentifier:@"Vote"];
-        _viewComment = [storyGallery instantiateViewControllerWithIdentifier:@"Comment"];
-        viewInfo = [storyGallery instantiateViewControllerWithIdentifier:@"Info"];
     }
     return self;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"Vote"]) {
+        viewVote = segue.destinationViewController;
+        viewVote.picture = _picture;
+    }
+    if ([segue.identifier isEqualToString:@"Comment"]) {
+        viewComment = segue.destinationViewController;
+        viewComment.picture = _picture;
+    }
+    if ([segue.identifier isEqualToString:@"Info"]) {
+        viewInfo = segue.destinationViewController;
+        viewInfo.picture = _picture;
+    }
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    _viewVote.view.frame = CGRectMake(0, 0, 320, 320);
-    [scrollTab addSubview:_viewVote.view];
-    [self addChildViewController:_viewVote];
-    [_viewVote didMoveToParentViewController:self];
-    
-    _viewComment.view.frame = CGRectMake(320, 0, 320, 320);
-    [scrollTab addSubview:_viewComment.view];
-    [self addChildViewController:_viewComment];
-    [_viewComment didMoveToParentViewController:self];
-    
-    viewInfo.view.frame = CGRectMake(640, 0, 320, 320);
-    [scrollTab addSubview:viewInfo.view];
-    [self addChildViewController:viewInfo];
-    [viewInfo didMoveToParentViewController:self];
     
     currentTab = 2;
     scrollTab.contentSize = CGSizeMake(960, 320);
     scrollTab.contentOffset = CGPointMake(320, 0);
-    
-    viewInfo.parent = _parent;
-    _viewComment.parent = _parent;
-    if (_picture != nil) {
-        viewInfo.picture = _picture;
-    }
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-}
-
-- (void)setPicture:(Picture *)picture {
-    _picture = picture;
-    _viewComment.picture = picture;
-    viewInfo.picture = picture;
-    
-    // Switch to comment
-    if (!_picture.isOwner && currentTab == 1) {
-        [self setTab:2];
-    }
 }
 
 - (void)setTab:(NSInteger)tab {
@@ -98,4 +82,12 @@
 - (void)viewDidUnload {
     [super viewDidUnload];
 }
+- (IBAction)closeModal:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return YES;
+}
+
 @end

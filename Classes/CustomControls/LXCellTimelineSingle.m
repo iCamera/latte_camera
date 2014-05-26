@@ -68,8 +68,6 @@
     buttonUser.layer.cornerRadius = 15;
     buttonUser.layer.shouldRasterize = YES;
     buttonUser.layer.rasterizationScale = [[UIScreen mainScreen] scale];
-    
-    [LXUtils globalShadow:viewBackground];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -84,7 +82,7 @@
     
     Picture *pic = feed.targets[0];
 
-    [buttonPic setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pic.urlMedium] placeholderImage:nil];
+    [buttonPic setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pic.urlMedium] placeholderImage:nil];
 
     buttonLike.tag = [pic.pictureId integerValue];
     buttonInfo.tag = [pic.pictureId integerValue];

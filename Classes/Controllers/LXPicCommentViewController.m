@@ -11,8 +11,6 @@
 #import "LXCellComment.h"
 #import "LXAppDelegate.h"
 #import "LXUserPageViewController.h"
-//#import "SideSwipeTableViewCell.h"
-#import "LXCommentControllViewController.h"
 #import "LXButtonBack.h"
 #import "MBProgressHUD.h"
 #import "LXReportAbuseCommentViewController.h"
@@ -51,10 +49,6 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Component"
-                                                             bundle:nil];
-    UIViewController *viewCommentControl = [mainStoryboard instantiateViewControllerWithIdentifier:@"Comment"];
-    viewCommentControl.view.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.rowHeight);
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
@@ -77,6 +71,26 @@
     userTag = [[NSMutableArray alloc] init];
     
     [LXUtils globalShadow:viewHeader];
+    
+    if (_picture.comments) {
+        _comments = _picture.comments;
+        [self.tableView reloadData];
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(_comments.count-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        [activityLoad stopAnimating];
+        self.tableView.tableFooterView = nil;
+        
+    } else {
+        NSString *urlDetail = [NSString stringWithFormat:@"picture/%ld", [_picture.pictureId integerValue]];
+        [activityLoad startAnimating];
+        self.tableView.tableFooterView = _viewFooter;
+        [[LatteAPIClient sharedClient] GET:urlDetail parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+            _comments = [Comment mutableArrayFromDictionary:JSON withKey:@"comments"];
+            [self.tableView reloadData];
+            //[self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(_comments.count-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            [activityLoad stopAnimating];
+            self.tableView.tableFooterView = nil;
+        } failure:nil];
+    }
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification
@@ -174,17 +188,6 @@
 }
 
 
-- (void)setComments:(NSMutableArray *)comments {
-    _comments = comments;
-    
-    [self.tableView reloadData];
-    if (comments.count > 0) {
-        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(comments.count-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-    }
-    [activityLoad stopAnimating];
-    self.tableView.tableFooterView = nil;
-}
-
 - (BOOL)sendComment {
     if (growingComment.text.length < 3000) {
         // Submit comment
@@ -241,6 +244,7 @@
 - (IBAction)touchSend:(id)sender {
     [self sendComment];
 }
+
 
 - (void)showUser:(UIButton *)sender {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
@@ -328,9 +332,9 @@
     Comment *comment = _comments[indexPath.row];
     NSString *strComment = comment.descriptionText;
     CGSize labelSize = [strComment sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12]
-                              constrainedToSize:CGSizeMake(255.0f, MAXFLOAT)
+                              constrainedToSize:CGSizeMake(266.0f, MAXFLOAT)
                                   lineBreakMode:NSLineBreakByWordWrapping];
-    return MAX(labelSize.height + 45, 42);
+    return labelSize.height + 50;
 }
 
 #pragma mark - Table view delegate

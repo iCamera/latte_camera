@@ -51,7 +51,13 @@
 
 - (AFHTTPRequestOperation *)GET:(NSString *)URLString parameters:(NSDictionary *)parameters success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure {
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    NSMutableDictionary *params;
+    if (parameters) {
+        params = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    } else {
+        params = [[NSMutableDictionary alloc] init];
+    }
+    
     if ([app getToken]) {
         [params setObject:[app getToken] forKey:@"token"];
     }
@@ -60,9 +66,13 @@
 }
 
 - (AFHTTPRequestOperation *)POST:(NSString *)URLString parameters:(NSDictionary *)parameters success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure {
-    
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    NSMutableDictionary *params;
+    if (parameters) {
+        params = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    } else {
+        params = [[NSMutableDictionary alloc] init];
+    }
     if ([app getToken]) {
         [params setObject:[app getToken] forKey:@"token"];
     }

@@ -38,6 +38,12 @@
     // Configure the view for the selected state
 }
 
+- (void)awakeFromNib {
+    buttonUser.layer.cornerRadius = 15;
+    buttonUser.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+    buttonUser.layer.shouldRasterize = YES;
+}
+
 - (void)setComment:(Comment *)comment {
     _comment = comment;
     textComment.text = comment.descriptionText;
@@ -61,71 +67,14 @@
     else {
         buttonLike.hidden = false;
         buttonReply.hidden = YES;
-//        buttonLike.selected = comment.isVoted;
         buttonLike.enabled = !comment.isVoted;
     }
-    [buttonLike addTarget:self action:@selector(toggleLikeComment:) forControlEvents:UIControlEventTouchUpInside];
     
     [LXUtils setNationalityOfUser:comment.user forImage:imageNationality nextToLabel:labelAuthor];
-    
-    [self relayout];
 }
 
-- (void)relayout {
-    CGSize labelSize = [textComment.text sizeWithFont:textComment.font
-                                    constrainedToSize:CGSizeMake(255.0f, CGFLOAT_MAX)
-                                        lineBreakMode:NSLineBreakByWordWrapping];
-    
-    CGSize sizeLabelDate = [labelDate.text sizeWithFont:labelDate.font
-                                      constrainedToSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)
-                                          lineBreakMode:NSLineBreakByWordWrapping];
-    
-    CGPoint pointer = CGPointMake(42, labelSize.height + 22);
-    
-    CGRect frameComment = textComment.frame;
-    CGRect frameDate = labelDate.frame;
-    CGRect frameLike = buttonLike.frame;
-    CGRect frameLikeImage = imageLike.frame;
-    CGRect frameLikeCount = labelLike.frame;
-    
-    frameDate.origin.y = frameLikeCount.origin.y = frameLike.origin.y = frameLikeImage.origin.y = pointer.y;
-    frameComment.size = labelSize;
-    
-    frameDate.size.width = sizeLabelDate.width;
-    pointer.x += sizeLabelDate.width + 2;
-    
 
-    if (!buttonLike.hidden) {
-        frameLike.origin.x = pointer.x;
-        
-        NSString *buttonString;
-        if (buttonLike.selected) {
-            buttonString = [buttonLike titleForState:UIControlStateSelected];
-        } else if (!buttonLike.enabled) {
-            buttonString = [buttonLike titleForState:UIControlStateDisabled];
-        } else
-            buttonString = [buttonLike titleForState:UIControlStateNormal];
-        frameLike.size.width = [buttonString sizeWithFont:labelDate.font
-                                        constrainedToSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)].width + 3;
-        pointer.x += frameLike.size.width + 3;
-    }
-    
-    frameLikeImage.origin.y = pointer.y + 2;
-    frameLikeImage.origin.x = pointer.x;
-    pointer.x += 10 + 3;
-    frameLikeCount.origin.x = pointer.x;
-    
-    [UIView animateWithDuration:kGlobalAnimationSpeed
-                     animations:^{
-                         labelLike.frame = frameLikeCount;
-                         labelDate.frame = frameDate;
-                         buttonLike.frame = frameLike;
-                         imageLike.frame = frameLikeImage;
-                         textComment.frame = frameComment;
-                     }];
-}
-
-- (void)toggleLikeComment:(UIButton*)sender {
+- (IBAction)toggleLike:(UIButton*)sender {
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
     if (!app.currentUser) {
         sender.enabled = NO;
@@ -141,8 +90,6 @@
     
     labelLike.text = [_comment.voteCount stringValue];
     
-    [self relayout];
-    
     NSMutableDictionary *param = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                   @"1", @"vote_type",
                                   nil];
@@ -152,29 +99,6 @@
     
     
     NSString *url = [NSString stringWithFormat:@"picture/comment/%d/vote", [_comment.commentId integerValue]];
-    [[LatteAPIClient sharedClient] POST:url
-                                 parameters:param
-                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                        DLog(@"Submited like");
-                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
-                                                                                        message:error.localizedDescription
-                                                                                       delegate:nil
-                                                                              cancelButtonTitle:NSLocalizedString(@"close", "Close")
-                                                                              otherButtonTitles:nil];
-                                        [alert show];
-                                        DLog(@"Something went wrong (Vote)");
-                                    }];
+    [[LatteAPIClient sharedClient] POST:url parameters:param success:nil failure:nil];
 }
-
-
-- (void)drawRect:(CGRect)rect {
-    [super drawRect:rect];
-    
-    buttonUser.layer.cornerRadius = 3;
-    buttonUser.clipsToBounds = YES;
-    viewBack.layer.cornerRadius = 3;
-    viewBack.clipsToBounds = YES;
-}
-
 @end

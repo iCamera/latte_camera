@@ -71,15 +71,10 @@
     } else {
         [sender setTitle:[pic.voteCount stringValue] forState:UIControlStateNormal];
     }
-    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                           @"1", @"vote_type",
-                           nil];
-    if (app.currentUser != nil) {
-        [param setObject:[app getToken] forKey:@"token"];
-    }
     
+    NSDictionary *param = @{@"vote_type": [NSNumber numberWithInteger:1]};
     
-    NSString *url = [NSString stringWithFormat:@"picture/%ld/vote_post", [pic.pictureId integerValue]];
+    NSString *url = [NSString stringWithFormat:@"picture/%ld/vote_post", (long)[pic.pictureId integerValue]];
     [[LatteAPIClient sharedClient] POST:url
                                  parameters:param
                                     success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {

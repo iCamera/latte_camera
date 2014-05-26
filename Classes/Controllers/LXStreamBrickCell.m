@@ -40,8 +40,6 @@
     _buttonUser.layer.rasterizationScale = [[UIScreen mainScreen] scale];
     _buttonUser.layer.shouldRasterize = YES;
     
-    _buttonPicture.imageView.contentMode = UIViewContentModeScaleAspectFill;
-    
     self.layer.cornerRadius = 2;
     self.layer.masksToBounds = YES;
     self.layer.shouldRasterize = YES;
@@ -71,9 +69,13 @@
     UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                            bundle:nil];
     UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
+    navGalerry.modalPresentationStyle = UIModalPresentationFullScreen;
+    navGalerry.modalPresentationCapturesStatusBarAppearance = YES;
+    
     LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
     viewGallery.delegate = _delegate;
     viewGallery.picture = picture;
+    viewGallery.user = _feed.user;
     
     [_delegate presentViewController:navGalerry animated:YES completion:nil];
 }
