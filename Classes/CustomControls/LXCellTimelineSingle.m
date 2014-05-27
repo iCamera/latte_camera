@@ -15,6 +15,7 @@
 #import "RDActionSheet.h"
 #import "UIButton+AFNetworking.h"
 #import "LXUserPageViewController.h"
+#import "LXPicDetailTabViewController.h"
 
 @implementation LXCellTimelineSingle {
     LXShare *lxShare;
@@ -167,15 +168,12 @@
     
     UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                            bundle:nil];
-    UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
-    LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
-    viewGallery.delegate = viewController;
-    viewGallery.user = _feed.user;
-    viewGallery.picture = pic;
+    LXPicDetailTabViewController *pictureTab = [storyGallery instantiateViewControllerWithIdentifier:@"DetailScroll"];
+
+    pictureTab.picture = pic;
+    pictureTab.tab = kGalleryTabComment;
     
-    [viewController presentViewController:navGalerry animated:YES completion:^{
-        viewGallery.currentTab = kGalleryTabComment;
-    }];
+    [viewController presentViewController:pictureTab animated:YES completion:nil];
 }
 
 - (IBAction)toggleLike:(id)sender {
