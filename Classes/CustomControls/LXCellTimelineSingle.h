@@ -10,7 +10,7 @@
 #import "Feed.h"
 #import "LXGalleryViewController.h"
 
-@interface LXCellTimelineSingle : UITableViewCell
+@interface LXCellTimelineSingle : UITableViewCell<UIActionSheetDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *labelTitle;
 @property (strong, nonatomic) IBOutlet UILabel *labelUser;

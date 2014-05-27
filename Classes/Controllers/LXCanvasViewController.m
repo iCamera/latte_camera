@@ -11,7 +11,6 @@
 #import "ALAssetsLibrary+CustomPhotoAlbum.h"
 #import "LXFilterFish.h"
 #import "LXShare.h"
-#import "RDActionSheet.h"
 #import "LXImageFilter.h"
 #import "LXImageLens.h"
 #import "LXFilterDOF.h"
@@ -23,8 +22,6 @@
     GPUImageFilterPipeline *pipe;
     LXImageFilter *filterMain;
     LXFilterDOF *filterDOF;
-    
-    UIActionSheet *sheet;
     
     BOOL isSaved;
     BOOL isWatingToUpload;
@@ -593,50 +590,73 @@
         controllerPicEdit.preview = imageFinalThumb;
         [self.navigationController pushViewController:controllerPicEdit animated:YES];
     } else {
-        RDActionSheet *actionSheet = [[RDActionSheet alloc] initWithCancelButtonTitle:NSLocalizedString(@"Cancel", @"")
-                                                                   primaryButtonTitle:nil
-                                                               destructiveButtonTitle:nil
-                                                                    otherButtonTitles:@"Email", @"Twitter", @"Facebook", @"Latte", nil];
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                                 delegate:self
+                                                        cancelButtonTitle:NSLocalizedString(@"Cancel", @"")
+                                                   destructiveButtonTitle:nil
+                                                        otherButtonTitles:@"Email", @"Twitter", @"Facebook", @"Latte", nil];
+        actionSheet.tag = 0;
+        [actionSheet showInView:self.view];
+    }
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (actionSheet.tag == 0) {
+        laSharekit.text = @"";
+        laSharekit.imageData = imageFinalData;
+        laSharekit.imagePreview = imageFinalThumb;
         
-        actionSheet.callbackBlock = ^(RDActionSheetResult result, NSInteger buttonIndex)
-        {
-            switch (result) {
-                case RDActionSheetButtonResultSelected: {
-                    laSharekit.text = @"";
-                    laSharekit.imageData = imageFinalData;
-                    laSharekit.imagePreview = imageFinalThumb;
-                    
-                    switch (buttonIndex) {
-                        case 0: // email
-                            [laSharekit emailIt];
-                            break;
-                        case 1: // twitter
-                            [laSharekit tweet];
-                            break;
-                        case 2: // facebook
-                            [laSharekit facebookPost];
-                            break;
-                        case 3: {
-                            UINavigationController *modalLogin = [[UIStoryboard storyboardWithName:@"Authentication"
-                                                                                            bundle: nil] instantiateInitialViewController];
-                            [self presentViewController:modalLogin animated:YES completion:^{
-                                isWatingToUpload = YES;
-                            }];
-                            
-                            break;
-                        }
-                            
-                        default:
-                            break;
-                    }
-                }
-                    break;
-                case RDActionSheetResultResultCancelled:
-                    NSLog(@"Sheet cancelled");
+        switch (buttonIndex) {
+            case 0: // email
+                [laSharekit emailIt];
+                break;
+            case 1: // twitter
+                [laSharekit tweet];
+                break;
+            case 2: // facebook
+                [laSharekit facebookPost];
+                break;
+            case 3: {
+                UINavigationController *modalLogin = [[UIStoryboard storyboardWithName:@"Authentication"
+                                                                                bundle: nil] instantiateInitialViewController];
+                [self presentViewController:modalLogin animated:YES completion:^{
+                    isWatingToUpload = YES;
+                }];
+                
+                break;
             }
-        };
-        
-        [actionSheet showFrom:self.view];
+                
+            default:
+                break;
+        }
+
+    } else if (actionSheet.tag == 1) {
+        NSInteger blendMode = 4;
+        switch (buttonIndex) {
+            case 0: // Softlight
+                blendMode = 7;
+                break;
+            case 1: // Overlay
+                blendMode = 6;
+                break;
+            case 2: // Color Dodge
+                blendMode = 5;
+                break;
+            case 3: // Screen
+                blendMode = 4;
+                break;
+            case 4: // Lighten
+                blendMode = 3;
+                break;
+            case 5: // Normal
+                blendMode = 11;
+                break;
+        }
+        if (!buttonBlendLayer1.enabled)
+            filterMain.blendMode = blendMode;
+        if (!buttonBlendLayer2.enabled)
+            filterMain.filmMode = blendMode;
+        [self processImage];
     }
 }
 
@@ -1550,56 +1570,19 @@
     [super viewDidUnload];
 }
 - (IBAction)touchBlendSetting:(id)sender {
-    RDActionSheet *actionSheet = [[RDActionSheet alloc] initWithCancelButtonTitle:NSLocalizedString(@"Cancel", @"")
-                                                               primaryButtonTitle:nil
-                                                           destructiveButtonTitle:nil
-                                                                otherButtonTitles:
-                                  NSLocalizedString(@"Soft Light", @""),
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                             delegate:self
+                                                    cancelButtonTitle:NSLocalizedString(@"Cancel", @"")
+                                               destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Soft Light", @""),
                                   NSLocalizedString(@"Overlay", @""),
                                   NSLocalizedString(@"Color Dodge", @""),
                                   NSLocalizedString(@"Screen", @""),
                                   NSLocalizedString(@"Lighten", @""),
-                                  NSLocalizedString(@"Normal", @""),
-                                  nil];
+                                  NSLocalizedString(@"Normal", @""), nil];
+
+    actionSheet.tag = 1;
     
-    actionSheet.callbackBlock = ^(RDActionSheetResult result, NSInteger buttonIndex)
-    {
-        switch (result) {
-            case RDActionSheetButtonResultSelected:{
-                NSInteger blendMode = 4;
-                switch (buttonIndex) {
-                    case 0: // Softlight
-                        blendMode = 7;
-                        break;
-                    case 1: // Overlay
-                        blendMode = 6;
-                        break;
-                    case 2: // Color Dodge
-                        blendMode = 5;
-                        break;
-                    case 3: // Screen
-                        blendMode = 4;
-                        break;
-                    case 4: // Lighten
-                        blendMode = 3;
-                        break;
-                    case 5: // Normal
-                        blendMode = 11;
-                        break;
-                }
-                if (!buttonBlendLayer1.enabled)
-                    filterMain.blendMode = blendMode;
-                if (!buttonBlendLayer2.enabled)
-                    filterMain.filmMode = blendMode;
-                [self processImage];
-            }
-                break;
-            case RDActionSheetResultResultCancelled:
-                NSLog(@"Sheet cancelled");
-        }
-    };
-    
-    [actionSheet showFrom:self.view];
+    [actionSheet showInView:self.view];
 }
 
 - (IBAction)changeBlendIntensity:(id)sender {

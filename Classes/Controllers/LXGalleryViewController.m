@@ -19,7 +19,6 @@
 #import "UIButton+AsyncImage.h"
 #import "Comment.h"
 #import "LXTagViewController.h"
-#import "RDActionSheet.h"
 #import "LXUserPageViewController.h"
 
 
@@ -432,40 +431,31 @@
 }
 
 - (IBAction)touchShare:(id)sender {
-    LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
-    RDActionSheet *actionSheet = [[RDActionSheet alloc] initWithCancelButtonTitle:NSLocalizedString(@"Cancel", @"")
-                                                               primaryButtonTitle:nil
-                                                           destructiveButtonTitle:nil
-                                                                otherButtonTitles:@"Email", @"Twitter", @"Facebook", nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                             delegate:self
+                                                    cancelButtonTitle:NSLocalizedString(@"Cancel", @"")
+                                               destructiveButtonTitle:nil otherButtonTitles:@"Email", @"Twitter", @"Facebook", nil];
+    [actionSheet showInView:self.view];
+}
 
-    actionSheet.callbackBlock = ^(RDActionSheetResult result, NSInteger buttonIndex)
-    {
-        switch (result) {
-            case RDActionSheetButtonResultSelected: {
-                lxShare.url = currentPage.picture.urlWeb;
-                lxShare.text = currentPage.picture.urlWeb;
-                
-                switch (buttonIndex) {
-                    case 0: // email
-                        [lxShare emailIt];
-                        break;
-                    case 1: // twitter
-                        [lxShare tweet];
-                        break;
-                    case 2: // facebook
-                        [lxShare facebookPost];
-                        break;
-                    default:
-                        break;
-                }
-            }
-                break;
-            case RDActionSheetResultResultCancelled:
-                NSLog(@"Sheet cancelled");
-        }
-    };
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
+    lxShare.url = currentPage.picture.urlWeb;
+    lxShare.text = currentPage.picture.urlWeb;
     
-    [actionSheet showFrom:self.view];
+    switch (buttonIndex) {
+        case 0: // email
+            [lxShare emailIt];
+            break;
+        case 1: // twitter
+            [lxShare tweet];
+            break;
+        case 2: // facebook
+            [lxShare facebookPost];
+            break;
+        default:
+            break;
+    }
 }
 
 

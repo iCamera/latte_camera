@@ -12,7 +12,6 @@
 #import "LXCellComment.h"
 #import "LXAppDelegate.h"
 #import "LXShare.h"
-#import "RDActionSheet.h"
 #import "UIButton+AFNetworking.h"
 #import "LXUserPageViewController.h"
 #import "LXPicDetailTabViewController.h"
@@ -196,44 +195,35 @@
 }
 
 - (IBAction)moreAction:(id)sender {
+    UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:nil
+                                                        delegate:self
+                                               cancelButtonTitle:NSLocalizedString(@"Cancel", @"")
+                                          destructiveButtonTitle:nil
+                                               otherButtonTitles:@"Email", @"Twitter", @"Facebook", nil];
+    [action showFromTabBar:viewController.navigationController.tabBarController.tabBar];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     Picture *pic = _feed.targets[0];
     
-    RDActionSheet *actionSheet = [[RDActionSheet alloc] initWithCancelButtonTitle:NSLocalizedString(@"Cancel", @"")
-                                                               primaryButtonTitle:nil
-                                                           destructiveButtonTitle:nil
-                                                                otherButtonTitles:@"Email", @"Twitter", @"Facebook", nil];
+    lxShare = [[LXShare alloc] init];
+    lxShare.controller = viewController;
     
-    actionSheet.callbackBlock = ^(RDActionSheetResult result, NSInteger buttonIndex)
-    {
-        switch (result) {
-                
-            case RDActionSheetButtonResultSelected: {
-                lxShare = [[LXShare alloc] init];
-                lxShare.controller = viewController;
-                
-                lxShare.url = pic.urlWeb;
-                lxShare.text = pic.urlWeb;
-                
-                switch (buttonIndex) {
-                    case 0: // email
-                        [lxShare emailIt];
-                        break;
-                    case 1: // twitter
-                        [lxShare tweet];
-                        break;
-                    case 2: // facebook
-                        [lxShare facebookPost];
-                        break;
-                    default:
-                        break;
-                }
-            }
-                break;
-            case RDActionSheetResultResultCancelled:
-                NSLog(@"Sheet cancelled");
-        }
-    };
+    lxShare.url = pic.urlWeb;
+    lxShare.text = pic.urlWeb;
     
-    [actionSheet showFrom:viewController.navigationController.tabBarController.view];
+    switch (buttonIndex) {
+        case 0: // email
+            [lxShare emailIt];
+            break;
+        case 1: // twitter
+            [lxShare tweet];
+            break;
+        case 2: // facebook
+            [lxShare facebookPost];
+            break;
+        default:
+            break;
+    }
 }
 @end

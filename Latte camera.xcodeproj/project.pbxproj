@@ -994,25 +994,8 @@
 		8884E40816A8EB5700DCBAC7 /* REComposeSheetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8884E40116A8EB5700DCBAC7 /* REComposeSheetView.m */; };
 		8884E40916A8EB5700DCBAC7 /* REComposeViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8884E40216A8EB5700DCBAC7 /* REComposeViewController.bundle */; };
 		8884E40A16A8EB5700DCBAC7 /* REComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8884E40416A8EB5700DCBAC7 /* REComposeViewController.m */; };
-		8884E42D16A8EB6C00DCBAC7 /* RDActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 8884E41416A8EB6C00DCBAC7 /* RDActionSheet.m */; };
 		8884E45616A8ECB100DCBAC7 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8884E45516A8ECB100DCBAC7 /* MessageUI.framework */; };
 		8884E45916A9012E00DCBAC7 /* LXShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 8884E45816A9012E00DCBAC7 /* LXShare.m */; };
-		8884E46A16A91C4200DCBAC7 /* SheetBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 8884E45A16A91C4200DCBAC7 /* SheetBackground.png */; };
-		8884E46B16A91C4200DCBAC7 /* SheetBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8884E45B16A91C4200DCBAC7 /* SheetBackground@2x.png */; };
-		8884E46C16A91C4200DCBAC7 /* SheetButtonDestroy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8884E45C16A91C4200DCBAC7 /* SheetButtonDestroy@2x.png */; };
-		8884E46D16A91C4200DCBAC7 /* SheetButtonDestroyTouch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8884E45D16A91C4200DCBAC7 /* SheetButtonDestroyTouch@2x.png */; };
-		8884E46E16A91C4200DCBAC7 /* SheetButtonDismiss.png in Resources */ = {isa = PBXBuildFile; fileRef = 8884E45E16A91C4200DCBAC7 /* SheetButtonDismiss.png */; };
-		8884E46F16A91C4200DCBAC7 /* SheetButtonDismiss@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8884E45F16A91C4200DCBAC7 /* SheetButtonDismiss@2x.png */; };
-		8884E47016A91C4200DCBAC7 /* SheetButtonDismissTouch.png in Resources */ = {isa = PBXBuildFile; fileRef = 8884E46016A91C4200DCBAC7 /* SheetButtonDismissTouch.png */; };
-		8884E47116A91C4200DCBAC7 /* SheetButtonDismissTouch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8884E46116A91C4200DCBAC7 /* SheetButtonDismissTouch@2x.png */; };
-		8884E47216A91C4200DCBAC7 /* SheetButtonGeneric.png in Resources */ = {isa = PBXBuildFile; fileRef = 8884E46216A91C4200DCBAC7 /* SheetButtonGeneric.png */; };
-		8884E47316A91C4200DCBAC7 /* SheetButtonGeneric@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8884E46316A91C4200DCBAC7 /* SheetButtonGeneric@2x.png */; };
-		8884E47416A91C4200DCBAC7 /* SheetButtonGenericTouch.png in Resources */ = {isa = PBXBuildFile; fileRef = 8884E46416A91C4200DCBAC7 /* SheetButtonGenericTouch.png */; };
-		8884E47516A91C4200DCBAC7 /* SheetButtonGenericTouch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8884E46516A91C4200DCBAC7 /* SheetButtonGenericTouch@2x.png */; };
-		8884E47616A91C4200DCBAC7 /* SheetButtonPrimary.png in Resources */ = {isa = PBXBuildFile; fileRef = 8884E46616A91C4200DCBAC7 /* SheetButtonPrimary.png */; };
-		8884E47716A91C4200DCBAC7 /* SheetButtonPrimary@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8884E46716A91C4200DCBAC7 /* SheetButtonPrimary@2x.png */; };
-		8884E47816A91C4200DCBAC7 /* SheetButtonPrimaryTouch.png in Resources */ = {isa = PBXBuildFile; fileRef = 8884E46816A91C4200DCBAC7 /* SheetButtonPrimaryTouch.png */; };
-		8884E47916A91C4200DCBAC7 /* SheetButtonPrimaryTouch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8884E46916A91C4200DCBAC7 /* SheetButtonPrimaryTouch@2x.png */; };
 		8884E54D16AD582800DCBAC7 /* icon_detail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8884E54116AD582800DCBAC7 /* icon_detail@2x.png */; };
 		8884E54E16AD582800DCBAC7 /* icon_lens3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8884E54216AD582800DCBAC7 /* icon_lens3@2x.png */; };
 		8884E54F16AD582800DCBAC7 /* icon_no2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8884E54316AD582800DCBAC7 /* icon_no2@2x.png */; };
@@ -3065,27 +3048,9 @@
 		8884E40216A8EB5700DCBAC7 /* REComposeViewController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = REComposeViewController.bundle; sourceTree = "<group>"; };
 		8884E40316A8EB5700DCBAC7 /* REComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REComposeViewController.h; sourceTree = "<group>"; };
 		8884E40416A8EB5700DCBAC7 /* REComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REComposeViewController.m; sourceTree = "<group>"; };
-		8884E41316A8EB6C00DCBAC7 /* RDActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDActionSheet.h; sourceTree = "<group>"; };
-		8884E41416A8EB6C00DCBAC7 /* RDActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDActionSheet.m; sourceTree = "<group>"; };
 		8884E45516A8ECB100DCBAC7 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		8884E45716A9012E00DCBAC7 /* LXShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXShare.h; sourceTree = "<group>"; };
 		8884E45816A9012E00DCBAC7 /* LXShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXShare.m; sourceTree = "<group>"; };
-		8884E45A16A91C4200DCBAC7 /* SheetBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SheetBackground.png; sourceTree = "<group>"; };
-		8884E45B16A91C4200DCBAC7 /* SheetBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SheetBackground@2x.png"; sourceTree = "<group>"; };
-		8884E45C16A91C4200DCBAC7 /* SheetButtonDestroy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SheetButtonDestroy@2x.png"; sourceTree = "<group>"; };
-		8884E45D16A91C4200DCBAC7 /* SheetButtonDestroyTouch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SheetButtonDestroyTouch@2x.png"; sourceTree = "<group>"; };
-		8884E45E16A91C4200DCBAC7 /* SheetButtonDismiss.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SheetButtonDismiss.png; sourceTree = "<group>"; };
-		8884E45F16A91C4200DCBAC7 /* SheetButtonDismiss@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SheetButtonDismiss@2x.png"; sourceTree = "<group>"; };
-		8884E46016A91C4200DCBAC7 /* SheetButtonDismissTouch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SheetButtonDismissTouch.png; sourceTree = "<group>"; };
-		8884E46116A91C4200DCBAC7 /* SheetButtonDismissTouch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SheetButtonDismissTouch@2x.png"; sourceTree = "<group>"; };
-		8884E46216A91C4200DCBAC7 /* SheetButtonGeneric.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SheetButtonGeneric.png; sourceTree = "<group>"; };
-		8884E46316A91C4200DCBAC7 /* SheetButtonGeneric@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SheetButtonGeneric@2x.png"; sourceTree = "<group>"; };
-		8884E46416A91C4200DCBAC7 /* SheetButtonGenericTouch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SheetButtonGenericTouch.png; sourceTree = "<group>"; };
-		8884E46516A91C4200DCBAC7 /* SheetButtonGenericTouch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SheetButtonGenericTouch@2x.png"; sourceTree = "<group>"; };
-		8884E46616A91C4200DCBAC7 /* SheetButtonPrimary.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SheetButtonPrimary.png; sourceTree = "<group>"; };
-		8884E46716A91C4200DCBAC7 /* SheetButtonPrimary@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SheetButtonPrimary@2x.png"; sourceTree = "<group>"; };
-		8884E46816A91C4200DCBAC7 /* SheetButtonPrimaryTouch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SheetButtonPrimaryTouch.png; sourceTree = "<group>"; };
-		8884E46916A91C4200DCBAC7 /* SheetButtonPrimaryTouch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SheetButtonPrimaryTouch@2x.png"; sourceTree = "<group>"; };
 		8884E47D16A95B3D00DCBAC7 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8884E54116AD582800DCBAC7 /* icon_detail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_detail@2x.png"; sourceTree = "<group>"; };
 		8884E54216AD582800DCBAC7 /* icon_lens3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_lens3@2x.png"; sourceTree = "<group>"; };
@@ -5049,32 +5014,6 @@
 			path = REComposeViewController/REComposeViewController;
 			sourceTree = "<group>";
 		};
-		8884E40B16A8EB6C00DCBAC7 /* RDActionSheet */ = {
-			isa = PBXGroup;
-			children = (
-				8884E45A16A91C4200DCBAC7 /* SheetBackground.png */,
-				8884E45B16A91C4200DCBAC7 /* SheetBackground@2x.png */,
-				8884E45C16A91C4200DCBAC7 /* SheetButtonDestroy@2x.png */,
-				8884E45D16A91C4200DCBAC7 /* SheetButtonDestroyTouch@2x.png */,
-				8884E45E16A91C4200DCBAC7 /* SheetButtonDismiss.png */,
-				8884E45F16A91C4200DCBAC7 /* SheetButtonDismiss@2x.png */,
-				8884E46016A91C4200DCBAC7 /* SheetButtonDismissTouch.png */,
-				8884E46116A91C4200DCBAC7 /* SheetButtonDismissTouch@2x.png */,
-				8884E46216A91C4200DCBAC7 /* SheetButtonGeneric.png */,
-				8884E46316A91C4200DCBAC7 /* SheetButtonGeneric@2x.png */,
-				8884E46416A91C4200DCBAC7 /* SheetButtonGenericTouch.png */,
-				8884E46516A91C4200DCBAC7 /* SheetButtonGenericTouch@2x.png */,
-				8884E46616A91C4200DCBAC7 /* SheetButtonPrimary.png */,
-				8884E46716A91C4200DCBAC7 /* SheetButtonPrimary@2x.png */,
-				8884E46816A91C4200DCBAC7 /* SheetButtonPrimaryTouch.png */,
-				8884E46916A91C4200DCBAC7 /* SheetButtonPrimaryTouch@2x.png */,
-				8884E41316A8EB6C00DCBAC7 /* RDActionSheet.h */,
-				8884E41416A8EB6C00DCBAC7 /* RDActionSheet.m */,
-			);
-			name = RDActionSheet;
-			path = RDActionSheet/RDActionSheet;
-			sourceTree = "<group>";
-		};
 		8890722B16770EBB0013DF7A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -5650,7 +5589,6 @@
 				8890B9B716E03B1F008EDFBF /* GrowingTextView */,
 				880E50D51728C30800D584EE /* ImageCrop */,
 				880C4AE1161C2A1400252C6A /* MBProgressHUD */,
-				8884E40B16A8EB6C00DCBAC7 /* RDActionSheet */,
 				8884E3F916A8EB5700DCBAC7 /* REComposeViewController */,
 				8847561617212718005CA201 /* RNBlurModalView */,
 				8866D66916EEE66300CAE6E5 /* STTweetLabel */,
@@ -7126,22 +7064,6 @@
 				8884E35B16A811A700DCBAC7 /* icon_time2_none.png in Resources */,
 				8884E35C16A811A700DCBAC7 /* icon_time2_none@2x.png in Resources */,
 				8884E40916A8EB5700DCBAC7 /* REComposeViewController.bundle in Resources */,
-				8884E46A16A91C4200DCBAC7 /* SheetBackground.png in Resources */,
-				8884E46B16A91C4200DCBAC7 /* SheetBackground@2x.png in Resources */,
-				8884E46C16A91C4200DCBAC7 /* SheetButtonDestroy@2x.png in Resources */,
-				8884E46D16A91C4200DCBAC7 /* SheetButtonDestroyTouch@2x.png in Resources */,
-				8884E46E16A91C4200DCBAC7 /* SheetButtonDismiss.png in Resources */,
-				8884E46F16A91C4200DCBAC7 /* SheetButtonDismiss@2x.png in Resources */,
-				8884E47016A91C4200DCBAC7 /* SheetButtonDismissTouch.png in Resources */,
-				8884E47116A91C4200DCBAC7 /* SheetButtonDismissTouch@2x.png in Resources */,
-				8884E47216A91C4200DCBAC7 /* SheetButtonGeneric.png in Resources */,
-				8884E47316A91C4200DCBAC7 /* SheetButtonGeneric@2x.png in Resources */,
-				8884E47416A91C4200DCBAC7 /* SheetButtonGenericTouch.png in Resources */,
-				8884E47516A91C4200DCBAC7 /* SheetButtonGenericTouch@2x.png in Resources */,
-				8884E47616A91C4200DCBAC7 /* SheetButtonPrimary.png in Resources */,
-				8884E47716A91C4200DCBAC7 /* SheetButtonPrimary@2x.png in Resources */,
-				8884E47816A91C4200DCBAC7 /* SheetButtonPrimaryTouch.png in Resources */,
-				8884E47916A91C4200DCBAC7 /* SheetButtonPrimaryTouch@2x.png in Resources */,
 				8884E54D16AD582800DCBAC7 /* icon_detail@2x.png in Resources */,
 				8884E54E16AD582800DCBAC7 /* icon_lens3@2x.png in Resources */,
 				8884E54F16AD582800DCBAC7 /* icon_no2@2x.png in Resources */,
@@ -8609,7 +8531,6 @@
 				88D2DC211924A25A0027D88A /* UIImageView+loadProgress.m in Sources */,
 				8884E40A16A8EB5700DCBAC7 /* REComposeViewController.m in Sources */,
 				88491EBB1921B4A400CAF0A2 /* LXAnouncementViewController.m in Sources */,
-				8884E42D16A8EB6C00DCBAC7 /* RDActionSheet.m in Sources */,
 				8884E45916A9012E00DCBAC7 /* LXShare.m in Sources */,
 				884C54D516B22EF500DA318E /* LXHelpBokehViewController.m in Sources */,
 				885C061D16BB69B0000820E7 /* UIDeviceHardware.m in Sources */,
