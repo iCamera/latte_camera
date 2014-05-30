@@ -28,6 +28,8 @@
 #import "LXCellDataField.h"
 #import "NSDate+TKCategory.h"
 
+#import "LXCaptureViewController.h"
+
 typedef enum {
     kTablePhoto = 0,
     kTableTag = 1,
@@ -261,6 +263,9 @@ typedef enum {
         default:
             break;
     }
+}
+
+- (IBAction)touchProfilePic:(id)sender {
 }
 
 - (void)loadMore {
@@ -881,6 +886,117 @@ typedef enum {
         [self reloadView];
     }
 }
+
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
+        case 0:
+            [self deleteProfilePic];
+            break;
+        case 1:
+            [self pickPhoto];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)deleteProfilePic {
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    
+    [[LatteAPIClient sharedClient] POST:@"user/me/profile_picture_delete"
+                             parameters:[NSDictionary dictionaryWithObjectsAndKeys:
+                                         [app getToken], @"token", nil]
+                                success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                    
+                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                    DLog(@"Something went wrong (Delete profile pic)");
+                                }];
+    
+}
+
+- (void)pickPhoto {
+    LatteAPIClient *api = [LatteAPIClient sharedClient];
+    if (api.reachabilityManager.networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"")
+                                                        message:NSLocalizedString(@"Network connectivity is not available", @"")
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"close", @"")
+                                              otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    
+    UIStoryboard* storySetting = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
+    UINavigationController *navCamera = [storySetting instantiateInitialViewController];
+    
+    LXCaptureViewController *controllerCamera = navCamera.viewControllers[0];
+    controllerCamera.delegate = self;
+    
+    [self presentViewController:navCamera animated:YES completion:nil];
+}
+
+- (void)imagePickerController:(LXCanvasViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info {
+    UIViewController *tmp2 = picker.navigationController.presentingViewController;
+    [picker dismissViewControllerAnimated:NO completion:nil];
+    [tmp2 dismissViewControllerAnimated:YES completion:nil];
+    
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    
+    MBProgressHUD *progessHUD = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:progessHUD];
+    
+    progessHUD.mode = MBProgressHUDModeDeterminate;
+    [progessHUD show:YES];
+    
+    void (^createForm)(id<AFMultipartFormData>) = ^(id<AFMultipartFormData> formData) {
+        [formData appendPartWithFileData:[info objectForKey:@"data"]
+                                    name:@"file"
+                                fileName:@"latte.jpg"
+                                mimeType:@"image/jpeg"];
+    };
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [app getToken], @"token", nil];
+    
+    LatteAPIClient *api = [LatteAPIClient sharedClient];
+    NSMutableURLRequest *request = [api.requestSerializer multipartFormRequestWithMethod:@"POST"
+                                                                               URLString:[[NSURL URLWithString:@"user/me/profile_picture" relativeToURL:api.baseURL] absoluteString]
+                                                                              parameters:params
+                                                               constructingBodyWithBlock:createForm error:nil];
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    
+    void (^successUpload)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        progessHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+        progessHUD.mode = MBProgressHUDModeCustomView;
+        [progessHUD hide:YES afterDelay:1];
+    };
+    
+    void (^failUpload)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
+        if([operation.response statusCode] != 200){
+            DLog(@"Upload Failed");
+            return;
+        }
+        DLog(@"error: %@", [operation error]);
+        progessHUD.mode = MBProgressHUDModeText;
+        progessHUD.labelText = @"Error";
+        progessHUD.margin = 10.f;
+        progessHUD.yOffset = 150.f;
+        progessHUD.removeFromSuperViewOnHide = YES;
+        
+        [progessHUD hide:YES afterDelay:2];
+    };
+    
+    [operation setCompletionBlockWithSuccess: successUpload failure: failUpload];
+    
+    [operation setUploadProgressBlock:^(NSUInteger bytesWritten, NSInteger totalBytesWritten, NSInteger totalBytesExpectedToWrite) {
+        progessHUD.progress = (float)totalBytesWritten/(float)totalBytesExpectedToWrite;
+    }];
+    
+    [operation start];
+}
+
 
 - (void)showPic:(UIButton*)sender {
     UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"

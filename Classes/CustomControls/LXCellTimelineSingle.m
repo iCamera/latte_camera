@@ -42,7 +42,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        NSLog(@"Created");
+        
     }
     return self;
 }

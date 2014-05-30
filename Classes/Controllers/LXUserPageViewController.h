@@ -23,5 +23,6 @@
 - (void)expandHeader;
 - (void)collapseHeader;
 - (void)reloadView;
+- (IBAction)touchProfilePic:(id)sender;
 
 @end

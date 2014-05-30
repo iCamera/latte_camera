@@ -11,6 +11,7 @@
 #import "LXPicInfoViewController.h"
 #import "LXPicCommentViewController.h"
 #import "LXVoteViewController.h"
+#import "LXAppDelegate.h"
 
 
 
@@ -63,7 +64,16 @@
 	// Do any additional setup after loading the view.
     
     _constraintTab.constant = -(_tab-1)*320;
-//    scrollTab.contentSize = CGSizeMake(960, 518);
+    
+    _labelComment.text = [_picture.commentCount stringValue];
+    _labelLike.text = [_picture.voteCount stringValue];
+    
+    _buttonLike.enabled = NO;
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    if (!(_picture.isVoted && !app.currentUser))
+        _buttonLike.enabled = YES;
+    _buttonLike.selected = _picture.isVoted;
+    _labelLike.highlighted = _picture.isVoted;
 }
 
 - (void)awakeFromNib {
@@ -86,11 +96,15 @@
 }
 
 - (IBAction)toggleLike:(id)sender {
-    _constraintTab.constant = 0;
-    
-    [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
-        [self.view layoutIfNeeded];
-    }];
+    if (_picture.isOwner) {
+        _constraintTab.constant = 0;
+        
+        [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
+            [self.view layoutIfNeeded];
+        }];
+    } else {
+        [LXUtils toggleLike:sender ofPicture:_picture setCount:_labelLike];
+    }
 }
 
 - (IBAction)touchComment:(id)sender {

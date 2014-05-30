@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "UIButton+AsyncImage.h"
 #import "Picture.h"
+#import "LXGalleryViewController.h"
 
 @interface LXTimelineMultiItemViewController : UIViewController {
 }
@@ -18,6 +19,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *labelView;
 
 @property (strong, nonatomic) Picture *pic;
+@property (assign, nonatomic) NSInteger *index;
+
 @property (weak, nonatomic) id parent;
 
 @end

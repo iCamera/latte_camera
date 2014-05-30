@@ -11,6 +11,12 @@
 #import "Picture.h"
 #import "UIButton+AsyncImage.h"
 #import "LXTimelineMultiItemViewController.h"
+#import "LXUserPageViewController.h"
+
+#import "LXAppDelegate.h"
+#import "LXUserPageViewController.h"
+#import "LXGalleryViewController.h"
+#import "LXPicDetailTabViewController.h"
 
 
 @implementation LXCellTimelineMulti
@@ -19,8 +25,6 @@
 @synthesize scrollPic;
 @synthesize labelTitle;
 @synthesize labelUserDate;
-@synthesize viewController;
-@synthesize viewBackground;
 @synthesize imageNationality;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -46,6 +50,8 @@
 }
 
 - (void)setFeed:(Feed *)feed {
+    _feed = feed;
+
     [buttonUser loadBackground:feed.user.profilePicture placeholderImage:@"user.gif"];
     
     for(UIView *subview in [scrollPic subviews]) {
@@ -55,17 +61,22 @@
     CGSize size = CGSizeMake(6, 152);
     UIStoryboard *storyComponent = [UIStoryboard storyboardWithName:@"Component"
                                                              bundle:nil];
+    
+    NSInteger index = 0;
     for (Picture *pic in feed.targets) {
-        
         LXTimelineMultiItemViewController *viewPic = [storyComponent instantiateViewControllerWithIdentifier:@"TimlineMultiPhoto"];
         
         viewPic.pic = pic;
-        viewPic.parent = viewController;
+        viewPic.parent = self;
+        viewPic.index = index;
+
         viewPic.view.frame = CGRectMake(size.width, 0, 152, 152);
         [scrollPic addSubview:viewPic.view];
         
         size.width += 156;
+        index += 1;
     }
+    
     scrollPic.contentOffset = CGPointZero;
     scrollPic.contentSize = size;
     
@@ -74,8 +85,55 @@
     
     
     [LXUtils setNationalityOfUser:feed.user forImage:imageNationality nextToLabel:labelTitle];
+}
 
-    [buttonUser addTarget:viewController action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
+- (IBAction)showUser:(id)sender {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    
+    viewUserPage.user = _feed.user;
+    [_parent.navigationController pushViewController:viewUserPage animated:YES];
+}
+
+- (void)showPicture:(UIButton*)sender {
+    UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
+                                                           bundle:nil];
+    UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
+    LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
+    viewGallery.delegate = _parent;
+    viewGallery.user = _feed.user;
+    viewGallery.picture = _feed.targets[sender.tag];
+    
+    [_parent presentViewController:navGalerry animated:YES completion:nil];
+}
+
+- (void)showComment:(UIButton*)sender {
+    UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
+                                                           bundle:nil];
+    LXPicDetailTabViewController *pictureTab = [storyGallery instantiateViewControllerWithIdentifier:@"DetailScroll"];
+    
+    pictureTab.picture = _feed.targets[sender.tag];
+    pictureTab.tab = kGalleryTabComment;
+    
+    [_parent presentViewController:pictureTab animated:YES completion:nil];
+}
+
+
+- (void)toggleLike:(UIButton*)sender {
+    Picture *picture = _feed.targets[sender.tag];
+    if (picture.isOwner) {
+        UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
+                                                               bundle:nil];
+        LXPicDetailTabViewController *pictureTab = [storyGallery instantiateViewControllerWithIdentifier:@"DetailScroll"];
+        
+        pictureTab.picture = picture;
+        pictureTab.tab = kGalleryTabVote;
+        
+        [_parent presentViewController:pictureTab animated:YES completion:nil];
+    } else {
+        [LXUtils toggleLike:sender ofPicture:picture];
+    }
 }
 
 @end

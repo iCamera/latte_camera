@@ -11,6 +11,9 @@
 @class Picture, User;
 @interface LXPicDetailTabViewController : UIViewController
 
+@property (strong, nonatomic) IBOutlet UIButton *buttonLike;
+@property (strong, nonatomic) IBOutlet UILabel *labelComment;
+@property (strong, nonatomic) IBOutlet UILabel *labelLike;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintTab;
 @property (assign, nonatomic) NSInteger tab;
 

@@ -7,7 +7,6 @@
 //
 
 #import "LXTimelineMultiItemViewController.h"
-
 #import "LXAppDelegate.h"
 
 @interface LXTimelineMultiItemViewController ()
@@ -30,22 +29,20 @@
     return self;
 }
 
+- (void)awakeFromNib {
+    buttonImage.layer.cornerRadius = 2;
+    buttonComment.layer.cornerRadius = 2;
+    buttonVote.layer.cornerRadius = 2;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [buttonImage loadBackground:_pic.urlSquare];
     
-//    UIBezierPath *shadowPathPic = [UIBezierPath bezierPathWithRect:buttonImage.bounds];
-//    buttonImage.layer.masksToBounds = NO;
-//    buttonImage.layer.shadowColor = [UIColor blackColor].CGColor;
-//    buttonImage.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-//    buttonImage.layer.shadowOpacity = 0.5f;
-//    buttonImage.layer.shadowRadius = 1.5f;
-//    buttonImage.layer.shadowPath = shadowPathPic.CGPath;
-    
-    buttonImage.layer.cornerRadius = 2;
-    buttonComment.layer.cornerRadius = 2;
-    buttonVote.layer.cornerRadius = 2;
+    buttonImage.tag = _index;
+    buttonComment.tag = _index;
+    buttonVote.tag = _index;
     
     [buttonComment setTitle:[_pic.commentCount stringValue] forState:UIControlStateNormal];
     [buttonVote setTitle:[_pic.voteCount stringValue] forState:UIControlStateNormal];
@@ -57,28 +54,20 @@
         buttonVote.enabled = YES;
     buttonVote.selected = _pic.isVoted;
     
-    buttonComment.tag = [_pic.pictureId integerValue];
-    buttonImage.tag = [_pic.pictureId integerValue];
-    buttonVote.tag = [_pic.pictureId integerValue];
     labelView.text = [_pic.pageviews stringValue];
     
-    [buttonImage addTarget:_parent action:@selector(showPic:) forControlEvents:UIControlEventTouchUpInside];
+    [buttonImage addTarget:_parent action:@selector(showPicture:) forControlEvents:UIControlEventTouchUpInside];
     [buttonComment addTarget:_parent action:@selector(showComment:) forControlEvents:UIControlEventTouchUpInside];
-    
-    if (_pic.isOwner) {
-        if ([_pic.voteCount integerValue] == 0) {
-            buttonVote.enabled = false;
-        }
-        [buttonVote addTarget:_parent action:@selector(showLike:) forControlEvents:UIControlEventTouchUpInside];
-    } else {
-        [buttonVote addTarget:_parent action:@selector(submitLike:) forControlEvents:UIControlEventTouchUpInside];
-    }
+    [buttonVote addTarget:_parent action:@selector(toggleLike:) forControlEvents:UIControlEventTouchUpInside];
     
 //    buttonComment.hidden = !_showButton;
 //    buttonVote.hidden = !_showButton;
 
     // Do any additional setup after loading the view from its nib.
 }
+
+
+
 
 - (void)didReceiveMemoryWarning
 {

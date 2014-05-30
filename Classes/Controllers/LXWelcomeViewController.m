@@ -209,7 +209,7 @@ typedef enum {
                                                       reuseIdentifier:@"Multi"];
             }
             
-            cell.viewController = self;
+            cell.parent = self;
             cell.feed = feed;
             cell.buttonUser.tag = indexPath.row;
             

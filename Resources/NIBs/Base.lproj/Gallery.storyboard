@@ -38,7 +38,6 @@
                                             <color key="titleColor" red="0.3675926679078666" green="0.59252089671395725" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="switchTab:" destination="IuH-xf-ibI" eventType="touchUpInside" id="2Qa-iu-Oga"/>
                                             <action selector="toggleLike:" destination="IuH-xf-ibI" eventType="touchUpInside" id="ReV-4R-xUa"/>
                                         </connections>
                                     </button>
@@ -66,7 +65,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="switchTab:" destination="IuH-xf-ibI" eventType="touchUpInside" id="hx8-Xo-tBi"/>
+                                            <segue destination="uaI-vZ-eKI" kind="modal" identifier="Detail" id="Zqg-iC-z4j"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NXS-cb-RLu">
@@ -460,7 +459,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QYV-zO-LgB">
-                                        <rect key="frame" x="228" y="-2" width="30" height="30"/>
+                                        <rect key="frame" x="241" y="-2" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" image="icon_plus_s.png">
@@ -517,7 +516,10 @@
                     </view>
                     <size key="freeformSize" width="320" height="320"/>
                     <connections>
+                        <outlet property="buttonLike" destination="8J1-6V-MhX" id="qrX-j0-8wj"/>
                         <outlet property="constraintTab" destination="Ibe-Lr-Vx0" id="9j4-Mc-isz"/>
+                        <outlet property="labelComment" destination="zMn-LA-Gbq" id="eXM-nM-LqI"/>
+                        <outlet property="labelLike" destination="C4f-mk-dlf" id="i0H-FY-HEA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X6h-aO-2Ye" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1492,4 +1494,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="2c1-ZN-mH2"/>
+    </inferredMetricsTieBreakers>
 </document>

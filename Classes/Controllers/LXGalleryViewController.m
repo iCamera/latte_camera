@@ -87,7 +87,7 @@
 
     pageController.view.frame = self.view.bounds;
 
-    tapPage = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapScrollImage:)];
+    tapPage = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleInfo:)];
     tapPage.numberOfTapsRequired = 1;
 
     tapDouble = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapZoom:)];
@@ -178,7 +178,7 @@
 }
 
 
-- (void)toggleInfo {
+- (void)toggleInfo:(UITapGestureRecognizer*)sender {
     [UIView animateWithDuration:kGlobalAnimationSpeed
                      animations:^{
                          if (viewTab.alpha == 1) {
@@ -223,7 +223,23 @@
         LXPicEditViewController *viewEdit = segue.destinationViewController;
         viewEdit.picture = currentPage.picture;
     } else if ([segue.identifier isEqualToString:@"Detail"]) {
+        UIButton *button = (UIButton*)sender;
         LXPicDetailTabViewController *viewPicTab = segue.destinationViewController;
+        
+        switch (button.tag) {
+            case 1:
+                viewPicTab.tab = kGalleryTabVote;
+                break;
+            case 2:
+                viewPicTab.tab = kGalleryTabComment;
+                break;
+            case 3:
+                viewPicTab.tab = kGalleryTabInfo;
+                break;
+            default:
+                break;
+        }
+        
         viewPicTab.picture = currentPage.picture;
     }
 }
@@ -408,8 +424,6 @@
 
 - (void)loadInfo {
     loadedInfo = true;
-    LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
-    LXAppDelegate *app = [LXAppDelegate currentDelegate];
 }
 
 - (IBAction)touchUser:(UIButton *)sender {
