@@ -12,7 +12,14 @@
 #import "LXButtonBrown30.h"
 #import "LXGalleryViewController.h"
 
-//#import "SideSwipeTableViewController.h"
+@class Comment;
+
+@protocol LXPicCommentViewControllerDelegate <NSObject>
+
+@required
+- (void)showUserFromComment:(Comment*)comment;
+@end
+
 @interface LXPicCommentViewController : UIViewController<HPGrowingTextViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
@@ -24,7 +31,7 @@
 @property (strong, nonatomic) IBOutlet UIView *viewFooter;
 @property (strong, nonatomic) NSMutableArray *comments;
 
-@property (weak, nonatomic) LXGalleryViewController *parent;
+@property (weak, nonatomic) UIViewController<LXPicCommentViewControllerDelegate> *parent;
 
 - (IBAction)touchSend:(id)sender;
 - (IBAction)touchReport:(id)sender;

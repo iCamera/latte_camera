@@ -26,8 +26,6 @@
     LXPicInfoViewController *viewInfo;
 }
 
-@synthesize scrollTab;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -64,19 +62,16 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    currentTab = 2;
-    scrollTab.contentSize = CGSizeMake(960, 320);
-    scrollTab.contentOffset = CGPointMake(320, 0);
+    _constraintTab.constant = -(_tab-1)*320;
+//    scrollTab.contentSize = CGSizeMake(960, 518);
+}
+
+- (void)awakeFromNib {
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-}
-
-- (void)setTab:(NSInteger)tab {
-    currentTab = tab;
-    [scrollTab  setContentOffset:CGPointMake((tab-1)*320, 0) animated:YES];
 }
 
 - (void)viewDidUnload {
@@ -90,4 +85,27 @@
     return YES;
 }
 
+- (IBAction)toggleLike:(id)sender {
+    _constraintTab.constant = 0;
+    
+    [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
+        [self.view layoutIfNeeded];
+    }];
+}
+
+- (IBAction)touchComment:(id)sender {
+    _constraintTab.constant = -320;
+
+    [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
+        [self.view layoutIfNeeded];
+    }];
+}
+
+- (IBAction)touchInfo:(id)sender {
+    _constraintTab.constant = -640;
+
+    [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
+        [self.view layoutIfNeeded];
+    }];
+}
 @end

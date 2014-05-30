@@ -11,6 +11,7 @@
 #import "UIButton+AsyncImage.h"
 #import "Comment.h"
 #import "User.h"
+#import "LXPicCommentViewController.h"
 
 @interface LXCellComment : UITableViewCell
 
@@ -27,6 +28,8 @@
 @property (strong, nonatomic) IBOutlet UIImageView *imageNationality;
 
 @property (strong, nonatomic) Comment *comment;
+@property (weak, nonatomic) LXPicCommentViewController *parent;
+
 - (IBAction)toggleLike:(UIButton*)sender;
 
 @end

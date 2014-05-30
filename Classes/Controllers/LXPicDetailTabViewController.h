@@ -10,13 +10,15 @@
 
 @class Picture, User;
 @interface LXPicDetailTabViewController : UIViewController
-@property (strong, nonatomic) IBOutlet UIScrollView *scrollTab;
 
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintTab;
+@property (assign, nonatomic) NSInteger tab;
+
+- (IBAction)toggleLike:(id)sender;
+- (IBAction)touchComment:(id)sender;
+- (IBAction)touchInfo:(id)sender;
+- (IBAction)closeModal:(id)sender;
 
 @property (strong, nonatomic) Picture *picture;
-@property (strong, nonatomic) NSDictionary *picDict;
-
-@property (assign, nonatomic) NSInteger tab;
-- (IBAction)closeModal:(id)sender;
 
 @end

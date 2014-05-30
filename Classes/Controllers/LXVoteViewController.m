@@ -110,6 +110,7 @@
     
     [self.navigationController pushViewController:viewUser animated:YES];
 }
+
 //- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 //    if (indexPath.item == voters.count) {
 //        UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Guest"];

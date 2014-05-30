@@ -280,7 +280,7 @@ typedef enum {
 }
 
 - (void)showPic:(UIButton*)sender {
-    [self showPic:sender withTab:kGalleryTabNone];
+    [self showPic:sender withTab:kGalleryTabComment];
 }
 
 - (void)showInfo:(UIButton*)sender {

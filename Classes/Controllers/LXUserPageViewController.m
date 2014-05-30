@@ -882,12 +882,7 @@ typedef enum {
     }
 }
 
-
-- (void)showInfo:(UIButton*)sender {
-    [self showPic:sender withTab:kGalleryTabInfo];
-}
-
-- (void)showPic:(UIButton*)sender withTab:(GalleryTab)tab {
+- (void)showPic:(UIButton*)sender {
     UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                            bundle:nil];
     UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
@@ -911,26 +906,9 @@ typedef enum {
             break;
     }
     
-    if (self.navigationController.presentingViewController) {
-        [self.navigationController pushViewController:viewGallery animated:YES];
-    } else {
-        [self presentViewController:navGalerry animated:YES completion:^{
-            switch (tab) {
-                case kGalleryTabComment:
-                case kGalleryTabInfo:
-                case kGalleryTabVote:
-                    viewGallery.currentTab = tab;
-                    break;
-                default:
-                    break;
-            }
-        }];
-    }
+    [self presentViewController:navGalerry animated:YES completion:nil];
 }
 
-- (void)showPic:(UIButton*)sender {
-    [self showPic:sender withTab:kGalleryTabNone];
-}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"

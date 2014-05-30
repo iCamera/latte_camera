@@ -175,20 +175,32 @@
     [viewController presentViewController:pictureTab animated:YES completion:nil];
 }
 
+- (IBAction)showInfo:(id)sender {
+    Picture *pic = _feed.targets[0];
+    
+    UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
+                                                           bundle:nil];
+    LXPicDetailTabViewController *pictureTab = [storyGallery instantiateViewControllerWithIdentifier:@"DetailScroll"];
+    
+    pictureTab.picture = pic;
+    pictureTab.tab = kGalleryTabInfo;
+    
+    [viewController presentViewController:pictureTab animated:YES completion:nil];
+}
+
 - (IBAction)toggleLike:(id)sender {
     Picture *pic = _feed.targets[0];
     if (pic.isOwner) {
+        Picture *pic = _feed.targets[0];
+        
         UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                                bundle:nil];
-        UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
-        LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
-        viewGallery.delegate = viewController;
-        viewGallery.user = _feed.user;
-        viewGallery.picture = pic;
+        LXPicDetailTabViewController *pictureTab = [storyGallery instantiateViewControllerWithIdentifier:@"DetailScroll"];
         
-        [viewController presentViewController:navGalerry animated:YES completion:^{
-            viewGallery.currentTab = kGalleryTabVote;
-        }];
+        pictureTab.picture = pic;
+        pictureTab.tab = kGalleryTabVote;
+        
+        [viewController presentViewController:pictureTab animated:YES completion:nil];
     } else {
         [LXUtils toggleLike:buttonLike ofPicture:pic setCount:labelLike];
     }

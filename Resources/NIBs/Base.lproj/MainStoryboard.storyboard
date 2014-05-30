@@ -1122,7 +1122,6 @@
                                         <segment title="All"/>
                                         <segment title="" image="icon_follower_s.png"/>
                                         <segment title="" image="icon_friend_m.png"/>
-                                        <segment title="" image="icon_tag_s.png"/>
                                     </segments>
                                     <color key="tintColor" red="0.20784313730000001" green="0.18823529410000001" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
                                     <connections>
@@ -1345,7 +1344,7 @@
                                                                 <action selector="showComment:" destination="eDN-OG-rBE" eventType="touchUpInside" id="28e-hM-rgm"/>
                                                             </connections>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vps-ge-lJ4">
+                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vps-ge-lJ4">
                                                             <rect key="frame" x="290" y="2" width="22" height="22"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                             <color key="tintColor" red="0.20784313730000001" green="0.18823529410000001" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
@@ -1356,6 +1355,9 @@
                                                             <state key="highlighted">
                                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="showInfo:" destination="eDN-OG-rBE" eventType="touchUpInside" id="EQL-TG-nxf"/>
+                                                            </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pod-DE-4I6">
                                                             <rect key="frame" x="228" y="-2" width="30" height="30"/>
@@ -2142,7 +2144,7 @@ Or you can resend confirmation email.</string>
                                             <rect key="frame" x="6" y="3" width="308" height="42"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" image="user.gif" translatesAutoresizingMaskIntoConstraints="NO" id="BNS-CJ-Ncp">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" image="user.gif" translatesAutoresizingMaskIntoConstraints="NO" id="BNS-CJ-Ncp">
                                                     <rect key="frame" x="6" y="6" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -2240,7 +2242,6 @@ Or you can resend confirmation email.</string>
         <image name="icon_setting.png" width="15" height="16"/>
         <image name="icon_setting_m_ocher.png" width="15" height="15"/>
         <image name="icon_tag_m.png" width="16" height="16"/>
-        <image name="icon_tag_s.png" width="12" height="12"/>
         <image name="icon_trend_ltrend.png" width="13" height="15"/>
         <image name="notify_all.png" width="19" height="15"/>
         <image name="notify_comment.png" width="15" height="15"/>

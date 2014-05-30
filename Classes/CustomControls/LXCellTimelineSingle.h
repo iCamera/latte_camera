@@ -33,6 +33,7 @@
 - (IBAction)showUser:(id)sender;
 - (IBAction)showPicture:(id)sender;
 - (IBAction)showComment:(id)sender;
+- (IBAction)showInfo:(id)sender;
 - (IBAction)toggleLike:(id)sender;
 - (IBAction)moreAction:(id)sender;
 

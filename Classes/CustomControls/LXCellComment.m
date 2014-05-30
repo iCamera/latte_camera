@@ -101,4 +101,6 @@
     NSString *url = [NSString stringWithFormat:@"picture/comment/%d/vote", [_comment.commentId integerValue]];
     [[LatteAPIClient sharedClient] POST:url parameters:param success:nil failure:nil];
 }
+
+
 @end

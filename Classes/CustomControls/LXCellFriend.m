@@ -26,6 +26,14 @@
     return self;
 }
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    
+    imageUser.layer.cornerRadius = 15;
+    imageUser.layer.shouldRasterize = YES;
+    imageUser.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
@@ -38,16 +46,6 @@
     labelIntro.text = user.introduction;
     labelName.text = user.name;
     [LXUtils setNationalityOfUser:user forImage:imageNationality nextToLabel:labelName];
-}
-
-- (void)drawRect:(CGRect)rect {
-    imageUser.layer.cornerRadius = 3;
-    imageUser.clipsToBounds = YES;
-    
-    [LXUtils globalShadow:viewBackground];
-    viewBackground.layer.cornerRadius = 5.0;
-    
-    [super drawRect:rect];
 }
 
 @end

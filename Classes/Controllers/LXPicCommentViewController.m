@@ -247,12 +247,8 @@
 
 
 - (void)showUser:(UIButton *)sender {
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                             bundle:nil];
-    LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
     Comment *comment = _comments[sender.tag];
-    viewUserPage.user = comment.user;
-    [self.navigationController pushViewController:viewUserPage animated:YES];
+    [_parent showUserFromComment:comment];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {

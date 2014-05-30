@@ -10,7 +10,6 @@
 #import "STTweetLabel.h"
 
 typedef enum {
-    kGalleryTabNone = 0,
     kGalleryTabVote = 1,
     kGalleryTabComment = 2,
     kGalleryTabInfo = 3,
