@@ -16,7 +16,8 @@
 #import "LXAppDelegate.h"
 #import "LXUserPageViewController.h"
 #import "LXGalleryViewController.h"
-#import "LXPicDetailTabViewController.h"
+#import "LXVoteViewController.h"
+#import "LXPicCommentViewController.h"
 
 
 @implementation LXCellTimelineMulti
@@ -111,12 +112,9 @@
 - (void)showComment:(UIButton*)sender {
     UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                            bundle:nil];
-    LXPicDetailTabViewController *pictureTab = [storyGallery instantiateViewControllerWithIdentifier:@"DetailScroll"];
-    
-    pictureTab.picture = _feed.targets[sender.tag];
-    pictureTab.tab = kGalleryTabComment;
-    
-    [_parent presentViewController:pictureTab animated:YES completion:nil];
+    LXPicCommentViewController *viewComment = [storyGallery instantiateViewControllerWithIdentifier:@"Comment"];
+    viewComment.picture = _feed.targets[sender.tag];
+    [_parent.navigationController pushViewController:viewComment animated:YES];
 }
 
 
@@ -125,12 +123,9 @@
     if (picture.isOwner) {
         UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                                bundle:nil];
-        LXPicDetailTabViewController *pictureTab = [storyGallery instantiateViewControllerWithIdentifier:@"DetailScroll"];
-        
-        pictureTab.picture = picture;
-        pictureTab.tab = kGalleryTabVote;
-        
-        [_parent presentViewController:pictureTab animated:YES completion:nil];
+        LXVoteViewController *viewVote = [storyGallery instantiateViewControllerWithIdentifier:@"Like"];
+        viewVote.picture = _feed.targets[sender.tag];
+        [_parent.navigationController pushViewController:viewVote animated:YES];
     } else {
         [LXUtils toggleLike:sender ofPicture:picture];
     }

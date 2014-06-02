@@ -14,7 +14,9 @@
 #import "LXShare.h"
 #import "UIButton+AFNetworking.h"
 #import "LXUserPageViewController.h"
-#import "LXPicDetailTabViewController.h"
+#import "LXVoteViewController.h"
+#import "LXPicCommentViewController.h"
+#import "LXPicInfoViewController.h"
 
 @implementation LXCellTimelineSingle {
     LXShare *lxShare;
@@ -167,12 +169,11 @@
     
     UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                            bundle:nil];
-    LXPicDetailTabViewController *pictureTab = [storyGallery instantiateViewControllerWithIdentifier:@"DetailScroll"];
+    LXPicCommentViewController *viewComment = [storyGallery instantiateViewControllerWithIdentifier:@"Comment"];
 
-    pictureTab.picture = pic;
-    pictureTab.tab = kGalleryTabComment;
+    viewComment.picture = pic;
     
-    [viewController presentViewController:pictureTab animated:YES completion:nil];
+    [viewController.navigationController pushViewController:viewComment animated:YES];
 }
 
 - (IBAction)showInfo:(id)sender {
@@ -180,27 +181,23 @@
     
     UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                            bundle:nil];
-    LXPicDetailTabViewController *pictureTab = [storyGallery instantiateViewControllerWithIdentifier:@"DetailScroll"];
+    LXPicInfoViewController *viewInfo = [storyGallery instantiateViewControllerWithIdentifier:@"Info"];
     
-    pictureTab.picture = pic;
-    pictureTab.tab = kGalleryTabInfo;
+    viewInfo.picture = pic;
     
-    [viewController presentViewController:pictureTab animated:YES completion:nil];
+    [viewController.navigationController pushViewController:viewInfo animated:YES];
 }
 
 - (IBAction)toggleLike:(id)sender {
     Picture *pic = _feed.targets[0];
     if (pic.isOwner) {
-        Picture *pic = _feed.targets[0];
-        
         UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                                bundle:nil];
-        LXPicDetailTabViewController *pictureTab = [storyGallery instantiateViewControllerWithIdentifier:@"DetailScroll"];
+        LXVoteViewController *viewVote = [storyGallery instantiateViewControllerWithIdentifier:@"Like"];
         
-        pictureTab.picture = pic;
-        pictureTab.tab = kGalleryTabVote;
+        viewVote.picture = pic;
         
-        [viewController presentViewController:pictureTab animated:YES completion:nil];
+        [viewController.navigationController pushViewController:viewVote animated:YES];
     } else {
         [LXUtils toggleLike:buttonLike ofPicture:pic setCount:labelLike];
     }

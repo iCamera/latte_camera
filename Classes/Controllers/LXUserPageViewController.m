@@ -132,20 +132,23 @@ typedef enum {
     HUD.margin = 10.f;
     HUD.yOffset = 150.f;
     
+    _buttonUser.layer.cornerRadius = 9;
+    
+    [_buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:_user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
+    [_buttonUsername setTitle:_user.name forState:UIControlStateNormal];
+    
     [self reloadView];
 }
 
 
 
-- (void)reloadProfile {    
+- (void)reloadProfile {
     NSString *url = [NSString stringWithFormat:@"user/%ld", [_user.userId longValue]];
     [[LatteAPIClient sharedClient] GET:url
                                 parameters: nil
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        userDict = JSON[@"user"];
                                        User *user = [User instanceFromDictionary:userDict];
-                                       UIButton *button;
-                                       [button setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:user.profilePicture] placeholderImage:nil];
                                        
                                        NSSet *allField = [NSSet setWithArray:[userDict allKeys]];
                                        
@@ -173,7 +176,7 @@ typedef enum {
             return;
     }
 
-    NSDictionary *param = @{@"page": [NSNumber numberWithInt:pagePic + 1],
+    NSDictionary *param = @{@"page": [NSNumber numberWithInteger:pagePic],
                             @"limit": [NSNumber numberWithInt:30]};
 
     NSString *url = [NSString stringWithFormat:@"picture/user/%ld", [_user.userId longValue]];
@@ -195,6 +198,7 @@ typedef enum {
                                        }
                                        
                                        [self.tableView reloadData];
+                                       [self.refreshControl endRefreshing];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        endedPic = true;
                                        if (reset) {
@@ -266,6 +270,10 @@ typedef enum {
 }
 
 - (IBAction)touchProfilePic:(id)sender {
+}
+
+- (IBAction)refresh:(id)sender {
+    [self reloadView];
 }
 
 - (void)loadMore {

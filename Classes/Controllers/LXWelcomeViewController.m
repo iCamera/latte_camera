@@ -247,54 +247,6 @@ typedef enum {
         return 104;
 }
 
-- (void)showPic:(UIButton*)sender withTab:(GalleryTab)tab {
-    UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
-                                                             bundle:nil];
-    UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
-    LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
-    viewGallery.delegate = self;
-    
-    if (tableMode == kWelcomeTableTimeline) {
-        Feed *feed = [LXUtils feedFromPicID:sender.tag of:feeds];
-        Picture *picture = [LXUtils picFromPicID:sender.tag of:feeds];
-        viewGallery.user = feed.user;
-        viewGallery.picture = picture;
-    } else {
-        Feed *feed = feeds[sender.tag];
-        Picture *picture = feed.targets[0];
-        viewGallery.user = feed.user;
-        viewGallery.picture = picture;
-    }
-    
-    [self presentViewController:navGalerry animated:YES completion:^{
-        switch (tab) {
-            case kGalleryTabComment:
-            case kGalleryTabInfo:
-            case kGalleryTabVote:
-                viewGallery.currentTab = tab;
-                break;
-            default:
-                break;
-        }
-    }];
-}
-
-- (void)showPic:(UIButton*)sender {
-    [self showPic:sender withTab:kGalleryTabComment];
-}
-
-- (void)showInfo:(UIButton*)sender {
-    [self showPic:sender withTab:kGalleryTabInfo];
-}
-
-- (void)showLike:(UIButton*)sender {
-    [self showPic:sender withTab:kGalleryTabVote];
-}
-
-- (void)showComment:(UIButton*)sender {
-    [self showPic:sender withTab:kGalleryTabComment];
-}
-
 - (void)showMap:(UIButton*)sender {
     UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                            bundle:nil];

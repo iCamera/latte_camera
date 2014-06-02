@@ -653,7 +653,6 @@
 		883278A0170173690053C8A2 /* ZM@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 883276BE170173690053C8A2 /* ZM@2x.png */; };
 		883278A1170173690053C8A2 /* ZW.png in Resources */ = {isa = PBXBuildFile; fileRef = 883276BF170173690053C8A2 /* ZW.png */; };
 		883278A2170173690053C8A2 /* ZW@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 883276C0170173690053C8A2 /* ZW@2x.png */; };
-		8835C77416E6EAED0036BF5E /* LXPicDetailTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8835C77316E6EAED0036BF5E /* LXPicDetailTabViewController.m */; };
 		8835FCC1171BEB3700A48346 /* NSDate+TKCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8835FCC0171BEB3700A48346 /* NSDate+TKCategory.m */; };
 		8835FCC4171BEB6300A48346 /* NSDate+CalendarGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 8835FCC3171BEB6300A48346 /* NSDate+CalendarGrid.m */; };
 		8835FCC8171CE31900A48346 /* LXCellGridUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8835FCC7171CE31900A48346 /* LXCellGridUser.m */; };
@@ -2660,8 +2659,6 @@
 		883276BE170173690053C8A2 /* ZM@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ZM@2x.png"; sourceTree = "<group>"; };
 		883276BF170173690053C8A2 /* ZW.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ZW.png; sourceTree = "<group>"; };
 		883276C0170173690053C8A2 /* ZW@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ZW@2x.png"; sourceTree = "<group>"; };
-		8835C77216E6EAED0036BF5E /* LXPicDetailTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXPicDetailTabViewController.h; sourceTree = "<group>"; };
-		8835C77316E6EAED0036BF5E /* LXPicDetailTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXPicDetailTabViewController.m; sourceTree = "<group>"; };
 		8835FCBF171BEB3700A48346 /* NSDate+TKCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+TKCategory.h"; sourceTree = "<group>"; };
 		8835FCC0171BEB3700A48346 /* NSDate+TKCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+TKCategory.m"; sourceTree = "<group>"; };
 		8835FCC2171BEB6200A48346 /* NSDate+CalendarGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+CalendarGrid.h"; sourceTree = "<group>"; };
@@ -5148,8 +5145,6 @@
 				8890724B16770EBB0013DF7A /* LXNotifySideViewController.m */,
 				88FB5C22192461A50018F757 /* LXPicCommentViewController.h */,
 				88FB5C23192461A50018F757 /* LXPicCommentViewController.m */,
-				8835C77216E6EAED0036BF5E /* LXPicDetailTabViewController.h */,
-				8835C77316E6EAED0036BF5E /* LXPicDetailTabViewController.m */,
 				888F64B416FAD74400ED74BB /* LXPicDumbTabViewController.h */,
 				888F64B516FAD74500ED74BB /* LXPicDumbTabViewController.m */,
 				8890723E16770EBB0013DF7A /* LXPicEditViewController.h */,
@@ -8622,7 +8617,6 @@
 				8890B9D716E03B1F008EDFBF /* HPTextViewInternal.m in Sources */,
 				88A5F41816E11D8B00118996 /* LXSettingRootViewController.m in Sources */,
 				88F0075016E4A29B0071369C /* LXSettingNotifyViewController.m in Sources */,
-				8835C77416E6EAED0036BF5E /* LXPicDetailTabViewController.m in Sources */,
 				88B37BF616E719B700AB682C /* LXVoteViewController.m in Sources */,
 				8874DBC316E8BF3600FDF60B /* LXNavMypageController.m in Sources */,
 				8874DBD216E8C58200FDF60B /* LXNavGalleryViewController.m in Sources */,

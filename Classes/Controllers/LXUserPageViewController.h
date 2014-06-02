@@ -16,6 +16,8 @@
 
 @interface LXUserPageViewController : UITableViewController <UIActionSheetDelegate, LXGalleryViewControllerDataSource>
 
+@property (strong, nonatomic) IBOutlet UIButton *buttonUser;
+@property (strong, nonatomic) IBOutlet UIButton *buttonUsername;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadIndicator;
 
 @property (strong, nonatomic) User *user;
@@ -24,5 +26,6 @@
 - (void)collapseHeader;
 - (void)reloadView;
 - (IBAction)touchProfilePic:(id)sender;
+- (IBAction)refresh:(id)sender;
 
 @end

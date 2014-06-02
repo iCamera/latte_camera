@@ -10,7 +10,8 @@
 #import "LXGalleryViewController.h"
 #import "LXZoomPictureViewController.h"
 
-#import "LXPicDetailTabViewController.h"
+#import "LXVoteViewController.h"
+#import "LXPicInfoViewController.h"
 #import "LXPicCommentViewController.h"
 #import "LXPicMapViewController.h"
 #import "LXPicEditViewController.h"
@@ -37,7 +38,6 @@
 
 @synthesize buttonComment;
 @synthesize buttonLike;
-@synthesize buttonMap;
 @synthesize viewTab;
 @synthesize labelDesc;
 @synthesize buttonEdit;
@@ -63,7 +63,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _currentTab = kGalleryTabComment;
+
     }
     return self;
 }
@@ -195,22 +195,15 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
-    [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];
-    
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     [super viewWillAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-    [nc removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
     
     [super viewWillDisappear:animated];
 }
-
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -222,25 +215,17 @@
     } else if ([segue.identifier isEqualToString:@"Edit"]) {
         LXPicEditViewController *viewEdit = segue.destinationViewController;
         viewEdit.picture = currentPage.picture;
-    } else if ([segue.identifier isEqualToString:@"Detail"]) {
-        UIButton *button = (UIButton*)sender;
-        LXPicDetailTabViewController *viewPicTab = segue.destinationViewController;
-        
-        switch (button.tag) {
-            case 1:
-                viewPicTab.tab = kGalleryTabVote;
-                break;
-            case 2:
-                viewPicTab.tab = kGalleryTabComment;
-                break;
-            case 3:
-                viewPicTab.tab = kGalleryTabInfo;
-                break;
-            default:
-                break;
-        }
-        
-        viewPicTab.picture = currentPage.picture;
+    } else if ([segue.identifier isEqualToString:@"Vote"]) {
+        LXVoteViewController *viewVote = segue.destinationViewController;
+        viewVote.picture = _picture;
+    }
+    if ([segue.identifier isEqualToString:@"Comment"]) {
+        LXPicCommentViewController *viewComment = segue.destinationViewController;
+        viewComment.picture = _picture;
+    }
+    if ([segue.identifier isEqualToString:@"Info"]) {
+        LXPicInfoViewController *viewInfo = segue.destinationViewController;
+        viewInfo.picture = _picture;
     }
 }
 
@@ -352,12 +337,6 @@
     buttonLike.selected = currentPage.picture.isVoted;
     labelLike.highlighted = currentPage.picture.isVoted;
     
-    if ((currentPage.picture.latitude != nil) && (currentPage.picture.longitude != nil)) {
-        buttonMap.enabled = YES;
-    } else {
-        buttonMap.enabled = NO;
-    }
-    
     labelComment.text = [currentPage.picture.commentCount stringValue];
     labelLike.text = [currentPage.picture.voteCount stringValue];
     
@@ -382,43 +361,10 @@
 
 - (IBAction)toggleLike:(UIButton *)sender {
     LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
-    if (currentPage.picture.isOwner)
-        return;
+    if (currentPage.picture.isOwner) {
+        [self performSegueWithIdentifier:@"Like" sender:self];
+    } else {
     [LXUtils toggleLike:sender ofPicture:currentPage.picture setCount:labelLike];
-}
-
-- (IBAction)switchTab:(UIButton *)sender {
-    switch (sender.tag) {
-        case 1:
-            self.currentTab = kGalleryTabVote;
-            break;
-        case 2:
-            self.currentTab = kGalleryTabComment;
-            break;
-        case 3:
-            self.currentTab = kGalleryTabInfo;
-            break;
-        default:
-            break;
-    }
-}
-
-- (IBAction)dragTab:(UIPanGestureRecognizer *)sender {
-    if (sender.state == UIGestureRecognizerStateBegan || sender.state == UIGestureRecognizerStateChanged) {
-        CGPoint translatedPoint = [sender translationInView:self.view];
-        
-        CGRect frameTab = viewTab.frame;
-        CGRect screenRect = [[UIScreen mainScreen] bounds];
-        
-        frameTab.origin.y += translatedPoint.y;
-        if (frameTab.origin.y < 0) {
-            frameTab.origin.y = 0;
-        }
-        if (frameTab.origin.y + frameTab.size.height > screenRect.size.height) {
-            frameTab.origin.y = screenRect.size.height - frameTab.size.height;
-        }
-        
-        [sender setTranslation:CGPointZero inView:self.view];
     }
 }
 
@@ -478,7 +424,6 @@
 }
 
 - (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
-    
     return UIStatusBarAnimationFade;
 }
 
