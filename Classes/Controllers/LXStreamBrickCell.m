@@ -57,7 +57,8 @@
     _feed = feed;
     Picture *picture = feed.targets[0];
 
-    [_imagePicture setImageWithURL:[NSURL URLWithString:picture.urlSmall] placeholderImage:nil];
+    _imagePicture.image = nil;
+    [_imagePicture setImageWithURL:[NSURL URLWithString:picture.urlSmall]];
     [_buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:feed.user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
     _labelUsername.text = feed.user.name;
 }

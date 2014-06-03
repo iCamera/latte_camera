@@ -50,12 +50,16 @@
     layoutWaterfall.minimumInteritemSpacing = 4;
     layoutWaterfall.sectionInset = UIEdgeInsetsMake(6, 6, 6, 6);
     layoutWaterfall.headerHeight = 44;
+    layoutWaterfall.footerHeight = 50;
     
 //    UICollectionViewFlowLayout
     [self.collectionView setCollectionViewLayout:layoutWaterfall animated:NO];
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"LXStreamHeader" bundle:nil] forSupplementaryViewOfKind:CHTCollectionElementKindSectionHeader withReuseIdentifier:@"Header"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"LXStreamHeader" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"Header"];
+    
+    [self.collectionView registerNib:[UINib nibWithNibName:@"LXStreamFooter" bundle:nil] forSupplementaryViewOfKind:CHTCollectionElementKindSectionFooter withReuseIdentifier:@"Footer"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"LXStreamFooter" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"Footer"];
     
     loadEnded = false;
     loading = false;
@@ -197,6 +201,18 @@
         header.segmentView.selectedSegmentIndex = 1;
         return header;
     }
+    
+    if ([kind isEqualToString:CHTCollectionElementKindSectionFooter]) {
+        return [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                                    withReuseIdentifier:@"Footer"
+                                                                           forIndexPath:indexPath];
+    }
+    
+    if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
+        return [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                                    withReuseIdentifier:@"Footer"
+                                                                           forIndexPath:indexPath];
+    }
 
     return nil;
 }
@@ -229,6 +245,11 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     return CGSizeMake(320, layoutWaterfall.headerHeight);
 }
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
+    return CGSizeMake(320, layoutWaterfall.footerHeight);
+}
+
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {

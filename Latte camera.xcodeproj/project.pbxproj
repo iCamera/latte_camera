@@ -131,6 +131,7 @@
 		8820550119381A7A00D741BB /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 882054F119381A7A00D741BB /* iTunesArtwork@2x.png */; };
 		882055041938550D00D741BB /* LXPicVoteCollectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 882055031938550D00D741BB /* LXPicVoteCollectionController.m */; };
 		882055071938570E00D741BB /* LXCollectionCellUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 882055061938570D00D741BB /* LXCollectionCellUser.m */; };
+		8820552D193C5D8F00D741BB /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8820551F193C5D8F00D741BB /* TTTAttributedLabel.m */; };
 		8820D82E16634D7000DBBFF9 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8820D82D16634D7000DBBFF9 /* CoreImage.framework */; };
 		8824FAD916F6DD6C00357ADB /* LXCellUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = 8824FAD816F6DD6C00357ADB /* LXCellUpload.m */; };
 		8824FB0B16F72A6E00357ADB /* LXZoomPictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8824FB0716F72A6B00357ADB /* LXZoomPictureViewController.m */; };
@@ -1128,8 +1129,6 @@
 		889093FD16F8959400E98DF4 /* follow_mutual_m_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 889093F916F8959400E98DF4 /* follow_mutual_m_off@2x.png */; };
 		889093FE16F8959400E98DF4 /* follow_mutual_m.png in Resources */ = {isa = PBXBuildFile; fileRef = 889093FA16F8959400E98DF4 /* follow_mutual_m.png */; };
 		889093FF16F8959400E98DF4 /* follow_mutual_m@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 889093FB16F8959400E98DF4 /* follow_mutual_m@2x.png */; };
-		8890B9D616E03B1F008EDFBF /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890B9BB16E03B1F008EDFBF /* HPGrowingTextView.m */; };
-		8890B9D716E03B1F008EDFBF /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890B9BD16E03B1F008EDFBF /* HPTextViewInternal.m */; };
 		88979100179FD64B00BDC803 /* LXFAQViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 889790FF179FD64A00BDC803 /* LXFAQViewController.m */; };
 		88A43B0216703340001A8BB3 /* bt_twitter2_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A43AFE16703340001A8BB3 /* bt_twitter2_on.png */; };
 		88A43B0316703340001A8BB3 /* bt_twitter2_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A43AFF16703340001A8BB3 /* bt_twitter2_on@2x.png */; };
@@ -1933,6 +1932,9 @@
 		88FE4383166C93D7004DCE53 /* user.gif in Resources */ = {isa = PBXBuildFile; fileRef = 88FE418E166C93D7004DCE53 /* user.gif */; };
 		88FE4388166C941A004DCE53 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 88FE438A166C941A004DCE53 /* Localizable.strings */; };
 		88FE4417166C96A3004DCE53 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88FE4416166C96A3004DCE53 /* Default-568h@2x.png */; };
+		88FECF06193C796D0008985C /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88FECEEB193C796D0008985C /* HPGrowingTextView.m */; };
+		88FECF07193C796D0008985C /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 88FECEED193C796D0008985C /* HPTextViewInternal.m */; };
+		88FECF1D193D9BE60008985C /* LXStreamFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88FECF1C193D9BE60008985C /* LXStreamFooter.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2131,6 +2133,8 @@
 		882055031938550D00D741BB /* LXPicVoteCollectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXPicVoteCollectionController.m; sourceTree = "<group>"; };
 		882055051938570D00D741BB /* LXCollectionCellUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCollectionCellUser.h; sourceTree = "<group>"; };
 		882055061938570D00D741BB /* LXCollectionCellUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCollectionCellUser.m; sourceTree = "<group>"; };
+		8820551E193C5D8F00D741BB /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
+		8820551F193C5D8F00D741BB /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
 		8820D82D16634D7000DBBFF9 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		8824FAD716F6DD6C00357ADB /* LXCellUpload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCellUpload.h; sourceTree = "<group>"; };
 		8824FAD816F6DD6C00357ADB /* LXCellUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCellUpload.m; sourceTree = "<group>"; };
@@ -3251,10 +3255,6 @@
 		889093F916F8959400E98DF4 /* follow_mutual_m_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "follow_mutual_m_off@2x.png"; sourceTree = "<group>"; };
 		889093FA16F8959400E98DF4 /* follow_mutual_m.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = follow_mutual_m.png; sourceTree = "<group>"; };
 		889093FB16F8959400E98DF4 /* follow_mutual_m@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "follow_mutual_m@2x.png"; sourceTree = "<group>"; };
-		8890B9BA16E03B1F008EDFBF /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPGrowingTextView.h; sourceTree = "<group>"; };
-		8890B9BB16E03B1F008EDFBF /* HPGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPGrowingTextView.m; sourceTree = "<group>"; };
-		8890B9BC16E03B1F008EDFBF /* HPTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPTextViewInternal.h; sourceTree = "<group>"; };
-		8890B9BD16E03B1F008EDFBF /* HPTextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewInternal.m; sourceTree = "<group>"; };
 		889790FE179FD64A00BDC803 /* LXFAQViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFAQViewController.h; sourceTree = "<group>"; };
 		889790FF179FD64A00BDC803 /* LXFAQViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFAQViewController.m; sourceTree = "<group>"; };
 		88A43AFE16703340001A8BB3 /* bt_twitter2_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bt_twitter2_on.png; sourceTree = "<group>"; };
@@ -4090,6 +4090,11 @@
 		88FE418E166C93D7004DCE53 /* user.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = user.gif; sourceTree = "<group>"; };
 		88FE4389166C941A004DCE53 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		88FE4416166C96A3004DCE53 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../../Default-568h@2x.png"; sourceTree = "<group>"; };
+		88FECEEA193C796D0008985C /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPGrowingTextView.h; sourceTree = "<group>"; };
+		88FECEEB193C796D0008985C /* HPGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPGrowingTextView.m; sourceTree = "<group>"; };
+		88FECEEC193C796D0008985C /* HPTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPTextViewInternal.h; sourceTree = "<group>"; };
+		88FECEED193C796D0008985C /* HPTextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewInternal.m; sourceTree = "<group>"; };
+		88FECF1C193D9BE60008985C /* LXStreamFooter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LXStreamFooter.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4330,6 +4335,23 @@
 			path = icon;
 			sourceTree = "<group>";
 		};
+		88205508193C5D8F00D741BB /* TTTAttributedLabel */ = {
+			isa = PBXGroup;
+			children = (
+				8820551D193C5D8F00D741BB /* TTTAttributedLabel */,
+			);
+			path = TTTAttributedLabel;
+			sourceTree = "<group>";
+		};
+		8820551D193C5D8F00D741BB /* TTTAttributedLabel */ = {
+			isa = PBXGroup;
+			children = (
+				8820551E193C5D8F00D741BB /* TTTAttributedLabel.h */,
+				8820551F193C5D8F00D741BB /* TTTAttributedLabel.m */,
+			);
+			path = TTTAttributedLabel;
+			sourceTree = "<group>";
+		};
 		8824FB4516F72CE700357ADB /* NIBs */ = {
 			isa = PBXGroup;
 			children = (
@@ -4342,6 +4364,7 @@
 				8824FB6316F72CE700357ADB /* LXZoomPictureViewController.xib */,
 				88CE8A44174F102000C6A6B6 /* TextTemplate.xib */,
 				88FB5C1D1921E2420018F757 /* LXStreamHeader.xib */,
+				88FECF1C193D9BE60008985C /* LXStreamFooter.xib */,
 			);
 			path = NIBs;
 			sourceTree = "<group>";
@@ -5346,25 +5369,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		8890B9B716E03B1F008EDFBF /* GrowingTextView */ = {
-			isa = PBXGroup;
-			children = (
-				8890B9B916E03B1F008EDFBF /* class */,
-			);
-			path = GrowingTextView;
-			sourceTree = "<group>";
-		};
-		8890B9B916E03B1F008EDFBF /* class */ = {
-			isa = PBXGroup;
-			children = (
-				8890B9BA16E03B1F008EDFBF /* HPGrowingTextView.h */,
-				8890B9BB16E03B1F008EDFBF /* HPGrowingTextView.m */,
-				8890B9BC16E03B1F008EDFBF /* HPTextViewInternal.h */,
-				8890B9BD16E03B1F008EDFBF /* HPTextViewInternal.m */,
-			);
-			path = class;
-			sourceTree = "<group>";
-		};
 		88AAA1A21769E141007610BB /* gradient1 */ = {
 			isa = PBXGroup;
 			children = (
@@ -5640,13 +5644,14 @@
 		88D4B5BE15D4B66B00FC4FBB /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				88FECEE7193C796D0008985C /* GrowingTextView */,
+				88205508193C5D8F00D741BB /* TTTAttributedLabel */,
 				88D2DC22192C40630027D88A /* REFrostedViewController */,
 				88120B2618F6B171000BFB5E /* GoogleAnalyticsServicesiOS_3.06 */,
 				88120B9F18F6B173000BFB5E /* TestFlightSDK3.0.0 */,
 				88120A2218F63230000BFB5E /* AFNetworking */,
 				881209EA18F3D20D000BFB5E /* CHTCollectionViewWaterfallLayout */,
 				8814422B172F9CCF00A5B3FF /* BCGenieEffect */,
-				8890B9B716E03B1F008EDFBF /* GrowingTextView */,
 				880E50D51728C30800D584EE /* ImageCrop */,
 				880C4AE1161C2A1400252C6A /* MBProgressHUD */,
 				8884E3F916A8EB5700DCBAC7 /* REComposeViewController */,
@@ -6686,6 +6691,25 @@
 				88FE418E166C93D7004DCE53 /* user.gif */,
 			);
 			path = Images;
+			sourceTree = "<group>";
+		};
+		88FECEE7193C796D0008985C /* GrowingTextView */ = {
+			isa = PBXGroup;
+			children = (
+				88FECEE9193C796D0008985C /* class */,
+			);
+			path = GrowingTextView;
+			sourceTree = "<group>";
+		};
+		88FECEE9193C796D0008985C /* class */ = {
+			isa = PBXGroup;
+			children = (
+				88FECEEA193C796D0008985C /* HPGrowingTextView.h */,
+				88FECEEB193C796D0008985C /* HPGrowingTextView.m */,
+				88FECEEC193C796D0008985C /* HPTextViewInternal.h */,
+				88FECEED193C796D0008985C /* HPTextViewInternal.m */,
+			);
+			path = class;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -8177,6 +8201,7 @@
 				88CE8A49174F376B00C6A6B6 /* icon_save2.png in Resources */,
 				88877F0E17533773002B81D7 /* edit_center.png in Resources */,
 				88877F0F17533773002B81D7 /* edit_center@2x.png in Resources */,
+				88FECF1D193D9BE60008985C /* LXStreamFooter.xib in Resources */,
 				88877F1017533773002B81D7 /* edit_horizon.png in Resources */,
 				88877F1117533773002B81D7 /* edit_horizon@2x.png in Resources */,
 				88877F1217533773002B81D7 /* edit_left.png in Resources */,
@@ -8593,6 +8618,7 @@
 				889072F616770EBB0013DF7A /* UIActionSheet+ButtonState.m in Sources */,
 				889072FB16770EBB0013DF7A /* Comment.m in Sources */,
 				88120AFF18F63233000BFB5E /* UIAlertView+AFNetworking.m in Sources */,
+				88FECF06193C796D0008985C /* HPGrowingTextView.m in Sources */,
 				889072FC16770EBB0013DF7A /* Feed.m in Sources */,
 				889072FD16770EBB0013DF7A /* ModelObject.m in Sources */,
 				889072FE16770EBB0013DF7A /* Picture.m in Sources */,
@@ -8600,6 +8626,7 @@
 				8890730016770EBB0013DF7A /* User.m in Sources */,
 				8890730116770EBB0013DF7A /* LXUtils.m in Sources */,
 				88D2DC83192C40640027D88A /* REFrostedContainerViewController.m in Sources */,
+				8820552D193C5D8F00D741BB /* TTTAttributedLabel.m in Sources */,
 				880E35A816A7BECA0097B97F /* LXAboutViewController.m in Sources */,
 				8884E40516A8EB5700DCBAC7 /* DEComposeRuledView.m in Sources */,
 				8884E40616A8EB5700DCBAC7 /* DEComposeTextView.m in Sources */,
@@ -8613,8 +8640,6 @@
 				885C061D16BB69B0000820E7 /* UIDeviceHardware.m in Sources */,
 				88A9576916BFC2A2003649E8 /* LXStillCamera.m in Sources */,
 				8883C07D16DCBCE1003510A1 /* LXGalleryViewController.m in Sources */,
-				8890B9D616E03B1F008EDFBF /* HPGrowingTextView.m in Sources */,
-				8890B9D716E03B1F008EDFBF /* HPTextViewInternal.m in Sources */,
 				88A5F41816E11D8B00118996 /* LXSettingRootViewController.m in Sources */,
 				88F0075016E4A29B0071369C /* LXSettingNotifyViewController.m in Sources */,
 				88B37BF616E719B700AB682C /* LXVoteViewController.m in Sources */,
@@ -8661,6 +8686,7 @@
 				880E51001728E50400D584EE /* LXCaptureViewController.m in Sources */,
 				88120B0018F63233000BFB5E /* UIButton+AFNetworking.m in Sources */,
 				880E5110172A16C900D584EE /* LXCamCaptureManager.m in Sources */,
+				88FECF07193C796D0008985C /* HPTextViewInternal.m in Sources */,
 				88144259172F9CCF00A5B3FF /* UIView+Genie.m in Sources */,
 				8883EED4173212EC00AA2D5E /* LXImageTextViewController.m in Sources */,
 				8883EED7173220EA00AA2D5E /* LXTextTemplateViewController.m in Sources */,

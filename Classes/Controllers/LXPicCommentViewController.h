@@ -22,6 +22,7 @@
 
 @interface LXPicCommentViewController : UIViewController<HPGrowingTextViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintTextHeight;
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
 @property (strong, nonatomic) IBOutlet HPGrowingTextView *growingComment;
 @property (strong, nonatomic) IBOutlet LXButtonBrown30 *buttonSend;

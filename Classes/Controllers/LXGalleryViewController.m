@@ -33,7 +33,6 @@
     UITapGestureRecognizer *tapDouble;
     NSMutableArray *currentComments;
     LXShare *lxShare;
-    BOOL loadedInfo;
 }
 
 @synthesize buttonComment;
@@ -282,7 +281,6 @@
 }
 
 - (void)setPicture {
-    loadedInfo = false;
     LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
     
     CGSize size = [currentPage.picture.descriptionText sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0]
@@ -323,8 +321,6 @@
         labelNickname.text = currentPage.picture.user.name;
         [LXUtils setNationalityOfUser:currentPage.picture.user forImage:imageNationality nextToLabel:labelNickname];
         [buttonUser loadBackground:currentPage.picture.user.profilePicture placeholderImage:@"user.gif"];
-    } else {
-        [self loadInfo];
     }
     
     labelView.text = [NSString stringWithFormat:NSLocalizedString(@"d_views", @""), [currentPage.picture.pageviews integerValue]];
@@ -366,10 +362,6 @@
     } else {
     [LXUtils toggleLike:sender ofPicture:currentPage.picture setCount:labelLike];
     }
-}
-
-- (void)loadInfo {
-    loadedInfo = true;
 }
 
 - (IBAction)touchUser:(UIButton *)sender {
