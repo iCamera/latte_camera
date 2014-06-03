@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="cxD-TB-4Px">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="cxD-TB-4Px">
     <dependencies>
         <deployment version="1536" defaultVersion="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
         <!--Table View Controller-->
@@ -348,7 +348,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="821-7a-Cgz" kind="push" id="Oxq-q8-FIc"/>
+                                            <segue destination="QKN-ba-57H" kind="push" id="MYR-qS-bka"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="2PM-9S-zrr">
@@ -368,7 +368,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="QKN-ba-57H" kind="push" id="8dz-Rz-bfa"/>
+                                            <segue destination="821-7a-Cgz" kind="push" id="kOO-qu-RVT"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -1156,10 +1156,11 @@ We improve our services to the best of our ability, but please understand that n
             </objects>
             <point key="canvasLocation" x="882" y="-1514"/>
         </scene>
-        <!--View Controller - Term of Service-->
+        <!--Company Policy View Controller - Term of Service-->
         <scene sceneID="qk6-CY-bjM">
             <objects>
-                <viewController id="QKN-ba-57H" sceneMemberID="viewController">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Frw-mm-2M9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="QKN-ba-57H" customClass="LXCompanyPolicyViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XFR-mm-k0e">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1175,17 +1176,16 @@ We improve our services to the best of our ability, but please understand that n
                     </view>
                     <navigationItem key="navigationItem" title="Term of Service" id="KH9-cm-2Pw"/>
                     <connections>
-                        <outlet property="viewWeb" destination="i26-WP-egh" id="vbY-Du-0db"/>
+                        <outlet property="mainWebView" destination="i26-WP-egh" id="VgN-RV-RAd"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Frw-mm-2M9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-786" y="-271"/>
         </scene>
-        <!--View Controller - Company-->
+        <!--Company Policy View Controller - Company-->
         <scene sceneID="wvF-mW-Z0i">
             <objects>
-                <viewController id="821-7a-Cgz" sceneMemberID="viewController">
+                <viewController id="821-7a-Cgz" customClass="LXCompanyPolicyViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="reF-eS-5gU">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1201,7 +1201,7 @@ We improve our services to the best of our ability, but please understand that n
                     </view>
                     <navigationItem key="navigationItem" title="Company" id="LeH-td-8wH"/>
                     <connections>
-                        <outlet property="viewWeb" destination="8Xy-ar-HXF" id="IZj-9i-fRJ"/>
+                        <outlet property="mainWebView" destination="8Xy-ar-HXF" id="PXK-wF-5Mb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nea-AR-weD" userLabel="First Responder" sceneMemberID="firstResponder"/>

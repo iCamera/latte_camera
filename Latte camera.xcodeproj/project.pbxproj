@@ -1935,6 +1935,7 @@
 		88FECF06193C796D0008985C /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88FECEEB193C796D0008985C /* HPGrowingTextView.m */; };
 		88FECF07193C796D0008985C /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 88FECEED193C796D0008985C /* HPTextViewInternal.m */; };
 		88FECF1D193D9BE60008985C /* LXStreamFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88FECF1C193D9BE60008985C /* LXStreamFooter.xib */; };
+		8C0E16FF193DD19600B50887 /* LXCompanyPolicyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C0E16FE193DD19600B50887 /* LXCompanyPolicyViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -4095,6 +4096,8 @@
 		88FECEEC193C796D0008985C /* HPTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPTextViewInternal.h; sourceTree = "<group>"; };
 		88FECEED193C796D0008985C /* HPTextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewInternal.m; sourceTree = "<group>"; };
 		88FECF1C193D9BE60008985C /* LXStreamFooter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LXStreamFooter.xib; sourceTree = "<group>"; };
+		8C0E16FD193DD19600B50887 /* LXCompanyPolicyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCompanyPolicyViewController.h; sourceTree = "<group>"; };
+		8C0E16FE193DD19600B50887 /* LXCompanyPolicyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCompanyPolicyViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -5220,6 +5223,8 @@
 				88D2DC9A192C4B600027D88A /* LXMenuViewController.m */,
 				882055021938550D00D741BB /* LXPicVoteCollectionController.h */,
 				882055031938550D00D741BB /* LXPicVoteCollectionController.m */,
+				8C0E16FD193DD19600B50887 /* LXCompanyPolicyViewController.h */,
+				8C0E16FE193DD19600B50887 /* LXCompanyPolicyViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -8707,6 +8712,7 @@
 				884D215E175C9BF0002FF853 /* ZipArchive.mm in Sources */,
 				884D2161175CA656002FF853 /* LXFilterDOF2.m in Sources */,
 				882055041938550D00D741BB /* LXPicVoteCollectionController.m in Sources */,
+				8C0E16FF193DD19600B50887 /* LXCompanyPolicyViewController.m in Sources */,
 				88AAA2C01769EC52007610BB /* UIImage+Resize.m in Sources */,
 				88120ABC18F63233000BFB5E /* AFURLRequestSerialization.m in Sources */,
 				88120AB618F63233000BFB5E /* AFHTTPRequestOperation.m in Sources */,
