@@ -65,18 +65,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)tapBackground:(id)sender {
-    [self hide];
-}
-
-- (void)hide {
-    [UIView animateWithDuration:0.3 animations:^{
-        self.view.alpha = 0;
-    } completion:^(BOOL finished) {
-        [self.view removeFromSuperview];
-        [self removeFromParentViewController];
-    }];
-}
 
 - (void)viewDidUnload {
     [self setViewSub:nil];
@@ -106,7 +94,7 @@
                                                       cancelButtonTitle:NSLocalizedString(@"close", @"閉じる")
                                                       otherButtonTitles:nil];
                 [alert show];
-                [self hide];
+                [self.navigationController popViewControllerAnimated:YES];
             } else {
                 UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"エラー")
                                                                 message:NSLocalizedString(@"Please enter your current password again", @"") delegate:nil
