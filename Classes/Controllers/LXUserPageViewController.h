@@ -18,7 +18,7 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonUser;
 @property (strong, nonatomic) IBOutlet UIButton *buttonUsername;
-@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadIndicator;
+@property (strong, nonatomic) IBOutlet UISegmentedControl *segmentTab;
 
 @property (strong, nonatomic) User *user;
 
@@ -27,5 +27,6 @@
 - (void)reloadView;
 - (IBAction)touchProfilePic:(id)sender;
 - (IBAction)refresh:(id)sender;
+- (IBAction)switchView:(id)sender;
 
 @end

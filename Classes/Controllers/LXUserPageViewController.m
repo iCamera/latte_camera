@@ -47,9 +47,6 @@ typedef enum {
 @end
 
 @implementation LXUserPageViewController  {
-    NSMutableSet *showSet;
-    NSArray *showField;
-    NSDictionary *userDict;
     NSInteger daysInMonth;
     
     UserPagePhotoMode photoMode;
@@ -96,8 +93,6 @@ typedef enum {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    showSet = [NSMutableSet setWithObjects:@"gender", @"residence", @"age", @"birthdate", @"bloodtype", @"occupation", @"introduction", @"hobby", @"nationality", nil];
     
     if (tableMode == 0) {
         tableMode = kTablePhoto;
@@ -147,14 +142,7 @@ typedef enum {
     [[LatteAPIClient sharedClient] GET:url
                                 parameters: nil
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       userDict = JSON[@"user"];
-                                       User *user = [User instanceFromDictionary:userDict];
-                                       
-                                       NSSet *allField = [NSSet setWithArray:[userDict allKeys]];
-                                       
-                                       [showSet intersectSet:allField];
-                                       showField = [showSet allObjects];
-                                       
+                                       User *user = [User instanceFromDictionary:JSON[@"user"]];
                                        
                                        [self.tableView reloadData];
                                        
@@ -276,6 +264,28 @@ typedef enum {
     [self reloadView];
 }
 
+- (IBAction)switchView:(id)sender {
+    switch (_segmentTab.selectedSegmentIndex) {
+        case 0:
+            tableMode = kTablePhoto;
+            photoMode = kPhotoGrid;
+            break;
+        case 1:
+            tableMode = kTablePhoto;
+            photoMode = kPhotoCalendar;
+            break;
+        case 2:
+            tableMode = kTableFollowings;
+            break;
+        case 3:
+            tableMode = kTableFollower;
+            break;
+        default:
+            break;
+    }
+    [self reloadView];
+}
+
 - (void)loadMore {
     if (photoMode == kPhotoGrid)
         [self loadPicture:NO];
@@ -375,7 +385,9 @@ typedef enum {
     {
         if (photoMode == kPhotoGrid) {
             return 104;
-        } else if (photoMode == kPhotoCalendar) {
+        }
+        
+        if (photoMode == kPhotoCalendar) {
             if (selectedCalendarDate) {
                 UIView *view = [self viewForCalendarDay:selectedCalendarDate];
                 return view.frame.size.height;
@@ -383,23 +395,9 @@ typedef enum {
                 return 0;
 
         }
-//    } else if (tableMode == kTableProfile) {
-//        if (indexPath.row == showField.count) {
-//            return 22;
-//        }
-//        NSString* strKey = [showField objectAtIndex:indexPath.row];
-//        
-//        if ([strKey isEqualToString:@"hobby"]|| [strKey isEqualToString:@"introduction"]) {
-//            CGSize size = [[userDict objectForKey:strKey] sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0]
-//                                                     constrainedToSize:CGSizeMake(212.0, CGFLOAT_MAX)
-//                                                         lineBreakMode:NSLineBreakByWordWrapping];
-//            return size.height + 8;
-//        } else {
-//            return 22;
-//        }
-    }
-    else
+    } else
         return 48;
+    return 22;
 }
 
 - (BOOL)checkEmpty {
