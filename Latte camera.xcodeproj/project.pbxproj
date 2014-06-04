@@ -1935,6 +1935,7 @@
 		88FECF07193C796D0008985C /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 88FECEED193C796D0008985C /* HPTextViewInternal.m */; };
 		88FECF1D193D9BE60008985C /* LXStreamFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88FECF1C193D9BE60008985C /* LXStreamFooter.xib */; };
 		8C0E16FF193DD19600B50887 /* LXCompanyPolicyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C0E16FE193DD19600B50887 /* LXCompanyPolicyViewController.m */; };
+		C5FDFC3D193F16000084FD33 /* LXCellNotifyOfficial.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FDFC3C193F16000084FD33 /* LXCellNotifyOfficial.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -4095,6 +4096,8 @@
 		88FECF1C193D9BE60008985C /* LXStreamFooter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LXStreamFooter.xib; sourceTree = "<group>"; };
 		8C0E16FD193DD19600B50887 /* LXCompanyPolicyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCompanyPolicyViewController.h; sourceTree = "<group>"; };
 		8C0E16FE193DD19600B50887 /* LXCompanyPolicyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCompanyPolicyViewController.m; sourceTree = "<group>"; };
+		C5FDFC3B193F16000084FD33 /* LXCellNotifyOfficial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCellNotifyOfficial.h; sourceTree = "<group>"; };
+		C5FDFC3C193F16000084FD33 /* LXCellNotifyOfficial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCellNotifyOfficial.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -5256,6 +5259,8 @@
 				888F64BB16FB2BB500ED74BB /* LXCellInfoTag.m */,
 				8890726516770EBB0013DF7A /* LXCellNotify.h */,
 				8890726616770EBB0013DF7A /* LXCellNotify.m */,
+				C5FDFC3B193F16000084FD33 /* LXCellNotifyOfficial.h */,
+				C5FDFC3C193F16000084FD33 /* LXCellNotifyOfficial.m */,
 				8890726D16770EBB0013DF7A /* LXCellRankLv1.h */,
 				8890726E16770EBB0013DF7A /* LXCellRankLv1.m */,
 				8890726F16770EBB0013DF7A /* LXCellRankLv2.h */,
@@ -8562,6 +8567,7 @@
 				880E510A172A130E00D584EE /* AVCamViewController.m in Sources */,
 				88120B0318F63233000BFB5E /* UIRefreshControl+AFNetworking.m in Sources */,
 				880E510B172A130E00D584EE /* AVCamCaptureManager.m in Sources */,
+				C5FDFC3D193F16000084FD33 /* LXCellNotifyOfficial.m in Sources */,
 				880E510D172A130E00D584EE /* AVCamUtilities.m in Sources */,
 				8866D66716EA00E000CAE6E5 /* SideSwipeTableViewCell.m in Sources */,
 				8866D66816EA00E000CAE6E5 /* SideSwipeTableViewController.m in Sources */,

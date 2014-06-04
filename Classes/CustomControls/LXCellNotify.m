@@ -37,6 +37,11 @@
     NSDictionary *target = [notify objectForKey:@"target"];
     NSDate *updatedAt = [LXUtils dateFromJSON:[notify objectForKey:@"updated_at"]];
     viewImage.image = [UIImage imageNamed:@"user.gif"];
+    viewImage.layer.cornerRadius = 6.0f;
+    viewImage.layer.borderWidth = 0.5f;
+    viewImage.layer.borderColor = [UIColor colorWithWhite: 0.90 alpha:0.6].CGColor;
+    viewImage.layer.masksToBounds = YES;
+
     labelDate.text = [LXUtils timeDeltaFromNow:updatedAt];
     labelNotify.text = [LXUtils stringFromNotify:notify];
     

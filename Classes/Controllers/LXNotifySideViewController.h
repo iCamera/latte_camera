@@ -11,7 +11,9 @@
 #import "LXMainTabViewController.h"
 
 
-@interface LXNotifySideViewController : UITableViewController
+@interface LXNotifySideViewController : UITableViewController {
+    NSMutableDictionary *selectedIndexes;
+}
 
 - (IBAction)switchTab:(UISegmentedControl *)sender;
 - (IBAction)refresh:(id)sender;

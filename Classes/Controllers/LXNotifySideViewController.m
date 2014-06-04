@@ -11,6 +11,7 @@
 #import "LXAppDelegate.h"
 #import "LatteAPIClient.h"
 #import "LXCellNotify.h"
+#import "LXCellNotifyOfficial.h"
 #import "LXGalleryViewController.h"
 #import "LXUserPageViewController.h"
 #import "Comment.h"
@@ -20,7 +21,7 @@
 #import "LXNavigationController.h"
 
 @interface LXNotifySideViewController ()
-
+    -(BOOL)cellIsSelected:(NSIndexPath *)indexPath;
 @end
 
 @implementation LXNotifySideViewController {
@@ -69,6 +70,8 @@
     limit = 30;
     
     [self loadNotify:YES setRead:YES];
+    
+    selectedIndexes = [[NSMutableDictionary alloc] init];
 }
 
 - (void)didReceiveMemoryWarning
@@ -98,7 +101,13 @@
         return cellNotify;
     }
     
-    LXCellNotify* cellNotify = [tableView dequeueReusableCellWithIdentifier:@"Notify" forIndexPath:indexPath];
+    LXCellNotify* cellNotify = nil;
+    if (currentTab == 4) {
+        cellNotify = [tableView dequeueReusableCellWithIdentifier:@"NotifyOfficial" forIndexPath:indexPath];
+    } else {
+        cellNotify = [tableView dequeueReusableCellWithIdentifier:@"Notify" forIndexPath:indexPath];
+    }
+
     NSDictionary *notify = [notifies objectAtIndex:indexPath.row];
     [cellNotify setNotify:notify];
     return cellNotify;
@@ -191,6 +200,23 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *notify = notifies[indexPath.row];
     NotifyTarget notifyTarget = [[notify objectForKey:@"target_model"] integerValue];
+    
+    if (currentTab == 4 && !notifyTarget) {
+        // Deselect cell
+        [tableView deselectRowAtIndexPath:indexPath animated:TRUE];
+        
+        // Toggle 'selected' state
+        BOOL isSelected = ![self cellIsSelected:indexPath];
+        // Store cell 'selected' state keyed on indexPath
+        NSNumber *selectedIndex = [NSNumber numberWithBool:isSelected];
+        [selectedIndexes setObject:selectedIndex forKey:indexPath];
+		
+        //For Animation
+        [tableView beginUpdates];
+        [tableView endUpdates];
+        return;
+    }
+    
     switch (notifyTarget) {
         case kNotifyTargetComment: {
             Comment *comment = [Comment instanceFromDictionary:[notify objectForKey:@"target"]];
@@ -255,9 +281,34 @@
     }
 }
 
+- (BOOL)cellIsSelected:(NSIndexPath *)indexPath {
+	// Return whether the cell at the specified index path is selected or not
+	NSNumber *selectedIndex = [selectedIndexes objectForKey:indexPath];
+	return selectedIndex == nil ? FALSE : [selectedIndex boolValue];
+}
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 45;
+    if (currentTab != 4) {
+        return 55;
+    }
+    
+	// If our cell is selected, return double height
+	if([self cellIsSelected:indexPath]) {
+        NSDictionary *notify = [notifies objectAtIndex:indexPath.row];
+        NSString *title = [notify objectForKey:@"title"];
+        NSString *note = [notify objectForKey:@"note"];
+        CGSize labelSize = [note sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:11]
+                                  constrainedToSize:CGSizeMake(310.0, MAXFLOAT)
+                                      lineBreakMode:NSLineBreakByTruncatingTail];
+
+        if (labelSize.height > 90) {
+            return labelSize.height + 75;
+        }
+        
+	}
+   
+    return 90;
 }
 
 - (IBAction)switchTab:(UISegmentedControl *)sender {
