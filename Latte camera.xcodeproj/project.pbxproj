@@ -109,7 +109,6 @@
 		88120B0418F63233000BFB5E /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 88120AB318F63233000BFB5E /* UIWebView+AFNetworking.m */; };
 		88120BF218F6B173000BFB5E /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88120B9D18F6B173000BFB5E /* libGoogleAnalyticsServices.a */; };
 		88120BF418F6B173000BFB5E /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88120BA018F6B173000BFB5E /* libTestFlight.a */; };
-		88144259172F9CCF00A5B3FF /* UIView+Genie.m in Sources */ = {isa = PBXBuildFile; fileRef = 88144248172F9CCF00A5B3FF /* UIView+Genie.m */; };
 		8818861116F1F039009A9266 /* LXCellSearchUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8818861016F1F039009A9266 /* LXCellSearchUser.m */; };
 		8818861316F30BEA009A9266 /* mymenu.png in Resources */ = {isa = PBXBuildFile; fileRef = 8818861216F30BEA009A9266 /* mymenu.png */; };
 		882054DC193816EF00D741BB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 882054DB193816EF00D741BB /* Images.xcassets */; };
@@ -2108,8 +2107,6 @@
 		88120BA318F6B173000BFB5E /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
 		88120BA418F6B173000BFB5E /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
 		88120BA518F6B173000BFB5E /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
-		88144247172F9CCF00A5B3FF /* UIView+Genie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Genie.h"; sourceTree = "<group>"; };
-		88144248172F9CCF00A5B3FF /* UIView+Genie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Genie.m"; sourceTree = "<group>"; };
 		8818860F16F1F039009A9266 /* LXCellSearchUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCellSearchUser.h; sourceTree = "<group>"; };
 		8818861016F1F039009A9266 /* LXCellSearchUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCellSearchUser.m; sourceTree = "<group>"; };
 		8818861216F30BEA009A9266 /* mymenu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mymenu.png; sourceTree = "<group>"; };
@@ -4306,15 +4303,6 @@
 			path = TestFlightSDK3.0.0;
 			sourceTree = "<group>";
 		};
-		8814422B172F9CCF00A5B3FF /* BCGenieEffect */ = {
-			isa = PBXGroup;
-			children = (
-				88144247172F9CCF00A5B3FF /* UIView+Genie.h */,
-				88144248172F9CCF00A5B3FF /* UIView+Genie.m */,
-			);
-			path = BCGenieEffect;
-			sourceTree = "<group>";
-		};
 		882054E119381A7900D741BB /* icon */ = {
 			isa = PBXGroup;
 			children = (
@@ -5656,7 +5644,6 @@
 				88120B9F18F6B173000BFB5E /* TestFlightSDK3.0.0 */,
 				88120A2218F63230000BFB5E /* AFNetworking */,
 				881209EA18F3D20D000BFB5E /* CHTCollectionViewWaterfallLayout */,
-				8814422B172F9CCF00A5B3FF /* BCGenieEffect */,
 				880E50D51728C30800D584EE /* ImageCrop */,
 				880C4AE1161C2A1400252C6A /* MBProgressHUD */,
 				8884E3F916A8EB5700DCBAC7 /* REComposeViewController */,
@@ -8692,7 +8679,6 @@
 				88120B0018F63233000BFB5E /* UIButton+AFNetworking.m in Sources */,
 				880E5110172A16C900D584EE /* LXCamCaptureManager.m in Sources */,
 				88FECF07193C796D0008985C /* HPTextViewInternal.m in Sources */,
-				88144259172F9CCF00A5B3FF /* UIView+Genie.m in Sources */,
 				8883EED4173212EC00AA2D5E /* LXImageTextViewController.m in Sources */,
 				8883EED7173220EA00AA2D5E /* LXTextTemplateViewController.m in Sources */,
 				8883EEF41732256B00AA2D5E /* YIPopupTextView.m in Sources */,
