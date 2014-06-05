@@ -410,7 +410,7 @@ typedef enum {
             isEmpty = followings.count == 0;
             break;
         case kTablePhoto:
-            if (photoMode == kPhotoGrid)
+            if (photoMode == kPhotoGrid && endedPic)
                 isEmpty = pictures.count == 0;
             break;
         case kTableTag:

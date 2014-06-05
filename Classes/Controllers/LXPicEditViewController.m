@@ -79,9 +79,6 @@
     [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object:nil];
     
-    imagePic.layer.cornerRadius = 7;
-    imagePic.layer.masksToBounds = YES;
-    
     textDesc.placeholder = NSLocalizedString(@"desc_placeholder", @"");
     
     if (_picture != nil) {

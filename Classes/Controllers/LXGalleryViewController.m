@@ -321,6 +321,14 @@
         labelNickname.text = currentPage.picture.user.name;
         [LXUtils setNationalityOfUser:currentPage.picture.user forImage:imageNationality nextToLabel:labelNickname];
         [buttonUser loadBackground:currentPage.picture.user.profilePicture placeholderImage:@"user.gif"];
+    } else {
+        NSString *url = [NSString stringWithFormat:@"user/%ld", [currentPage.picture.userId longValue]];
+        [[LatteAPIClient sharedClient] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+            User *user = [User instanceFromDictionary:JSON[@"user"]];
+            labelNickname.text = user.name;
+            [LXUtils setNationalityOfUser:user forImage:imageNationality nextToLabel:labelNickname];
+            [buttonUser loadBackground:user.profilePicture placeholderImage:@"user.gif"];
+        } failure:nil];
     }
     
     labelView.text = [NSString stringWithFormat:NSLocalizedString(@"d_views", @""), [currentPage.picture.pageviews integerValue]];

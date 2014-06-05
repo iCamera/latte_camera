@@ -142,8 +142,8 @@
     [buttonUploadStatus addSubview:hudUpload];
     [self.view addSubview:buttonUploadStatus];
     buttonUploadStatus.hidden = YES;
-    
-    [[UITabBar appearance] setTintColor:[UIColor redColor]];
+
+    [[UITabBar appearance] setTintColor:[UIColor colorWithRed:35.0/255.0 green:183.0/255.0 blue:223.0/255.00 alpha:1]];
 }
 
 - (void)receivePushNotify:(NSNotification*)notify {

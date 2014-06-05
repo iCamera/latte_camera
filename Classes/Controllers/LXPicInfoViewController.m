@@ -84,7 +84,7 @@
     UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery" bundle:nil];
     LXReportAbuseViewController *controllerReport = [storyGallery instantiateViewControllerWithIdentifier:@"Report"];
     controllerReport.picture = _picture;
-    [_parent.navigationController pushViewController:controllerReport animated:YES];
+    [self.navigationController pushViewController:controllerReport animated:YES];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -111,7 +111,7 @@
         if ([[keyBasic objectAtIndex:indexPath.row] isEqualToString:@"tags"]) {
             LXCellInfoTag *cellTag = [tableView dequeueReusableCellWithIdentifier:@"Tag"];
             cellTag.tags = _picture.tagsOld;
-            cellTag.parent = _parent;
+            cellTag.parent = self;
             return cellTag;
         }
     
