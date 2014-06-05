@@ -19,6 +19,7 @@
 #import "Picture.h"
 #import "MBProgressHUD.h"
 #import "LXNavigationController.h"
+#import "MZFormSheetController.h"
 
 @interface LXNotifySideViewController ()
     -(BOOL)cellIsSelected:(NSIndexPath *)indexPath;
@@ -318,6 +319,21 @@
 
 - (IBAction)refresh:(id)sender {
     [self loadNotify:YES setRead:YES];
+}
+
+- (IBAction)showSetting:(id)sender {
+    UIStoryboard *storySetting = [UIStoryboard storyboardWithName:@"Setting" bundle:nil];
+    UIViewController *settingNotification = [storySetting instantiateViewControllerWithIdentifier:@"Notification"];
+    
+    // present form sheet with view controller
+    MZFormSheetController *formSheet = [[MZFormSheetController alloc] initWithViewController:settingNotification];
+    
+    formSheet.cornerRadius = 0;
+    formSheet.shouldDismissOnBackgroundViewTap = YES;
+    
+    [self mz_presentFormSheetController:formSheet animated:YES completionHandler:^(MZFormSheetController *formSheetController) {
+        //do sth
+    }];
 }
 
 @end

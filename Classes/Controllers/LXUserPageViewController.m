@@ -127,9 +127,9 @@ typedef enum {
     HUD.margin = 10.f;
     HUD.yOffset = 150.f;
     
-    _buttonUser.layer.cornerRadius = 9;
+    _buttonUser.layer.cornerRadius = 25;
     
-    [_buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:_user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
+    [_buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:_user.profilePicture]];
     [_buttonUsername setTitle:_user.name forState:UIControlStateNormal];
     
     [self reloadView];
@@ -1135,6 +1135,24 @@ typedef enum {
     LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
     viewUserPage.user = user;
     [self.navigationController pushViewController:viewUserPage animated:YES];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
+    if (tableMode == kTablePhoto && photoMode == kPhotoGrid) {
+        if (endedPic)
+            return;
+        CGPoint offset = aScrollView.contentOffset;
+        CGRect bounds = aScrollView.bounds;
+        CGSize size = aScrollView.contentSize;
+        UIEdgeInsets inset = aScrollView.contentInset;
+        float y = offset.y + bounds.size.height - inset.bottom;
+        float h = size.height;
+        
+        float reload_distance = -100;
+        if(y > h + reload_distance) {
+            [self loadPicture:NO];
+        }
+    }
 }
 
 @end
