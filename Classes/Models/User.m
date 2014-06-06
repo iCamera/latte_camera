@@ -152,10 +152,8 @@
 +(void)getLastUserInformation:(void (^)(id))success
                       failure:(void (^)(NSError *))failure
 {
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    NSDictionary *params = [NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"];
     [[LatteAPIClient sharedClient] GET:@"user/me"
-                            parameters:params
+                            parameters:nil
                                success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                    if (success) {
                                        success(JSON);
@@ -173,8 +171,7 @@
                      forObject:(NSString *)name
                         success:(void (^)(id))success
                         failure:(void (^)(NSError *))failure {
-    LXAppDelegate* app = [LXAppDelegate currentDelegate];
-    NSDictionary *dict = @{name: value, @"token": [app getToken]};
+    NSDictionary *dict = @{name: value};
     [[LatteAPIClient sharedClient] POST:@"user/me/update"
                              parameters: dict
                                 success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
