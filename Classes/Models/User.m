@@ -1,4 +1,5 @@
 #import "User.h"
+#import "LXAppDelegate.h"
 
 @implementation User
 
@@ -80,6 +81,8 @@
         [self setValue:value forKey:@"birthyearPublic"];
     } else if ([key isEqualToString:@"bloodtype"]) {
         [self setValue:value forKey:@"bloodType"];
+    } else if ([key isEqualToString:@"bloodtype_public"]) {
+        [self setValue:value forKey:@"_bloodTypePublic"];
     } else if ([key isEqualToString:@"count_follows"]) {
         [self setValue:value forKey:@"countFollows"];
     } else if ([key isEqualToString:@"count_followers"]) {
@@ -126,6 +129,8 @@
         [self setValue:value forKey:@"_defaultShowLarge"];
     } else if ([key isEqualToString:@"nationality"]) {
         [self setValue:value forKey:@"_nationality"];
+    } else if ([key isEqualToString:@"nationality_public"]) {
+        [self setValue:value forKey:@"_nationalityPublic"];
     } else if ([key isEqualToString:@"picture_auto_facebook_upload"]) {
         [self setValue:value forKey:@"_pictureAutoFacebookUpload"];
     } else if ([key isEqualToString:@"picture_auto_tweet"]) {
@@ -143,6 +148,61 @@
     }
 
 }
+
++(void)getLastUserInformation:(void (^)(id))success
+                      failure:(void (^)(NSError *))failure
+{
+    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+    NSDictionary *params = [NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"];
+    [[LatteAPIClient sharedClient] GET:@"user/me"
+                            parameters:params
+                               success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                   if (success) {
+                                       success(JSON);
+                                   }
+                               }
+                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                   if(failure) {
+                                       failure(error);
+                                   }
+                               }];
+}
+
+
++ (void)updatePermission:(NSNumber *)value
+                     forObject:(NSString *)name
+                        success:(void (^)(id))success
+                        failure:(void (^)(NSError *))failure {
+    LXAppDelegate* app = [LXAppDelegate currentDelegate];
+    NSDictionary *dict = @{name: value, @"token": [app getToken]};
+    [[LatteAPIClient sharedClient] POST:@"user/me/update"
+                             parameters: dict
+                                success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                    if ([[JSON objectForKey:@"status"] integerValue] == 0) {
+                                        if (failure) {
+                                            NSString *error_content = @"";
+                                            NSDictionary *errors = [JSON objectForKey:@"errors"];
+                                            for (NSString *tmp in [JSON objectForKey:@"errors"]) {
+                                                error_content = [error_content stringByAppendingFormat:@"\n%@", [errors objectForKey:tmp]];
+                                            }
+                                            NSMutableDictionary* details = [NSMutableDictionary dictionary];
+                                            [details setValue:error_content forKey:NSLocalizedDescriptionKey];
+                                            // populate the error object with the details
+                                            NSError *error = [NSError errorWithDomain:@"latte" code:0 userInfo:details];
+                                            failure(error);
+                                        }
+                                    } else {
+                                        if (success) {
+                                            success(JSON);
+                                        }
+                                    }
+                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                    if (failure) {
+                                        failure(error);
+                                    }
+                                }];
+}
+
 
 @end
 
