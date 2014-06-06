@@ -9,12 +9,11 @@
 #import <UIKit/UIKit.h>
 
 #import "LXGalleryViewController.h"
-#import "LXCanvasViewController.h"
 
 
 @class User;
 
-@interface LXUserPageViewController : UITableViewController <UIActionSheetDelegate, LXGalleryViewControllerDataSource>
+@interface LXUserPageViewController : UITableViewController <UIActionSheetDelegate, LXGalleryViewControllerDataSource, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonUser;
 @property (strong, nonatomic) IBOutlet UIButton *buttonUsername;

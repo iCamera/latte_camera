@@ -12,7 +12,6 @@
 #import "LXUtils.h"
 #import "LXShare.h"
 #import "UIImageView+loadProgress.h"
-#import "LXCaptureViewController.h"
 
 @interface LXSettingRootViewController ()
 
@@ -146,31 +145,52 @@
 }
 
 - (IBAction)touchSetPicture:(id)sender {
-    LatteAPIClient *api = [LatteAPIClient sharedClient];
-    if (api.reachabilityManager.networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"")
-                                                        message:NSLocalizedString(@"Network connectivity is not available", @"")
-                                                       delegate:nil
-                                              cancelButtonTitle:NSLocalizedString(@"close", @"")
-                                              otherButtonTitles:nil];
-        [alert show];
-        return;
-    }
-    UIStoryboard* storySetting = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
-    UINavigationController *navCamera = [storySetting instantiateInitialViewController];
-    LXCaptureViewController *controllerCamera = navCamera.viewControllers[0];
-    controllerCamera.delegate = self;
+    UIActionSheet *actionUpload = [[UIActionSheet alloc] initWithTitle:@""
+                                                              delegate:self
+                                                     cancelButtonTitle:NSLocalizedString(@"Cancel", @"")
+                                                destructiveButtonTitle:nil
+                                                     otherButtonTitles:NSLocalizedString(@"Camera", @""), NSLocalizedString(@"Photo Library", @""), nil];
     
-    [self presentViewController:navCamera animated:YES completion:nil];
+    [actionUpload showInView:self.view];
 }
 
-- (void)imagePickerController:(LXCanvasViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info {
-    UIViewController *tmp2 = picker.navigationController.presentingViewController;
-    [picker dismissViewControllerAnimated:NO completion:nil];
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    UIStoryboard* storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
     
-    if (tmp2 != self.navigationController) {
-        [tmp2 dismissViewControllerAnimated:YES completion:nil];
+    if (buttonIndex == 0) {
+        
+        if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            
+            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                  message:@"Device has no camera"
+                                                                 delegate:nil
+                                                        cancelButtonTitle:@"OK"
+                                                        otherButtonTitles: nil];
+            
+            [myAlertView show];
+            
+        } else {
+            UIImagePickerController *imagePicker = [storyCamera instantiateViewControllerWithIdentifier:@"Picker"];
+            
+            imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            imagePicker.allowsEditing = YES;
+            imagePicker.delegate = self;
+            
+            [self presentViewController:imagePicker animated:YES completion:nil];
+        }
+    } else if (buttonIndex == 1) {
+        UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+        
+        imagePicker.allowsEditing = YES;
+        imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        imagePicker.delegate = self;
+        
+        [self presentViewController:imagePicker animated:YES completion:nil];
     }
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    [picker dismissViewControllerAnimated:NO completion:nil];
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
@@ -181,20 +201,17 @@
     [progessHUD show:YES];
     
     void (^createForm)(id<AFMultipartFormData>) = ^(id<AFMultipartFormData> formData) {
-        [formData appendPartWithFileData:[info objectForKey:@"data"]
+        [formData appendPartWithFileData:info[UIImagePickerControllerEditedImage]
                                     name:@"file"
                                 fileName:@"latte.jpg"
                                 mimeType:@"image/jpeg"];
     };
     
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            [app getToken], @"token", nil];
-    
     
     LatteAPIClient *api = [LatteAPIClient sharedClient];
     NSURLRequest *request = [api.requestSerializer multipartFormRequestWithMethod:@"POST"
                                                                         URLString:[[NSURL URLWithString:@"user/me/profile_picture" relativeToURL:api.baseURL] absoluteString]
-                                                                       parameters:params
+                                                                       parameters:nil
                                                         constructingBodyWithBlock:createForm
                                                                             error:nil];
     
@@ -208,16 +225,16 @@
         imageProfile.image = [info objectForKey:@"preview"];
         
         [[LatteAPIClient sharedClient] GET:@"user/me"
-                                    parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
-                                       success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                           
-                                           User *user = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
-                                           app.currentUser = user;
-                                           
-                                           
-                                       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                           DLog(@"Something went wrong (Profile)");
-                                       }];
+                                parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       
+                                       User *user = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
+                                       app.currentUser = user;
+                                       
+                                       
+                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       DLog(@"Something went wrong (Profile)");
+                                   }];
     };
     
     void (^failUpload)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -241,5 +258,9 @@
     }];
     
     [operation start];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 @end

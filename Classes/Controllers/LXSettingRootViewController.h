@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "LXCanvasViewController.h"
 
-@interface LXSettingRootViewController : UITableViewController<LXImagePickerDelegate>
+@interface LXSettingRootViewController : UITableViewController<UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *labelVersion;
 @property (strong, nonatomic) IBOutlet UIImageView *imageProfile;

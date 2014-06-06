@@ -72,7 +72,6 @@
 		880AC53B1786B6C4001E4365 /* gradient1-148.png in Resources */ = {isa = PBXBuildFile; fileRef = 880AC4FD1786B6C4001E4365 /* gradient1-148.png */; };
 		880AC53C1786B6C4001E4365 /* gradient1-149.png in Resources */ = {isa = PBXBuildFile; fileRef = 880AC4FE1786B6C4001E4365 /* gradient1-149.png */; };
 		880AC53D1786B6C4001E4365 /* gradient1-150.png in Resources */ = {isa = PBXBuildFile; fileRef = 880AC4FF1786B6C4001E4365 /* gradient1-150.png */; };
-		880B978A18F79C460084D79D /* LXImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 880B978918F79C460084D79D /* LXImagePickerController.m */; };
 		880C4B17161C2A1400252C6A /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 880C4AFC161C2A1400252C6A /* MBProgressHUD.m */; };
 		880E35A816A7BECA0097B97F /* LXAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E35A716A7BECA0097B97F /* LXAboutViewController.m */; };
 		880E50BD17252A9F00D584EE /* icon_iine_ss_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 880E50BB17252A9F00D584EE /* icon_iine_ss_on.png */; };
@@ -82,11 +81,6 @@
 		880E50EF1728C30800D584EE /* HFImageEditorFrameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E50DA1728C30800D584EE /* HFImageEditorFrameView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		880E50F01728C30800D584EE /* HFImageEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E50DD1728C30800D584EE /* HFImageEditorViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		880E50F71728C30800D584EE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 880E50EC1728C30800D584EE /* README.md */; };
-		880E51001728E50400D584EE /* LXCaptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E50FF1728E50300D584EE /* LXCaptureViewController.m */; };
-		880E510A172A130E00D584EE /* AVCamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E5102172A11AE00D584EE /* AVCamViewController.m */; };
-		880E510B172A130E00D584EE /* AVCamCaptureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E5104172A11AE00D584EE /* AVCamCaptureManager.m */; };
-		880E510D172A130E00D584EE /* AVCamUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E5108172A11AE00D584EE /* AVCamUtilities.m */; };
-		880E5110172A16C900D584EE /* LXCamCaptureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E510F172A16C900D584EE /* LXCamCaptureManager.m */; };
 		881015D61700270A00AE81E1 /* hicon_menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 881015D41700270A00AE81E1 /* hicon_menu.png */; };
 		881015D71700270A00AE81E1 /* hicon_menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 881015D51700270A00AE81E1 /* hicon_menu@2x.png */; };
 		88120A0D18F3D20D000BFB5E /* CHTCollectionViewWaterfallLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 881209ED18F3D20D000BFB5E /* CHTCollectionViewWaterfallLayout.m */; };
@@ -2038,8 +2032,6 @@
 		880AC4FD1786B6C4001E4365 /* gradient1-148.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gradient1-148.png"; sourceTree = "<group>"; };
 		880AC4FE1786B6C4001E4365 /* gradient1-149.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gradient1-149.png"; sourceTree = "<group>"; };
 		880AC4FF1786B6C4001E4365 /* gradient1-150.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gradient1-150.png"; sourceTree = "<group>"; };
-		880B978818F79C460084D79D /* LXImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXImagePickerController.h; sourceTree = "<group>"; };
-		880B978918F79C460084D79D /* LXImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXImagePickerController.m; sourceTree = "<group>"; };
 		880C4AFB161C2A1400252C6A /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		880C4AFC161C2A1400252C6A /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		880E35A616A7BECA0097B97F /* LXAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXAboutViewController.h; sourceTree = "<group>"; };
@@ -2055,16 +2047,6 @@
 		880E50DC1728C30800D584EE /* HFImageEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFImageEditorViewController.h; sourceTree = "<group>"; };
 		880E50DD1728C30800D584EE /* HFImageEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFImageEditorViewController.m; sourceTree = "<group>"; };
 		880E50EC1728C30800D584EE /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		880E50FE1728E50300D584EE /* LXCaptureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCaptureViewController.h; sourceTree = "<group>"; };
-		880E50FF1728E50300D584EE /* LXCaptureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCaptureViewController.m; sourceTree = "<group>"; };
-		880E5102172A11AE00D584EE /* AVCamViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVCamViewController.m; sourceTree = "<group>"; };
-		880E5103172A11AE00D584EE /* AVCamCaptureManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVCamCaptureManager.h; sourceTree = "<group>"; };
-		880E5104172A11AE00D584EE /* AVCamCaptureManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVCamCaptureManager.m; sourceTree = "<group>"; };
-		880E5107172A11AE00D584EE /* AVCamUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVCamUtilities.h; sourceTree = "<group>"; };
-		880E5108172A11AE00D584EE /* AVCamUtilities.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVCamUtilities.m; sourceTree = "<group>"; };
-		880E5109172A11AE00D584EE /* AVCamViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVCamViewController.h; sourceTree = "<group>"; };
-		880E510E172A16C900D584EE /* LXCamCaptureManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCamCaptureManager.h; sourceTree = "<group>"; };
-		880E510F172A16C900D584EE /* LXCamCaptureManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCamCaptureManager.m; sourceTree = "<group>"; };
 		881015D41700270A00AE81E1 /* hicon_menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hicon_menu.png; sourceTree = "<group>"; };
 		881015D51700270A00AE81E1 /* hicon_menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hicon_menu@2x.png"; sourceTree = "<group>"; };
 		881209EC18F3D20D000BFB5E /* CHTCollectionViewWaterfallLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHTCollectionViewWaterfallLayout.h; sourceTree = "<group>"; };
@@ -4200,21 +4182,6 @@
 			path = ImageEditor;
 			sourceTree = "<group>";
 		};
-		880E5101172A119D00D584EE /* AVCam */ = {
-			isa = PBXGroup;
-			children = (
-				880E5103172A11AE00D584EE /* AVCamCaptureManager.h */,
-				880E5104172A11AE00D584EE /* AVCamCaptureManager.m */,
-				880E5107172A11AE00D584EE /* AVCamUtilities.h */,
-				880E5108172A11AE00D584EE /* AVCamUtilities.m */,
-				880E5109172A11AE00D584EE /* AVCamViewController.h */,
-				880E5102172A11AE00D584EE /* AVCamViewController.m */,
-				880E510E172A16C900D584EE /* LXCamCaptureManager.h */,
-				880E510F172A16C900D584EE /* LXCamCaptureManager.m */,
-			);
-			path = AVCam;
-			sourceTree = "<group>";
-		};
 		881209EA18F3D20D000BFB5E /* CHTCollectionViewWaterfallLayout */ = {
 			isa = PBXGroup;
 			children = (
@@ -5119,7 +5086,6 @@
 		8890722B16770EBB0013DF7A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				880E5101172A119D00D584EE /* AVCam */,
 				8890722C16770EBB0013DF7A /* AppDelegate */,
 				8890722F16770EBB0013DF7A /* Controllers */,
 				8890725416770EBB0013DF7A /* CustomControls */,
@@ -5147,8 +5113,6 @@
 				88491EBA1921B4A400CAF0A2 /* LXAnouncementViewController.m */,
 				8890723016770EBB0013DF7A /* LXCanvasViewController.h */,
 				8890723116770EBB0013DF7A /* LXCanvasViewController.m */,
-				880E50FE1728E50300D584EE /* LXCaptureViewController.h */,
-				880E50FF1728E50300D584EE /* LXCaptureViewController.m */,
 				8837736917AA81A4005B0826 /* LXChangeEmailViewController.h */,
 				8837736A17AA81A4005B0826 /* LXChangeEmailViewController.m */,
 				8837736617AA7B1F005B0826 /* LXChangePasswordViewController.h */,
@@ -5163,8 +5127,6 @@
 				8883C07C16DCBCE1003510A1 /* LXGalleryViewController.m */,
 				884C54D316B22EF500DA318E /* LXHelpBokehViewController.h */,
 				884C54D416B22EF500DA318E /* LXHelpBokehViewController.m */,
-				880B978818F79C460084D79D /* LXImagePickerController.h */,
-				880B978918F79C460084D79D /* LXImagePickerController.m */,
 				8883EED2173212EC00AA2D5E /* LXImageTextViewController.h */,
 				8883EED3173212EC00AA2D5E /* LXImageTextViewController.m */,
 				888F651416FC09DF00ED74BB /* LXLeftGuestViewController.h */,
@@ -8633,12 +8595,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				880E510A172A130E00D584EE /* AVCamViewController.m in Sources */,
 				88120B0318F63233000BFB5E /* UIRefreshControl+AFNetworking.m in Sources */,
-				880E510B172A130E00D584EE /* AVCamCaptureManager.m in Sources */,
 				C5FDFC3D193F16000084FD33 /* LXCellNotifyOfficial.m in Sources */,
 				889ED8C519405D400088F1CD /* MZFormSheetBackgroundWindowViewController.m in Sources */,
-				880E510D172A130E00D584EE /* AVCamUtilities.m in Sources */,
 				8866D66716EA00E000CAE6E5 /* SideSwipeTableViewCell.m in Sources */,
 				8866D66816EA00E000CAE6E5 /* SideSwipeTableViewController.m in Sources */,
 				880120BF16E5E80900B9E3D9 /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */,
@@ -8673,7 +8632,6 @@
 				889ED8C919405D400088F1CD /* UIImage+Additional.m in Sources */,
 				889072D616770EBB0013DF7A /* LXCellFriendRequest.m in Sources */,
 				889072D716770EBB0013DF7A /* LXCellNotify.m in Sources */,
-				880B978A18F79C460084D79D /* LXImagePickerController.m in Sources */,
 				889072DA16770EBB0013DF7A /* LXCellDataField.m in Sources */,
 				889072DB16770EBB0013DF7A /* LXCellRankLv1.m in Sources */,
 				889072DC16770EBB0013DF7A /* LXCellRankLv2.m in Sources */,
@@ -8758,9 +8716,7 @@
 				88FB5C24192461A50018F757 /* LXPicCommentViewController.m in Sources */,
 				880E50EF1728C30800D584EE /* HFImageEditorFrameView.m in Sources */,
 				880E50F01728C30800D584EE /* HFImageEditorViewController.m in Sources */,
-				880E51001728E50400D584EE /* LXCaptureViewController.m in Sources */,
 				88120B0018F63233000BFB5E /* UIButton+AFNetworking.m in Sources */,
-				880E5110172A16C900D584EE /* LXCamCaptureManager.m in Sources */,
 				88FECF07193C796D0008985C /* HPTextViewInternal.m in Sources */,
 				8883EED4173212EC00AA2D5E /* LXImageTextViewController.m in Sources */,
 				8883EED7173220EA00AA2D5E /* LXTextTemplateViewController.m in Sources */,

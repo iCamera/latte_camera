@@ -28,8 +28,6 @@
 #import "LXCellDataField.h"
 #import "NSDate+TKCategory.h"
 
-#import "LXCaptureViewController.h"
-
 typedef enum {
     kTablePhoto = 0,
     kTableTag = 1,
@@ -873,7 +871,7 @@ typedef enum {
                                                        delegate:self
                                               cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
                                          destructiveButtonTitle:NSLocalizedString(@"remove_profile_pic", @"削除する")
-                                              otherButtonTitles:NSLocalizedString(@"select_profile_pic", @"写真を選択する"), nil];
+                                              otherButtonTitles:NSLocalizedString(@"Camera", @""), NSLocalizedString(@"Photo Library", @""), nil];
     [sheet showFromTabBar:self.tabBarController.tabBar];
 }
 
@@ -900,7 +898,36 @@ typedef enum {
             [self deleteProfilePic];
             break;
         case 1:
-            [self pickPhoto];
+            if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+                
+                UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                      message:@"Device has no camera"
+                                                                     delegate:nil
+                                                            cancelButtonTitle:@"OK"
+                                                            otherButtonTitles: nil];
+                
+                [myAlertView show];
+                
+            } else {
+                UIStoryboard* storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
+                UIImagePickerController *imagePicker = [storyCamera instantiateViewControllerWithIdentifier:@"Picker"];
+                
+                imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+                imagePicker.allowsEditing = YES;
+                imagePicker.delegate = self;
+                
+                [self presentViewController:imagePicker animated:YES completion:nil];
+            }
+            break;
+        case 2: {
+            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+            
+            imagePicker.allowsEditing = YES;
+            imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            imagePicker.delegate = self;
+            
+            [self presentViewController:imagePicker animated:YES completion:nil];
+        }
             break;
         default:
             break;
@@ -921,31 +948,9 @@ typedef enum {
     
 }
 
-- (void)pickPhoto {
-    LatteAPIClient *api = [LatteAPIClient sharedClient];
-    if (api.reachabilityManager.networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"")
-                                                        message:NSLocalizedString(@"Network connectivity is not available", @"")
-                                                       delegate:nil
-                                              cancelButtonTitle:NSLocalizedString(@"close", @"")
-                                              otherButtonTitles:nil];
-        [alert show];
-        return;
-    }
-    
-    UIStoryboard* storySetting = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
-    UINavigationController *navCamera = [storySetting instantiateInitialViewController];
-    
-    LXCaptureViewController *controllerCamera = navCamera.viewControllers[0];
-    controllerCamera.delegate = self;
-    
-    [self presentViewController:navCamera animated:YES completion:nil];
-}
 
-- (void)imagePickerController:(LXCanvasViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info {
-    UIViewController *tmp2 = picker.navigationController.presentingViewController;
-    [picker dismissViewControllerAnimated:NO completion:nil];
-    [tmp2 dismissViewControllerAnimated:YES completion:nil];
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    [picker dismissViewControllerAnimated:YES completion:nil];
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
@@ -956,7 +961,7 @@ typedef enum {
     [progessHUD show:YES];
     
     void (^createForm)(id<AFMultipartFormData>) = ^(id<AFMultipartFormData> formData) {
-        [formData appendPartWithFileData:[info objectForKey:@"data"]
+        [formData appendPartWithFileData:info[UIImagePickerControllerEditedImage]
                                     name:@"file"
                                 fileName:@"latte.jpg"
                                 mimeType:@"image/jpeg"];
@@ -1003,6 +1008,9 @@ typedef enum {
     [operation start];
 }
 
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
 
 - (void)showPic:(UIButton*)sender {
     UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"

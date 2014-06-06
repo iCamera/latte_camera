@@ -47,8 +47,8 @@ typedef enum {
 
 @protocol LXImagePickerDelegate <NSObject>
 @optional
-- (void)imagePickerController:(LXCanvasViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info;
-- (void)imagePickerControllerDidCancel:(LXCanvasViewController *)picker;
+- (void)lattePickerController:(LXCanvasViewController *)picker didFinishPickingMediaWithData:(NSDictionary *)info;
+- (void)lattePickerControllerDidCancel:(LXCanvasViewController *)picker;
 @end
 
 @interface LXCanvasViewController : UIViewController <UIActionSheetDelegate, UIGestureRecognizerDelegate, UIScrollViewDelegate, LXDrawViewDelegate, UIAlertViewDelegate, UINavigationControllerDelegate, LXImageTextDelegate, UIActionSheetDelegate>
@@ -141,7 +141,6 @@ typedef enum {
 - (IBAction)toggleFisheye:(UIButton *)sender;
 - (IBAction)setBlend:(UIButton *)sender;
 - (IBAction)toggleMono:(id)sender;
-- (IBAction)touchCrop:(id)sender;
 - (IBAction)touchText:(id)sender;
 - (IBAction)printTemplate:(id)sender;
 - (IBAction)touchBlendSetting:(id)sender;

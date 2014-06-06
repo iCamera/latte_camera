@@ -18,7 +18,6 @@
 #import "LXUploadStatusViewController.h"
 #import "LXUploadObject.h"
 #import "LXTableConfirmEmailController.h"
-#import "LXImagePickerController.h"
 
 @interface LXMainTabViewController ()
 
@@ -31,9 +30,6 @@
     LXUploadStatusViewController *viewUpload;
     UIButton *buttonUploadStatus;
     MBRoundProgressView *hudUpload;
-    
-    UINavigationController *navRank;
-    UINavigationController *navSearch;
 }
 
 
@@ -81,28 +77,6 @@
     UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     viewUpload = [storyMain instantiateViewControllerWithIdentifier:@"UploadStatus"];
     self.delegate = self;
-    // Tab style
-//    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
-//    for (UITabBarItem* tab in [self.tabBarController.tabBar items]) {
-//        DLog(@"text");
-//        [tab setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-//                                     [UIColor blackColor], UITextAttributeTextShadowColor,
-//                                     [NSValue valueWithUIOffset:UIOffsetMake(0, 1)], UITextAttributeTextShadowOffset,
-//                                     nil] forState:UIControlStateNormal];
-//    }
-
-
-//    self.tabBar.selectionIndicatorImage = [UIImage imageNamed:@"bg_bottom_on.png"];
-//    self.tabBar.backgroundImage = [UIImage imageNamed: @"bg_bottom.png"];
-    
-    // add the drop shadow
-//    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:self.tabBar.bounds];
-//    self.tabBar.layer.masksToBounds = NO;
-//    self.tabBar.layer.shadowColor = [UIColor blackColor].CGColor;
-//    self.tabBar.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-//    self.tabBar.layer.shadowOpacity = 0.8f;
-//    self.tabBar.layer.shadowRadius = 2.5f;
-//    self.tabBar.layer.shadowPath = shadowPath.CGPath;
     
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
     if (app.currentUser != nil) {
@@ -110,23 +84,6 @@
     } else {
         [self setGuest];
     }
-    
-//    for(UIViewController *tab in self.viewControllers) {
-//        
-//        UIFont *font;
-//
-//        font = [UIFont fontWithName:@"HelveticaNeue" size:9];
-//        
-//        NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-//                                    font, UITextAttributeFont,
-//                                    [UIColor whiteColor], UITextAttributeTextColor,
-//                                    [NSValue valueWithCGSize:CGSizeMake(0, 1)], UITextAttributeTextShadowOffset,
-//                                    [UIColor blackColor], UITextAttributeTextShadowColor,
-//                                    nil];
-//        
-//        [tab.tabBarItem setTitleTextAttributes:attributes
-//                                      forState:UIControlStateNormal];
-//    }
     
     viewUpload.view.frame = self.view.bounds;
     [self.view addSubview:viewUpload.view];
@@ -178,42 +135,6 @@
     [self presentViewController:[storySetting instantiateInitialViewController] animated:YES completion:nil];
 
 }
-
-
-- (void)cameraView:(id)sender {
-    
-}
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) {
-        UIStoryboard* storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
-        
-        if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-            
-            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                  message:@"Device has no camera"
-                                                                 delegate:nil
-                                                        cancelButtonTitle:@"OK"
-                                                        otherButtonTitles: nil];
-            
-            [myAlertView show];
-            
-        } else {
-            LXImagePickerController *imagePicker = [storyCamera instantiateViewControllerWithIdentifier:@"Picker"];
-            imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-            imagePicker.delegate = imagePicker;
-            [self presentViewController:imagePicker animated:YES completion:nil];
-        }
-    } else if (buttonIndex == 1) {
-//        UIStoryboard* storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
-        //LXImagePickerController *imagePicker = [storyCamera instantiateViewControllerWithIdentifier:@"Picker"];
-        LXImagePickerController *imagePicker = [[LXImagePickerController alloc] init];
-        imagePicker.delegate = imagePicker;
-        imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        [self presentViewController:imagePicker animated:YES completion:nil];
-    }
-}
-
 
 - (void)didReceiveMemoryWarning
 {
@@ -324,17 +245,70 @@
     [self presentViewController:viewConfirm animated:YES completion:nil];
 }
 
-- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController NS_AVAILABLE_IOS(3_0) {
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
     if (viewController == tabBarController.viewControllers[2]) {
         UIActionSheet *actionUpload = [[UIActionSheet alloc] initWithTitle:@""
-                                                                  delegate:self cancelButtonTitle:@"Cancel"
-                                                    destructiveButtonTitle:nil
-                                                         otherButtonTitles:@"Camera", @"Photo Library", nil];
+                                                   delegate:self
+                                          cancelButtonTitle:NSLocalizedString(@"Cancel", @"")
+                                     destructiveButtonTitle:nil
+                                          otherButtonTitles:NSLocalizedString(@"Camera", @""), NSLocalizedString(@"Photo Library", @""), nil];
+        
         [actionUpload showFromTabBar:self.tabBar];
+        
         return false;
     }
     
     return true;
 }
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    UIStoryboard* storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
+    
+    if (buttonIndex == 0) {
+        
+        if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            
+            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                  message:@"Device has no camera"
+                                                                 delegate:nil
+                                                        cancelButtonTitle:@"OK"
+                                                        otherButtonTitles: nil];
+            
+            [myAlertView show];
+            
+        } else {
+            UIImagePickerController *imagePicker = [storyCamera instantiateViewControllerWithIdentifier:@"Picker"];
+            
+            imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            imagePicker.allowsEditing = YES;
+            imagePicker.delegate = self;
+            
+            [self presentViewController:imagePicker animated:YES completion:nil];
+        }
+    } else if (buttonIndex == 1) {
+        UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+        
+        imagePicker.allowsEditing = YES;
+        imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        imagePicker.delegate = self;
+        
+        [self presentViewController:imagePicker animated:YES completion:nil];
+    }
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    UIStoryboard *storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
+    LXCanvasViewController *controllerCanvas = [storyCamera instantiateInitialViewController];
+    
+    controllerCanvas.delegate = self;
+    controllerCanvas.info = info;
+    
+    [picker pushViewController:controllerCanvas animated:YES];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 @end

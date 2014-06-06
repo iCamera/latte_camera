@@ -300,7 +300,7 @@
     
     // Set Image
     
-    imageOriginal = _info[UIImagePickerControllerOriginalImage];
+    imageOriginal = _info[UIImagePickerControllerEditedImage];
     imageOrientation = imageOriginal.imageOrientation;
     CGFloat heightThumb = [LXUtils heightFromWidth:70 width:imageOriginal.size.width height:imageOriginal.size.height];
     CGFloat heightPreview = [LXUtils heightFromWidth:320 width:imageOriginal.size.width height:imageOriginal.size.height];
@@ -577,7 +577,7 @@
                               imageFinalData, @"data",
                               imageFinalThumb, @"preview",
                               nil];
-        [_delegate imagePickerController:self didFinishPickingMediaWithData:info];
+        [_delegate lattePickerController:self didFinishPickingMediaWithData:info];
         return;
     }
     
@@ -1059,7 +1059,7 @@
         alert.tag = 1;
         [alert show];
     } else {
-        [self.navigationController popViewControllerAnimated:NO];
+        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
@@ -1110,7 +1110,7 @@
     switch (alertView.tag) {
         case 1: //Touch No
             if (buttonIndex == 1) {
-                [self.navigationController popViewControllerAnimated:NO];
+                [self.navigationController dismissViewControllerAnimated:YES completion:nil];
             }
             break;
         case 2:
