@@ -64,6 +64,7 @@
 @property (nonatomic, copy) NSNumber *birthdatePublic;
 @property (nonatomic, copy) NSNumber *birthyearPublic;
 @property (nonatomic, copy) NSString *bloodType;
+@property (nonatomic, copy) NSNumber *bloodTypePublic;
 @property (nonatomic, copy) NSNumber *countFollows;
 @property (nonatomic, copy) NSNumber *countFollowers;
 @property (nonatomic, copy) NSNumber *countFriends;
@@ -84,6 +85,7 @@
 @property (nonatomic, copy) NSString *profilePicture;
 @property (nonatomic, copy) NSString *profilePictureHi;
 @property (nonatomic, copy) NSString *nationality;
+@property (nonatomic, copy) NSNumber *nationalityPublic;
 @property (nonatomic, copy) NSString *mail;
 @property (nonatomic, copy) NSNumber *voteCount;
 @property (nonatomic, copy) NSNumber *pageViews;
@@ -92,10 +94,10 @@
 @property (nonatomic, assign) BOOL isFriend;
 
 @property (nonatomic, assign) BOOL stealthMode;
-@property (nonatomic, assign) BOOL defaultShowGPS;
-@property (nonatomic, assign) BOOL defaultShowEXIF;
-@property (nonatomic, assign) BOOL defaultShowTakenAt;
-@property (nonatomic, assign) BOOL defaultShowLarge;
+@property (nonatomic, assign) PictureStatus defaultShowGPS;
+@property (nonatomic, assign) PictureStatus defaultShowEXIF;
+@property (nonatomic, assign) PictureStatus defaultShowTakenAt;
+@property (nonatomic, assign) PictureStatus defaultShowLarge;
 
 @property (nonatomic, assign) BOOL pictureAutoFacebookUpload;
 @property (nonatomic, assign) BOOL pictureAutoTweet;
@@ -109,7 +111,10 @@
 + (User *)instanceFromDictionary:(NSDictionary *)aDictionary;
 - (void)setAttributesFromDictionary:(NSDictionary *)aDictionary;
 + (NSMutableArray *)mutableArrayFromDictionary:(NSDictionary *)aDictionary withKey:(NSString *)aKey;
-
++ (void)updatePermission:(NSNumber *)value forObject:(NSString *)name success:(void (^)(id))success failure:(void (^)(NSError *))failure;
 @end
+
+
+
 
 

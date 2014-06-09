@@ -72,6 +72,7 @@
 		880AC53B1786B6C4001E4365 /* gradient1-148.png in Resources */ = {isa = PBXBuildFile; fileRef = 880AC4FD1786B6C4001E4365 /* gradient1-148.png */; };
 		880AC53C1786B6C4001E4365 /* gradient1-149.png in Resources */ = {isa = PBXBuildFile; fileRef = 880AC4FE1786B6C4001E4365 /* gradient1-149.png */; };
 		880AC53D1786B6C4001E4365 /* gradient1-150.png in Resources */ = {isa = PBXBuildFile; fileRef = 880AC4FF1786B6C4001E4365 /* gradient1-150.png */; };
+		880B978A18F79C460084D79D /* LXImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 880B978918F79C460084D79D /* LXImagePickerController.m */; };
 		880C4B17161C2A1400252C6A /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 880C4AFC161C2A1400252C6A /* MBProgressHUD.m */; };
 		880E35A816A7BECA0097B97F /* LXAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 880E35A716A7BECA0097B97F /* LXAboutViewController.m */; };
 		880E50BD17252A9F00D584EE /* icon_iine_ss_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 880E50BB17252A9F00D584EE /* icon_iine_ss_on.png */; };
@@ -1939,6 +1940,9 @@
 		88FECF1D193D9BE60008985C /* LXStreamFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88FECF1C193D9BE60008985C /* LXStreamFooter.xib */; };
 		8C0E16FF193DD19600B50887 /* LXCompanyPolicyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C0E16FE193DD19600B50887 /* LXCompanyPolicyViewController.m */; };
 		C5FDFC3D193F16000084FD33 /* LXCellNotifyOfficial.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FDFC3C193F16000084FD33 /* LXCellNotifyOfficial.m */; };
+		8C75515E193F108800CBFA2C /* LXPrivacySettingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C75515D193F108800CBFA2C /* LXPrivacySettingTableViewCell.m */; };
+		8C8F582E193EF35E004A9EB9 /* LXTableSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8F582D193EF35E004A9EB9 /* LXTableSettingViewController.m */; };
+		8CFFF63D19407C8500D09F5B /* LXTableSettingItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CFFF63C19407C8500D09F5B /* LXTableSettingItemViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -4107,6 +4111,12 @@
 		8C0E16FE193DD19600B50887 /* LXCompanyPolicyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCompanyPolicyViewController.m; sourceTree = "<group>"; };
 		C5FDFC3B193F16000084FD33 /* LXCellNotifyOfficial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCellNotifyOfficial.h; sourceTree = "<group>"; };
 		C5FDFC3C193F16000084FD33 /* LXCellNotifyOfficial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCellNotifyOfficial.m; sourceTree = "<group>"; };
+		8C75515C193F108800CBFA2C /* LXPrivacySettingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXPrivacySettingTableViewCell.h; sourceTree = "<group>"; };
+		8C75515D193F108800CBFA2C /* LXPrivacySettingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXPrivacySettingTableViewCell.m; sourceTree = "<group>"; };
+		8C8F582C193EF35E004A9EB9 /* LXTableSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXTableSettingViewController.h; sourceTree = "<group>"; };
+		8C8F582D193EF35E004A9EB9 /* LXTableSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXTableSettingViewController.m; sourceTree = "<group>"; };
+		8CFFF63B19407C8500D09F5B /* LXTableSettingItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXTableSettingItemViewController.h; sourceTree = "<group>"; };
+		8CFFF63C19407C8500D09F5B /* LXTableSettingItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXTableSettingItemViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -5205,6 +5215,10 @@
 				882055031938550D00D741BB /* LXPicVoteCollectionController.m */,
 				8C0E16FD193DD19600B50887 /* LXCompanyPolicyViewController.h */,
 				8C0E16FE193DD19600B50887 /* LXCompanyPolicyViewController.m */,
+				8C8F582C193EF35E004A9EB9 /* LXTableSettingViewController.h */,
+				8C8F582D193EF35E004A9EB9 /* LXTableSettingViewController.m */,
+				8CFFF63B19407C8500D09F5B /* LXTableSettingItemViewController.h */,
+				8CFFF63C19407C8500D09F5B /* LXTableSettingItemViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -5290,6 +5304,8 @@
 				8866D66616EA00C000CAE6E5 /* SideSwipeTableViewController.m */,
 				882055051938570D00D741BB /* LXCollectionCellUser.h */,
 				882055061938570D00D741BB /* LXCollectionCellUser.m */,
+				8C75515C193F108800CBFA2C /* LXPrivacySettingTableViewCell.h */,
+				8C75515D193F108800CBFA2C /* LXPrivacySettingTableViewCell.m */,
 			);
 			path = CustomControls;
 			sourceTree = "<group>";
@@ -8713,11 +8729,16 @@
 				8847564217212718005CA201 /* RNBlurModalView.m in Sources */,
 				88F621061724E6AE00CDD1EC /* LXFBOpenGraph.m in Sources */,
 				88D2DC87192C40640027D88A /* UIViewController+REFrostedViewController.m in Sources */,
+				8C75515E193F108800CBFA2C /* LXPrivacySettingTableViewCell.m in Sources */,
 				88FB5C24192461A50018F757 /* LXPicCommentViewController.m in Sources */,
 				880E50EF1728C30800D584EE /* HFImageEditorFrameView.m in Sources */,
 				880E50F01728C30800D584EE /* HFImageEditorViewController.m in Sources */,
+				880E51001728E50400D584EE /* LXCaptureViewController.m in Sources */,
 				88120B0018F63233000BFB5E /* UIButton+AFNetworking.m in Sources */,
+				880E5110172A16C900D584EE /* LXCamCaptureManager.m in Sources */,
 				88FECF07193C796D0008985C /* HPTextViewInternal.m in Sources */,
+				8C8F582E193EF35E004A9EB9 /* LXTableSettingViewController.m in Sources */,
+				88144259172F9CCF00A5B3FF /* UIView+Genie.m in Sources */,
 				8883EED4173212EC00AA2D5E /* LXImageTextViewController.m in Sources */,
 				8883EED7173220EA00AA2D5E /* LXTextTemplateViewController.m in Sources */,
 				8883EEF41732256B00AA2D5E /* YIPopupTextView.m in Sources */,
@@ -8730,6 +8751,7 @@
 				88CE8A09174E120300C6A6B6 /* LXCellFont.m in Sources */,
 				887379BB17586FF400C1549B /* LXCellFontPreview.m in Sources */,
 				884D215A175C9BF0002FF853 /* ioapi.c in Sources */,
+				8CFFF63D19407C8500D09F5B /* LXTableSettingItemViewController.m in Sources */,
 				882055071938570E00D741BB /* LXCollectionCellUser.m in Sources */,
 				884D215B175C9BF0002FF853 /* mztools.c in Sources */,
 				884D215C175C9BF0002FF853 /* unzip.c in Sources */,

@@ -49,7 +49,10 @@
     return _sharedClient;
 }
 
-- (AFHTTPRequestOperation *)GET:(NSString *)URLString parameters:(NSDictionary *)parameters success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure {
+- (AFHTTPRequestOperation *)GET:(NSString *)URLString
+                     parameters:(NSDictionary *)parameters
+                        success:(void (^)(AFHTTPRequestOperation *, id))success
+                        failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure {
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
     NSMutableDictionary *params;
     if (parameters) {
@@ -65,7 +68,10 @@
     return [super GET:URLString parameters:params success:success failure:failure];
 }
 
-- (AFHTTPRequestOperation *)POST:(NSString *)URLString parameters:(NSDictionary *)parameters success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure {
+- (AFHTTPRequestOperation *)POST:(NSString *)URLString
+                      parameters:(NSDictionary *)parameters
+                         success:(void (^)(AFHTTPRequestOperation *, id))success
+                         failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure {
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
     NSMutableDictionary *params;
     if (parameters) {
