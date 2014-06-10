@@ -11,8 +11,8 @@
 
 
 #ifdef DEBUG
-static NSString * const kLatteAPIBaseURLString = @"http://dev-latte.luxeys.co.jp/api";
-//static NSString * const kLatteAPIBaseURLString = @"http://local-latte.la/api/";
+//static NSString * const kLatteAPIBaseURLString = @"http://dev-latte.luxeys.co.jp/api";
+static NSString * const kLatteAPIBaseURLString = @"http://local-latte.la/api/";
 //static NSString * const kLatteAPIBaseURLString = @"https://latte.la/api/";
 #else
 static NSString * const kLatteAPIBaseURLString = @"http://latte.la/api/";

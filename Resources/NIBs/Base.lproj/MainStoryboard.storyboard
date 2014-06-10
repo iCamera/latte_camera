@@ -380,45 +380,37 @@
             </objects>
             <point key="canvasLocation" x="197" y="628"/>
         </scene>
-        <!--Tag View Controller-->
+        <!--Tag View Controller - Tag-->
         <scene sceneID="qoJ-OX-aaX">
             <objects>
                 <tableViewController storyboardIdentifier="Tag" id="Hea-mo-ou6" customClass="LXTagViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="hcL-f7-mKI">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="q8F-ni-nnZ">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="48"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ieY-g0-jYH">
-                                    <rect key="frame" x="6" y="6" width="308" height="35"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                    <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Tag" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AoE-6z-6rV">
-                                            <rect key="frame" x="32" y="7" width="256" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" image="icon_tag_m.png" translatesAutoresizingMaskIntoConstraints="NO" id="zZN-bB-OZW">
-                                            <rect key="frame" x="8" y="9" width="16" height="16"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        </imageView>
-                                    </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                </view>
+                                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="4ch-9p-xPo">
+                                    <rect key="frame" x="20" y="11" width="280" height="29"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <segments>
+                                        <segment title="" image="icon_phot_m.png"/>
+                                        <segment title="" image="icon_friend_m.png"/>
+                                        <segment title="" image="icon_comment_s.png"/>
+                                    </segments>
+                                </segmentedControl>
                             </subviews>
                             <color key="backgroundColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
                         </view>
                         <activityIndicatorView key="tableFooterView" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" animating="YES" style="gray" id="tTQ-Zj-A8T">
-                            <rect key="frame" x="0.0" y="114" width="320" height="20"/>
+                            <rect key="frame" x="0.0" y="116" width="320" height="20"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </activityIndicatorView>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Grid" id="UPI-cd-4wL" customClass="LXCellGrid">
-                                <rect key="frame" x="0.0" y="70" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="72" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UPI-cd-4wL" id="Yng-RP-Ppw">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -432,16 +424,15 @@
                             <outlet property="delegate" destination="Hea-mo-ou6" id="ODJ-Wt-tqd"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="Siy-Pf-bZx"/>
+                    <navigationItem key="navigationItem" title="Tag" id="Siy-Pf-bZx"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="activityLoad" destination="tTQ-Zj-A8T" id="Tz9-ab-n12"/>
-                        <outlet property="labelTag" destination="AoE-6z-6rV" id="pi0-OY-I0p"/>
-                        <outlet property="viewHeader" destination="ieY-g0-jYH" id="DpS-oJ-r8t"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6LQ-bA-eEB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="197" y="1281"/>
+            <point key="canvasLocation" x="-274" y="-17"/>
         </scene>
         <!--Notify Side View Controller - Notification-->
         <scene sceneID="kYt-5Z-oXR">
@@ -1142,7 +1133,6 @@
                         <outlet property="buttonSearchTrend" destination="v1t-ja-Pue" id="WFE-6W-og1"/>
                         <outlet property="searchDisplayController" destination="CVC-H8-daV" id="YKt-u2-om6"/>
                         <outlet property="viewHeader" destination="POL-ZM-7ga" id="PFk-Z5-Zv9"/>
-                        <segue destination="Hea-mo-ou6" kind="push" identifier="ShowTag" id="Z4t-Jz-nB3"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U2c-Yq-iFg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2270,7 +2260,7 @@ Or you can resend confirmation email.</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o8j-Qd-JPd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-250" y="-9"/>
+            <point key="canvasLocation" x="197" y="-9"/>
         </scene>
     </scenes>
     <resources>
@@ -2314,7 +2304,6 @@ Or you can resend confirmation email.</string>
         <image name="icon_profile_s.png" width="12" height="12"/>
         <image name="icon_rank.png" width="20" height="21"/>
         <image name="icon_setting_m_ocher.png" width="15" height="15"/>
-        <image name="icon_tag_m.png" width="16" height="16"/>
         <image name="icon_trend_ltrend.png" width="13" height="15"/>
         <image name="notify_all.png" width="19" height="15"/>
         <image name="notify_comment.png" width="15" height="15"/>

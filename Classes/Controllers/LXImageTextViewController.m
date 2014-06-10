@@ -1051,8 +1051,8 @@ typedef enum {
         
         [operation setCompletionBlockWithSuccess: successUpload failure: failDownload];
         
-        [operation setDownloadProgressBlock:^(NSUInteger bytesWritten, NSInteger totalBytesWritten, NSInteger totalBytesExpectedToWrite) {
-            progessHUD.progress = (float)totalBytesWritten/(float)totalBytesExpectedToWrite;
+        [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+            progessHUD.progress = (float)totalBytesRead/(float)totalBytesExpectedToRead;
         }];
         
         [operation start];

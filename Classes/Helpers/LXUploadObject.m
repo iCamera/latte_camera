@@ -178,7 +178,7 @@
     [operation setCompletionBlockWithSuccess: successUpload
                                      failure: failUpload];
     
-    [operation setUploadProgressBlock:^(NSUInteger bytesWritten, NSInteger totalBytesWritten, NSInteger totalBytesExpectedToWrite) {
+    [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
         _percent = (float)totalBytesWritten/(float)totalBytesExpectedToWrite;
         [_delegate uploader:self progress:_percent];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderProgress" object:self];
