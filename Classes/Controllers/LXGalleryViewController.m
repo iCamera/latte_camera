@@ -118,38 +118,38 @@
     labelDesc.textColor = [UIColor whiteColor];
     
     __weak LXGalleryViewController *weakSelf = self;
-    STLinkCallbackBlock callbackBlock = ^(STLinkActionType actionType, NSString *link) {
-        
-        NSString *displayString = NULL;
-        
-        // determine what the user clicked on
-        switch (actionType) {
-                
-                // if the user clicked on an account (@_max_k)
-            case STLinkActionTypeAccount:
-                displayString = [NSString stringWithFormat:@"Twitter account:\n%@", link];
-                break;
-                
-                // if the user clicked on a hashtag (#thisisreallycool)
-            case STLinkActionTypeHashtag: {
-                displayString = [NSString stringWithFormat:@"Twitter hashtag:\n%@", link];
-                
-                UIStoryboard *storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                                       bundle:nil];
-                LXTagViewController *viewTag = [storyMain instantiateViewControllerWithIdentifier:@"Tag"];
-                viewTag.keyword = [link substringFromIndex:1];
-                
-                [weakSelf.navigationController pushViewController:viewTag animated:YES];
-
-                break;
-            }
-                // if the user clicked on a website (http://github.com/SebastienThiebaud)
-            case STLinkActionTypeWebsite:
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:link]];
-                break;
-        }
-    };
-    [labelDesc setCallbackBlock:callbackBlock];
+//    STLinkCallbackBlock callbackBlock = ^(STLinkActionType actionType, NSString *link) {
+//        
+//        NSString *displayString = NULL;
+//        
+//        // determine what the user clicked on
+//        switch (actionType) {
+//                
+//                // if the user clicked on an account (@_max_k)
+//            case STLinkActionTypeAccount:
+//                displayString = [NSString stringWithFormat:@"Twitter account:\n%@", link];
+//                break;
+//                
+//                // if the user clicked on a hashtag (#thisisreallycool)
+//            case STLinkActionTypeHashtag: {
+//                displayString = [NSString stringWithFormat:@"Twitter hashtag:\n%@", link];
+//                
+//                UIStoryboard *storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard"
+//                                                                       bundle:nil];
+//                LXTagViewController *viewTag = [storyMain instantiateViewControllerWithIdentifier:@"Tag"];
+//                viewTag.keyword = [link substringFromIndex:1];
+//                
+//                [weakSelf.navigationController pushViewController:viewTag animated:YES];
+//
+//                break;
+//            }
+//                // if the user clicked on a website (http://github.com/SebastienThiebaud)
+//            case STLinkActionTypeWebsite:
+//                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:link]];
+//                break;
+//        }
+//    };
+//    [labelDesc setCallbackBlock:callbackBlock];
     [viewDesc addSubview:labelDesc];
 
     [self setPicture];

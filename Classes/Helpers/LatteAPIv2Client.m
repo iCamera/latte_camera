@@ -23,7 +23,7 @@
         
         [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
         
-        if (![kLatteAPIBaseURLString isEqualToString:@"http://latte.la/api2/"]) {
+        if (![kLatteAPIv2BaseURLString isEqualToString:@"http://latte.la/api2/"]) {
             [_sharedClient.requestSerializer setAuthorizationHeaderFieldWithUsername:@"luxeys" password:@"13579"];
         }
         

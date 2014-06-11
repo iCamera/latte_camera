@@ -226,6 +226,16 @@
     return date;
 }
 
++ (NSDate *)dateFromString:(NSString *)aDate {
+    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
+    
+    NSDate *date = [dateFormatter dateFromString:aDate];
+    
+    return date;
+}
+
+
 + (NSDictionary *)getGPSDictionaryForLocation:(CLLocation *)location {
     NSMutableDictionary *gps = [NSMutableDictionary dictionary];
 

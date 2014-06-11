@@ -32,6 +32,7 @@ typedef NS_ENUM(NSInteger, NotifyTarget) {
 + (NSString *)timeDeltaFromNow:(NSDate *)aDate;
 + (NSDate *)dateFromJSON:(NSString *)aDate;
 + (NSDate *)dateFromJSON:(NSString *)aDate timezone:(BOOL)timezone;
++ (NSDate *)dateFromString:(NSString *)aDate;
 + (NSDictionary *)getGPSDictionaryForLocation:(CLLocation *)location;
 + (NSString *)dateToString:(NSDate*)aDate;
 

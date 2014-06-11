@@ -26,8 +26,6 @@
     BOOL loadEnded;
 }
 
-@synthesize viewHeader;
-@synthesize labelTag;
 @synthesize activityLoad;
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -48,10 +46,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [LXUtils globalShadow:viewHeader];
-    viewHeader.layer.cornerRadius = 5.0;
-    labelTag.text = _keyword;
     
     page = 1;
     loadEnded = false;

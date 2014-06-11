@@ -12,8 +12,6 @@
 @interface LXTagViewController : UITableViewController<LXGalleryViewControllerDataSource, UIScrollViewDelegate>
 
 @property (strong, nonatomic) NSString *keyword;
-@property (strong, nonatomic) IBOutlet UIView *viewHeader;
-@property (strong, nonatomic) IBOutlet UILabel *labelTag;
 
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityLoad;
 
