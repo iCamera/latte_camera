@@ -13,6 +13,7 @@ pod 'REComposeViewController'
 pod 'REFrostedViewController'
 pod 'STTweetLabel'
 pod 'TTTAttributedLabel'
+pod 'socket.IO'
 
 end
 

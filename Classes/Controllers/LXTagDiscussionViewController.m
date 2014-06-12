@@ -13,6 +13,8 @@
 #import "UIImageView+AFNetworking.h"
 #import "LXUtils.h"
 #import "LXAppDelegate.h"
+#import "SocketIOPacket.h"
+#import <CommonCrypto/CommonDigest.h>
 
 @interface LXTagDiscussionViewController ()
 
@@ -21,6 +23,8 @@
 @implementation LXTagDiscussionViewController {
     NSMutableArray *messages;
     NSMutableArray *raw;
+    SocketIO *socketIO;
+    NSString *hash;
 }
 
 - (JSQMessage*)fromDict:(NSDictionary*)JSON {
@@ -41,6 +45,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navigationItem.title = _tag;
+    hash = [self sha1:[_tag lowercaseString]];
     self.outgoingBubbleImageView = [JSQMessagesBubbleImageFactory
                                     outgoingMessageBubbleImageViewWithColor:[UIColor jsq_messageBubbleLightGrayColor]];
     
@@ -53,6 +58,9 @@
     self.inputToolbar.contentView.leftBarButtonItem = nil;
     
     [self loadMore];
+    
+     socketIO = [[SocketIO alloc] initWithDelegate:self];
+    [socketIO connectToHost:kLatteSocketURLString onPort:80];
 }
 
 - (void)loadMore {
@@ -340,6 +348,44 @@
         LXTagViewController *view = segue.destinationViewController;
         view.keyword = _tag;
     }
+}
+
+- (void) socketIO:(SocketIO *)socket didReceiveEvent:(SocketIOPacket *)packet {
+    DLog(@"%@", packet.dataAsJSON);
+    for (NSDictionary *object in packet.dataAsJSON[@"args"]) {
+        if ([packet.name isEqualToString:@"new_message"]) {
+            if ([object[@"hash"] isEqualToString:hash]) {
+                JSQMessage *message = [[JSQMessage alloc] initWithText:object[@"body"]
+                                                                sender:object[@"user"][@"name"]
+                                                                  date:[LXUtils dateFromString:object[@"created_at"]]];
+                [messages addObject:message];                
+                [raw addObject:@{@"user": object[@"user"]}];
+                [self finishReceivingMessage];
+            }
+        }
+    }
+    
+}
+
+-(NSString*) sha1:(NSString*)input
+{
+    const char *cstr = [input cStringUsingEncoding:NSUTF8StringEncoding];
+    NSData *data = [NSData dataWithBytes:cstr length:input.length];
+    
+    uint8_t digest[CC_SHA1_DIGEST_LENGTH];
+    
+    CC_SHA1(data.bytes, data.length, digest);
+    
+    NSMutableString* output = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
+    
+    for(int i = 0; i < CC_SHA1_DIGEST_LENGTH; i++)
+        [output appendFormat:@"%02x", digest[i]];
+    
+    return output;
+}
+
+- (void)socketIODidConnect:(SocketIO *)socket {
+    [socket sendEvent:@"join" withData:hash];
 }
 
 @end
