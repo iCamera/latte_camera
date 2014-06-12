@@ -7,6 +7,7 @@
 //
 
 #import "LXTagDiscussionViewController.h"
+#import "LXTagViewController.h"
 #import "JSQMessages.h"
 #import "LatteAPIv2Client.h"
 #import "UIImageView+AFNetworking.h"
@@ -47,11 +48,22 @@
                                     incomingMessageBubbleImageViewWithColor:[UIColor jsq_messageBubbleGreenColor]];
     
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
-    self.showLoadEarlierMessagesHeader = YES;
+    
     self.sender = app.currentUser.name;
     
+    [self loadMore];
+}
+
+- (void)loadMore {
     LatteAPIv2Client *api2 = [LatteAPIv2Client sharedClient];
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:@{@"tag":_tag}];
+    
     [api2 GET:@"message" parameters:@{@"tag":_tag} success:^(AFHTTPRequestOperation *operation, NSMutableArray *JSON) {
+        if (JSON.count > 0) {
+            self.showLoadEarlierMessagesHeader = YES;
+        } else {
+            self.showLoadEarlierMessagesHeader = NO;
+        }
         messages = [[NSMutableArray alloc] init];
         raw = [[NSMutableArray alloc] init];
         for (NSDictionary *message in JSON) {
@@ -306,7 +318,7 @@
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView
                 header:(JSQMessagesLoadEarlierHeaderView *)headerView didTapLoadEarlierMessagesButton:(UIButton *)sender
 {
-    NSLog(@"Load earlier messages!");
+    [self loadMore];
 }
 
 - (void)didReceiveMemoryWarning
@@ -315,7 +327,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -323,7 +335,10 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"Tag"]) {
+        LXTagViewController *view = segue.destinationViewController;
+        view.keyword = _tag;
+    }
 }
-*/
 
 @end

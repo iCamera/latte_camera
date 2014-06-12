@@ -389,10 +389,17 @@
                         <viewControllerLayoutGuide type="bottom" id="hbO-H8-5bX"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="OhT-9B-KMP">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="705-CG-WoS">
+                        <barButtonItem key="rightBarButtonItem" image="icon_phot_m.png" id="Yl2-wp-MF1">
+                            <connections>
+                                <segue destination="Hea-mo-ou6" kind="push" identifier="Tag" id="vGs-B6-HUM"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l43-nT-RgO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -406,29 +413,13 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="q8F-ni-nnZ">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="4ch-9p-xPo">
-                                    <rect key="frame" x="20" y="11" width="280" height="29"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <segments>
-                                        <segment title="" image="icon_phot_m.png"/>
-                                        <segment title="" image="icon_comment_s.png"/>
-                                        <segment title="" image="icon_friend_m.png"/>
-                                    </segments>
-                                </segmentedControl>
-                            </subviews>
-                            <color key="backgroundColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
-                        </view>
                         <activityIndicatorView key="tableFooterView" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" animating="YES" style="gray" id="tTQ-Zj-A8T">
-                            <rect key="frame" x="0.0" y="116" width="320" height="20"/>
+                            <rect key="frame" x="0.0" y="66" width="320" height="20"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </activityIndicatorView>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Grid" id="UPI-cd-4wL" customClass="LXCellGrid">
-                                <rect key="frame" x="0.0" y="72" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UPI-cd-4wL" id="Yng-RP-Ppw">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -442,9 +433,7 @@
                             <outlet property="delegate" destination="Hea-mo-ou6" id="ODJ-Wt-tqd"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Tag" id="Siy-Pf-bZx">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="7Dm-Hh-Q2F"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Tag" id="Siy-Pf-bZx"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="activityLoad" destination="tTQ-Zj-A8T" id="Tz9-ab-n12"/>
@@ -452,7 +441,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6LQ-bA-eEB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-142" y="-553"/>
+            <point key="canvasLocation" x="212" y="-611"/>
         </scene>
         <!--Notify Side View Controller - Notification-->
         <scene sceneID="kYt-5Z-oXR">
@@ -1542,6 +1531,9 @@
                             <action selector="refresh:" destination="Ftc-ZZ-Upd" eventType="valueChanged" id="zlb-zo-AvT"/>
                         </connections>
                     </refreshControl>
+                    <connections>
+                        <segue destination="FUG-mk-N2R" kind="push" id="fpu-js-3C3"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HVc-Wm-P1o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2280,7 +2272,7 @@ Or you can resend confirmation email.</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o8j-Qd-JPd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="197" y="-9"/>
+            <point key="canvasLocation" x="229" y="-9"/>
         </scene>
     </scenes>
     <resources>

@@ -50,6 +50,8 @@
     page = 1;
     loadEnded = false;
     [self loadMore];
+    
+    self.navigationItem.title = _keyword;
 }
 
 - (void)loadMore {
