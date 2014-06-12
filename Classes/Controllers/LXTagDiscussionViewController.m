@@ -50,6 +50,7 @@
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
     
     self.sender = app.currentUser.name;
+    self.inputToolbar.contentView.leftBarButtonItem = nil;
     
     [self loadMore];
 }
@@ -58,7 +59,7 @@
     LatteAPIv2Client *api2 = [LatteAPIv2Client sharedClient];
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:@{@"tag":_tag}];
     
-    [api2 GET:@"message" parameters:@{@"tag":_tag} success:^(AFHTTPRequestOperation *operation, NSMutableArray *JSON) {
+    [api2 GET:@"message" parameters:params success:^(AFHTTPRequestOperation *operation, NSMutableArray *JSON) {
         if (JSON.count > 0) {
             self.showLoadEarlierMessagesHeader = YES;
         } else {
