@@ -58,9 +58,12 @@
     NSMutableDictionary *imageMeta;
     CGSize imageSize;
     UIImage *imagePreview;
-    UIImage *imageOriginal;
     UIImage *imageThumbnail;
     UIImage *imageOriginalPreview;
+    UIImageOrientation imageOrientation;
+    
+    GPUImagePicture *previewFilter;
+    GPUImagePicture *imageToProcess;
 }
 
 @end
@@ -132,9 +135,7 @@
 
 @synthesize buttonBlackWhite;
 
-@synthesize imageOrientation;
-@synthesize imageToProcess;
-@synthesize previewFilter;
+@synthesize imageOriginal;
 
 @synthesize imageNext;
 @synthesize imagePrev;
@@ -298,8 +299,6 @@
     [self addBlendButton:scrollFilm target:@selector(toggleFilm:)];
     
     // Set Image
-    
-    imageOriginal = _info[UIImagePickerControllerEditedImage];
     imageOrientation = imageOriginal.imageOrientation;
     CGFloat heightThumb = [LXUtils heightFromWidth:70 width:imageOriginal.size.width height:imageOriginal.size.height];
     CGFloat heightPreview = [LXUtils heightFromWidth:320 width:imageOriginal.size.width height:imageOriginal.size.height];
@@ -577,25 +576,24 @@
                               imageFinalThumb, @"preview",
                               nil];
         [_delegate lattePickerController:self didFinishPickingMediaWithData:info];
-        return;
-    }
-    
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    
-    if (app.currentUser) {
-        LXPicEditViewController *controllerPicEdit = [[UIStoryboard storyboardWithName:@"Gallery"
-                                                                                bundle: nil] instantiateViewControllerWithIdentifier:@"PicEdit"];
-        controllerPicEdit.imageData = imageFinalData;
-        controllerPicEdit.preview = imageFinalThumb;
-        [self.navigationController pushViewController:controllerPicEdit animated:YES];
     } else {
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                                 delegate:self
-                                                        cancelButtonTitle:NSLocalizedString(@"Cancel", @"")
-                                                   destructiveButtonTitle:nil
-                                                        otherButtonTitles:@"Email", @"Twitter", @"Facebook", @"Latte", nil];
-        actionSheet.tag = 0;
-        [actionSheet showInView:self.view];
+        LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
+        
+        if (app.currentUser) {
+            LXPicEditViewController *controllerPicEdit = [[UIStoryboard storyboardWithName:@"Gallery"
+                                                                                    bundle: nil] instantiateViewControllerWithIdentifier:@"PicEdit"];
+            controllerPicEdit.imageData = imageFinalData;
+            controllerPicEdit.preview = imageFinalThumb;
+            [self.navigationController pushViewController:controllerPicEdit animated:YES];
+        } else {
+            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                                     delegate:self
+                                                            cancelButtonTitle:NSLocalizedString(@"Cancel", @"")
+                                                       destructiveButtonTitle:nil
+                                                            otherButtonTitles:@"Email", @"Twitter", @"Facebook", @"Latte", nil];
+            actionSheet.tag = 0;
+            [actionSheet showInView:self.view];
+        }
     }
 }
 
@@ -1056,7 +1054,7 @@
         alert.tag = 1;
         [alert show];
     } else {
-        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
@@ -1107,12 +1105,12 @@
     switch (alertView.tag) {
         case 1: //Touch No
             if (buttonIndex == 1) {
-                [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+                [self dismissViewControllerAnimated:YES completion:nil];
             }
             break;
         case 2:
             if (buttonIndex == 1) {
-                [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+                [self dismissViewControllerAnimated:YES completion:nil];
             }
             break;
         default:

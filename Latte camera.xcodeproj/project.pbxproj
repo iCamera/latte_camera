@@ -1540,6 +1540,7 @@
 		88F0398D17A2879B00458900 /* menu4b_4_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F0397517A2879B00458900 /* menu4b_4_off@2x.png */; };
 		88F0398E17A2879B00458900 /* menu4b_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F0397617A2879B00458900 /* menu4b_4.png */; };
 		88F0398F17A2879B00458900 /* menu4b_4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F0397717A2879B00458900 /* menu4b_4@2x.png */; };
+		88F550B1194AD118007217CF /* LXImageCropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88F550B0194AD117007217CF /* LXImageCropViewController.m */; };
 		88F5986C173908DB000BD186 /* crop_lb.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F59862173908DA000BD186 /* crop_lb.png */; };
 		88F5986D173908DB000BD186 /* crop_lb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F59863173908DA000BD186 /* crop_lb@2x.png */; };
 		88F5986E173908DB000BD186 /* crop_lt.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F59864173908DA000BD186 /* crop_lt.png */; };
@@ -1902,30 +1903,6 @@
 		D43F85446D6B48A0B1EB39B0 /* libPods-Latte camera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC48C9BB332464C84EA4512 /* libPods-Latte camera.a */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		88120B1B18F69C8D000BFB5E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88120B1518F69C8D000BFB5E /* GPUImage.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BCF1A33414DDB1EC00852800;
-			remoteInfo = GPUImage;
-		};
-		88120B1D18F69C8D000BFB5E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88120B1518F69C8D000BFB5E /* GPUImage.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BCF1A34414DDB1EC00852800;
-			remoteInfo = GPUImageTests;
-		};
-		88120B1F18F69CD6000BFB5E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88120B1518F69C8D000BFB5E /* GPUImage.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = BCF1A33314DDB1EC00852800;
-			remoteInfo = GPUImage;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		0EC48C9BB332464C84EA4512 /* libPods-Latte camera.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Latte camera.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55BB20FE3C764265B8BCE71D /* Pods-Latte camera.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Latte camera.xcconfig"; path = "Pods/Pods-Latte camera.xcconfig"; sourceTree = "<group>"; };
@@ -2004,7 +1981,6 @@
 		880E50CB1725703D00D584EE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		881015D41700270A00AE81E1 /* hicon_menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hicon_menu.png; sourceTree = "<group>"; };
 		881015D51700270A00AE81E1 /* hicon_menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hicon_menu@2x.png"; sourceTree = "<group>"; };
-		88120B1518F69C8D000BFB5E /* GPUImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GPUImage.xcodeproj; path = Vendor/GPUImage/framework/GPUImage.xcodeproj; sourceTree = "<group>"; };
 		88120B5418F6B172000BFB5E /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
 		88120B5518F6B172000BFB5E /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIDictionaryBuilder.h; sourceTree = "<group>"; };
 		88120B5618F6B172000BFB5E /* GAIFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIFields.h; sourceTree = "<group>"; };
@@ -3618,6 +3594,8 @@
 		88F0397517A2879B00458900 /* menu4b_4_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu4b_4_off@2x.png"; sourceTree = "<group>"; };
 		88F0397617A2879B00458900 /* menu4b_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu4b_4.png; sourceTree = "<group>"; };
 		88F0397717A2879B00458900 /* menu4b_4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu4b_4@2x.png"; sourceTree = "<group>"; };
+		88F550AF194AD117007217CF /* LXImageCropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXImageCropViewController.h; sourceTree = "<group>"; };
+		88F550B0194AD117007217CF /* LXImageCropViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXImageCropViewController.m; sourceTree = "<group>"; };
 		88F59862173908DA000BD186 /* crop_lb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crop_lb.png; sourceTree = "<group>"; };
 		88F59863173908DA000BD186 /* crop_lb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crop_lb@2x.png"; sourceTree = "<group>"; };
 		88F59864173908DA000BD186 /* crop_lt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crop_lt.png; sourceTree = "<group>"; };
@@ -4036,15 +4014,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		88120B1618F69C8D000BFB5E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				88120B1C18F69C8D000BFB5E /* libGPUImage.a */,
-				88120B1E18F69C8D000BFB5E /* GPUImageTests.octest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		88120B2618F6B171000BFB5E /* GoogleAnalyticsServicesiOS_3.06 */ = {
 			isa = PBXGroup;
 			children = (
@@ -4840,6 +4809,8 @@
 		8890722F16770EBB0013DF7A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				88F550AF194AD117007217CF /* LXImageCropViewController.h */,
+				88F550B0194AD117007217CF /* LXImageCropViewController.m */,
 				880E35A616A7BECA0097B97F /* LXAboutViewController.h */,
 				880E35A716A7BECA0097B97F /* LXAboutViewController.m */,
 				88491EB91921B4A400CAF0A2 /* LXAnouncementViewController.h */,
@@ -5384,7 +5355,6 @@
 			isa = PBXGroup;
 			children = (
 				88EB47C91948316400D0F026 /* libsqlite3.dylib */,
-				88120B1518F69C8D000BFB5E /* GPUImage.xcodeproj */,
 				88C0FF4717212C0600F8CA2D /* Accelerate.framework */,
 				887E40CE1626CE300060623C /* Accounts.framework */,
 				887E40CF1626CE330060623C /* AdSupport.framework */,
@@ -6425,7 +6395,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				88120B2018F69CD6000BFB5E /* PBXTargetDependency */,
 			);
 			name = "Latte camera";
 			productName = Latte;
@@ -6488,35 +6457,12 @@
 			mainGroup = 88D9863815B8F97700858AD6;
 			productRefGroup = 88D9864415B8F97800858AD6 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 88120B1618F69C8D000BFB5E /* Products */;
-					ProjectRef = 88120B1518F69C8D000BFB5E /* GPUImage.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				88D9864215B8F97800858AD6 /* Latte camera */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		88120B1C18F69C8D000BFB5E /* libGPUImage.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libGPUImage.a;
-			remoteRef = 88120B1B18F69C8D000BFB5E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		88120B1E18F69C8D000BFB5E /* GPUImageTests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = GPUImageTests.octest;
-			remoteRef = 88120B1D18F69C8D000BFB5E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		88D9864115B8F97800858AD6 /* Resources */ = {
@@ -8309,6 +8255,7 @@
 				889072C116770EBB0013DF7A /* LXMyPageViewController.m in Sources */,
 				889072C416770EBB0013DF7A /* LXPicEditViewController.m in Sources */,
 				889072C516770EBB0013DF7A /* LXPicInfoViewController.m in Sources */,
+				88F550B1194AD118007217CF /* LXImageCropViewController.m in Sources */,
 				889072C616770EBB0013DF7A /* LXPicMapViewController.m in Sources */,
 				889072C716770EBB0013DF7A /* LXRankingViewController.m in Sources */,
 				889072C816770EBB0013DF7A /* LXRegisterViewController.m in Sources */,
@@ -8430,14 +8377,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		88120B2018F69CD6000BFB5E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = GPUImage;
-			targetProxy = 88120B1F18F69CD6000BFB5E /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		8824FB4616F72CE700357ADB /* Authentication.storyboard */ = {

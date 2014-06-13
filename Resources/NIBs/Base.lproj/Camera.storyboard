@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="IgC-G0-Nfq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="7Fc-rr-87L">
     <dependencies>
-        <deployment version="1536" defaultVersion="1536" identifier="iOS"/>
+        <deployment version="1536" defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
@@ -1388,6 +1388,137 @@
             </objects>
             <point key="canvasLocation" x="-2292" y="-228"/>
         </scene>
+        <!--Image Crop View Controller-->
+        <scene sceneID="JQA-gO-TVL">
+            <objects>
+                <viewController storyboardIdentifier="Crop" definesPresentationContext="YES" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7Fc-rr-87L" customClass="LXImageCropViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="psU-fp-jzi">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="XQd-W2-KOT" customClass="HFImageEditorFrameView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="430"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="Fdu-mU-oln">
+                                <rect key="frame" x="0.0" y="430" width="320" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="hVT-wz-T6n">
+                                        <rect key="frame" x="249" y="5" width="58" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" image="icon_ok.png">
+                                            <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="doneAction:" destination="7Fc-rr-87L" eventType="touchUpInside" id="geS-Uj-PLz"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Zdt-4b-dhi">
+                                        <rect key="frame" x="0.0" y="5" width="58" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" image="icon_escape.png">
+                                            <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="cancelAction:" destination="7Fc-rr-87L" eventType="touchUpInside" id="gvx-76-Rj5"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="67F-2h-hcf">
+                                        <rect key="frame" x="63" y="5" width="58" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                        <state key="normal" title="1:1">
+                                            <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="setCropRatio:" destination="7Fc-rr-87L" eventType="touchUpInside" id="gKl-Hh-hU2"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="mIh-my-AA8">
+                                        <rect key="frame" x="126" y="5" width="58" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                        <state key="normal" title="4:3">
+                                            <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="setCropRatio:" destination="7Fc-rr-87L" eventType="touchUpInside" id="jov-To-mqy"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="qcf-Tw-6Ui">
+                                        <rect key="frame" x="189" y="5" width="58" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                        <state key="normal" title="3:4">
+                                            <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="setCropRatio:" destination="7Fc-rr-87L" eventType="touchUpInside" id="hNS-Eh-VS4"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
+                            </view>
+                            <imageView contentMode="center" image="crop_rb.png" id="t1P-U4-RwE">
+                                <rect key="frame" x="278" y="311" width="40" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="AYX-b2-2O6" appends="YES" id="WFT-IJ-Crm"/>
+                                </connections>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="frameView" destination="XQd-W2-KOT" id="LVR-7s-FjC"/>
+                        <outlet property="imageCropSize" destination="t1P-U4-RwE" id="ViN-Wo-c99"/>
+                        <outlet property="panRecognizer" destination="kmG-XG-Q5E" id="asv-Wy-0mD"/>
+                        <outlet property="pinchRecognizer" destination="cZp-Ta-n0I" id="s8Q-un-Y1G"/>
+                        <outlet property="rotationRecognizer" destination="kEl-SJ-DHj" id="jMK-8l-C5C"/>
+                        <outlet property="tapRecognizer" destination="cMK-Tw-X3f" id="pj5-3S-GA0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x59-ME-89r" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <rotationGestureRecognizer id="kEl-SJ-DHj">
+                    <connections>
+                        <action selector="handleRotation:" destination="7Fc-rr-87L" id="Tl3-Mf-wUE"/>
+                    </connections>
+                </rotationGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="kmG-XG-Q5E">
+                    <connections>
+                        <action selector="handlePan:" destination="7Fc-rr-87L" id="lmD-3r-F4I"/>
+                    </connections>
+                </panGestureRecognizer>
+                <pinchGestureRecognizer id="cZp-Ta-n0I">
+                    <connections>
+                        <action selector="handlePinch:" destination="7Fc-rr-87L" id="3Xe-rN-aIx"/>
+                    </connections>
+                </pinchGestureRecognizer>
+                <tapGestureRecognizer id="cMK-Tw-X3f">
+                    <connections>
+                        <action selector="handleTap:" destination="7Fc-rr-87L" id="ruW-OM-oXP"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="AYX-b2-2O6">
+                    <connections>
+                        <action selector="panSize:" destination="7Fc-rr-87L" id="Tfq-aQ-itu"/>
+                    </connections>
+                </panGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="-3222" y="342"/>
+        </scene>
     </scenes>
     <resources>
         <image name="bg_camera_bottom.png" width="320" height="50"/>
@@ -1395,6 +1526,7 @@
         <image name="bg_camera_bt2_on.png" width="58" height="40"/>
         <image name="bg_camera_bt3.png" width="58" height="30"/>
         <image name="bg_camera_bt3_on.png" width="58" height="30"/>
+        <image name="crop_rb.png" width="22" height="22"/>
         <image name="edit_delete.png" width="24" height="24"/>
         <image name="edit_fonts.png" width="19" height="15"/>
         <image name="edit_horizon.png" width="12" height="15"/>
@@ -1420,6 +1552,7 @@
         <image name="icon_lens3.png" width="20" height="20"/>
         <image name="icon_light.png" width="12" height="12"/>
         <image name="icon_no2.png" width="15" height="15"/>
+        <image name="icon_ok.png" width="15" height="14"/>
         <image name="icon_ok2.png" width="15" height="14"/>
         <image name="icon_preset.png" width="27" height="20"/>
         <image name="icon_reset.png" width="15" height="15"/>

@@ -9,6 +9,7 @@
 #import "LXLoginViewController.h"
 #import "User.h"
 #import "Picture.h"
+#import "LXImageCropViewController.h"
 #import "LXCanvasViewController.h"
 #import "LXMainTabViewController.h"
 #import "LXAppDelegate.h"
@@ -260,7 +261,6 @@
             UIImagePickerController *imagePicker = [storyCamera instantiateViewControllerWithIdentifier:@"Picker"];
             
             imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-            imagePicker.allowsEditing = YES;
             imagePicker.delegate = self;
             
             [self presentViewController:imagePicker animated:YES completion:nil];
@@ -268,7 +268,6 @@
     } else if (buttonIndex == 1) {
         UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
         
-        imagePicker.allowsEditing = YES;
         imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         imagePicker.delegate = self;
         
@@ -278,12 +277,27 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIStoryboard *storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
-    LXCanvasViewController *controllerCanvas = [storyCamera instantiateInitialViewController];
+    LXImageCropViewController *controllerCrop = [storyCamera instantiateInitialViewController];
     
-    //controllerCanvas.delegate = self;
-    controllerCanvas.info = info;
+    UIImage *image =  [info objectForKey:UIImagePickerControllerOriginalImage];
+    controllerCrop.sourceImage = image;
+    controllerCrop.doneCallback = ^(UIImage *editedImage, BOOL canceled){
+        if(!canceled) {
+            [picker dismissViewControllerAnimated:NO completion:nil];
+            
+            UIStoryboard *storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
+            LXCanvasViewController *controllerCanvas = [storyCamera instantiateViewControllerWithIdentifier:@"Canvas"];
+            controllerCanvas.imageOriginal = editedImage;
+            controllerCanvas.info = info;
+            [self presentViewController:controllerCanvas animated:NO completion:nil];
+        } else {
+            [picker popToRootViewControllerAnimated:YES];
+            [picker setNavigationBarHidden:NO animated:NO];
+        }
+    };
     
-    [picker pushViewController:controllerCanvas animated:YES];
+    [picker setNavigationBarHidden:YES animated:NO];
+    [picker pushViewController:controllerCrop animated:YES];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
