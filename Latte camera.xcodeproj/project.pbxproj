@@ -755,7 +755,6 @@
 		8855F9B8173CB3C1006892FD /* star-9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8855F970173CB3C1006892FD /* star-9.jpg */; };
 		8855F9BB173CB50A006892FD /* blend4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8855F9B9173CB50A006892FD /* blend4.jpg */; };
 		8855F9BC173CB50A006892FD /* blend5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8855F9BA173CB50A006892FD /* blend5.jpg */; };
-		8855F9BF173CD452006892FD /* GPUImageFilter+reset.m in Sources */ = {isa = PBXBuildFile; fileRef = 8855F9BE173CD452006892FD /* GPUImageFilter+reset.m */; };
 		8855F9D81740D09A006892FD /* hr_preset.png in Resources */ = {isa = PBXBuildFile; fileRef = 8855F9C51740D09A006892FD /* hr_preset.png */; };
 		8855F9D91740D09A006892FD /* hr_preset@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8855F9C61740D09A006892FD /* hr_preset@2x.png */; };
 		8855F9DA1740D09A006892FD /* icon_preset.png in Resources */ = {isa = PBXBuildFile; fileRef = 8855F9C71740D09A006892FD /* icon_preset.png */; };
@@ -2740,8 +2739,6 @@
 		8855F970173CB3C1006892FD /* star-9.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "star-9.jpg"; sourceTree = "<group>"; };
 		8855F9B9173CB50A006892FD /* blend4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = blend4.jpg; sourceTree = "<group>"; };
 		8855F9BA173CB50A006892FD /* blend5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = blend5.jpg; sourceTree = "<group>"; };
-		8855F9BD173CD452006892FD /* GPUImageFilter+reset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GPUImageFilter+reset.h"; sourceTree = "<group>"; };
-		8855F9BE173CD452006892FD /* GPUImageFilter+reset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GPUImageFilter+reset.m"; sourceTree = "<group>"; };
 		8855F9C51740D09A006892FD /* hr_preset.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hr_preset.png; sourceTree = "<group>"; };
 		8855F9C61740D09A006892FD /* hr_preset@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hr_preset@2x.png"; sourceTree = "<group>"; };
 		8855F9C71740D09A006892FD /* icon_preset.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_preset.png; sourceTree = "<group>"; };
@@ -5041,8 +5038,6 @@
 		8890728F16770EBB0013DF7A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				8855F9BD173CD452006892FD /* GPUImageFilter+reset.h */,
-				8855F9BE173CD452006892FD /* GPUImageFilter+reset.m */,
 				8890729816770EBB0013DF7A /* LatteAPIClient.h */,
 				8890729916770EBB0013DF7A /* LatteAPIClient.m */,
 				887A66BE194561BD000E07F2 /* LatteAPIv2Client.h */,
@@ -8400,7 +8395,6 @@
 				8883EEF51732256B00AA2D5E /* YISSTextView.m in Sources */,
 				88C095C8173A47BD007CED90 /* UIImage+fixOrientation.m in Sources */,
 				88E617BE173BD0C000E6E909 /* LXFilterDOF.m in Sources */,
-				8855F9BF173CD452006892FD /* GPUImageFilter+reset.m in Sources */,
 				88CE8A06174E10B500C6A6B6 /* UIColor+MLPFlatColors.m in Sources */,
 				88CE8A09174E120300C6A6B6 /* LXCellFont.m in Sources */,
 				887379BB17586FF400C1549B /* LXCellFontPreview.m in Sources */,

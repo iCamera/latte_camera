@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LXUploadStatusViewController : UIViewController
-@property (strong, nonatomic) IBOutlet UITableView *tableUpload;
-- (IBAction)touchBackground:(id)sender;
+@interface LXUploadStatusViewController : UITableViewController
 
 @end

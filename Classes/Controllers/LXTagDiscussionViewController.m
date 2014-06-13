@@ -358,7 +358,7 @@
                 JSQMessage *message = [[JSQMessage alloc] initWithText:object[@"body"]
                                                                 sender:object[@"user"][@"name"]
                                                                   date:[LXUtils dateFromString:object[@"created_at"]]];
-                [messages addObject:message];                
+                [messages addObject:message];
                 [raw addObject:@{@"user": object[@"user"]}];
                 [self finishReceivingMessage];
             }

@@ -15,7 +15,6 @@
 #import "LXImageLens.h"
 #import "LXFilterDOF.h"
 #import "LXFilterDOF2.h"
-#import "GPUImageFilter+reset.h"
 #import "UIImage+Resize.h"
 
 @interface LXCanvasViewController ()  {
@@ -661,11 +660,12 @@
 }
 
 - (UIImage*)getFinalThumb {
-    [filterMain resetCapture];
+    [filterMain useNextFrameForImageCapture];
     [self processImage];
     CGImageRef cgImagePreviewFromBytes = [pipe newCGImageFromCurrentFilteredFrame];
     UIImage* ret = [UIImage imageWithCGImage:cgImagePreviewFromBytes];
     CGImageRelease(cgImagePreviewFromBytes);
+
     return ret;
 }
 
@@ -690,21 +690,18 @@
     NSData *jpeg;
     // skip processing if prevew pic same size with fullsize
     if (CGSizeEqualToSize(imageOriginal.size, imagePreview.size)) {
-        jpeg = UIImageJPEGRepresentation(imageFinalThumb, 0.9);
+        jpeg = UIImageJPEGRepresentation(imageFinalThumb, 1.0);
     } else {
         [self preparePipe:imageToProcess];
         
-        if (MAX(imageOriginal.size.width, imageOriginal.size.height) > 1000) {
-            [filterMain useNextFrameForImageCapture];
-        }
-        
+        [filterMain useNextFrameForImageCapture];
         [imageToProcess processImage];
         
         // Save to Jpeg NSData
         
         CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrame];
         UIImage *outputImage = [UIImage imageWithCGImage:cgImageFromBytes];
-        jpeg = UIImageJPEGRepresentation(outputImage, 0.9);
+        jpeg = UIImageJPEGRepresentation(outputImage, 1.0);
         CGImageRelease(cgImageFromBytes);
     }
 

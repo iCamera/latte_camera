@@ -16,8 +16,6 @@
 
 @implementation LXUploadStatusViewController
 
-@synthesize tableUpload;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -37,11 +35,11 @@
 }
 
 - (void)uploadStart:(NSNotification *) notification {
-    [tableUpload reloadData];
+    [self.tableView reloadData];
 }
 
 - (void)uploadSuccess:(NSNotification *) notification {
-    [tableUpload reloadData];
+    [self.tableView reloadData];
 }
 
 
@@ -77,8 +75,4 @@
 }
 
 
-- (void)viewDidUnload {
-    [self setTableUpload:nil];
-    [super viewDidUnload];
-}
 @end

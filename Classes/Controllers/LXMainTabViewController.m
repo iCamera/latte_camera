@@ -27,7 +27,6 @@
     UIView *viewCamera;
     BOOL isFirst;
 
-    LXUploadStatusViewController *viewUpload;
     UIButton *buttonUploadStatus;
     MBRoundProgressView *hudUpload;
 }
@@ -74,8 +73,6 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     // Init View
-    UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    viewUpload = [storyMain instantiateViewControllerWithIdentifier:@"UploadStatus"];
     self.delegate = self;
     
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
@@ -84,11 +81,6 @@
     } else {
         [self setGuest];
     }
-    
-    viewUpload.view.frame = self.view.bounds;
-    [self.view addSubview:viewUpload.view];
-    [viewUpload didMoveToParentViewController:self];
-    viewUpload.view.hidden = true;
     
     UIScreen *screen = [UIScreen mainScreen];
     
@@ -223,19 +215,7 @@
 }
 
 - (void)toggleUpload:(id)sender {
-    if (viewUpload.view.hidden) {
-        viewUpload.view.alpha = 0;
-        viewUpload.view.hidden = false;
-        [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
-            viewUpload.view.alpha = 1;
-        }];
-    } else {
-        [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
-            viewUpload.view.alpha = 0;
-        } completion:^(BOOL finished) {
-            viewUpload.view.hidden = true;
-        }];
-    }
+    [self performSegueWithIdentifier:@"UploadStatus" sender:self];
 }
 
 - (void)statusBarOverlayDidRecognizeGesture:(UIGestureRecognizer *)gestureRecognizer {
@@ -300,7 +280,7 @@
     UIStoryboard *storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
     LXCanvasViewController *controllerCanvas = [storyCamera instantiateInitialViewController];
     
-    controllerCanvas.delegate = self;
+    //controllerCanvas.delegate = self;
     controllerCanvas.info = info;
     
     [picker pushViewController:controllerCanvas animated:YES];
