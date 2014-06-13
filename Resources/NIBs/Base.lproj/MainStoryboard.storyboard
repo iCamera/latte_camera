@@ -239,7 +239,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Trending" id="73I-gl-Maa">
-                        <barButtonItem key="leftBarButtonItem" image="icon_menu_l.png" id="y7S-ve-IZm"/>
+                        <barButtonItem key="leftBarButtonItem" image="icon_menu_l.png" id="y7S-ve-IZm">
+                            <connections>
+                                <action selector="showMenu" destination="HL7-KM-o46" id="XzL-o9-K51"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="USA" id="gAe-34-1CB"/>
                     </navigationItem>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="7h9-DV-X2L">
@@ -606,7 +610,11 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Notification" id="yh9-EW-FKo">
                         <barButtonItem key="backBarButtonItem" title="Back" id="Li0-4m-rwR"/>
-                        <barButtonItem key="leftBarButtonItem" image="icon_menu_l.png" id="FYH-TZ-oCS"/>
+                        <barButtonItem key="leftBarButtonItem" image="icon_menu_l.png" id="FYH-TZ-oCS">
+                            <connections>
+                                <action selector="showMenu" destination="muX-Hh-Ats" id="pMJ-zW-hxS"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="icon_setting_m_ocher.png" id="zbw-TX-xTo">
                             <connections>
                                 <action selector="showSetting:" destination="muX-Hh-Ats" id="wyu-eY-8sa"/>
@@ -1526,7 +1534,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Home" id="IuJ-4O-GVS">
-                        <barButtonItem key="leftBarButtonItem" image="icon_menu_l.png" id="BX6-Vl-RyL"/>
+                        <barButtonItem key="leftBarButtonItem" image="icon_menu_l.png" id="BX6-Vl-RyL">
+                            <connections>
+                                <action selector="showMenu" destination="Ftc-ZZ-Upd" id="Qgd-lF-DeG"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="icon_setting_m_ocher.png" id="p1J-3M-f4j">
                             <connections>
                                 <action selector="showSetting:" destination="Ftc-ZZ-Upd" id="5Jp-hj-uTn"/>
@@ -1965,17 +1977,17 @@ Or you can resend confirmation email.</string>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="atw-Fx-8Q1">
-                                            <rect key="frame" x="6" y="6" width="30" height="30"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="41" height="41"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
-                                        <progressView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cz7-fJ-uXT">
-                                            <rect key="frame" x="44" y="20" width="220" height="2"/>
+                                        <progressView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="cz7-fJ-uXT">
+                                            <rect key="frame" x="49" y="20" width="220" height="2"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="progressTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="trackTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="progressTintColor" red="0.20784313730000001" green="0.18823529410000001" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
+                                            <color key="trackTintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         </progressView>
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jo5-oF-S6x">
-                                            <rect key="frame" x="278" y="10" width="22" height="22"/>
+                                            <rect key="frame" x="287" y="10" width="22" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <state key="normal">

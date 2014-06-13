@@ -22,6 +22,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonAreaLocal;
 @property (strong, nonatomic) IBOutlet UIButton *buttonAreaWorld;
 
+- (IBAction)showMenu;
 - (IBAction)touchTab:(UISegmentedControl*)sender;
 - (IBAction)touchArea:(UIButton*)sender;
 - (IBAction)refresh:(id)sender;

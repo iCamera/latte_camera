@@ -15,6 +15,7 @@
 
 @interface LXMyPageViewController : UITableViewController <UIActionSheetDelegate, LXImagePickerDelegate, LXGalleryViewControllerDataSource>
 
+- (IBAction)showMenu;
 - (IBAction)showSetting:(id)sender;
 - (IBAction)switchTimeline:(UISegmentedControl*)sender;
 - (IBAction)refresh:(id)sender;

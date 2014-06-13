@@ -106,12 +106,4 @@
     
 }
 
-- (void)drawRect:(CGRect)rect {
-    imageupload.layer.cornerRadius = 3;
-    imageupload.clipsToBounds = YES;
-    self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg_menu.png"]];
-    
-    [super drawRect:rect];
-}
-
 @end

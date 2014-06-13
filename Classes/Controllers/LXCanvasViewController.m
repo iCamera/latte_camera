@@ -1054,7 +1054,7 @@
         alert.tag = 1;
         [alert show];
     } else {
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
@@ -1105,12 +1105,12 @@
     switch (alertView.tag) {
         case 1: //Touch No
             if (buttonIndex == 1) {
-                [self dismissViewControllerAnimated:YES completion:nil];
+                [self.navigationController dismissViewControllerAnimated:YES completion:nil];
             }
             break;
         case 2:
             if (buttonIndex == 1) {
-                [self dismissViewControllerAnimated:YES completion:nil];
+                [self.navigationController dismissViewControllerAnimated:YES completion:nil];
             }
             break;
         default:

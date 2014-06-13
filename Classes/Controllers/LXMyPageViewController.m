@@ -26,7 +26,7 @@
 #import "MBProgressHUD.h"
 
 #import "LXCellGrid.h"
-
+#import "REFrostedViewController.h"
 
 typedef enum {
     kTimelineAll = 10,
@@ -327,6 +327,18 @@ typedef enum {
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"TimelineHideDesc"
      object:self];
+}
+
+- (IBAction)showMenu
+{
+    // Dismiss keyboard (optional)
+    //
+    [self.view endEditing:YES];
+    [self.frostedViewController.view endEditing:YES];
+    
+    // Present the view controller
+    //
+    [self.frostedViewController presentMenuViewController];
 }
 
 @end

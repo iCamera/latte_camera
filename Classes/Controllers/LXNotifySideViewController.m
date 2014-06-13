@@ -21,6 +21,8 @@
 #import "LXNavigationController.h"
 #import "MZFormSheetController.h"
 
+#import "REFrostedViewController.h"
+
 @interface LXNotifySideViewController ()
     -(BOOL)cellIsSelected:(NSIndexPath *)indexPath;
 @end
@@ -334,6 +336,18 @@
     [self mz_presentFormSheetController:formSheet animated:YES completionHandler:^(MZFormSheetController *formSheetController) {
         //do sth
     }];
+}
+
+- (IBAction)showMenu
+{
+    // Dismiss keyboard (optional)
+    //
+    [self.view endEditing:YES];
+    [self.frostedViewController.view endEditing:YES];
+    
+    // Present the view controller
+    //
+    [self.frostedViewController presentMenuViewController];
 }
 
 @end

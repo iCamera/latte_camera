@@ -19,6 +19,7 @@
 #import "LXUploadStatusViewController.h"
 #import "LXUploadObject.h"
 #import "LXTableConfirmEmailController.h"
+#import "MZFormSheetSegue.h"
 
 @interface LXMainTabViewController ()
 
@@ -283,20 +284,18 @@
     controllerCrop.sourceImage = image;
     controllerCrop.doneCallback = ^(UIImage *editedImage, BOOL canceled){
         if(!canceled) {
-            [picker dismissViewControllerAnimated:NO completion:nil];
-            
             UIStoryboard *storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
             LXCanvasViewController *controllerCanvas = [storyCamera instantiateViewControllerWithIdentifier:@"Canvas"];
             controllerCanvas.imageOriginal = editedImage;
             controllerCanvas.info = info;
-            [self presentViewController:controllerCanvas animated:NO completion:nil];
+            [picker pushViewController:controllerCanvas animated:YES];
         } else {
-            [picker popToRootViewControllerAnimated:YES];
-            [picker setNavigationBarHidden:NO animated:NO];
+            [picker popViewControllerAnimated:YES];
+            [picker setNavigationBarHidden:NO animated:YES];
         }
     };
     
-    [picker setNavigationBarHidden:YES animated:NO];
+    [picker setNavigationBarHidden:YES animated:YES];
     [picker pushViewController:controllerCrop animated:YES];
 }
 
@@ -304,5 +303,12 @@
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"UploadStatus"]) {
+        MZFormSheetSegue *sheet = (MZFormSheetSegue*)segue;
+        sheet.formSheetController.cornerRadius = 0;
+        sheet.formSheetController.shouldDismissOnBackgroundViewTap = YES;
+    }
+}
 
 @end

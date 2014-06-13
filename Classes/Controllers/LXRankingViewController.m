@@ -16,7 +16,7 @@
 #import "LXUtils.h"
 #import "LatteAPIClient.h"
 #import "LXUserPageViewController.h"
-
+#import "REFrostedViewController.h"
 
 typedef enum {
     kLayoutNormal,
@@ -609,6 +609,18 @@ typedef enum {
 
 - (IBAction)refresh:(id)sender {
     [self reloadView];
+}
+
+- (IBAction)showMenu
+{
+    // Dismiss keyboard (optional)
+    //
+    [self.view endEditing:YES];
+    [self.frostedViewController.view endEditing:YES];
+    
+    // Present the view controller
+    //
+    [self.frostedViewController presentMenuViewController];
 }
 
 @end
