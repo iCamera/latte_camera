@@ -55,22 +55,32 @@
     [filterProgram addAttribute:@"inputTextureCoordinate2"];
 }
 
-- (void)renderToTextureWithVertices:(const GLfloat *)vertices textureCoordinates:(const GLfloat *)textureCoordinates sourceTexture:(GLuint)sourceTexture;
+- (void)renderToTextureWithVertices:(const GLfloat *)vertices textureCoordinates:(const GLfloat *)textureCoordinates
 {
     if (self.preventRendering)
     {
+        [firstInputFramebuffer unlock];
         return;
     }
     
+    GLuint currentTexture = [firstInputFramebuffer texture];
+    
     [GPUImageContext setActiveShaderProgram:filterProgram];
-    //[self setFilterFBO];
+    
+    outputFramebuffer = [[GPUImageContext sharedFramebufferCache] fetchFramebufferForSize:[self sizeOfFBO] textureOptions:self.outputTextureOptions onlyTexture:NO];
+    [outputFramebuffer activateFramebuffer];
+    if (usingNextFrameForImageCapture)
+    {
+        [outputFramebuffer lock];
+    }
+    
     [self setUniformsForProgramAtIndex:0];
     
     glClearColor(backgroundColorRed, backgroundColorGreen, backgroundColorBlue, backgroundColorAlpha);
     glClear(GL_COLOR_BUFFER_BIT);
     
 	glActiveTexture(GL_TEXTURE2);
-	glBindTexture(GL_TEXTURE_2D, sourceTexture);
+	glBindTexture(GL_TEXTURE_2D, currentTexture);
 	glUniform1i(filterInputTextureUniform, 2);
     
     glActiveTexture(GL_TEXTURE3);
@@ -82,6 +92,14 @@
     glVertexAttribPointer(filterSecondTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, [[self class] textureCoordinatesForRotation:inputRotation2]);
     
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    
+    
+    [firstInputFramebuffer unlock];
+    
+    if (usingNextFrameForImageCapture)
+    {
+        dispatch_semaphore_signal(imageCaptureSemaphore);
+    }
 }
 
 - (void)setBias:(CGFloat)aBias {
@@ -93,30 +111,6 @@
 }
 
 - (void)setImageDOF:(UIImage *)imageDOF {
-    if (!imageDOF) {
-        if (filterSourceTexture2)
-        {
-            runSynchronouslyOnVideoProcessingQueue(^{
-                [GPUImageContext useImageProcessingContext];
-                glDeleteTextures(1, &filterSourceTexture2);
-                filterSourceTexture2 = 0;
-            });
-        }
-        return;
-    }
-    
-    CGFloat widthOfImage = CGImageGetWidth(imageDOF.CGImage);
-    CGFloat heightOfImage = CGImageGetHeight(imageDOF.CGImage);
-    
-    GLubyte *imageData = (GLubyte *) calloc(1, (int)widthOfImage * (int)heightOfImage * 4);
-    
-    CGColorSpaceRef genericRGBColorspace = CGColorSpaceCreateDeviceRGB();
-    
-    CGContextRef imageContext = CGBitmapContextCreate(imageData, (size_t)widthOfImage, (size_t)heightOfImage, 8, (size_t)widthOfImage * 4, genericRGBColorspace,  kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
-    CGContextDrawImage(imageContext, CGRectMake(0.0, 0.0, widthOfImage, heightOfImage), imageDOF.CGImage);
-    CGContextRelease(imageContext);
-    CGColorSpaceRelease(genericRGBColorspace);
-    
     runSynchronouslyOnVideoProcessingQueue(^{
         [GPUImageContext useImageProcessingContext];
         
@@ -125,6 +119,22 @@
             glDeleteTextures(1, &filterSourceTexture2);
             filterSourceTexture2 = 0;
         }
+        
+        if (!imageDOF) {
+            return;
+        }
+        
+        CGFloat widthOfImage = CGImageGetWidth(imageDOF.CGImage);
+        CGFloat heightOfImage = CGImageGetHeight(imageDOF.CGImage);
+        
+        GLubyte *imageData = (GLubyte *) calloc(1, (int)widthOfImage * (int)heightOfImage * 4);
+        
+        CGColorSpaceRef genericRGBColorspace = CGColorSpaceCreateDeviceRGB();
+        
+        CGContextRef imageContext = CGBitmapContextCreate(imageData, (size_t)widthOfImage, (size_t)heightOfImage, 8, (size_t)widthOfImage * 4, genericRGBColorspace,  kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
+        CGContextDrawImage(imageContext, CGRectMake(0.0, 0.0, widthOfImage, heightOfImage), imageDOF.CGImage);
+        CGContextRelease(imageContext);
+        CGColorSpaceRelease(genericRGBColorspace);        
         
         glActiveTexture(GL_TEXTURE3);
         glGenTextures(1, &filterSourceTexture2);
@@ -136,9 +146,11 @@
         
         
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (int)widthOfImage /*width*/, (int)heightOfImage /*height*/, 0, GL_BGRA, GL_UNSIGNED_BYTE, imageData);
+        
+        free(imageData);
     });
     
-    free(imageData);
+    
 }
 
 - (void)setupFilterForSize:(CGSize)filterFrameSize

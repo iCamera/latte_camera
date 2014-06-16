@@ -268,8 +268,6 @@
 }
 
 - (void)setImageBlend:(UIImage *)imageBlend {
-
-    
     runSynchronouslyOnVideoProcessingQueue(^{
         [GPUImageContext useImageProcessingContext];
         
