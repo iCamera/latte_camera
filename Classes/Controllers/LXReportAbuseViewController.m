@@ -40,7 +40,6 @@
     textComment.placeholder = NSLocalizedString(@"Message", @"");
     
     [imagePicture loadProgess:_picture.urlMedium];
-    imagePicture.layer.cornerRadius = 5;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -65,7 +64,7 @@
 }
 
 - (IBAction)touchReport:(id)sender {
-    NSString *path = [NSString stringWithFormat:@"user/report_abuse/%@/%d", @"picture", [_picture.pictureId integerValue]];
+    NSString *path = [NSString stringWithFormat:@"user/report_abuse/%@/%ld", @"picture", [_picture.pictureId longValue]];
     
     [[LatteAPIClient sharedClient] POST:path
                                  parameters:[NSDictionary dictionaryWithObject:textComment.text forKey:@"report_comment"]

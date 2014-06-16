@@ -903,7 +903,7 @@
         <scene sceneID="diS-UO-x0Q">
             <objects>
                 <viewController storyboardIdentifier="Text" definesPresentationContext="YES" modalTransitionStyle="crossDissolve" id="bke-ye-End" customClass="LXImageTextViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ray-0u-rjP">
+                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="ray-0u-rjP">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
@@ -1130,15 +1130,16 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.2196078431372549" green="0.19215686274509802" blue="0.11372549019607843" alpha="0.90000000000000002" colorSpace="deviceRGB"/>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bg_camera_bottom.png" id="Go1-6o-ec7">
+                            <view contentMode="scaleToFill" id="4tP-rE-maQ">
                                 <rect key="frame" x="0.0" y="430" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
-                            </imageView>
+                                <color key="backgroundColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="JrI-NA-VF4">
                                 <rect key="frame" x="254" y="435" width="58" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" image="icon_save2.png" backgroundImage="bg_camera_bt2.png">
+                                <state key="normal" image="icon_save2.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted" backgroundImage="bg_camera_bt2_on.png"/>
@@ -1149,7 +1150,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="SzT-ly-LTc">
                                 <rect key="frame" x="5" y="435" width="58" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <state key="normal" image="icon_escape.png" backgroundImage="bg_camera_bt2.png">
+                                <state key="normal" image="icon_escape.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted" backgroundImage="bg_camera_bt2_on.png"/>
@@ -1160,6 +1161,8 @@
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="8" id="yaH-Cn-Y4N">
                                 <rect key="frame" x="71" y="437" width="175" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <color key="pageIndicatorTintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="currentPageIndicatorTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <action selector="pageChanged:" destination="bke-ye-End" eventType="valueChanged" id="JQj-3z-fkS"/>
                                 </connections>
@@ -1521,8 +1524,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="bg_camera_bottom.png" width="320" height="50"/>
-        <image name="bg_camera_bt2.png" width="58" height="40"/>
         <image name="bg_camera_bt2_on.png" width="58" height="40"/>
         <image name="bg_camera_bt3.png" width="58" height="30"/>
         <image name="bg_camera_bt3_on.png" width="58" height="30"/>

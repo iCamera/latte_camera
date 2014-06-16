@@ -244,8 +244,6 @@
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    UIStoryboard* storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
-    
     if (buttonIndex == 0) {
         
         if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
@@ -259,7 +257,7 @@
             [myAlertView show];
             
         } else {
-            UIImagePickerController *imagePicker = [storyCamera instantiateViewControllerWithIdentifier:@"Picker"];
+            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
             
             imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
             imagePicker.delegate = self;

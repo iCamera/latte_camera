@@ -56,6 +56,7 @@
     
     self.sender = app.currentUser.name;
     self.inputToolbar.contentView.leftBarButtonItem = nil;
+    self.automaticallyScrollsToMostRecentMessage = YES;
     
     [self loadMore];
     

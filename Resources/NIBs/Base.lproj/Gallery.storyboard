@@ -29,6 +29,7 @@
                                         <rect key="frame" x="0.0" y="1" width="107" height="34"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="13"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <inset key="imageEdgeInsets" minX="67" minY="-1" maxX="5" maxY="0.0"/>
                                         <state key="normal" title="Like" image="icon_iine_s.png">
                                             <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -45,6 +46,7 @@
                                         <rect key="frame" x="108" y="1" width="107" height="34"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="14"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <inset key="imageEdgeInsets" minX="72" minY="0.0" maxX="5" maxY="0.0"/>
                                         <state key="normal" title="Comment" image="icon_comment_s.png">
                                             <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -256,7 +258,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="Report" id="MVZ-Ew-3hi" customClass="LXReportAbuseViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="XTa-nB-kIe">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="ffy-Dg-6EO">
@@ -264,46 +266,16 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Report abuse" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EvW-gJ-9iA">
-                                    <rect key="frame" x="41" y="12" width="252" height="21"/>
+                                    <rect key="frame" x="41" y="5" width="252" height="22"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
                                     <color key="textColor" red="0.2190684443" green="0.19459484590000001" blue="0.11386880050000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <imageView userInteractionEnabled="NO" contentMode="center" fixedFrame="YES" image="box_warning.png" translatesAutoresizingMaskIntoConstraints="NO" id="JpO-Kd-RHg">
-                                    <rect key="frame" x="5" y="10" width="33" height="22"/>
+                                    <rect key="frame" x="5" y="5" width="33" height="22"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
-                            </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        </view>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="EuZ-PR-dFS">
-                            <rect key="frame" x="0.0" y="281" width="320" height="209"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a9X-Qq-6sb" customClass="LXButtonBrown30">
-                                    <rect key="frame" x="111" y="14" width="98" height="30"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
-                                    <state key="normal" title="Report">
-                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <state key="highlighted">
-                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <connections>
-                                        <action selector="touchReport:" destination="MVZ-Ew-3hi" eventType="touchUpInside" id="Uub-Yq-1sq"/>
-                                        <action selector="touchReport:" destination="1Vb-iL-LK1" eventType="touchUpInside" id="bmB-TI-XIy"/>
-                                    </connections>
-                                </button>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Enm-PH-A2u">
-                                    <rect key="frame" x="0.0" y="42" width="320" height="167"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                </textView>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>
@@ -318,7 +290,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P1L-Dm-y0p">
-                                                    <rect key="frame" x="0.0" y="1" width="320" height="108"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="109"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                             </subviews>
@@ -354,7 +326,15 @@
                             <outlet property="delegate" destination="MVZ-Ew-3hi" id="36C-Jd-Biy"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="n28-04-sCh"/>
+                    <navigationItem key="navigationItem" id="n28-04-sCh">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="Z6S-NN-3hQ">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="touchReport:" destination="MVZ-Ew-3hi" id="cky-Np-uvn"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="imagePicture" destination="P1L-Dm-y0p" id="qpn-Fu-ZIo"/>
                         <outlet property="textComment" destination="K9f-6b-2by" id="0iR-KY-hgA"/>
@@ -387,31 +367,9 @@
             <objects>
                 <tableViewController storyboardIdentifier="Info" wantsFullScreenLayout="YES" hidesBottomBarWhenPushed="YES" id="1Vb-iL-LK1" customClass="LXPicInfoViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="oDe-n4-Wi3">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="r2l-nB-Hee">
-                            <rect key="frame" x="0.0" y="135" width="320" height="58"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J93-mb-cAf" customClass="LXButtonBrown30">
-                                    <rect key="frame" x="105" y="14" width="110" height="30"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
-                                    <state key="normal" title="Report">
-                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <state key="highlighted">
-                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <connections>
-                                        <action selector="touchReport:" destination="1Vb-iL-LK1" eventType="touchUpInside" id="A6R-8a-CfK"/>
-                                    </connections>
-                                </button>
-                            </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="Profile" rowHeight="30" id="dUK-3p-v72" customClass="LXCellDataField">
                                 <rect key="frame" x="0.0" y="55" width="320" height="30"/>
@@ -471,7 +429,15 @@
                             <outlet property="delegate" destination="1Vb-iL-LK1" id="8Fh-Zc-s4Y"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="tou-Gg-92E"/>
+                    <navigationItem key="navigationItem" id="tou-Gg-92E">
+                        <barButtonItem key="rightBarButtonItem" title="Report" id="oDg-gz-68g">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="touchReport:" destination="1Vb-iL-LK1" id="V75-9K-jBK"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fah-AR-fTU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -912,7 +878,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Drg-vc-LUr">
-                                                    <rect key="frame" x="0.0" y="-1" width="320" height="200"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
                                                 </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -1180,7 +1146,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="ReportComment" id="k3Y-xu-bbh" customClass="LXReportAbuseCommentViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="NUs-FD-1xw">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="G8g-nn-mFj">
@@ -1188,46 +1154,16 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Report abuse" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OQk-AC-QWZ">
-                                    <rect key="frame" x="41" y="12" width="252" height="21"/>
+                                    <rect key="frame" x="41" y="5" width="252" height="22"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
                                     <color key="textColor" red="0.2190684443" green="0.19459484590000001" blue="0.11386880050000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <imageView userInteractionEnabled="NO" contentMode="center" fixedFrame="YES" image="box_warning.png" translatesAutoresizingMaskIntoConstraints="NO" id="wiM-dq-uDo">
-                                    <rect key="frame" x="5" y="10" width="33" height="22"/>
+                                    <rect key="frame" x="5" y="5" width="33" height="22"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
-                            </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        </view>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="0CW-cZ-A1f">
-                            <rect key="frame" x="0.0" y="281" width="320" height="209"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cbz-dV-p9B" customClass="LXButtonBrown30">
-                                    <rect key="frame" x="111" y="14" width="98" height="30"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
-                                    <state key="normal" title="Report">
-                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <state key="highlighted">
-                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <connections>
-                                        <action selector="touchReport:" destination="1Vb-iL-LK1" eventType="touchUpInside" id="82u-oD-nl4"/>
-                                        <action selector="touchReport:" destination="k3Y-xu-bbh" eventType="touchUpInside" id="GVf-VV-60s"/>
-                                    </connections>
-                                </button>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="otv-qE-9YM">
-                                    <rect key="frame" x="0.0" y="42" width="320" height="167"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                </textView>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>
@@ -1242,7 +1178,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AIo-Fy-iDB">
-                                                    <rect key="frame" x="0.0" y="0.0" width="300" height="108"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="108"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <color key="textColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
@@ -1282,7 +1218,15 @@
                             <outlet property="delegate" destination="k3Y-xu-bbh" id="xix-mU-JDI"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="dCd-ys-CK5"/>
+                    <navigationItem key="navigationItem" id="dCd-ys-CK5">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="oIS-ZZ-kIM">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="touchReport:" destination="k3Y-xu-bbh" id="z2b-3o-96x"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="textComment" destination="nCc-Gy-f5f" id="Fn6-oj-yc3"/>
                         <outlet property="textOriginal" destination="AIo-Fy-iDB" id="OKl-jS-mjq"/>

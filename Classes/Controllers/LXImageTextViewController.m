@@ -540,13 +540,13 @@ typedef enum {
 
 - (IBAction)touchClose:(id)sender {
     [self resignAllFocus];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)touchOK:(id)sender {
     [self resignAllFocus];
-    [self dismissViewControllerAnimated:YES completion:nil];
     [_delegate newTextImage:[self exportText]];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)touchEditText:(id)sender {
@@ -1076,6 +1076,10 @@ typedef enum {
         return 1;
     }else
         return 0;
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return YES;
 }
 
 @end

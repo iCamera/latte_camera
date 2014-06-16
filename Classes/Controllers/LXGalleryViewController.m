@@ -21,6 +21,7 @@
 #import "Comment.h"
 #import "LXTagViewController.h"
 #import "LXUserPageViewController.h"
+#import "LXTagDiscussionViewController.h"
 
 
 @interface LXGalleryViewController ()
@@ -114,42 +115,41 @@
     [pageController didMoveToParentViewController:self];
     
     labelDesc = [[STTweetLabel alloc] initWithFrame:CGRectMake(6, 6, 308, 0)];
-    labelDesc.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0];
-    labelDesc.textColor = [UIColor whiteColor];
+    [labelDesc setAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0]}];
+    [labelDesc setAttributes:@{NSForegroundColorAttributeName: [UIColor cyanColor], NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0]} hotWord:STTweetHashtag];
     
     __weak LXGalleryViewController *weakSelf = self;
-//    STLinkCallbackBlock callbackBlock = ^(STLinkActionType actionType, NSString *link) {
-//        
-//        NSString *displayString = NULL;
-//        
-//        // determine what the user clicked on
-//        switch (actionType) {
-//                
-//                // if the user clicked on an account (@_max_k)
-//            case STLinkActionTypeAccount:
-//                displayString = [NSString stringWithFormat:@"Twitter account:\n%@", link];
-//                break;
-//                
-//                // if the user clicked on a hashtag (#thisisreallycool)
-//            case STLinkActionTypeHashtag: {
-//                displayString = [NSString stringWithFormat:@"Twitter hashtag:\n%@", link];
-//                
-//                UIStoryboard *storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard"
-//                                                                       bundle:nil];
-//                LXTagViewController *viewTag = [storyMain instantiateViewControllerWithIdentifier:@"Tag"];
-//                viewTag.keyword = [link substringFromIndex:1];
-//                
-//                [weakSelf.navigationController pushViewController:viewTag animated:YES];
-//
-//                break;
-//            }
-//                // if the user clicked on a website (http://github.com/SebastienThiebaud)
-//            case STLinkActionTypeWebsite:
-//                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:link]];
-//                break;
-//        }
-//    };
-//    [labelDesc setCallbackBlock:callbackBlock];
+
+    [labelDesc setDetectionBlock:^(STTweetHotWord hotWord, NSString *string, NSString *protocol, NSRange range) {
+        NSString *displayString = NULL;
+        
+        // determine what the user clicked on
+        switch (hotWord) {
+                
+                // if the user clicked on an account (@_max_k)
+            case STTweetHandle:
+                displayString = [NSString stringWithFormat:@"Twitter account:\n%@", string];
+                break;
+                
+                // if the user clicked on a hashtag (#thisisreallycool)
+            case STTweetHashtag: {
+                displayString = [NSString stringWithFormat:@"Twitter hashtag:\n%@", string];
+                
+                UIStoryboard *storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                                    bundle:nil];
+                LXTagDiscussionViewController *viewTag = [storyMain instantiateViewControllerWithIdentifier:@"Discussion"];
+                viewTag.tag = [string substringFromIndex:1];
+                
+                [weakSelf.navigationController pushViewController:viewTag animated:YES];
+                
+                break;
+            }
+                // if the user clicked on a website (http://github.com/SebastienThiebaud)
+            case STTweetLink:
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:string]];
+                break;
+        }
+    }];
     [viewDesc addSubview:labelDesc];
 
     [self setPicture];
@@ -283,11 +283,13 @@
 - (void)setPicture {
     LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
     
-    CGSize size = [currentPage.picture.descriptionText sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0]
-                                                  constrainedToSize:CGSizeMake(308, CGFLOAT_MAX)
-                                                      lineBreakMode:labelDesc.lineBreakMode];
+    CGRect bound = [currentPage.picture.descriptionText boundingRectWithSize:(CGSize){308, CGFLOAT_MAX}
+                                                                     options:NSStringDrawingUsesLineFragmentOrigin
+                                                                  attributes:@{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0]}
+                                                                     context:nil];
+                   
     CGRect frame = labelDesc.frame;
-    frame.size.height = size.height;
+    frame.size.height = bound.size.height;
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGRect frameDesc = viewDesc.frame;
     frameDesc.size.height = MIN(frame.size.height + 12, 200);
@@ -346,8 +348,8 @@
     
     // Increase counter
     NSString *urlCounter = [NSString stringWithFormat:@"picture/counter/%ld/%ld",
-                     [currentPage.picture.pictureId integerValue],
-                     [currentPage.picture.userId integerValue]];
+                     [currentPage.picture.pictureId longValue],
+                     [currentPage.picture.userId longValue]];
     
     [[LatteAPIClient sharedClient] GET:urlCounter parameters:nil success:nil failure:nil];
     buttonEdit.hidden = !currentPage.picture.isOwner;

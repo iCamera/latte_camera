@@ -63,7 +63,6 @@
     UIImageOrientation imageOrientation;
     
     GPUImagePicture *previewFilter;
-    GPUImagePicture *imageToProcess;
 }
 
 @end
@@ -389,8 +388,6 @@
         initedPreviewTone = YES;
         [self initPreviewPic];
         
-        buttonYes.enabled = NO;
-        imageToProcess = [[GPUImagePicture alloc] initWithImage:imageOriginal];
         buttonYes.enabled = YES;
     }
     [super viewDidAppear:animated];
@@ -449,35 +446,6 @@
     }
     
     [pipe addFilter:filterMain];
-    
-    if (source) {
-        [pipe.filters[0] setInputRotation:[self rotationFromImage:imageOrientation] atIndex:0];
-    }
-    else {
-        [pipe.filters[0] setInputRotation:[self rotationFromImage:imagePreview.imageOrientation] atIndex:0];
-    }
-}
-
-- (GPUImageRotationMode)rotationFromImage:(UIImageOrientation)orientation {
-    GPUImageRotationMode imageViewRotationModeIdx1 = kGPUImageNoRotation;
-    switch (orientation) {
-        case UIImageOrientationLeft:
-            imageViewRotationModeIdx1 = kGPUImageRotateLeft;
-            break;
-        case UIImageOrientationRight:
-            imageViewRotationModeIdx1 = kGPUImageRotateRight;
-            break;
-        case UIImageOrientationDown:
-            imageViewRotationModeIdx1 = kGPUImageRotate180;
-            break;
-        case UIImageOrientationUp:
-            imageViewRotationModeIdx1 = kGPUImageNoRotation;
-            break;
-        default:
-            imageViewRotationModeIdx1 = kGPUImageNoRotation;
-            break;
-    }
-    return imageViewRotationModeIdx1;
 }
 
 - (void)applyFilterSetting {
@@ -658,11 +626,10 @@
 }
 
 - (UIImage*)getFinalThumb {
-    [filterMain useNextFrameForImageCapture];
+    [self preparePipe:previewFilter];
+    [pipe.filters.lastObject useNextFrameForImageCapture];
     [self processImage];
-    CGImageRef cgImagePreviewFromBytes = [pipe newCGImageFromCurrentFilteredFrame];
-    UIImage* ret = [UIImage imageWithCGImage:cgImagePreviewFromBytes];
-    CGImageRelease(cgImagePreviewFromBytes);
+    UIImage* ret = [pipe currentFilteredFrame];
 
     return ret;
 }
@@ -690,17 +657,17 @@
     if (CGSizeEqualToSize(imageOriginal.size, imagePreview.size)) {
         jpeg = UIImageJPEGRepresentation(imageFinalThumb, 1.0);
     } else {
+        GPUImagePicture *imageToProcess = [[GPUImagePicture alloc] initWithImage:imageOriginal];
         [self preparePipe:imageToProcess];
         
-        [filterMain useNextFrameForImageCapture];
+        [pipe.filters.lastObject useNextFrameForImageCapture];
         [imageToProcess processImage];
         
         // Save to Jpeg NSData
         
-        CGImageRef cgImageFromBytes = [pipe newCGImageFromCurrentFilteredFrame];
-        UIImage *outputImage = [UIImage imageWithCGImage:cgImageFromBytes];
+
+        UIImage *outputImage = [pipe currentFilteredFrame];
         jpeg = UIImageJPEGRepresentation(outputImage, 1.0);
-        CGImageRelease(cgImageFromBytes);
     }
 
     
@@ -855,7 +822,6 @@
     CGRect frameLens = viewLensControl.frame;
     CGRect frameTopBar = viewTopBar.frame;
     CGRect frameBlend = viewBlendControl.frame;
-    CGRect frameCanvas;
     
     
     CGFloat posBottom;
@@ -906,22 +872,18 @@
     
     CGFloat height;
     if (screen.size.height > 480) {
-        height = 568 - 50 - 40 - 20;
+        height = 568 - 50 - 40;
     }
     else {
-        height = 480 - 50 - 40 - 20;
+        height = 480 - 50 - 40;
     }
     
     if (currentTab != kTabPreview) {
         height -= 110;
     }
+
     
-    frameCanvas = CGRectMake(0, 40, 320, height+20);
-    
-    CGFloat horizontalRatio = 300.0 / imageSize.width;
-    CGFloat verticalRatio = height / imageSize.height;
-    CGFloat ratio;
-    ratio = MIN(horizontalRatio, verticalRatio);
+    frame.origin = CGPointMake(frame.origin.x, (height - frame.size.height)/2);
     
     viewTopBar.hidden = false;
 
@@ -1059,7 +1021,6 @@
 }
 
 - (IBAction)touchReset:(id)sender {
-    imageToProcess = [[GPUImagePicture alloc] initWithImage:imageOriginal];
     imagePreview = imageOriginalPreview;
     imageSize = imageOriginalPreview.size;
     imageOrientation = imageOriginal.imageOrientation;
@@ -1399,7 +1360,7 @@
 }
 
 - (IBAction)touchText:(id)sender {
-    [self presentViewController:controllerText animated:YES completion:nil];
+    [self.navigationController pushViewController:controllerText animated:YES];
 }
 
 - (void)newMask:(UIImage *)mask {
@@ -1508,7 +1469,7 @@
                                   delay:0
                                 options:UIViewAnimationOptionCurveEaseInOut
                              animations:^{
-                                 imagePrev.alpha = 1;
+                                 imagePrev.alpha = 0.25;
                              }
                              completion:nil];
         }
@@ -1526,7 +1487,7 @@
                                   delay:0
                                 options:UIViewAnimationOptionCurveEaseInOut
                              animations:^{
-                                 imageNext.alpha = 1;
+                                 imageNext.alpha = 0.25;
                              }
                              completion:nil];
         }
