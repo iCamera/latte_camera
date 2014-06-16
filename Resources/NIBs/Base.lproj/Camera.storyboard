@@ -1180,11 +1180,11 @@
                                                 <rect key="frame" x="0.0" y="22" width="220" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="R95-Vx-VG0" id="meU-Ht-G3h">
-                                                    <rect key="frame" x="0.0" y="0.0" width="220" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="220" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Sample Text" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="a1b-Mb-QhK">
-                                                            <rect key="frame" x="10" y="0.0" width="184" height="29"/>
+                                                            <rect key="frame" x="10" y="0.0" width="184" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1208,6 +1208,7 @@
                                                         </imageView>
                                                     </subviews>
                                                 </tableViewCellContentView>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <connections>
                                                     <outlet property="imageDownloaded" destination="QT1-un-PYi" id="A4d-NE-1mg"/>
                                                     <outlet property="labelFontName" destination="JAn-KS-tMe" id="nnh-Ki-tg3"/>
@@ -1219,7 +1220,7 @@
                                                 <rect key="frame" x="0.0" y="66" width="220" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NRd-9e-ulD" id="9vM-1I-Khq">
-                                                    <rect key="frame" x="0.0" y="0.0" width="220" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="220" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="aez-Bs-s4V">
@@ -1228,6 +1229,7 @@
                                                         </imageView>
                                                     </subviews>
                                                 </tableViewCellContentView>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <connections>
                                                     <outlet property="imageFont" destination="aez-Bs-s4V" id="edU-Bu-vQC"/>
                                                 </connections>
