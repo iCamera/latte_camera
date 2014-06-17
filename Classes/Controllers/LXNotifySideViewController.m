@@ -73,8 +73,6 @@
     limit = 30;
     
     [self loadNotify:YES setRead:YES];
-    
-    selectedIndexes = [[NSMutableDictionary alloc] init];
 }
 
 - (void)didReceiveMemoryWarning
@@ -205,18 +203,8 @@
     NotifyTarget notifyTarget = [[notify objectForKey:@"target_model"] integerValue];
     
     if (currentTab == 4 && !notifyTarget) {
-        // Deselect cell
-        [tableView deselectRowAtIndexPath:indexPath animated:TRUE];
-        
-        // Toggle 'selected' state
-        BOOL isSelected = ![self cellIsSelected:indexPath];
-        // Store cell 'selected' state keyed on indexPath
-        NSNumber *selectedIndex = [NSNumber numberWithBool:isSelected];
-        [selectedIndexes setObject:selectedIndex forKey:indexPath];
-		
-        //For Animation
-        [tableView beginUpdates];
-        [tableView endUpdates];
+                //For Animation
+        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         return;
     }
     
@@ -284,32 +272,25 @@
     }
 }
 
-- (BOOL)cellIsSelected:(NSIndexPath *)indexPath {
-	// Return whether the cell at the specified index path is selected or not
-	NSNumber *selectedIndex = [selectedIndexes objectForKey:indexPath];
-	return selectedIndex == nil ? FALSE : [selectedIndex boolValue];
-}
-
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (currentTab != 4) {
-        return 55;
+        return 45;
     }
     
 	// If our cell is selected, return double height
-	if([self cellIsSelected:indexPath]) {
-        NSDictionary *notify = [notifies objectAtIndex:indexPath.row];
-        NSString *title = [notify objectForKey:@"title"];
-        NSString *note = [notify objectForKey:@"note"];
-        CGSize labelSize = [note sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:11]
-                                  constrainedToSize:CGSizeMake(310.0, MAXFLOAT)
-                                      lineBreakMode:NSLineBreakByTruncatingTail];
-
-        if (labelSize.height > 90) {
-            return labelSize.height + 75;
+    for (NSIndexPath *path in tableView.indexPathsForSelectedRows) {
+        if (indexPath.row == path.row) {
+            NSDictionary *notify = [notifies objectAtIndex:indexPath.row];
+            NSString *note = [notify objectForKey:@"note"];
+            CGSize labelSize = [note sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:11]
+                                constrainedToSize:CGSizeMake(310.0, MAXFLOAT)
+                                    lineBreakMode:NSLineBreakByTruncatingTail];
+            
+            if (labelSize.height > 90) {
+                return labelSize.height + 75;
+            }
         }
-        
-	}
+    }
    
     return 90;
 }

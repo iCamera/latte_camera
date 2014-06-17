@@ -39,11 +39,6 @@
     updatedAt = [LXUtils dateFromJSON:[notify objectForKey:@"updated_at"]];
     NSString *title = [notify objectForKey:@"title"];
     NSString *note = [notify objectForKey:@"note"];
-    viewImage.image = [UIImage imageNamed:@"Icon-40@2x.png"]; // logo.png
-    viewImage.layer.cornerRadius = 5.0f;
-    viewImage.layer.borderWidth = 1;
-    viewImage.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    viewImage.layer.masksToBounds = YES;
     
     labelDate.text = [LXUtils timeDeltaFromNow:updatedAt];
     labelNote.text = note;
