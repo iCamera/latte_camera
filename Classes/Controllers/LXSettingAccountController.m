@@ -8,6 +8,7 @@
 
 #import "LXSettingAccountController.h"
 #import "LXAppDelegate.h"
+#import "MZFormSheetSegue.h"
 
 @interface LXSettingAccountController ()
 
@@ -50,4 +51,12 @@
     [self setTextEmail:nil];
     [super viewDidUnload];
 }
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    MZFormSheetSegue *sheet = (MZFormSheetSegue*)segue;
+    sheet.formSheetController.cornerRadius = 0;
+    sheet.formSheetController.shouldDismissOnBackgroundViewTap = YES;
+    sheet.formSheetController.presentedFormSheetSize = CGSizeMake(300, 200);
+}
+
 @end

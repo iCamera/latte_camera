@@ -24,7 +24,7 @@
 #import "REFrostedViewController.h"
 
 @interface LXNotifySideViewController ()
-    -(BOOL)cellIsSelected:(NSIndexPath *)indexPath;
+
 @end
 
 @implementation LXNotifySideViewController {
