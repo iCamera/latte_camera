@@ -56,14 +56,13 @@
     lxShare = [[LXShare alloc] init];
     lxShare.controller = self;
     
-    self.tableView.tableHeaderView = nil;
-    
     if (app.currentUser) {
-        [LXUtils globalShadow:viewHeader];
         [imageProfile loadProgess:app.currentUser.profilePicture];
         viewHeader.layer.cornerRadius = 5;
-        imageProfile.layer.cornerRadius = 5;
+        imageProfile.layer.cornerRadius = 25;
         imageProfile.layer.masksToBounds = YES;
+    } else {
+        self.tableView.tableHeaderView = nil;
     }
 }
 

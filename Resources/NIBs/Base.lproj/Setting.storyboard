@@ -450,7 +450,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g6H-xe-xgQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-394" y="-271"/>
+            <point key="canvasLocation" x="-170" y="-323"/>
         </scene>
         <!--About View Controller - Inquiry-->
         <scene sceneID="e7i-I8-8V7">
@@ -485,6 +485,7 @@ We improve our services to the best of our ability, but please understand that n
                                                 </textView>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="213" id="f66-DH-Vl3">
                                         <rect key="frame" x="0.0" y="265" width="320" height="213"/>
@@ -531,6 +532,7 @@ We improve our services to the best of our ability, but please understand that n
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -548,7 +550,7 @@ We improve our services to the best of our ability, but please understand that n
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EnL-NQ-J0o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1246" y="-271"/>
+            <point key="canvasLocation" x="-1034" y="-323"/>
         </scene>
         <!--Social View Controller - Social Network-->
         <scene sceneID="hhP-K8-kjG">
@@ -635,22 +637,6 @@ We improve our services to the best of our ability, but please understand that n
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5os-Yk-4tq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-400" y="-1732"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="ftY-U6-tuA">
-            <objects>
-                <navigationController storyboardIdentifier="ModalNotification" definesPresentationContext="YES" id="yVW-Bi-fpU" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="7kt-vQ-37d">
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.20784313730000001" green="0.18823529410000001" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="130-si-waG" kind="relationship" relationship="rootViewController" id="bVk-IZ-USq"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="kGg-eQ-TV9" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1314" y="-1533"/>
         </scene>
         <!--Table Setting View Controller-->
         <scene sceneID="5xU-Vw-nd5">
@@ -914,7 +900,7 @@ We improve our services to the best of our ability, but please understand that n
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qv4-ds-8Lu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-346" y="-975"/>
+            <point key="canvasLocation" x="-400" y="-964"/>
         </scene>
         <!--Setting Account Controller - Account-->
         <scene sceneID="SLa-f5-3PL">
@@ -996,7 +982,7 @@ We improve our services to the best of our ability, but please understand that n
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nnA-y2-APT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="122" y="-883"/>
+            <point key="canvasLocation" x="95" y="-964"/>
         </scene>
         <!--Change Password View Controller-->
         <scene sceneID="xVq-3g-EII">
@@ -1159,7 +1145,7 @@ We improve our services to the best of our ability, but please understand that n
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Frw-mm-2M9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-786" y="-271"/>
+            <point key="canvasLocation" x="-588" y="-323"/>
         </scene>
         <!--Company Policy View Controller - Company-->
         <scene sceneID="wvF-mW-Z0i">
@@ -1185,7 +1171,7 @@ We improve our services to the best of our ability, but please understand that n
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nea-AR-weD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="84" y="-271"/>
+            <point key="canvasLocation" x="293" y="-323"/>
         </scene>
     </scenes>
     <resources>
@@ -1209,7 +1195,4 @@ We improve our services to the best of our ability, but please understand that n
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="bVk-IZ-USq"/>
-    </inferredMetricsTieBreakers>
 </document>
