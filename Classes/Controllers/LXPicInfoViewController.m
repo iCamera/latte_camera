@@ -15,6 +15,10 @@
 #import "AFNetworking.h"
 #import "LatteAPIClient.h"
 #import "LXReportAbuseViewController.h"
+#import "PicturePin.h"
+#import <CoreLocation/CoreLocation.h>
+
+#define METERS_PER_MILE 1609.344
 
 @interface LXPicInfoViewController ()
 @end
@@ -23,6 +27,8 @@
     NSMutableArray *keyBasic;
     NSArray *keyExif;
     NSInteger sections;
+    PicturePin *pin;
+    MKMapView *mapPic;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -64,6 +70,23 @@
     
     if (_picture.isOwner) {
         sections += 1;
+    }
+    
+    if (_picture.latitude && _picture.longitude) {
+        CLLocationCoordinate2D location;
+        location.latitude = [_picture.latitude floatValue];
+        location.longitude = [_picture.longitude floatValue];
+        pin = [[PicturePin alloc] initWithCoordinate:location];
+        
+        mapPic = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 320, 150)];
+        MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(pin.coordinate, 0.5*METERS_PER_MILE, 0.5*METERS_PER_MILE);
+        MKCoordinateRegion adjustedRegion = [mapPic regionThatFits:viewRegion];
+        
+        [mapPic addAnnotation:pin];
+        [mapPic setRegion:adjustedRegion animated:YES];
+        [mapPic regionThatFits:adjustedRegion];
+        
+        self.tableView.tableHeaderView = mapPic;
     }
     
     [self.tableView reloadData];

@@ -56,7 +56,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VOb-GG-DNn">
-                                        <rect key="frame" x="286" y="1" width="22" height="22"/>
+                                        <rect key="frame" x="286" y="7" width="22" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <state key="normal">
@@ -514,51 +514,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RMa-J8-rW7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-3117" y="-1959"/>
-        </scene>
-        <!--Pic Map View Controller-->
-        <scene sceneID="3A2-jU-APF">
-            <objects>
-                <viewController storyboardIdentifier="Map" wantsFullScreenLayout="YES" id="59n-9u-wT7" customClass="LXPicMapViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="YXu-HJ-kO2"/>
-                        <viewControllerLayoutGuide type="bottom" id="fjB-Mf-1aW"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="nua-ee-116">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="9Ih-x9-5Dk">
-                                <rect key="frame" x="0.0" y="-22" width="320" height="524"/>
-                                <connections>
-                                    <outlet property="delegate" destination="59n-9u-wT7" id="Xwc-hV-NtU"/>
-                                </connections>
-                            </mapView>
-                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4eO-MU-P2C">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                                <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Location information is hidden" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QxN-lI-Chj">
-                                        <rect key="frame" x="20" y="11" width="280" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="bDs-D2-cPu"/>
-                    <connections>
-                        <outlet property="mapPic" destination="9Ih-x9-5Dk" id="nKg-Jh-8uA"/>
-                        <outlet property="viewHidden" destination="4eO-MU-P2C" id="KPd-IR-VOj"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="VZ5-CL-VyY" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1672" y="-2678"/>
         </scene>
         <!--Pic Comment View Controller-->
         <scene sceneID="DNe-oM-yGd">

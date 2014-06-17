@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "Picture.h"
 #import "LXGalleryViewController.h"
+#import <MapKit/MapKit.h>
 
-@interface LXPicInfoViewController : UITableViewController<UIAlertViewDelegate>
+@interface LXPicInfoViewController : UITableViewController<UIAlertViewDelegate, MKMapViewDelegate>
 
 @property (strong, nonatomic) Picture *picture;
 - (IBAction)touchReport:(id)sender;
