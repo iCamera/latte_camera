@@ -16,7 +16,7 @@
 #import "LXAppDelegate.h"
 #import "LXUserPageViewController.h"
 #import "LXGalleryViewController.h"
-#import "LXVoteViewController.h"
+#import "LXPicVoteCollectionController.h"
 #import "LXPicCommentViewController.h"
 
 
@@ -123,7 +123,7 @@
     if (picture.isOwner) {
         UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                                bundle:nil];
-        LXVoteViewController *viewVote = [storyGallery instantiateViewControllerWithIdentifier:@"Like"];
+        LXPicVoteCollectionController *viewVote = [storyGallery instantiateViewControllerWithIdentifier:@"Like"];
         viewVote.picture = _feed.targets[sender.tag];
         [_parent.navigationController pushViewController:viewVote animated:YES];
     } else {

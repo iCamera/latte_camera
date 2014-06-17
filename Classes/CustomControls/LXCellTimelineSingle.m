@@ -14,7 +14,7 @@
 #import "LXShare.h"
 #import "UIButton+AFNetworking.h"
 #import "LXUserPageViewController.h"
-#import "LXVoteViewController.h"
+#import "LXPicVoteCollectionController.h"
 #import "LXPicCommentViewController.h"
 #import "LXPicInfoViewController.h"
 
@@ -193,7 +193,7 @@
     if (pic.isOwner) {
         UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                                bundle:nil];
-        LXVoteViewController *viewVote = [storyGallery instantiateViewControllerWithIdentifier:@"Like"];
+        LXPicVoteCollectionController *viewVote = [storyGallery instantiateViewControllerWithIdentifier:@"Like"];
         
         viewVote.picture = pic;
         

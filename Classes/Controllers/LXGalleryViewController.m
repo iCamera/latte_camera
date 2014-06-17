@@ -10,7 +10,7 @@
 #import "LXGalleryViewController.h"
 #import "LXZoomPictureViewController.h"
 
-#import "LXVoteViewController.h"
+#import "LXPicVoteCollectionController.h"
 #import "LXPicInfoViewController.h"
 #import "LXPicCommentViewController.h"
 #import "LXPicMapViewController.h"
@@ -214,8 +214,8 @@
     } else if ([segue.identifier isEqualToString:@"Edit"]) {
         LXPicEditViewController *viewEdit = segue.destinationViewController;
         viewEdit.picture = currentPage.picture;
-    } else if ([segue.identifier isEqualToString:@"Vote"]) {
-        LXVoteViewController *viewVote = segue.destinationViewController;
+    } else if ([segue.identifier isEqualToString:@"Like"]) {
+        LXPicVoteCollectionController *viewVote = segue.destinationViewController;
         viewVote.picture = _picture;
     }
     if ([segue.identifier isEqualToString:@"Comment"]) {

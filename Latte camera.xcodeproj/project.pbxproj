@@ -1058,7 +1058,6 @@
 		889072C816770EBB0013DF7A /* LXRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890724716770EBB0013DF7A /* LXRegisterViewController.m */; };
 		889072CA16770EBB0013DF7A /* LXNotifySideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890724B16770EBB0013DF7A /* LXNotifySideViewController.m */; };
 		889072CC16770EBB0013DF7A /* LXMainTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890724F16770EBB0013DF7A /* LXMainTabViewController.m */; };
-		889072CE16770EBB0013DF7A /* LXWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890725316770EBB0013DF7A /* LXWelcomeViewController.m */; };
 		889072CF16770EBB0013DF7A /* LXButtonBack.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890725616770EBB0013DF7A /* LXButtonBack.m */; };
 		889072D016770EBB0013DF7A /* LXButtonBrown30.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890725816770EBB0013DF7A /* LXButtonBrown30.m */; };
 		889072D116770EBB0013DF7A /* LXButtonNormal.m in Sources */ = {isa = PBXBuildFile; fileRef = 8890725A16770EBB0013DF7A /* LXButtonNormal.m */; };
@@ -1265,7 +1264,6 @@
 		88AAA2C01769EC52007610BB /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 88AAA2BF1769EC52007610BB /* UIImage+Resize.m */; };
 		88AB7E1D16BB755F00040C00 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AB7E1B16BB755E00040C00 /* CFNetwork.framework */; };
 		88B08D4415D369EC003CB0D3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B08D4315D369EC003CB0D3 /* Security.framework */; };
-		88B37BF616E719B700AB682C /* LXVoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B37BF516E719B700AB682C /* LXVoteViewController.m */; };
 		88B3A3AB16F39951002A6BDA /* LXUploadObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B3A3AA16F39951002A6BDA /* LXUploadObject.m */; };
 		88BAA31C174A19AB004E0F63 /* curve19.png in Resources */ = {isa = PBXBuildFile; fileRef = 88BAA31B174A19AB004E0F63 /* curve19.png */; };
 		88C095AA1739FF25007CED90 /* hicon_lock_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88C095A71739FF25007CED90 /* hicon_lock_s@2x.png */; };
@@ -3059,8 +3057,6 @@
 		8890724D16770EBB0013DF7A /* LXSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXSettingViewController.m; sourceTree = "<group>"; };
 		8890724E16770EBB0013DF7A /* LXMainTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXMainTabViewController.h; sourceTree = "<group>"; };
 		8890724F16770EBB0013DF7A /* LXMainTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXMainTabViewController.m; sourceTree = "<group>"; };
-		8890725216770EBB0013DF7A /* LXWelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXWelcomeViewController.h; sourceTree = "<group>"; };
-		8890725316770EBB0013DF7A /* LXWelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXWelcomeViewController.m; sourceTree = "<group>"; };
 		8890725516770EBB0013DF7A /* LXButtonBack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXButtonBack.h; sourceTree = "<group>"; };
 		8890725616770EBB0013DF7A /* LXButtonBack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXButtonBack.m; sourceTree = "<group>"; };
 		8890725716770EBB0013DF7A /* LXButtonBrown30.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXButtonBrown30.h; sourceTree = "<group>"; };
@@ -3300,8 +3296,6 @@
 		88AAA2BF1769EC52007610BB /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
 		88AB7E1B16BB755E00040C00 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		88B08D4315D369EC003CB0D3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		88B37BF416E719B700AB682C /* LXVoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXVoteViewController.h; sourceTree = "<group>"; };
-		88B37BF516E719B700AB682C /* LXVoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXVoteViewController.m; sourceTree = "<group>"; };
 		88B3A3A916F39951002A6BDA /* LXUploadObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXUploadObject.h; sourceTree = "<group>"; };
 		88B3A3AA16F39951002A6BDA /* LXUploadObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXUploadObject.m; sourceTree = "<group>"; };
 		88BAA31B174A19AB004E0F63 /* curve19.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = curve19.png; sourceTree = "<group>"; };
@@ -4809,8 +4803,6 @@
 		8890722F16770EBB0013DF7A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				88F550AF194AD117007217CF /* LXImageCropViewController.h */,
-				88F550B0194AD117007217CF /* LXImageCropViewController.m */,
 				880E35A616A7BECA0097B97F /* LXAboutViewController.h */,
 				880E35A716A7BECA0097B97F /* LXAboutViewController.m */,
 				88491EB91921B4A400CAF0A2 /* LXAnouncementViewController.h */,
@@ -4821,6 +4813,8 @@
 				8837736A17AA81A4005B0826 /* LXChangeEmailViewController.m */,
 				8837736617AA7B1F005B0826 /* LXChangePasswordViewController.h */,
 				8837736717AA7B1F005B0826 /* LXChangePasswordViewController.m */,
+				8C0E16FD193DD19600B50887 /* LXCompanyPolicyViewController.h */,
+				8C0E16FE193DD19600B50887 /* LXCompanyPolicyViewController.m */,
 				8837738617B0C15F005B0826 /* LXEmailConfirmPopupController.h */,
 				8837738717B0C161005B0826 /* LXEmailConfirmPopupController.m */,
 				882E14A316EF0BF100839B92 /* LXFacebookFriendViewController.h */,
@@ -4831,6 +4825,8 @@
 				8883C07C16DCBCE1003510A1 /* LXGalleryViewController.m */,
 				884C54D316B22EF500DA318E /* LXHelpBokehViewController.h */,
 				884C54D416B22EF500DA318E /* LXHelpBokehViewController.m */,
+				88F550AF194AD117007217CF /* LXImageCropViewController.h */,
+				88F550B0194AD117007217CF /* LXImageCropViewController.m */,
 				8883EED2173212EC00AA2D5E /* LXImageTextViewController.h */,
 				8883EED3173212EC00AA2D5E /* LXImageTextViewController.m */,
 				888F651416FC09DF00ED74BB /* LXLeftGuestViewController.h */,
@@ -4843,6 +4839,8 @@
 				8890723716770EBB0013DF7A /* LXLoginViewController.m */,
 				8890724E16770EBB0013DF7A /* LXMainTabViewController.h */,
 				8890724F16770EBB0013DF7A /* LXMainTabViewController.m */,
+				88D2DC99192C4B600027D88A /* LXMenuViewController.h */,
+				88D2DC9A192C4B600027D88A /* LXMenuViewController.m */,
 				8890723816770EBB0013DF7A /* LXMyPageViewController.h */,
 				8890723916770EBB0013DF7A /* LXMyPageViewController.m */,
 				8874DBD016E8C58100FDF60B /* LXNavGalleryViewController.h */,
@@ -4863,6 +4861,8 @@
 				8890724116770EBB0013DF7A /* LXPicInfoViewController.m */,
 				8890724216770EBB0013DF7A /* LXPicMapViewController.h */,
 				8890724316770EBB0013DF7A /* LXPicMapViewController.m */,
+				882055021938550D00D741BB /* LXPicVoteCollectionController.h */,
+				882055031938550D00D741BB /* LXPicVoteCollectionController.m */,
 				8890724416770EBB0013DF7A /* LXRankingViewController.h */,
 				8890724516770EBB0013DF7A /* LXRankingViewController.m */,
 				8890724616770EBB0013DF7A /* LXRegisterViewController.h */,
@@ -4891,6 +4891,12 @@
 				884ACB2018EEB7F600B2924B /* LXStreamViewLayout.m */,
 				8837736317AA5AD8005B0826 /* LXTableConfirmEmailController.h */,
 				8837736417AA5AD9005B0826 /* LXTableConfirmEmailController.m */,
+				8CFFF63B19407C8500D09F5B /* LXTableSettingItemViewController.h */,
+				8CFFF63C19407C8500D09F5B /* LXTableSettingItemViewController.m */,
+				8C8F582C193EF35E004A9EB9 /* LXTableSettingViewController.h */,
+				8C8F582D193EF35E004A9EB9 /* LXTableSettingViewController.m */,
+				88EB47C619471B2E00D0F026 /* LXTagDiscussionViewController.h */,
+				88EB47C719471B2E00D0F026 /* LXTagDiscussionViewController.m */,
 				882E14C016F09B4A00839B92 /* LXTagViewController.h */,
 				882E14C116F09B4A00839B92 /* LXTagViewController.m */,
 				8883EED5173220E900AA2D5E /* LXTextTemplateViewController.h */,
@@ -4899,22 +4905,6 @@
 				88FB7CF51782DD590038B067 /* LXUploadStatusViewController.m */,
 				88FB5C1F192374720018F757 /* LXUserPageViewController.h */,
 				88FB5C20192374720018F757 /* LXUserPageViewController.m */,
-				88B37BF416E719B700AB682C /* LXVoteViewController.h */,
-				88B37BF516E719B700AB682C /* LXVoteViewController.m */,
-				8890725216770EBB0013DF7A /* LXWelcomeViewController.h */,
-				8890725316770EBB0013DF7A /* LXWelcomeViewController.m */,
-				88D2DC99192C4B600027D88A /* LXMenuViewController.h */,
-				88D2DC9A192C4B600027D88A /* LXMenuViewController.m */,
-				882055021938550D00D741BB /* LXPicVoteCollectionController.h */,
-				882055031938550D00D741BB /* LXPicVoteCollectionController.m */,
-				8C0E16FD193DD19600B50887 /* LXCompanyPolicyViewController.h */,
-				8C0E16FE193DD19600B50887 /* LXCompanyPolicyViewController.m */,
-				8C8F582C193EF35E004A9EB9 /* LXTableSettingViewController.h */,
-				8C8F582D193EF35E004A9EB9 /* LXTableSettingViewController.m */,
-				8CFFF63B19407C8500D09F5B /* LXTableSettingItemViewController.h */,
-				8CFFF63C19407C8500D09F5B /* LXTableSettingItemViewController.m */,
-				88EB47C619471B2E00D0F026 /* LXTagDiscussionViewController.h */,
-				88EB47C719471B2E00D0F026 /* LXTagDiscussionViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -8261,7 +8251,6 @@
 				889072C816770EBB0013DF7A /* LXRegisterViewController.m in Sources */,
 				889072CA16770EBB0013DF7A /* LXNotifySideViewController.m in Sources */,
 				889072CC16770EBB0013DF7A /* LXMainTabViewController.m in Sources */,
-				889072CE16770EBB0013DF7A /* LXWelcomeViewController.m in Sources */,
 				889072CF16770EBB0013DF7A /* LXButtonBack.m in Sources */,
 				889072D016770EBB0013DF7A /* LXButtonBrown30.m in Sources */,
 				889072D116770EBB0013DF7A /* LXButtonNormal.m in Sources */,
@@ -8300,7 +8289,6 @@
 				8883C07D16DCBCE1003510A1 /* LXGalleryViewController.m in Sources */,
 				88A5F41816E11D8B00118996 /* LXSettingRootViewController.m in Sources */,
 				88F0075016E4A29B0071369C /* LXSettingNotifyViewController.m in Sources */,
-				88B37BF616E719B700AB682C /* LXVoteViewController.m in Sources */,
 				8874DBC316E8BF3600FDF60B /* LXNavMypageController.m in Sources */,
 				8874DBD216E8C58200FDF60B /* LXNavGalleryViewController.m in Sources */,
 				8866D30416E9EE4400CAE6E5 /* LXSearchViewController.m in Sources */,

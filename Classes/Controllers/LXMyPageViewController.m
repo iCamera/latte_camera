@@ -22,7 +22,6 @@
 #import "UIActionSheet+ButtonState.h"
 #import "LXCellTimelineSingle.h"
 #import "LXCellTimelineMulti.h"
-#import "LXVoteViewController.h"
 #import "MBProgressHUD.h"
 
 #import "LXCellGrid.h"

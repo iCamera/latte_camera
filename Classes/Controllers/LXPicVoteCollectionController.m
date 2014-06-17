@@ -9,6 +9,7 @@
 #import "LXPicVoteCollectionController.h"
 #import "LatteAPIClient.h"
 #import "LXCollectionCellUser.h"
+#import "LXUserPageViewController.h"
 
 @interface LXPicVoteCollectionController ()
 
@@ -67,9 +68,14 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    LXCollectionCellUser *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"User" forIndexPath:indexPath];
-    cell.user = voters[indexPath.item];
-    return cell;
+    if (indexPath.item >= voters.count) {
+        LXCollectionCellUser *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"User" forIndexPath:indexPath];
+        return cell;
+    } else {
+        LXCollectionCellUser *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"User" forIndexPath:indexPath];
+        cell.user = voters[indexPath.item];
+        return cell;
+    }
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -77,11 +83,17 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return voters.count;
+    return voters.count + (guestVoteCount>0?1:0);
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    LXUserPageViewController *viewUser = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    viewUser.user = voters[indexPath.item];
     
+    [self.navigationController pushViewController:viewUser animated:YES];
+
 }
 
 /*
