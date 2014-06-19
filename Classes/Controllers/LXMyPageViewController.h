@@ -18,6 +18,7 @@
 - (IBAction)showMenu;
 - (IBAction)showSetting:(id)sender;
 - (IBAction)switchTimeline:(UISegmentedControl*)sender;
+- (IBAction)touchRightBar:(UISegmentedControl*)sender;
 - (IBAction)refresh:(id)sender;
 - (void)reloadView;
 

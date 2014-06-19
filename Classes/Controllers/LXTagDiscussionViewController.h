@@ -15,5 +15,6 @@
 @property (strong, nonatomic) UIImageView *incomingBubbleImageView;
 
 @property (strong, nonatomic) NSString *tag;
+@property (strong, nonatomic) NSString *conversationHash;
 
 @end

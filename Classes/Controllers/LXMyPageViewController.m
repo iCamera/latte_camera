@@ -30,7 +30,7 @@
 typedef enum {
     kTimelineAll = 10,
     kTimelineFriends = 12,
-    kTimelineFollowing = 13,
+    kTimelineFollowing = 13
 } LatteTimeline;
 
 #define kModelPicture 1
@@ -111,16 +111,6 @@ typedef enum {
             [params setObject:feed.feedID forKey:@"last_id"];
         }
     }
-    
-    [[LatteAPIClient sharedClient] GET: @"user/me/timeline"
-                            parameters: params
-                               success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                  
-                               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                   DLog(@"Something went wrong (Timeline)");
-                                   
-                                   [self.refreshControl endRefreshing];
-                               }];
     
     
     [[LatteAPIClient sharedClient] GET: @"user/me/timeline"
@@ -227,7 +217,6 @@ typedef enum {
     }
 }
 
-
 - (IBAction)showSetting:(id)sender {
     UIStoryboard* storySetting = [UIStoryboard storyboardWithName:@"Setting" bundle:nil];
     [self presentViewController:[storySetting instantiateInitialViewController] animated:YES completion:nil];
@@ -251,6 +240,12 @@ typedef enum {
     
     [self loadMore:YES];
     
+}
+
+- (IBAction)touchRightBar:(UISegmentedControl*)sender {
+    if (sender.selectedSegmentIndex == 0) {
+        [self performSegueWithIdentifier:@"Chat" sender:self];
+    }
 }
 
 - (void)showTimeline:(NSNotification *) notification {

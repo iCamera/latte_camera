@@ -26,6 +26,7 @@
 #import "LXCellGrid.h"
 #import "LXCellDataField.h"
 #import "NSDate+TKCategory.h"
+#import "UIImage+ImageEffects.h"
 
 typedef enum {
     kTablePhoto = 0,
@@ -86,6 +87,10 @@ typedef enum {
     return self;
 }
 
+- (void)awakeFromNib {
+    _imageCover.image = [_imageCover.image applyDarkEffect];
+}
+
 
 - (void)viewDidLoad
 {
@@ -124,7 +129,7 @@ typedef enum {
     HUD.margin = 10.f;
     HUD.yOffset = 150.f;
     
-    _buttonUser.layer.cornerRadius = 25;
+    _buttonUser.layer.cornerRadius = 17.5;
     
     [_buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:_user.profilePicture]];
     [_buttonUsername setTitle:_user.name forState:UIControlStateNormal];
@@ -255,6 +260,7 @@ typedef enum {
 }
 
 - (IBAction)touchProfilePic:(id)sender {
+    [self touchSetProfilePic];
 }
 
 - (IBAction)refresh:(id)sender {

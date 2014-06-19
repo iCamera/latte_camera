@@ -1539,6 +1539,9 @@
 		88F0398E17A2879B00458900 /* menu4b_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F0397617A2879B00458900 /* menu4b_4.png */; };
 		88F0398F17A2879B00458900 /* menu4b_4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F0397717A2879B00458900 /* menu4b_4@2x.png */; };
 		88F550B1194AD118007217CF /* LXImageCropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88F550B0194AD117007217CF /* LXImageCropViewController.m */; };
+		88F550B5195033A5007217CF /* default-cover.gif in Resources */ = {isa = PBXBuildFile; fileRef = 88F550B4195033A5007217CF /* default-cover.gif */; };
+		88F550B81950352A007217CF /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 88F550B71950352A007217CF /* UIImage+ImageEffects.m */; };
+		88F550BB19513315007217CF /* LXChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88F550BA19513315007217CF /* LXChatViewController.m */; };
 		88F5986C173908DB000BD186 /* crop_lb.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F59862173908DA000BD186 /* crop_lb.png */; };
 		88F5986D173908DB000BD186 /* crop_lb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F59863173908DA000BD186 /* crop_lb@2x.png */; };
 		88F5986E173908DB000BD186 /* crop_lt.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F59864173908DA000BD186 /* crop_lt.png */; };
@@ -3053,8 +3056,6 @@
 		8890724716770EBB0013DF7A /* LXRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXRegisterViewController.m; sourceTree = "<group>"; };
 		8890724A16770EBB0013DF7A /* LXNotifySideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXNotifySideViewController.h; sourceTree = "<group>"; };
 		8890724B16770EBB0013DF7A /* LXNotifySideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXNotifySideViewController.m; sourceTree = "<group>"; };
-		8890724C16770EBB0013DF7A /* LXSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXSettingViewController.h; sourceTree = "<group>"; };
-		8890724D16770EBB0013DF7A /* LXSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXSettingViewController.m; sourceTree = "<group>"; };
 		8890724E16770EBB0013DF7A /* LXMainTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXMainTabViewController.h; sourceTree = "<group>"; };
 		8890724F16770EBB0013DF7A /* LXMainTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXMainTabViewController.m; sourceTree = "<group>"; };
 		8890725516770EBB0013DF7A /* LXButtonBack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXButtonBack.h; sourceTree = "<group>"; };
@@ -3590,6 +3591,11 @@
 		88F0397717A2879B00458900 /* menu4b_4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu4b_4@2x.png"; sourceTree = "<group>"; };
 		88F550AF194AD117007217CF /* LXImageCropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXImageCropViewController.h; sourceTree = "<group>"; };
 		88F550B0194AD117007217CF /* LXImageCropViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXImageCropViewController.m; sourceTree = "<group>"; };
+		88F550B4195033A5007217CF /* default-cover.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "default-cover.gif"; sourceTree = "<group>"; };
+		88F550B61950352A007217CF /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		88F550B71950352A007217CF /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		88F550B919513315007217CF /* LXChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXChatViewController.h; sourceTree = "<group>"; };
+		88F550BA19513315007217CF /* LXChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXChatViewController.m; sourceTree = "<group>"; };
 		88F59862173908DA000BD186 /* crop_lb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crop_lb.png; sourceTree = "<group>"; };
 		88F59863173908DA000BD186 /* crop_lb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crop_lb@2x.png"; sourceTree = "<group>"; };
 		88F59864173908DA000BD186 /* crop_lt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crop_lt.png; sourceTree = "<group>"; };
@@ -3969,8 +3975,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				88EB47CA1948316400D0F026 /* libsqlite3.dylib in Frameworks */,
 				88C0FF4817212C0600F8CA2D /* Accelerate.framework in Frameworks */,
+				88EB47CA1948316400D0F026 /* libsqlite3.dylib in Frameworks */,
 				88A49B8315B8FD5700CEA262 /* QuartzCore.framework in Frameworks */,
 				88A49B7F15B8FD5700CEA262 /* AVFoundation.framework in Frameworks */,
 				88A49B8215B8FD5700CEA262 /* OpenGLES.framework in Frameworks */,
@@ -4879,8 +4885,6 @@
 				88F0074F16E4A29B0071369C /* LXSettingNotifyViewController.m */,
 				88A5F41616E11D8B00118996 /* LXSettingRootViewController.h */,
 				88A5F41716E11D8B00118996 /* LXSettingRootViewController.m */,
-				8890724C16770EBB0013DF7A /* LXSettingViewController.h */,
-				8890724D16770EBB0013DF7A /* LXSettingViewController.m */,
 				88D86DCE17CB446400EC62A2 /* LXSocialViewController.h */,
 				88D86DCF17CB446400EC62A2 /* LXSocialViewController.m */,
 				884ACB2218EEB8F900B2924B /* LXStreamBrickCell.h */,
@@ -4905,6 +4909,8 @@
 				88FB7CF51782DD590038B067 /* LXUploadStatusViewController.m */,
 				88FB5C1F192374720018F757 /* LXUserPageViewController.h */,
 				88FB5C20192374720018F757 /* LXUserPageViewController.m */,
+				88F550B919513315007217CF /* LXChatViewController.h */,
+				88F550BA19513315007217CF /* LXChatViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -4999,6 +5005,8 @@
 		8890728F16770EBB0013DF7A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				88F550B61950352A007217CF /* UIImage+ImageEffects.h */,
+				88F550B71950352A007217CF /* UIImage+ImageEffects.m */,
 				8890729816770EBB0013DF7A /* LatteAPIClient.h */,
 				8890729916770EBB0013DF7A /* LatteAPIClient.m */,
 				887A66BE194561BD000E07F2 /* LatteAPIv2Client.h */,
@@ -5590,6 +5598,7 @@
 		88FE3FAB166C93D6004DCE53 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				88F550B4195033A5007217CF /* default-cover.gif */,
 				88D86DD117CC726E00EC62A2 /* box_recruit.png */,
 				88D86DD217CC726E00EC62A2 /* box_recruit@2x.png */,
 				88D86DD317CC726E00EC62A2 /* icon_area_blue.png */,
@@ -7465,6 +7474,7 @@
 				88327879170173690053C8A2 /* TW.png in Resources */,
 				8832787A170173690053C8A2 /* TW@2x.png in Resources */,
 				8832787B170173690053C8A2 /* TZ.png in Resources */,
+				88F550B5195033A5007217CF /* default-cover.gif in Resources */,
 				8832787C170173690053C8A2 /* TZ@2x.png in Resources */,
 				8832787D170173690053C8A2 /* UA.png in Resources */,
 				8832787E170173690053C8A2 /* UA@2x.png in Resources */,
@@ -8239,6 +8249,7 @@
 				880120BF16E5E80900B9E3D9 /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */,
 				88D9865615B8F97800858AD6 /* main.m in Sources */,
 				884ACB1E18EEB4C000B2924B /* LXStreamViewController.m in Sources */,
+				88F550BB19513315007217CF /* LXChatViewController.m in Sources */,
 				889072BC16770EBB0013DF7A /* LXAppDelegate.m in Sources */,
 				889072BD16770EBB0013DF7A /* LXCanvasViewController.m in Sources */,
 				889072C016770EBB0013DF7A /* LXLoginViewController.m in Sources */,
@@ -8334,6 +8345,7 @@
 				88CE8A09174E120300C6A6B6 /* LXCellFont.m in Sources */,
 				887379BB17586FF400C1549B /* LXCellFontPreview.m in Sources */,
 				884D215A175C9BF0002FF853 /* ioapi.c in Sources */,
+				88F550B81950352A007217CF /* UIImage+ImageEffects.m in Sources */,
 				8CFFF63D19407C8500D09F5B /* LXTableSettingItemViewController.m in Sources */,
 				882055071938570E00D741BB /* LXCollectionCellUser.m in Sources */,
 				884D215B175C9BF0002FF853 /* mztools.c in Sources */,
@@ -8538,6 +8550,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Latte/Latte.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -8571,6 +8584,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Latte/Latte.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

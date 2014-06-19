@@ -22,14 +22,9 @@
 
 @implementation LXTagDiscussionViewController {
     NSMutableArray *messages;
-    NSMutableArray *raw;
     SocketIO *socketIO;
-    NSString *hash;
 }
 
-- (JSQMessage*)fromDict:(NSDictionary*)JSON {
-    return [[JSQMessage alloc] initWithText:JSON[@"body"] sender:JSON[@"user"][@"name"] date:[LXUtils dateFromString:JSON[@"created_at"]]];
-}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -45,7 +40,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navigationItem.title = _tag;
-    hash = [self sha1:[_tag lowercaseString]];
     self.outgoingBubbleImageView = [JSQMessagesBubbleImageFactory
                                     outgoingMessageBubbleImageViewWithColor:[UIColor jsq_messageBubbleLightGrayColor]];
     
@@ -58,30 +52,40 @@
     self.inputToolbar.contentView.leftBarButtonItem = nil;
     self.automaticallyScrollsToMostRecentMessage = YES;
     
-    [self loadMore];
+    [self loadMore:YES];
     
      socketIO = [[SocketIO alloc] initWithDelegate:self];
     [socketIO connectToHost:kLatteSocketURLString onPort:80];
 }
 
-- (void)loadMore {
+- (void)loadMore:(BOOL)reset {
     LatteAPIv2Client *api2 = [LatteAPIv2Client sharedClient];
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:@{@"tag":_tag}];
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:@{@"hash": _conversationHash}];
+    if (!reset && messages.count > 0) {
+        params[@"last_id"] = messages[0][@"id"];
+    }
     
     [api2 GET:@"message" parameters:params success:^(AFHTTPRequestOperation *operation, NSMutableArray *JSON) {
+        if (reset) {
+            messages = [[NSMutableArray alloc] init];
+        }
+
+        for (NSDictionary *message in JSON) {
+            [messages insertObject:message atIndex:0];
+        }
+        [self.collectionView reloadData];
         if (JSON.count > 0) {
             self.showLoadEarlierMessagesHeader = YES;
         } else {
             self.showLoadEarlierMessagesHeader = NO;
         }
-        messages = [[NSMutableArray alloc] init];
-        raw = [[NSMutableArray alloc] init];
-        for (NSDictionary *message in JSON) {
-            [messages insertObject:[self fromDict:message] atIndex:0];
-            [raw insertObject:message atIndex:0];
-        }
-        [self.collectionView reloadData];
+
     } failure:nil];
+}
+
+- (void)setTag:(NSString *)tag {
+    _tag = tag;
+    _conversationHash = [self sha1:[_tag lowercaseString]];
 }
 
 #pragma mark - JSQMessagesViewController method overrides
@@ -99,13 +103,6 @@
      *  3. Call `finishSendingMessage`
      */
     [JSQSystemSoundPlayer jsq_playMessageSentSound];
-    
-    JSQMessage *message = [[JSQMessage alloc] initWithText:text sender:sender date:date];
-    [messages addObject:message];
-    
-    LXAppDelegate *app = [LXAppDelegate currentDelegate];
-    
-    [raw addObject:@{@"user": @{@"profile_picture": app.currentUser.profilePicture}}];
     
     [self finishSendingMessage];
     
@@ -129,7 +126,8 @@
 
 - (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [messages objectAtIndex:indexPath.item];
+    NSDictionary *message = messages[indexPath.row];
+    return [[JSQMessage alloc] initWithText:message[@"body"] sender:message[@"user"][@"name"] date:[LXUtils dateFromString:message[@"created_at"]]];
 }
 
 - (UIImageView *)collectionView:(JSQMessagesCollectionView *)collectionView bubbleImageViewForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -144,9 +142,9 @@
      *  Otherwise, each cell would be referencing the same imageView and bubbles would disappear from cells
      */
     
-    JSQMessage *message = [messages objectAtIndex:indexPath.item];
+    NSDictionary *message = messages[indexPath.item];
     
-    if ([message.sender isEqualToString:self.sender]) {
+    if ([message[@"user"][@"name"] isEqualToString:self.sender]) {
         return [[UIImageView alloc] initWithImage:self.outgoingBubbleImageView.image
                                  highlightedImage:self.outgoingBubbleImageView.highlightedImage];
     }
@@ -178,10 +176,12 @@
      *
      *  Override the defaults in `viewDidLoad`
      */
-    NSDictionary *message = raw[indexPath.item];
+    NSDictionary *message = messages[indexPath.item];
     
-    UIImageView *imageView = [[UIImageView alloc] init];
-    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 34, 34)];
+    imageView.image = [UIImage imageNamed:@"user.gif"];
+    imageView.layer.cornerRadius = 17;
+    imageView.layer.masksToBounds = YES;
     [imageView setImageWithURL:[NSURL URLWithString:message[@"user"][@"profile_picture"]] placeholderImage:[UIImage imageNamed:@"user.gif"]];
     return imageView;
 }
@@ -195,8 +195,9 @@
      *  Show a timestamp for every 3rd message
      */
     if (indexPath.item % 3 == 0) {
-        JSQMessage *message = [messages objectAtIndex:indexPath.item];
-        return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:message.date];
+        NSDictionary *message = messages[indexPath.item];
+        NSDate *date = [LXUtils dateFromString:message[@"created_at"]];
+        return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:date];
     }
     
     return nil;
@@ -204,18 +205,18 @@
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath
 {
-    JSQMessage *message = [messages objectAtIndex:indexPath.item];
+    NSDictionary *message = [messages objectAtIndex:indexPath.item];
     
     /**
      *  iOS7-style sender name labels
      */
-    if ([message.sender isEqualToString:self.sender]) {
+    if ([message[@"user"][@"name"] isEqualToString:self.sender]) {
         return nil;
     }
     
     if (indexPath.item - 1 > 0) {
-        JSQMessage *previousMessage = [messages objectAtIndex:indexPath.item - 1];
-        if ([[previousMessage sender] isEqualToString:message.sender]) {
+        NSDictionary *previousMessage = [messages objectAtIndex:indexPath.item - 1];
+        if ([previousMessage[@"user"][@"name"] isEqualToString:message[@"user"][@"name"]]) {
             return nil;
         }
     }
@@ -223,7 +224,7 @@
     /**
      *  Don't specify attributes to use the defaults.
      */
-    return [[NSAttributedString alloc] initWithString:message.sender];
+    return [[NSAttributedString alloc] initWithString:message[@"user"][@"name"]];
 }
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
@@ -259,9 +260,9 @@
      *  Instead, override the properties you want on `self.collectionView.collectionViewLayout` from `viewDidLoad`
      */
     
-    JSQMessage *msg = [messages objectAtIndex:indexPath.item];
+    NSDictionary *msg = messages[indexPath.item];
     
-    if ([msg.sender isEqualToString:self.sender]) {
+    if ([msg[@"user"][@"name"] isEqualToString:self.sender]) {
         cell.textView.textColor = [UIColor blackColor];
     }
     else {
@@ -304,14 +305,14 @@
     /**
      *  iOS7-style sender name labels
      */
-    JSQMessage *currentMessage = [messages objectAtIndex:indexPath.item];
-    if ([[currentMessage sender] isEqualToString:self.sender]) {
+    NSDictionary *currentMessage = messages[indexPath.item];
+    if ([currentMessage[@"user"][@"name"] isEqualToString:self.sender]) {
         return 0.0f;
     }
     
     if (indexPath.item - 1 > 0) {
-        JSQMessage *previousMessage = [messages objectAtIndex:indexPath.item - 1];
-        if ([[previousMessage sender] isEqualToString:[currentMessage sender]]) {
+        NSDictionary *previousMessage = messages[indexPath.item - 1];
+        if ([previousMessage[@"user"][@"name"] isEqualToString:currentMessage[@"user"][@"name"]]) {
             return 0.0f;
         }
     }
@@ -328,7 +329,7 @@
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView
                 header:(JSQMessagesLoadEarlierHeaderView *)headerView didTapLoadEarlierMessagesButton:(UIButton *)sender
 {
-    [self loadMore];
+    [self loadMore:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -355,12 +356,9 @@
     DLog(@"%@", packet.dataAsJSON);
     for (NSDictionary *object in packet.dataAsJSON[@"args"]) {
         if ([packet.name isEqualToString:@"new_message"]) {
-            if ([object[@"hash"] isEqualToString:hash]) {
-                JSQMessage *message = [[JSQMessage alloc] initWithText:object[@"body"]
-                                                                sender:object[@"user"][@"name"]
-                                                                  date:[LXUtils dateFromString:object[@"created_at"]]];
-                [messages addObject:message];
-                [raw addObject:@{@"user": object[@"user"]}];
+            if ([object[@"hash"] isEqualToString:_conversationHash]) {
+                [messages addObject:object];
+                [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
                 [self finishReceivingMessage];
             }
         }
@@ -386,7 +384,7 @@
 }
 
 - (void)socketIODidConnect:(SocketIO *)socket {
-    [socket sendEvent:@"join" withData:hash];
+    [socket sendEvent:@"join" withData:_conversationHash];
 }
 
 @end
