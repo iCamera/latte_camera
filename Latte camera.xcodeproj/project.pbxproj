@@ -1902,7 +1902,17 @@
 		8C75515E193F108800CBFA2C /* LXPrivacySettingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C75515D193F108800CBFA2C /* LXPrivacySettingTableViewCell.m */; };
 		8C8F582E193EF35E004A9EB9 /* LXTableSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8F582D193EF35E004A9EB9 /* LXTableSettingViewController.m */; };
 		8CFFF63D19407C8500D09F5B /* LXTableSettingItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CFFF63C19407C8500D09F5B /* LXTableSettingItemViewController.m */; };
+		C54E590D195195AB003EC0F5 /* LXProfileSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C54E590C195195AB003EC0F5 /* LXProfileSettingTableViewController.m */; };
+		C54E59101951960E003EC0F5 /* LXProfileSettingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C54E590F1951960E003EC0F5 /* LXProfileSettingTableViewCell.m */; };
+		C54E59161952CCDD003EC0F5 /* LXProfileSettingEditTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C54E59151952CCDD003EC0F5 /* LXProfileSettingEditTVC.m */; };
+		C54E591E1953D128003EC0F5 /* LXCellSelectItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C54E591D1953D127003EC0F5 /* LXCellSelectItem.m */; };
+		C54E59211953D172003EC0F5 /* LXCellDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = C54E59201953D172003EC0F5 /* LXCellDatePicker.m */; };
+		C54E59241953D190003EC0F5 /* LXCellTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = C54E59231953D190003EC0F5 /* LXCellTextView.m */; };
+		C54E59271953D1A9003EC0F5 /* LXCellPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = C54E59261953D1A9003EC0F5 /* LXCellPicker.m */; };
+		C575B9CE1953D5E4008D6E43 /* LXSettingsProfileTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C575B9CD1953D5E4008D6E43 /* LXSettingsProfileTVC.m */; };
+		C575B9D2195422FC008D6E43 /* LXSelectorVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C575B9D1195422FC008D6E43 /* LXSelectorVC.m */; };
 		C5FDFC3D193F16000084FD33 /* LXCellNotifyOfficial.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FDFC3C193F16000084FD33 /* LXCellNotifyOfficial.m */; };
+		C968C214195561160047982D /* LXTextViewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C968C213195561160047982D /* LXTextViewVC.m */; };
 		D43F85446D6B48A0B1EB39B0 /* libPods-Latte camera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC48C9BB332464C84EA4512 /* libPods-Latte camera.a */; };
 /* End PBXBuildFile section */
 
@@ -3972,8 +3982,28 @@
 		8C8F582D193EF35E004A9EB9 /* LXTableSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXTableSettingViewController.m; sourceTree = "<group>"; };
 		8CFFF63B19407C8500D09F5B /* LXTableSettingItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXTableSettingItemViewController.h; sourceTree = "<group>"; };
 		8CFFF63C19407C8500D09F5B /* LXTableSettingItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXTableSettingItemViewController.m; sourceTree = "<group>"; };
+		C54E590B195195AB003EC0F5 /* LXProfileSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXProfileSettingTableViewController.h; sourceTree = "<group>"; };
+		C54E590C195195AB003EC0F5 /* LXProfileSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXProfileSettingTableViewController.m; sourceTree = "<group>"; };
+		C54E590E1951960E003EC0F5 /* LXProfileSettingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXProfileSettingTableViewCell.h; sourceTree = "<group>"; };
+		C54E590F1951960E003EC0F5 /* LXProfileSettingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXProfileSettingTableViewCell.m; sourceTree = "<group>"; };
+		C54E59141952CCDD003EC0F5 /* LXProfileSettingEditTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXProfileSettingEditTVC.h; sourceTree = "<group>"; };
+		C54E59151952CCDD003EC0F5 /* LXProfileSettingEditTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXProfileSettingEditTVC.m; sourceTree = "<group>"; };
+		C54E591C1953D127003EC0F5 /* LXCellSelectItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCellSelectItem.h; sourceTree = "<group>"; };
+		C54E591D1953D127003EC0F5 /* LXCellSelectItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCellSelectItem.m; sourceTree = "<group>"; };
+		C54E591F1953D172003EC0F5 /* LXCellDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCellDatePicker.h; sourceTree = "<group>"; };
+		C54E59201953D172003EC0F5 /* LXCellDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCellDatePicker.m; sourceTree = "<group>"; };
+		C54E59221953D190003EC0F5 /* LXCellTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCellTextView.h; sourceTree = "<group>"; };
+		C54E59231953D190003EC0F5 /* LXCellTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCellTextView.m; sourceTree = "<group>"; };
+		C54E59251953D1A9003EC0F5 /* LXCellPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCellPicker.h; sourceTree = "<group>"; };
+		C54E59261953D1A9003EC0F5 /* LXCellPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCellPicker.m; sourceTree = "<group>"; };
+		C575B9CC1953D5E4008D6E43 /* LXSettingsProfileTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXSettingsProfileTVC.h; sourceTree = "<group>"; };
+		C575B9CD1953D5E4008D6E43 /* LXSettingsProfileTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXSettingsProfileTVC.m; sourceTree = "<group>"; };
+		C575B9D0195422FC008D6E43 /* LXSelectorVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXSelectorVC.h; sourceTree = "<group>"; };
+		C575B9D1195422FC008D6E43 /* LXSelectorVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXSelectorVC.m; sourceTree = "<group>"; };
 		C5FDFC3B193F16000084FD33 /* LXCellNotifyOfficial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCellNotifyOfficial.h; sourceTree = "<group>"; };
 		C5FDFC3C193F16000084FD33 /* LXCellNotifyOfficial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCellNotifyOfficial.m; sourceTree = "<group>"; };
+		C968C212195561160047982D /* LXTextViewVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXTextViewVC.h; sourceTree = "<group>"; };
+		C968C213195561160047982D /* LXTextViewVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXTextViewVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4915,6 +4945,7 @@
 				88FB7CF51782DD590038B067 /* LXUploadStatusViewController.m */,
 				88FB5C1F192374720018F757 /* LXUserPageViewController.h */,
 				88FB5C20192374720018F757 /* LXUserPageViewController.m */,
+				C575B9CF195422B7008D6E43 /* Profile Settings */,
 				88F550B919513315007217CF /* LXChatViewController.h */,
 				88F550BA19513315007217CF /* LXChatViewController.m */,
 				887D5DD01957F50A00519186 /* LXUserProfileViewController.h */,
@@ -4928,6 +4959,7 @@
 		8890725416770EBB0013DF7A /* CustomControls */ = {
 			isa = PBXGroup;
 			children = (
+				C54E591B1953D0B8003EC0F5 /* ProfileSettings */,
 				88D2DC1C1924A25A0027D88A /* UIButton+AsyncImage.h */,
 				88D2DC1D1924A25A0027D88A /* UIButton+AsyncImage.m */,
 				88D2DC1E1924A25A0027D88A /* UIImageView+loadProgress.h */,
@@ -6386,6 +6418,48 @@
 				88FECEED193C796D0008985C /* HPTextViewInternal.m */,
 			);
 			path = class;
+			sourceTree = "<group>";
+		};
+		C54E591B1953D0B8003EC0F5 /* ProfileSettings */ = {
+			isa = PBXGroup;
+			children = (
+				C54E590E1951960E003EC0F5 /* LXProfileSettingTableViewCell.h */,
+				C54E590F1951960E003EC0F5 /* LXProfileSettingTableViewCell.m */,
+				C54E591C1953D127003EC0F5 /* LXCellSelectItem.h */,
+				C54E591D1953D127003EC0F5 /* LXCellSelectItem.m */,
+				C54E591F1953D172003EC0F5 /* LXCellDatePicker.h */,
+				C54E59201953D172003EC0F5 /* LXCellDatePicker.m */,
+				C54E59221953D190003EC0F5 /* LXCellTextView.h */,
+				C54E59231953D190003EC0F5 /* LXCellTextView.m */,
+				C54E59251953D1A9003EC0F5 /* LXCellPicker.h */,
+				C54E59261953D1A9003EC0F5 /* LXCellPicker.m */,
+			);
+			name = ProfileSettings;
+			sourceTree = "<group>";
+		};
+		C575B9CF195422B7008D6E43 /* Profile Settings */ = {
+			isa = PBXGroup;
+			children = (
+				C968C215195562BC0047982D /* ModalSheets */,
+				C54E590B195195AB003EC0F5 /* LXProfileSettingTableViewController.h */,
+				C54E590C195195AB003EC0F5 /* LXProfileSettingTableViewController.m */,
+				C54E59141952CCDD003EC0F5 /* LXProfileSettingEditTVC.h */,
+				C54E59151952CCDD003EC0F5 /* LXProfileSettingEditTVC.m */,
+				C575B9CC1953D5E4008D6E43 /* LXSettingsProfileTVC.h */,
+				C575B9CD1953D5E4008D6E43 /* LXSettingsProfileTVC.m */,
+				C575B9D0195422FC008D6E43 /* LXSelectorVC.h */,
+				C575B9D1195422FC008D6E43 /* LXSelectorVC.m */,
+				C968C212195561160047982D /* LXTextViewVC.h */,
+				C968C213195561160047982D /* LXTextViewVC.m */,
+			);
+			name = "Profile Settings";
+			sourceTree = "<group>";
+		};
+		C968C215195562BC0047982D /* ModalSheets */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = ModalSheets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -8274,6 +8348,7 @@
 				889072CC16770EBB0013DF7A /* LXMainTabViewController.m in Sources */,
 				889072CF16770EBB0013DF7A /* LXButtonBack.m in Sources */,
 				889072D016770EBB0013DF7A /* LXButtonBrown30.m in Sources */,
+				C575B9CE1953D5E4008D6E43 /* LXSettingsProfileTVC.m in Sources */,
 				889072D116770EBB0013DF7A /* LXButtonNormal.m in Sources */,
 				889072D216770EBB0013DF7A /* LXButtonOrange.m in Sources */,
 				889072D416770EBB0013DF7A /* LXCellComment.m in Sources */,
@@ -8292,6 +8367,7 @@
 				889072F116770EBB0013DF7A /* LatteAPIClient.m in Sources */,
 				889072F416770EBB0013DF7A /* LXFilterFish.m in Sources */,
 				889072F616770EBB0013DF7A /* UIActionSheet+ButtonState.m in Sources */,
+				C54E59101951960E003EC0F5 /* LXProfileSettingTableViewCell.m in Sources */,
 				889072FB16770EBB0013DF7A /* Comment.m in Sources */,
 				88FECF06193C796D0008985C /* HPGrowingTextView.m in Sources */,
 				889072FC16770EBB0013DF7A /* Feed.m in Sources */,
@@ -8317,7 +8393,10 @@
 				882E14AD16EF0FDE00839B92 /* LXCellFacebook.m in Sources */,
 				88EB47C819471B2E00D0F026 /* LXTagDiscussionViewController.m in Sources */,
 				882E14BF16F0928700839B92 /* LXCellGrid.m in Sources */,
+				C54E591E1953D128003EC0F5 /* LXCellSelectItem.m in Sources */,
+				C54E59241953D190003EC0F5 /* LXCellTextView.m in Sources */,
 				882E14C216F09B4C00839B92 /* LXTagViewController.m in Sources */,
+				C54E59161952CCDD003EC0F5 /* LXProfileSettingEditTVC.m in Sources */,
 				8818861116F1F039009A9266 /* LXCellSearchUser.m in Sources */,
 				88B3A3AB16F39951002A6BDA /* LXUploadObject.m in Sources */,
 				8824FAD916F6DD6C00357ADB /* LXCellUpload.m in Sources */,
@@ -8353,6 +8432,7 @@
 				88E617BE173BD0C000E6E909 /* LXFilterDOF.m in Sources */,
 				88CE8A06174E10B500C6A6B6 /* UIColor+MLPFlatColors.m in Sources */,
 				88CE8A09174E120300C6A6B6 /* LXCellFont.m in Sources */,
+				C968C214195561160047982D /* LXTextViewVC.m in Sources */,
 				887379BB17586FF400C1549B /* LXCellFontPreview.m in Sources */,
 				884D215A175C9BF0002FF853 /* ioapi.c in Sources */,
 				88F550B81950352A007217CF /* UIImage+ImageEffects.m in Sources */,
@@ -8361,6 +8441,7 @@
 				884D215B175C9BF0002FF853 /* mztools.c in Sources */,
 				884D215C175C9BF0002FF853 /* unzip.c in Sources */,
 				884D215D175C9BF0002FF853 /* zip.c in Sources */,
+				C54E59271953D1A9003EC0F5 /* LXCellPicker.m in Sources */,
 				884D215E175C9BF0002FF853 /* ZipArchive.mm in Sources */,
 				884D2161175CA656002FF853 /* LXFilterDOF2.m in Sources */,
 				887A66C0194561BD000E07F2 /* LatteAPIv2Client.m in Sources */,
@@ -8371,11 +8452,14 @@
 				88AAA2C01769EC52007610BB /* UIImage+Resize.m in Sources */,
 				884ACB2418EEB8F900B2924B /* LXStreamBrickCell.m in Sources */,
 				88FB7CF61782DD590038B067 /* LXUploadStatusViewController.m in Sources */,
+				C54E59211953D172003EC0F5 /* LXCellDatePicker.m in Sources */,
 				88979100179FD64B00BDC803 /* LXFAQViewController.m in Sources */,
 				88FB5C21192374720018F757 /* LXUserPageViewController.m in Sources */,
 				8837734617A90A5E005B0826 /* LXSettingAccountController.m in Sources */,
+				C54E590D195195AB003EC0F5 /* LXProfileSettingTableViewController.m in Sources */,
 				8837736517AA5AD9005B0826 /* LXTableConfirmEmailController.m in Sources */,
 				8837736817AA7B20005B0826 /* LXChangePasswordViewController.m in Sources */,
+				C575B9D2195422FC008D6E43 /* LXSelectorVC.m in Sources */,
 				8837736B17AA81A5005B0826 /* LXChangeEmailViewController.m in Sources */,
 				88D2DC9B192C4B600027D88A /* LXMenuViewController.m in Sources */,
 				88D2DC201924A25A0027D88A /* UIButton+AsyncImage.m in Sources */,

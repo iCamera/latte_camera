@@ -46,6 +46,18 @@
 /* ニックネームを入力してください */
 "register_error_username_require" = "Please enter a username";
 
+/* ニックネームは20文字以下で入力してください */
+"register_error_username_length" = "Username cannot be longer than 20 characters";
+
+/* 職業は100文字以下で入力してください */
+"register_error_occupation_length" = "Occupation cannot be longer than 100 characters";
+
+/* 自己紹介は10,000文字以下で入力してください */
+"register_error_introduction_length" = "Self-introduction cannot be longer than 10,000 characters";
+
+/* 趣味は10,000文字以下で入力してください */
+"register_error_hobby_length" = "Self-introduction cannot be longer than 10,000 characters";
+
 /* 登録確認メールを送信しました。 */
 "register_sent_email" = "Confirmation email sent.";
 
@@ -105,6 +117,8 @@
 "follow" = "Follow";
 
 "gender" = "Gender";
+
+"username" = "Username";
 
 "current_residence" = "Current address";
 
