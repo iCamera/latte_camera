@@ -246,6 +246,11 @@ typedef enum {
     if (sender.selectedSegmentIndex == 0) {
         [self performSegueWithIdentifier:@"Chat" sender:self];
     }
+    if (sender.selectedSegmentIndex == 1) {
+        UIStoryboard* storySetting = [UIStoryboard storyboardWithName:@"Setting" bundle:nil];
+        [self presentViewController:[storySetting instantiateInitialViewController] animated:YES completion:nil];
+    }
+
 }
 
 - (void)showTimeline:(NSNotification *) notification {

@@ -19,6 +19,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonUsername;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segmentTab;
 @property (strong, nonatomic) IBOutlet UIImageView *imageCover;
+@property (strong, nonatomic) IBOutlet UIButton *buttonFollow;
 
 @property (strong, nonatomic) User *user;
 
@@ -28,5 +29,6 @@
 - (IBAction)touchProfilePic:(id)sender;
 - (IBAction)refresh:(id)sender;
 - (IBAction)switchView:(id)sender;
+- (IBAction)touchFollow:(id)sender;
 
 @end

@@ -134,7 +134,9 @@ typedef enum {
     [_buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:_user.profilePicture]];
     [_buttonUsername setTitle:_user.name forState:UIControlStateNormal];
     
+    
     [self reloadView];
+    [self reloadProfile];
 }
 
 
@@ -146,8 +148,11 @@ typedef enum {
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        User *user = [User instanceFromDictionary:JSON[@"user"]];
                                        
-                                       [self.tableView reloadData];
-                                       
+                                       LXAppDelegate* app = [LXAppDelegate currentDelegate];
+                                       if (app.currentUser != nil && ![user.userId isEqualToNumber:app.currentUser.userId]) {
+                                           _buttonFollow.enabled = true;
+                                           _buttonFollow.selected = user.isFollowing;
+                                       }
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        DLog(@"Something went wrong (Profile)");
                                    }];
@@ -287,6 +292,31 @@ typedef enum {
             break;
     }
     [self reloadView];
+}
+
+- (IBAction)touchFollow:(id)sender {
+    _buttonFollow.selected = !_buttonFollow.selected;
+    _user.isFollowing = _buttonFollow.selected;
+    NSString *url;
+    
+    LXAppDelegate* app = [LXAppDelegate currentDelegate];
+    
+    if (_user.isFollowing) {
+        url = [NSString stringWithFormat:@"user/follow/%ld", [_user.userId longValue]];
+        
+    } else {
+        url = [NSString stringWithFormat:@"user/unfollow/%ld", [_user.userId longValue]];
+    }
+    
+    [[LatteAPIClient sharedClient] POST:url
+                             parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                                success:nil
+                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                    _buttonFollow.selected = !_buttonFollow.selected;
+                                    _user.isFollowing = _buttonFollow.selected;
+                                    DLog(@"Something went wrong (User - follow)");
+                                }];
+
 }
 
 - (void)loadMore {

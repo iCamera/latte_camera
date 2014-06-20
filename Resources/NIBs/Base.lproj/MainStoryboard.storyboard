@@ -2134,24 +2134,28 @@ Or you can resend confirmation email.</string>
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="81"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wfs-G9-fnV">
-                                    <rect key="frame" x="15" y="2" width="93" height="29"/>
+                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wfs-G9-fnV">
+                                    <rect key="frame" x="20" y="2" width="80" height="34"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
                                     <state key="normal" title="Username">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kc8-8B-lDc">
-                                    <rect key="frame" x="116" y="4" width="22" height="22"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kc8-8B-lDc">
+                                    <rect key="frame" x="108" y="8" width="22" height="22"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="22" id="eYN-15-WNp"/>
+                                        <constraint firstAttribute="height" constant="22" id="tGo-6M-xC6"/>
+                                    </constraints>
                                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <state key="normal">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                 </button>
                                 <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="vj5-au-Je8">
-                                    <rect key="frame" x="15" y="37" width="285" height="29"/>
+                                    <rect key="frame" x="20" y="38" width="280" height="29"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <segments>
                                         <segment title="" image="icon_grid.png"/>
@@ -2165,6 +2169,12 @@ Or you can resend confirmation email.</string>
                                     </connections>
                                 </segmentedControl>
                             </subviews>
+                            <constraints>
+                                <constraint firstItem="wfs-G9-fnV" firstAttribute="leading" secondItem="CF0-wx-KGd" secondAttribute="leading" constant="20" id="6jx-93-OeP"/>
+                                <constraint firstItem="Kc8-8B-lDc" firstAttribute="top" secondItem="CF0-wx-KGd" secondAttribute="top" constant="8" id="PdH-1m-S4b"/>
+                                <constraint firstItem="Kc8-8B-lDc" firstAttribute="leading" secondItem="wfs-G9-fnV" secondAttribute="trailing" constant="8" id="cn3-TY-4nj"/>
+                                <constraint firstItem="wfs-G9-fnV" firstAttribute="top" secondItem="CF0-wx-KGd" secondAttribute="top" constant="2" id="vcY-yP-Nw0"/>
+                            </constraints>
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Grid" id="vUJ-m3-IyL" userLabel="Cell Grid" customClass="LXCellGrid">
@@ -2324,7 +2334,23 @@ Or you can resend confirmation email.</string>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>
-                        <barButtonItem key="rightBarButtonItem" title="Follow" id="s1j-Xb-uK2"/>
+                        <barButtonItem key="rightBarButtonItem" style="done" id="Lmb-Nq-lOT">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="loZ-41-srG">
+                                <rect key="frame" x="233" y="5" width="71" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="Follow">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" title="Following">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="touchFollow:" destination="21a-Kc-kfo" eventType="touchUpInside" id="kq0-VE-bKw"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
@@ -2336,6 +2362,7 @@ Or you can resend confirmation email.</string>
                         </connections>
                     </refreshControl>
                     <connections>
+                        <outlet property="buttonFollow" destination="loZ-41-srG" id="aZR-j9-mgO"/>
                         <outlet property="buttonUser" destination="vEm-kz-mRV" id="tqj-sD-Y4v"/>
                         <outlet property="buttonUsername" destination="wfs-G9-fnV" id="rJh-sA-iL0"/>
                         <outlet property="imageCover" destination="XIy-D3-oA1" id="dbR-hE-DHa"/>
