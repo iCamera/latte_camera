@@ -27,6 +27,8 @@
 #import "LXCellDataField.h"
 #import "NSDate+TKCategory.h"
 #import "UIImage+ImageEffects.h"
+#import "LXUserProfileViewController.h"
+#import "MZFormSheetSegue.h"
 
 typedef enum {
     kTablePhoto = 0,
@@ -136,7 +138,12 @@ typedef enum {
     
     
     [self reloadView];
-    [self reloadProfile];
+    
+    if (app.currentUser != nil && ![_user.userId isEqualToNumber:app.currentUser.userId]) {
+        [self reloadProfile];
+    } else {
+        _buttonFollow.hidden = YES;
+    }
 }
 
 
@@ -148,11 +155,8 @@ typedef enum {
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        User *user = [User instanceFromDictionary:JSON[@"user"]];
                                        
-                                       LXAppDelegate* app = [LXAppDelegate currentDelegate];
-                                       if (app.currentUser != nil && ![user.userId isEqualToNumber:app.currentUser.userId]) {
-                                           _buttonFollow.enabled = true;
-                                           _buttonFollow.selected = user.isFollowing;
-                                       }
+                                       _buttonFollow.enabled = true;
+                                       _buttonFollow.selected = user.isFollowing;
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        DLog(@"Something went wrong (Profile)");
                                    }];
@@ -265,7 +269,10 @@ typedef enum {
 }
 
 - (IBAction)touchProfilePic:(id)sender {
-    [self touchSetProfilePic];
+    LXAppDelegate* app = [LXAppDelegate currentDelegate];
+    if (app.currentUser &&  [_user.userId isEqualToNumber:app.currentUser.userId]) {
+        [self touchSetProfilePic];
+    }
 }
 
 - (IBAction)refresh:(id)sender {
@@ -1178,6 +1185,16 @@ typedef enum {
     LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
     viewUserPage.user = user;
     [self.navigationController pushViewController:viewUserPage animated:YES];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"Profile"]) {
+        LXUserProfileViewController *view = segue.destinationViewController;
+        view.user = _user;
+        MZFormSheetSegue *sheet = (MZFormSheetSegue*)segue;
+        sheet.formSheetController.cornerRadius = 0;
+        sheet.formSheetController.shouldDismissOnBackgroundViewTap = YES;
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {

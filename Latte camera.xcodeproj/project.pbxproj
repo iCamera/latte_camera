@@ -839,6 +839,7 @@
 		88795ED0171EADBD009EA487 /* calendar_label.png in Resources */ = {isa = PBXBuildFile; fileRef = 88795ECE171EADBD009EA487 /* calendar_label.png */; };
 		88795ED1171EADBD009EA487 /* calendar_label@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88795ECF171EADBD009EA487 /* calendar_label@2x.png */; };
 		887A66C0194561BD000E07F2 /* LatteAPIv2Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 887A66BF194561BD000E07F2 /* LatteAPIv2Client.m */; };
+		887D5DD21957F50A00519186 /* LXUserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 887D5DD11957F50A00519186 /* LXUserProfileViewController.m */; };
 		887E40A116257A310060623C /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 887E40A016257A300060623C /* Default@2x.png */; };
 		887E40A316257B950060623C /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 887E40A216257B950060623C /* Default.png */; };
 		887E40D11626CE380060623C /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 887E40CE1626CE300060623C /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -2813,6 +2814,8 @@
 		88795ECF171EADBD009EA487 /* calendar_label@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar_label@2x.png"; sourceTree = "<group>"; };
 		887A66BE194561BD000E07F2 /* LatteAPIv2Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LatteAPIv2Client.h; sourceTree = "<group>"; };
 		887A66BF194561BD000E07F2 /* LatteAPIv2Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LatteAPIv2Client.m; sourceTree = "<group>"; };
+		887D5DD01957F50A00519186 /* LXUserProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXUserProfileViewController.h; sourceTree = "<group>"; };
+		887D5DD11957F50A00519186 /* LXUserProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXUserProfileViewController.m; sourceTree = "<group>"; };
 		887E4094162552C10060623C /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../../icon.png; sourceTree = "<group>"; };
 		887E40961625536B0060623C /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "../../icon@2x.png"; sourceTree = "<group>"; };
 		887E40A016257A300060623C /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../../Default@2x.png"; sourceTree = "<group>"; };
@@ -4911,6 +4914,8 @@
 				88FB5C20192374720018F757 /* LXUserPageViewController.m */,
 				88F550B919513315007217CF /* LXChatViewController.h */,
 				88F550BA19513315007217CF /* LXChatViewController.m */,
+				887D5DD01957F50A00519186 /* LXUserProfileViewController.h */,
+				887D5DD11957F50A00519186 /* LXUserProfileViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -8370,6 +8375,7 @@
 				88D2DC201924A25A0027D88A /* UIButton+AsyncImage.m in Sources */,
 				8837738517AF9C50005B0826 /* LXReportAbuseViewController.m in Sources */,
 				8837738817B0C164005B0826 /* LXEmailConfirmPopupController.m in Sources */,
+				887D5DD21957F50A00519186 /* LXUserProfileViewController.m in Sources */,
 				88C67F3A17C5B324002A5D56 /* LXModalNavigationController.m in Sources */,
 				88D86DD017CB446400EC62A2 /* LXSocialViewController.m in Sources */,
 				88FCB2D517CC83CA0010169E /* LXReportAbuseCommentViewController.m in Sources */,
