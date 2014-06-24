@@ -17,4 +17,6 @@
 @property (strong, nonatomic) NSString *tag;
 @property (strong, nonatomic) NSString *conversationHash;
 
+@property (strong, nonatomic) NSMutableArray *messages;
+
 @end

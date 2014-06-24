@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JSQMessagesViewController.h"
 
-@interface LXMessage : NSObject
+@interface LXMessage : NSDictionary<JSQMessageData>
 
 @end

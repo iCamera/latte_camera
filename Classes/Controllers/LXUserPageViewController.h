@@ -22,6 +22,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonFollow;
 
 @property (strong, nonatomic) User *user;
+@property (assign, nonatomic) NSInteger userId;
 
 - (void)expandHeader;
 - (void)collapseHeader;

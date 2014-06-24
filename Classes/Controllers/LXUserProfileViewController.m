@@ -91,9 +91,9 @@
         cell.textLabel.text = @"URL";
         NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
         if ([language isEqualToString:@"ja"]) {
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"http://latte.la/picture/user/%d", [_user.userId integerValue]];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"http://latte.la/photo/%d", [_user.userId integerValue]];
         } else {
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"http://en.latte.la/picture/user/%d", [_user.userId integerValue]];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"http://en.latte.la/photo/%d", [_user.userId integerValue]];
         }
         cell.detailTextLabel.highlighted = YES;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -169,6 +169,19 @@
         return size.height + 27;
     } else {
         return 44;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == showField.count) {
+        NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
+        if ([language isEqualToString:@"ja"]) {
+            NSString *url = [NSString stringWithFormat:@"http://latte.la/photo/%d", [_user.userId integerValue]];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+        } else {
+            NSString *url = [NSString stringWithFormat:@"http://en.latte.la/photo/%d", [_user.userId integerValue]];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+        }
     }
 }
 

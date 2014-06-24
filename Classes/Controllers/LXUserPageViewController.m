@@ -93,6 +93,10 @@ typedef enum {
     _imageCover.image = [_imageCover.image applyDarkEffect];
 }
 
+- (void)setUser:(User *)user {
+    _user = user;
+    _userId = [user.userId integerValue];
+}
 
 - (void)viewDidLoad
 {
@@ -118,7 +122,7 @@ typedef enum {
     photoMode = kPhotoGrid;
     
     // Increase count
-    NSString *url = [NSString stringWithFormat:@"user/counter/%ld",[_user.userId longValue]];
+    NSString *url = [NSString stringWithFormat:@"user/counter/%ld", _userId];
     
     [[LatteAPIClient sharedClient] GET:url parameters:nil success:nil failure:nil];
     
@@ -136,12 +140,10 @@ typedef enum {
     [_buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:_user.profilePicture]];
     [_buttonUsername setTitle:_user.name forState:UIControlStateNormal];
     
-    
     [self reloadView];
+    [self reloadProfile];
     
-    if (app.currentUser != nil && ![_user.userId isEqualToNumber:app.currentUser.userId]) {
-        [self reloadProfile];
-    } else {
+    if (app.currentUser && (_userId == [app.currentUser.userId integerValue])) {
         _buttonFollow.hidden = YES;
     }
 }
@@ -149,14 +151,17 @@ typedef enum {
 
 
 - (void)reloadProfile {
-    NSString *url = [NSString stringWithFormat:@"user/%ld", [_user.userId longValue]];
+    NSString *url = [NSString stringWithFormat:@"user/%ld", _userId];
     [[LatteAPIClient sharedClient] GET:url
                                 parameters: nil
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       User *user = [User instanceFromDictionary:JSON[@"user"]];
+                                       _user = [User instanceFromDictionary:JSON[@"user"]];
+                                       
+                                       [_buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:_user.profilePicture]];
+                                       [_buttonUsername setTitle:_user.name forState:UIControlStateNormal];
                                        
                                        _buttonFollow.enabled = true;
-                                       _buttonFollow.selected = user.isFollowing;
+                                       _buttonFollow.selected = _user.isFollowing;
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        DLog(@"Something went wrong (Profile)");
                                    }];
@@ -178,7 +183,7 @@ typedef enum {
     NSDictionary *param = @{@"page": [NSNumber numberWithInteger:pagePic],
                             @"limit": [NSNumber numberWithInt:30]};
 
-    NSString *url = [NSString stringWithFormat:@"picture/user/%ld", [_user.userId longValue]];
+    NSString *url = [NSString stringWithFormat:@"picture/user/%ld", _userId];
     currentRequest = [[LatteAPIClient sharedClient] GET:url
                                 parameters: param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -210,7 +215,7 @@ typedef enum {
 - (void)loadFollower {
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
-    NSString *url = [NSString stringWithFormat:@"user/%ld/follower", [_user.userId longValue]];
+    NSString *url = [NSString stringWithFormat:@"user/%ld/follower", _userId];
     [[LatteAPIClient sharedClient] GET:url
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -230,7 +235,7 @@ typedef enum {
 - (void)loadFollowings {
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
-    NSString *url = [NSString stringWithFormat:@"user/%ld/following", [_user.userId longValue]];
+    NSString *url = [NSString stringWithFormat:@"user/%ld/following", _userId];
     [[LatteAPIClient sharedClient] GET:url
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -270,7 +275,7 @@ typedef enum {
 
 - (IBAction)touchProfilePic:(id)sender {
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
-    if (app.currentUser &&  [_user.userId isEqualToNumber:app.currentUser.userId]) {
+    if (app.currentUser &&  (_userId == [app.currentUser.userId integerValue])) {
         [self touchSetProfilePic];
     }
 }
@@ -309,10 +314,10 @@ typedef enum {
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
     
     if (_user.isFollowing) {
-        url = [NSString stringWithFormat:@"user/follow/%ld", [_user.userId longValue]];
+        url = [NSString stringWithFormat:@"user/follow/%ld", _userId];
         
     } else {
-        url = [NSString stringWithFormat:@"user/unfollow/%ld", [_user.userId longValue]];
+        url = [NSString stringWithFormat:@"user/unfollow/%ld", _userId];
     }
     
     [[LatteAPIClient sharedClient] POST:url
@@ -337,7 +342,7 @@ typedef enum {
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"yyyyMM"];
     
-    NSString* urlPhotos = [NSString stringWithFormat:@"picture/album/by_month/%@/%d", [dateFormat stringFromDate:currentMonth], [_user.userId integerValue]];
+    NSString* urlPhotos = [NSString stringWithFormat:@"picture/album/by_month/%@/%ld", [dateFormat stringFromDate:currentMonth], _userId];
     [HUD show:YES];
     [[LatteAPIClient sharedClient] GET:urlPhotos
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
