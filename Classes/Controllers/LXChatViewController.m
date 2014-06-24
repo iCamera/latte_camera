@@ -69,7 +69,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Conversation" forIndexPath:indexPath];
     
     NSDictionary *conversation = conversations[indexPath.row];
-    cell.textLabel.text = conversation[@"preview"];
+    cell.textLabel.text = conversation[@"title"];
     cell.detailTextLabel.text = conversation[@"preview"];
     cell.tag = indexPath.row;
     // Configure the cell...
@@ -92,7 +92,14 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
+        NSDictionary *conversation = conversations[indexPath.row];
+        
+        NSString *url = [NSString stringWithFormat:@"message/%@", conversation[@"hash"]];
+        
+        LatteAPIv2Client *api2 = [LatteAPIv2Client sharedClient];
+        [api2 DELETE:url parameters:nil success:nil failure:nil];
+        
+        [conversations removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -130,6 +137,7 @@
     LXTagDiscussionViewController *viewConversation = segue.destinationViewController;
     UITableViewCell *cell = sender;
     NSDictionary* conversation = conversations[cell.tag];
+    viewConversation.navigationItem.title = conversation[@"title"];
     viewConversation.conversationHash = conversation[@"hash"];
 }
 

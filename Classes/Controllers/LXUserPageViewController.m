@@ -135,7 +135,7 @@ typedef enum {
     HUD.margin = 10.f;
     HUD.yOffset = 150.f;
     
-    _buttonUser.layer.cornerRadius = 17.5;
+    _buttonUser.layer.cornerRadius = 15;
     
     [_buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:_user.profilePicture]];
     [_buttonUsername setTitle:_user.name forState:UIControlStateNormal];
