@@ -15,6 +15,7 @@
 #import "LXStreamHeader.h"
 
 #import "REFrostedViewController.h"
+#import "MZFormSheetSegue.h"
 
 @interface LXStreamViewController ()
 
@@ -147,6 +148,8 @@
     return ret;
 }
 
+#pragma mark - Gallery datasource
+
 
 - (NSDictionary *)pictureAfterPicture:(Picture *)picture {
     Feed *feed = [LXUtils feedFromPicID:[picture.pictureId longValue] of:feeds];
@@ -182,6 +185,9 @@
     return ret;
 }
 
+
+#pragma mark - Collection Datasource
+
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     if ([kind isEqualToString:CHTCollectionElementKindSectionHeader]) {
         LXStreamHeader *header = [collectionView dequeueReusableSupplementaryViewOfKind:kind
@@ -215,16 +221,6 @@
     }
 
     return nil;
-}
-
-- (void)switchTab:(UISegmentedControl *)sender {
-    currentTab = sender.selectedSegmentIndex;
-    if (currentTab == 0) {
-        [self.collectionView selectItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] animated:NO scrollPosition:UICollectionViewScrollPositionNone];
-        [self.collectionView setCollectionViewLayout:layoutWaterfall animated:YES];
-    } else {
-        [self.collectionView setCollectionViewLayout:layoutGrid animated:YES];
-    }
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -280,6 +276,31 @@
     }
 }
 
+
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"Country"]) {
+        MZFormSheetSegue *sheet = (MZFormSheetSegue*)segue;
+        sheet.formSheetController.cornerRadius = 0;
+        sheet.formSheetController.shouldDismissOnBackgroundViewTap = YES;
+    }
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+
+- (void)switchTab:(UISegmentedControl *)sender {
+    currentTab = sender.selectedSegmentIndex;
+    if (currentTab == 0) {
+        [self.collectionView selectItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+        [self.collectionView setCollectionViewLayout:layoutWaterfall animated:YES];
+    } else {
+        [self.collectionView setCollectionViewLayout:layoutGrid animated:YES];
+    }
+}
+
 - (IBAction)showMenu
 {
     // Dismiss keyboard (optional)
@@ -292,20 +313,5 @@
     [self.frostedViewController presentMenuViewController];
 }
 
-- (IBAction)selectCountry:(id)sender {
-    
-}
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

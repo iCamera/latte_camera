@@ -1092,6 +1092,7 @@
 		889093FD16F8959400E98DF4 /* follow_mutual_m_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 889093F916F8959400E98DF4 /* follow_mutual_m_off@2x.png */; };
 		889093FE16F8959400E98DF4 /* follow_mutual_m.png in Resources */ = {isa = PBXBuildFile; fileRef = 889093FA16F8959400E98DF4 /* follow_mutual_m.png */; };
 		889093FF16F8959400E98DF4 /* follow_mutual_m@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 889093FB16F8959400E98DF4 /* follow_mutual_m@2x.png */; };
+		88963E8E195A731B000B1DDC /* LXCountrySelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88963E8D195A731B000B1DDC /* LXCountrySelectViewController.m */; };
 		88979100179FD64B00BDC803 /* LXFAQViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 889790FF179FD64A00BDC803 /* LXFAQViewController.m */; };
 		88A43B0216703340001A8BB3 /* bt_twitter2_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A43AFE16703340001A8BB3 /* bt_twitter2_on.png */; };
 		88A43B0316703340001A8BB3 /* bt_twitter2_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A43AFF16703340001A8BB3 /* bt_twitter2_on@2x.png */; };
@@ -3123,6 +3124,8 @@
 		889093F916F8959400E98DF4 /* follow_mutual_m_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "follow_mutual_m_off@2x.png"; sourceTree = "<group>"; };
 		889093FA16F8959400E98DF4 /* follow_mutual_m.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = follow_mutual_m.png; sourceTree = "<group>"; };
 		889093FB16F8959400E98DF4 /* follow_mutual_m@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "follow_mutual_m@2x.png"; sourceTree = "<group>"; };
+		88963E8C195A731B000B1DDC /* LXCountrySelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCountrySelectViewController.h; sourceTree = "<group>"; };
+		88963E8D195A731B000B1DDC /* LXCountrySelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCountrySelectViewController.m; sourceTree = "<group>"; };
 		889790FE179FD64A00BDC803 /* LXFAQViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFAQViewController.h; sourceTree = "<group>"; };
 		889790FF179FD64A00BDC803 /* LXFAQViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFAQViewController.m; sourceTree = "<group>"; };
 		88A43AFE16703340001A8BB3 /* bt_twitter2_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bt_twitter2_on.png; sourceTree = "<group>"; };
@@ -4916,6 +4919,8 @@
 				88F550BA19513315007217CF /* LXChatViewController.m */,
 				887D5DD01957F50A00519186 /* LXUserProfileViewController.h */,
 				887D5DD11957F50A00519186 /* LXUserProfileViewController.m */,
+				88963E8C195A731B000B1DDC /* LXCountrySelectViewController.h */,
+				88963E8D195A731B000B1DDC /* LXCountrySelectViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -8361,6 +8366,7 @@
 				887A66C0194561BD000E07F2 /* LatteAPIv2Client.m in Sources */,
 				882055041938550D00D741BB /* LXPicVoteCollectionController.m in Sources */,
 				8C0E16FF193DD19600B50887 /* LXCompanyPolicyViewController.m in Sources */,
+				88963E8E195A731B000B1DDC /* LXCountrySelectViewController.m in Sources */,
 				88EB47CD19483E4700D0F026 /* LXMessage.m in Sources */,
 				88AAA2C01769EC52007610BB /* UIImage+Resize.m in Sources */,
 				884ACB2418EEB8F900B2924B /* LXStreamBrickCell.m in Sources */,
