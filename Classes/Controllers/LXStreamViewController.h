@@ -11,6 +11,7 @@
 #import "LXGalleryViewController.h"
 
 @interface LXStreamViewController : UICollectionViewController <CHTCollectionViewDelegateWaterfallLayout, LXGalleryViewControllerDataSource>
+@property (strong, nonatomic) IBOutlet UIButton *buttonCountry;
 
 - (IBAction)showMenu;
 

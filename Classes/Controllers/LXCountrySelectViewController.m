@@ -7,10 +7,11 @@
 //
 
 #import "LXCountrySelectViewController.h"
+#import "MZFormSheetController.h"
 
 @interface LXCountrySelectViewController () {
-    NSMutableArray *localizedCountryArray;
-    NSArray *countryArray;
+    NSMutableArray *countryCodes;
+    NSMutableArray *countryString;
 }
 
 @end
@@ -37,17 +38,27 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     NSLocale *locale = [NSLocale currentLocale];
-    countryArray = [NSLocale ISOCountryCodes];
+    countryCodes = [[NSLocale ISOCountryCodes] mutableCopy];
+    NSMutableDictionary *countryDict = [[NSMutableDictionary alloc] init];
+    countryString = [[NSMutableArray alloc] init];
     
-    localizedCountryArray = [[NSMutableArray alloc] init];
-    
-    for (NSString *countryCode in countryArray) {
-        
+    for (NSString *countryCode in countryCodes)
+    {
         NSString *displayNameString = [locale displayNameForKey:NSLocaleCountryCode value:countryCode];
-        [localizedCountryArray addObject:displayNameString];
-        
+        [countryDict setObject:displayNameString forKey:countryCode];
     }
-
+    
+    countryCodes = [[countryDict keysSortedByValueUsingSelector:@selector(localizedCompare:)] mutableCopy];
+    
+    
+    for (NSString *countryCode in countryCodes)
+    {
+        [countryString addObject:countryDict[countryCode]];
+    }
+    
+    [countryCodes insertObject:@"World" atIndex:0];
+    [countryString insertObject:@"World" atIndex:0];
+    
     [self.tableView reloadData];
 }
 
@@ -58,7 +69,19 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"%@", countryArray[indexPath.row]);
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if (indexPath.row == 0) {
+        [defaults removeObjectForKey:@"BrowsingCountry"];
+    } else {
+        [defaults setObject:countryCodes[indexPath.row] forKey:@"BrowsingCountry"];
+    }
+    [defaults synchronize];
+    
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"ChangedBrowsingCountry"
+     object:countryCodes[indexPath.row]];
+    
+    [self mz_dismissFormSheetControllerAnimated:YES completionHandler:nil];
 }
 
 #pragma mark - Table view data source
@@ -70,7 +93,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return countryArray.count;
+    return countryCodes.count;
 }
 
 
@@ -78,7 +101,9 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Country" forIndexPath:indexPath];
     
-    cell.textLabel.text = localizedCountryArray[indexPath.row];
+    NSString *countryImage = [NSString stringWithFormat:@"%@.png", countryCodes[indexPath.row]];
+    cell.imageView.image = [UIImage imageNamed:countryImage];
+    cell.textLabel.text = countryString[indexPath.row];
 
     return cell;
 }

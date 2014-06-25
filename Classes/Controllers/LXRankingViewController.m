@@ -17,6 +17,7 @@
 #import "LatteAPIClient.h"
 #import "LXUserPageViewController.h"
 #import "REFrostedViewController.h"
+#import "MZFormSheetSegue.h"
 
 typedef enum {
     kLayoutNormal,
@@ -35,7 +36,7 @@ typedef enum {
     NSMutableArray *days;
     NSInteger rankLayout;
     BOOL reloading;
-    NSString *area;
+    NSString *browsingCountry;
 }
 
 @synthesize buttonWeekly;
@@ -44,8 +45,6 @@ typedef enum {
 @synthesize viewTab;
 @synthesize loadIndicator;
 @synthesize buttonDaily;
-@synthesize buttonAreaLocal;
-@synthesize buttonAreaWorld;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -83,23 +82,33 @@ typedef enum {
     
     //setup left button
     
-    area = [[NSUserDefaults standardUserDefaults] objectForKey:@"timeline_area"];
-    if (!area) {
-        area = @"local";
-    }
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(changedBrowsingCountry:)
+                                                 name:@"ChangedBrowsingCountry" object:nil];
     
-    if ([area isEqualToString:@"world"]) {
-        buttonAreaWorld.selected = YES;
-        buttonAreaLocal.selected = NO;
-    } else {
-        buttonAreaWorld.selected = NO;
-        buttonAreaLocal.selected = YES;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    browsingCountry = [defaults objectForKey:@"BrowsingCountry"];
+    if (browsingCountry) {
+        NSString *countryImage = [NSString stringWithFormat:@"%@.png", browsingCountry];
+        [_buttonCountry setImage:[UIImage imageNamed:countryImage] forState:UIControlStateNormal];
     }
     
     [self reloadView];
 }
 
 - (void)becomeActive:(id)sender {
+    [self reloadView];
+}
+
+- (void)changedBrowsingCountry:(NSNotification*)notify {
+    browsingCountry = notify.object;
+    NSString *countryImage;
+    if (browsingCountry && [browsingCountry isEqualToString:@"World"]) {
+        countryImage = @"icon_area.png";
+    } else {
+        countryImage = [NSString stringWithFormat:@"%@.png", browsingCountry];
+    }
+    [_buttonCountry setImage:[UIImage imageNamed:countryImage] forState:UIControlStateNormal];
     [self reloadView];
 }
 
@@ -137,7 +146,10 @@ typedef enum {
     loadEnded = false;
     
     NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
-    [param setObject:area forKey:@"area"];
+    
+    if (browsingCountry) {
+        param[@"country"] = browsingCountry;
+    }
     
     [[LatteAPIClient sharedClient] GET:url
                                 parameters: param
@@ -171,7 +183,10 @@ typedef enum {
     loadEnded = false;
     
     NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
-    [param setObject:area forKey:@"area"];
+    
+    if (browsingCountry) {
+        param[@"country"] = browsingCountry;
+    }
     
     [[LatteAPIClient sharedClient] GET:url
                                 parameters: param
@@ -210,7 +225,10 @@ typedef enum {
     loadEnded = false;
     
     NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
-    [param setObject:area forKey:@"area"];
+    
+    if (browsingCountry) {
+        param[@"country"] = browsingCountry;
+    }
     
     [[LatteAPIClient sharedClient] GET:url
                                 parameters: param
@@ -237,7 +255,10 @@ typedef enum {
     [loadIndicator startAnimating];
     
     NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
-    [param setObject:area forKey:@"area"];
+    
+    if (browsingCountry) {
+        param[@"country"] = browsingCountry;
+    }
     
     [[LatteAPIClient sharedClient] GET:url
                                 parameters:param
@@ -587,25 +608,7 @@ typedef enum {
     return nil;
 }
 
-- (IBAction)touchArea:(UIButton*)sender {
-    buttonAreaWorld.selected = NO;
-    buttonAreaLocal.selected = NO;
-    sender.selected = YES;
-    switch (sender.tag) {
-        case 0:
-            area = @"local";
-            break;
-        case 1:
-            area = @"world";
-            break;
-        default:
-            break;
-    }
-    [[NSUserDefaults standardUserDefaults] setObject:area forKey:@"timeline_area"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    [self reloadView];
-}
+
 
 - (IBAction)refresh:(id)sender {
     [self reloadView];
@@ -622,5 +625,20 @@ typedef enum {
     //
     [self.frostedViewController presentMenuViewController];
 }
+
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"Country"]) {
+        MZFormSheetSegue *sheet = (MZFormSheetSegue*)segue;
+        sheet.formSheetController.cornerRadius = 0;
+        sheet.formSheetController.shouldDismissOnBackgroundViewTap = YES;
+    }
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+
 
 @end

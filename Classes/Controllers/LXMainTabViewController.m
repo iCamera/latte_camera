@@ -220,13 +220,6 @@
     [self performSegueWithIdentifier:@"UploadStatus" sender:self];
 }
 
-- (void)statusBarOverlayDidRecognizeGesture:(UIGestureRecognizer *)gestureRecognizer {
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                             bundle:nil];
-    UINavigationController *viewConfirm = [mainStoryboard instantiateViewControllerWithIdentifier:@"NavConfirmEmail"];
-    [self presentViewController:viewConfirm animated:YES completion:nil];
-}
-
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
     if (viewController == tabBarController.viewControllers[2]) {
         UIActionSheet *actionUpload = [[UIActionSheet alloc] initWithTitle:@""

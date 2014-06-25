@@ -244,7 +244,18 @@
                                 <action selector="showMenu" destination="HL7-KM-o46" id="XzL-o9-K51"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="USA" id="gAe-34-1CB"/>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="VGx-uY-mgl">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="EH2-al-meD">
+                                <rect key="frame" x="274" y="11" width="30" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="icon_area.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="uiS-AQ-BI7" kind="custom" identifier="Country" customClass="MZFormSheetSegue" id="kV3-JH-Oaz"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                     </navigationItem>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="7h9-DV-X2L">
                         <autoresizingMask key="autoresizingMask"/>
@@ -254,6 +265,7 @@
                         </connections>
                     </refreshControl>
                     <connections>
+                        <outlet property="buttonCountry" destination="EH2-al-meD" id="ThX-lZ-Gxj"/>
                         <outlet property="loadIndicator" destination="9Bq-Yq-rnc" id="XU9-cy-VSr"/>
                         <outlet property="segmentView" destination="3W1-ff-YM5" id="UIH-gm-DSm"/>
                         <outlet property="viewTab" destination="qhJ-TB-csr" id="ktt-CA-fl7"/>
@@ -408,7 +420,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l43-nT-RgO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-250" y="-9"/>
+            <point key="canvasLocation" x="202" y="-11"/>
         </scene>
         <!--Tag View Controller - Tag-->
         <scene sceneID="qoJ-OX-aaX">
@@ -456,7 +468,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6LQ-bA-eEB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="289" y="-611"/>
+            <point key="canvasLocation" x="741" y="-613"/>
         </scene>
         <!--Notify Side View Controller - Notification-->
         <scene sceneID="kYt-5Z-oXR">
@@ -1773,7 +1785,7 @@
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Ujf-iu-3bB">
                                 <rect key="frame" x="274" y="11" width="30" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="JP.png">
+                                <state key="normal" image="icon_area.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -1782,6 +1794,9 @@
                             </button>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="buttonCountry" destination="Ujf-iu-3bB" id="VOA-Nc-2lP"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8bd-O6-Dpl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2466,7 +2481,7 @@ Or you can resend confirmation email.</string>
                     </prototypes>
                 </tableView>
             </objects>
-            <point key="canvasLocation" x="289" y="-9"/>
+            <point key="canvasLocation" x="741" y="-11"/>
         </scene>
         <!--User Profile View Controller-->
         <scene sceneID="RFo-4z-rFb">
@@ -2510,12 +2525,11 @@ Or you can resend confirmation email.</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Ii-cU-EWi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="736" y="-7"/>
+            <point key="canvasLocation" x="1188" y="-9"/>
         </scene>
     </scenes>
     <resources>
         <image name="Icon-40.png" width="40" height="40"/>
-        <image name="JP.png" width="16" height="16"/>
         <image name="arrow_right.png" width="8" height="13"/>
         <image name="bg_rank1.png" width="20" height="21"/>
         <image name="bg_rank2.png" width="20" height="21"/>
@@ -2533,6 +2547,7 @@ Or you can resend confirmation email.</string>
         <image name="camera.png" width="25" height="20"/>
         <image name="default-cover.gif" width="1200" height="100"/>
         <image name="icon_addfollow_s.png" width="12" height="12"/>
+        <image name="icon_area.png" width="15" height="15"/>
         <image name="icon_calendar_blue.png" width="15" height="15"/>
         <image name="icon_calendar_lbrown.png" width="15" height="15"/>
         <image name="icon_comment_s.png" width="12" height="12"/>
@@ -2580,6 +2595,7 @@ Or you can resend confirmation email.</string>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="kV3-JH-Oaz"/>
         <segue reference="N1b-hN-6Tv"/>
     </inferredMetricsTieBreakers>
 </document>

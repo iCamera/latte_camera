@@ -19,12 +19,11 @@
 @property (strong, nonatomic) IBOutlet UIView *viewTab;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segmentView;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadIndicator;
-@property (strong, nonatomic) IBOutlet UIButton *buttonAreaLocal;
-@property (strong, nonatomic) IBOutlet UIButton *buttonAreaWorld;
+
+@property (strong, nonatomic) IBOutlet UIButton *buttonCountry;
 
 - (IBAction)showMenu;
 - (IBAction)touchTab:(UISegmentedControl*)sender;
-- (IBAction)touchArea:(UIButton*)sender;
 - (IBAction)refresh:(id)sender;
 - (void)reloadView;
 @end

@@ -25,11 +25,11 @@
     NSMutableArray *feeds;
     BOOL loadEnded;
     BOOL loading;
-    NSString *area;
     UIRefreshControl *refresh;
     NSInteger currentTab;
     UICollectionViewLayout *layoutGrid;
     CHTCollectionViewWaterfallLayout *layoutWaterfall;
+    NSString *browsingCountry;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -70,6 +70,29 @@
                                              selector:@selector(becomeActive:)
                                                  name:@"BecomeActive" object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(changedBrowsingCountry:)
+                                                 name:@"ChangedBrowsingCountry" object:nil];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    browsingCountry = [defaults objectForKey:@"BrowsingCountry"];
+    if (browsingCountry) {
+        NSString *countryImage = [NSString stringWithFormat:@"%@.png", browsingCountry];
+        [_buttonCountry setImage:[UIImage imageNamed:countryImage] forState:UIControlStateNormal];
+    }
+    
+    [self loadMore:YES];
+}
+
+- (void)changedBrowsingCountry:(NSNotification*)notify {
+    browsingCountry = notify.object;
+    NSString *countryImage;
+    if (browsingCountry && [browsingCountry isEqualToString:@"World"]) {
+        countryImage = @"icon_area.png";
+    } else {
+        countryImage = [NSString stringWithFormat:@"%@.png", browsingCountry];
+    }
+    [_buttonCountry setImage:[UIImage imageNamed:countryImage] forState:UIControlStateNormal];
     [self loadMore:YES];
 }
 
@@ -97,8 +120,10 @@
     Feed *feed = feeds.lastObject;
     
     NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
-    area = @"local";
-    [param setObject:area forKey:@"area"];
+
+    if (browsingCountry) {
+        param[@"country"] = browsingCountry;
+    }
     
     if (!reset) {
         if (feed) {
