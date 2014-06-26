@@ -7,11 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LXGalleryViewController.h"
 
-#import "LXMainTabViewController.h"
-
-
-@interface LXNotifySideViewController : UITableViewController
+@interface LXNotifySideViewController : UITableViewController<LXGalleryViewControllerDataSource>
 
 - (IBAction)showMenu;
 - (IBAction)switchTab:(UISegmentedControl *)sender;

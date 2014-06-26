@@ -12,10 +12,12 @@
 @interface LXSettingRootViewController : UITableViewController<UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *labelVersion;
-@property (strong, nonatomic) IBOutlet UIImageView *imageProfile;
-@property (strong, nonatomic) IBOutlet UIView *viewHeader;
+@property (strong, nonatomic) IBOutlet UIButton *buttonProfilePicture;
+@property (strong, nonatomic) IBOutlet UIImageView *imageCover;
+
 @property (strong, nonatomic) IBOutlet UIView *viewWrapHeader;
 
 - (IBAction)touchSetPicture:(id)sender;
+- (IBAction)touchSetCover:(id)sender;
 
 @end

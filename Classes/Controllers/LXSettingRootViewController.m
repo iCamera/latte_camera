@@ -8,10 +8,11 @@
 
 #import "LXSettingRootViewController.h"
 #import "LXAppDelegate.h"
-#import "LatteAPIClient.h"
+#import "LatteAPIv2Client.h"
 #import "LXUtils.h"
 #import "LXShare.h"
-#import "UIImageView+loadProgress.h"
+#import "UIButton+AFNetworking.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface LXSettingRootViewController ()
 
@@ -19,11 +20,10 @@
 
 @implementation LXSettingRootViewController {
     LXShare *lxShare;
+    NSInteger photoMode;
 }
 
 @synthesize labelVersion;
-@synthesize viewHeader;
-@synthesize imageProfile;
 @synthesize viewWrapHeader;
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -56,11 +56,18 @@
     lxShare = [[LXShare alloc] init];
     lxShare.controller = self;
     
+    _buttonProfilePicture.layer.cornerRadius = 25;
+    
     if (app.currentUser) {
-        [imageProfile loadProgess:app.currentUser.profilePicture];
-        viewHeader.layer.cornerRadius = 5;
-        imageProfile.layer.cornerRadius = 25;
-        imageProfile.layer.masksToBounds = YES;
+        [[LatteAPIv2Client sharedClient] GET:@"user/me"
+                                parameters: nil
+                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       [_buttonProfilePicture setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:JSON[@"profile_picture"]]];
+                                       [_imageCover setImageWithURL:[NSURL URLWithString:JSON[@"cover_picture"]]];
+                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       DLog(@"Something went wrong (Profile)");
+                                   }];
+
     } else {
         self.tableView.tableHeaderView = nil;
     }
@@ -137,13 +144,23 @@
 }
 
 - (void)viewDidUnload {
-    [self setImageProfile:nil];
-    [self setViewHeader:nil];
     [self setViewWrapHeader:nil];
     [super viewDidUnload];
 }
 
 - (IBAction)touchSetPicture:(id)sender {
+    photoMode = 1;
+    UIActionSheet *actionUpload = [[UIActionSheet alloc] initWithTitle:@""
+                                                              delegate:self
+                                                     cancelButtonTitle:NSLocalizedString(@"Cancel", @"")
+                                                destructiveButtonTitle:nil
+                                                     otherButtonTitles:NSLocalizedString(@"Camera", @""), NSLocalizedString(@"Photo Library", @""), nil];
+    
+    [actionUpload showInView:self.view];
+}
+
+- (IBAction)touchSetCover:(id)sender {
+    photoMode = 2;
     UIActionSheet *actionUpload = [[UIActionSheet alloc] initWithTitle:@""
                                                               delegate:self
                                                      cancelButtonTitle:NSLocalizedString(@"Cancel", @"")
@@ -154,8 +171,6 @@
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    UIStoryboard* storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
-    
     if (buttonIndex == 0) {
         
         if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
@@ -169,10 +184,9 @@
             [myAlertView show];
             
         } else {
-            UIImagePickerController *imagePicker = [storyCamera instantiateViewControllerWithIdentifier:@"Picker"];
+            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
             
             imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-            imagePicker.allowsEditing = YES;
             imagePicker.delegate = self;
             
             [self presentViewController:imagePicker animated:YES completion:nil];
@@ -180,7 +194,6 @@
     } else if (buttonIndex == 1) {
         UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
         
-        imagePicker.allowsEditing = YES;
         imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         imagePicker.delegate = self;
         
@@ -191,72 +204,38 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [picker dismissViewControllerAnimated:NO completion:nil];
     
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    
-    MBProgressHUD *progessHUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:progessHUD];
-    progessHUD.removeFromSuperViewOnHide = YES;
-    progessHUD.mode = MBProgressHUDModeDeterminate;
-    [progessHUD show:YES];
-    
     void (^createForm)(id<AFMultipartFormData>) = ^(id<AFMultipartFormData> formData) {
-        [formData appendPartWithFileData:info[UIImagePickerControllerEditedImage]
+        NSData *imageData = UIImagePNGRepresentation(info[UIImagePickerControllerOriginalImage]);
+        [formData appendPartWithFileData:imageData
                                     name:@"file"
                                 fileName:@"latte.jpg"
                                 mimeType:@"image/jpeg"];
     };
     
+    LatteAPIv2Client *api2 = [LatteAPIv2Client sharedClient];
     
-    LatteAPIClient *api = [LatteAPIClient sharedClient];
-    NSURLRequest *request = [api.requestSerializer multipartFormRequestWithMethod:@"POST"
-                                                                        URLString:[[NSURL URLWithString:@"user/me/profile_picture" relativeToURL:api.baseURL] absoluteString]
-                                                                       parameters:nil
-                                                        constructingBodyWithBlock:createForm
-                                                                            error:nil];
+    if (photoMode == 1) {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [api2 POST:@"user/me/profile_picture" parameters:nil constructingBodyWithBlock:createForm success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+            [_buttonProfilePicture setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:JSON[@"profile_picture"]]];
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        }];
+
+    }
     
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    
-    void (^successUpload)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
-        progessHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
-        progessHUD.mode = MBProgressHUDModeCustomView;
-        [progessHUD hide:YES afterDelay:1];
+    if (photoMode == 2) {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [api2 POST:@"user/me/cover_picture" parameters:nil constructingBodyWithBlock:createForm success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+            [_imageCover setImageWithURL:[NSURL URLWithString:JSON[@"cover_picture"]]];
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        }];
         
-        imageProfile.image = [info objectForKey:@"preview"];
-        
-        [[LatteAPIClient sharedClient] GET:@"user/me"
-                                parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
-                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       
-                                       User *user = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
-                                       app.currentUser = user;
-                                       
-                                       
-                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       DLog(@"Something went wrong (Profile)");
-                                   }];
-    };
-    
-    void (^failUpload)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
-        if([operation.response statusCode] != 200){
-            DLog(@"Upload Failed");
-            return;
-        }
-        DLog(@"error: %@", [operation error]);
-        progessHUD.mode = MBProgressHUDModeText;
-        progessHUD.labelText = @"Error";
-        progessHUD.margin = 10.f;
-        progessHUD.yOffset = 150.f;
-        
-        [progessHUD hide:YES afterDelay:2];
-    };
-    
-    [operation setCompletionBlockWithSuccess: successUpload failure: failUpload];
-    
-    [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
-        progessHUD.progress = (float)totalBytesWritten/(float)totalBytesExpectedToWrite;
-    }];
-    
-    [operation start];
+    }
+
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {

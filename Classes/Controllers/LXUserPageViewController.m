@@ -10,6 +10,7 @@
 
 #import "LXAppDelegate.h"
 #import "LatteAPIClient.h"
+#import "LatteAPIv2Client.h"
 #import "UIImageView+AFNetworking.h"
 #import "LXCellFriend.h"
 #import "LXUtils.h"
@@ -152,19 +153,19 @@ typedef enum {
 
 - (void)reloadProfile {
     NSString *url = [NSString stringWithFormat:@"user/%ld", _userId];
-    [[LatteAPIClient sharedClient] GET:url
-                                parameters: nil
-                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       _user = [User instanceFromDictionary:JSON[@"user"]];
-                                       
-                                       [_buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:_user.profilePicture]];
-                                       [_buttonUsername setTitle:_user.name forState:UIControlStateNormal];
-                                       
-                                       _buttonFollow.enabled = true;
-                                       _buttonFollow.selected = _user.isFollowing;
-                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       DLog(@"Something went wrong (Profile)");
-                                   }];
+    LXAppDelegate* app = [LXAppDelegate currentDelegate];
+    
+    [[LatteAPIv2Client sharedClient] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+        [_buttonUsername setTitle:JSON[@"name"] forState:UIControlStateNormal];
+        [_buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:JSON[@"profile_picture"]]];
+        [_imageCover setImageWithURL:[NSURL URLWithString:JSON[@"cover_picture"]]];
+        
+        if (app.currentUser) {
+            _buttonFollow.enabled = true;
+            _buttonFollow.selected = [JSON[@"is_following"] boolValue];
+            
+        }
+    } failure:nil];
 }
 
 

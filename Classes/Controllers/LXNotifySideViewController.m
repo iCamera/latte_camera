@@ -229,6 +229,7 @@
                     
                     viewGallery.user = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
                     viewGallery.picture = [Picture instanceFromDictionary:[JSON objectForKey:@"picture"]];
+                    viewGallery.delegate = self;
                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                     [hud hide:YES];
                     DLog(@"Something went wrong Notify Gallery");
@@ -252,6 +253,7 @@
             UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
             LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
             viewGallery.picture = pic;
+            viewGallery.delegate = self;
             [self presentViewController:navGalerry animated:YES completion:nil];
             break;
         }
