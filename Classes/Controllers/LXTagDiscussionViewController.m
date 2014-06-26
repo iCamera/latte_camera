@@ -70,7 +70,8 @@
 
 - (void)loadMore:(BOOL)reset {
     LatteAPIv2Client *api2 = [LatteAPIv2Client sharedClient];
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:@{@"hash": _conversationHash}];
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:@{@"hash": _conversationHash,
+                                                                                  @"limit": @"500"}];
     if (!reset && rawMessages.count > 0) {
         params[@"last_id"] = rawMessages[0][@"id"];
     }
@@ -204,13 +205,42 @@
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
 {
+    /**
+     *  This logic should be consistent with what you return from `heightForCellTopLabelAtIndexPath:`
+     *  The other label text delegate methods should follow a similar pattern.
+     *
+     *  Show a timestamp for every 3rd message
+     */
+    if (indexPath.item % 3 == 0) {
+        JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
+        return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:message.date];
+    }
+    
     return nil;
 }
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath
 {
+    JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
     
-    return nil;
+    /**
+     *  iOS7-style sender name labels
+     */
+    if ([message.sender isEqualToString:self.sender]) {
+        return nil;
+    }
+    
+    if (indexPath.item - 1 > 0) {
+        JSQMessage *previousMessage = [self.messages objectAtIndex:indexPath.item - 1];
+        if ([[previousMessage sender] isEqualToString:message.sender]) {
+            return nil;
+        }
+    }
+    
+    /**
+     *  Don't specify attributes to use the defaults.
+     */
+    return [[NSAttributedString alloc] initWithString:message.sender];
 }
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
@@ -278,6 +308,10 @@
      *
      *  Show a timestamp for every 3rd message
      */
+    if (indexPath.item % 3 == 0) {
+        return kJSQMessagesCollectionViewCellLabelHeightDefault;
+    }
+    
     return 0.0f;
 }
 
@@ -287,7 +321,19 @@
     /**
      *  iOS7-style sender name labels
      */
-    return 0.0f;
+    JSQMessage *currentMessage = [self.messages objectAtIndex:indexPath.item];
+    if ([[currentMessage sender] isEqualToString:self.sender]) {
+        return 0.0f;
+    }
+    
+    if (indexPath.item - 1 > 0) {
+        JSQMessage *previousMessage = [self.messages objectAtIndex:indexPath.item - 1];
+        if ([[previousMessage sender] isEqualToString:[currentMessage sender]]) {
+            return 0.0f;
+        }
+    }
+    
+    return kJSQMessagesCollectionViewCellLabelHeightDefault;
 }
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
@@ -351,12 +397,12 @@
 }
 
 - (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {
-    [self loadMore:NO];
+//    [self loadMore:NO];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (scrollView.contentOffset.y == 0) {
-        [self loadMore:NO];
+//        [self loadMore:NO];
     }
 }
 

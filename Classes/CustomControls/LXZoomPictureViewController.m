@@ -7,7 +7,7 @@
 //
 
 #import "LXZoomPictureViewController.h"
-#import "UIImageView+AFNetworking.h"
+#import "UIImageView+loadProgress.h"
 #import "UIButton+AFNetworking.h"
 #import "Picture.h"
 
@@ -55,7 +55,7 @@
     
     actualScale = MAX(orgWidth/screenWidth, orgHeight/screenHeight)*2.0;
 
-    [imageZoom setImageWithURL:[NSURL URLWithString:_picture.urlMedium]];
+    [imageZoom loadProgess:_picture.urlMedium];
 
     zoomLevel = [[NSMutableArray alloc]init];
     
@@ -93,11 +93,11 @@
     
     if (scrollView.zoomScale >= 2.0 && !loadedLarge) {
         loadedLarge = true;
-        [imageZoom setImageWithURL:[NSURL URLWithString:_picture.urlLarge] placeholderImage:imageZoom.image];
+        [imageZoom loadProgess:_picture.urlLarge placeholderImage:imageZoom.image];
     } else if (scrollView.zoomScale >= 4.0 && !loadedOrg && actualScale >= 4.0) {
         loadedOrg = true;
         if (_picture.urlOrg) {
-            [imageZoom setImageWithURL:[NSURL URLWithString:_picture.urlOrg] placeholderImage:imageZoom.image];
+            [imageZoom loadProgess:_picture.urlOrg placeholderImage:imageZoom.image];
         }
     }
 }
