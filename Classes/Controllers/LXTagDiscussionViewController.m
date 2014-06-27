@@ -15,7 +15,6 @@
 #import "LXAppDelegate.h"
 #import "SocketIOPacket.h"
 #import "LXUserPageViewController.h"
-#import "LXMessage.h"
 #import <CommonCrypto/CommonDigest.h>
 
 @interface LXTagDiscussionViewController ()
@@ -354,7 +353,7 @@
     LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
     NSInteger userId = [rawMessages[indexPath.item][@"user"][@"id"] integerValue];
     viewUserPage.userId = userId;
-    NSLog(@"%d", userId);
+    NSLog(@"%ld", (long)userId);
     
     [self.navigationController pushViewController:viewUserPage animated:YES];
 

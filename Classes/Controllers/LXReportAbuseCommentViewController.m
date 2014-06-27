@@ -62,7 +62,7 @@
 }
 
 - (IBAction)touchReport:(id)sender {
-    NSString *path = [NSString stringWithFormat:@"user/report_abuse/%@/%d", @"comment", [_comment.commentId integerValue]];
+    NSString *path = [NSString stringWithFormat:@"user/report_abuse/%@/%ld", @"comment", [_comment.commentId longValue]];
     
     [[LatteAPIClient sharedClient] POST:path
                                  parameters:[NSDictionary dictionaryWithObject:textComment.text forKey:@"report_comment"]

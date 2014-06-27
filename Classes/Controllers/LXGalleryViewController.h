@@ -13,7 +13,7 @@
 
 @protocol LXGalleryViewControllerDataSource <NSObject>
 
-@required
+@optional
 - (NSDictionary*)pictureBeforePicture:(Picture *)picture;
 - (NSDictionary*)pictureAfterPicture:(Picture *)picture;
 @end

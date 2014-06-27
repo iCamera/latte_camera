@@ -244,7 +244,7 @@
             [HUD show:YES];
             LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
             
-            NSString *url = [NSString stringWithFormat:@"picture/%ld/delete", [_picture.pictureId integerValue]];
+            NSString *url = [NSString stringWithFormat:@"picture/%ld/delete", (long)[_picture.pictureId integerValue]];
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                                     [app getToken], @"token", nil];
             
@@ -322,7 +322,7 @@
     [HUD show:YES];
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
-    NSString *url = [NSString stringWithFormat:@"picture/%ld/edit", [_picture.pictureId integerValue]];
+    NSString *url = [NSString stringWithFormat:@"picture/%ld/edit", (long)[_picture.pictureId integerValue]];
     NSMutableArray *tagsPolish = [[NSMutableArray alloc] init];
     for (NSString *tag in tags)
         if (tag.length > 0)

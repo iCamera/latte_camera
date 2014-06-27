@@ -33,7 +33,6 @@
 
 typedef enum {
     kTablePhoto = 0,
-    kTableTag = 1,
     kTableFollower = 2,
     kTableFollowings = 3,
 } UserTableMode;
@@ -123,7 +122,7 @@ typedef enum {
     photoMode = kPhotoGrid;
     
     // Increase count
-    NSString *url = [NSString stringWithFormat:@"user/counter/%ld", _userId];
+    NSString *url = [NSString stringWithFormat:@"user/counter/%ld", (long)_userId];
     
     [[LatteAPIClient sharedClient] GET:url parameters:nil success:nil failure:nil];
     
@@ -152,7 +151,7 @@ typedef enum {
 
 
 - (void)reloadProfile {
-    NSString *url = [NSString stringWithFormat:@"user/%ld", _userId];
+    NSString *url = [NSString stringWithFormat:@"user/%ld", (long)_userId];
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
     
     [[LatteAPIv2Client sharedClient] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -184,7 +183,7 @@ typedef enum {
     NSDictionary *param = @{@"page": [NSNumber numberWithInteger:pagePic],
                             @"limit": [NSNumber numberWithInt:30]};
 
-    NSString *url = [NSString stringWithFormat:@"picture/user/%ld", _userId];
+    NSString *url = [NSString stringWithFormat:@"picture/user/%ld", (long)_userId];
     currentRequest = [[LatteAPIClient sharedClient] GET:url
                                 parameters: param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -216,7 +215,7 @@ typedef enum {
 - (void)loadFollower {
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
-    NSString *url = [NSString stringWithFormat:@"user/%ld/follower", _userId];
+    NSString *url = [NSString stringWithFormat:@"user/%ld/follower", (long)_userId];
     [[LatteAPIClient sharedClient] GET:url
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -236,7 +235,7 @@ typedef enum {
 - (void)loadFollowings {
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
-    NSString *url = [NSString stringWithFormat:@"user/%ld/following", _userId];
+    NSString *url = [NSString stringWithFormat:@"user/%ld/following", (long)_userId];
     [[LatteAPIClient sharedClient] GET:url
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -315,10 +314,10 @@ typedef enum {
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
     
     if (_user.isFollowing) {
-        url = [NSString stringWithFormat:@"user/follow/%ld", _userId];
+        url = [NSString stringWithFormat:@"user/follow/%ld", (long)_userId];
         
     } else {
-        url = [NSString stringWithFormat:@"user/unfollow/%ld", _userId];
+        url = [NSString stringWithFormat:@"user/unfollow/%ld", (long)_userId];
     }
     
     [[LatteAPIClient sharedClient] POST:url
@@ -343,7 +342,7 @@ typedef enum {
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"yyyyMM"];
     
-    NSString* urlPhotos = [NSString stringWithFormat:@"picture/album/by_month/%@/%ld", [dateFormat stringFromDate:currentMonth], _userId];
+    NSString* urlPhotos = [NSString stringWithFormat:@"picture/album/by_month/%@/%ld", [dateFormat stringFromDate:currentMonth], (long)_userId];
     [HUD show:YES];
     [[LatteAPIClient sharedClient] GET:urlPhotos
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
@@ -420,8 +419,6 @@ typedef enum {
             return followings.count;
         case kTableFollower:
             return followers.count;
-        case kTableTag:
-            return 0;
     }
     return 0;
 }
@@ -458,8 +455,6 @@ typedef enum {
         case kTablePhoto:
             if (photoMode == kPhotoGrid && endedPic)
                 isEmpty = pictures.count == 0;
-            break;
-        case kTableTag:
             break;
     }
     return isEmpty;
@@ -585,7 +580,7 @@ typedef enum {
                     CGRect frame = medal.bounds;
                     frame.size.height -= 2;
                     UILabel *label = [[UILabel alloc] initWithFrame:frame];
-                    label.text = [NSString stringWithFormat:@"%d", components.day];
+                    label.text = [NSString stringWithFormat:@"%ld", (long)components.day];
                     label.textColor = [UIColor whiteColor];
                     label.textAlignment = NSTextAlignmentCenter;
                     label.backgroundColor = [UIColor clearColor];
@@ -608,7 +603,7 @@ typedef enum {
                         label.text = NSLocalizedString(@"today", @"calendar today");
                     } else {
                         bg.image = [UIImage imageNamed:@"calendar_off.png"];
-                        label.text = [NSString stringWithFormat:@"%d", components.day];
+                        label.text = [NSString stringWithFormat:@"%ld", (long)components.day];
                     }
                     [bg addSubview:label];
                     if (componentCurrent.month != components.month) {
@@ -770,13 +765,13 @@ typedef enum {
     
     for (NSInteger i = 0; i < 25; i++) {
         [dateFormat setDateFormat:@"yyyyMMdd"];
-        NSString* key = [NSString stringWithFormat:@"%@%02d", [dateFormat stringFromDate:date], i];
+        NSString* key = [NSString stringWithFormat:@"%@%02ld", [dateFormat stringFromDate:date], (long)i];
         UIFont *font = [UIFont fontWithName:@"HelveticaNeue-Light" size:10];
     
         if ([currentDayPics objectForKey:key] || i == 24) {
             if (head < i - 1) {
                 UILabel *labelStart = [[UILabel alloc] initWithFrame:CGRectMake(6, height + 6, 50, 16)];
-                labelStart.text = [NSString stringWithFormat:@"%02d:00", head];
+                labelStart.text = [NSString stringWithFormat:@"%02ld:00", (long)head];
                 UILabel *labelEnd = [[UILabel alloc] initWithFrame:CGRectMake(6, height + 33, 50, 16)];
                 labelEnd.text = [NSString stringWithFormat:@"%02d:00", i-1];
                 
@@ -804,7 +799,7 @@ typedef enum {
                 [view addSubview:sp];
             } else if (head == i-1) {
                 UILabel *labelStart = [[UILabel alloc] initWithFrame:CGRectMake(6, height + 6, 50, 16)];
-                labelStart.text = [NSString stringWithFormat:@"%02ld:00", head];
+                labelStart.text = [NSString stringWithFormat:@"%02ld:00", (long)head];
                 labelStart.textAlignment = NSTextAlignmentCenter;
                 labelStart.font = font;
                 labelStart.backgroundColor = [UIColor clearColor];
@@ -816,7 +811,7 @@ typedef enum {
         if ([currentDayPics objectForKey:key]) {
             head += i+1;
             UILabel *labelStart = [[UILabel alloc] initWithFrame:CGRectMake(6, height + 6, 50, 16)];
-            labelStart.text = [NSString stringWithFormat:@"%02d:00", i];
+            labelStart.text = [NSString stringWithFormat:@"%02ld:00", (long)i];
             labelStart.textAlignment = NSTextAlignmentCenter;
             labelStart.font = font;
             labelStart.backgroundColor = [UIColor clearColor];

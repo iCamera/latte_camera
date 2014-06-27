@@ -62,7 +62,7 @@
                                    senderName, @"sender",
                                    nil];
     if (app.currentUser != nil) {
-        senderName = [NSString stringWithFormat:@"%@ [ID: %ld]", app.currentUser.name, [app.currentUser.userId integerValue]] ;
+        senderName = [NSString stringWithFormat:@"%@ [ID: %ld]", app.currentUser.name, (long)[app.currentUser.userId integerValue]] ;
         [params setObject:[app getToken] forKey:@"token"];
     }
     

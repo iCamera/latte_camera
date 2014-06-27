@@ -9,8 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface LXChangeEmailViewController : UIViewController
-- (IBAction)tapBackground:(id)sender;
-@property (strong, nonatomic) IBOutlet UIView *viewSub;
+
 - (IBAction)touchChange:(id)sender;
 @property (strong, nonatomic) IBOutlet UITextField *textMail;
 @property (strong, nonatomic) IBOutlet UITextField *textPassword;

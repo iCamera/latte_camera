@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface LXChangePasswordViewController : UIViewController
-- (IBAction)tapBackground:(id)sender;
-@property (strong, nonatomic) IBOutlet UIView *viewSub;
 - (IBAction)touchChange:(id)sender;
 @property (strong, nonatomic) IBOutlet UITextField *textCurrentPassword;
 @property (strong, nonatomic) IBOutlet UITextField *textNewPassword;

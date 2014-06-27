@@ -1407,7 +1407,6 @@
 		88E96B2515EDCBC800FB9CC8 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E96B2415EDCBC800FB9CC8 /* CoreLocation.framework */; };
 		88EB47C819471B2E00D0F026 /* LXTagDiscussionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88EB47C719471B2E00D0F026 /* LXTagDiscussionViewController.m */; };
 		88EB47CA1948316400D0F026 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 88EB47C91948316400D0F026 /* libsqlite3.dylib */; };
-		88EB47CD19483E4700D0F026 /* LXMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 88EB47CC19483E4700D0F026 /* LXMessage.m */; };
 		88EDBEC3170A7EE3003D7B15 /* blend0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88EDBE55170A7EE2003D7B15 /* blend0.jpg */; };
 		88EDBEC4170A7EE3003D7B15 /* blend1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88EDBE56170A7EE2003D7B15 /* blend1.jpg */; };
 		88EDBEC5170A7EE3003D7B15 /* bokehcircle-1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88EDBE58170A7EE2003D7B15 /* bokehcircle-1.jpg */; };
@@ -3460,8 +3459,6 @@
 		88EB47C619471B2E00D0F026 /* LXTagDiscussionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXTagDiscussionViewController.h; sourceTree = "<group>"; };
 		88EB47C719471B2E00D0F026 /* LXTagDiscussionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXTagDiscussionViewController.m; sourceTree = "<group>"; };
 		88EB47C91948316400D0F026 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		88EB47CB19483E4700D0F026 /* LXMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXMessage.h; sourceTree = "<group>"; };
-		88EB47CC19483E4700D0F026 /* LXMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXMessage.m; sourceTree = "<group>"; };
 		88EDBE55170A7EE2003D7B15 /* blend0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = blend0.jpg; sourceTree = "<group>"; };
 		88EDBE56170A7EE2003D7B15 /* blend1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = blend1.jpg; sourceTree = "<group>"; };
 		88EDBE58170A7EE2003D7B15 /* bokehcircle-1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bokehcircle-1.jpg"; sourceTree = "<group>"; };
@@ -5053,8 +5050,6 @@
 				88C095C7173A47BD007CED90 /* UIImage+fixOrientation.m */,
 				88AAA2BE1769EC52007610BB /* UIImage+Resize.h */,
 				88AAA2BF1769EC52007610BB /* UIImage+Resize.m */,
-				88EB47CB19483E4700D0F026 /* LXMessage.h */,
-				88EB47CC19483E4700D0F026 /* LXMessage.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -8367,7 +8362,6 @@
 				882055041938550D00D741BB /* LXPicVoteCollectionController.m in Sources */,
 				8C0E16FF193DD19600B50887 /* LXCompanyPolicyViewController.m in Sources */,
 				88963E8E195A731B000B1DDC /* LXCountrySelectViewController.m in Sources */,
-				88EB47CD19483E4700D0F026 /* LXMessage.m in Sources */,
 				88AAA2C01769EC52007610BB /* UIImage+Resize.m in Sources */,
 				884ACB2418EEB8F900B2924B /* LXStreamBrickCell.m in Sources */,
 				88FB7CF61782DD590038B067 /* LXUploadStatusViewController.m in Sources */,

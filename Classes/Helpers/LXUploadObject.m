@@ -55,7 +55,7 @@
                       } else {
                           [self finishedUpload];
                       }
-                      NSLog(@"Twitter response, HTTP response: %i", [urlResponse statusCode]);
+                      NSLog(@"Twitter response, HTTP response: %li", (long)[urlResponse statusCode]);
                   }];
              }
          }

@@ -17,7 +17,6 @@
 
 @implementation LXChangeEmailViewController
 
-@synthesize viewSub;
 @synthesize textMail;
 @synthesize textPassword;
 
@@ -33,29 +32,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [LXUtils globalShadow:viewSub];
-    viewSub.layer.cornerRadius = 5;
 	// Do any additional setup after loading the view.
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
 }
 
-- (void)keyboardWillShow:(NSNotification *)notification
-{
-    CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-    
-    CGRect frame = self.viewSub.frame;
-    frame.origin.y = (self.view.bounds.size.height - keyboardSize.height - self.viewSub.bounds.size.height) / 2;
-    
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationCurve:[[[notification userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
-    [UIView setAnimationDuration:[[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue]];
-    
-    self.viewSub.frame = frame;
-    
-    [UIView commitAnimations];
-    
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -64,7 +43,6 @@
 }
 
 - (void)viewDidUnload {
-    [self setViewSub:nil];
     [self setTextMail:nil];
     [self setTextPassword:nil];
     [super viewDidUnload];
