@@ -188,13 +188,12 @@
         NSInteger count = [JSON[@"notify_count"] integerValue];
         if (count > 0) {
             self.tabBarItem.badgeValue = [JSON[@"notify_count"] stringValue];
+            [self reloadView];
         } else {
             self.tabBarItem.badgeValue = nil;
         }
         
     } failure: nil];
-    
-    [self reloadView];
 }
 
 

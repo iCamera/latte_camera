@@ -406,7 +406,7 @@
                         <viewControllerLayoutGuide type="bottom" id="hbO-H8-5bX"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="OhT-9B-KMP">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="272"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -420,14 +420,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l43-nT-RgO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="202" y="-11"/>
+            <point key="canvasLocation" x="584" y="684"/>
         </scene>
         <!--Tag View Controller - Tag-->
         <scene sceneID="qoJ-OX-aaX">
             <objects>
                 <tableViewController storyboardIdentifier="Tag" id="Hea-mo-ou6" customClass="LXTagViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="hcL-f7-mKI">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="44" width="320" height="76"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="w27-LY-aQX">
@@ -468,7 +468,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6LQ-bA-eEB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="741" y="-613"/>
+            <point key="canvasLocation" x="511" y="350"/>
         </scene>
         <!--Notify Side View Controller - Notification-->
         <scene sceneID="kYt-5Z-oXR">
@@ -694,7 +694,69 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RKB-t0-6If" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-250" y="628"/>
+            <point key="canvasLocation" x="-140" y="18"/>
+        </scene>
+        <!--Tag Home-->
+        <scene sceneID="bzC-la-srv">
+            <objects>
+                <viewController storyboardIdentifier="TagHome" id="9YB-Rx-kkz" customClass="LXTagHome" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="uYh-An-L7n"/>
+                        <viewControllerLayoutGuide type="bottom" id="01O-Pe-PaN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="RlL-bJ-Dcz">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cFM-lT-vSe">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="120"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="k3P-Fq-roK"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="Hea-mo-ou6" kind="embed" identifier="TagPhoto" id="gJK-ni-fiN"/>
+                                </connections>
+                            </containerView>
+                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N7M-mh-zVV">
+                                <rect key="frame" x="0.0" y="144" width="320" height="272"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="FUG-mk-N2R" kind="embed" identifier="TagChat" id="gji-Cu-gYb"/>
+                                </connections>
+                            </containerView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dicussion" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Noh-UG-Bb8">
+                                <rect key="frame" x="0.0" y="120" width="320" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="igq-jB-nLP"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="10"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="cFM-lT-vSe" firstAttribute="leading" secondItem="RlL-bJ-Dcz" secondAttribute="leading" id="5YF-5v-ac1"/>
+                            <constraint firstItem="cFM-lT-vSe" firstAttribute="top" secondItem="uYh-An-L7n" secondAttribute="bottom" id="6kN-oK-Lx3"/>
+                            <constraint firstItem="N7M-mh-zVV" firstAttribute="top" secondItem="Noh-UG-Bb8" secondAttribute="bottom" id="APz-cX-oMh"/>
+                            <constraint firstItem="01O-Pe-PaN" firstAttribute="top" secondItem="N7M-mh-zVV" secondAttribute="bottom" id="Jey-SI-8Wo"/>
+                            <constraint firstAttribute="trailing" secondItem="N7M-mh-zVV" secondAttribute="trailing" id="KUe-xL-CXe"/>
+                            <constraint firstAttribute="trailing" secondItem="Noh-UG-Bb8" secondAttribute="trailing" id="OQj-YJ-rZ7"/>
+                            <constraint firstItem="Noh-UG-Bb8" firstAttribute="leading" secondItem="RlL-bJ-Dcz" secondAttribute="leading" id="PyP-L9-80C"/>
+                            <constraint firstItem="N7M-mh-zVV" firstAttribute="leading" secondItem="RlL-bJ-Dcz" secondAttribute="leading" id="Ydp-zF-fIq"/>
+                            <constraint firstItem="Noh-UG-Bb8" firstAttribute="top" secondItem="cFM-lT-vSe" secondAttribute="bottom" id="iRL-1X-z2j"/>
+                            <constraint firstAttribute="trailing" secondItem="cFM-lT-vSe" secondAttribute="trailing" id="ofq-Ee-VP9"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="xfF-c4-ahD"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uKH-Hd-dhN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-140" y="607"/>
         </scene>
         <!--Anouncement View Controller - Announcement-->
         <scene sceneID="HaE-IL-7CV">
@@ -1249,7 +1311,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="n8n-88-B00">
-                                    <rect key="frame" x="20" y="8" width="280" height="29"/>
+                                    <rect key="frame" x="20" y="8" width="233" height="29"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <segments>
                                         <segment title="All"/>
@@ -1261,6 +1323,14 @@
                                         <action selector="switchTimeline:" destination="Ftc-ZZ-Upd" eventType="valueChanged" id="S1V-xR-aQ8"/>
                                     </connections>
                                 </segmentedControl>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5bN-oa-kna">
+                                    <rect key="frame" x="268" y="2" width="40" height="40"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="icon_comment.png"/>
+                                    <connections>
+                                        <segue destination="IsL-ha-Fbg" kind="push" id="olk-MY-Zmq"/>
+                                    </connections>
+                                </button>
                             </subviews>
                         </view>
                         <prototypes>
@@ -1624,20 +1694,6 @@
                                 <action selector="showMenu" destination="Ftc-ZZ-Upd" id="Qgd-lF-DeG"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="HYo-fj-oTx">
-                            <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" momentary="YES" id="E3y-KN-0pS">
-                                <rect key="frame" x="233" y="7" width="71" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="" image="icon_comment_s.png"/>
-                                    <segment title="" image="icon_setting_m_ocher.png"/>
-                                </segments>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <action selector="touchRightBar:" destination="Ftc-ZZ-Upd" eventType="valueChanged" id="ez9-Xa-2Pv"/>
-                                </connections>
-                            </segmentedControl>
-                        </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="hgg-06-ltH">
@@ -1647,13 +1703,12 @@
                         </connections>
                     </refreshControl>
                     <connections>
-                        <segue destination="FUG-mk-N2R" kind="push" id="fpu-js-3C3"/>
-                        <segue destination="IsL-ha-Fbg" kind="push" identifier="Chat" id="N0D-Nv-Rph"/>
+                        <segue destination="9YB-Rx-kkz" kind="push" id="aAa-9F-ZgU"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HVc-Wm-P1o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-680" y="-9"/>
+            <point key="canvasLocation" x="-680" y="18"/>
         </scene>
         <!--Navigation Controller - Home-->
         <scene sceneID="w3S-Mf-elA">
@@ -1837,7 +1892,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y8N-2c-jnz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-250" y="-658"/>
+            <point key="canvasLocation" x="-146" y="-658"/>
         </scene>
         <!--Navigation Controller - Stream-->
         <scene sceneID="aD3-Mu-sG5">
@@ -2423,7 +2478,7 @@ Or you can resend confirmation email.</string>
                     </prototypes>
                 </tableView>
             </objects>
-            <point key="canvasLocation" x="741" y="-11"/>
+            <point key="canvasLocation" x="383" y="-273"/>
         </scene>
         <!--User Profile View Controller-->
         <scene sceneID="RFo-4z-rFb">
@@ -2467,7 +2522,7 @@ Or you can resend confirmation email.</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Ii-cU-EWi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1188" y="-9"/>
+            <point key="canvasLocation" x="830" y="-271"/>
         </scene>
     </scenes>
     <resources>
@@ -2492,6 +2547,7 @@ Or you can resend confirmation email.</string>
         <image name="icon_area.png" width="15" height="15"/>
         <image name="icon_calendar_blue.png" width="15" height="15"/>
         <image name="icon_calendar_lbrown.png" width="15" height="15"/>
+        <image name="icon_comment.png" width="20" height="20"/>
         <image name="icon_comment_s.png" width="12" height="12"/>
         <image name="icon_follow_s.png" width="14" height="12"/>
         <image name="icon_follower_s.png" width="14" height="12"/>
@@ -2537,7 +2593,8 @@ Or you can resend confirmation email.</string>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="gJK-ni-fiN"/>
+        <segue reference="gji-Cu-gYb"/>
         <segue reference="kV3-JH-Oaz"/>
-        <segue reference="N1b-hN-6Tv"/>
     </inferredMetricsTieBreakers>
 </document>

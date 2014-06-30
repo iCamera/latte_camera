@@ -387,7 +387,11 @@
                 JSQMessage *message = [[JSQMessage alloc] initWithText:rawMessage[@"body"] sender:rawMessage[@"user"][@"name"] date:[LXUtils dateFromString:rawMessage[@"created_at"]]];
                 [rawMessages addObject:rawMessage];
                 [self.messages addObject:message];
-                [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
+                
+                if (![message.sender isEqualToString:self.sender]) {
+                    [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
+                }
+
                 [self finishReceivingMessage];
             }
         }

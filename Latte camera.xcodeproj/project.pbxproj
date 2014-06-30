@@ -678,6 +678,7 @@
 		8847564217212718005CA201 /* RNBlurModalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8847563217212718005CA201 /* RNBlurModalView.m */; };
 		88491EBB1921B4A400CAF0A2 /* LXAnouncementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88491EBA1921B4A400CAF0A2 /* LXAnouncementViewController.m */; };
 		88491EC11921BD1700CAF0A2 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88491EBF1921BD1700CAF0A2 /* MainStoryboard.storyboard */; };
+		8849E00019614BA200578987 /* LXTagHome.m in Sources */ = {isa = PBXBuildFile; fileRef = 8849DFFF19614BA200578987 /* LXTagHome.m */; };
 		884ACB1E18EEB4C000B2924B /* LXStreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 884ACB1D18EEB4C000B2924B /* LXStreamViewController.m */; };
 		884ACB2118EEB7F600B2924B /* LXStreamViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 884ACB2018EEB7F600B2924B /* LXStreamViewLayout.m */; };
 		884ACB2418EEB8F900B2924B /* LXStreamBrickCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 884ACB2318EEB8F900B2924B /* LXStreamBrickCell.m */; };
@@ -2613,6 +2614,8 @@
 		88491EC01921BD1700CAF0A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		88491EC21921BD2100CAF0A2 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
 		88491EC31921BD2700CAF0A2 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
+		8849DFFE19614BA200578987 /* LXTagHome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXTagHome.h; sourceTree = "<group>"; };
+		8849DFFF19614BA200578987 /* LXTagHome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXTagHome.m; sourceTree = "<group>"; };
 		884ACB0A18EE7D7500B2924B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Authentication.storyboard; sourceTree = "<group>"; };
 		884ACB0B18EE7D7600B2924B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Camera.storyboard; sourceTree = "<group>"; };
 		884ACB0C18EE7D7600B2924B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Component.storyboard; sourceTree = "<group>"; };
@@ -4918,6 +4921,8 @@
 				887D5DD11957F50A00519186 /* LXUserProfileViewController.m */,
 				88963E8C195A731B000B1DDC /* LXCountrySelectViewController.h */,
 				88963E8D195A731B000B1DDC /* LXCountrySelectViewController.m */,
+				8849DFFE19614BA200578987 /* LXTagHome.h */,
+				8849DFFF19614BA200578987 /* LXTagHome.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -8359,6 +8364,7 @@
 				884D215E175C9BF0002FF853 /* ZipArchive.mm in Sources */,
 				884D2161175CA656002FF853 /* LXFilterDOF2.m in Sources */,
 				887A66C0194561BD000E07F2 /* LatteAPIv2Client.m in Sources */,
+				8849E00019614BA200578987 /* LXTagHome.m in Sources */,
 				882055041938550D00D741BB /* LXPicVoteCollectionController.m in Sources */,
 				8C0E16FF193DD19600B50887 /* LXCompanyPolicyViewController.m in Sources */,
 				88963E8E195A731B000B1DDC /* LXCountrySelectViewController.m in Sources */,

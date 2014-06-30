@@ -7,7 +7,7 @@
 //
 
 #import "LXCellInfoTag.h"
-#import "LXTagDiscussionViewController.h"
+#import "LXTagHome.h"
 
 @implementation LXCellInfoTag
 
@@ -54,8 +54,9 @@
     UIStoryboard *storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                         bundle:nil];
 
-    LXTagDiscussionViewController *viewTag = [storyMain instantiateViewControllerWithIdentifier:@"Discussion"];
+    LXTagHome *viewTag = [storyMain instantiateViewControllerWithIdentifier:@"TagHome"];
     viewTag.tag = _tags[button.tag];
+    viewTag.title = _tags[button.tag];
     
     [_parent.navigationController pushViewController:viewTag animated:YES];
 }
