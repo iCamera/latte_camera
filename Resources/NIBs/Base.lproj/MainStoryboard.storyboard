@@ -1311,7 +1311,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="n8n-88-B00">
-                                    <rect key="frame" x="20" y="8" width="233" height="29"/>
+                                    <rect key="frame" x="20" y="8" width="114" height="29"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <segments>
                                         <segment title="All"/>
@@ -1323,13 +1323,26 @@
                                         <action selector="switchTimeline:" destination="Ftc-ZZ-Upd" eventType="valueChanged" id="S1V-xR-aQ8"/>
                                     </connections>
                                 </segmentedControl>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5bN-oa-kna">
-                                    <rect key="frame" x="268" y="2" width="40" height="40"/>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oG6-7W-Nd3">
+                                    <rect key="frame" x="216" y="11" width="71" height="22"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" image="icon_comment.png"/>
-                                    <connections>
-                                        <segue destination="IsL-ha-Fbg" kind="push" id="olk-MY-Zmq"/>
-                                    </connections>
+                                    <state key="normal" title="Button" image="icon_tag_m.png">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WQt-ds-SB1">
+                                    <rect key="frame" x="170" y="8" width="22" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Po-fa-u3n">
+                                    <rect key="frame" x="121" y="8" width="46" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" title="Button">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
                                 </button>
                             </subviews>
                         </view>
@@ -1693,6 +1706,31 @@
                             <connections>
                                 <action selector="showMenu" destination="Ftc-ZZ-Upd" id="Qgd-lF-DeG"/>
                             </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="YtF-Jd-3VD">
+                            <view key="customView" contentMode="scaleToFill" id="h2W-wz-VDd">
+                                <rect key="frame" x="233" y="5" width="71" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5bN-oa-kna">
+                                        <rect key="frame" x="31" y="-3" width="40" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="icon_comment.png"/>
+                                        <connections>
+                                            <segue destination="IsL-ha-Fbg" kind="push" id="olk-MY-Zmq"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uq7-Z6-aDe">
+                                        <rect key="frame" x="27" y="0.0" width="20" height="17"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                         </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
@@ -2570,6 +2608,7 @@ Or you can resend confirmation email.</string>
         <image name="icon_profile_s.png" width="12" height="12"/>
         <image name="icon_rank.png" width="20" height="21"/>
         <image name="icon_setting_m_ocher.png" width="15" height="15"/>
+        <image name="icon_tag_m.png" width="16" height="16"/>
         <image name="icon_trend_ltrend.png" width="13" height="15"/>
         <image name="notify_all.png" width="19" height="15"/>
         <image name="notify_comment.png" width="15" height="15"/>

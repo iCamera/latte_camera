@@ -556,8 +556,7 @@ typedef enum {
 - (void)openEditText {
     YIPopupTextView* popupTextView = [[YIPopupTextView alloc] initWithPlaceHolder:@"Sample Text"
                                                                          maxCount:1000
-                                                                      buttonStyle:YIPopupTextViewButtonStyleLeftCancelRightDone
-                                                                  tintsDoneButton:NO];
+                                                                      buttonStyle:YIPopupTextViewButtonStyleLeftCancelRightDone];
     popupTextView.delegate = self;
     popupTextView.textAlignment = ((UILabel*)editingObject).textAlignment;
     popupTextView.font = ((UILabel*)editingObject).font;
