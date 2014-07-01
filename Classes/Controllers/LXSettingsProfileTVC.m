@@ -139,7 +139,7 @@
         break;
     }
     //Set checkbox
-    NSNumber *targetValue = [NSNumber numberWithInt:(indexPath.row + 1)];
+    NSNumber *targetValue = [NSNumber numberWithInteger:(indexPath.row + 1)];
     if (value && [targetValue isEqualToNumber:value]) {
       [tableView selectRowAtIndexPath:indexPath
                              animated:YES

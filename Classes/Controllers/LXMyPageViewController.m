@@ -158,10 +158,10 @@ typedef enum {
 
     Feed *feed = feeds[indexPath.row];
     if (feed.targets.count > 1) {
-        return 206;
+        return 212;
     } else if (feed.targets.count == 1) {
         Picture *pic = feed.targets[0];
-        CGFloat feedHeight = [LXUtils heightFromWidth:320.0 width:[pic.width floatValue] height:[pic.height floatValue]] + 3+6+30+6+6+31+3;
+        CGFloat feedHeight = [LXUtils heightFromWidth:304.0 width:[pic.width floatValue] height:[pic.height floatValue]] + 8+8+8+34;
         return feedHeight;
     } else
         return 1;

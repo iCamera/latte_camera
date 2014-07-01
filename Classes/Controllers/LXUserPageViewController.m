@@ -773,7 +773,7 @@ typedef enum {
                 UILabel *labelStart = [[UILabel alloc] initWithFrame:CGRectMake(6, height + 6, 50, 16)];
                 labelStart.text = [NSString stringWithFormat:@"%02ld:00", (long)head];
                 UILabel *labelEnd = [[UILabel alloc] initWithFrame:CGRectMake(6, height + 33, 50, 16)];
-                labelEnd.text = [NSString stringWithFormat:@"%02d:00", i-1];
+                labelEnd.text = [NSString stringWithFormat:@"%02ld:00", (long)i-1];
                 
                 labelEnd.textAlignment = NSTextAlignmentCenter;
                 labelStart.textAlignment = NSTextAlignmentCenter;

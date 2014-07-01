@@ -26,8 +26,6 @@
 
 @synthesize labelTitle;
 @synthesize labelUser;
-@synthesize labelAccess;
-@synthesize labelLike;
 @synthesize buttonPic;
 @synthesize buttonUser;
 
@@ -38,7 +36,6 @@
 @synthesize buttonShare;
 @synthesize imageNationality;
 @synthesize labelDesc;
-@synthesize viewDesc;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -67,9 +64,12 @@
 }
 
 - (void)awakeFromNib {
-    buttonUser.layer.cornerRadius = 15;
+    buttonUser.layer.cornerRadius = 18;
     buttonUser.layer.shouldRasterize = YES;
     buttonUser.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+    
+    _viewWrap.layer.cornerRadius = 3;
+    _viewDescBg.layer.colors = [NSArray arrayWithObjects:(id)[[UIColor clearColor] CGColor], (id)[[UIColor colorWithWhite:0 alpha:0.5] CGColor], nil];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -90,8 +90,7 @@
     buttonInfo.tag = [pic.pictureId integerValue];
     
     [buttonComment setTitle:[pic.commentCount stringValue] forState:UIControlStateNormal];
-    labelLike.text = [pic.voteCount stringValue];
-    labelAccess.text = [pic.pageviews stringValue];
+    [buttonLike setTitle:[pic.voteCount stringValue] forState:UIControlStateNormal];
 
     LXAppDelegate* app = (LXAppDelegate*)[[UIApplication sharedApplication] delegate];
     
@@ -99,7 +98,6 @@
     if (!(pic.isVoted && !app.currentUser))
         buttonLike.enabled = YES;
     buttonLike.selected = pic.isVoted;
-    labelLike.highlighted = pic.isVoted;
     
     buttonComment.enabled = pic.canComment;
     
@@ -111,8 +109,7 @@
     [LXUtils setNationalityOfUser:feed.user forImage:imageNationality nextToLabel:labelTitle];
     
     labelDesc.text = pic.descriptionText;
-    viewDesc.hidden = pic.descriptionText.length == 0;
-    
+    _viewDescBg.hidden = pic.descriptionText.length == 0;
 
     [self increaseCounter];
 }
@@ -120,14 +117,14 @@
 - (void)showDesc {
     if (labelDesc.text.length > 0) {
         [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
-            viewDesc.alpha = 1;
+            _viewDescBg.alpha = 1;
         }];
     }
 }
 
 - (void)hideDesc {
     [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
-        viewDesc.alpha = 0;
+        _viewDescBg.alpha = 0;
     }];
 }
 
@@ -199,7 +196,7 @@
         
         [viewController.navigationController pushViewController:viewVote animated:YES];
     } else {
-        [LXUtils toggleLike:buttonLike ofPicture:pic setCount:labelLike];
+        [LXUtils toggleLike:buttonLike ofPicture:pic setCount:nil];
     }
 }
 

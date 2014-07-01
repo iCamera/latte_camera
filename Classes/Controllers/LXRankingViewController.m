@@ -409,7 +409,7 @@ typedef enum {
                 [cellLv2.buttonPic2 setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pic.urlSquare] placeholderImage:nil];
                 
                 cellLv2.buttonPic2.tag = [pic.pictureId integerValue];
-                cellLv2.label1st.text = [NSString stringWithFormat:@"%d", baseIdx+1];
+                cellLv2.label1st.text = [NSString stringWithFormat:@"%ld", (long)baseIdx+1];
                 if (baseIdx == 1)
                     [cellLv2.imageBg1 setImage:[UIImage imageNamed:@"bg_rank2.png"]];
                 else
@@ -421,7 +421,7 @@ typedef enum {
 
                 [cellLv2.buttonPic3 setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pic.urlSquare] placeholderImage:nil];
                 cellLv2.buttonPic3.tag = [pic.pictureId integerValue];
-                cellLv2.label2nd.text = [NSString stringWithFormat:@"%d", baseIdx+2];
+                cellLv2.label2nd.text = [NSString stringWithFormat:@"%ld", (long)baseIdx+2];
                 if (baseIdx == 2)
                     [cellLv2.imageBg2 setImage:[UIImage imageNamed:@"bg_rank3.png"]];
                 else
@@ -432,7 +432,7 @@ typedef enum {
                 Picture *pic = [pics objectAtIndex:baseIdx + 2];
                 [cellLv2.buttonPic4 setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pic.urlSquare] placeholderImage:nil];
                 cellLv2.buttonPic4.tag = [pic.pictureId integerValue];
-                cellLv2.label3rd.text = [NSString stringWithFormat:@"%d", baseIdx+3];
+                cellLv2.label3rd.text = [NSString stringWithFormat:@"%ld", (long)baseIdx+3];
             }
             
             return cellLv2;

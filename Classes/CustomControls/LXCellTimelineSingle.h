@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Feed.h"
 #import "LXGalleryViewController.h"
+#import "LXGradientView.h"
 
 @interface LXCellTimelineSingle : UITableViewCell<UIActionSheetDelegate>
 
@@ -19,13 +20,12 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonLike;
 @property (strong, nonatomic) IBOutlet UIButton *buttonComment;
 @property (strong, nonatomic) IBOutlet UIButton *buttonInfo;
-@property (strong, nonatomic) IBOutlet UILabel *labelAccess;
 @property (strong, nonatomic) IBOutlet UIView *viewBackground;
-@property (strong, nonatomic) IBOutlet UILabel *labelLike;
 @property (strong, nonatomic) IBOutlet UIButton *buttonShare;
 @property (strong, nonatomic) IBOutlet UIImageView *imageNationality;
-@property (strong, nonatomic) IBOutlet UIView *viewDesc;
 @property (strong, nonatomic) IBOutlet UILabel *labelDesc;
+@property (strong, nonatomic) IBOutlet UIView *viewWrap;
+@property (strong, nonatomic) IBOutlet LXGradientView *viewDescBg;
 
 @property (weak, nonatomic) UIViewController<LXGalleryViewControllerDataSource> *viewController;
 @property (strong, nonatomic) Feed *feed;

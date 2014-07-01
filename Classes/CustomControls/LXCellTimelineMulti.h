@@ -20,6 +20,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *labelUserDate;
 
 @property (strong, nonatomic) IBOutlet UIImageView *imageNationality;
+@property (strong, nonatomic) IBOutlet UIView *viewWrap;
 
 @property (strong, nonatomic) Feed *feed;
 @property (weak, nonatomic) UIViewController<LXGalleryViewControllerDataSource> *parent;

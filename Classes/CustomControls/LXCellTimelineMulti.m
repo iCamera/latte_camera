@@ -45,9 +45,11 @@
 }
 
 - (void)awakeFromNib {
-    buttonUser.layer.cornerRadius = 15;
+    buttonUser.layer.cornerRadius = 18;
     buttonUser.layer.shouldRasterize = YES;
     buttonUser.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+    
+    _viewWrap.layer.cornerRadius = 3;
 }
 
 - (void)setFeed:(Feed *)feed {
