@@ -1907,9 +1907,10 @@
 		C54E59271953D1A9003EC0F5 /* LXCellPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = C54E59261953D1A9003EC0F5 /* LXCellPicker.m */; };
 		C575B9CE1953D5E4008D6E43 /* LXSettingsProfileTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C575B9CD1953D5E4008D6E43 /* LXSettingsProfileTVC.m */; };
 		C575B9D2195422FC008D6E43 /* LXSelectorVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C575B9D1195422FC008D6E43 /* LXSelectorVC.m */; };
+		C5963937196413F600EF920C /* libPods-Latte camera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5963936196413F600EF920C /* libPods-Latte camera.a */; };
+		C596393D196424C500EF920C /* LXNationSelectTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C596393C196424C500EF920C /* LXNationSelectTVC.m */; };
 		C5FDFC3D193F16000084FD33 /* LXCellNotifyOfficial.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FDFC3C193F16000084FD33 /* LXCellNotifyOfficial.m */; };
 		C968C214195561160047982D /* LXTextViewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C968C213195561160047982D /* LXTextViewVC.m */; };
-		D43F85446D6B48A0B1EB39B0 /* libPods-Latte camera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC48C9BB332464C84EA4512 /* libPods-Latte camera.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -3988,6 +3989,9 @@
 		C575B9CD1953D5E4008D6E43 /* LXSettingsProfileTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXSettingsProfileTVC.m; sourceTree = "<group>"; };
 		C575B9D0195422FC008D6E43 /* LXSelectorVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXSelectorVC.h; sourceTree = "<group>"; };
 		C575B9D1195422FC008D6E43 /* LXSelectorVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXSelectorVC.m; sourceTree = "<group>"; };
+		C5963936196413F600EF920C /* libPods-Latte camera.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Latte camera.a"; path = "Pods/build/Release-iphoneos/libPods-Latte camera.a"; sourceTree = "<group>"; };
+		C596393B196424C500EF920C /* LXNationSelectTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXNationSelectTVC.h; sourceTree = "<group>"; };
+		C596393C196424C500EF920C /* LXNationSelectTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXNationSelectTVC.m; sourceTree = "<group>"; };
 		C5FDFC3B193F16000084FD33 /* LXCellNotifyOfficial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCellNotifyOfficial.h; sourceTree = "<group>"; };
 		C5FDFC3C193F16000084FD33 /* LXCellNotifyOfficial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCellNotifyOfficial.m; sourceTree = "<group>"; };
 		C968C212195561160047982D /* LXTextViewVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXTextViewVC.h; sourceTree = "<group>"; };
@@ -3999,6 +4003,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5963937196413F600EF920C /* libPods-Latte camera.a in Frameworks */,
 				88C0FF4817212C0600F8CA2D /* Accelerate.framework in Frameworks */,
 				88EB47CA1948316400D0F026 /* libsqlite3.dylib in Frameworks */,
 				88A49B8315B8FD5700CEA262 /* QuartzCore.framework in Frameworks */,
@@ -4031,7 +4036,6 @@
 				88D9864C15B8F97800858AD6 /* CoreGraphics.framework in Frameworks */,
 				88D9864E15B8F97800858AD6 /* CoreData.framework in Frameworks */,
 				88418F2B1743674F004EFBA1 /* FacebookSDK.framework in Frameworks */,
-				D43F85446D6B48A0B1EB39B0 /* libPods-Latte camera.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5353,6 +5357,7 @@
 		88D9864615B8F97800858AD6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C5963936196413F600EF920C /* libPods-Latte camera.a */,
 				88EB47C91948316400D0F026 /* libsqlite3.dylib */,
 				88C0FF4717212C0600F8CA2D /* Accelerate.framework */,
 				887E40CE1626CE300060623C /* Accounts.framework */,
@@ -6391,6 +6396,8 @@
 				C575B9D1195422FC008D6E43 /* LXSelectorVC.m */,
 				C968C212195561160047982D /* LXTextViewVC.h */,
 				C968C213195561160047982D /* LXTextViewVC.m */,
+				C596393B196424C500EF920C /* LXNationSelectTVC.h */,
+				C596393C196424C500EF920C /* LXNationSelectTVC.m */,
 			);
 			name = "Profile Settings";
 			sourceTree = "<group>";
@@ -6431,7 +6438,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = luxeys;
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = LUXEYS;
 				TargetAttributes = {
 					88D9864215B8F97800858AD6 = {
@@ -8390,6 +8397,7 @@
 				88FB7CF61782DD590038B067 /* LXUploadStatusViewController.m in Sources */,
 				C54E59211953D172003EC0F5 /* LXCellDatePicker.m in Sources */,
 				88979100179FD64B00BDC803 /* LXFAQViewController.m in Sources */,
+				C596393D196424C500EF920C /* LXNationSelectTVC.m in Sources */,
 				88FB5C21192374720018F757 /* LXUserPageViewController.m in Sources */,
 				8837734617A90A5E005B0826 /* LXSettingAccountController.m in Sources */,
 				C54E590D195195AB003EC0F5 /* LXProfileSettingTableViewController.m in Sources */,
@@ -8537,6 +8545,7 @@
 				HEADER_SEARCH_PATHS = "";
 				"INFOPLIST_FILE[sdk=*]" = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -8585,6 +8594,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vendor/GoogleAnalyticsServicesiOS_3.06",
 					"$(PROJECT_DIR)/Vendor/TestFlightSDK3.0.0",
+					"$(PROJECT_DIR)/Pods/build/Release-iphoneos",
 				);
 				PRODUCT_NAME = "Latte camera";
 				PROVISIONING_PROFILE = "1A88157A-71FA-4D1C-9E34-90D9864220F8";
@@ -8614,6 +8624,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vendor/GoogleAnalyticsServicesiOS_3.06",
 					"$(PROJECT_DIR)/Vendor/TestFlightSDK3.0.0",
+					"$(PROJECT_DIR)/Pods/build/Release-iphoneos",
 				);
 				PRODUCT_NAME = "Latte camera";
 				PROVISIONING_PROFILE = "5C018444-93D6-4579-B9B7-C81D56F0DC8F";

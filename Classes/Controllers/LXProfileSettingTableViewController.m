@@ -229,8 +229,9 @@
     NSDictionary *data;
     
     if ([[segue identifier] isEqualToString:@"gender"]){  //NSNumber
+        NSNumber *zero = [NSNumber numberWithInt:0];
         data = @{
-                 @"value" : self.user.gender ? self.user.gender : @"",
+                 @"value" : self.user.gender ? self.user.gender : zero,
                  @"kind": segue.identifier
                  };
     } else if ([[segue identifier] isEqualToString:@"bloodtype"]){  //NSString

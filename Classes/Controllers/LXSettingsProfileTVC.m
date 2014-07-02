@@ -87,8 +87,8 @@
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-  NSString *kind = [self.data objectForKey:@"kind"];
-  NSString *title = @"";
+    NSString *kind = [self.data objectForKey:@"kind"];
+    NSString *title = @"";
     if ([kind isEqualToString:@"gender"]) {
       title = NSLocalizedString(@"gender", @"Gender");
     } else if ([kind isEqualToString:@"bloodtype"]) {
@@ -123,9 +123,11 @@
 {
   NSString *kind = [self.data objectForKey:@"kind"];
   UITableViewCell *cell;
+  NSNumber *value = [self.data valueForKey:@"value"];
+  
   if ([kind isEqualToString:@"gender"]) {
     LXCellSelectItem *cellSelect = (LXCellSelectItem *)[tableView dequeueReusableCellWithIdentifier:@"cellSelect"];
-    NSNumber *value = [self.data valueForKey:@"value"];
+    
     switch (indexPath.row) {
       case 0:
         cellSelect.labelField.text = NSLocalizedString(@"male", @"Male");
@@ -138,13 +140,14 @@
       default:
         break;
     }
-    //Set checkbox
+    //Set check
     NSNumber *targetValue = [NSNumber numberWithInteger:(indexPath.row + 1)];
     if (value && [targetValue isEqualToNumber:value]) {
       [tableView selectRowAtIndexPath:indexPath
                              animated:YES
                        scrollPosition:UITableViewScrollPositionMiddle];
       cellSelect.accessoryType = UITableViewCellAccessoryCheckmark;
+      NSLog(@"cellSelect.accessoryType");
     }
     return cellSelect;
   } else if ([kind isEqualToString:@"bloodtype"]) {
@@ -171,7 +174,10 @@
     }
     //Set checkbox
     if ([cellSelect.labelField.text isEqualToString:[self.data valueForKey:@"value"]]) {
-      [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
+      [tableView selectRowAtIndexPath:indexPath
+                             animated:YES
+                       scrollPosition:UITableViewScrollPositionMiddle];
+      cellSelect.accessoryType = UITableViewCellAccessoryCheckmark;
     }
     return cellSelect;
   }
