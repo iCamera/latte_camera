@@ -339,6 +339,7 @@
     return ([comment.user.userId integerValue] == [app.currentUser.userId integerValue]) || _picture.isOwner;
 }
 
+
 - (void)viewDidUnload {
     [self setViewFooter:nil];
     [super viewDidUnload];

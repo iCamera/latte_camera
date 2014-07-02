@@ -31,18 +31,21 @@
 
 - (void)setTags:(NSArray *)tags {
     _tags = tags;
-    CGSize size = CGSizeMake(6, 40);
+    CGSize size = CGSizeMake(6, 36);
     for (UIView *subview in scrollTag.subviews) {
         [subview removeFromSuperview];
     }
     for (NSString *tag in tags) {
-        UIFont *font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
+        UIFont *font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12];
         CGSize textSize = [tag sizeWithFont:font];
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(size.width, 0, textSize.width, 40)];
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(size.width, 8, textSize.width + 12, 22)];
         button.titleLabel.font = font;
         [button setTitle:tag forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor colorWithRed:30.0/255.0 green:90.0/255.0 blue:136.0/255.0 alpha:1.0] forState:UIControlStateNormal];
-        size.width += textSize.width + 6 + 6;
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [button setBackgroundColor:[UIColor colorWithRed:105.0/255.0 green:205.0/255.0 blue:117.0/255.0 alpha:1]];
+        button.layer.cornerRadius = 3;
+        size.width += textSize.width + 20;
+        
         [button addTarget:self action:@selector(showNormalTag:) forControlEvents:UIControlEventTouchUpInside];
         button.tag = [tags indexOfObject:tag];
         [scrollTag addSubview:button];

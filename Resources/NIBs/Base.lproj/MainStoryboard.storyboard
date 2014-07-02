@@ -757,7 +757,19 @@
                             <outletCollection property="gestureRecognizers" destination="rVE-K7-vNR" appends="YES" id="dlh-ED-XaM"/>
                         </connections>
                     </view>
-                    <navigationItem key="navigationItem" id="xfF-c4-ahD"/>
+                    <navigationItem key="navigationItem" id="xfF-c4-ahD">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="w6Y-oV-vEt">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="wuK-4t-b8H">
+                                <rect key="frame" x="233" y="5" width="71" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="Follow">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" title="Following"/>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="constraintHeight" destination="k3P-Fq-roK" id="7w9-XW-dHs"/>
                         <outlet property="containerChat" destination="N7M-mh-zVV" id="yE8-8D-L5h"/>
@@ -1747,7 +1759,7 @@
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="barTintColor" red="0.20784313725490194" green="0.18823529411764706" blue="0.13333333333333333" alpha="1" colorSpace="deviceRGB"/>
                         <textAttributes key="titleTextAttributes">
-                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         </textAttributes>
                     </navigationBar>
                     <connections>

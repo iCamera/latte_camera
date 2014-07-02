@@ -116,7 +116,7 @@
     
     // Tag
     
-    CGSize size = CGSizeMake(6, 40);
+    CGSize size = CGSizeMake(6, 36);
     for (UIView *subview in _scrollTags.subviews) {
         [subview removeFromSuperview];
     }
@@ -129,11 +129,10 @@
         button.titleLabel.font = font;
         [button setTitle:tag forState:UIControlStateNormal];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-
         [button setBackgroundColor:[UIColor colorWithRed:105.0/255.0 green:205.0/255.0 blue:117.0/255.0 alpha:1]];
         button.layer.cornerRadius = 3;
-        
         size.width += textSize.width + 20;
+        
         [button addTarget:self action:@selector(showNormalTag:) forControlEvents:UIControlEventTouchUpInside];
         button.tag = idx;
         idx += 1;

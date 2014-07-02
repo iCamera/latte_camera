@@ -85,6 +85,14 @@
     return 1;
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    self.tabBarItem.badgeValue = nil;
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+
+}
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (notifies.count > 0 && !loadEnded) {
@@ -124,6 +132,7 @@
     
     self.tabBarItem.badgeValue = nil;
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    [[LatteAPIClient sharedClient] POST:@"user/me/read_notify" parameters:nil success:nil failure:nil];
 }
 
 - (void)loadNotify:(BOOL)reset setRead:(BOOL)setRead {

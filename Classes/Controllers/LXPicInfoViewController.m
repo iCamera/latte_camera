@@ -217,7 +217,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0)
         if ([[keyBasic objectAtIndex:indexPath.row] isEqualToString:@"tags"])
-            return 40;
+            return 36;
     return 30;
 }
 
