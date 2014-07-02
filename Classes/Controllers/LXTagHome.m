@@ -14,7 +14,9 @@
 
 @end
 
-@implementation LXTagHome
+@implementation LXTagHome {
+    BOOL showingKeyboard;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -25,10 +27,25 @@
     return self;
 }
 
+- (void)awakeFromNib {
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    _labelSp.layer.cornerRadius = 6;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    showingKeyboard = false;
 }
 
 - (void)didReceiveMemoryWarning
@@ -54,5 +71,46 @@
     // Pass the selected object to the new view controller.
 }
 
+
+
+- (IBAction)panView:(UIPanGestureRecognizer *)sender {
+    if (showingKeyboard) {
+        return;
+    }
+    [self.view bringSubviewToFront:[(UIPanGestureRecognizer*)sender view]];
+    CGPoint translatedPoint = [(UIPanGestureRecognizer*)sender translationInView:self.view];
+    
+    CGFloat newHeight = _constraintHeight.constant + translatedPoint.y;
+    if (newHeight < 0) {
+        newHeight = 0;
+    }
+    
+    if (newHeight > 320) {
+        newHeight = 320;
+    }
+    
+    _constraintHeight.constant = newHeight;
+
+    [sender setTranslation:CGPointZero inView:self.view];
+}
+
+- (IBAction)tapView:(id)sender {
+    [UIView animateWithDuration:0.3 animations:^{
+        _constraintHeight.constant = 0;
+        [self.view layoutIfNeeded];
+    }];
+}
+
+- (void)keyboardWillShow:(id)sender {
+    [UIView animateWithDuration:0.3 animations:^{
+        _constraintHeight.constant = 0;
+        [self.view layoutIfNeeded];
+    }];
+    showingKeyboard = true;
+}
+
+- (void)keyboardWillHide:(id)sender {
+    showingKeyboard = false;
+}
 
 @end

@@ -10,6 +10,14 @@
 
 @interface LXTagHome : UIViewController
 
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintHeight;
 @property (strong, nonatomic) NSString *tag;
+@property (strong, nonatomic) IBOutlet UIView *containerPhoto;
+@property (strong, nonatomic) IBOutlet UIView *containerChat;
+@property (strong, nonatomic) IBOutlet UILabel *labelSp;
+
+- (IBAction)panView:(UIPanGestureRecognizer *)sender;
+- (IBAction)tapView:(id)sender;
+
 
 @end

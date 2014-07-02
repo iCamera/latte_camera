@@ -699,7 +699,7 @@
         <!--Tag Home-->
         <scene sceneID="bzC-la-srv">
             <objects>
-                <viewController storyboardIdentifier="TagHome" id="9YB-Rx-kkz" customClass="LXTagHome" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TagHome" hidesBottomBarWhenPushed="YES" id="9YB-Rx-kkz" customClass="LXTagHome" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="uYh-An-L7n"/>
                         <viewControllerLayoutGuide type="bottom" id="01O-Pe-PaN"/>
@@ -728,33 +728,54 @@
                                 </connections>
                             </containerView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dicussion" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Noh-UG-Bb8">
-                                <rect key="frame" x="0.0" y="120" width="320" height="24"/>
+                                <rect key="frame" x="135" y="126" width="50" height="12"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.90588241820000004" green="0.89411771299999998" blue="0.85490202900000001" alpha="1" colorSpace="deviceRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="24" id="igq-jB-nLP"/>
+                                    <constraint firstAttribute="height" constant="12" id="igq-jB-nLP"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="10"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="8"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="cFM-lT-vSe" firstAttribute="leading" secondItem="RlL-bJ-Dcz" secondAttribute="leading" id="5YF-5v-ac1"/>
                             <constraint firstItem="cFM-lT-vSe" firstAttribute="top" secondItem="uYh-An-L7n" secondAttribute="bottom" id="6kN-oK-Lx3"/>
-                            <constraint firstItem="N7M-mh-zVV" firstAttribute="top" secondItem="Noh-UG-Bb8" secondAttribute="bottom" id="APz-cX-oMh"/>
+                            <constraint firstItem="N7M-mh-zVV" firstAttribute="top" secondItem="Noh-UG-Bb8" secondAttribute="bottom" constant="6" id="APz-cX-oMh"/>
                             <constraint firstItem="01O-Pe-PaN" firstAttribute="top" secondItem="N7M-mh-zVV" secondAttribute="bottom" id="Jey-SI-8Wo"/>
                             <constraint firstAttribute="trailing" secondItem="N7M-mh-zVV" secondAttribute="trailing" id="KUe-xL-CXe"/>
-                            <constraint firstAttribute="trailing" secondItem="Noh-UG-Bb8" secondAttribute="trailing" id="OQj-YJ-rZ7"/>
-                            <constraint firstItem="Noh-UG-Bb8" firstAttribute="leading" secondItem="RlL-bJ-Dcz" secondAttribute="leading" id="PyP-L9-80C"/>
+                            <constraint firstAttribute="trailing" secondItem="Noh-UG-Bb8" secondAttribute="trailing" constant="135" id="OQj-YJ-rZ7"/>
+                            <constraint firstItem="Noh-UG-Bb8" firstAttribute="leading" secondItem="RlL-bJ-Dcz" secondAttribute="leading" constant="135" id="PyP-L9-80C"/>
                             <constraint firstItem="N7M-mh-zVV" firstAttribute="leading" secondItem="RlL-bJ-Dcz" secondAttribute="leading" id="Ydp-zF-fIq"/>
-                            <constraint firstItem="Noh-UG-Bb8" firstAttribute="top" secondItem="cFM-lT-vSe" secondAttribute="bottom" id="iRL-1X-z2j"/>
+                            <constraint firstItem="Noh-UG-Bb8" firstAttribute="top" secondItem="cFM-lT-vSe" secondAttribute="bottom" constant="6" id="iRL-1X-z2j"/>
                             <constraint firstAttribute="trailing" secondItem="cFM-lT-vSe" secondAttribute="trailing" id="ofq-Ee-VP9"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="yeZ-6u-wY1" appends="YES" id="ihn-jT-rel"/>
+                            <outletCollection property="gestureRecognizers" destination="rVE-K7-vNR" appends="YES" id="dlh-ED-XaM"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="xfF-c4-ahD"/>
+                    <connections>
+                        <outlet property="constraintHeight" destination="k3P-Fq-roK" id="7w9-XW-dHs"/>
+                        <outlet property="containerChat" destination="N7M-mh-zVV" id="yE8-8D-L5h"/>
+                        <outlet property="containerPhoto" destination="cFM-lT-vSe" id="35O-38-w6g"/>
+                        <outlet property="labelSp" destination="Noh-UG-Bb8" id="DW0-7I-QPc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uKH-Hd-dhN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer cancelsTouchesInView="NO" minimumNumberOfTouches="1" id="yeZ-6u-wY1">
+                    <connections>
+                        <action selector="panView:" destination="9YB-Rx-kkz" id="LRC-ko-dfa"/>
+                    </connections>
+                </panGestureRecognizer>
+                <tapGestureRecognizer id="rVE-K7-vNR">
+                    <connections>
+                        <action selector="tapView:" destination="9YB-Rx-kkz" id="TlG-xH-yMt"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-140" y="607"/>
         </scene>
