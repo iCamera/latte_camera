@@ -26,6 +26,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *labelDesc;
 @property (strong, nonatomic) IBOutlet UIView *viewWrap;
 @property (strong, nonatomic) IBOutlet LXGradientView *viewDescBg;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *contraintHeight;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollTags;
 
 @property (weak, nonatomic) UIViewController<LXGalleryViewControllerDataSource> *viewController;
 @property (strong, nonatomic) Feed *feed;

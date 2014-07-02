@@ -17,6 +17,7 @@
 #import "LXPicVoteCollectionController.h"
 #import "LXPicCommentViewController.h"
 #import "LXPicInfoViewController.h"
+#import "LXTagHome.h"
 
 @implementation LXCellTimelineSingle {
     LXShare *lxShare;
@@ -84,6 +85,8 @@
     
     Picture *pic = feed.targets[0];
 
+    _contraintHeight.constant = [LXUtils heightFromWidth:304.0 width:[pic.width floatValue] height:[pic.height floatValue]];
+    
     [buttonPic setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pic.urlMedium] placeholderImage:nil];
 
     buttonLike.tag = [pic.pictureId integerValue];
@@ -110,6 +113,33 @@
     
     labelDesc.text = pic.descriptionText;
     _viewDescBg.hidden = pic.descriptionText.length == 0;
+    
+    // Tag
+    
+    CGSize size = CGSizeMake(6, 40);
+    for (UIView *subview in _scrollTags.subviews) {
+        [subview removeFromSuperview];
+    }
+    
+    NSInteger idx = 0;
+    for (NSString *tag in pic.tagsOld) {
+        UIFont *font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12];
+        CGSize textSize = [tag sizeWithFont:font];
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(size.width, 8, textSize.width + 12, 22)];
+        button.titleLabel.font = font;
+        [button setTitle:tag forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+
+        [button setBackgroundColor:[UIColor colorWithRed:105.0/255.0 green:205.0/255.0 blue:117.0/255.0 alpha:1]];
+        button.layer.cornerRadius = 3;
+        
+        size.width += textSize.width + 20;
+        [button addTarget:self action:@selector(showNormalTag:) forControlEvents:UIControlEventTouchUpInside];
+        button.tag = idx;
+        idx += 1;
+        [_scrollTags addSubview:button];
+    }
+    _scrollTags.contentSize = size;
 
     [self increaseCounter];
 }
@@ -232,4 +262,19 @@
             break;
     }
 }
+
+- (void)showNormalTag:(UIButton*)button {
+    Picture *pic = _feed.targets[0];
+    
+    UIStoryboard *storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                        bundle:nil];
+    
+    LXTagHome *viewTag = [storyMain instantiateViewControllerWithIdentifier:@"TagHome"];
+    viewTag.tag = pic.tagsOld[button.tag];
+    viewTag.title = pic.tagsOld[button.tag];
+    
+    [viewController.navigationController pushViewController:viewTag animated:YES];
+}
+
+
 @end
