@@ -520,8 +520,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="2dA-O6-tna">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                            <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="2dA-O6-tna">
+                                <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
                                 <color key="separatorColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
@@ -717,7 +717,7 @@
                                 </connections>
                             </tableView>
                             <view autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fVy-Ab-ZMG">
-                                <rect key="frame" x="0.0" y="200" width="320" height="45"/>
+                                <rect key="frame" x="0.0" y="435" width="320" height="45"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IGt-sZ-7Eg" customClass="LXButtonBrown30">
@@ -751,17 +751,19 @@
                         <constraints>
                             <constraint firstItem="2dA-O6-tna" firstAttribute="leading" secondItem="dWD-j2-gts" secondAttribute="leading" id="0YR-vw-5DG"/>
                             <constraint firstItem="cQJ-o3-SgE" firstAttribute="top" secondItem="2dA-O6-tna" secondAttribute="bottom" id="KIe-g8-xMr"/>
+                            <constraint firstItem="cQJ-o3-SgE" firstAttribute="top" secondItem="fVy-Ab-ZMG" secondAttribute="bottom" id="UdA-lf-Eq7"/>
                             <constraint firstItem="fVy-Ab-ZMG" firstAttribute="leading" secondItem="2dA-O6-tna" secondAttribute="leading" id="Zxt-tT-6ue"/>
                             <constraint firstItem="fVy-Ab-ZMG" firstAttribute="trailing" secondItem="2dA-O6-tna" secondAttribute="trailing" id="aMa-iK-cm4"/>
                             <constraint firstItem="2dA-O6-tna" firstAttribute="top" secondItem="h3w-id-1b9" secondAttribute="bottom" id="asb-AM-gOF"/>
                             <constraint firstAttribute="trailing" secondItem="2dA-O6-tna" secondAttribute="trailing" id="ckQ-YI-ECj"/>
-                            <constraint firstItem="fVy-Ab-ZMG" firstAttribute="top" secondItem="h3w-id-1b9" secondAttribute="bottom" constant="180" id="icb-me-TbU"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ZkK-ef-hca"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
                     <connections>
                         <outlet property="activityLoad" destination="8gt-nq-4Hs" id="J8f-jd-pk7"/>
                         <outlet property="buttonSend" destination="IGt-sZ-7Eg" id="FtK-x8-BZv"/>
+                        <outlet property="constraintInputPadding" destination="UdA-lf-Eq7" id="ZOU-q1-f5D"/>
                         <outlet property="constraintTextHeight" destination="YUW-8H-r43" id="2D0-MT-mte"/>
                         <outlet property="growingComment" destination="gJw-LX-gFU" id="IM8-sh-PqY"/>
                         <outlet property="tableView" destination="2dA-O6-tna" id="OjB-Vk-c2J"/>
@@ -771,7 +773,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hL8-Gj-MT3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2738" y="-1959"/>
+            <point key="canvasLocation" x="-2751" y="-1959"/>
         </scene>
         <!--Pic Dumb Tab View Controller-->
         <scene sceneID="Oda-k2-cr5">

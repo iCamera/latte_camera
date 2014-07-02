@@ -80,7 +80,7 @@
         self.tableView.tableFooterView = nil;
         
     } else {
-        NSString *urlDetail = [NSString stringWithFormat:@"picture/%ld", [_picture.pictureId integerValue]];
+        NSString *urlDetail = [NSString stringWithFormat:@"picture/%ld", [_picture.pictureId longValue]];
         [activityLoad startAnimating];
         self.tableView.tableFooterView = _viewFooter;
         [[LatteAPIClient sharedClient] GET:urlDetail parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -107,19 +107,18 @@
     keyboardBounds = [self.view convertRect:keyboardBounds toView:nil];
     
 	// get a rect for the textView frame
-	CGRect containerFrame = viewHeader.frame;
     
     UIEdgeInsets padding = UIEdgeInsetsMake(0, 0, keyboardBounds.size.height + 45, 0);
     
-    containerFrame.origin.y = self.view.bounds.size.height - (keyboardBounds.size.height + containerFrame.size.height);
 	// animations settings
 	[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationBeginsFromCurrentState:YES];
     [UIView setAnimationDuration:[duration doubleValue]];
     [UIView setAnimationCurve:[curve intValue]];
-	
+    
 	// set views with new info
-	viewHeader.frame = containerFrame;
+	_constraintInputPadding.constant = keyboardBounds.size.height;
+    [self.view layoutIfNeeded];
     _tableView.contentInset = padding;
     _tableView.scrollIndicatorInsets = padding;
 	
@@ -134,10 +133,6 @@
     
     NSNumber *duration = [notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
     NSNumber *curve = [notification.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
-	
-	// get a rect for the textView frame
-	CGRect containerFrame = viewHeader.frame;
-    containerFrame.origin.y = self.view.bounds.size.height - containerFrame.size.height;
     
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
@@ -149,13 +144,15 @@
     }
 	
 	// animations settings
+    
 	[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationBeginsFromCurrentState:YES];
     [UIView setAnimationDuration:[duration doubleValue]];
     [UIView setAnimationCurve:[curve intValue]];
     
 	// set views with new info
-	viewHeader.frame = containerFrame;
+	_constraintInputPadding.constant = 0;
+    [self.view layoutIfNeeded];
     
     _tableView.contentInset = padding;
     _tableView.scrollIndicatorInsets = padding;

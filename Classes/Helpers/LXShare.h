@@ -9,19 +9,14 @@
 #import <Foundation/Foundation.h>
 
 #import <MessageUI/MFMailComposeViewController.h>
-#import "REComposeViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
 
 // MY OWN BLOCK
 typedef void (^MyCompletionBlock)();
 
-@interface LXShare : NSObject<MFMailComposeViewControllerDelegate, FBLoginViewDelegate, UIAlertViewDelegate, REComposeViewControllerDelegate> 
+@interface LXShare : NSObject<MFMailComposeViewControllerDelegate, UIAlertViewDelegate>
 
-// BLOCKS
-- (void) setCompletionDone:(MyCompletionBlock)blockDone;
-- (void) setCompletionCanceled:(MyCompletionBlock)blockCanceled;
-- (void) setCompletionFailed:(MyCompletionBlock)blockFailed;
-- (void) setCompletionSaved:(MyCompletionBlock)blockSaved;
+
 
 @property (nonatomic, weak) id controller;
 

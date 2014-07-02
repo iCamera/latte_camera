@@ -65,15 +65,6 @@
     
     share = [[LXShare alloc] init];
     share.controller = self;
-    
-    
-    [share setCompletionDone:^{
-        MBProgressHUD *HUD2 = [[MBProgressHUD alloc] init];
-        HUD2.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
-        HUD2.mode = MBProgressHUDModeCustomView;
-        [HUD2 show:YES];
-        [HUD2 hide:YES afterDelay:1];
-    }];
         
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];

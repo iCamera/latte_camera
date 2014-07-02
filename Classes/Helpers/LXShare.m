@@ -135,124 +135,19 @@ typedef enum {
 
 - (void) facebookPost
 {
-    //share to facebook
-    // esto lo hago solo si la version del sistema es menor a la 6.0
-
-        // If the session is open, do the post, if not, try login
-        if (FBSession.activeSession.isOpen)
-        {
-            // if it is available to us, we will post using the native dialog
-            NSURL *fbURL;
-            if (url) {
-                fbURL = [NSURL URLWithString:url];
-            }
+    FBShareDialogParams *params = [[FBShareDialogParams alloc] init];
+    params.link = [NSURL URLWithString:url];
+    if ([FBDialogs canPresentShareDialogWithParams:params]) {
+        [FBDialogs presentShareDialogWithParams:params clientState:nil handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
+        }];
+    } else {
+        [FBWebDialogs presentFeedDialogModallyWithSession:nil parameters:@{@"link": url} handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
             
-            REComposeViewController *composeViewController = [[REComposeViewController alloc] init];
-            if (imagePreview) {
-                composeViewController.hasAttachment = YES;
-                composeViewController.attachmentImage = imagePreview;
-            }
-            
-            composeViewController.text = text;
-            
-            // Service name
-            UILabel *titleView          = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 110, 30)];
-            titleView.font              = [UIFont boldSystemFontOfSize:17.0];
-            titleView.textAlignment     = NSTextAlignmentCenter;
-            titleView.backgroundColor   = [UIColor clearColor];
-            titleView.textColor         = [UIColor whiteColor];
-            titleView.text              = @"Facebook";
-            composeViewController.navigationItem.titleView = titleView;
-            
-            composeViewController.navigationBar.tintColor = [UIColor colorWithRed:44.0/255.0 green:67.0/255.0 blue:136.0/255.0 alpha:1.0];
-            composeViewController.delegate = self;
-            
-            [_controller presentViewController:composeViewController animated:YES completion:nil];
-        }
-        else
-        {
-            [self openSessionWithAllowLoginUI:YES];
-        }
-}
-
-- (void)composeViewController:(REComposeViewController *)composeViewController didFinishWithResult:(REComposeResult)result {
-    [composeViewController dismissViewControllerAnimated:YES completion:nil];
-    switch (result)
-    {
-        case REComposeResultCancelled:
-            [self completionResult:typeCanceled];
-            break;
-            
-        case REComposeResultPosted: {
-            [self performPublishAction:^{
-                
-                // paso los parametros para mandar al feed del usuario
-                NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-                
-                if (composeViewController.text) {
-                    [params setObject:composeViewController.text forKey:@"message"];
-                }
-                if (url) {
-                    [params setObject:url forKey:@"link"];
-                }
-                
-                if (imageData) {
-                    if (imageData) {
-                        [params setObject:imageData forKey:@"picture"];
-                    }
-                    
-                    [FBRequestConnection startWithGraphPath:@"me/photos"
-                                                 parameters:params
-                                                 HTTPMethod:@"POST"
-                                          completionHandler:^(FBRequestConnection *connection,
-                                                              id result,
-                                                              NSError *error) {
-                                              if (!error)
-                                              {
-                                                  [self completionResult:typeDone];
-                                              }
-                                              else
-                                              {
-                                                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                                                  message:error.localizedDescription
-                                                                                                 delegate:nil
-                                                                                        cancelButtonTitle:@"Close"
-                                                                                        otherButtonTitles:nil];
-                                                  [alert show];
-                                                  [self completionResult:typeCanceled];
-                                              }
-                                          }];
-                } else {
-                    [FBRequestConnection startWithGraphPath:@"me/feed"
-                                                 parameters:params
-                                                 HTTPMethod:@"POST"
-                                          completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-                                              
-                                              if (!error)
-                                              {
-                                                  [self completionResult:typeDone];
-                                              }
-                                              else
-                                              {
-                                                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                                                  message:error.localizedDescription
-                                                                                                 delegate:nil
-                                                                                        cancelButtonTitle:@"Close"
-                                                                                        otherButtonTitles:nil];
-                                                  [alert show];
-                                                  
-                                                  [self completionResult:typeCanceled];
-                                              }
-                                          }];
-                }
-            }];
-        }
-            break;
-            
-        default:
-            break;
+        }];
     }
 }
+
+
 
 - (void)inviteFriend {
     if ([MFMailComposeViewController canSendMail]==YES)

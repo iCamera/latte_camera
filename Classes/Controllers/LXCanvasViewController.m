@@ -596,7 +596,7 @@
         }
 
     } else if (actionSheet.tag == 1) {
-        NSInteger blendMode = 4;
+        int blendMode = 4;
         switch (buttonIndex) {
             case 0: // Softlight
                 blendMode = 7;
