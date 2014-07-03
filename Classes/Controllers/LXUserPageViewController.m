@@ -30,16 +30,12 @@
 #import "UIImage+ImageEffects.h"
 #import "LXUserProfileViewController.h"
 #import "MZFormSheetSegue.h"
+#import "LXUserListViewController.h"
 
 typedef enum {
-    kTablePhoto = 0,
-    kTableFollower = 2,
-    kTableFollowings = 3,
-} UserTableMode;
-
-typedef enum {
-    kPhotoGrid = 0,
-    kPhotoCalendar = 1,
+    kPhotoTimeline = 0,
+    kPhotoGrid = 1,
+    kPhotoCalendar = 2,
 } UserPagePhotoMode;
 
 @interface LXUserPageViewController ()
@@ -67,8 +63,6 @@ typedef enum {
     NSMutableArray *currentMonthPicsFlat;
     MBProgressHUD *HUD;
     
-    UserTableMode tableMode;
-    
     AFHTTPRequestOperation *currentRequest;
 }
 
@@ -77,14 +71,6 @@ typedef enum {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-    }
-    return self;
-}
-
-- (id)init {
-    self = [super init];
-    if (self) {
-        tableMode = 0;
     }
     return self;
 }
@@ -102,9 +88,6 @@ typedef enum {
 {
     [super viewDidLoad];
     
-    if (tableMode == 0) {
-        tableMode = kTablePhoto;
-    }
 
     endedPic = false;
     
@@ -212,42 +195,6 @@ typedef enum {
                                    }];
 }
 
-- (void)loadFollower {
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    
-    NSString *url = [NSString stringWithFormat:@"user/%ld/follower", (long)_userId];
-    [[LatteAPIClient sharedClient] GET:url
-                                parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
-                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       followers = [User mutableArrayFromDictionary:JSON
-                                                                          withKey:@"followers"];
-                                       
-                                       [self.tableView reloadData];
-                                       [self.refreshControl endRefreshing];
-                                       
-                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       DLog(@"Something went wrong (Follower)");
-                                       [self.tableView reloadData];
-                                       
-                                   }];
-}
-
-- (void)loadFollowings {
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    
-    NSString *url = [NSString stringWithFormat:@"user/%ld/following", (long)_userId];
-    [[LatteAPIClient sharedClient] GET:url
-                                parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
-                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       followings = [User mutableArrayFromDictionary:JSON
-                                                                             withKey:@"following"];
-                                       
-                                       [self.tableView reloadData];
-                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       DLog(@"Something went wrong (Reload Following)");
-                                       [self.tableView reloadData];
-                                   }];
-}
 
 
 - (void)reloadView {
@@ -255,22 +202,11 @@ typedef enum {
 
     [self reloadProfile];
     
-    switch (tableMode) {
-        case kTablePhoto:
-            if (photoMode == kPhotoGrid)
-                [self loadPicture:YES];
-            else if (photoMode == kPhotoCalendar)
-                [self reloadCalendar];
-            break;
-        case kTableFollowings:
-            [self loadFollowings];
-            break;
-        case kTableFollower:
-            [self loadFollower];
-            break;
-        default:
-            break;
-    }
+    
+    if (photoMode == kPhotoGrid)
+        [self loadPicture:YES];
+    else if (photoMode == kPhotoCalendar)
+        [self reloadCalendar];
 }
 
 - (IBAction)touchProfilePic:(id)sender {
@@ -287,18 +223,13 @@ typedef enum {
 - (IBAction)switchView:(id)sender {
     switch (_segmentTab.selectedSegmentIndex) {
         case 0:
-            tableMode = kTablePhoto;
-            photoMode = kPhotoGrid;
+            photoMode = kPhotoTimeline;
             break;
         case 1:
-            tableMode = kTablePhoto;
-            photoMode = kPhotoCalendar;
+            photoMode = kPhotoGrid;
             break;
         case 2:
-            tableMode = kTableFollowings;
-            break;
-        case 3:
-            tableMode = kTableFollower;
+            photoMode = kPhotoCalendar;
             break;
         default:
             break;
@@ -384,7 +315,7 @@ typedef enum {
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (tableMode == kTablePhoto && photoMode == kPhotoCalendar) {
+    if (photoMode == kPhotoCalendar) {
         NSArray *rangeDates = [LXUtils rangeOfDatesInMonthGrid:currentMonth startOnSunday:YES timeZone:[NSTimeZone localTimeZone]];
         NSUInteger numberOfDaysBetween = [rangeDates[0] daysBetweenDate:[rangeDates lastObject]] + 1;
         return numberOfDaysBetween/7 + 2;
@@ -393,70 +324,50 @@ typedef enum {
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    switch (tableMode) {
-        case kTablePhoto:
-            if (photoMode == kPhotoGrid) {
-                return (pictures.count/3) + (pictures.count%3>0?1:0);
-            } else if (photoMode == kPhotoCalendar) {
-                if (selectedCalendarDate && section > 0) {
-                    NSArray *rangeDates = [LXUtils rangeOfDatesInMonthGrid:currentMonth startOnSunday:YES timeZone:[NSTimeZone localTimeZone]];
-                    
-                    NSDate *dateStart = [rangeDates[0] copy];
-                    dateStart = [dateStart dateByAddingTimeInterval:24*60*60*(section-1)*7];
-                    NSDate *dateEnd = [dateStart dateByAddingTimeInterval:24*60*60*7];
-                    
-                    if (
-                        (([selectedCalendarDate compare:dateStart] == NSOrderedDescending) ||
-                        ([selectedCalendarDate compare:dateStart] == NSOrderedSame)) &&
-                        ([selectedCalendarDate compare:dateEnd] == NSOrderedAscending))
-                    {
-                        return 1;
-                    }
-                }
-                return 0;
+    if (photoMode == kPhotoGrid) {
+        return (pictures.count/3) + (pictures.count%3>0?1:0);
+    } else if (photoMode == kPhotoCalendar) {
+        if (selectedCalendarDate && section > 0) {
+            NSArray *rangeDates = [LXUtils rangeOfDatesInMonthGrid:currentMonth startOnSunday:YES timeZone:[NSTimeZone localTimeZone]];
+            
+            NSDate *dateStart = [rangeDates[0] copy];
+            dateStart = [dateStart dateByAddingTimeInterval:24*60*60*(section-1)*7];
+            NSDate *dateEnd = [dateStart dateByAddingTimeInterval:24*60*60*7];
+            
+            if (
+                (([selectedCalendarDate compare:dateStart] == NSOrderedDescending) ||
+                 ([selectedCalendarDate compare:dateStart] == NSOrderedSame)) &&
+                ([selectedCalendarDate compare:dateEnd] == NSOrderedAscending))
+            {
+                return 1;
             }
-        case kTableFollowings:
-            return followings.count;
-        case kTableFollower:
-            return followers.count;
+        }
+        return 0;
     }
     return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableMode == kTablePhoto)
-    {
-        if (photoMode == kPhotoGrid) {
-            return 104;
-        }
+    if (photoMode == kPhotoGrid) {
+        return 104;
+    }
+    
+    if (photoMode == kPhotoCalendar) {
+        if (selectedCalendarDate) {
+            UIView *view = [self viewForCalendarDay:selectedCalendarDate];
+            return view.frame.size.height;
+        } else
+            return 0;
         
-        if (photoMode == kPhotoCalendar) {
-            if (selectedCalendarDate) {
-                UIView *view = [self viewForCalendarDay:selectedCalendarDate];
-                return view.frame.size.height;
-            } else
-                return 0;
-
-        }
-    } else
-        return 48;
+    }
+    
     return 22;
 }
 
 - (BOOL)checkEmpty {
     BOOL isEmpty = false;
-    switch (tableMode) {
-        case kTableFollower:
-            isEmpty = followers.count == 0;
-            break;
-        case kTableFollowings:
-            isEmpty = followings.count == 0;
-            break;
-        case kTablePhoto:
-            if (photoMode == kPhotoGrid && endedPic)
-                isEmpty = pictures.count == 0;
-            break;
-    }
+    if (photoMode == kPhotoGrid && endedPic)
+        isEmpty = pictures.count == 0;
     return isEmpty;
 }
 
@@ -470,7 +381,7 @@ typedef enum {
         return emptyView;
     }
     
-    if ((tableMode == kTablePhoto) && (photoMode == kPhotoCalendar)) {
+    if (photoMode == kPhotoCalendar) {
         NSArray *rangeDates = [LXUtils rangeOfDatesInMonthGrid:currentMonth startOnSunday:YES timeZone:[NSTimeZone localTimeZone]];
         NSUInteger numberOfDaysBetween = [rangeDates[0] daysBetweenDate:[rangeDates lastObject]] + 1;
         NSUInteger headerCount = numberOfDaysBetween/7;
@@ -677,7 +588,7 @@ typedef enum {
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if ([self checkEmpty])
         return 200;
-    if ((tableMode == kTablePhoto) && (photoMode == kPhotoCalendar)) {
+    if (photoMode == kPhotoCalendar) {
         NSArray *rangeDates = [LXUtils rangeOfDatesInMonthGrid:currentMonth startOnSunday:YES timeZone:[NSTimeZone localTimeZone]];
         NSUInteger numberOfDaysBetween = [rangeDates[0] daysBetweenDate:[rangeDates lastObject]] + 1;
         NSUInteger headerCount = numberOfDaysBetween/7;
@@ -693,51 +604,19 @@ typedef enum {
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (tableMode) {
-        case kTableFollower:
-        case kTableFollowings: {
-            LXCellFriend* cellUser;
-            User *user;
-            
-            cellUser = [tableView dequeueReusableCellWithIdentifier:@"User"];
-            
-            @try {
-                if (tableMode == kTableFollower) {
-                    user = followers[indexPath.row];
-                } else if (tableMode == kTableFollowings) {
-                    user = followings[indexPath.row];
-                }
-                cellUser.user = user;
-            }
-            @catch (NSException *exception) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                message:exception.debugDescription
-                                                               delegate:nil
-                                                      cancelButtonTitle:@"Close"
-                                                      otherButtonTitles:nil];
-                [alert show];
-            }
-            
-            return cellUser;
-        }
-            break;
-        case kTablePhoto:    {
-            if (photoMode == kPhotoGrid) {
-                LXCellGrid *cellPic = [tableView dequeueReusableCellWithIdentifier:@"Grid"];
-
-                cellPic.viewController = self;
-                [cellPic setPictures:pictures forRow:indexPath.row];
-
-                return cellPic;
-            } else if (photoMode == kPhotoCalendar) {
-                UITableViewCell *cell = [[UITableViewCell alloc] init];
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
-                [cell addSubview:[self viewForCalendarDay:selectedCalendarDate]];
-                return cell;
-            }
-        }
-            break;
+    if (photoMode == kPhotoGrid) {
+        LXCellGrid *cellPic = [tableView dequeueReusableCellWithIdentifier:@"Grid"];
+        
+        cellPic.viewController = self;
+        [cellPic setPictures:pictures forRow:indexPath.row];
+        
+        return cellPic;
+    } else if (photoMode == kPhotoCalendar) {
+        UITableViewCell *cell = [[UITableViewCell alloc] init];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        [cell addSubview:[self viewForCalendarDay:selectedCalendarDate]];
+        return cell;
     }
 }
 
@@ -871,27 +750,6 @@ typedef enum {
     self.tableView.tableHeaderView = viewHeader;
 }
 
-- (void)touchTab:(UserTableMode)mode {
-    tableMode = mode;
-    switch (mode) {
-        case kTablePhoto:
-            [self.tableView reloadData];
-            break;
-        case kTableFollower:
-            if (followers == nil)
-                [self loadFollower];
-            else
-                [self.tableView reloadData];
-            break;
-        case kTableFollowings:
-            if (followings == nil)
-                [self loadFollowings];
-            else
-                [self.tableView reloadData];
-
-            break;
-    }
-}
 
 - (void)touchPhoto:(UserPagePhotoMode)mode {
     switch (mode) {
@@ -1082,27 +940,12 @@ typedef enum {
     [self presentViewController:navGalerry animated:YES completion:nil];
 }
 
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                             bundle:nil];
-    LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
-    switch (tableMode) {
-        case kTableFollower:
-            viewUserPage.user = followers[indexPath.row];
-            break;
-        case kTableFollowings:
-            viewUserPage.user = followings[indexPath.row];
-            break;
-        default:
-            return;
-    }
-    [self.navigationController pushViewController:viewUserPage animated:YES];
-}
-
-
 - (NSDictionary *)pictureAfterPicture:(Picture *)picture {
     switch (photoMode) {
+        case kPhotoTimeline:{
+            break;
+        }
+            
         case kPhotoGrid: {
             NSUInteger current = [pictures indexOfObject:picture];
             if (current != NSNotFound && current < pictures.count-1) {
@@ -1135,6 +978,9 @@ typedef enum {
 
 - (NSDictionary *)pictureBeforePicture:(Picture *)picture {    
     switch (photoMode) {
+        case kPhotoTimeline:{
+            break;
+        }
         case kPhotoGrid: {
             NSUInteger current = [pictures indexOfObject:picture];
             if (current != NSNotFound && current > 0) {
@@ -1161,24 +1007,6 @@ typedef enum {
     return nil;
 }
 
-- (void)showUser:(UIButton*)sender {
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                             bundle:nil];
-    LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
-    switch (tableMode) {
-        case kTableFollower:
-            
-            break;
-        case kTableFollowings:
-            viewUserPage.user = followings[sender.tag];
-            break;
-        default:
-            break;
-    }
-    [self.navigationController pushViewController:viewUserPage animated:YES];
-
-}
-
 
 - (void)showUser:(User *)user fromGallery:(LXGalleryViewController *)gallery {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
@@ -1192,6 +1020,25 @@ typedef enum {
     if ([segue.identifier isEqualToString:@"Profile"]) {
         LXUserProfileViewController *view = segue.destinationViewController;
         view.user = _user;
+        
+        MZFormSheetSegue *sheet = (MZFormSheetSegue*)segue;
+        sheet.formSheetController.cornerRadius = 0;
+        sheet.formSheetController.shouldDismissOnBackgroundViewTap = YES;
+    }
+    
+    if ([segue.identifier isEqualToString:@"Follower"]) {
+        LXUserListViewController *view = segue.destinationViewController;
+        [view loadFollowerForUser:[_user.userId integerValue]];
+        
+        MZFormSheetSegue *sheet = (MZFormSheetSegue*)segue;
+        sheet.formSheetController.cornerRadius = 0;
+        sheet.formSheetController.shouldDismissOnBackgroundViewTap = YES;
+    }
+    
+    if ([segue.identifier isEqualToString:@"Following"]) {
+        LXUserListViewController *view = segue.destinationViewController;
+        [view loadFollowingForUser:[_user.userId integerValue]];
+        
         MZFormSheetSegue *sheet = (MZFormSheetSegue*)segue;
         sheet.formSheetController.cornerRadius = 0;
         sheet.formSheetController.shouldDismissOnBackgroundViewTap = YES;
@@ -1199,7 +1046,7 @@ typedef enum {
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
-    if (tableMode == kTablePhoto && photoMode == kPhotoGrid) {
+    if (photoMode == kPhotoGrid) {
         if (endedPic)
             return;
         CGPoint offset = aScrollView.contentOffset;

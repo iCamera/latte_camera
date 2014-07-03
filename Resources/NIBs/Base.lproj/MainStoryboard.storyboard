@@ -2286,81 +2286,35 @@ Or you can resend confirmation email.</string>
             </objects>
             <point key="canvasLocation" x="-2858" y="-89"/>
         </scene>
-        <!--User Page View Controller-->
-        <scene sceneID="bRl-eM-CfX">
+        <!--User List View Controller-->
+        <scene sceneID="r5n-Vu-Ni8">
             <objects>
-                <tableViewController storyboardIdentifier="UserPage" id="21a-Kc-kfo" customClass="LXUserPageViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" directionalLockEnabled="YES" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="5EB-hp-jPu">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                <tableViewController id="OZE-UL-Mh9" customClass="LXUserListViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="3Bb-y8-HIB">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="CF0-wx-KGd">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="usG-91-eNs">
+                            <rect key="frame" x="0.0" y="70" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="default-cover.gif" translatesAutoresizingMaskIntoConstraints="NO" id="XIy-D3-oA1">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="kxT-QN-pg2">
+                                    <rect key="frame" x="150" y="12" width="20" height="20"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                </imageView>
-                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wfs-G9-fnV">
-                                    <rect key="frame" x="20" y="2" width="80" height="34"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
-                                    <state key="normal" title="Username">
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kc8-8B-lDc">
-                                    <rect key="frame" x="108" y="8" width="22" height="22"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="22" id="eYN-15-WNp"/>
-                                        <constraint firstAttribute="height" constant="22" id="tGo-6M-xC6"/>
-                                    </constraints>
-                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <state key="normal">
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <connections>
-                                        <segue destination="fNT-Qz-mIt" kind="custom" identifier="Profile" customClass="MZFormSheetSegue" id="s00-5A-NCH"/>
-                                    </connections>
-                                </button>
-                                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="vj5-au-Je8">
-                                    <rect key="frame" x="20" y="38" width="280" height="29"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <segments>
-                                        <segment title="" image="icon_grid.png"/>
-                                        <segment title="" image="icon_calendar_blue.png"/>
-                                        <segment title="" image="icon_follower_s.png"/>
-                                        <segment title="" image="icon_follow_s.png"/>
-                                    </segments>
-                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <connections>
-                                        <action selector="switchView:" destination="21a-Kc-kfo" eventType="valueChanged" id="DRC-x5-NDx"/>
-                                    </connections>
-                                </segmentedControl>
+                                </activityIndicatorView>
                             </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstItem="wfs-G9-fnV" firstAttribute="leading" secondItem="CF0-wx-KGd" secondAttribute="leading" constant="20" id="6jx-93-OeP"/>
-                                <constraint firstItem="Kc8-8B-lDc" firstAttribute="top" secondItem="CF0-wx-KGd" secondAttribute="top" constant="8" id="PdH-1m-S4b"/>
-                                <constraint firstItem="Kc8-8B-lDc" firstAttribute="leading" secondItem="wfs-G9-fnV" secondAttribute="trailing" constant="8" id="cn3-TY-4nj"/>
-                                <constraint firstItem="wfs-G9-fnV" firstAttribute="top" secondItem="CF0-wx-KGd" secondAttribute="top" constant="2" id="vcY-yP-Nw0"/>
+                                <constraint firstAttribute="centerX" secondItem="kxT-QN-pg2" secondAttribute="centerX" id="Bwa-7L-6oA"/>
+                                <constraint firstAttribute="centerY" secondItem="kxT-QN-pg2" secondAttribute="centerY" id="tzw-tE-HPe"/>
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Grid" id="vUJ-m3-IyL" userLabel="Cell Grid" customClass="LXCellGrid">
-                                <rect key="frame" x="0.0" y="102" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vUJ-m3-IyL" id="fjV-jP-SJ6">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="User" rowHeight="48" id="c1v-6H-r7x" customClass="LXCellFriend">
-                                <rect key="frame" x="0.0" y="146" width="320" height="48"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="gray" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="User" rowHeight="48" id="c1v-6H-r7x" customClass="LXCellFriend">
+                                <rect key="frame" x="0.0" y="22" width="320" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="c1v-6H-r7x" id="8Gb-6V-H6B">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="48"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="47"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" image="user.gif" translatesAutoresizingMaskIntoConstraints="NO" id="BNS-CJ-Ncp">
@@ -2407,8 +2361,108 @@ Or you can resend confirmation email.</string>
                                     <outlet property="labelName" destination="7zH-No-HfM" id="Fhj-Ha-gJS"/>
                                 </connections>
                             </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="OZE-UL-Mh9" id="Zx5-iE-8Hz"/>
+                            <outlet property="delegate" destination="OZE-UL-Mh9" id="wQp-5E-Hcg"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hT2-lE-wtM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="842" y="-848"/>
+        </scene>
+        <!--User Page View Controller-->
+        <scene sceneID="bRl-eM-CfX">
+            <objects>
+                <tableViewController storyboardIdentifier="UserPage" id="21a-Kc-kfo" customClass="LXUserPageViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" directionalLockEnabled="YES" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="5EB-hp-jPu">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="CF0-wx-KGd">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="109"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="default-cover.gif" translatesAutoresizingMaskIntoConstraints="NO" id="XIy-D3-oA1">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="109"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wfs-G9-fnV">
+                                    <rect key="frame" x="20" y="2" width="80" height="34"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
+                                    <state key="normal" title="Username">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kc8-8B-lDc">
+                                    <rect key="frame" x="108" y="8" width="22" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="22" id="eYN-15-WNp"/>
+                                        <constraint firstAttribute="height" constant="22" id="tGo-6M-xC6"/>
+                                    </constraints>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <state key="normal">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <segue destination="fNT-Qz-mIt" kind="custom" identifier="Profile" customClass="MZFormSheetSegue" id="s00-5A-NCH"/>
+                                    </connections>
+                                </button>
+                                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="vj5-au-Je8">
+                                    <rect key="frame" x="20" y="66" width="280" height="29"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <segments>
+                                        <segment title="" image="icon_timeline.png"/>
+                                        <segment title="" image="icon_grid.png"/>
+                                        <segment title="" image="icon_calendar_blue.png"/>
+                                    </segments>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <connections>
+                                        <action selector="switchView:" destination="21a-Kc-kfo" eventType="valueChanged" id="DRC-x5-NDx"/>
+                                    </connections>
+                                </segmentedControl>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VG6-0T-eya">
+                                    <rect key="frame" x="188" y="4" width="67" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" title="0" image="icon_follow_m.png">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <segue destination="OZE-UL-Mh9" kind="custom" identifier="Follower" customClass="MZFormSheetSegue" id="nqr-PV-YRj"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ylh-RA-SXN">
+                                    <rect key="frame" x="193" y="32" width="62" height="25"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" title="0" image="icon_follow_s.png">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <segue destination="OZE-UL-Mh9" kind="custom" identifier="Following" customClass="MZFormSheetSegue" id="bsm-XB-qQP"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="wfs-G9-fnV" firstAttribute="leading" secondItem="CF0-wx-KGd" secondAttribute="leading" constant="20" id="6jx-93-OeP"/>
+                                <constraint firstItem="Kc8-8B-lDc" firstAttribute="top" secondItem="CF0-wx-KGd" secondAttribute="top" constant="8" id="PdH-1m-S4b"/>
+                                <constraint firstItem="Kc8-8B-lDc" firstAttribute="leading" secondItem="wfs-G9-fnV" secondAttribute="trailing" constant="8" id="cn3-TY-4nj"/>
+                                <constraint firstItem="wfs-G9-fnV" firstAttribute="top" secondItem="CF0-wx-KGd" secondAttribute="top" constant="2" id="vcY-yP-Nw0"/>
+                            </constraints>
+                        </view>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Grid" id="vUJ-m3-IyL" userLabel="Cell Grid" customClass="LXCellGrid">
+                                <rect key="frame" x="0.0" y="131" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vUJ-m3-IyL" id="fjV-jP-SJ6">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Load" id="xki-b7-ZFl">
-                                <rect key="frame" x="0.0" y="194" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="175" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xki-b7-ZFl" id="Mk2-m0-saE">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -2576,7 +2630,7 @@ Or you can resend confirmation email.</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Ii-cU-EWi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="830" y="-271"/>
+            <point key="canvasLocation" x="842" y="-107"/>
         </scene>
     </scenes>
     <resources>
@@ -2603,6 +2657,7 @@ Or you can resend confirmation email.</string>
         <image name="icon_calendar_lbrown.png" width="15" height="15"/>
         <image name="icon_comment.png" width="20" height="20"/>
         <image name="icon_comment_s.png" width="12" height="12"/>
+        <image name="icon_follow_m.png" width="17" height="15"/>
         <image name="icon_follow_s.png" width="14" height="12"/>
         <image name="icon_follower_s.png" width="14" height="12"/>
         <image name="icon_followon_s.png" width="9" height="12"/>
@@ -2626,6 +2681,7 @@ Or you can resend confirmation email.</string>
         <image name="icon_rank.png" width="20" height="21"/>
         <image name="icon_setting_m_ocher.png" width="15" height="15"/>
         <image name="icon_tag_m.png" width="16" height="16"/>
+        <image name="icon_timeline.png" width="19" height="15"/>
         <image name="icon_trend_ltrend.png" width="13" height="15"/>
         <image name="notify_all.png" width="19" height="15"/>
         <image name="notify_comment.png" width="15" height="15"/>
@@ -2652,5 +2708,6 @@ Or you can resend confirmation email.</string>
         <segue reference="gji-Cu-gYb"/>
         <segue reference="gJK-ni-fiN"/>
         <segue reference="kV3-JH-Oaz"/>
+        <segue reference="nqr-PV-YRj"/>
     </inferredMetricsTieBreakers>
 </document>
