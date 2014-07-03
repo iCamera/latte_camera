@@ -21,10 +21,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonReply;
 @property (strong, nonatomic) IBOutlet UIButton *buttonReport;
 @property (strong, nonatomic) IBOutlet UILabel *labelDate;
-@property (strong, nonatomic) IBOutlet UIView *viewBack;
 @property (strong, nonatomic) IBOutlet UIButton *buttonLike;
-@property (strong, nonatomic) IBOutlet UILabel *labelLike;
-@property (strong, nonatomic) IBOutlet UIImageView *imageLike;
 @property (strong, nonatomic) IBOutlet UIImageView *imageNationality;
 
 @property (strong, nonatomic) Comment *comment;

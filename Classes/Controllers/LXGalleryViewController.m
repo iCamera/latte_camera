@@ -47,8 +47,6 @@
 @synthesize labelView;
 @synthesize viewInfoTop;
 @synthesize viewDesc;
-@synthesize labelComment;
-@synthesize labelLike;
 @synthesize imageNationality;
 
 
@@ -221,7 +219,7 @@
         sheet.formSheetController.presentedFormSheetSize = CGSizeMake(320, self.view.bounds.size.height - sheet.formSheetController.portraitTopInset);
         
         LXPicVoteCollectionController *viewVote = segue.destinationViewController;
-        viewVote.picture = _picture;
+        viewVote.picture = currentPage.picture;
         viewVote.isModal = true;
 
     } else if ([segue.identifier isEqualToString:@"Comment"]) {
@@ -233,7 +231,7 @@
         sheet.formSheetController.presentedFormSheetSize = CGSizeMake(320, self.view.bounds.size.height - sheet.formSheetController.portraitTopInset);
 
         LXPicCommentViewController *viewComment = segue.destinationViewController;
-        viewComment.picture = _picture;
+        viewComment.picture = currentPage.picture;
         viewComment.isModal = true;
     } else if ([segue.identifier isEqualToString:@"Info"]) {
         MZFormSheetSegue *sheet = (MZFormSheetSegue*)segue;
@@ -244,7 +242,7 @@
         sheet.formSheetController.presentedFormSheetSize = CGSizeMake(320, self.view.bounds.size.height - sheet.formSheetController.portraitTopInset);
 
         LXPicInfoViewController *viewInfo = segue.destinationViewController;
-        viewInfo.picture = _picture;
+        viewInfo.picture = currentPage.picture;
         viewInfo.isModal = true;
     }
 }
@@ -362,10 +360,9 @@
     if (!(currentPage.picture.isVoted && !app.currentUser))
         buttonLike.enabled = YES;
     buttonLike.selected = currentPage.picture.isVoted;
-    labelLike.highlighted = currentPage.picture.isVoted;
+    [buttonLike setTitle:[currentPage.picture.voteCount stringValue] forState:UIControlStateNormal];
     
-    labelComment.text = [currentPage.picture.commentCount stringValue];
-    labelLike.text = [currentPage.picture.voteCount stringValue];
+    [buttonComment setTitle:[currentPage.picture.commentCount stringValue] forState:UIControlStateNormal];
     
     // Increase counter
     NSString *urlCounter = [NSString stringWithFormat:@"picture/counter/%ld/%ld",
@@ -391,7 +388,7 @@
     if (currentPage.picture.isOwner) {
         [self performSegueWithIdentifier:@"Like" sender:self];
     } else {
-    [LXUtils toggleLike:sender ofPicture:currentPage.picture setCount:labelLike];
+        [LXUtils toggleLike:sender ofPicture:currentPage.picture];
     }
 }
 

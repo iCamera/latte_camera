@@ -49,11 +49,8 @@
     view.clipsToBounds = YES;
 }
 
-+ (void)toggleLike:(UIButton*)sender ofPicture:(Picture*)pic {
-    [LXUtils toggleLike:sender ofPicture:pic setCount:nil];
-}
 
-+ (void)toggleLike:(UIButton*)sender ofPicture:(Picture*)pic setCount:(UILabel*)labelCount {
++ (void)toggleLike:(UIButton*)sender ofPicture:(Picture*)pic {
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
     if (!app.currentUser) {
         sender.enabled = NO;
@@ -65,12 +62,8 @@
     BOOL increase = pic.isVoted;
 
     pic.voteCount = [NSNumber numberWithInteger:[pic.voteCount integerValue] + (increase?1:-1)];
-    labelCount.highlighted = increase;
-    if (labelCount != nil) {
-        labelCount.text = [pic.voteCount stringValue];
-    } else {
-        [sender setTitle:[pic.voteCount stringValue] forState:UIControlStateNormal];
-    }
+
+    [sender setTitle:[pic.voteCount stringValue] forState:UIControlStateNormal];
     
     NSDictionary *param = @{@"vote_type": [NSNumber numberWithInteger:1]};
     

@@ -14,10 +14,7 @@
 @synthesize labelAuthor;
 @synthesize labelDate;
 @synthesize buttonUser;
-@synthesize viewBack;
 @synthesize buttonLike;
-@synthesize labelLike;
-@synthesize imageLike;
 @synthesize imageNationality;
 @synthesize buttonReply;
 @synthesize buttonReport;
@@ -47,8 +44,9 @@
 - (void)setComment:(Comment *)comment {
     _comment = comment;
     textComment.text = comment.descriptionText;
-    labelDate.text = [NSString stringWithFormat:@"%@ -", [LXUtils timeDeltaFromNow:comment.createdAt]];
-    labelLike.text = [comment.voteCount stringValue];
+    labelDate.text = [LXUtils timeDeltaFromNow:comment.createdAt];
+    [buttonLike setTitle:[comment.voteCount stringValue] forState:UIControlStateNormal];
+
     if (comment.user.isUnregister) {
         labelAuthor.text = NSLocalizedString(@"guest", @"ゲスト");
     } else {
@@ -88,7 +86,7 @@
     
     _comment.voteCount = [NSNumber numberWithInteger:[_comment.voteCount integerValue] + (increase?1:-1)];
     
-    labelLike.text = [_comment.voteCount stringValue];
+    [buttonLike setTitle:[_comment.voteCount stringValue] forState:UIControlStateNormal];
     
     NSMutableDictionary *param = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                   @"1", @"vote_type",

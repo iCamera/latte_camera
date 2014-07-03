@@ -25,30 +25,29 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="elZ-1B-Ddf" userLabel="View Tab">
                                 <rect key="frame" x="0.0" y="445" width="320" height="35"/>
                                 <subviews>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aai-dv-xYK">
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aai-dv-xYK">
                                         <rect key="frame" x="0.0" y="1" width="107" height="34"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="13"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <inset key="imageEdgeInsets" minX="67" minY="-1" maxX="5" maxY="0.0"/>
-                                        <state key="normal" title="Like" image="icon_iine_s.png">
+                                        <inset key="imageEdgeInsets" minX="-8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="---" image="icon_iine.png">
                                             <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <state key="disabled" title="Liked"/>
-                                        <state key="selected" title="Like" image="icon_iine_s_on.png">
+                                        <state key="selected" image="icon_iine_s_on.png">
                                             <color key="titleColor" red="0.3675926679078666" green="0.59252089671395725" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="toggleLike:" destination="IuH-xf-ibI" eventType="touchUpInside" id="ReV-4R-xUa"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JNz-uA-38y">
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JNz-uA-38y">
                                         <rect key="frame" x="108" y="1" width="107" height="34"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="14"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <inset key="imageEdgeInsets" minX="72" minY="0.0" maxX="5" maxY="0.0"/>
-                                        <state key="normal" title="Comment" image="icon_comment_s.png">
+                                        <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="---" image="icon_comment.png">
                                             <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -85,20 +84,6 @@
                                             <action selector="touchShare:" destination="IuH-xf-ibI" eventType="touchUpInside" id="U8p-fq-Q9V"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YRf-Qi-Bof">
-                                        <rect key="frame" x="75" y="7" width="32" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="14"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <color key="highlightedColor" red="0.3675926679" green="0.59252089669999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C1l-wW-5fB">
-                                        <rect key="frame" x="185" y="7" width="30" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="14"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
@@ -225,8 +210,6 @@
                         <outlet property="buttonLike" destination="aai-dv-xYK" id="w1A-MS-Kg7"/>
                         <outlet property="buttonUser" destination="MX3-d9-HyP" id="7Xh-er-cha"/>
                         <outlet property="imageNationality" destination="Ns6-ul-0Wp" id="eXW-qw-Pmz"/>
-                        <outlet property="labelComment" destination="C1l-wW-5fB" id="nFG-mN-oQy"/>
-                        <outlet property="labelLike" destination="YRf-Qi-Bof" id="MRx-Ds-70H"/>
                         <outlet property="labelNickname" destination="S7J-P5-R5U" id="3JX-Bu-Shv"/>
                         <outlet property="labelView" destination="o8T-e9-IaH" id="Dpy-he-8Dp"/>
                         <outlet property="viewDesc" destination="dcl-lB-O6o" id="v30-Hy-nyU"/>
@@ -548,22 +531,26 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="63"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rxu-4E-T7t">
-                                                    <rect key="frame" x="95" y="42" width="30" height="14"/>
+                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rxu-4E-T7t">
+                                                    <rect key="frame" x="97" y="36" width="53" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="14" id="bWv-wG-ETM"/>
+                                                        <constraint firstAttribute="height" constant="23" id="bWv-wG-ETM"/>
+                                                        <constraint firstAttribute="width" constant="53" id="eDQ-dZ-cA6"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                                    <inset key="titleEdgeInsets" minX="4" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="2" maxX="0.0" maxY="0.0"/>
-                                                    <state key="normal" title="Like">
-                                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <state key="normal" title="0" image="icon_iine_s.png">
+                                                        <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
-                                                    <state key="disabled" title="Liked">
+                                                    <state key="disabled">
                                                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
-                                                    <state key="selected" title="Unlike"/>
+                                                    <state key="selected" image="icon_iine_s_on.png">
+                                                        <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
                                                     <connections>
                                                         <action selector="toggleLike:" destination="sXR-T7-xsm" eventType="touchUpInside" id="b5L-HN-ADa"/>
                                                     </connections>
@@ -611,20 +598,6 @@
                                                     <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qDc-eX-qJc">
-                                                    <rect key="frame" x="147" y="41" width="7" height="14"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="14" id="4GY-Lp-WOp"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
-                                                    <color key="textColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="icon_iine_ss.png" translatesAutoresizingMaskIntoConstraints="NO" id="iIi-OS-MeM">
-                                                    <rect key="frame" x="131" y="43" width="10" height="10"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E2z-bN-F6K">
                                                     <rect key="frame" x="86" y="7" width="16" height="16"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -633,8 +606,8 @@
                                                         <constraint firstAttribute="width" constant="16" id="r0w-Wa-XJX"/>
                                                     </constraints>
                                                 </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="spI-ig-vIB">
-                                                    <rect key="frame" x="284" y="33" width="36" height="30"/>
+                                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="spI-ig-vIB">
+                                                    <rect key="frame" x="284" y="35" width="36" height="28"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="36" id="ihv-Fw-SvK"/>
@@ -652,7 +625,7 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cVL-xA-beg">
-                                                    <rect key="frame" x="241" y="2" width="70" height="25"/>
+                                                    <rect key="frame" x="241" y="2" width="70" height="27"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="70" id="99b-jo-t3T"/>
@@ -671,20 +644,14 @@
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="iIi-OS-MeM" firstAttribute="leading" secondItem="rxu-4E-T7t" secondAttribute="trailing" constant="6" id="1Hy-Ru-VnW"/>
                                                 <constraint firstItem="kxb-oT-Vsh" firstAttribute="leading" secondItem="abX-kb-SeK" secondAttribute="leading" constant="45" id="272-4g-gRe"/>
                                                 <constraint firstItem="spI-ig-vIB" firstAttribute="top" secondItem="cVL-xA-beg" secondAttribute="bottom" constant="6" id="5Xd-YD-W7C"/>
                                                 <constraint firstItem="E2z-bN-F6K" firstAttribute="leading" secondItem="NAs-Sm-ZHd" secondAttribute="trailing" constant="6" id="8ZX-TW-A0Y"/>
                                                 <constraint firstItem="jtV-Fy-boJ" firstAttribute="leading" secondItem="abX-kb-SeK" secondAttribute="leading" constant="45" id="8sj-vO-8Z4"/>
-                                                <constraint firstItem="spI-ig-vIB" firstAttribute="centerY" secondItem="qDc-eX-qJc" secondAttribute="centerY" id="Aaw-Rj-JNj"/>
-                                                <constraint firstAttribute="bottom" secondItem="iIi-OS-MeM" secondAttribute="bottom" constant="10" id="CBo-RI-SaC"/>
                                                 <constraint firstAttribute="trailing" secondItem="spI-ig-vIB" secondAttribute="trailing" id="D86-Sh-4oA"/>
-                                                <constraint firstItem="rxu-4E-T7t" firstAttribute="leading" secondItem="jtV-Fy-boJ" secondAttribute="trailing" constant="2" id="DZu-Rw-WR0"/>
-                                                <constraint firstItem="qDc-eX-qJc" firstAttribute="leading" secondItem="iIi-OS-MeM" secondAttribute="trailing" constant="6" id="HLi-Vr-FKc"/>
-                                                <constraint firstItem="spI-ig-vIB" firstAttribute="baseline" secondItem="qDc-eX-qJc" secondAttribute="baseline" id="LAL-BY-SOC"/>
+                                                <constraint firstItem="rxu-4E-T7t" firstAttribute="leading" secondItem="jtV-Fy-boJ" secondAttribute="trailing" constant="4" id="DZu-Rw-WR0"/>
                                                 <constraint firstItem="v4G-Ph-f9B" firstAttribute="leading" secondItem="abX-kb-SeK" secondAttribute="leading" constant="9" id="LL1-C9-RC0"/>
                                                 <constraint firstItem="cVL-xA-beg" firstAttribute="top" secondItem="abX-kb-SeK" secondAttribute="top" constant="2" id="Oz0-Ze-yeN"/>
-                                                <constraint firstAttribute="bottom" secondItem="qDc-eX-qJc" secondAttribute="bottom" constant="8" id="UST-K7-aLr"/>
                                                 <constraint firstAttribute="trailing" secondItem="kxb-oT-Vsh" secondAttribute="trailing" constant="9" id="XDC-vM-0p8"/>
                                                 <constraint firstAttribute="bottom" secondItem="spI-ig-vIB" secondAttribute="bottom" id="YiW-pe-Hgr"/>
                                                 <constraint firstItem="v4G-Ph-f9B" firstAttribute="top" secondItem="abX-kb-SeK" secondAttribute="top" constant="9" id="aU2-it-4iN"/>
@@ -694,7 +661,7 @@
                                                 <constraint firstItem="kxb-oT-Vsh" firstAttribute="top" secondItem="abX-kb-SeK" secondAttribute="top" constant="24" id="ljX-bv-vog"/>
                                                 <constraint firstItem="E2z-bN-F6K" firstAttribute="top" secondItem="abX-kb-SeK" secondAttribute="top" constant="7" id="mpT-4S-T4S"/>
                                                 <constraint firstItem="NAs-Sm-ZHd" firstAttribute="top" secondItem="abX-kb-SeK" secondAttribute="top" constant="7" id="rwD-w1-JDs"/>
-                                                <constraint firstAttribute="bottom" secondItem="rxu-4E-T7t" secondAttribute="bottom" constant="7" id="x8R-I2-N53"/>
+                                                <constraint firstAttribute="bottom" secondItem="rxu-4E-T7t" secondAttribute="bottom" constant="4" id="x8R-I2-N53"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -702,11 +669,9 @@
                                             <outlet property="buttonReply" destination="spI-ig-vIB" id="1CB-Kc-0wg"/>
                                             <outlet property="buttonReport" destination="cVL-xA-beg" id="T3d-05-Qiw"/>
                                             <outlet property="buttonUser" destination="v4G-Ph-f9B" id="WYh-us-dbE"/>
-                                            <outlet property="imageLike" destination="iIi-OS-MeM" id="ulN-Le-vJo"/>
                                             <outlet property="imageNationality" destination="E2z-bN-F6K" id="JsK-iB-6Yn"/>
                                             <outlet property="labelAuthor" destination="NAs-Sm-ZHd" id="H6r-Ka-LZR"/>
                                             <outlet property="labelDate" destination="jtV-Fy-boJ" id="YYJ-rr-yuD"/>
-                                            <outlet property="labelLike" destination="qDc-eX-qJc" id="3lI-v3-Umz"/>
                                             <outlet property="textComment" destination="kxb-oT-Vsh" id="hA1-R9-PDJ"/>
                                         </connections>
                                     </tableViewCell>
@@ -1251,10 +1216,10 @@
         <image name="checkbox_off.png" width="15" height="15"/>
         <image name="checkbox_on.png" width="15" height="15"/>
         <image name="icon_close.png" width="20" height="20"/>
-        <image name="icon_comment_s.png" width="12" height="12"/>
+        <image name="icon_comment.png" width="20" height="20"/>
+        <image name="icon_iine.png" width="20" height="20"/>
         <image name="icon_iine_s.png" width="12" height="12"/>
         <image name="icon_iine_s_on.png" width="12" height="12"/>
-        <image name="icon_iine_ss.png" width="10" height="10"/>
         <image name="icon_plus_s.png" width="11" height="11"/>
         <image name="icon_reply_s.png" width="12" height="9"/>
         <image name="icon_setting_m_ocher.png" width="15" height="15"/>

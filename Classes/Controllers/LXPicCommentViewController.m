@@ -71,11 +71,16 @@
     userTag = [[NSMutableArray alloc] init];
     
     [LXUtils globalShadow:viewHeader];
-    
+}
+
+- (void)setPicture:(Picture *)picture {
+    _picture = picture;
     if (_picture.comments) {
         _comments = _picture.comments;
         [self.tableView reloadData];
-        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(_comments.count-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        if (_comments.count > 0) {
+            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(_comments.count-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        }        
         [activityLoad stopAnimating];
         self.tableView.tableFooterView = nil;
         
@@ -86,7 +91,10 @@
         [[LatteAPIClient sharedClient] GET:urlDetail parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
             _comments = [Comment mutableArrayFromDictionary:JSON withKey:@"comments"];
             [self.tableView reloadData];
-            //[self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(_comments.count-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            if (_comments.count > 0) {
+                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(_comments.count-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            }
+            
             [activityLoad stopAnimating];
             self.tableView.tableFooterView = nil;
         } failure:nil];

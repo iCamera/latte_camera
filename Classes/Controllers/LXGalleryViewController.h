@@ -32,8 +32,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *labelNickname;
 @property (strong, nonatomic) STTweetLabel *labelDesc;
 @property (strong, nonatomic) IBOutlet UILabel *labelView;
-@property (strong, nonatomic) IBOutlet UILabel *labelLike;
-@property (strong, nonatomic) IBOutlet UILabel *labelComment;
 @property (strong, nonatomic) IBOutlet UIImageView *imageNationality;
 
 @property (strong, nonatomic) Picture* picture;

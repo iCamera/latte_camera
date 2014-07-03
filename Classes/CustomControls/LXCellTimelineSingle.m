@@ -224,7 +224,7 @@
         
         [viewController.navigationController pushViewController:viewVote animated:YES];
     } else {
-        [LXUtils toggleLike:buttonLike ofPicture:pic setCount:nil];
+        [LXUtils toggleLike:buttonLike ofPicture:pic];
     }
 }
 
