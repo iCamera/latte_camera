@@ -70,7 +70,6 @@
     buttonUser.layer.rasterizationScale = [[UIScreen mainScreen] scale];
     
     _viewWrap.layer.cornerRadius = 3;
-    _viewDescBg.layer.colors = [NSArray arrayWithObjects:(id)[[UIColor clearColor] CGColor], (id)[[UIColor colorWithWhite:0 alpha:0.5] CGColor], nil];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

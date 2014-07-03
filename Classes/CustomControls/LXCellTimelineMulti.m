@@ -61,7 +61,7 @@
         [subview removeFromSuperview];
     }
     
-    CGSize size = CGSizeMake(6, 152);
+    CGSize size = CGSizeMake(0, 200);
     UIStoryboard *storyComponent = [UIStoryboard storyboardWithName:@"Component"
                                                              bundle:nil];
     
@@ -73,10 +73,10 @@
         viewPic.parent = self;
         viewPic.index = index;
 
-        viewPic.view.frame = CGRectMake(size.width, 0, 152, 152);
+        viewPic.view.frame = CGRectMake(size.width, 0, 200, 200);
         [scrollPic addSubview:viewPic.view];
         
-        size.width += 156;
+        size.width += 206;
         index += 1;
     }
     

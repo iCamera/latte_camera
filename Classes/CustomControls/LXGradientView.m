@@ -19,8 +19,13 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        
     }
     return self;
+}
+
+- (void)awakeFromNib {
+    self.layer.colors = [NSArray arrayWithObjects:(id)[[UIColor clearColor] CGColor], (id)[[UIColor colorWithWhite:0 alpha:0.5] CGColor], nil];
 }
 
 /*
