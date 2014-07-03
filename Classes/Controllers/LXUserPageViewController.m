@@ -57,6 +57,7 @@ typedef enum {
     NSMutableArray *followings;
     NSMutableDictionary *currentMonthPics;
     NSMutableDictionary *currentDayPics;
+    NSMutableArray *feeds;
     
     NSDate *currentMonth;
     NSDate *selectedCalendarDate;
@@ -102,7 +103,7 @@ typedef enum {
     
     [app.tracker send:[[GAIDictionaryBuilder createAppView] build]];
     
-    photoMode = kPhotoGrid;
+    photoMode = kPhotoTimeline;
     
     // Increase count
     NSString *url = [NSString stringWithFormat:@"user/counter/%ld", (long)_userId];
@@ -124,7 +125,6 @@ typedef enum {
     [_buttonUsername setTitle:_user.name forState:UIControlStateNormal];
     
     [self reloadView];
-    [self reloadProfile];
     
     if (app.currentUser && (_userId == [app.currentUser.userId integerValue])) {
         _buttonFollow.hidden = YES;
@@ -148,6 +148,51 @@ typedef enum {
             
         }
     } failure:nil];
+}
+
+- (void)loadTimeline:(BOOL)reset {
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+
+    if (reset) {
+        endedPic = false;
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        
+        if (currentRequest.isExecuting)
+            return;
+    } else {
+        if (currentRequest.isExecuting)
+            return;
+        Feed *feed = feeds.lastObject;
+        if (feed) {
+            [params setObject:feed.feedID forKey:@"last_id"];
+        }
+    }
+    
+    
+    NSString *url = [NSString stringWithFormat:@"user/%ld/timeline", _userId];
+    currentRequest = [[LatteAPIClient sharedClient] GET: url
+                            parameters: params
+                               success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                   
+                                   NSMutableArray *newFeed = [Feed mutableArrayFromDictionary:JSON
+                                                                                      withKey:@"feeds"];
+                                   
+                                   endedPic = newFeed.count == 0;
+                                   
+                                   if (reset) {
+                                       feeds = newFeed;
+                                       [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                   } else {
+                                       [feeds addObjectsFromArray:newFeed];
+                                   }
+                                   
+                                   [self.tableView reloadData];
+                                   [self.refreshControl endRefreshing];
+                               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                   DLog(@"Something went wrong (Timeline)");
+                                   
+                                   [self.refreshControl endRefreshing];
+                               }];
 }
 
 
@@ -202,10 +247,14 @@ typedef enum {
 
     [self reloadProfile];
     
-    
-    if (photoMode == kPhotoGrid)
+    if (currentRequest && currentRequest.isExecuting)
+        [currentRequest cancel];
+
+    if (photoMode == kPhotoTimeline) {
+         [self loadTimeline:YES];
+    } else if (photoMode == kPhotoGrid) {
         [self loadPicture:YES];
-    else if (photoMode == kPhotoCalendar)
+    } else if (photoMode == kPhotoCalendar)
         [self reloadCalendar];
 }
 
@@ -263,7 +312,9 @@ typedef enum {
 }
 
 - (void)loadMore {
-    if (photoMode == kPhotoGrid)
+    if (photoMode == kPhotoTimeline) {
+        [self loadTimeline:NO];
+    } else if (photoMode == kPhotoGrid)
         [self loadPicture:NO];
 }
 
@@ -324,7 +375,9 @@ typedef enum {
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (photoMode == kPhotoGrid) {
+    if (photoMode == kPhotoTimeline) {
+        return feeds.count;
+    } else if (photoMode == kPhotoGrid) {
         return (pictures.count/3) + (pictures.count%3>0?1:0);
     } else if (photoMode == kPhotoCalendar) {
         if (selectedCalendarDate && section > 0) {
@@ -348,6 +401,21 @@ typedef enum {
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (photoMode == kPhotoTimeline) {
+        Feed *feed = feeds[indexPath.row];
+        if (feed.targets.count > 1) {
+            return 260;
+        } else if (feed.targets.count == 1) {
+            Picture *pic = feed.targets[0];
+            CGFloat feedHeight = [LXUtils heightFromWidth:304.0 width:[pic.width floatValue] height:[pic.height floatValue]] +8+52+34;
+            if (pic.tagsOld.count > 0) {
+                feedHeight += 36;
+            }
+            return feedHeight;
+        } else
+            return 1;
+    }
+
     if (photoMode == kPhotoGrid) {
         return 104;
     }
@@ -366,7 +434,7 @@ typedef enum {
 
 - (BOOL)checkEmpty {
     BOOL isEmpty = false;
-    if (photoMode == kPhotoGrid && endedPic)
+    if (((photoMode == kPhotoTimeline) || (photoMode == kPhotoGrid)) && endedPic)
         isEmpty = pictures.count == 0;
     return isEmpty;
 }
@@ -604,7 +672,29 @@ typedef enum {
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (photoMode == kPhotoGrid) {
+    if (photoMode == kPhotoTimeline) {
+        Feed *feed = [feeds objectAtIndex:indexPath.row];
+        if (feed.targets.count == 1) {
+            
+            LXCellTimelineSingle *cell = [tableView dequeueReusableCellWithIdentifier:@"Single" forIndexPath:indexPath];
+            
+            cell.viewController = self;
+            feed.user = _user;
+            cell.feed = feed;
+            cell.buttonUser.tag = indexPath.row;
+            
+            return cell;
+        } else {
+            LXCellTimelineMulti *cell = [tableView dequeueReusableCellWithIdentifier:@"Multi" forIndexPath:indexPath];
+            
+            cell.parent = self;
+            feed.user = _user;
+            cell.feed = feed;
+            cell.buttonUser.tag = indexPath.row;
+            
+            return cell;
+        }
+    } else if (photoMode == kPhotoGrid) {
         LXCellGrid *cellPic = [tableView dequeueReusableCellWithIdentifier:@"Grid"];
         
         cellPic.viewController = self;
@@ -618,6 +708,7 @@ typedef enum {
         [cell addSubview:[self viewForCalendarDay:selectedCalendarDate]];
         return cell;
     }
+    return nil;
 }
 
 - (UIView *)viewForCalendarDay:(NSDate*)date {
@@ -748,23 +839,6 @@ typedef enum {
     UIView *viewHeader = self.tableView.tableHeaderView;
     viewHeader.frame = CGRectMake(0, 0, 320, 82);
     self.tableView.tableHeaderView = viewHeader;
-}
-
-
-- (void)touchPhoto:(UserPagePhotoMode)mode {
-    switch (mode) {
-        case kPhotoGrid:
-            photoMode = mode;
-            if (pictures.count == 0) {
-                [self loadPicture:YES];
-            } else
-                [self.tableView reloadData];
-            break;
-        case kPhotoCalendar:
-            photoMode = mode;
-            [self reloadCalendar];
-            break;
-    }
 }
 
 - (void)touchSetProfilePic {
@@ -940,9 +1014,35 @@ typedef enum {
     [self presentViewController:navGalerry animated:YES completion:nil];
 }
 
+- (NSMutableArray*)flatPictureArray {
+    NSMutableArray *ret = [[NSMutableArray alloc] init];
+    for (Feed *feed in feeds) {
+        for (Picture *picture in feed.targets) {
+            [ret addObject:picture];
+        }
+    }
+    return ret;
+}
+
 - (NSDictionary *)pictureAfterPicture:(Picture *)picture {
     switch (photoMode) {
         case kPhotoTimeline:{
+            NSArray *flatPictures = [self flatPictureArray];
+            NSUInteger current = [flatPictures indexOfObject:picture];
+            
+            if (current != NSNotFound && current < flatPictures.count-1) {
+                Picture *nextPic = [flatPictures objectAtIndex:current+1];
+                Feed* feed = [LXUtils feedFromPicID:[nextPic.pictureId integerValue] of:feeds];
+                NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
+                                     nextPic, @"picture",
+                                     feed.user, @"user",
+                                     nil];
+                // Loadmore
+                if (current > flatPictures.count - 6)
+                    [self loadTimeline:NO];
+                return ret;
+            }
+            
             break;
         }
             
@@ -979,6 +1079,18 @@ typedef enum {
 - (NSDictionary *)pictureBeforePicture:(Picture *)picture {    
     switch (photoMode) {
         case kPhotoTimeline:{
+            NSArray *flatPictures = [self flatPictureArray];
+            NSInteger current = [flatPictures indexOfObject:picture];
+            if (current != NSNotFound && current > 0) {
+                Picture *prevPic = [flatPictures objectAtIndex:current-1];
+                Feed* feed = [LXUtils feedFromPicID:[prevPic.pictureId integerValue] of:feeds];
+                NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
+                                     prevPic,  @"picture",
+                                     feed.user, @"user",
+                                     nil];
+                return ret;
+            }
+
             break;
         }
         case kPhotoGrid: {
@@ -1046,7 +1158,7 @@ typedef enum {
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
-    if (photoMode == kPhotoGrid) {
+    if (photoMode == kPhotoGrid || photoMode == kPhotoTimeline) {
         if (endedPic)
             return;
         CGPoint offset = aScrollView.contentOffset;
@@ -1058,7 +1170,7 @@ typedef enum {
         
         float reload_distance = -100;
         if(y > h + reload_distance) {
-            [self loadPicture:NO];
+            [self loadMore];
         }
     }
 }
