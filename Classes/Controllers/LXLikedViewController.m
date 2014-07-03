@@ -69,8 +69,8 @@
     page += 1;
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             [app getToken], @"token",
-                            [NSNumber numberWithInt:page], @"page",
-                            [NSNumber numberWithInt:30], @"limit",
+                            [NSNumber numberWithInteger:page], @"page",
+                            [NSNumber numberWithInteger:30], @"limit",
                             nil];
     
     [[LatteAPIClient sharedClient] GET:@"picture/user/me/voted"
@@ -87,12 +87,12 @@
                                            [self.tableView reloadData];
                                        } else {
                                            [self.tableView beginUpdates];
-                                           int rowCountPrev = [self.tableView numberOfRowsInSection:0];
+                                           NSInteger rowCountPrev = [self.tableView numberOfRowsInSection:0];
                                            
                                            [pictures addObjectsFromArray:newData];
                                            
                                            if (newData.count > 0) {
-                                               int newRows = [self tableView:self.tableView numberOfRowsInSection:0] - rowCountPrev;
+                                               NSInteger newRows = [self tableView:self.tableView numberOfRowsInSection:0] - rowCountPrev;
                                                NSMutableArray *paths = [[NSMutableArray alloc] init];
                                                for (int i = 0; i < newRows ; i++) {
                                                    [paths addObject:[NSIndexPath indexPathForRow:i+rowCountPrev inSection:0]];

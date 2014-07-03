@@ -9,6 +9,7 @@
 #import "LXAppDelegate.h"
 #import "LXGalleryViewController.h"
 #import "LXZoomPictureViewController.h"
+#import "MZFormSheetSegue.h"
 
 #import "LXPicVoteCollectionController.h"
 #import "LXPicInfoViewController.h"
@@ -208,23 +209,43 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
     
-    if ([segue.identifier isEqualToString:@"Map"]) {
-        LXPicMapViewController *viewMap = segue.destinationViewController;
-        viewMap.picture = currentPage.picture;
-    } else if ([segue.identifier isEqualToString:@"Edit"]) {
+    if ([segue.identifier isEqualToString:@"Edit"]) {
         LXPicEditViewController *viewEdit = segue.destinationViewController;
         viewEdit.picture = currentPage.picture;
     } else if ([segue.identifier isEqualToString:@"Like"]) {
+        MZFormSheetSegue *sheet = (MZFormSheetSegue*)segue;
+        sheet.formSheetController.transitionStyle = MZFormSheetTransitionStyleSlideFromBottom;
+        sheet.formSheetController.cornerRadius = 0;
+        sheet.formSheetController.shouldDismissOnBackgroundViewTap = YES;
+        sheet.formSheetController.portraitTopInset = 50;
+        sheet.formSheetController.presentedFormSheetSize = CGSizeMake(320, self.view.bounds.size.height - sheet.formSheetController.portraitTopInset);
+        
         LXPicVoteCollectionController *viewVote = segue.destinationViewController;
         viewVote.picture = _picture;
-    }
-    if ([segue.identifier isEqualToString:@"Comment"]) {
+        viewVote.isModal = true;
+
+    } else if ([segue.identifier isEqualToString:@"Comment"]) {
+        MZFormSheetSegue *sheet = (MZFormSheetSegue*)segue;
+        sheet.formSheetController.transitionStyle = MZFormSheetTransitionStyleSlideFromBottom;
+        sheet.formSheetController.cornerRadius = 0;
+        sheet.formSheetController.shouldDismissOnBackgroundViewTap = YES;
+        sheet.formSheetController.portraitTopInset = 50;
+        sheet.formSheetController.presentedFormSheetSize = CGSizeMake(320, self.view.bounds.size.height - sheet.formSheetController.portraitTopInset);
+
         LXPicCommentViewController *viewComment = segue.destinationViewController;
         viewComment.picture = _picture;
-    }
-    if ([segue.identifier isEqualToString:@"Info"]) {
+        viewComment.isModal = true;
+    } else if ([segue.identifier isEqualToString:@"Info"]) {
+        MZFormSheetSegue *sheet = (MZFormSheetSegue*)segue;
+        sheet.formSheetController.transitionStyle = MZFormSheetTransitionStyleSlideFromBottom;
+        sheet.formSheetController.cornerRadius = 0;
+        sheet.formSheetController.shouldDismissOnBackgroundViewTap = YES;
+        sheet.formSheetController.portraitTopInset = 50;
+        sheet.formSheetController.presentedFormSheetSize = CGSizeMake(320, self.view.bounds.size.height - sheet.formSheetController.portraitTopInset);
+
         LXPicInfoViewController *viewInfo = segue.destinationViewController;
         viewInfo.picture = _picture;
+        viewInfo.isModal = true;
     }
 }
 

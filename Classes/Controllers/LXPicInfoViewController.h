@@ -14,5 +14,7 @@
 @interface LXPicInfoViewController : UITableViewController<UIAlertViewDelegate, MKMapViewDelegate>
 
 @property (strong, nonatomic) Picture *picture;
+@property (assign, nonatomic) BOOL isModal;
+
 - (IBAction)touchReport:(id)sender;
 @end

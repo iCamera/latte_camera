@@ -96,6 +96,10 @@
 
 }
 
+- (BOOL)prefersStatusBarHidden {
+    return _isModal;
+}
+
 /*
 #pragma mark - Navigation
 

@@ -9,12 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "User.h"
 #import "Picture.h"
+#import "LXGalleryViewController.h"
 
 @interface LXCellNotify : UITableViewCell
-@property (strong, nonatomic) IBOutlet UIImageView *viewImage;
+
+@property (strong, nonatomic) IBOutlet UIButton *buttonImage;
 @property (strong, nonatomic) IBOutlet UILabel *labelNotify;
 @property (strong, nonatomic) IBOutlet UILabel *labelDate;
 
-- (void)setNotify:(NSDictionary *)notify;
+@property (strong, nonatomic) NSDictionary *notify;
+
+@property (weak, nonatomic) UIViewController<LXGalleryViewControllerDataSource> *parent;
+
+- (IBAction)touchImage:(id)sender;
 
 @end

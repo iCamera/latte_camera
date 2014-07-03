@@ -9,11 +9,14 @@
 #import "LXCellNotify.h"
 #import "UIButton+AFNetworking.h"
 #import "UIImageView+AFNetworking.h"
+#import "Comment.h"
+#import "LatteAPIClient.h"
+#import "LXGalleryViewController.h"
+#import <MBProgressHUD/MBProgressHUD.h>
 
 @implementation LXCellNotify
 
 @synthesize labelNotify;
-@synthesize viewImage;
 @synthesize labelDate;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -33,10 +36,36 @@
     
 }
 
+- (IBAction)touchImage:(id)sender {
+    NotifyTarget notifyTarget = [[_notify objectForKey:@"target_model"] integerValue];
+    NSDictionary *target = [_notify objectForKey:@"target"];
+    
+    switch (notifyTarget) {
+        case kNotifyTargetPicture: {
+            Picture *pic = [Picture instanceFromDictionary:target];
+            UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
+                                                                   bundle:nil];
+            
+            UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
+            LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
+            
+            viewGallery.picture = pic;
+            viewGallery.delegate = _parent;
+            [_parent presentViewController:navGalerry animated:YES completion:nil];
+        }
+            
+            break;
+        default:
+            break;
+    }
+}
+
 - (void)setNotify:(NSDictionary *)notify {
+    _notify = notify;
+    
     NSDictionary *target = [notify objectForKey:@"target"];
     NSDate *updatedAt = [LXUtils dateFromJSON:[notify objectForKey:@"updated_at"]];
-    viewImage.image = [UIImage imageNamed:@"user.gif"];
+    [_buttonImage setBackgroundImage:[UIImage imageNamed:@"user.gif"] forState:UIControlStateNormal];
 
     labelDate.text = [LXUtils timeDeltaFromNow:updatedAt];
     labelNotify.text = [LXUtils stringFromNotify:notify];
@@ -46,19 +75,22 @@
         switch (notifyTarget) {
             case kNotifyTargetPicture: {
                 Picture *pic = [Picture instanceFromDictionary:target];
-                [viewImage setImageWithURL:[NSURL URLWithString:pic.urlSquare]];
+                [_buttonImage setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pic.urlSquare] placeholderImage:[UIImage imageNamed:@"user.gif"]];
+                _buttonImage.enabled = YES;
                 break;
             }
             case kNotifyTargetUser: {
                 User *user = [User instanceFromDictionary:target];
-                [viewImage setImageWithURL:[NSURL URLWithString:user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
+                [_buttonImage setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
+                _buttonImage.enabled = NO;
                 break;
             }
             case kNotifyTargetComment: {
+                _buttonImage.enabled = NO;
                 NSMutableArray *users = [User mutableArrayFromDictionary:notify withKey:@"users"];
                 for (User *user in users) {
                     if (user.name != nil) {
-                        [viewImage setImageWithURL:[NSURL URLWithString:user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
+                        [_buttonImage setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
                     }
                 }
             }

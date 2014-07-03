@@ -52,7 +52,7 @@
                                             <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="Cl7-HT-jiB" kind="push" identifier="Comment" id="rqF-xC-Qb3"/>
+                                            <segue destination="Cl7-HT-jiB" kind="custom" identifier="Comment" customClass="MZFormSheetSegue" id="2NW-gr-wIO"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VOb-GG-DNn">
@@ -67,7 +67,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="1Vb-iL-LK1" kind="push" identifier="Info" id="boz-PM-usf"/>
+                                            <segue destination="1Vb-iL-LK1" kind="custom" identifier="Info" customClass="MZFormSheetSegue" id="boz-PM-usf"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NXS-cb-RLu">
@@ -133,14 +133,14 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="---" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S7J-P5-R5U">
-                                        <rect key="frame" x="42" y="9" width="16" height="17"/>
+                                        <rect key="frame" x="42" y="8" width="16" height="17"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="---" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o8T-e9-IaH">
-                                        <rect key="frame" x="44" y="23" width="146" height="11"/>
+                                        <rect key="frame" x="42" y="24" width="146" height="11"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="11"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -198,7 +198,7 @@
                                     <constraint firstItem="yLL-l6-32z" firstAttribute="top" secondItem="KWF-Xb-pkH" secondAttribute="top" id="FLh-up-Bp8"/>
                                     <constraint firstItem="yLL-l6-32z" firstAttribute="leading" secondItem="gKT-fc-CMb" secondAttribute="trailing" constant="8" id="JEI-t8-DjA"/>
                                     <constraint firstItem="Ns6-ul-0Wp" firstAttribute="leading" secondItem="S7J-P5-R5U" secondAttribute="trailing" constant="6" id="SyF-xb-VDn"/>
-                                    <constraint firstItem="S7J-P5-R5U" firstAttribute="top" secondItem="KWF-Xb-pkH" secondAttribute="top" constant="9" id="gKE-l6-7eC"/>
+                                    <constraint firstItem="S7J-P5-R5U" firstAttribute="top" secondItem="KWF-Xb-pkH" secondAttribute="top" constant="8" id="gKE-l6-7eC"/>
                                     <constraint firstItem="MX3-d9-HyP" firstAttribute="top" secondItem="KWF-Xb-pkH" secondAttribute="top" constant="6" id="hSp-FE-9rJ"/>
                                     <constraint firstItem="MX3-d9-HyP" firstAttribute="leading" secondItem="KWF-Xb-pkH" secondAttribute="leading" constant="6" id="iVQ-aH-APd"/>
                                     <constraint firstAttribute="trailing" secondItem="yLL-l6-32z" secondAttribute="trailing" id="vge-Vs-0RD"/>
@@ -234,7 +234,7 @@
                         <outlet property="viewTab" destination="elZ-1B-Ddf" id="42G-qT-YRn"/>
                         <segue destination="MVZ-Ew-3hi" kind="push" identifier="ReportPicture" id="09P-ty-4Py"/>
                         <segue destination="k3Y-xu-bbh" kind="push" identifier="ReportComment" id="J0s-2i-TEv"/>
-                        <segue destination="qte-Sn-AM0" kind="push" identifier="Like" id="11L-9i-OVT"/>
+                        <segue destination="qte-Sn-AM0" kind="custom" identifier="Like" customClass="MZFormSheetSegue" id="11L-9i-OVT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qbF-3c-Cp3" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -434,9 +434,9 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fah-AR-fTU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2387" y="-1959"/>
+            <point key="canvasLocation" x="-1899" y="-1949"/>
         </scene>
-        <!--Pic Vote Collection Controller-->
+        <!--Pic Vote Collection Controller - Like-->
         <scene sceneID="Vkl-wX-xgy">
             <objects>
                 <collectionViewController storyboardIdentifier="Like" autoresizesArchivedViewToFullSize="NO" hidesBottomBarWhenPushed="YES" id="qte-Sn-AM0" customClass="LXPicVoteCollectionController" sceneMemberID="viewController">
@@ -502,13 +502,13 @@
                             <outlet property="delegate" destination="qte-Sn-AM0" id="n7d-zn-Paf"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="eqV-zA-kxz"/>
+                    <navigationItem key="navigationItem" title="Like" id="eqV-zA-kxz"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RMa-J8-rW7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3117" y="-1959"/>
+            <point key="canvasLocation" x="-2977" y="-1959"/>
         </scene>
-        <!--Pic Comment View Controller-->
+        <!--Pic Comment View Controller - Comment-->
         <scene sceneID="DNe-oM-yGd">
             <objects>
                 <viewController storyboardIdentifier="Comment" hidesBottomBarWhenPushed="YES" id="Cl7-HT-jiB" customClass="LXPicCommentViewController" sceneMemberID="viewController">
@@ -758,7 +758,7 @@
                             <constraint firstAttribute="trailing" secondItem="2dA-O6-tna" secondAttribute="trailing" id="ckQ-YI-ECj"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="ZkK-ef-hca"/>
+                    <navigationItem key="navigationItem" title="Comment" id="ZkK-ef-hca"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
                     <connections>
                         <outlet property="activityLoad" destination="8gt-nq-4Hs" id="J8f-jd-pk7"/>
@@ -773,7 +773,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hL8-Gj-MT3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2751" y="-1959"/>
+            <point key="canvasLocation" x="-2433" y="-1949"/>
         </scene>
         <!--Pic Dumb Tab View Controller-->
         <scene sceneID="Oda-k2-cr5">

@@ -274,4 +274,8 @@
     return 30;
 }
 
+- (BOOL)prefersStatusBarHidden {
+    return _isModal;
+}
+
 @end

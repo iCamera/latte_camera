@@ -12,5 +12,6 @@
 @interface LXPicVoteCollectionController : UICollectionViewController
 
 @property (strong, nonatomic) Picture *picture;
+@property (assign, nonatomic) BOOL isModal;
 
 @end

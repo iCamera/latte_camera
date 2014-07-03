@@ -32,6 +32,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIView *viewFooter;
 @property (strong, nonatomic) NSMutableArray *comments;
+@property (assign, nonatomic) BOOL isModal;
 
 @property (weak, nonatomic) UIViewController<LXPicCommentViewControllerDelegate> *parent;
 

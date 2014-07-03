@@ -14,6 +14,8 @@
 #import "LXCellNotifyOfficial.h"
 #import "LXGalleryViewController.h"
 #import "LXUserPageViewController.h"
+#import "LXPicCommentViewController.h"
+#import "LXPicVoteCollectionController.h"
 #import "Comment.h"
 #import "User.h"
 #import "Picture.h"
@@ -115,6 +117,7 @@
         cellNotify = [tableView dequeueReusableCellWithIdentifier:@"NotifyOfficial" forIndexPath:indexPath];
     } else {
         cellNotify = [tableView dequeueReusableCellWithIdentifier:@"Notify" forIndexPath:indexPath];
+        cellNotify.parent = self;
     }
 
     NSDictionary *notify = [notifies objectAtIndex:indexPath.row];
@@ -209,6 +212,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *notify = notifies[indexPath.row];
     NotifyTarget notifyTarget = [[notify objectForKey:@"target_model"] integerValue];
+    NotifyKind notifyKind = [[notify objectForKey:@"kind"] integerValue];
     
     if (currentTab == 4 && !notifyTarget) {
                 //For Animation
@@ -258,11 +262,19 @@
             
             UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                                    bundle:nil];
-            UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
-            LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
-            viewGallery.picture = pic;
-            viewGallery.delegate = self;
-            [self presentViewController:navGalerry animated:YES completion:nil];
+            
+            if (notifyKind == kNotifyKindComment) {
+                LXPicCommentViewController *viewComment = [storyGallery instantiateViewControllerWithIdentifier:@"Comment"];
+                viewComment.picture = pic;
+                [self.navigationController pushViewController:viewComment animated:YES];
+            }
+            
+            if (notifyKind == kNotifyKindLike) {
+                LXPicVoteCollectionController *viewVote = [storyGallery instantiateViewControllerWithIdentifier:@"Like"];
+                viewVote.picture = pic;
+                [self.navigationController pushViewController:viewVote animated:YES];
+            }
+
             break;
         }
         case kNotifyTargetUser: {
@@ -284,7 +296,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (currentTab != 4) {
-        return 45;
+        return 60;
     }
     
 	// If our cell is selected, return double height
@@ -292,7 +304,7 @@
         if (indexPath.row == path.row) {
             NSDictionary *notify = [notifies objectAtIndex:indexPath.row];
             NSString *note = [notify objectForKey:@"note"];
-            CGSize labelSize = [note sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:11]
+            CGSize labelSize = [note sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12]
                                 constrainedToSize:CGSizeMake(310.0, MAXFLOAT)
                                     lineBreakMode:NSLineBreakByTruncatingTail];
             
