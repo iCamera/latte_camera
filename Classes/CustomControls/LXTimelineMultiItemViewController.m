@@ -8,6 +8,7 @@
 
 #import "LXTimelineMultiItemViewController.h"
 #import "LXAppDelegate.h"
+#import "UIButton+AFNetworking.h"
 
 @interface LXTimelineMultiItemViewController ()
 
@@ -38,7 +39,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [buttonImage loadBackground:_pic.urlSquare];
+    //[buttonImage loadBackground:_pic.urlSquare];
+    [buttonImage setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:_pic.urlMedium]];
+    buttonImage.imageView.contentMode = UIViewContentModeScaleAspectFill;
     
     buttonImage.tag = _index;
     buttonComment.tag = _index;

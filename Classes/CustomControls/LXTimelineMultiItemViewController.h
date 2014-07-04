@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIButton+AsyncImage.h"
 #import "Picture.h"
 #import "LXGalleryViewController.h"
 
