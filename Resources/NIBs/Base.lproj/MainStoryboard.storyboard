@@ -406,7 +406,7 @@
                         <viewControllerLayoutGuide type="bottom" id="hbO-H8-5bX"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="OhT-9B-KMP">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="82"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -2331,8 +2331,8 @@ Or you can resend confirmation email.</string>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Intro" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="i7i-AA-Bx8">
-                                            <rect key="frame" x="42" y="25" width="270" height="14"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Intro" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="i7i-AA-Bx8">
+                                            <rect key="frame" x="42" y="25" width="270" height="15"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -2352,6 +2352,9 @@ Or you can resend confirmation email.</string>
                                         <constraint firstItem="jJe-IA-tko" firstAttribute="top" secondItem="8Gb-6V-H6B" secondAttribute="top" constant="9" id="3rl-w4-vRC"/>
                                         <constraint firstItem="7zH-No-HfM" firstAttribute="leading" secondItem="8Gb-6V-H6B" secondAttribute="leading" constant="42" id="KeG-z9-Q0s"/>
                                         <constraint firstItem="7zH-No-HfM" firstAttribute="top" secondItem="8Gb-6V-H6B" secondAttribute="top" constant="9" id="bIo-Bp-ODh"/>
+                                        <constraint firstItem="i7i-AA-Bx8" firstAttribute="leading" secondItem="8Gb-6V-H6B" secondAttribute="leading" constant="42" id="dvj-Ae-6TX"/>
+                                        <constraint firstAttribute="trailing" secondItem="i7i-AA-Bx8" secondAttribute="trailing" constant="8" id="kKp-9L-FpO"/>
+                                        <constraint firstItem="i7i-AA-Bx8" firstAttribute="top" secondItem="8Gb-6V-H6B" secondAttribute="top" constant="25" id="ovq-26-tqU"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -3009,7 +3012,7 @@ Or you can resend confirmation email.</string>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="N1b-hN-6Tv"/>
+        <segue reference="gji-Cu-gYb"/>
         <segue reference="gJK-ni-fiN"/>
         <segue reference="kV3-JH-Oaz"/>
         <segue reference="nqr-PV-YRj"/>

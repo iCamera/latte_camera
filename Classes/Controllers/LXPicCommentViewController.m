@@ -80,7 +80,7 @@
         [self.tableView reloadData];
         if (_comments.count > 0) {
             [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(_comments.count-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-        }        
+        }
         [activityLoad stopAnimating];
         self.tableView.tableFooterView = nil;
         

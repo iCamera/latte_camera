@@ -28,7 +28,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonUser;
 @property (strong, nonatomic) IBOutlet UIView *viewTab;
 @property (strong, nonatomic) IBOutlet UIView *viewInfoTop;
-@property (strong, nonatomic) IBOutlet UIScrollView *viewDesc;
 @property (strong, nonatomic) IBOutlet UILabel *labelNickname;
 @property (strong, nonatomic) STTweetLabel *labelDesc;
 @property (strong, nonatomic) IBOutlet UILabel *labelView;

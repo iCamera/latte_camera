@@ -20,9 +20,8 @@
 #import "LXShare.h"
 #import "UIButton+AsyncImage.h"
 #import "Comment.h"
-#import "LXTagViewController.h"
+#import "LXTagHome.h"
 #import "LXUserPageViewController.h"
-#import "LXTagDiscussionViewController.h"
 
 
 @interface LXGalleryViewController ()
@@ -35,6 +34,7 @@
     UITapGestureRecognizer *tapDouble;
     NSMutableArray *currentComments;
     LXShare *lxShare;
+    UIScrollView *viewDesc;
 }
 
 @synthesize buttonComment;
@@ -46,7 +46,6 @@
 @synthesize buttonUser;
 @synthesize labelView;
 @synthesize viewInfoTop;
-@synthesize viewDesc;
 @synthesize imageNationality;
 
 
@@ -136,7 +135,7 @@
                 
                 UIStoryboard *storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                                     bundle:nil];
-                LXTagDiscussionViewController *viewTag = [storyMain instantiateViewControllerWithIdentifier:@"Discussion"];
+                LXTagHome *viewTag = [storyMain instantiateViewControllerWithIdentifier:@"TagHome"];
                 viewTag.tag = [string substringFromIndex:1];
                 
                 [weakSelf.navigationController pushViewController:viewTag animated:YES];
@@ -149,6 +148,9 @@
                 break;
         }
     }];
+    viewDesc = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 480, 320, 0)];
+    viewDesc.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+    [self.view addSubview:viewDesc];
     [viewDesc addSubview:labelDesc];
 
     [self setPicture];
@@ -302,13 +304,11 @@
 - (void)setPicture {
     LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
     
-    CGRect bound = [currentPage.picture.descriptionText boundingRectWithSize:(CGSize){308, CGFLOAT_MAX}
-                                                                     options:NSStringDrawingUsesLineFragmentOrigin
-                                                                  attributes:@{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0]}
-                                                                     context:nil];
+    [labelDesc setText:currentPage.picture.descriptionText];
+    CGSize labelSize = [labelDesc suggestedFrameSizeToFitEntireStringConstraintedToWidth:308];
                    
     CGRect frame = labelDesc.frame;
-    frame.size.height = bound.size.height;
+    frame.size.height = labelSize.height;
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGRect frameDesc = viewDesc.frame;
     frameDesc.size.height = MIN(frame.size.height + 12, 200);
@@ -325,8 +325,6 @@
                      animations:^{
                          labelDesc.frame = frame;
                          viewDesc.frame = frameDesc;
-                         
-                         [labelDesc setText:currentPage.picture.descriptionText];
                      }
                      completion:^(BOOL finished) {
                          [viewDesc flashScrollIndicators];
@@ -346,6 +344,7 @@
         NSString *url = [NSString stringWithFormat:@"user/%ld", [currentPage.picture.userId longValue]];
         [[LatteAPIClient sharedClient] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
             User *user = [User instanceFromDictionary:JSON[@"user"]];
+            currentPage.user = user;
             labelNickname.text = user.name;
             [LXUtils setNationalityOfUser:user forImage:imageNationality nextToLabel:labelNickname];
             [buttonUser loadBackground:user.profilePicture placeholderImage:@"user.gif"];

@@ -17,11 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dcl-lB-O6o" userLabel="Scroll View Description">
-                                <rect key="frame" x="0.0" y="449" width="320" height="0.0"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
-                            </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="elZ-1B-Ddf" userLabel="View Tab">
                                 <rect key="frame" x="0.0" y="445" width="320" height="35"/>
                                 <subviews>
@@ -118,7 +113,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="---" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S7J-P5-R5U">
-                                        <rect key="frame" x="42" y="8" width="16" height="17"/>
+                                        <rect key="frame" x="42" y="7" width="16" height="17"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -183,7 +178,7 @@
                                     <constraint firstItem="yLL-l6-32z" firstAttribute="top" secondItem="KWF-Xb-pkH" secondAttribute="top" id="FLh-up-Bp8"/>
                                     <constraint firstItem="yLL-l6-32z" firstAttribute="leading" secondItem="gKT-fc-CMb" secondAttribute="trailing" constant="8" id="JEI-t8-DjA"/>
                                     <constraint firstItem="Ns6-ul-0Wp" firstAttribute="leading" secondItem="S7J-P5-R5U" secondAttribute="trailing" constant="6" id="SyF-xb-VDn"/>
-                                    <constraint firstItem="S7J-P5-R5U" firstAttribute="top" secondItem="KWF-Xb-pkH" secondAttribute="top" constant="8" id="gKE-l6-7eC"/>
+                                    <constraint firstItem="S7J-P5-R5U" firstAttribute="top" secondItem="KWF-Xb-pkH" secondAttribute="top" constant="7" id="gKE-l6-7eC"/>
                                     <constraint firstItem="MX3-d9-HyP" firstAttribute="top" secondItem="KWF-Xb-pkH" secondAttribute="top" constant="6" id="hSp-FE-9rJ"/>
                                     <constraint firstItem="MX3-d9-HyP" firstAttribute="leading" secondItem="KWF-Xb-pkH" secondAttribute="leading" constant="6" id="iVQ-aH-APd"/>
                                     <constraint firstAttribute="trailing" secondItem="yLL-l6-32z" secondAttribute="trailing" id="vge-Vs-0RD"/>
@@ -212,7 +207,6 @@
                         <outlet property="imageNationality" destination="Ns6-ul-0Wp" id="eXW-qw-Pmz"/>
                         <outlet property="labelNickname" destination="S7J-P5-R5U" id="3JX-Bu-Shv"/>
                         <outlet property="labelView" destination="o8T-e9-IaH" id="Dpy-he-8Dp"/>
-                        <outlet property="viewDesc" destination="dcl-lB-O6o" id="v30-Hy-nyU"/>
                         <outlet property="viewInfoTop" destination="KWF-Xb-pkH" id="h1n-OK-hc4"/>
                         <outlet property="viewTab" destination="elZ-1B-Ddf" id="42G-qT-YRn"/>
                         <segue destination="MVZ-Ew-3hi" kind="push" identifier="ReportPicture" id="09P-ty-4Py"/>
