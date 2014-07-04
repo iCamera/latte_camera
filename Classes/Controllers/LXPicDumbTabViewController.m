@@ -10,7 +10,9 @@
 #import "LXCellTag.h"
 #import "LXButtonBack.h"
 
-@interface LXPicDumbTabViewController ()
+@interface LXPicDumbTabViewController () {
+    NSArray *results;
+}
 
 @end
 
@@ -36,6 +38,36 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
     [self.tableView setEditing:YES animated:YES];
+    
+    for (UIView *subView in self.searchDisplayController.searchBar.subviews) {
+        //        if ([subView isKindOfClass:NSClassFromString(@"UINavigationButton")]) {
+        //            UIButton *cancelButton = (UIButton*)subView;
+        //            [cancelButton setTitle:@"OK" forState:UIControlStateNormal];
+        //        }
+        for (UIView *subSubview in subView.subviews)
+        {
+            if ([subSubview conformsToProtocol:@protocol(UITextInputTraits)])
+            {
+                UITextField *textField = (UITextField *)subSubview;
+                //                [textField setKeyboardAppearance: UIKeyboardAppearanceAlert];
+                textField.returnKeyType = UIReturnKeyDone;
+                break;
+            }
+        }
+    }
+
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillAppear:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+//    [self.searchDisplayController setActive:YES animated:NO];
+//    [self.searchDisplayController.searchBar becomeFirstResponder];
+}
+
+- (void)keyboardWillAppear:(NSNotification *)notification
+{
+    //[self.searchDisplayController.searchBar setShowsCancelButton:NO animated:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -51,46 +83,45 @@
     return 1;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        if (![_tags containsObject:results[indexPath.row]]) {
+            [_tags addObject:results[indexPath.row]];
+        } else {
+            [_tags removeObject:results[indexPath.row]];
+        }
+        [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _tags.count + 1;
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        return results.count;
+    } else {
+        return _tags.count;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Tag";
-    LXCellTag *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    [cell.textTag addTarget:self action:@selector(editEnd:) forControlEvents:UIControlEventEditingDidEnd];
-    [cell.textTag addTarget:self action:@selector(editBegin:) forControlEvents:UIControlEventEditingDidBegin];
-    cell.textTag.tag = indexPath.row;
-    if (indexPath.row < _tags.count) {
-        cell.textTag.text = _tags[indexPath.row];
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Result"];
+        cell.textLabel.text = results[indexPath.row];
+        if ([_tags containsObject:results[indexPath.row]]) {
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        } else {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
+        return cell;
     } else {
-        cell.textTag.text = @"";
-    }
-    
-    return cell;
-}
-
-- (void)editEnd:(UITextField*)textField {
-    if (textField.text.length == 0) {
-//        [picture.tags removeObjectAtIndex:textField.tag];
-//        [self.tableView reloadData];
-//        NSArray* indexes = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:textField.tag inSection:0]];
-//        [textField resignFirstResponder];
-//        [self.tableView deleteRowsAtIndexPaths:indexes withRowAnimation:UITableViewRowAnimationAutomatic];
-    } else {
-        _tags[textField.tag] = textField.text;
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Tag" forIndexPath:indexPath];
+        cell.textLabel.text = _tags[indexPath.row];
+        
+        return cell;
     }
 }
 
-- (void)editBegin:(UITextField*)textField {
-    if (textField.tag == _tags.count) {
-        [_tags addObject:@""];
-        NSArray* indexes = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:_tags.count inSection:0]];
-        [self.tableView insertRowsAtIndexPaths:indexes withRowAnimation:UITableViewRowAnimationAutomatic];
-    }
-}
 
 // Update the data model according to edit actions delete or insert.
 - (void)tableView:(UITableView *)aTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
@@ -98,14 +129,15 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [_tags removeObjectAtIndex:indexPath.row];
 		[aTableView reloadData];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        [_tags addObject:@""];
-		[aTableView reloadData];
     }
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return indexPath.row < _tags.count;
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        return NO;
+    } else {
+        return YES;
+    }
 }
 
 #pragma mark Row reordering
@@ -122,5 +154,35 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [_tags insertObject:item atIndex:toIndexPath.row];
     }
 }
+
+#pragma mark - UISearchDisplayController delegate methods
+-(BOOL)searchDisplayController:(UISearchDisplayController *)controller
+shouldReloadTableForSearchString:(NSString *)searchString
+{
+    results = [NSArray arrayWithObject:searchString];
+    return YES;
+}
+
+- (void)searchDisplayController:(UISearchDisplayController *)controller willHideSearchResultsTableView:(UITableView *)tableView {
+    [self.tableView reloadData];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [self.searchDisplayController setActive:NO animated:YES];
+}
+
+/*
+ - (BOOL)searchDisplayController:(UISearchDisplayController *)controller
+ shouldReloadTableForSearchScope:(NSInteger)searchOption
+ {
+ [self filterContentForSearchText:[self.searchDisplayController.searchBar text]
+ scope:[[self.searchDisplayController.searchBar scopeButtonTitles]
+ objectAtIndex:searchOption]];
+ 
+ return YES;
+ }
+ 
+ */
+
 
 @end

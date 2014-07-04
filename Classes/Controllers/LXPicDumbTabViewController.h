@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Picture.h"
 
-@interface LXPicDumbTabViewController : UITableViewController
+@interface LXPicDumbTabViewController : UITableViewController<UISearchDisplayDelegate, UISearchBarDelegate>
 
 @property (strong, nonatomic) NSMutableArray *tags;
 

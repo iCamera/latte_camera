@@ -184,12 +184,6 @@
 
 - (void)growingTextView:(HPGrowingTextView *)growingTextView willChangeHeight:(float)height
 {
-//    float diff = (growingTextView.frame.size.height - height);
-//    
-//	CGRect r = viewHeader.frame;
-//    r.size.height -= diff;
-//    r.origin.y += diff;
-//    viewHeader.frame = r;
     _constraintTextHeight.constant = height + 20;
 }
 
