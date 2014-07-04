@@ -144,7 +144,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if ((indexPath.section == 1) && (indexPath.row > 1))
+    if ((indexPath.section == 2))
     {
         UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"privacy_setting", @"公開設定")
                                                            delegate:self
@@ -163,7 +163,7 @@
         }
         else
             [sheet showInView:self.view];
-    } else if (indexPath.section == 2) {
+    } else if (indexPath.section == 1) {
         share.text = textDesc.text;
         switch (indexPath.row) {
             case 1:
@@ -179,7 +179,7 @@
     UILabel *label;
 
     
-    if (actionSheet.tag > 1 && actionSheet.tag < 10) {
+    if (actionSheet.tag < 10) {
         PictureStatus status = PictureStatusPublic;
         switch (buttonIndex) {
             case 0:
@@ -200,23 +200,23 @@
         }
         
         switch (actionSheet.tag) {
-            case 2:
+            case 0:
                 label = labelStatus;
                 imageStatus = status;
                 break;
-            case 3:
+            case 1:
                 label = labelTakenDateStatus;
                 imageTakenAtStatus = status;
                 break;
-            case 4:
+            case 2:
                 label = labelEXIFStatus;
                 imageExifStatus = status;
                 break;
-            case 5:
+            case 3:
                 label = labelGPSStatus;
                 imageGPSStatus = status;
                 break;
-            case 6:
+            case 4:
                 label = labelShowOriginalStatus;
                 imageShowOriginal = status;
                 break;
@@ -415,57 +415,6 @@
     [self backToCamera];
 }
 
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (_picture != nil) {
-        return 2;
-    } else {
-        return 3;
-    }
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
-    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, 30)];
-    title.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
-    title.textColor = [UIColor colorWithRed:101.0/255.0 green:90.0/255.0 blue:56.0/255.0 alpha:1];
-    title.text = [self tableView:tableView titleForHeaderInSection:section];
-    [view addSubview:title];
-    title.backgroundColor = [UIColor clearColor];
-    view.backgroundColor = [UIColor clearColor];
-    return view;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    NSString *title = [self tableView:tableView titleForHeaderInSection:section];
-    if (title.length > 0)
-        return 30;
-    else
-        return 0;
-
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    UIFont *font = [UIFont fontWithName:@"HelveticaNeue-Light" size:11];
-    NSString *title = [self tableView:tableView titleForFooterInSection:section];
-    CGSize size = [title sizeWithFont:font constrainedToSize:CGSizeMake(300, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, size.height + 20)];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 300, size.height)];
-    label.font = font;
-    label.lineBreakMode = NSLineBreakByWordWrapping;
-    label.numberOfLines = 0;
-    label.backgroundColor = [UIColor clearColor];
-    label.text = title;
-    [view addSubview:label];
-    return  view;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    UIFont *font = [UIFont fontWithName:@"HelveticaNeue-Light" size:11];
-    NSString *title = [self tableView:tableView titleForFooterInSection:section];
-    CGSize size = [title sizeWithFont:font constrainedToSize:CGSizeMake(300, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
-    return size.height;
-}
 
 - (void)viewDidUnload {
     [self setTextDesc:nil];
