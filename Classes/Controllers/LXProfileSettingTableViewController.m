@@ -36,6 +36,7 @@
 @synthesize textHometown;
 @synthesize textIntroduction;
 @synthesize textNationality;
+@synthesize imageViewNationalityFlag;
 @synthesize textOccupation;
 @synthesize editing;
 
@@ -113,10 +114,17 @@
     
     textHobby.tag = 8;
     textHobby.text = user.hobby;
-    
+
     textNationality.tag = 9;
-    textNationality.text = user.nationality;
-    
+    if (user.nationality && [user.nationality length]) {
+        NSLocale *locale = [NSLocale currentLocale];
+        NSString *countryImage = [NSString stringWithFormat:@"%@.png", user.nationality];
+        imageViewNationalityFlag.image = [UIImage imageNamed:countryImage];
+        NSString *displayNameString = [locale displayNameForKey:NSLocaleCountryCode value:user.nationality];
+        textNationality.text = displayNameString;
+    } else {
+        textNationality.text = @"";
+    }
 }
 
 #pragma mark - textField

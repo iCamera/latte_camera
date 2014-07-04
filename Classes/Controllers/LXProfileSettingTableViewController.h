@@ -24,6 +24,8 @@
 @property (strong, nonatomic) IBOutlet UITextField *textIntroduction;
 @property (strong, nonatomic) IBOutlet UITextField *textHobby;
 @property (strong, nonatomic) IBOutlet UITextField *textNationality;
+@property (strong, nonatomic) IBOutlet UIImageView *imageViewNationalityFlag;
+
 
 -(void)updateData;
 @end

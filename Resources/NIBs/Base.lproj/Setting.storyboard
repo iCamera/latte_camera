@@ -273,7 +273,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="12" id="232-O6-BmJ">
-                                                    <rect key="frame" x="123" y="7" width="164" height="30"/>
+                                                    <rect key="frame" x="102" y="7" width="165" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
@@ -288,6 +288,10 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="deN-Vz-Ymi">
+                                                    <rect key="frame" x="271" y="14" width="16" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
@@ -304,6 +308,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="RT8-Pe-IPI"/>
                     <connections>
+                        <outlet property="imageViewNationalityFlag" destination="deN-Vz-Ymi" id="92w-Le-Rmt"/>
                         <outlet property="textBirthday" destination="HRG-XF-sS5" id="nF2-yU-gYl"/>
                         <outlet property="textBloodType" destination="wvL-hX-Or0" id="Zs1-oR-6cW"/>
                         <outlet property="textCurrentAddress" destination="dRp-j7-DOt" id="WUh-nR-Voa"/>
