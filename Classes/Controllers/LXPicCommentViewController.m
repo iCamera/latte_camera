@@ -202,7 +202,7 @@
             [param setObject:mention forKey:@"mention"];
         }
         
-        NSString *url = [NSString stringWithFormat:@"picture/%d/comment_post", [_picture.pictureId integerValue]];
+        NSString *url = [NSString stringWithFormat:@"picture/%ld/comment_post", [_picture.pictureId longValue]];
         
         [MBProgressHUD showHUDAddedTo:self.view.superview.superview.superview animated:YES];
         [growingComment resignFirstResponder];
@@ -259,7 +259,7 @@
         
         LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
         
-        NSString *url = [NSString stringWithFormat:@"picture/comment/%d/delete", [comment.commentId integerValue]];
+        NSString *url = [NSString stringWithFormat:@"picture/comment/%ld/delete", [comment.commentId longValue]];
         [[LatteAPIClient sharedClient] POST:url
                                      parameters:[NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"]
                                         success:nil
@@ -327,10 +327,12 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     Comment *comment = _comments[indexPath.row];
     NSString *strComment = comment.descriptionText;
-    CGSize labelSize = [strComment sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12]
-                              constrainedToSize:CGSizeMake(266.0f, MAXFLOAT)
-                                  lineBreakMode:NSLineBreakByWordWrapping];
-    return labelSize.height + 50;
+
+    CGRect labelRect = [strComment boundingRectWithSize:CGSizeMake(266.0f, MAXFLOAT)
+                                                options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
+                                             attributes:@{ NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:12] }
+                                                context:nil];
+    return labelRect.size.height + 49;
 }
 
 #pragma mark - Table view delegate

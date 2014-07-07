@@ -760,9 +760,9 @@ typedef enum {
 
 - (void)refreshLabel {
     if (editingObject.tag == 0) {
-        CGSize textSize = [((UILabel*)editingObject).text
-                           sizeWithFont:((UILabel*)editingObject).font
-                           constrainedToSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+        UILabel *label = (UILabel*)editingObject;
+        CGSize textSize = [label.text sizeWithAttributes:@{ NSFontAttributeName : label.font }];
+
         CGRect frame = editingObject.bounds;
         frame.size = textSize;
         editingObject.bounds = frame;
@@ -771,15 +771,15 @@ typedef enum {
         CGFloat maxWidth = 0;
         for (NSInteger i = 0; i < label.text.length; i++) {
             NSString* chr = [label.text substringWithRange:NSMakeRange(i, 1)];
-            CGSize size = [chr sizeWithFont:label.font];
+            CGSize size = [chr sizeWithAttributes:@{ NSFontAttributeName :label.font}];
             maxWidth = MAX(maxWidth, size.width);
         }
         label.textAlignment = NSTextAlignmentCenter;
         
-        CGSize textSize = [((UILabel*)editingObject).text
-                           sizeWithFont:((UILabel*)editingObject).font
-                           constrainedToSize:CGSizeMake(maxWidth, CGFLOAT_MAX)
-                           lineBreakMode:NSLineBreakByCharWrapping];
+        CGRect stringRect = [((UILabel*)editingObject).text boundingRectWithSize:CGSizeMake(maxWidth, CGFLOAT_MAX)
+                                               options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
+                                            attributes:@{ NSFontAttributeName : ((UILabel*)editingObject).font }
+                                               context:nil];
         
 //        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
 //        paragraphStyle.lineHeightMultiple = 1.0;
@@ -793,7 +793,7 @@ typedef enum {
 //        [label setAttributedText:attributedText];
         
         CGRect frame = editingObject.bounds;
-        frame.size = textSize;
+        frame.size = stringRect.size;
         editingObject.bounds = frame;
     }
 }

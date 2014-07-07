@@ -169,7 +169,7 @@ typedef enum {
     }
     
     
-    NSString *url = [NSString stringWithFormat:@"user/%ld/timeline", _userId];
+    NSString *url = [NSString stringWithFormat:@"user/%ld/timeline", (long)_userId];
     currentRequest = [[LatteAPIClient sharedClient] GET: url
                             parameters: params
                                success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {

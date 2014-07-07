@@ -37,7 +37,7 @@
     }
     for (NSString *tag in tags) {
         UIFont *font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12];
-        CGSize textSize = [tag sizeWithFont:font];
+        CGSize textSize = [tag sizeWithAttributes:@{ NSFontAttributeName : font }];
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(size.width, 8, textSize.width + 12, 22)];
         button.titleLabel.font = font;
         [button setTitle:tag forState:UIControlStateNormal];

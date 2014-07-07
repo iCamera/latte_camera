@@ -167,28 +167,6 @@
                                     } failure:nil];
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    UIFont *font = [UIFont fontWithName:@"HelveticaNeue-Light" size:11];
-    NSString *title = [self tableView:tableView titleForFooterInSection:section];
-    CGSize size = [title sizeWithFont:font constrainedToSize:CGSizeMake(300, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, size.height + 20)];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 300, size.height)];
-    label.font = font;
-    label.lineBreakMode = NSLineBreakByWordWrapping;
-    label.numberOfLines = 0;
-    label.backgroundColor = [UIColor clearColor];
-    label.text = title;
-    [view addSubview:label];
-    return  view;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    UIFont *font = [UIFont fontWithName:@"HelveticaNeue-Light" size:11];
-    NSString *title = [self tableView:tableView titleForFooterInSection:section];
-    CGSize size = [title sizeWithFont:font constrainedToSize:CGSizeMake(300, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
-    return size.height;
-}
-
 - (void)viewDidUnload {
     [self setSwtichFacebook:nil];
     [self setSwitchTwitter:nil];

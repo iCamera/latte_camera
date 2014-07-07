@@ -304,13 +304,13 @@
         if (indexPath.row == path.row) {
             NSDictionary *notify = [notifies objectAtIndex:indexPath.row];
             NSString *note = [notify objectForKey:@"note"];
-            CGSize labelSize = [note sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12]
-                                constrainedToSize:CGSizeMake(310.0, MAXFLOAT)
-                                    lineBreakMode:NSLineBreakByTruncatingTail];
             
-            if (labelSize.height > 90) {
-                return labelSize.height + 75;
-            }
+            CGRect stringRect = [note boundingRectWithSize:CGSizeMake(310.0, CGFLOAT_MAX)
+                                                                 options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
+                                                              attributes:@{ NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:12] }
+                                                                 context:nil];
+            
+            return stringRect.size.height + 54;
         }
     }
    
