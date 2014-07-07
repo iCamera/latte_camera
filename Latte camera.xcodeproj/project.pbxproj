@@ -1094,6 +1094,8 @@
 		889093FF16F8959400E98DF4 /* follow_mutual_m@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 889093FB16F8959400E98DF4 /* follow_mutual_m@2x.png */; };
 		88963E8E195A731B000B1DDC /* LXCountrySelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88963E8D195A731B000B1DDC /* LXCountrySelectViewController.m */; };
 		88979100179FD64B00BDC803 /* LXFAQViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 889790FF179FD64A00BDC803 /* LXFAQViewController.m */; };
+		88992C8B196A77000002E502 /* LXCellTimelineMulti.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88992C8A196A77000002E502 /* LXCellTimelineMulti.xib */; };
+		88992C8D196A77800002E502 /* LXCellTimelineSingle.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88992C8C196A77800002E502 /* LXCellTimelineSingle.xib */; };
 		88A43B0216703340001A8BB3 /* bt_twitter2_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A43AFE16703340001A8BB3 /* bt_twitter2_on.png */; };
 		88A43B0316703340001A8BB3 /* bt_twitter2_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A43AFF16703340001A8BB3 /* bt_twitter2_on@2x.png */; };
 		88A43B0416703340001A8BB3 /* bt_twitter2.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A43B0016703340001A8BB3 /* bt_twitter2.png */; };
@@ -3136,6 +3138,8 @@
 		88963E8D195A731B000B1DDC /* LXCountrySelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCountrySelectViewController.m; sourceTree = "<group>"; };
 		889790FE179FD64A00BDC803 /* LXFAQViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFAQViewController.h; sourceTree = "<group>"; };
 		889790FF179FD64A00BDC803 /* LXFAQViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFAQViewController.m; sourceTree = "<group>"; };
+		88992C8A196A77000002E502 /* LXCellTimelineMulti.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LXCellTimelineMulti.xib; sourceTree = "<group>"; };
+		88992C8C196A77800002E502 /* LXCellTimelineSingle.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LXCellTimelineSingle.xib; sourceTree = "<group>"; };
 		88A43AFE16703340001A8BB3 /* bt_twitter2_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bt_twitter2_on.png; sourceTree = "<group>"; };
 		88A43AFF16703340001A8BB3 /* bt_twitter2_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bt_twitter2_on@2x.png"; sourceTree = "<group>"; };
 		88A43B0016703340001A8BB3 /* bt_twitter2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bt_twitter2.png; sourceTree = "<group>"; };
@@ -4122,6 +4126,8 @@
 				88CE8A44174F102000C6A6B6 /* TextTemplate.xib */,
 				88FB5C1D1921E2420018F757 /* LXStreamHeader.xib */,
 				88FECF1C193D9BE60008985C /* LXStreamFooter.xib */,
+				88992C8A196A77000002E502 /* LXCellTimelineMulti.xib */,
+				88992C8C196A77800002E502 /* LXCellTimelineSingle.xib */,
 			);
 			path = NIBs;
 			sourceTree = "<group>";
@@ -6906,6 +6912,7 @@
 				8883C00916DC4F9B003510A1 /* icon_timeline_m_off.png in Resources */,
 				8883C00A16DC4F9B003510A1 /* icon_timeline_m_off@2x.png in Resources */,
 				8883C00B16DC4F9B003510A1 /* icon_timeline_m.png in Resources */,
+				88992C8D196A77800002E502 /* LXCellTimelineSingle.xib in Resources */,
 				8883C00C16DC4F9B003510A1 /* icon_timeline_m@2x.png in Resources */,
 				8883C01916DC5707003510A1 /* menu_4_center_on.png in Resources */,
 				8883C01A16DC5707003510A1 /* menu_4_center_on@2x.png in Resources */,
@@ -7188,6 +7195,7 @@
 				8832773A170173690053C8A2 /* DZ@2x.png in Resources */,
 				8832773B170173690053C8A2 /* EC.png in Resources */,
 				8832773C170173690053C8A2 /* EC@2x.png in Resources */,
+				88992C8B196A77000002E502 /* LXCellTimelineMulti.xib in Resources */,
 				8832773D170173690053C8A2 /* EE.png in Resources */,
 				8832773E170173690053C8A2 /* EE@2x.png in Resources */,
 				8832773F170173690053C8A2 /* EG.png in Resources */,
@@ -8588,7 +8596,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Latte/Latte.entitlements;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/../../../Documents/FacebookSDK\"",
@@ -8603,7 +8612,7 @@
 					"$(PROJECT_DIR)/Pods/build/Release-iphoneos",
 				);
 				PRODUCT_NAME = "Latte camera";
-				PROVISIONING_PROFILE = "1A88157A-71FA-4D1C-9E34-90D9864220F8";
+				PROVISIONING_PROFILE = "";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -8619,6 +8628,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Latte/Latte.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: LUXEYS, K.K. (P5K9793YJJ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: LUXEYS, K.K. (P5K9793YJJ)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/../../../Documents/FacebookSDK\"",
@@ -8633,7 +8643,7 @@
 					"$(PROJECT_DIR)/Pods/build/Release-iphoneos",
 				);
 				PRODUCT_NAME = "Latte camera";
-				PROVISIONING_PROFILE = "5C018444-93D6-4579-B9B7-C81D56F0DC8F";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

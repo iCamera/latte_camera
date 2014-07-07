@@ -124,6 +124,9 @@ typedef enum {
     [_buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:_user.profilePicture]];
     [_buttonUsername setTitle:_user.name forState:UIControlStateNormal];
     
+    [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTimelineSingle" bundle:nil] forCellReuseIdentifier:@"Single"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTimelineMulti" bundle:nil] forCellReuseIdentifier:@"Multi"];
+    
     [self reloadView];
     
     if (app.currentUser && (_userId == [app.currentUser.userId integerValue])) {

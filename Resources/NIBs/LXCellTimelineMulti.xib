@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LXCellTimelineMulti"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Multi" rowHeight="260" id="qSZ-3j-jQu" customClass="LXCellTimelineMulti">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="260"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qSZ-3j-jQu" id="8Vf-W0-a8C">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="259"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dLJ-g2-uPx">
+                        <rect key="frame" x="8" y="8" width="304" height="252"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aYS-oY-FVA">
+                        <rect key="frame" x="16" y="16" width="36" height="36"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="36" id="JV8-Wo-pSo"/>
+                            <constraint firstAttribute="width" constant="36" id="Vba-bS-NCo"/>
+                        </constraints>
+                        <state key="normal" backgroundImage="user.gif">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="showUser:" destination="qSZ-3j-jQu" eventType="touchUpInside" id="SCr-cH-jwg"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="---" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ijy-pY-iTJ">
+                        <rect key="frame" x="58" y="16" width="16" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                        <color key="textColor" red="0.20784313730000001" green="0.18823529410000001" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="yyyy/dd/mm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l4S-xG-sWL">
+                        <rect key="frame" x="58" y="33" width="154" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="12"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </label>
+                    <scrollView multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cWc-V3-yeg">
+                        <rect key="frame" x="8" y="60" width="304" height="200"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </scrollView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="81W-bV-dZq">
+                        <rect key="frame" x="82" y="17" width="16" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="16" id="DGe-5k-owb"/>
+                            <constraint firstAttribute="height" constant="16" id="ZkF-gw-B2s"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="16" id="bYC-Jj-ry3"/>
+                            <constraint firstAttribute="width" constant="16" id="om8-4y-l8i"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Ijy-pY-iTJ" firstAttribute="leading" secondItem="aYS-oY-FVA" secondAttribute="trailing" constant="6" id="HVE-5a-oQx"/>
+                    <constraint firstItem="aYS-oY-FVA" firstAttribute="leading" secondItem="8Vf-W0-a8C" secondAttribute="leading" constant="16" id="QmG-l6-6dg"/>
+                    <constraint firstItem="81W-bV-dZq" firstAttribute="leading" secondItem="Ijy-pY-iTJ" secondAttribute="trailing" constant="8" id="dUH-Lb-pZF"/>
+                    <constraint firstItem="aYS-oY-FVA" firstAttribute="top" secondItem="8Vf-W0-a8C" secondAttribute="top" constant="16" id="pkb-wY-qSd"/>
+                    <constraint firstItem="Ijy-pY-iTJ" firstAttribute="top" secondItem="8Vf-W0-a8C" secondAttribute="top" constant="16" id="wEv-6k-naL"/>
+                    <constraint firstItem="81W-bV-dZq" firstAttribute="top" secondItem="8Vf-W0-a8C" secondAttribute="top" constant="17" id="zo5-6G-cC7"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="0.90588241820000004" green="0.89411771299999998" blue="0.85490202900000001" alpha="1" colorSpace="deviceRGB"/>
+            <connections>
+                <outlet property="buttonUser" destination="aYS-oY-FVA" id="jv5-qW-FhZ"/>
+                <outlet property="imageNationality" destination="81W-bV-dZq" id="ZLF-sx-ybs"/>
+                <outlet property="labelTitle" destination="Ijy-pY-iTJ" id="fBE-cv-U35"/>
+                <outlet property="labelUserDate" destination="l4S-xG-sWL" id="XkR-cl-rlM"/>
+                <outlet property="scrollPic" destination="cWc-V3-yeg" id="nkH-kI-oPC"/>
+                <outlet property="viewWrap" destination="dLJ-g2-uPx" id="IIS-dY-7l7"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="user.gif" width="100" height="100"/>
+    </resources>
+</document>
