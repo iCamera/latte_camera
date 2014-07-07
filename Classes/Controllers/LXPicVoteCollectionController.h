@@ -13,5 +13,6 @@
 
 @property (strong, nonatomic) Picture *picture;
 @property (assign, nonatomic) BOOL isModal;
+@property (weak, nonatomic) UIViewController *parent;
 
 @end

@@ -14,6 +14,7 @@
 #import "LXButtonBack.h"
 #import "MBProgressHUD.h"
 #import "LXReportAbuseCommentViewController.h"
+#import "MZFormSheetController.h"
 
 @interface LXPicCommentViewController ()
 
@@ -248,7 +249,17 @@
 
 - (void)showUser:(UIButton *)sender {
     Comment *comment = _comments[sender.tag];
-    [_parent showUserFromComment:comment];
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    viewUserPage.user = comment.user;
+    if (_isModal) {
+        [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController *formSheetController) {
+            [_parent.navigationController pushViewController:viewUserPage animated:YES];
+        }];
+    } else {
+        [self.navigationController pushViewController:viewUserPage animated:YES];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -320,7 +331,14 @@
     UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery" bundle:nil];
     LXReportAbuseCommentViewController *controllerReport = [storyGallery instantiateViewControllerWithIdentifier:@"ReportComment"];
     controllerReport.comment = comment;
-    [_parent.navigationController pushViewController:controllerReport animated:YES];
+    
+    if (_isModal) {
+        [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController *formSheetController) {
+            [_parent.navigationController pushViewController:controllerReport animated:YES];
+        }];
+    } else {
+        [self.navigationController pushViewController:controllerReport animated:YES];
+    }
 }
 
 

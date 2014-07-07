@@ -8,6 +8,7 @@
 
 #import "LXCellInfoTag.h"
 #import "LXTagHome.h"
+#import "MZFormSheetController.h"
 
 @implementation LXCellInfoTag
 
@@ -60,8 +61,14 @@
     LXTagHome *viewTag = [storyMain instantiateViewControllerWithIdentifier:@"TagHome"];
     viewTag.tag = _tags[button.tag];
     viewTag.title = _tags[button.tag];
-    
-    [_parent.navigationController pushViewController:viewTag animated:YES];
+
+    if (_isModal) {
+        [_parent mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController *formSheetController) {
+            [_parent.navigationController pushViewController:viewTag animated:YES];
+        }];
+    } else {
+        [_parent.navigationController pushViewController:viewTag animated:YES];
+    }
 }
 
 @end

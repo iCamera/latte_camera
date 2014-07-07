@@ -34,7 +34,7 @@
 @property (strong, nonatomic) NSMutableArray *comments;
 @property (assign, nonatomic) BOOL isModal;
 
-@property (weak, nonatomic) UIViewController<LXPicCommentViewControllerDelegate> *parent;
+@property (weak, nonatomic) UIViewController *parent;
 
 - (IBAction)touchSend:(id)sender;
 - (IBAction)touchReport:(id)sender;

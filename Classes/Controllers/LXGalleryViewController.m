@@ -224,6 +224,7 @@
         LXPicVoteCollectionController *viewVote = segue.destinationViewController;
         viewVote.picture = currentPage.picture;
         viewVote.isModal = true;
+        viewVote.parent = self;
 
     } else if ([segue.identifier isEqualToString:@"Comment"]) {
         MZFormSheetSegue *sheet = (MZFormSheetSegue*)segue;
@@ -234,6 +235,7 @@
         sheet.formSheetController.presentedFormSheetSize = CGSizeMake(320, self.view.bounds.size.height - sheet.formSheetController.portraitTopInset);
 
         LXPicCommentViewController *viewComment = segue.destinationViewController;
+        viewComment.parent = self;
         viewComment.picture = currentPage.picture;
         viewComment.isModal = true;
     } else if ([segue.identifier isEqualToString:@"Info"]) {
@@ -245,6 +247,7 @@
         sheet.formSheetController.presentedFormSheetSize = CGSizeMake(320, self.view.bounds.size.height - sheet.formSheetController.portraitTopInset);
 
         LXPicInfoViewController *viewInfo = segue.destinationViewController;
+        viewInfo.parent = self;
         viewInfo.picture = currentPage.picture;
         viewInfo.isModal = true;
     }

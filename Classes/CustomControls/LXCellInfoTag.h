@@ -12,7 +12,9 @@
 
 @interface LXCellInfoTag : UITableViewCell
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollTag;
-@property (weak, nonatomic) UIViewController *parent;
 @property (strong, nonatomic) NSArray *tags;
+
+@property (assign, nonatomic) BOOL isModal;
+@property (weak, nonatomic) UIViewController *parent;
 
 @end

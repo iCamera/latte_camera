@@ -16,6 +16,7 @@
 #import "LatteAPIClient.h"
 #import "LXReportAbuseViewController.h"
 #import "PicturePin.h"
+#import "MZFormSheetController.h"
 #import <CoreLocation/CoreLocation.h>
 
 #define METERS_PER_MILE 1609.344
@@ -135,6 +136,7 @@
             LXCellInfoTag *cellTag = [tableView dequeueReusableCellWithIdentifier:@"Tag"];
             cellTag.tags = _picture.tagsOld;
             cellTag.parent = self;
+            cellTag.isModal = _isModal;
             return cellTag;
         }
     

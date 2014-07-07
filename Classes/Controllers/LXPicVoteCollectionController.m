@@ -10,6 +10,7 @@
 #import "LatteAPIClient.h"
 #import "LXCollectionCellUser.h"
 #import "LXUserPageViewController.h"
+#import "MZFormSheetController.h"
 
 @interface LXPicVoteCollectionController ()
 
@@ -92,8 +93,13 @@
     LXUserPageViewController *viewUser = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
     viewUser.user = voters[indexPath.item];
     
-    [self.navigationController pushViewController:viewUser animated:YES];
-
+    if (_isModal) {
+        [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController *formSheetController) {
+            [_parent.navigationController pushViewController:viewUser animated:YES];
+        }];
+    } else {
+        [self.navigationController pushViewController:viewUser animated:YES];
+    }
 }
 
 - (BOOL)prefersStatusBarHidden {
