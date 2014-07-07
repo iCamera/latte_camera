@@ -2080,28 +2080,16 @@ Or you can resend confirmation email.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="CF0-wx-KGd">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="109"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="190"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="default-cover.gif" translatesAutoresizingMaskIntoConstraints="NO" id="XIy-D3-oA1">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="109"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
-                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wfs-G9-fnV">
-                                    <rect key="frame" x="20" y="2" width="80" height="34"/>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kc8-8B-lDc">
+                                    <rect key="frame" x="278" y="20" width="22" height="22"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
-                                    <state key="normal" title="Username">
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kc8-8B-lDc">
-                                    <rect key="frame" x="108" y="8" width="22" height="22"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="22" id="eYN-15-WNp"/>
-                                        <constraint firstAttribute="height" constant="22" id="tGo-6M-xC6"/>
-                                    </constraints>
                                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <state key="normal">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -2111,20 +2099,20 @@ Or you can resend confirmation email.</string>
                                     </connections>
                                 </button>
                                 <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="vj5-au-Je8">
-                                    <rect key="frame" x="20" y="66" width="280" height="29"/>
+                                    <rect key="frame" x="20" y="155" width="280" height="29"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <segments>
                                         <segment title="" image="icon_timeline.png"/>
                                         <segment title="" image="icon_grid.png"/>
                                         <segment title="" image="icon_calendar_blue.png"/>
                                     </segments>
-                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="tintColor" red="0.20784313730000001" green="0.18823529410000001" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
                                     <connections>
                                         <action selector="switchView:" destination="21a-Kc-kfo" eventType="valueChanged" id="DRC-x5-NDx"/>
                                     </connections>
                                 </segmentedControl>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VG6-0T-eya">
-                                    <rect key="frame" x="188" y="4" width="67" height="22"/>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VG6-0T-eya">
+                                    <rect key="frame" x="88" y="16" width="67" height="22"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" title="0" image="icon_follow_m.png">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -2133,8 +2121,8 @@ Or you can resend confirmation email.</string>
                                         <segue destination="OZE-UL-Mh9" kind="custom" identifier="Follower" customClass="MZFormSheetSegue" id="nqr-PV-YRj"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ylh-RA-SXN">
-                                    <rect key="frame" x="193" y="32" width="62" height="25"/>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ylh-RA-SXN">
+                                    <rect key="frame" x="93" y="49" width="62" height="25"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" title="0" image="icon_follow_s.png">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -2143,17 +2131,21 @@ Or you can resend confirmation email.</string>
                                         <segue destination="OZE-UL-Mh9" kind="custom" identifier="Following" customClass="MZFormSheetSegue" id="bsm-XB-qQP"/>
                                     </connections>
                                 </button>
+                                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vEm-kz-mRV">
+                                    <rect key="frame" x="8" y="8" width="60" height="60"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" backgroundImage="user.gif">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="touchProfilePic:" destination="21a-Kc-kfo" eventType="touchUpInside" id="ml7-Rd-FvW"/>
+                                    </connections>
+                                </button>
                             </subviews>
-                            <constraints>
-                                <constraint firstItem="wfs-G9-fnV" firstAttribute="leading" secondItem="CF0-wx-KGd" secondAttribute="leading" constant="20" id="6jx-93-OeP"/>
-                                <constraint firstItem="Kc8-8B-lDc" firstAttribute="top" secondItem="CF0-wx-KGd" secondAttribute="top" constant="8" id="PdH-1m-S4b"/>
-                                <constraint firstItem="Kc8-8B-lDc" firstAttribute="leading" secondItem="wfs-G9-fnV" secondAttribute="trailing" constant="8" id="cn3-TY-4nj"/>
-                                <constraint firstItem="wfs-G9-fnV" firstAttribute="top" secondItem="CF0-wx-KGd" secondAttribute="top" constant="2" id="vcY-yP-Nw0"/>
-                            </constraints>
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Grid" id="vUJ-m3-IyL" userLabel="Cell Grid" customClass="LXCellGrid">
-                                <rect key="frame" x="0.0" y="131" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="212" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vUJ-m3-IyL" id="fjV-jP-SJ6">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -2161,7 +2153,7 @@ Or you can resend confirmation email.</string>
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Load" id="xki-b7-ZFl">
-                                <rect key="frame" x="0.0" y="175" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="256" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xki-b7-ZFl" id="Mk2-m0-saE">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -2183,23 +2175,6 @@ Or you can resend confirmation email.</string>
                     </tableView>
                     <navigationItem key="navigationItem" id="RFh-zs-rV7">
                         <nil key="title"/>
-                        <view key="titleView" contentMode="scaleToFill" id="w8F-zZ-79a">
-                            <rect key="frame" x="96" y="6" width="128" height="33"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vEm-kz-mRV">
-                                    <rect key="frame" x="48" y="0.0" width="33" height="33"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" backgroundImage="user.gif">
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <connections>
-                                        <action selector="touchProfilePic:" destination="21a-Kc-kfo" eventType="touchUpInside" id="ml7-Rd-FvW"/>
-                                    </connections>
-                                </button>
-                            </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        </view>
                         <barButtonItem key="rightBarButtonItem" style="done" id="Lmb-Nq-lOT">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="loZ-41-srG">
                                 <rect key="frame" x="233" y="5" width="71" height="33"/>
@@ -2230,7 +2205,6 @@ Or you can resend confirmation email.</string>
                     <connections>
                         <outlet property="buttonFollow" destination="loZ-41-srG" id="aZR-j9-mgO"/>
                         <outlet property="buttonUser" destination="vEm-kz-mRV" id="tqj-sD-Y4v"/>
-                        <outlet property="buttonUsername" destination="wfs-G9-fnV" id="rJh-sA-iL0"/>
                         <outlet property="imageCover" destination="XIy-D3-oA1" id="dbR-hE-DHa"/>
                         <outlet property="segmentTab" destination="vj5-au-Je8" id="VSH-pG-0ca"/>
                     </connections>

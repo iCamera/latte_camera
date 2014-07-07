@@ -7,7 +7,7 @@
 //
 
 #import "LXCellFriend.h"
-#import "UIImageView+loadProgress.h"
+#import "UIImageView+AFNetworking.h"
 #import "LXUtils.h"
 
 @implementation LXCellFriend
@@ -42,7 +42,7 @@
 }
 
 - (void)setUser:(User *)user {
-    [imageUser loadProgess:user.profilePicture placeholderImage:[UIImage imageNamed:@"user.gif"]];
+    [imageUser setImageWithURL:[NSURL URLWithString:user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
     labelIntro.text = user.introduction;
     labelName.text = user.name;
     [LXUtils setNationalityOfUser:user forImage:imageNationality nextToLabel:labelName];

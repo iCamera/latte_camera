@@ -119,10 +119,10 @@ typedef enum {
     HUD.margin = 10.f;
     HUD.yOffset = 150.f;
     
-    _buttonUser.layer.cornerRadius = 15;
+    _buttonUser.layer.cornerRadius = 30;
     
     [_buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:_user.profilePicture]];
-    [_buttonUsername setTitle:_user.name forState:UIControlStateNormal];
+    self.navigationItem.title = _user.name;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTimelineSingle" bundle:nil] forCellReuseIdentifier:@"Single"];
     [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTimelineMulti" bundle:nil] forCellReuseIdentifier:@"Multi"];
@@ -141,7 +141,7 @@ typedef enum {
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
     
     [[LatteAPIv2Client sharedClient] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-        [_buttonUsername setTitle:JSON[@"name"] forState:UIControlStateNormal];
+        self.navigationItem.title = JSON[@"name"];
         [_buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:JSON[@"profile_picture"]]];
         [_imageCover setImageWithURL:[NSURL URLWithString:JSON[@"cover_picture"]]];
         
@@ -437,8 +437,12 @@ typedef enum {
 
 - (BOOL)checkEmpty {
     BOOL isEmpty = false;
-    if (((photoMode == kPhotoTimeline) || (photoMode == kPhotoGrid)) && endedPic)
-        isEmpty = pictures.count == 0;
+    if (photoMode == kPhotoTimeline) {
+        isEmpty = feeds.count == 0 && endedPic;
+    }
+    if (photoMode == kPhotoGrid) {
+        isEmpty = pictures.count == 0 && endedPic;
+    }
     return isEmpty;
 }
 
@@ -446,7 +450,6 @@ typedef enum {
     if ([self checkEmpty]) {
         UIView *emptyView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 200)];
         UIImageView *emptyImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nopict.png"]];
-        //    UILabel *label = [[UILabel alloc] initWithFrame:(CGRect)]
         emptyImage.center = emptyView.center;
         [emptyView addSubview:emptyImage];
         return emptyView;

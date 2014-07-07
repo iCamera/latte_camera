@@ -64,6 +64,9 @@
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        [_buttonProfilePicture setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:JSON[@"profile_picture"]]];
                                        [_imageCover setImageWithURL:[NSURL URLWithString:JSON[@"cover_picture"]]];
+                                       _labelLike.text = [JSON[@"vote_count"] stringValue];
+                                       _labelPV.text = [JSON[@"page_views"] stringValue];
+                                       
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        DLog(@"Something went wrong (Profile)");
                                    }];

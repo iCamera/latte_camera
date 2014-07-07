@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="cxD-TB-4Px">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="cxD-TB-4Px">
     <dependencies>
         <deployment version="1536" defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
@@ -368,6 +368,28 @@
                                         <action selector="touchSetCover:" destination="BA8-7X-K8C" eventType="touchUpInside" id="qIa-hK-025"/>
                                     </connections>
                                 </button>
+                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_info.png" id="LG1-5A-yU1">
+                                    <rect key="frame" x="7" y="15" width="40" height="25"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_info.png" id="wtd-az-iGJ">
+                                    <rect key="frame" x="7" y="40" width="40" height="25"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wrI-Ac-Pig">
+                                    <rect key="frame" x="46" y="17" width="81" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iZi-gY-BIo">
+                                    <rect key="frame" x="46" y="40" width="81" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>
@@ -674,6 +696,8 @@
                     <connections>
                         <outlet property="buttonProfilePicture" destination="spK-rA-JJ3" id="NkP-V8-2KB"/>
                         <outlet property="imageCover" destination="xU5-OF-ASV" id="7P6-pL-8Qd"/>
+                        <outlet property="labelLike" destination="wrI-Ac-Pig" id="SkM-dA-JlX"/>
+                        <outlet property="labelPV" destination="iZi-gY-BIo" id="VIA-3U-nhf"/>
                         <outlet property="labelVersion" destination="cQb-06-rty" id="Zew-yT-YMj"/>
                         <outlet property="viewWrapHeader" destination="Fie-4u-OsU" id="1Xx-Gz-6y9"/>
                     </connections>
@@ -1658,6 +1682,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="box_twitter.png" width="22" height="22"/>
         <image name="bt_input.png" width="320" height="45"/>
         <image name="default-cover.gif" width="1200" height="100"/>
+        <image name="icon_info.png" width="17" height="16"/>
         <image name="icon_iphone_l.jpg" width="12" height="22"/>
         <image name="icon_iphone_l_off.jpg" width="12" height="22"/>
         <image name="icon_mail_l.jpg" width="22" height="16"/>

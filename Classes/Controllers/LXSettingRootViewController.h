@@ -16,6 +16,8 @@
 @property (strong, nonatomic) IBOutlet UIImageView *imageCover;
 
 @property (strong, nonatomic) IBOutlet UIView *viewWrapHeader;
+@property (strong, nonatomic) IBOutlet UILabel *labelPV;
+@property (strong, nonatomic) IBOutlet UILabel *labelLike;
 
 - (IBAction)touchSetPicture:(id)sender;
 - (IBAction)touchSetCover:(id)sender;
