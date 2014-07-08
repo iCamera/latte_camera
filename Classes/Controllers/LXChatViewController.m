@@ -45,6 +45,8 @@
         conversations = JSON;
         [self.tableView reloadData];
     } failure:nil];
+    
+    [api2 POST:@"message/markread" parameters:nil success:nil failure:nil];
 }
 
 - (void)didReceiveMemoryWarning

@@ -10,7 +10,9 @@
 #import "SocketIOPacket.h"
 #import "LXAppDelegate.h"
 
-@implementation LXSocketIO
+@implementation LXSocketIO {
+    NSTimer *timerPingSocket;
+}
 
 + (instancetype)sharedClient {
     static LXSocketIO *_socketIO = nil;
@@ -20,10 +22,14 @@
         // Websocket
         _socketIO = [[LXSocketIO alloc] init];
         _socketIO.delegate = _socketIO;
-        [_socketIO connectToHost:kLatteSocketURLString onPort:80];
+        [_socketIO reconnectSocket];
     });
     
     return _socketIO;
+}
+
+- (void)reconnectSocket {
+    [self connectToHost:kLatteSocketURLString onPort:80];
 }
 
 - (void) socketIODidConnect:(SocketIO *)socket {
@@ -56,6 +62,7 @@
 
 - (void) socketIO:(SocketIO *)socket onError:(NSError *)error {
     DLog(@"Error");
+    timerPingSocket = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(reconnectSocket) userInfo:nil repeats:NO];
 }
 
 @end

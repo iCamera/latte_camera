@@ -294,23 +294,25 @@
 
 - (void)userUpdate:(NSNotification *)notification {
     NSDictionary *rawUser = notification.object;
-    LXAppDelegate* app = [LXAppDelegate currentDelegate];
-    if (app.currentUser) {
-        if ([app.currentUser.userId integerValue] == [rawUser[@"id"] integerValue]) {
-            UINavigationController* notifyNav = self.viewControllers[3];
-            
-            if (self.selectedIndex != 3) {
-                NSInteger notifyCount = [rawUser[@"notification_count"] integerValue];
-                if (notifyCount > 0) {
-                    notifyNav.tabBarItem.badgeValue = [NSString stringWithFormat:@"%ld", (long)notifyCount];
+    if (rawUser[@"notification_count"]) {
+        LXAppDelegate* app = [LXAppDelegate currentDelegate];
+        if (app.currentUser) {
+            if ([app.currentUser.userId integerValue] == [rawUser[@"id"] integerValue]) {
+                UINavigationController* notifyNav = self.viewControllers[3];
+                
+                if (self.selectedIndex != 3) {
+                    NSInteger notifyCount = [rawUser[@"notification_count"] integerValue];
+                    if (notifyCount > 0) {
+                        notifyNav.tabBarItem.badgeValue = [NSString stringWithFormat:@"%ld", (long)notifyCount];
+                    } else {
+                        notifyNav.tabBarItem.badgeValue = nil;
+                    }
+                    [UIApplication sharedApplication].applicationIconBadgeNumber = notifyCount;
                 } else {
-                    notifyNav.tabBarItem.badgeValue = nil;
+                    LXNotifySideViewController *viewNotify = notifyNav.viewControllers[0];
+                    [viewNotify reloadView];
+                    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
                 }
-                [UIApplication sharedApplication].applicationIconBadgeNumber = notifyCount;
-            } else {
-                LXNotifySideViewController *viewNotify = notifyNav.viewControllers[0];
-                [viewNotify reloadView];
-                [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
             }
         }
     }

@@ -11,6 +11,7 @@
 
 #import "LXAppDelegate.h"
 #import "LatteAPIClient.h"
+#import "LatteAPIv2Client.h"
 #import "UIImageView+AFNetworking.h"
 #import "LXCellFriend.h"
 #import "LXUtils.h"
@@ -85,15 +86,32 @@ typedef enum {
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTimeline:) name:@"LoggedIn" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive:) name:@"BecomeActive" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userUpdate:) name:@"user_update" object:nil];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTimelineSingle" bundle:nil] forCellReuseIdentifier:@"Single"];
     [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTimelineMulti" bundle:nil] forCellReuseIdentifier:@"Multi"];
     
     // This will remove extra separators from tableview
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    _labelMessage.layer.cornerRadius = 7;
     
     [self reloadView];
+    [self reloadProfile];
 }
+
+- (void)reloadProfile {
+    LXAppDelegate* app = [LXAppDelegate currentDelegate];
+    
+    [[LatteAPIv2Client sharedClient] GET:@"user/me" parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+        if (app.currentUser) {
+            NSInteger messageCount = [JSON[@"unread_message"] integerValue];
+            _labelMessage.hidden = messageCount == 0;
+            _labelMessage.text = [NSString stringWithFormat:@"%ld", (long)messageCount];
+            
+        }
+    } failure:nil];
+}
+
 
 - (void)reloadView {
     [self loadMore:YES];
@@ -341,6 +359,20 @@ typedef enum {
     // Present the view controller
     //
     [self.frostedViewController presentMenuViewController];
+}
+
+- (void)userUpdate:(NSNotification *)notification {
+    NSDictionary *rawUser = notification.object;
+    if (rawUser[@"unread_message"]) {
+        LXAppDelegate* app = [LXAppDelegate currentDelegate];
+        if (app.currentUser) {
+            if ([app.currentUser.userId integerValue] == [rawUser[@"id"] integerValue]) {
+                NSInteger messageCount = [rawUser[@"unread_message"] integerValue];
+                _labelMessage.hidden = messageCount == 0;
+                _labelMessage.text = [NSString stringWithFormat:@"%ld", (long)messageCount];
+            }
+        }
+    }
 }
 
 @end
