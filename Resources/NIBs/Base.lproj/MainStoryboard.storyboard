@@ -735,14 +735,14 @@
                                     <segue destination="FUG-mk-N2R" kind="embed" identifier="TagChat" id="gji-Cu-gYb"/>
                                 </connections>
                             </containerView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dicussion" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Noh-UG-Bb8">
-                                <rect key="frame" x="135" y="311" width="50" height="12"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Discussion" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Noh-UG-Bb8">
+                                <rect key="frame" x="129" y="308" width="62" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.90588241820000004" green="0.89411771299999998" blue="0.85490202900000001" alpha="1" colorSpace="deviceRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="12" id="igq-jB-nLP"/>
+                                    <constraint firstAttribute="height" constant="16" id="igq-jB-nLP"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="8"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="10"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -751,13 +751,13 @@
                         <constraints>
                             <constraint firstItem="cFM-lT-vSe" firstAttribute="leading" secondItem="RlL-bJ-Dcz" secondAttribute="leading" id="5YF-5v-ac1"/>
                             <constraint firstItem="cFM-lT-vSe" firstAttribute="top" secondItem="uYh-An-L7n" secondAttribute="bottom" id="6kN-oK-Lx3"/>
-                            <constraint firstItem="N7M-mh-zVV" firstAttribute="top" secondItem="Noh-UG-Bb8" secondAttribute="bottom" constant="11" id="APz-cX-oMh"/>
+                            <constraint firstItem="N7M-mh-zVV" firstAttribute="top" secondItem="Noh-UG-Bb8" secondAttribute="bottom" constant="10" id="APz-cX-oMh"/>
                             <constraint firstItem="01O-Pe-PaN" firstAttribute="top" secondItem="N7M-mh-zVV" secondAttribute="bottom" id="Jey-SI-8Wo"/>
                             <constraint firstAttribute="trailing" secondItem="N7M-mh-zVV" secondAttribute="trailing" id="KUe-xL-CXe"/>
-                            <constraint firstAttribute="trailing" secondItem="Noh-UG-Bb8" secondAttribute="trailing" constant="135" id="OQj-YJ-rZ7"/>
-                            <constraint firstItem="Noh-UG-Bb8" firstAttribute="leading" secondItem="RlL-bJ-Dcz" secondAttribute="leading" constant="135" id="PyP-L9-80C"/>
+                            <constraint firstAttribute="trailing" secondItem="Noh-UG-Bb8" secondAttribute="trailing" constant="129" id="OQj-YJ-rZ7"/>
+                            <constraint firstItem="Noh-UG-Bb8" firstAttribute="leading" secondItem="RlL-bJ-Dcz" secondAttribute="leading" constant="129" id="PyP-L9-80C"/>
                             <constraint firstItem="N7M-mh-zVV" firstAttribute="leading" secondItem="RlL-bJ-Dcz" secondAttribute="leading" id="Ydp-zF-fIq"/>
-                            <constraint firstItem="Noh-UG-Bb8" firstAttribute="top" secondItem="cFM-lT-vSe" secondAttribute="bottom" constant="11" id="iRL-1X-z2j"/>
+                            <constraint firstItem="Noh-UG-Bb8" firstAttribute="top" secondItem="cFM-lT-vSe" secondAttribute="bottom" constant="8" id="iRL-1X-z2j"/>
                             <constraint firstAttribute="trailing" secondItem="cFM-lT-vSe" secondAttribute="trailing" id="ofq-Ee-VP9"/>
                         </constraints>
                         <connections>

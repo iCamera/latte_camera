@@ -34,7 +34,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    _labelSp.layer.cornerRadius = 6;
+    _labelSp.layer.cornerRadius = 8;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)

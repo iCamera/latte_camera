@@ -76,17 +76,17 @@
             case kNotifyTargetPicture: {
                 Picture *pic = [Picture instanceFromDictionary:target];
                 [_buttonImage setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pic.urlSquare] placeholderImage:[UIImage imageNamed:@"user.gif"]];
-                _buttonImage.enabled = YES;
+                _buttonImage.userInteractionEnabled = YES;
                 break;
             }
             case kNotifyTargetUser: {
                 User *user = [User instanceFromDictionary:target];
                 [_buttonImage setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
-                _buttonImage.enabled = NO;
+                _buttonImage.userInteractionEnabled = NO;
                 break;
             }
             case kNotifyTargetComment: {
-                _buttonImage.enabled = NO;
+                _buttonImage.userInteractionEnabled = NO;
                 NSMutableArray *users = [User mutableArrayFromDictionary:notify withKey:@"users"];
                 for (User *user in users) {
                     if (user.name != nil) {

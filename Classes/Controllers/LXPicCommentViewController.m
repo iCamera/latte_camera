@@ -348,7 +348,7 @@
 
     CGRect labelRect = [strComment boundingRectWithSize:CGSizeMake(266.0f, MAXFLOAT)
                                                 options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                             attributes:@{ NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:12] }
+                                             attributes:@{ NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:13] }
                                                 context:nil];
     return labelRect.size.height + 49;
 }
