@@ -9,6 +9,7 @@
 #import "LXStreamBrickCell.h"
 #import "UIButton+AFNetworking.h"
 #import "UIImageView+AFNetworking.h"
+#import "LXUserPageViewController.h"
 #import "Picture.h"
 
 @implementation LXStreamBrickCell
@@ -31,12 +32,7 @@
 }
 
 - (void)awakeFromNib {
-    CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = _viewBg.bounds;
-    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor clearColor] CGColor], (id)[[UIColor colorWithWhite:0 alpha:1] CGColor], nil];
-    [_viewBg.layer insertSublayer:gradient atIndex:0];
-    
-    _buttonUser.layer.cornerRadius = 10;
+    _buttonUser.layer.cornerRadius = 15;
     _buttonUser.layer.rasterizationScale = [[UIScreen mainScreen] scale];
     _buttonUser.layer.shouldRasterize = YES;
     
@@ -79,6 +75,16 @@
     viewGallery.user = _feed.user;
     
     [_delegate presentViewController:navGalerry animated:YES completion:nil];
+}
+
+- (IBAction)touchUser:(id)sender {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    
+    viewUserPage.user = _feed.user;
+    
+    [_delegate.navigationController pushViewController:viewUserPage animated:YES];
 }
 
 - (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {

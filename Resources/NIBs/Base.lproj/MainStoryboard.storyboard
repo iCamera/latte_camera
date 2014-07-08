@@ -1396,7 +1396,7 @@
                                                 <action selector="touchPicture:" destination="jzd-7n-ALa" eventType="touchUpInside" id="aBH-Al-hqQ"/>
                                             </connections>
                                         </button>
-                                        <view clipsSubviews="YES" alpha="0.75" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="foj-kx-FLA">
+                                        <view clipsSubviews="YES" alpha="0.75" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="foj-kx-FLA" customClass="LXGradientView">
                                             <rect key="frame" x="0.0" y="122" width="152" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <constraints>
@@ -1404,24 +1404,27 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GsV-i8-MRg">
-                                            <rect key="frame" x="29" y="129" width="119" height="16"/>
+                                            <rect key="frame" x="40" y="124" width="106" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                             <color key="shadowColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
                                             <size key="shadowOffset" width="0.0" height="1"/>
                                         </label>
                                         <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zln-KU-lKb">
-                                            <rect key="frame" x="4" y="127" width="20" height="20"/>
+                                            <rect key="frame" x="4" y="118" width="30" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="20" id="eph-tK-eL5"/>
-                                                <constraint firstAttribute="height" constant="20" id="uGl-sO-1Km"/>
+                                                <constraint firstAttribute="width" constant="30" id="eph-tK-eL5"/>
+                                                <constraint firstAttribute="height" constant="30" id="uGl-sO-1Km"/>
                                             </constraints>
                                             <state key="normal" backgroundImage="user.gif">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <connections>
+                                                <action selector="touchUser:" destination="jzd-7n-ALa" eventType="touchUpInside" id="zFP-X8-Pmn"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1429,7 +1432,7 @@
                                 <constraints>
                                     <constraint firstItem="Zln-KU-lKb" firstAttribute="leading" secondItem="jzd-7n-ALa" secondAttribute="leading" constant="4" id="2CX-wm-Rj5"/>
                                     <constraint firstAttribute="bottom" secondItem="Qlf-ws-s2t" secondAttribute="bottom" id="2o4-hK-qNv"/>
-                                    <constraint firstAttribute="bottom" secondItem="Zln-KU-lKb" secondAttribute="bottom" constant="5" id="8Vk-tv-EEi"/>
+                                    <constraint firstAttribute="bottom" secondItem="Zln-KU-lKb" secondAttribute="bottom" constant="4" id="8Vk-tv-EEi"/>
                                     <constraint firstAttribute="trailing" secondItem="Qlf-ws-s2t" secondAttribute="trailing" id="9o4-RJ-7Ax"/>
                                     <constraint firstAttribute="bottom" secondItem="GlX-xg-AP5" secondAttribute="bottom" id="CKI-7c-Pdq"/>
                                     <constraint firstAttribute="trailing" secondItem="GlX-xg-AP5" secondAttribute="trailing" id="LxC-0w-d5h"/>
@@ -1438,11 +1441,11 @@
                                     <constraint firstItem="foj-kx-FLA" firstAttribute="leading" secondItem="jzd-7n-ALa" secondAttribute="leading" id="Zpk-Y1-qEs"/>
                                     <constraint firstItem="GlX-xg-AP5" firstAttribute="leading" secondItem="jzd-7n-ALa" secondAttribute="leading" id="jF0-WT-lNP"/>
                                     <constraint firstAttribute="trailing" secondItem="foj-kx-FLA" secondAttribute="trailing" id="nsy-hC-WfU"/>
-                                    <constraint firstAttribute="bottom" secondItem="GsV-i8-MRg" secondAttribute="bottom" constant="7" id="rEN-tE-cE0"/>
+                                    <constraint firstAttribute="bottom" secondItem="GsV-i8-MRg" secondAttribute="bottom" constant="10" id="rEN-tE-cE0"/>
                                     <constraint firstItem="Qlf-ws-s2t" firstAttribute="top" secondItem="jzd-7n-ALa" secondAttribute="top" id="rqN-uU-Stv"/>
-                                    <constraint firstAttribute="trailing" secondItem="GsV-i8-MRg" secondAttribute="trailing" constant="4" id="sF0-XH-hb9"/>
+                                    <constraint firstAttribute="trailing" secondItem="GsV-i8-MRg" secondAttribute="trailing" constant="6" id="sF0-XH-hb9"/>
                                     <constraint firstItem="GlX-xg-AP5" firstAttribute="top" secondItem="jzd-7n-ALa" secondAttribute="top" id="xGN-nZ-9Gl"/>
-                                    <constraint firstItem="GsV-i8-MRg" firstAttribute="leading" secondItem="Zln-KU-lKb" secondAttribute="trailing" constant="5" id="xlI-FH-5v6"/>
+                                    <constraint firstItem="GsV-i8-MRg" firstAttribute="leading" secondItem="Zln-KU-lKb" secondAttribute="trailing" constant="6" id="xlI-FH-5v6"/>
                                 </constraints>
                                 <size key="customSize" width="152" height="152"/>
                                 <connections>
@@ -2242,7 +2245,7 @@ Or you can resend confirmation email.</string>
     <inferredMetricsTieBreakers>
         <segue reference="gji-Cu-gYb"/>
         <segue reference="gJK-ni-fiN"/>
-        <segue reference="kV3-JH-Oaz"/>
+        <segue reference="myE-qi-b3h"/>
         <segue reference="nqr-PV-YRj"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -21,5 +21,6 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonPicture;
 - (IBAction)touchPicture:(UIButton *)sender;
+- (IBAction)touchUser:(id)sender;
 
 @end
