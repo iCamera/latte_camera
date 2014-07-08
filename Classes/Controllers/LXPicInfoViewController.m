@@ -135,7 +135,12 @@
         if ([[keyBasic objectAtIndex:indexPath.row] isEqualToString:@"tags"]) {
             LXCellInfoTag *cellTag = [tableView dequeueReusableCellWithIdentifier:@"Tag"];
             cellTag.tags = _picture.tagsOld;
-            cellTag.parent = self;
+            if (_isModal) {
+                cellTag.parent = _parent;
+            } else {
+                cellTag.parent = self;
+            }
+            
             cellTag.isModal = _isModal;
             return cellTag;
         }

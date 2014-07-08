@@ -13,16 +13,15 @@
 #import "UIImageView+AFNetworking.h"
 #import "LXUtils.h"
 #import "LXAppDelegate.h"
-#import "SocketIOPacket.h"
 #import "LXUserPageViewController.h"
 #import <CommonCrypto/CommonDigest.h>
+#import "LXSocketIO.h"
 
 @interface LXTagDiscussionViewController ()
 
 @end
 
 @implementation LXTagDiscussionViewController {
-    SocketIO *socketIO;
     NSMutableArray *rawMessages;
 }
 
@@ -63,8 +62,10 @@
         self.navigationItem.rightBarButtonItem = nil;
     }
     
-     socketIO = [[SocketIO alloc] initWithDelegate:self];
-    [socketIO connectToHost:kLatteSocketURLString onPort:80];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newMessage:) name:@"new_message" object:nil];
+    
+    LXSocketIO *socket = [LXSocketIO sharedClient];
+    [socket sendEvent:@"join" withData:_conversationHash];
 }
 
 - (void)loadMore:(BOOL)reset {
@@ -379,24 +380,20 @@
     }
 }
 
-- (void)socketIO:(SocketIO *)socket didReceiveEvent:(SocketIOPacket *)packet {
-    DLog(@"%@", packet.dataAsJSON);
-    for (NSDictionary *rawMessage in packet.dataAsJSON[@"args"]) {
-        if ([packet.name isEqualToString:@"new_message"]) {
-            if ([rawMessage[@"hash"] isEqualToString:_conversationHash]) {
-                JSQMessage *message = [[JSQMessage alloc] initWithText:rawMessage[@"body"] sender:rawMessage[@"user"][@"name"] date:[LXUtils dateFromString:rawMessage[@"created_at"]]];
-                [rawMessages addObject:rawMessage];
-                [self.messages addObject:message];
-                
-                if (![message.sender isEqualToString:self.sender]) {
-                    [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
-                }
-
-                [self finishReceivingMessage];
-            }
-        }
-    }
+- (void)newMessage:(NSNotification *)notification {
+    NSDictionary *rawMessage = notification.object;
     
+    if ([rawMessage[@"hash"] isEqualToString:_conversationHash]) {
+        JSQMessage *message = [[JSQMessage alloc] initWithText:rawMessage[@"body"] sender:rawMessage[@"user"][@"name"] date:[LXUtils dateFromString:rawMessage[@"created_at"]]];
+        [rawMessages addObject:rawMessage];
+        [self.messages addObject:message];
+        
+        if (![message.sender isEqualToString:self.sender]) {
+            [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
+        }
+        
+        [self finishReceivingMessage];
+    }
 }
 
 - (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {
@@ -426,8 +423,5 @@
     return output;
 }
 
-- (void)socketIODidConnect:(SocketIO *)socket {
-    [socket sendEvent:@"join" withData:_conversationHash];
-}
 
 @end

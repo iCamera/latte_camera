@@ -138,6 +138,7 @@
                                                                     bundle:nil];
                 LXTagHome *viewTag = [storyMain instantiateViewControllerWithIdentifier:@"TagHome"];
                 viewTag.tag = [string substringFromIndex:1];
+                viewTag.navigationItem.title = viewTag.tag;
                 
                 [weakSelf.navigationController pushViewController:viewTag animated:YES];
                 
@@ -151,6 +152,8 @@
     }];
     viewDesc = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 480, 320, 0)];
     viewDesc.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+    viewDesc.indicatorStyle = UIScrollViewIndicatorStyleWhite;
+
     [self.view addSubview:viewDesc];
     [viewDesc addSubview:labelDesc];
 

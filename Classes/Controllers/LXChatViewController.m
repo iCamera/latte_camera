@@ -38,6 +38,9 @@
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     LatteAPIv2Client *api2 = [LatteAPIv2Client sharedClient];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateConversation:) name:@"update_conversation" object:nil];
+    
     [api2 GET:@"message/recent" parameters:nil success:^(AFHTTPRequestOperation *operation, NSMutableArray *JSON) {
         conversations = JSON;
         [self.tableView reloadData];
@@ -126,6 +129,16 @@
 }
 */
 
+- (void)updateConversation:(NSNotification *)notification {
+    NSDictionary *rawConversation = notification.object;
+    
+    for (NSInteger idx = 0; idx < conversations.count; idx++) {
+        if ([rawConversation[@"hash"] isEqualToString:conversations[idx][@"hash"]]) {
+            conversations[idx] = rawConversation;
+            [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:idx inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
+    }
+}
 
 #pragma mark - Navigation
 

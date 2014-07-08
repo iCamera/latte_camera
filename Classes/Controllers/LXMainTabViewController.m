@@ -20,6 +20,7 @@
 #import "LXUploadObject.h"
 #import "LXTableConfirmEmailController.h"
 #import "MZFormSheetSegue.h"
+#import "LXNotifySideViewController.h"
 
 @interface LXMainTabViewController ()
 
@@ -56,14 +57,11 @@
                                                  name:@"LoggedOut"
                                                object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(receivePushNotify:)
-                                                 name:@"ReceivedPushNotify"
-                                               object:nil];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadSuccess:) name:@"LXUploaderSuccess" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadProgess:) name:@"LXUploaderProgress" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadStart:) name:@"LXUploaderStart" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userUpdate:) name:@"user_update" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive:) name:@"BecomeActive" object:nil];
     
     isFirst = true;
     
@@ -95,22 +93,6 @@
     buttonUploadStatus.hidden = YES;
 
     [[UITabBar appearance] setTintColor:[UIColor colorWithRed:35.0/255.0 green:183.0/255.0 blue:223.0/255.00 alpha:1]];
-}
-
-- (void)receivePushNotify:(NSNotification*)notify {
-    if (self.selectedIndex != 3) {
-        NSDictionary *userInfo = notify.object;
-        if ([userInfo objectForKey:@"aps"]) {
-            NSDictionary *aps = [userInfo objectForKey:@"aps"];
-            if ([aps objectForKey:@"badge"]) {
-                NSNumber *count = [aps objectForKey:@"badge"];
-                UIViewController* notifyView = self.viewControllers[3];
-                notifyView.tabBarItem.badgeValue = [count stringValue];
-            }
-        }
-    } else {
-        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-    }
 }
 
 - (void)showNotify {
@@ -236,6 +218,13 @@
     return true;
 }
 
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+    if (viewController == tabBarController.viewControllers[3]) {
+        viewController.tabBarItem.badgeValue = nil;
+        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    }
+}
+
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
         
@@ -290,6 +279,7 @@
     [picker pushViewController:controllerCrop animated:YES];
 }
 
+
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
@@ -299,6 +289,45 @@
         MZFormSheetSegue *sheet = (MZFormSheetSegue*)segue;
         sheet.formSheetController.cornerRadius = 0;
         sheet.formSheetController.shouldDismissOnBackgroundViewTap = YES;
+    }
+}
+
+- (void)userUpdate:(NSNotification *)notification {
+    NSDictionary *rawUser = notification.object;
+    LXAppDelegate* app = [LXAppDelegate currentDelegate];
+    if (app.currentUser) {
+        if ([app.currentUser.userId integerValue] == [rawUser[@"id"] integerValue]) {
+            UINavigationController* notifyNav = self.viewControllers[3];
+            
+            if (self.selectedIndex != 3) {
+                NSInteger notifyCount = [rawUser[@"notification_count"] integerValue];
+                if (notifyCount > 0) {
+                    notifyNav.tabBarItem.badgeValue = [NSString stringWithFormat:@"%ld", (long)notifyCount];
+                } else {
+                    notifyNav.tabBarItem.badgeValue = nil;
+                }
+                [UIApplication sharedApplication].applicationIconBadgeNumber = notifyCount;
+            } else {
+                LXNotifySideViewController *viewNotify = notifyNav.viewControllers[0];
+                [viewNotify reloadView];
+                [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+            }
+        }
+    }
+}
+
+- (void)becomeActive:(NSNotification *) notification {
+    if (self.selectedIndex != 3) {
+        [[LatteAPIClient sharedClient] GET:@"user/me/unread_notify" parameters: nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+            NSInteger count = [JSON[@"notify_count"] integerValue];
+            if (count > 0) {
+                self.tabBarItem.badgeValue = [JSON[@"notify_count"] stringValue];
+            } else {
+                self.tabBarItem.badgeValue = nil;
+            }
+            [UIApplication sharedApplication].applicationIconBadgeNumber = count;
+            
+        } failure: nil];
     }
 }
 

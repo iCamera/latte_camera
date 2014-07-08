@@ -65,7 +65,6 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveLoggedIn:) name:@"LoggedIn" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive:) name:@"BecomeActive" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive:) name:@"ReceivedPushNotify" object:nil];
     
     // This will remove extra separators from tableview
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -133,7 +132,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    self.tabBarItem.badgeValue = nil;
+    self.tabBarItem.badgeValue = @"";
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     [[LatteAPIClient sharedClient] POST:@"user/me/read_notify" parameters:nil success:nil failure:nil];
 }
@@ -196,16 +195,7 @@
 }
 
 - (void)becomeActive:(NSNotification *) notification {
-    [[LatteAPIClient sharedClient] GET:@"user/me/unread_notify" parameters: nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-        NSInteger count = [JSON[@"notify_count"] integerValue];
-        if (count > 0) {
-            self.tabBarItem.badgeValue = [JSON[@"notify_count"] stringValue];
-            [self reloadView];
-        } else {
-            self.tabBarItem.badgeValue = nil;
-        }
-        
-    } failure: nil];
+    [self reloadView];
 }
 
 

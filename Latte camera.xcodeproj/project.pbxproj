@@ -1096,6 +1096,7 @@
 		88979100179FD64B00BDC803 /* LXFAQViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 889790FF179FD64A00BDC803 /* LXFAQViewController.m */; };
 		88992C8B196A77000002E502 /* LXCellTimelineMulti.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88992C8A196A77000002E502 /* LXCellTimelineMulti.xib */; };
 		88992C8D196A77800002E502 /* LXCellTimelineSingle.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88992C8C196A77800002E502 /* LXCellTimelineSingle.xib */; };
+		88992C90196B818A0002E502 /* LXSocketIO.m in Sources */ = {isa = PBXBuildFile; fileRef = 88992C8F196B818A0002E502 /* LXSocketIO.m */; };
 		88A43B0216703340001A8BB3 /* bt_twitter2_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A43AFE16703340001A8BB3 /* bt_twitter2_on.png */; };
 		88A43B0316703340001A8BB3 /* bt_twitter2_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A43AFF16703340001A8BB3 /* bt_twitter2_on@2x.png */; };
 		88A43B0416703340001A8BB3 /* bt_twitter2.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A43B0016703340001A8BB3 /* bt_twitter2.png */; };
@@ -3140,6 +3141,8 @@
 		889790FF179FD64A00BDC803 /* LXFAQViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFAQViewController.m; sourceTree = "<group>"; };
 		88992C8A196A77000002E502 /* LXCellTimelineMulti.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LXCellTimelineMulti.xib; sourceTree = "<group>"; };
 		88992C8C196A77800002E502 /* LXCellTimelineSingle.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LXCellTimelineSingle.xib; sourceTree = "<group>"; };
+		88992C8E196B818A0002E502 /* LXSocketIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXSocketIO.h; sourceTree = "<group>"; };
+		88992C8F196B818A0002E502 /* LXSocketIO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXSocketIO.m; sourceTree = "<group>"; };
 		88A43AFE16703340001A8BB3 /* bt_twitter2_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bt_twitter2_on.png; sourceTree = "<group>"; };
 		88A43AFF16703340001A8BB3 /* bt_twitter2_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bt_twitter2_on@2x.png"; sourceTree = "<group>"; };
 		88A43B0016703340001A8BB3 /* bt_twitter2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bt_twitter2.png; sourceTree = "<group>"; };
@@ -5064,6 +5067,8 @@
 				88C095C7173A47BD007CED90 /* UIImage+fixOrientation.m */,
 				88AAA2BE1769EC52007610BB /* UIImage+Resize.h */,
 				88AAA2BF1769EC52007610BB /* UIImage+Resize.m */,
+				88992C8E196B818A0002E502 /* LXSocketIO.h */,
+				88992C8F196B818A0002E502 /* LXSocketIO.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -8415,6 +8420,7 @@
 				88FB5C21192374720018F757 /* LXUserPageViewController.m in Sources */,
 				8837734617A90A5E005B0826 /* LXSettingAccountController.m in Sources */,
 				C54E590D195195AB003EC0F5 /* LXProfileSettingTableViewController.m in Sources */,
+				88992C90196B818A0002E502 /* LXSocketIO.m in Sources */,
 				8837736517AA5AD9005B0826 /* LXTableConfirmEmailController.m in Sources */,
 				8837736817AA7B20005B0826 /* LXChangePasswordViewController.m in Sources */,
 				C575B9D2195422FC008D6E43 /* LXSelectorVC.m in Sources */,

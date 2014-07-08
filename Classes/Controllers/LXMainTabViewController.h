@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "LXCanvasViewController.h"
+#import "SocketIO.h"
 
 #define kAnimationDuration .3
 
-@interface LXMainTabViewController : UITabBarController<UINavigationControllerDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UITabBarControllerDelegate, LXImagePickerDelegate>
+@interface LXMainTabViewController : UITabBarController<UINavigationControllerDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UITabBarControllerDelegate, LXImagePickerDelegate, SocketIODelegate>
 
 @property (strong, nonatomic) NSMutableArray *notifies;
 

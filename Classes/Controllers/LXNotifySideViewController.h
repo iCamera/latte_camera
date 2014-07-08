@@ -15,6 +15,6 @@
 - (IBAction)switchTab:(UISegmentedControl *)sender;
 - (IBAction)refresh:(id)sender;
 - (IBAction)showSetting:(id)sender;
-
+- (void)reloadView;
 
 @end

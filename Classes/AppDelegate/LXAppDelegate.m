@@ -12,6 +12,7 @@
 #import "LatteAPIClient.h"
 #import "ZipArchive.h"
 #import "TestFlight.h"
+#import "LXSocketIO.h"
 
 @implementation LXAppDelegate
 
@@ -75,11 +76,13 @@
     [GAI sharedInstance].dispatchInterval = 20;
     tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-242292-26"];
     [TestFlight takeOff:@"7f91e13e-a760-4471-aa7f-8168d62aa690"];
+    [LXSocketIO sharedClient];
     
     // Check user auth async
     if ([[self getToken] length] > 0) {
         [self checkTokenValidity];
     }
+    
     
     
     // Clear notify but save badge

@@ -7,9 +7,8 @@
 //
 
 #import "JSQMessagesViewController.h"
-#import "SocketIO.h"
 
-@interface LXTagDiscussionViewController : JSQMessagesViewController<SocketIODelegate>
+@interface LXTagDiscussionViewController : JSQMessagesViewController
 
 @property (strong, nonatomic) UIImageView *outgoingBubbleImageView;
 @property (strong, nonatomic) UIImageView *incomingBubbleImageView;
