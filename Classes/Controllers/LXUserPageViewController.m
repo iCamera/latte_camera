@@ -31,6 +31,7 @@
 #import "LXUserProfileViewController.h"
 #import "MZFormSheetSegue.h"
 #import "LXUserListViewController.h"
+#import "LXSocketIO.h"
 
 typedef enum {
     kPhotoTimeline = 0,
@@ -105,8 +106,11 @@ typedef enum {
     
     photoMode = kPhotoTimeline;
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userUpdate:) name:@"user_update" object:nil];
+    
     // Increase count
     NSString *url = [NSString stringWithFormat:@"user/counter/%ld", (long)_userId];
+    
     
     [[LatteAPIClient sharedClient] GET:url parameters:nil success:nil failure:nil];
     
@@ -132,6 +136,9 @@ typedef enum {
     if (app.currentUser && (_userId == [app.currentUser.userId integerValue])) {
         _buttonFollow.hidden = YES;
     }
+    
+    LXSocketIO *socket = [LXSocketIO sharedClient];
+    [socket sendEvent:@"join" withData:[NSString stringWithFormat:@"user_%ld", (long)_userId]];
 }
 
 
@@ -1199,6 +1206,13 @@ typedef enum {
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"TimelineHideDesc"
      object:self];
+}
+
+- (void)userUpdate:(NSNotification*)notify {
+    NSDictionary *raw = notify.object;
+    if (_userId == [raw[@"id"] longValue]) {
+        
+    }
 }
 
 @end

@@ -11,6 +11,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "LXUserPageViewController.h"
 #import "Picture.h"
+#import  "LatteAPIClient.h"
 
 @implementation LXStreamBrickCell
 
@@ -57,6 +58,12 @@
     [_imagePicture setImageWithURL:[NSURL URLWithString:picture.urlSmall]];
     [_buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:feed.user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
     _labelUsername.text = feed.user.name;
+    
+    NSString *urlCounter = [NSString stringWithFormat:@"picture/counter/%ld/%ld",
+                            [picture.pictureId longValue],
+                            [picture.userId longValue]];
+    
+    [[LatteAPIClient sharedClient] GET:urlCounter parameters:nil success:nil failure:nil];
 }
 
 

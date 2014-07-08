@@ -19,6 +19,8 @@
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segmentTab;
 @property (strong, nonatomic) IBOutlet UIImageView *imageCover;
 @property (strong, nonatomic) IBOutlet UIButton *buttonFollow;
+@property (strong, nonatomic) IBOutlet UIButton *buttonFollowing;
+@property (strong, nonatomic) IBOutlet UIButton *buttonFollower;
 
 @property (strong, nonatomic) User *user;
 @property (assign, nonatomic) NSInteger userId;
