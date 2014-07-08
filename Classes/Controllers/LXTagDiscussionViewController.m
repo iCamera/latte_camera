@@ -408,8 +408,11 @@
 
 -(NSString*) sha1:(NSString*)input
 {
-    const char *cstr = [input cStringUsingEncoding:NSUTF8StringEncoding];
-    NSData *data = [NSData dataWithBytes:cstr length:input.length];
+    NSData *plainData = [input.lowercaseString dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *base64String = [plainData base64EncodedStringWithOptions:0];
+    
+    const char *cstr = [base64String cStringUsingEncoding:NSUTF8StringEncoding];
+    NSData *data = [NSData dataWithBytes:cstr length:base64String.length];
     
     uint8_t digest[CC_SHA1_DIGEST_LENGTH];
     

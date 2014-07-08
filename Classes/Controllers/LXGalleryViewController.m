@@ -22,6 +22,7 @@
 #import "Comment.h"
 #import "LXTagHome.h"
 #import "LXUserPageViewController.h"
+#import "LXSocketIO.h"
 
 
 @interface LXGalleryViewController ()
@@ -73,6 +74,7 @@
     if (_picture.pictureId == nil)
         return;
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pictureUpdate:) name:@"picture_update" object:nil];
 
     pageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
                                                      navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
@@ -157,7 +159,9 @@
     [self.view addSubview:viewDesc];
     [viewDesc addSubview:labelDesc];
 
-    [self setPicture];
+    [self joinRoom];
+    [self renderPicture];
+    [self increaseCounter];
     
     buttonUser.layer.cornerRadius = 15;
     buttonUser.layer.shouldRasterize = YES;
@@ -296,7 +300,9 @@
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed {
     if (completed) {
-        [self setPicture];
+        [self joinRoom];
+        [self renderPicture];
+        [self increaseCounter];
     }
     
     [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
@@ -308,10 +314,19 @@
 
 }
 
-- (void)setPicture {
+- (void)joinRoom {
     LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
+    Picture *newPicture = currentPage.picture;
     
-    [labelDesc setText:currentPage.picture.descriptionText];
+    LXSocketIO *socket = [LXSocketIO sharedClient];
+    [socket sendEvent:@"join" withData:[NSString stringWithFormat:@"picture_%ld", [newPicture.pictureId longValue]]];
+}
+
+- (void)renderPicture {
+    LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
+    Picture *newPicture = currentPage.picture;
+    
+    [labelDesc setText:newPicture.descriptionText];
     CGSize labelSize = [labelDesc suggestedFrameSizeToFitEntireStringConstraintedToWidth:308];
                    
     CGRect frame = labelDesc.frame;
@@ -322,7 +337,7 @@
     frameDesc.origin.y = screenRect.size.height-frameDesc.size.height-35;
     viewDesc.contentSize = CGSizeMake(320, frame.size.height + 12);
     
-    if (currentPage.picture.descriptionText.length == 0) {
+    if (newPicture.descriptionText.length == 0) {
         frameDesc.size.height = 0;
     }
     
@@ -332,23 +347,23 @@
                      animations:^{
                          labelDesc.frame = frame;
                          viewDesc.frame = frameDesc;
+                         
                      }
                      completion:^(BOOL finished) {
                          [viewDesc flashScrollIndicators];
                      }];
-    
     
     if (currentPage.user) {
         labelNickname.text = currentPage.user.name;
         [LXUtils setNationalityOfUser:currentPage.user forImage:imageNationality nextToLabel:labelNickname];
         [buttonUser loadBackground:currentPage.user.profilePicture placeholderImage:@"user.gif"];
         
-    } else if (currentPage.picture.user) {
+    } else if (newPicture.user) {
         labelNickname.text = currentPage.picture.user.name;
-        [LXUtils setNationalityOfUser:currentPage.picture.user forImage:imageNationality nextToLabel:labelNickname];
-        [buttonUser loadBackground:currentPage.picture.user.profilePicture placeholderImage:@"user.gif"];
+        [LXUtils setNationalityOfUser:newPicture.user forImage:imageNationality nextToLabel:labelNickname];
+        [buttonUser loadBackground:newPicture.user.profilePicture placeholderImage:@"user.gif"];
     } else {
-        NSString *url = [NSString stringWithFormat:@"user/%ld", [currentPage.picture.userId longValue]];
+        NSString *url = [NSString stringWithFormat:@"user/%ld", [newPicture.userId longValue]];
         [[LatteAPIClient sharedClient] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
             User *user = [User instanceFromDictionary:JSON[@"user"]];
             currentPage.user = user;
@@ -358,25 +373,30 @@
         } failure:nil];
     }
     
-    labelView.text = [NSString stringWithFormat:NSLocalizedString(@"d_views", @""), [currentPage.picture.pageviews integerValue]];
+    labelView.text = [NSString stringWithFormat:NSLocalizedString(@"d_views", @""), [newPicture.pageviews integerValue]];
     
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
-
+    
     buttonLike.enabled = NO;
     if (!(currentPage.picture.isVoted && !app.currentUser))
         buttonLike.enabled = YES;
-    buttonLike.selected = currentPage.picture.isVoted;
-    [buttonLike setTitle:[currentPage.picture.voteCount stringValue] forState:UIControlStateNormal];
+    buttonLike.selected = newPicture.isVoted;
+    [buttonLike setTitle:[newPicture.voteCount stringValue] forState:UIControlStateNormal];
     
-    [buttonComment setTitle:[currentPage.picture.commentCount stringValue] forState:UIControlStateNormal];
+    [buttonComment setTitle:[newPicture.commentCount stringValue] forState:UIControlStateNormal];
     
+    buttonEdit.hidden = !newPicture.isOwner;
+    
+}
+
+- (void)increaseCounter {
     // Increase counter
+    LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
     NSString *urlCounter = [NSString stringWithFormat:@"picture/counter/%ld/%ld",
-                     [currentPage.picture.pictureId longValue],
-                     [currentPage.picture.userId longValue]];
+                            [currentPage.picture.pictureId longValue],
+                            [currentPage.picture.userId longValue]];
     
     [[LatteAPIClient sharedClient] GET:urlCounter parameters:nil success:nil failure:nil];
-    buttonEdit.hidden = !currentPage.picture.isOwner;
 }
 
 - (void)didReceiveMemoryWarning
@@ -453,5 +473,25 @@
     return UIStatusBarAnimationFade;
 }
 
+- (void)pictureUpdate:(NSNotification*)notify {
+    LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
+    
+    NSDictionary *raw = notify.object;
+    if ([currentPage.picture.pictureId longValue] == [raw[@"id"] longValue]) {
+        if (raw[@"pageviews"]) {
+            currentPage.picture.pageviews = raw[@"pageviews"];
+        }
+        if (raw[@"vote_count"]) {
+            currentPage.picture.voteCount = raw[@"vote_count"];
+        }
+        if (raw[@"comment_count"]) {
+            currentPage.picture.commentCount = raw[@"comment_count"];
+        }
+        if (raw[@"description"]) {
+            currentPage.picture.descriptionText = raw[@"description"];
+        }
+        [self renderPicture];
+    }
+}
 
 @end

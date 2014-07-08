@@ -18,6 +18,7 @@
 #import "LXPicCommentViewController.h"
 #import "LXPicInfoViewController.h"
 #import "LXTagHome.h"
+#import "LXSocketIO.h"
 
 @implementation LXCellTimelineSingle {
     LXShare *lxShare;
