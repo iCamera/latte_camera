@@ -1902,6 +1902,7 @@
 		8C75515E193F108800CBFA2C /* LXPrivacySettingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C75515D193F108800CBFA2C /* LXPrivacySettingTableViewCell.m */; };
 		8C8F582E193EF35E004A9EB9 /* LXTableSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8F582D193EF35E004A9EB9 /* LXTableSettingViewController.m */; };
 		8CFFF63D19407C8500D09F5B /* LXTableSettingItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CFFF63C19407C8500D09F5B /* LXTableSettingItemViewController.m */; };
+		C5426892196D0D2500052D0A /* LXCellMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = C5426891196D0D2500052D0A /* LXCellMenu.m */; };
 		C54E590D195195AB003EC0F5 /* LXProfileSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C54E590C195195AB003EC0F5 /* LXProfileSettingTableViewController.m */; };
 		C54E59101951960E003EC0F5 /* LXProfileSettingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C54E590F1951960E003EC0F5 /* LXProfileSettingTableViewCell.m */; };
 		C54E59161952CCDD003EC0F5 /* LXProfileSettingEditTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C54E59151952CCDD003EC0F5 /* LXProfileSettingEditTVC.m */; };
@@ -3981,6 +3982,8 @@
 		8C8F582D193EF35E004A9EB9 /* LXTableSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXTableSettingViewController.m; sourceTree = "<group>"; };
 		8CFFF63B19407C8500D09F5B /* LXTableSettingItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXTableSettingItemViewController.h; sourceTree = "<group>"; };
 		8CFFF63C19407C8500D09F5B /* LXTableSettingItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXTableSettingItemViewController.m; sourceTree = "<group>"; };
+		C5426890196D0D2500052D0A /* LXCellMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCellMenu.h; sourceTree = "<group>"; };
+		C5426891196D0D2500052D0A /* LXCellMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCellMenu.m; sourceTree = "<group>"; };
 		C54E590B195195AB003EC0F5 /* LXProfileSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXProfileSettingTableViewController.h; sourceTree = "<group>"; };
 		C54E590C195195AB003EC0F5 /* LXProfileSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXProfileSettingTableViewController.m; sourceTree = "<group>"; };
 		C54E590E1951960E003EC0F5 /* LXProfileSettingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXProfileSettingTableViewCell.h; sourceTree = "<group>"; };
@@ -4939,6 +4942,7 @@
 		8890725416770EBB0013DF7A /* CustomControls */ = {
 			isa = PBXGroup;
 			children = (
+				C542688F196D0D0400052D0A /* Cell */,
 				C54E591B1953D0B8003EC0F5 /* ProfileSettings */,
 				88D2DC1C1924A25A0027D88A /* UIButton+AsyncImage.h */,
 				88D2DC1D1924A25A0027D88A /* UIButton+AsyncImage.m */,
@@ -6379,6 +6383,15 @@
 				88FE418E166C93D7004DCE53 /* user.gif */,
 			);
 			path = Images;
+			sourceTree = "<group>";
+		};
+		C542688F196D0D0400052D0A /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				C5426890196D0D2500052D0A /* LXCellMenu.h */,
+				C5426891196D0D2500052D0A /* LXCellMenu.m */,
+			);
+			name = Cell;
 			sourceTree = "<group>";
 		};
 		C54E591B1953D0B8003EC0F5 /* ProfileSettings */ = {
@@ -8358,6 +8371,7 @@
 				882E14A516EF0BF100839B92 /* LXFacebookFriendViewController.m in Sources */,
 				882E14AD16EF0FDE00839B92 /* LXCellFacebook.m in Sources */,
 				88EB47C819471B2E00D0F026 /* LXTagDiscussionViewController.m in Sources */,
+				C5426892196D0D2500052D0A /* LXCellMenu.m in Sources */,
 				882E14BF16F0928700839B92 /* LXCellGrid.m in Sources */,
 				C54E591E1953D128003EC0F5 /* LXCellSelectItem.m in Sources */,
 				C54E59241953D190003EC0F5 /* LXCellTextView.m in Sources */,

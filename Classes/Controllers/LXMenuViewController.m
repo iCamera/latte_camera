@@ -9,12 +9,34 @@
 #import "LXMenuViewController.h"
 #import "LXAppDelegate.h"
 #import "REFrostedViewController.h"
+#import "LXAppDelegate.h"
+#import "MZFormSheetSegue.h"
+#import "MBProgressHUD.h"
+#import "LatteAPIClient.h"
+#import "LatteAPIv2Client.h"
+#import "LXUtils.h"
+#import "User.h"
+
+#import "LXShare.h"
+#import "UIButton+AFNetworking.h"
+#import "UIImageView+AFNetworking.h"
+
+#import "LXUserPageViewController.h"
+
+//#import "UIStoryboard.h"
 
 @interface LXMenuViewController ()
 
 @end
 
 @implementation LXMenuViewController
+@synthesize textUsername;
+@synthesize menuFollowingTags;
+@synthesize menuLikedPhotos;
+@synthesize menuLogOut;
+@synthesize menuSearch;
+@synthesize menuLogin;
+@synthesize menuSettings;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -25,15 +47,48 @@
     return self;
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    NSLog(@"VIEW viewWillAppear ");
+
+    NSLog(@"  app.currentUser : %@  profile_picture: %@", app.currentUser, app.currentUser.profilePicture);
+    if (app.currentUser) {
+        [_buttonProfilePicture setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:app.currentUser.profilePicture]];
+        textUsername.text = app.currentUser.name;
+        menuFollowingTags.hidden =FALSE;
+        menuLikedPhotos.hidden = FALSE;
+        menuLogin.hidden = TRUE;
+        menuLogOut.hidden = FALSE;
+        _buttonProfilePicture.hidden = FALSE;
+        textUsername.hidden = FALSE;
+
+    } else {
+        //Hide_show buttons
+        menuFollowingTags.hidden = TRUE;
+        menuLikedPhotos.hidden = TRUE;
+        menuLogin.hidden = FALSE;
+        menuLogOut.hidden = TRUE;
+        _buttonProfilePicture.hidden = TRUE;
+        textUsername.hidden = TRUE;
+        textUsername.text = @"";
+    }
+     [self.tableView reloadData];
+    
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    [app.tracker set:kGAIScreenName
+               value:@"Left Home Menu Screen"];
+    [app.tracker send:[[GAIDictionaryBuilder createAppView] build]];
+    _buttonProfilePicture.layer.cornerRadius = 37;
 }
 
 - (void)didReceiveMemoryWarning
@@ -43,14 +98,61 @@
 }
 
 #pragma mark - Table view data source
-
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+ UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
+ if (cell.hidden) {
+     return 0;
+ } else {
+     return 44; //[super tableView:tableView heightForRowAtIndexPath:indexPath];
+ }
+}
+         
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Setting
-    [self.frostedViewController hideMenuViewController];
-    if ([tableView cellForRowAtIndexPath:indexPath] == _menuSetting) {
+    if ([tableView cellForRowAtIndexPath:indexPath] == menuFollowingTags) {
+       [self.frostedViewController hideMenuViewController];
         LXAppDelegate *app = [LXAppDelegate currentDelegate];
-        [app.viewMainTab showSetting:self];
+        app.viewMainTab.selectedIndex = 4;
+        UINavigationController *navCurrent = (UINavigationController*)app.viewMainTab.selectedViewController;
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"                                                                bundle:nil];
+        [navCurrent pushViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"TagHome"] animated:YES];
+    } else if ([tableView cellForRowAtIndexPath:indexPath] ==  menuSettings) {
+        [self.frostedViewController hideMenuViewController];
+        UIStoryboard* storySetting = [UIStoryboard storyboardWithName:@"Setting" bundle:nil];
+        [self presentViewController:[storySetting instantiateInitialViewController] animated:YES completion:nil];
+
+    } else if ([tableView cellForRowAtIndexPath:indexPath] == menuLogOut) {
+        [self.frostedViewController hideMenuViewController];
+        LXAppDelegate *app = [LXAppDelegate currentDelegate];
+        [[FBSession activeSession] closeAndClearTokenInformation];
+        [[LatteAPIClient sharedClient] POST:@"user/logout" parameters:nil success:nil failure:nil];
+        [app setToken:@""];
+        app.currentUser = nil;
+        [self dismissViewControllerAnimated:YES completion:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"LoggedOut" object:self];
+    } else if ([tableView cellForRowAtIndexPath:indexPath] == menuLikedPhotos) {
+        [self.frostedViewController hideMenuViewController];
+        LXAppDelegate *app = [LXAppDelegate currentDelegate];
+        app.viewMainTab.selectedIndex = 4;
+        UINavigationController *navCurrent = (UINavigationController*)app.viewMainTab.selectedViewController;
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"                                                                bundle:nil];
+        [navCurrent pushViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"LikedPhotos"] animated:YES];
+
+    } else if ([tableView cellForRowAtIndexPath:indexPath] == menuLogin) {
+        [self.frostedViewController hideMenuViewController];
+        UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"Authentication" bundle:nil];
+        [self presentViewController:[storyMain instantiateInitialViewController] animated:YES completion:nil];
     }
+}
+
+- (IBAction)clickShowUser:(id)sender {
+    [self.frostedViewController hideMenuViewController];
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    UINavigationController *navCurrent = (UINavigationController*)app.viewMainTab.selectedViewController;
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    [navCurrent pushViewController:viewUserPage animated:YES];
 }
 
 /*

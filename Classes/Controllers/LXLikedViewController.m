@@ -58,15 +58,17 @@
 
 
 - (void)reloadFav {
-    page = 0;
+    page = 1;
     loadEnded = false;
     [self loadFav];
 }
 
 - (void)loadFav {
+    if (loadIndicator.isAnimating || loadEnded) {
+        return;
+    }
     [loadIndicator startAnimating];
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    page += 1;
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             [app getToken], @"token",
                             [NSNumber numberWithInteger:page], @"page",
@@ -102,7 +104,7 @@
                                            
                                            [self.tableView endUpdates];
                                        }
-                                       
+                                       page += 1;
                                        [self doneLoadingTableViewData];
                                        [loadIndicator stopAnimating];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
