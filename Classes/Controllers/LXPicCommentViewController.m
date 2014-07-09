@@ -205,7 +205,7 @@
         
         NSString *url = [NSString stringWithFormat:@"picture/%ld/comment_post", [_picture.pictureId longValue]];
         
-        [MBProgressHUD showHUDAddedTo:self.view.superview.superview.superview animated:YES];
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         [growingComment resignFirstResponder];
         
         [[LatteAPIClient sharedClient] POST:url
@@ -219,10 +219,10 @@
                                             growingComment.text = @"";
                                             userTag = [[NSMutableArray alloc] init];
                                             buttonSend.enabled = false;
-                                            [MBProgressHUD hideHUDForView:self.view.superview.superview.superview animated:YES];
+                                            [MBProgressHUD hideHUDForView:self.view animated:YES];
                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                             DLog(@"Something went wrong (Comment)");
-                                            [MBProgressHUD hideHUDForView:self.view.superview.superview.superview animated:YES];
+                                            [MBProgressHUD hideHUDForView:self.view animated:YES];
                                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
                                                                                             message:error.localizedDescription
                                                                                            delegate:nil

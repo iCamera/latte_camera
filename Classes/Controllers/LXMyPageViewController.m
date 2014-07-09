@@ -153,6 +153,10 @@ typedef enum {
                                        [self.tableView reloadData];
                                        [self.refreshControl endRefreshing];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       if (reset) {
+                                           [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                       }
+                                       
                                        DLog(@"Something went wrong (Timeline)");
                                        
                                        [self.refreshControl endRefreshing];

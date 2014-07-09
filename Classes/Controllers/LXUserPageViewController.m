@@ -63,7 +63,6 @@ typedef enum {
     NSDate *currentMonth;
     NSDate *selectedCalendarDate;
     NSMutableArray *currentMonthPicsFlat;
-    MBProgressHUD *HUD;
     
     AFHTTPRequestOperation *currentRequest;
 }
@@ -113,15 +112,6 @@ typedef enum {
     
     
     [[LatteAPIClient sharedClient] GET:url parameters:nil success:nil failure:nil];
-    
-    HUD = [[MBProgressHUD alloc] initWithView:app.viewMainTab.view];
-    HUD.userInteractionEnabled = NO;
-    [app.viewMainTab.view addSubview:HUD];
-    HUD.mode = MBProgressHUDModeText;
-    HUD.labelText = NSLocalizedString(@"Loading...", @"Loading...") ;
-    HUD.labelFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
-    HUD.margin = 10.f;
-    HUD.yOffset = 150.f;
     
     _buttonUser.layer.cornerRadius = 30;
     
@@ -200,6 +190,9 @@ typedef enum {
                                    [self.refreshControl endRefreshing];
                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                    DLog(@"Something went wrong (Timeline)");
+                                   if (reset) {
+                                       [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                   }
                                    
                                    [self.refreshControl endRefreshing];
                                }];
@@ -335,7 +328,8 @@ typedef enum {
     [dateFormat setDateFormat:@"yyyyMM"];
     
     NSString* urlPhotos = [NSString stringWithFormat:@"picture/album/by_month/%@/%ld", [dateFormat stringFromDate:currentMonth], (long)_userId];
-    [HUD show:YES];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+
     [[LatteAPIClient sharedClient] GET:urlPhotos
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -367,11 +361,11 @@ typedef enum {
                                        
                                        [self.tableView reloadData];
                                        
-                                       [HUD hide:YES];
+                                       [MBProgressHUD hideHUDForView:self.view animated:YES];
                                        
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        DLog(@"Something went wrong (User - Calendar)");
-                                       [HUD hide:YES];
+                                       [MBProgressHUD hideHUDForView:self.view animated:YES];
                                    }];
 }
 
@@ -901,7 +895,6 @@ typedef enum {
                 UIImagePickerController *imagePicker = [storyCamera instantiateViewControllerWithIdentifier:@"Picker"];
                 
                 imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-                imagePicker.allowsEditing = YES;
                 imagePicker.delegate = self;
                 
                 [self presentViewController:imagePicker animated:YES completion:nil];
@@ -910,7 +903,6 @@ typedef enum {
         case 2: {
             UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
             
-            imagePicker.allowsEditing = YES;
             imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
             imagePicker.delegate = self;
             

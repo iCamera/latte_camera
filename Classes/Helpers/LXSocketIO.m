@@ -38,6 +38,7 @@
 
 - (void) socketIODidDisconnect:(SocketIO *)socket disconnectedWithError:(NSError *)error {
     DLog(@"Disconnected");
+    timerPingSocket = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(reconnectSocket) userInfo:nil repeats:NO];
 }
 
 - (void) socketIO:(SocketIO *)socket didReceiveMessage:(SocketIOPacket *)packet {
