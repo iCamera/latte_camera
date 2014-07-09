@@ -96,6 +96,11 @@ typedef enum {
     _labelMessage.layer.cornerRadius = 7;
     
     [self reloadView];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
     [self reloadProfile];
 }
 
