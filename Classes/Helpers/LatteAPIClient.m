@@ -65,7 +65,12 @@
         [params setObject:[app getToken] forKey:@"token"];
     }
     
-    return [super GET:URLString parameters:params success:success failure:failure];
+    return [super GET:URLString parameters:params success:success failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        DLog(@"Something went wrong: %@", error.localizedDescription);
+        if (failure) {
+            failure(operation, error);
+        }
+    }];
 }
 
 - (AFHTTPRequestOperation *)POST:(NSString *)URLString
@@ -83,7 +88,12 @@
         [params setObject:[app getToken] forKey:@"token"];
     }
     
-    return [super POST:URLString parameters:params success:success failure:failure];
+    return [super POST:URLString parameters:params success:success failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        DLog(@"Something went wrong: %@", error.localizedDescription);
+        if (failure) {
+            failure(operation, error);
+        }
+    }];
 }
 
 - (id)initWithBaseURL:(NSURL *)url {

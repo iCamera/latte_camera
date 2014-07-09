@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LXCellFriend"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="gray" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="User" rowHeight="48" id="SLt-5B-5UZ" customClass="LXCellFriend">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="48"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SLt-5B-5UZ" id="g01-Xk-S90">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="47"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" image="user.gif" translatesAutoresizingMaskIntoConstraints="NO" id="RDX-xt-4sP">
+                        <rect key="frame" x="5" y="8" width="30" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="dYH-xZ-po4">
+                        <rect key="frame" x="42" y="9" width="37" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="16" id="iIW-YN-P91"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Intro" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="TIZ-rp-RUJ">
+                        <rect key="frame" x="42" y="25" width="270" height="15"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ywc-kZ-94E">
+                        <rect key="frame" x="87" y="9" width="16" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="16" id="Pu6-WN-7g7"/>
+                            <constraint firstAttribute="height" constant="16" id="QXA-2G-kRR"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Ywc-kZ-94E" firstAttribute="leading" secondItem="dYH-xZ-po4" secondAttribute="trailing" constant="8" id="FAc-f2-eVp"/>
+                    <constraint firstItem="TIZ-rp-RUJ" firstAttribute="leading" secondItem="g01-Xk-S90" secondAttribute="leading" constant="42" id="Hv4-Fu-iHy"/>
+                    <constraint firstItem="TIZ-rp-RUJ" firstAttribute="top" secondItem="g01-Xk-S90" secondAttribute="top" constant="25" id="QRM-ob-XNw"/>
+                    <constraint firstAttribute="trailing" secondItem="TIZ-rp-RUJ" secondAttribute="trailing" constant="8" id="Zgx-gS-JbW"/>
+                    <constraint firstItem="dYH-xZ-po4" firstAttribute="leading" secondItem="g01-Xk-S90" secondAttribute="leading" constant="42" id="byS-zk-EPn"/>
+                    <constraint firstItem="dYH-xZ-po4" firstAttribute="top" secondItem="g01-Xk-S90" secondAttribute="top" constant="9" id="hS3-Vb-RH9"/>
+                    <constraint firstItem="Ywc-kZ-94E" firstAttribute="top" secondItem="g01-Xk-S90" secondAttribute="top" constant="9" id="ptu-uD-Rvm"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="imageNationality" destination="Ywc-kZ-94E" id="N61-Ci-rdA"/>
+                <outlet property="imageUser" destination="RDX-xt-4sP" id="UAr-J6-641"/>
+                <outlet property="labelIntro" destination="TIZ-rp-RUJ" id="anz-Ud-4KX"/>
+                <outlet property="labelName" destination="dYH-xZ-po4" id="F2Q-i6-wQa"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="user.gif" width="100" height="100"/>
+    </resources>
+</document>

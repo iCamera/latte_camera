@@ -50,9 +50,7 @@
 -(void)viewWillAppear:(BOOL)animated {
 
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
-    NSLog(@"VIEW viewWillAppear ");
 
-    NSLog(@"  app.currentUser : %@  profile_picture: %@", app.currentUser, app.currentUser.profilePicture);
     if (app.currentUser) {
         [_buttonProfilePicture setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:app.currentUser.profilePicture]];
         textUsername.text = app.currentUser.name;
@@ -109,37 +107,36 @@
          
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Setting
+    [self.frostedViewController hideMenuViewController];
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    
     if ([tableView cellForRowAtIndexPath:indexPath] == menuFollowingTags) {
-       [self.frostedViewController hideMenuViewController];
-        LXAppDelegate *app = [LXAppDelegate currentDelegate];
-        app.viewMainTab.selectedIndex = 4;
+        //app.viewMainTab.selectedIndex = 4;
         UINavigationController *navCurrent = (UINavigationController*)app.viewMainTab.selectedViewController;
-        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"                                                                bundle:nil];
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
         [navCurrent pushViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"TagHome"] animated:YES];
     } else if ([tableView cellForRowAtIndexPath:indexPath] ==  menuSettings) {
-        [self.frostedViewController hideMenuViewController];
         UIStoryboard* storySetting = [UIStoryboard storyboardWithName:@"Setting" bundle:nil];
         [self presentViewController:[storySetting instantiateInitialViewController] animated:YES completion:nil];
 
     } else if ([tableView cellForRowAtIndexPath:indexPath] == menuLogOut) {
-        [self.frostedViewController hideMenuViewController];
-        LXAppDelegate *app = [LXAppDelegate currentDelegate];
         [[FBSession activeSession] closeAndClearTokenInformation];
         [[LatteAPIClient sharedClient] POST:@"user/logout" parameters:nil success:nil failure:nil];
         [app setToken:@""];
         app.currentUser = nil;
         [self dismissViewControllerAnimated:YES completion:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"LoggedOut" object:self];
-    } else if ([tableView cellForRowAtIndexPath:indexPath] == menuLikedPhotos) {
-        [self.frostedViewController hideMenuViewController];
-        LXAppDelegate *app = [LXAppDelegate currentDelegate];
-        app.viewMainTab.selectedIndex = 4;
+    } else if ([tableView cellForRowAtIndexPath:indexPath] == menuSearch) {
+        //app.viewMainTab.selectedIndex = 4;
         UINavigationController *navCurrent = (UINavigationController*)app.viewMainTab.selectedViewController;
-        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"                                                                bundle:nil];
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+        [navCurrent pushViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"Search"] animated:YES];
+    } else if ([tableView cellForRowAtIndexPath:indexPath] == menuLikedPhotos) {
+        //app.viewMainTab.selectedIndex = 4;
+        UINavigationController *navCurrent = (UINavigationController*)app.viewMainTab.selectedViewController;
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
         [navCurrent pushViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"LikedPhotos"] animated:YES];
-
     } else if ([tableView cellForRowAtIndexPath:indexPath] == menuLogin) {
-        [self.frostedViewController hideMenuViewController];
         UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"Authentication" bundle:nil];
         [self presentViewController:[storyMain instantiateInitialViewController] animated:YES completion:nil];
     }
@@ -152,67 +149,9 @@
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
     LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    viewUserPage.user = app.currentUser;
     [navCurrent pushViewController:viewUserPage animated:YES];
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
-}
-*/
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
