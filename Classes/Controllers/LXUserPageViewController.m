@@ -121,6 +121,7 @@ typedef enum {
     [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTimelineMulti" bundle:nil] forCellReuseIdentifier:@"Multi"];
     
     [self reloadView];
+    [self reloadProfile];
     
     if (app.currentUser && (_userId == [app.currentUser.userId integerValue])) {
         _buttonFollow.hidden = YES;
@@ -246,8 +247,6 @@ typedef enum {
 
 - (void)reloadView {
     endedPic = false;
-
-    [self reloadProfile];
     
     if (currentRequest && currentRequest.isExecuting)
         [currentRequest cancel];

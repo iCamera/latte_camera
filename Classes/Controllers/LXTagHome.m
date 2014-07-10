@@ -9,6 +9,8 @@
 #import "LXTagHome.h"
 #import "LXTagDiscussionViewController.h"
 #import "LXTagViewController.h"
+#import "LXAppDelegate.h"
+#import "LatteAPIv2Client.h"
 
 @interface LXTagHome ()
 
@@ -46,6 +48,16 @@
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
     showingKeyboard = false;
+    
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    
+    if (app.currentUser) {
+        LatteAPIv2Client *api2 = [LatteAPIv2Client sharedClient];
+        [api2 GET:@"tag/follow" parameters:@{@"tag": _tag} success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+            _buttonFollow.enabled = YES;
+            _buttonFollow.selected = [JSON[@"is_following"] boolValue];
+        } failure:nil];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -99,6 +111,25 @@
         _constraintHeight.constant = 0;
         [self.view layoutIfNeeded];
     }];
+}
+
+- (IBAction)toggleFollow:(id)sender {
+    LatteAPIv2Client *api2 = [LatteAPIv2Client sharedClient];
+    _buttonFollow.selected = !_buttonFollow.selected;
+    
+    if (_buttonFollow.selected) {
+        [api2 POST:@"tag/follow" parameters:@{@"tag": _tag} success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+            _buttonFollow.enabled = YES;
+            _buttonFollow.selected = [JSON[@"is_following"] boolValue];
+        } failure:nil];
+    }
+
+    if (!_buttonFollow.selected) {
+        [api2 POST:@"tag/unfollow" parameters:@{@"tag": _tag} success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+            _buttonFollow.enabled = YES;
+            _buttonFollow.selected = [JSON[@"is_following"] boolValue];
+        } failure:nil];
+    }
 }
 
 - (void)keyboardWillShow:(id)sender {

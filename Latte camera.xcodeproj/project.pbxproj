@@ -1097,6 +1097,7 @@
 		88992C8D196A77800002E502 /* LXCellTimelineSingle.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88992C8C196A77800002E502 /* LXCellTimelineSingle.xib */; };
 		88992C90196B818A0002E502 /* LXSocketIO.m in Sources */ = {isa = PBXBuildFile; fileRef = 88992C8F196B818A0002E502 /* LXSocketIO.m */; };
 		88992C94196D4C7C0002E502 /* LXCellFriend.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88992C93196D4C7C0002E502 /* LXCellFriend.xib */; };
+		88992C97196E44720002E502 /* LXFollowingTagTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 88992C96196E44720002E502 /* LXFollowingTagTVC.m */; };
 		88A43B0216703340001A8BB3 /* bt_twitter2_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A43AFE16703340001A8BB3 /* bt_twitter2_on.png */; };
 		88A43B0316703340001A8BB3 /* bt_twitter2_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A43AFF16703340001A8BB3 /* bt_twitter2_on@2x.png */; };
 		88A43B0416703340001A8BB3 /* bt_twitter2.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A43B0016703340001A8BB3 /* bt_twitter2.png */; };
@@ -3141,6 +3142,8 @@
 		88992C8E196B818A0002E502 /* LXSocketIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXSocketIO.h; sourceTree = "<group>"; };
 		88992C8F196B818A0002E502 /* LXSocketIO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXSocketIO.m; sourceTree = "<group>"; };
 		88992C93196D4C7C0002E502 /* LXCellFriend.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LXCellFriend.xib; sourceTree = "<group>"; };
+		88992C95196E44720002E502 /* LXFollowingTagTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFollowingTagTVC.h; sourceTree = "<group>"; };
+		88992C96196E44720002E502 /* LXFollowingTagTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFollowingTagTVC.m; sourceTree = "<group>"; };
 		88A43AFE16703340001A8BB3 /* bt_twitter2_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bt_twitter2_on.png; sourceTree = "<group>"; };
 		88A43AFF16703340001A8BB3 /* bt_twitter2_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bt_twitter2_on@2x.png"; sourceTree = "<group>"; };
 		88A43B0016703340001A8BB3 /* bt_twitter2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bt_twitter2.png; sourceTree = "<group>"; };
@@ -4929,6 +4932,8 @@
 				8849DFFF19614BA200578987 /* LXTagHome.m */,
 				8849E00819652ED700578987 /* LXUserListViewController.h */,
 				8849E00919652ED800578987 /* LXUserListViewController.m */,
+				88992C95196E44720002E502 /* LXFollowingTagTVC.h */,
+				88992C96196E44720002E502 /* LXFollowingTagTVC.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -8378,6 +8383,7 @@
 				888F651616FC09E100ED74BB /* LXLeftGuestViewController.m in Sources */,
 				886E540B16FC469B00629D76 /* LXLikedViewController.m in Sources */,
 				88673B6616FF5219007CF6BD /* LXCellSearchConnection.m in Sources */,
+				88992C97196E44720002E502 /* LXFollowingTagTVC.m in Sources */,
 				883274D9170146FA0053C8A2 /* LXCellTags.m in Sources */,
 				884ACB2118EEB7F600B2924B /* LXStreamViewLayout.m in Sources */,
 				88675373170C274A009B5BBE /* LXImageFilter.m in Sources */,

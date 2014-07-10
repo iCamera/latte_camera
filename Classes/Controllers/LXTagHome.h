@@ -15,9 +15,11 @@
 @property (strong, nonatomic) IBOutlet UIView *containerPhoto;
 @property (strong, nonatomic) IBOutlet UIView *containerChat;
 @property (strong, nonatomic) IBOutlet UILabel *labelSp;
+@property (strong, nonatomic) IBOutlet UIButton *buttonFollow;
 
 - (IBAction)panView:(UIPanGestureRecognizer *)sender;
 - (IBAction)tapView:(id)sender;
+- (IBAction)toggleFollow:(id)sender;
 
 
 @end

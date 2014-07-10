@@ -114,7 +114,7 @@
         //app.viewMainTab.selectedIndex = 4;
         UINavigationController *navCurrent = (UINavigationController*)app.viewMainTab.selectedViewController;
         UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-        [navCurrent pushViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"TagHome"] animated:YES];
+        [navCurrent pushViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"FollowingTag"] animated:YES];
     } else if ([tableView cellForRowAtIndexPath:indexPath] ==  menuSettings) {
         UIStoryboard* storySetting = [UIStoryboard storyboardWithName:@"Setting" bundle:nil];
         [self presentViewController:[storySetting instantiateInitialViewController] animated:YES completion:nil];

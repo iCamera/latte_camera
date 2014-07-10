@@ -676,12 +676,14 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+                                    <action selector="toggleFollow:" destination="9YB-Rx-kkz" eventType="touchUpInside" id="sBd-1J-t52"/>
                                     <action selector="touchFollow:" destination="21a-Kc-kfo" eventType="touchUpInside" id="UxS-qA-Vt8"/>
                                 </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="buttonFollow" destination="B47-Oy-2yj" id="Wlc-SZ-gNM"/>
                         <outlet property="constraintHeight" destination="k3P-Fq-roK" id="7w9-XW-dHs"/>
                         <outlet property="containerChat" destination="N7M-mh-zVV" id="yE8-8D-L5h"/>
                         <outlet property="containerPhoto" destination="cFM-lT-vSe" id="35O-38-w6g"/>
@@ -1473,6 +1475,35 @@ Or you can resend confirmation email.</string>
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
+                                <view alpha="0.59999999999999998" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Fw-lt-UFv" customClass="LXGradientView">
+                                    <rect key="frame" x="0.0" y="75" width="320" height="75"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ylh-RA-SXN">
+                                            <rect key="frame" x="247" y="26" width="73" height="39"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="40"/>
+                                            <state key="normal" title="0" image="icon_follow_s.png">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <segue destination="OZE-UL-Mh9" kind="custom" identifier="Following" customClass="MZFormSheetSegue" id="bsm-XB-qQP"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VG6-0T-eya">
+                                            <rect key="frame" x="131" y="28" width="108" height="37"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="40"/>
+                                            <state key="normal" title="0" image="icon_follow_m.png">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <segue destination="OZE-UL-Mh9" kind="custom" identifier="Follower" customClass="MZFormSheetSegue" id="nqr-PV-YRj"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kc8-8B-lDc">
                                     <rect key="frame" x="278" y="20" width="22" height="22"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1497,26 +1528,6 @@ Or you can resend confirmation email.</string>
                                         <action selector="switchView:" destination="21a-Kc-kfo" eventType="valueChanged" id="DRC-x5-NDx"/>
                                     </connections>
                                 </segmentedControl>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VG6-0T-eya">
-                                    <rect key="frame" x="93" y="102" width="67" height="22"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" title="0" image="icon_follow_m.png">
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <connections>
-                                        <segue destination="OZE-UL-Mh9" kind="custom" identifier="Follower" customClass="MZFormSheetSegue" id="nqr-PV-YRj"/>
-                                    </connections>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ylh-RA-SXN">
-                                    <rect key="frame" x="179" y="100" width="62" height="25"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" title="0" image="icon_follow_s.png">
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <connections>
-                                        <segue destination="OZE-UL-Mh9" kind="custom" identifier="Following" customClass="MZFormSheetSegue" id="bsm-XB-qQP"/>
-                                    </connections>
-                                </button>
                                 <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vEm-kz-mRV">
                                     <rect key="frame" x="130" y="20" width="60" height="60"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1964,6 +1975,44 @@ Or you can resend confirmation email.</string>
             </objects>
             <point key="canvasLocation" x="-2195" y="677"/>
         </scene>
+        <!--Following TagTVC - Following Tags-->
+        <scene sceneID="Q0y-eF-4Wb">
+            <objects>
+                <tableViewController storyboardIdentifier="FollowingTag" id="3Rl-AM-Gib" customClass="LXFollowingTagTVC" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="aZC-W5-Pc7">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Tag" textLabel="YvB-an-A3j" style="IBUITableViewCellStyleDefault" id="U1T-Y0-EdM">
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="U1T-Y0-EdM" id="e6X-QP-SRm">
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YvB-an-A3j">
+                                            <rect key="frame" x="15" y="0.0" width="270" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="3Rl-AM-Gib" id="aV1-Ff-98W"/>
+                            <outlet property="delegate" destination="3Rl-AM-Gib" id="nw1-bO-s9Y"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Following Tags" id="CWE-hg-mls"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="H4D-xI-fOL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1780" y="1260"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Icon-40.png" width="40" height="40"/>
@@ -2009,9 +2058,9 @@ Or you can resend confirmation email.</string>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="myE-qi-b3h"/>
         <segue reference="gji-Cu-gYb"/>
         <segue reference="gJK-ni-fiN"/>
-        <segue reference="myE-qi-b3h"/>
         <segue reference="nqr-PV-YRj"/>
     </inferredMetricsTieBreakers>
 </document>
