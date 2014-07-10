@@ -9,6 +9,7 @@
 #import "LXTimelineMultiItemViewController.h"
 #import "LXAppDelegate.h"
 #import "UIButton+AFNetworking.h"
+#import "LXSocketIO.h"
 
 @interface LXTimelineMultiItemViewController ()
 
@@ -19,7 +20,6 @@
 @synthesize buttonComment;
 @synthesize buttonImage;
 @synthesize buttonVote;
-@synthesize labelView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -39,14 +39,31 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //[buttonImage loadBackground:_pic.urlSquare];
-    [buttonImage setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:_pic.urlMedium]];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pictureUpdate:) name:@"picture_update" object:nil];
+    
     buttonImage.imageView.contentMode = UIViewContentModeScaleAspectFill;
     
     buttonImage.tag = _index;
     buttonComment.tag = _index;
     buttonVote.tag = _index;
     
+    [buttonImage addTarget:_parent action:@selector(showPicture:) forControlEvents:UIControlEventTouchUpInside];
+    [buttonComment addTarget:_parent action:@selector(showComment:) forControlEvents:UIControlEventTouchUpInside];
+    [buttonVote addTarget:_parent action:@selector(toggleLike:) forControlEvents:UIControlEventTouchUpInside];
+    
+    LXSocketIO *socket = [LXSocketIO sharedClient];
+    [socket sendEvent:@"join" withData:[NSString stringWithFormat:@"picture_%ld", [_pic.pictureId longValue]]];
+    
+    [buttonImage setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:_pic.urlMedium]];
+    [self renderPicture];
+//    buttonComment.hidden = !_showButton;
+//    buttonVote.hidden = !_showButton;
+
+    // Do any additional setup after loading the view from its nib.
+}
+
+- (void)renderPicture {
     [buttonComment setTitle:[_pic.commentCount stringValue] forState:UIControlStateNormal];
     [buttonVote setTitle:[_pic.voteCount stringValue] forState:UIControlStateNormal];
     
@@ -56,20 +73,16 @@
     if (!(_pic.isVoted && !app.currentUser))
         buttonVote.enabled = YES;
     buttonVote.selected = _pic.isVoted;
-    
-    labelView.text = [_pic.pageviews stringValue];
-    
-    [buttonImage addTarget:_parent action:@selector(showPicture:) forControlEvents:UIControlEventTouchUpInside];
-    [buttonComment addTarget:_parent action:@selector(showComment:) forControlEvents:UIControlEventTouchUpInside];
-    [buttonVote addTarget:_parent action:@selector(toggleLike:) forControlEvents:UIControlEventTouchUpInside];
-    
-//    buttonComment.hidden = !_showButton;
-//    buttonVote.hidden = !_showButton;
-
-    // Do any additional setup after loading the view from its nib.
 }
 
-
+- (void)pictureUpdate:(NSNotification*)notify {
+    NSDictionary *raw = notify.object;
+    if ([_pic.pictureId longValue] == [raw[@"id"] longValue]) {
+        [_pic setAttributesFromDictionary:raw];
+        
+        [self renderPicture];
+    }
+}
 
 
 - (void)didReceiveMemoryWarning
@@ -79,7 +92,6 @@
 }
 
 - (void)viewDidUnload {
-    [self setLabelView:nil];
     [super viewDidUnload];
 }
 @end

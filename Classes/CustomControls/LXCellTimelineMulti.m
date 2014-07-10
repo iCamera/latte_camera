@@ -20,7 +20,9 @@
 #import "LXPicCommentViewController.h"
 
 
-@implementation LXCellTimelineMulti
+@implementation LXCellTimelineMulti {
+    NSMutableArray *thumbControllers;
+}
 
 @synthesize buttonUser;
 @synthesize scrollPic;
@@ -66,8 +68,10 @@
                                                              bundle:nil];
     
     NSInteger index = 0;
+    thumbControllers = [[NSMutableArray alloc] init];
     for (Picture *pic in feed.targets) {
         LXTimelineMultiItemViewController *viewPic = [storyComponent instantiateViewControllerWithIdentifier:@"TimlineMultiPhoto"];
+        [thumbControllers addObject:viewPic];
         
         viewPic.pic = pic;
         viewPic.parent = self;

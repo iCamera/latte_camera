@@ -56,15 +56,10 @@
 
 - (void)loadMore {
     [activityLoad startAnimating];
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:
-                           [app getToken], @"token",
-                           _keyword, @"keyword",
-                           [NSNumber numberWithInteger:page], @"page",
-                           nil];
     
     [[LatteAPIClient sharedClient] GET:@"picture/tag"
-                                parameters:param
+                            parameters:@{@"tag": _keyword,
+                                         @"page": [NSNumber numberWithInteger:page]}
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        
                                        NSMutableArray *data = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];

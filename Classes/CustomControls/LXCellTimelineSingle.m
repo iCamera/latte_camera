@@ -61,6 +61,8 @@
     if (self) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showDesc) name:@"TimelineShowDesc" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideDesc) name:@"TimelineHideDesc" object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pictureUpdate:) name:@"picture_update" object:nil];
     }
     return self;
 }
@@ -84,17 +86,28 @@
     _feed = feed;
     
     Picture *pic = feed.targets[0];
-
-    _contraintHeight.constant = [LXUtils heightFromWidth:304.0 width:[pic.width floatValue] height:[pic.height floatValue]];
     
-    [buttonPic setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pic.urlMedium] placeholderImage:nil];
-
+    LXSocketIO *socket = [LXSocketIO sharedClient];
+    [socket sendEvent:@"join" withData:[NSString stringWithFormat:@"picture_%ld", [pic.pictureId longValue]]];
+    
     buttonLike.tag = [pic.pictureId integerValue];
     buttonInfo.tag = [pic.pictureId integerValue];
     
+    [buttonPic setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pic.urlMedium] placeholderImage:nil];
+    _contraintHeight.constant = [LXUtils heightFromWidth:304.0 width:[pic.width floatValue] height:[pic.height floatValue]];
+    [buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:_feed.user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
+    
+    [self increaseCounter];
+
+    [self renderPicture];
+}
+
+- (void)renderPicture {
+    Picture *pic = _feed.targets[0];
+    
     [buttonComment setTitle:[pic.commentCount stringValue] forState:UIControlStateNormal];
     [buttonLike setTitle:[pic.voteCount stringValue] forState:UIControlStateNormal];
-
+    
     LXAppDelegate* app = (LXAppDelegate*)[[UIApplication sharedApplication] delegate];
     
     buttonLike.enabled = NO;
@@ -104,12 +117,10 @@
     
     buttonComment.enabled = pic.canComment;
     
-    [buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:feed.user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
-
-    labelTitle.text = feed.user.name;
-    labelUser.text = [LXUtils timeDeltaFromNow:feed.updatedAt];
+    labelTitle.text = _feed.user.name;
+    labelUser.text = [LXUtils timeDeltaFromNow:_feed.updatedAt];
     
-    [LXUtils setNationalityOfUser:feed.user forImage:imageNationality nextToLabel:labelTitle];
+    [LXUtils setNationalityOfUser:_feed.user forImage:imageNationality nextToLabel:labelTitle];
     
     labelDesc.text = pic.descriptionText;
     _viewDescBg.hidden = pic.descriptionText.length == 0;
@@ -126,7 +137,7 @@
         UIFont *font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12];
         
         CGSize textSize = [tag sizeWithAttributes:@{ NSFontAttributeName : font }];
-
+        
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(size.width, 8, textSize.width + 12, 22)];
         button.titleLabel.font = font;
         [button setTitle:tag forState:UIControlStateNormal];
@@ -142,7 +153,6 @@
     }
     _scrollTags.contentSize = size;
 
-    [self increaseCounter];
 }
 
 - (void)showDesc {
@@ -277,5 +287,15 @@
     [viewController.navigationController pushViewController:viewTag animated:YES];
 }
 
+- (void)pictureUpdate:(NSNotification*)notify {
+    Picture *picture = _feed.targets[0];
+    
+    NSDictionary *raw = notify.object;
+    if ([picture.pictureId longValue] == [raw[@"id"] longValue]) {
+        [picture setAttributesFromDictionary:raw];
+        
+        [self renderPicture];
+    }
+}
 
 @end

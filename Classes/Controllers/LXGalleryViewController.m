@@ -478,18 +478,7 @@
     
     NSDictionary *raw = notify.object;
     if ([currentPage.picture.pictureId longValue] == [raw[@"id"] longValue]) {
-        if (raw[@"pageviews"]) {
-            currentPage.picture.pageviews = raw[@"pageviews"];
-        }
-        if (raw[@"vote_count"]) {
-            currentPage.picture.voteCount = raw[@"vote_count"];
-        }
-        if (raw[@"comment_count"]) {
-            currentPage.picture.commentCount = raw[@"comment_count"];
-        }
-        if (raw[@"description"]) {
-            currentPage.picture.descriptionText = raw[@"description"];
-        }
+        [currentPage.picture setAttributesFromDictionary:raw];
         [self renderPicture];
     }
 }
