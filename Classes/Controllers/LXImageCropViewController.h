@@ -15,5 +15,6 @@
 
 - (IBAction)panSize:(UIPanGestureRecognizer *)sender;
 - (IBAction)setCropRatio:(UIButton*)sender;
+- (IBAction)noCrop:(id)sender;
 
 @end

@@ -27,7 +27,6 @@
 #import "LXCellGrid.h"
 #import "LXCellDataField.h"
 #import "NSDate+TKCategory.h"
-#import "UIImage+ImageEffects.h"
 #import "LXUserProfileViewController.h"
 #import "MZFormSheetSegue.h"
 #import "LXUserListViewController.h"
@@ -77,7 +76,7 @@ typedef enum {
 }
 
 - (void)awakeFromNib {
-    _imageCover.image = [_imageCover.image applyDarkEffect];
+    
 }
 
 - (void)setUser:(User *)user {

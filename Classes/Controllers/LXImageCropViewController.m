@@ -98,4 +98,8 @@
     }
 }
 
+- (IBAction)noCrop:(id)sender {
+    self.doneCallback(self.sourceImage, NO);
+}
+
 @end

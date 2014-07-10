@@ -1113,7 +1113,6 @@
 		88A5F41416E11B8500118996 /* icon_mail_l_off.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88A5F41016E11B8500118996 /* icon_mail_l_off.jpg */; };
 		88A5F41516E11B8500118996 /* icon_mail_l.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88A5F41116E11B8500118996 /* icon_mail_l.jpg */; };
 		88A5F41816E11D8B00118996 /* LXSettingRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A5F41716E11D8B00118996 /* LXSettingRootViewController.m */; };
-		88A9576916BFC2A2003649E8 /* LXStillCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A9576816BFC2A2003649E8 /* LXStillCamera.m */; };
 		88AA5E5016DF4D950041164F /* menu5_center_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 88AA5E4416DF4D950041164F /* menu5_center_on.png */; };
 		88AA5E5116DF4D950041164F /* menu5_center_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88AA5E4516DF4D950041164F /* menu5_center_on@2x.png */; };
 		88AA5E5216DF4D950041164F /* menu5_center.png in Resources */ = {isa = PBXBuildFile; fileRef = 88AA5E4616DF4D950041164F /* menu5_center.png */; };
@@ -1544,7 +1543,6 @@
 		88F0398F17A2879B00458900 /* menu4b_4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F0397717A2879B00458900 /* menu4b_4@2x.png */; };
 		88F550B1194AD118007217CF /* LXImageCropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88F550B0194AD117007217CF /* LXImageCropViewController.m */; };
 		88F550B5195033A5007217CF /* default-cover.gif in Resources */ = {isa = PBXBuildFile; fileRef = 88F550B4195033A5007217CF /* default-cover.gif */; };
-		88F550B81950352A007217CF /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 88F550B71950352A007217CF /* UIImage+ImageEffects.m */; };
 		88F550BB19513315007217CF /* LXChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88F550BA19513315007217CF /* LXChatViewController.m */; };
 		88F5986C173908DB000BD186 /* crop_lb.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F59862173908DA000BD186 /* crop_lb.png */; };
 		88F5986D173908DB000BD186 /* crop_lb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F59863173908DA000BD186 /* crop_lb@2x.png */; };
@@ -3160,8 +3158,6 @@
 		88A5F41116E11B8500118996 /* icon_mail_l.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = icon_mail_l.jpg; sourceTree = "<group>"; };
 		88A5F41616E11D8B00118996 /* LXSettingRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXSettingRootViewController.h; sourceTree = "<group>"; };
 		88A5F41716E11D8B00118996 /* LXSettingRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXSettingRootViewController.m; sourceTree = "<group>"; };
-		88A9576716BFC2A2003649E8 /* LXStillCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXStillCamera.h; sourceTree = "<group>"; };
-		88A9576816BFC2A2003649E8 /* LXStillCamera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXStillCamera.m; sourceTree = "<group>"; };
 		88AA5E4416DF4D950041164F /* menu5_center_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu5_center_on.png; sourceTree = "<group>"; };
 		88AA5E4516DF4D950041164F /* menu5_center_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu5_center_on@2x.png"; sourceTree = "<group>"; };
 		88AA5E4616DF4D950041164F /* menu5_center.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu5_center.png; sourceTree = "<group>"; };
@@ -3611,8 +3607,6 @@
 		88F550AF194AD117007217CF /* LXImageCropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXImageCropViewController.h; sourceTree = "<group>"; };
 		88F550B0194AD117007217CF /* LXImageCropViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXImageCropViewController.m; sourceTree = "<group>"; };
 		88F550B4195033A5007217CF /* default-cover.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "default-cover.gif"; sourceTree = "<group>"; };
-		88F550B61950352A007217CF /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
-		88F550B71950352A007217CF /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		88F550B919513315007217CF /* LXChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXChatViewController.h; sourceTree = "<group>"; };
 		88F550BA19513315007217CF /* LXChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXChatViewController.m; sourceTree = "<group>"; };
 		88F59862173908DA000BD186 /* crop_lb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crop_lb.png; sourceTree = "<group>"; };
@@ -5031,8 +5025,6 @@
 		8890728F16770EBB0013DF7A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				88F550B61950352A007217CF /* UIImage+ImageEffects.h */,
-				88F550B71950352A007217CF /* UIImage+ImageEffects.m */,
 				8890729816770EBB0013DF7A /* LatteAPIClient.h */,
 				8890729916770EBB0013DF7A /* LatteAPIClient.m */,
 				887A66BE194561BD000E07F2 /* LatteAPIv2Client.h */,
@@ -5051,8 +5043,6 @@
 				8880F00B170D69C700478E42 /* LXImageLens.m */,
 				8884E45716A9012E00DCBAC7 /* LXShare.h */,
 				8884E45816A9012E00DCBAC7 /* LXShare.m */,
-				88A9576716BFC2A2003649E8 /* LXStillCamera.h */,
-				88A9576816BFC2A2003649E8 /* LXStillCamera.m */,
 				88B3A3A916F39951002A6BDA /* LXUploadObject.h */,
 				88B3A3AA16F39951002A6BDA /* LXUploadObject.m */,
 				889072BA16770EBB0013DF7A /* LXUtils.h */,
@@ -8360,7 +8350,6 @@
 				8884E45916A9012E00DCBAC7 /* LXShare.m in Sources */,
 				884C54D516B22EF500DA318E /* LXHelpBokehViewController.m in Sources */,
 				885C061D16BB69B0000820E7 /* UIDeviceHardware.m in Sources */,
-				88A9576916BFC2A2003649E8 /* LXStillCamera.m in Sources */,
 				8883C07D16DCBCE1003510A1 /* LXGalleryViewController.m in Sources */,
 				88A5F41816E11D8B00118996 /* LXSettingRootViewController.m in Sources */,
 				88F0075016E4A29B0071369C /* LXSettingNotifyViewController.m in Sources */,
@@ -8409,7 +8398,6 @@
 				C968C214195561160047982D /* LXTextViewVC.m in Sources */,
 				887379BB17586FF400C1549B /* LXCellFontPreview.m in Sources */,
 				884D215A175C9BF0002FF853 /* ioapi.c in Sources */,
-				88F550B81950352A007217CF /* UIImage+ImageEffects.m in Sources */,
 				8CFFF63D19407C8500D09F5B /* LXTableSettingItemViewController.m in Sources */,
 				882055071938570E00D741BB /* LXCollectionCellUser.m in Sources */,
 				884D215B175C9BF0002FF853 /* mztools.c in Sources */,

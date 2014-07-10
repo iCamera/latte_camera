@@ -16,7 +16,6 @@
 #import "UIImage+Resize.h"
 #import "UIImage+fixOrientation.h"
 #import "MBProgressHUD.h"
-#import "LXStillCamera.h"
 #import "LXImageTextViewController.h"
 
 typedef enum {
