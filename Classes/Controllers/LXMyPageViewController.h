@@ -16,10 +16,13 @@
 @interface LXMyPageViewController : UITableViewController <UIActionSheetDelegate, LXImagePickerDelegate, LXGalleryViewControllerDataSource>
 
 @property (strong, nonatomic) IBOutlet UILabel *labelMessage;
+@property (strong, nonatomic) IBOutlet UIButton *buttonTag;
+@property (strong, nonatomic) IBOutlet UIButton *buttonUser;
 
 - (IBAction)showMenu;
 
-- (IBAction)switchTimeline:(UISegmentedControl*)sender;
+- (IBAction)switchTab:(UIButton*)sender;
+- (IBAction)switchTimeline:(UIButton*)sender;
 - (IBAction)refresh:(id)sender;
 - (void)reloadView;
 

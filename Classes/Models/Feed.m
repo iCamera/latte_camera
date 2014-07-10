@@ -20,6 +20,20 @@
 
 }
 
++ (NSMutableArray *)mutableArrayFromPictures:(NSArray *)pictures {
+    NSMutableArray *ret = [[NSMutableArray alloc] init];
+    for (Picture *pic in pictures) {
+        Feed *feed = [[Feed alloc] init];
+        feed.count = [NSNumber numberWithInteger:1];
+        feed.model = [NSNumber numberWithInteger:1];
+        feed.targets = [NSMutableArray arrayWithObject:pic];
+        feed.updatedAt = pic.createdAt;
+        feed.user = pic.user;
+        [ret addObject:feed];
+    }
+    return ret;
+}
+
 - (void)setAttributesFromDictionary:(NSDictionary *)aDictionary {
 
     if (![aDictionary isKindOfClass:[NSDictionary class]]) {

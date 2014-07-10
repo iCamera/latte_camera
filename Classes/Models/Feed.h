@@ -22,6 +22,7 @@
 @property (nonatomic, copy) NSDate *updatedAt;
 
 + (Feed *)instanceFromDictionary:(NSDictionary *)aDictionary;
++ (NSMutableArray *)mutableArrayFromPictures:(NSArray *)pictures;
 - (void)setAttributesFromDictionary:(NSDictionary *)aDictionary;
 
 @end

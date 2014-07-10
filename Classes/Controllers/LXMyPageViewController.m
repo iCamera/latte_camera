@@ -34,6 +34,11 @@ typedef enum {
     kTimelineFollowing = 13
 } LatteTimeline;
 
+typedef enum {
+    kHomeUser = 1,
+    kHomeTag = 2
+} LatteHomeTab;
+
 #define kModelPicture 1
 
 @interface LXMyPageViewController ()
@@ -44,10 +49,11 @@ typedef enum {
     BOOL reloading;
     BOOL endedTimeline;
     
-    int pagePic;
+    NSInteger pagePic;
 
     NSMutableArray *feeds;
     LatteTimeline timelineKind;
+    LatteHomeTab homeTab;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -75,6 +81,7 @@ typedef enum {
     endedTimeline = false;
     
     timelineKind = kTimelineAll;
+    homeTab = kHomeUser;
     
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
     
@@ -119,11 +126,20 @@ typedef enum {
 
 
 - (void)reloadView {
-    [self loadMore:YES];
+    if (homeTab == kHomeUser) {
+        [self loadMore:YES];
+    } else {
+        [self loadMoreTag:YES];
+    }
+    
 }
 
 - (IBAction)refresh:(id)sender {
-    [self loadMore:YES];
+    if (homeTab == kHomeUser) {
+        [self loadMore:YES];
+    } else {
+        [self loadMoreTag:YES];
+    }
 }
 
 - (void)loadMore:(BOOL)reset {
@@ -139,33 +155,62 @@ typedef enum {
     }
     
     
-    [[LatteAPIClient sharedClient] GET: @"user/me/timeline"
-                                parameters: params
-                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       
-                                       NSMutableArray *newFeed = [Feed mutableArrayFromDictionary:JSON
-                                                                                          withKey:@"feeds"];
-                                       
-                                       endedTimeline = newFeed.count == 0;
-                                       
-                                       if (reset) {
-                                           feeds = newFeed;
-                                           [MBProgressHUD hideHUDForView:self.view animated:YES];
-                                       } else {
-                                           [feeds addObjectsFromArray:newFeed];
-                                       }
-                                       
-                                       [self.tableView reloadData];
-                                       [self.refreshControl endRefreshing];
-                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       if (reset) {
-                                           [MBProgressHUD hideHUDForView:self.view animated:YES];
-                                       }
-                                       
-                                       DLog(@"Something went wrong (Timeline)");
-                                       
-                                       [self.refreshControl endRefreshing];
-                                   }];
+    [[LatteAPIClient sharedClient] GET: @"user/me/timeline" parameters: params success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+        
+        NSMutableArray *newFeed = [Feed mutableArrayFromDictionary:JSON
+                                                           withKey:@"feeds"];
+        
+        endedTimeline = newFeed.count == 0;
+        
+        if (reset) {
+            feeds = newFeed;
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        } else {
+            [feeds addObjectsFromArray:newFeed];
+        }
+        
+        [self.tableView reloadData];
+        [self.refreshControl endRefreshing];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (reset) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        }
+        
+        [self.refreshControl endRefreshing];
+    }];
+}
+
+- (void)loadMoreTag:(BOOL)reset {
+    if (reset) {
+        endedTimeline = false;
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        pagePic = 1;
+    }
+    
+    
+    [[LatteAPIv2Client sharedClient] GET: @"picture" parameters: @{@"follow_tag": @"True", @"page": [NSNumber numberWithInteger:pagePic]} success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+        
+        pagePic += 1;
+
+        NSMutableArray *newFeed = [Feed mutableArrayFromPictures:[Picture mutableArrayFromDictionary:JSON withKey:@"pictures"]];
+        
+        endedTimeline = newFeed.count == 0;
+        
+        if (reset) {
+            feeds = newFeed;
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        } else {
+            [feeds addObjectsFromArray:newFeed];
+        }
+        
+        [self.tableView reloadData];
+        [self.refreshControl endRefreshing];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (reset) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        }
+        [self.refreshControl endRefreshing];
+    }];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -225,7 +270,12 @@ typedef enum {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == feeds.count) {
-        [self loadMore:NO];
+        if (homeTab == kHomeUser) {
+            [self loadMore:NO];
+        } else {
+            [self loadMoreTag:NO];
+        }
+        
         return [tableView dequeueReusableCellWithIdentifier:@"Load" forIndexPath:indexPath];
     } else {
         Feed *feed = [feeds objectAtIndex:indexPath.row];
@@ -255,8 +305,29 @@ typedef enum {
     [self presentViewController:[storySetting instantiateInitialViewController] animated:YES completion:nil];
 }
 
-- (IBAction)switchTimeline:(UISegmentedControl*)sender {
-    switch (sender.selectedSegmentIndex) {
+- (IBAction)switchTab:(UIButton*)sender {
+    switch (sender.tag) {
+        case 0:
+            homeTab = kHomeUser;
+            [self loadMore:YES];
+            _buttonTag.enabled = YES;
+            _buttonUser.enabled = NO;
+            break;
+        case 1:
+            homeTab = kHomeTag;
+            _buttonTag.enabled = NO;
+            _buttonUser.enabled = YES;
+            [self loadMoreTag:YES];
+            break;
+        default:
+            break;
+            
+    }
+}
+
+
+- (IBAction)switchTimeline:(UIButton*)sender {
+    switch (sender.tag) {
         case 0:
             timelineKind = kTimelineAll;
             break;
@@ -316,8 +387,14 @@ typedef enum {
                              feed.user, @"user",
                              nil];
         // Loadmore
-        if (current > flatPictures.count - 6)
-            [self loadMore:NO];
+        if (current > flatPictures.count - 6) {
+            if (homeTab == kHomeUser) {
+                [self loadMore:NO];
+            } else {
+                [self loadMoreTag:NO];
+            }
+            
+        }
         return ret;
     }
     return nil;
