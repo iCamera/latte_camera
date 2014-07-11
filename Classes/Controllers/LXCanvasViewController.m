@@ -641,8 +641,15 @@
         dictForTIFF = [[NSMutableDictionary alloc] init];
     }
     NSString *appVersion = [NSString stringWithFormat:@"Latte camera %@", [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"]];
+    
     [dictForTIFF setObject:appVersion forKey:(NSString *)kCGImagePropertyTIFFSoftware];
     [imageMeta setObject:dictForTIFF forKey:(NSString *)kCGImagePropertyTIFFDictionary];
+    
+    // After cropping, image orientation is UP
+    if (imageOriginal.imageOrientation == UIImageOrientationUp) {
+        [dictForTIFF removeObjectForKey:(NSString *)kCGImagePropertyTIFFOrientation];
+        [imageMeta removeObjectForKey:(NSString *)kCGImagePropertyOrientation];
+    }
     
     NSData *jpeg;
     // skip processing if prevew pic same size with fullsize
