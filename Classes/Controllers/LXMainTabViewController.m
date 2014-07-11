@@ -322,10 +322,11 @@
     if (self.selectedIndex != 3) {
         [[LatteAPIClient sharedClient] GET:@"user/me/unread_notify" parameters: nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
             NSInteger count = [JSON[@"notify_count"] integerValue];
+            UIViewController *viewNotify = self.viewControllers[3];
             if (count > 0) {
-                self.tabBarItem.badgeValue = [JSON[@"notify_count"] stringValue];
+                viewNotify.tabBarItem.badgeValue = [JSON[@"notify_count"] stringValue];
             } else {
-                self.tabBarItem.badgeValue = nil;
+                viewNotify.tabBarItem.badgeValue = nil;
             }
             [UIApplication sharedApplication].applicationIconBadgeNumber = count;
             

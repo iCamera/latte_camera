@@ -58,6 +58,8 @@
             _buttonFollow.selected = [JSON[@"is_following"] boolValue];
         } failure:nil];
     }
+    
+    self.navigationItem.title = _tag;
 }
 
 - (void)didReceiveMemoryWarning
