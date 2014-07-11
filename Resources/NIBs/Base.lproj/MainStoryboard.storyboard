@@ -405,14 +405,14 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Labelg sdg dgsdg sdgd fgdf dfhdfh dfh dfh sdgsgdsg" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="240" translatesAutoresizingMaskIntoConstraints="NO" id="xAM-Jx-dAd">
-                                            <rect key="frame" x="68" y="3" width="240" height="29"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="1 line 2 line 3 line" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="244" translatesAutoresizingMaskIntoConstraints="NO" id="xAM-Jx-dAd">
+                                            <rect key="frame" x="68" y="3" width="244" height="43"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Today" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4pz-Wh-ZNM">
-                                            <rect key="frame" x="282" y="42" width="26" height="12"/>
+                                            <rect key="frame" x="282" y="44" width="26" height="12"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -435,11 +435,13 @@
                                     <constraints>
                                         <constraint firstItem="dWY-Di-L0A" firstAttribute="leading" secondItem="YXc-5Z-snZ" secondAttribute="leading" id="Z6E-Wg-hHf"/>
                                         <constraint firstAttribute="trailing" secondItem="4pz-Wh-ZNM" secondAttribute="trailing" constant="12" id="cGM-HF-hcx"/>
-                                        <constraint firstAttribute="bottom" secondItem="4pz-Wh-ZNM" secondAttribute="bottom" constant="5" id="eSQ-Xv-Amp"/>
-                                        <constraint firstItem="xAM-Jx-dAd" firstAttribute="leading" secondItem="dWY-Di-L0A" secondAttribute="trailing" constant="8" id="fi6-sw-TwP"/>
+                                        <constraint firstItem="xAM-Jx-dAd" firstAttribute="leading" secondItem="dWY-Di-L0A" secondAttribute="trailing" constant="8" id="cUg-PV-ebh"/>
+                                        <constraint firstAttribute="bottom" secondItem="4pz-Wh-ZNM" secondAttribute="bottom" constant="3" id="eSQ-Xv-Amp"/>
+                                        <constraint firstAttribute="bottom" secondItem="xAM-Jx-dAd" secondAttribute="bottom" constant="13" id="hgF-a0-OxS"/>
                                         <constraint firstItem="dWY-Di-L0A" firstAttribute="top" secondItem="YXc-5Z-snZ" secondAttribute="top" id="j23-OU-3p7"/>
                                         <constraint firstItem="xAM-Jx-dAd" firstAttribute="top" secondItem="YXc-5Z-snZ" secondAttribute="top" constant="3" id="kvL-Gn-r0W"/>
-                                        <constraint firstAttribute="trailing" secondItem="xAM-Jx-dAd" secondAttribute="trailing" constant="12" id="nyb-zm-9f2"/>
+                                        <constraint firstAttribute="trailing" secondItem="xAM-Jx-dAd" secondAttribute="trailing" constant="8" id="nyb-zm-9f2"/>
+                                        <constraint firstItem="xAM-Jx-dAd" firstAttribute="top" relation="greaterThanOrEqual" secondItem="YXc-5Z-snZ" secondAttribute="top" constant="3" id="vdc-lB-csa"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <inset key="separatorInset" minX="45" minY="0.0" maxX="0.0" maxY="0.0"/>

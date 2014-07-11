@@ -216,13 +216,10 @@
             
             if (comment.pictureId != nil) {
                 NSString *urlDetail = [NSString stringWithFormat:@"picture/%ld", [comment.pictureId longValue]];
-                MBProgressHUD *hud = [[MBProgressHUD alloc]initWithView:self.view];
-
-                hud.mode = MBProgressHUDModeIndeterminate;
-                [hud show:YES];
+                [MBProgressHUD showHUDAddedTo:self.view animated:YES];
                 
                 [[LatteAPIClient sharedClient] GET:urlDetail parameters: nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                    [hud hide:YES];
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
                     
                     UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                                            bundle:nil];
@@ -232,16 +229,9 @@
                     viewGallery.user = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
                     viewGallery.picture = [Picture instanceFromDictionary:[JSON objectForKey:@"picture"]];
                     viewGallery.delegate = self;
+                    [self presentViewController:navGalerry animated:YES completion:nil];
                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                    [hud hide:YES];
-                    DLog(@"Something went wrong Notify Gallery");
-                    
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
-                                                                    message:error.localizedDescription
-                                                                   delegate:nil
-                                                          cancelButtonTitle:NSLocalizedString(@"close", "Close")
-                                                          otherButtonTitles:nil];
-                    [alert show];
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
                 }];
             }
             
