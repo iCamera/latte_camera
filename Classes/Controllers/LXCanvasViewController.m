@@ -59,8 +59,6 @@
     CGSize imageSize;
     UIImage *imagePreview;
     UIImage *imageThumbnail;
-    UIImage *imageOriginalPreview;
-    UIImageOrientation imageOrientation;
     
     GPUImagePicture *previewFilter;
 }
@@ -298,11 +296,10 @@
     [self addBlendButton:scrollFilm target:@selector(toggleFilm:)];
     
     // Set Image
-    imageOrientation = imageOriginal.imageOrientation;
     CGFloat heightThumb = [LXUtils heightFromWidth:70 width:imageOriginal.size.width height:imageOriginal.size.height];
     CGFloat heightPreview = [LXUtils heightFromWidth:320 width:imageOriginal.size.width height:imageOriginal.size.height];
-    imageThumbnail = [LXUtils imageWithImage:imageOriginal scaledToSize:CGSizeMake(70, heightThumb)];
-    imagePreview = [LXUtils imageWithImage:imageOriginal scaledToSize:CGSizeMake(320, heightPreview)];
+    imageThumbnail = [LXUtils imageWithImage:imageOriginal scaledToSize:CGSizeMake(140, heightThumb*2)];
+    imagePreview = [LXUtils imageWithImage:imageOriginal scaledToSize:CGSizeMake(640, heightPreview*2)];
     imageSize = imageOriginal.size;
     scrollLayer.contentSize = CGSizeMake(245, 220);
     
@@ -515,8 +512,8 @@
                 imageFinalData = [self getFinalImage];
                 [self saveImageToLib:imageFinalData];
             } else {
-                NSData *jpeg = UIImageJPEGRepresentation(imageOriginal, 0.9);
-                imageFinalThumb = imageOriginalPreview;
+                NSData *jpeg = UIImageJPEGRepresentation(imageOriginal, 1.0);
+                imageFinalThumb = imagePreview;
                 imageFinalData = [self mergeMetaIntoData:jpeg];
                 [HUD hide:YES];
             }
@@ -637,9 +634,7 @@
 - (NSData*)getFinalImage {
 //    NSDictionary *state = [self getState];
     // Prepare meta data
-    if (imageMeta == nil) {
-        imageMeta = [[NSMutableDictionary alloc] init];
-    }
+    imageMeta = [[NSMutableDictionary alloc] initWithDictionary:_info];
     // Add App Info
     NSMutableDictionary *dictForTIFF = [imageMeta objectForKey:(NSString *)kCGImagePropertyTIFFDictionary];
     if (dictForTIFF == nil) {
@@ -648,9 +643,6 @@
     NSString *appVersion = [NSString stringWithFormat:@"Latte camera %@", [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"]];
     [dictForTIFF setObject:appVersion forKey:(NSString *)kCGImagePropertyTIFFSoftware];
     [imageMeta setObject:dictForTIFF forKey:(NSString *)kCGImagePropertyTIFFDictionary];
-    
-    [dictForTIFF removeObjectForKey:(NSString *)kCGImagePropertyTIFFOrientation];
-    [imageMeta removeObjectForKey:(NSString *)kCGImagePropertyOrientation];
     
     NSData *jpeg;
     // skip processing if prevew pic same size with fullsize
@@ -1021,10 +1013,6 @@
 }
 
 - (IBAction)touchReset:(id)sender {
-    imagePreview = imageOriginalPreview;
-    imageSize = imageOriginalPreview.size;
-    imageOrientation = imageOriginal.imageOrientation;
-    
     [self switchEditImage];
     buttonReset.enabled = false;
 }

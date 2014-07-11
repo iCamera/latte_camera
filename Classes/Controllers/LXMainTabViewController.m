@@ -267,8 +267,22 @@
             UIStoryboard *storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
             LXCanvasViewController *controllerCanvas = [storyCamera instantiateViewControllerWithIdentifier:@"Canvas"];
             controllerCanvas.imageOriginal = editedImage;
-            controllerCanvas.info = info;
-            [picker pushViewController:controllerCanvas animated:YES];
+            if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+                controllerCanvas.info = [info objectForKey:UIImagePickerControllerMediaMetadata];
+                [picker pushViewController:controllerCanvas animated:YES];
+            } else {
+
+                NSURL *assetURL = [info objectForKey:UIImagePickerControllerReferenceURL];
+                
+                ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+                [library assetForURL:assetURL
+                         resultBlock:^(ALAsset *asset)  {
+                             controllerCanvas.info = asset.defaultRepresentation.metadata;
+                             [picker pushViewController:controllerCanvas animated:YES];
+                         }
+                        failureBlock:^(NSError *error) {
+                        }];
+            }
         } else {
             [picker popViewControllerAnimated:YES];
             [picker setNavigationBarHidden:NO animated:YES];
