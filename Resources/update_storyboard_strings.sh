@@ -31,6 +31,7 @@ do
         # Get New Base strings file full path and strings file name
         newBaseStringsPath=$(echo "$storyboardPath" | sed "s/$storyboardExt/$newStringsExt/")
         stringsFile=$(basename "$baseStringsPath")
+        echo "$storyboardPath"
         ibtool --export-strings-file $newBaseStringsPath $storyboardPath
         iconv -f UTF-16 -t UTF-8 $newBaseStringsPath > $baseStringsPath
         rm $newBaseStringsPath
