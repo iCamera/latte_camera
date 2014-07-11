@@ -33,6 +33,7 @@
     UIPageViewController *pageController;
     UITapGestureRecognizer *tapPage;
     UITapGestureRecognizer *tapDouble;
+    UILongPressGestureRecognizer *gestureLongPress;
     NSMutableArray *currentComments;
     LXShare *lxShare;
     UIScrollView *viewDesc;
@@ -94,10 +95,13 @@
     tapDouble = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapZoom:)];
     tapDouble.numberOfTapsRequired = 2;
     
+    gestureLongPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(holdShare:)];
+    
     [tapPage requireGestureRecognizerToFail:tapDouble];
     
     [pageController.view addGestureRecognizer:tapPage];
     [pageController.view addGestureRecognizer:tapDouble];
+    [pageController.view addGestureRecognizer:gestureLongPress];
     
     LXZoomPictureViewController *init = [[LXZoomPictureViewController alloc] init];
 
@@ -456,6 +460,16 @@
 }
 
 - (IBAction)touchShare:(id)sender {
+    [self showShare];
+}
+
+- (IBAction)holdShare:(UILongPressGestureRecognizer*)sender {
+    if (sender.state == UIGestureRecognizerStateBegan){
+        [self showShare];
+    }
+}
+
+- (void)showShare {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                              delegate:self
                                                     cancelButtonTitle:NSLocalizedString(@"Cancel", @"")
