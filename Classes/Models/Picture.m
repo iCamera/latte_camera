@@ -65,7 +65,11 @@
             comments = myMembers;
         }
     } else if ([key isEqualToString:@"created_at"]) {
-        self.createdAt = [LXUtils dateFromJSON:value];
+        NSDate *createAt = [LXUtils dateFromJSON:value];
+        if (!createAt) {
+            createAt = [LXUtils dateFromString:value];
+        }
+        self.createdAt = createAt;
     } else if ([key isEqualToString:@"taken_at"]) {
         self.takenAt = [LXUtils dateFromJSON:value timezone:NO];
     } else if ([key isEqualToString:@"tags"]) {
@@ -139,7 +143,5 @@
     }
 
 }
-
-
 
 @end

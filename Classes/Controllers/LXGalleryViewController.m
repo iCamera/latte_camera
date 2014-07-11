@@ -36,6 +36,7 @@
     NSMutableArray *currentComments;
     LXShare *lxShare;
     UIScrollView *viewDesc;
+    AFHTTPRequestOperation *currentRequest;
 }
 
 @synthesize buttonComment;
@@ -118,6 +119,8 @@
     [labelDesc setAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0]}];
     [labelDesc setAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0]} hotWord:STTweetHandle];
     [labelDesc setAttributes:@{NSForegroundColorAttributeName: [UIColor cyanColor], NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0]} hotWord:STTweetHashtag];
+    labelDesc.shadowColor = [UIColor blackColor];
+    labelDesc.shadowOffset = CGSizeMake(0, 1);
     
     __weak LXGalleryViewController *weakSelf = self;
 
@@ -153,7 +156,7 @@
         }
     }];
     viewDesc = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 480, 320, 0)];
-    viewDesc.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+    viewDesc.backgroundColor = [UIColor colorWithWhite:0 alpha:0.15];
     viewDesc.indicatorStyle = UIScrollViewIndicatorStyleWhite;
 
     [self.view addSubview:viewDesc];
@@ -162,10 +165,14 @@
     [self joinRoom];
     [self renderPicture];
     [self increaseCounter];
+    [self reloadPicture];
     
-    buttonUser.layer.cornerRadius = 15;
+    buttonUser.layer.cornerRadius = 17.5;
     buttonUser.layer.shouldRasterize = YES;
     buttonUser.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+    
+    buttonEdit.layer.cornerRadius = 17.5;
+    _buttonClose.layer.cornerRadius = 17.5;
 
     
     lxShare = [[LXShare alloc] init];
@@ -179,6 +186,17 @@
     [app.tracker send:[[GAIDictionaryBuilder createAppView] build]];
 }
 
+- (void)reloadPicture {
+    LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
+    NSString *url = [NSString stringWithFormat:@"picture/%ld", [currentPage.picture.pictureId longValue]];
+    if (currentRequest && currentRequest.isExecuting) {
+        [currentRequest cancel];
+    }
+    currentRequest = [[LatteAPIClient sharedClient] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+        [currentPage.picture setAttributesFromDictionary:JSON[@"picture"]];
+        [self renderPicture];
+    } failure:nil];
+}
 
 - (void)tapZoom:(UITapGestureRecognizer*)sender {
     LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
@@ -303,6 +321,7 @@
         [self joinRoom];
         [self renderPicture];
         [self increaseCounter];
+        [self reloadPicture];
     }
     
     [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{

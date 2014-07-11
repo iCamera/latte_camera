@@ -36,7 +36,7 @@
 }
 
 - (void)awakeFromNib {
-    buttonUser.layer.cornerRadius = 15;
+    buttonUser.layer.cornerRadius = 17.5;
     buttonUser.layer.rasterizationScale = [[UIScreen mainScreen] scale];
     buttonUser.layer.shouldRasterize = YES;
 }

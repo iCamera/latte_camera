@@ -346,7 +346,7 @@
     Comment *comment = _comments[indexPath.row];
     NSString *strComment = comment.descriptionText;
 
-    CGRect labelRect = [strComment boundingRectWithSize:CGSizeMake(266.0f, MAXFLOAT)
+    CGRect labelRect = [strComment boundingRectWithSize:CGSizeMake(261.0f, MAXFLOAT)
                                                 options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
                                              attributes:@{ NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:13] }
                                                 context:nil];

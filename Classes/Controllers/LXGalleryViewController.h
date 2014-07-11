@@ -32,6 +32,7 @@
 @property (strong, nonatomic) STTweetLabel *labelDesc;
 @property (strong, nonatomic) IBOutlet UILabel *labelView;
 @property (strong, nonatomic) IBOutlet UIImageView *imageNationality;
+@property (strong, nonatomic) IBOutlet UIButton *buttonClose;
 
 @property (strong, nonatomic) Picture* picture;
 @property (strong, nonatomic) User* user;
