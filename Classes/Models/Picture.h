@@ -72,6 +72,5 @@
 
 + (Picture *)instanceFromDictionary:(NSDictionary *)aDictionary;
 - (void)setAttributesFromDictionary:(NSDictionary *)aDictionary;
-- (void)setStats:(NSDictionary *)aDictionary;
 
 @end
