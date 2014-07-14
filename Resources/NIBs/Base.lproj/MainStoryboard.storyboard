@@ -744,7 +744,7 @@
         <!--Navigation Controller - Notification-->
         <scene sceneID="NPe-9h-C9N">
             <objects>
-                <navigationController definesPresentationContext="YES" id="VwC-Ow-z6p" sceneMemberID="viewController">
+                <navigationController definesPresentationContext="YES" id="VwC-Ow-z6p" customClass="LXNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" enabled="NO" title="Notification" image="icon_notice.png" id="D39-Yx-4Gc"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="JEo-cs-8hT">
                         <autoresizingMask key="autoresizingMask"/>

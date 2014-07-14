@@ -8,7 +8,7 @@
 
 #import "LXTimelineMultiItemViewController.h"
 #import "LXAppDelegate.h"
-#import "UIButton+AFNetworking.h"
+#import "UIImageView+AFNetworking.h"
 #import "LXSocketIO.h"
 
 @interface LXTimelineMultiItemViewController ()
@@ -48,6 +48,7 @@
     buttonComment.tag = _index;
     buttonVote.tag = _index;
     
+    
     [buttonImage addTarget:_parent action:@selector(showPicture:) forControlEvents:UIControlEventTouchUpInside];
     [buttonComment addTarget:_parent action:@selector(showComment:) forControlEvents:UIControlEventTouchUpInside];
     [buttonVote addTarget:_parent action:@selector(toggleLike:) forControlEvents:UIControlEventTouchUpInside];
@@ -55,7 +56,7 @@
     LXSocketIO *socket = [LXSocketIO sharedClient];
     [socket sendEvent:@"join" withData:[NSString stringWithFormat:@"picture_%ld", [_pic.pictureId longValue]]];
     
-    [buttonImage setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:_pic.urlMedium]];
+    [_imagePicture setImageWithURL:[NSURL URLWithString:_pic.urlMedium]];
     [self renderPicture];
 //    buttonComment.hidden = !_showButton;
 //    buttonVote.hidden = !_showButton;

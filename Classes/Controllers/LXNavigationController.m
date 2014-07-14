@@ -32,7 +32,7 @@
     self.delegate = self;
 	// Do any additional setup after loading the view.
     [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)]];
-    
+    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognized:)]];
 }
 
 - (void)panGestureRecognized:(UIPanGestureRecognizer *)sender
@@ -46,6 +46,22 @@
     //
     [self.frostedViewController panGestureRecognized:sender];
 }
+
+- (void)tapGestureRecognized:(UIPanGestureRecognizer *)sender
+{
+    if ([self.topViewController respondsToSelector:@selector(tableView)]) {
+        UITableViewController *view = (UITableViewController*)self.topViewController;
+        // No animation to prevent too much pageview counter request
+        [view.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+    }
+    
+    if ([self.topViewController respondsToSelector:@selector(collectionView)]) {
+        UICollectionViewController *view = (UICollectionViewController*)self.topViewController;
+        // No animation to prevent too much pageview counter request
+        [view.collectionView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+    }
+}
+
 
 - (void)popViewController {
     [self popViewControllerAnimated:YES];

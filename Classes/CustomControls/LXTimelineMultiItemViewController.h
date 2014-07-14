@@ -12,6 +12,7 @@
 
 @interface LXTimelineMultiItemViewController : UIViewController {
 }
+@property (strong, nonatomic) IBOutlet UIImageView *imagePicture;
 @property (strong, nonatomic) IBOutlet UIButton *buttonComment;
 @property (strong, nonatomic) IBOutlet UIButton *buttonImage;
 @property (strong, nonatomic) IBOutlet UIButton *buttonVote;
