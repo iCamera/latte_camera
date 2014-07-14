@@ -138,7 +138,7 @@
         [navCurrent pushViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"LikedPhotos"] animated:YES];
     } else if ([tableView cellForRowAtIndexPath:indexPath] == menuLogin) {
         UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"Authentication" bundle:nil];
-        [self presentViewController:[storyMain instantiateInitialViewController] animated:YES completion:nil];
+        [self presentViewController:[storyMain instantiateViewControllerWithIdentifier:@"LoginModal"] animated:YES completion:nil];
     }
 }
 

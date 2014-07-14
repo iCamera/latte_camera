@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="EFt-fq-8DL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="mAe-Lg-ucz">
     <dependencies>
         <deployment version="1536" defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
@@ -88,7 +88,7 @@
         <!--Login View Controller - Login-->
         <scene sceneID="mca-47-kU6">
             <objects>
-                <viewController storyboardIdentifier="Login" title="Login" id="Qbv-S2-pdO" customClass="LXLoginViewController" sceneMemberID="viewController">
+                <viewController title="Login" id="Qbv-S2-pdO" customClass="LXLoginViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mbT-9B-9wl">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -378,7 +378,25 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9go-6n-TLU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-590" y="-652"/>
+            <point key="canvasLocation" x="-978" y="-1216"/>
+        </scene>
+        <!--Navigation Controller - Login-->
+        <scene sceneID="eVo-Xs-YHH">
+            <objects>
+                <navigationController storyboardIdentifier="Login" definesPresentationContext="YES" id="mAe-Lg-ucz" customClass="LXNavigationController" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Login" image="icon_login.png" id="dlf-VV-oNq"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="0xq-8F-8VS">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.2078431547" green="0.18823531269999999" blue="0.13333334029999999" alpha="1" colorSpace="deviceRGB"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Qbv-S2-pdO" kind="relationship" relationship="rootViewController" id="ftp-Rj-wXi"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hui-mH-HUU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-855" y="-539"/>
         </scene>
     </scenes>
     <resources>
@@ -398,4 +416,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="ftp-Rj-wXi"/>
+    </inferredMetricsTieBreakers>
 </document>

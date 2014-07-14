@@ -124,20 +124,23 @@
 
 
 - (void)setGuest {
-    LXNavMypageController *navMypage = self.viewControllers[4];
-//    navMypage.tabBarItem.image = [UIImage imageNamed:@"icon_login.png"];    
-    UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"Authentication" bundle:nil];
-    UIViewController *viewLogin = [storyMain instantiateViewControllerWithIdentifier:@"Login"];
+    UIStoryboard* storyAuth = [UIStoryboard storyboardWithName:@"Authentication" bundle:nil];
+    UIViewController *navLogin = [storyAuth instantiateViewControllerWithIdentifier:@"Login"];
     
-    navMypage.viewControllers = [NSArray arrayWithObject:viewLogin];
+    NSMutableArray *views = [NSMutableArray arrayWithArray:self.viewControllers];
+    views[4] = navLogin;
+    self.selectedIndex = 0;
+    self.viewControllers = views;
 }
 
 - (void)setUser {
-    LXNavMypageController *navMypage = self.viewControllers[4];
-//    navMypage.tabBarItem.image = [UIImage imageNamed:@"icon_mypage.png"];
     UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    UIViewController *viewMypage = [storyMain instantiateViewControllerWithIdentifier:@"Home"];
-    navMypage.viewControllers = [NSArray arrayWithObject:viewMypage];
+    UIViewController *viewMypage = [storyMain instantiateViewControllerWithIdentifier:@"MyPage"];
+    
+    NSMutableArray *views = [NSMutableArray arrayWithArray:self.viewControllers];
+    views[4] = viewMypage;
+    self.selectedIndex = 0;
+    self.viewControllers = views;
 }
 
 - (void)receiveLoggedIn:(NSNotification *) notification {

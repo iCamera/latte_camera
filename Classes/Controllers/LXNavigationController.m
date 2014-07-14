@@ -32,7 +32,10 @@
     self.delegate = self;
 	// Do any additional setup after loading the view.
     [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)]];
-    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognized:)]];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognized:)];
+    tap.cancelsTouchesInView = NO;
+    [self.navigationBar addGestureRecognizer:tap];
 }
 
 - (void)panGestureRecognized:(UIPanGestureRecognizer *)sender
@@ -61,6 +64,8 @@
         [view.collectionView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
     }
 }
+
+
 
 
 - (void)popViewController {
