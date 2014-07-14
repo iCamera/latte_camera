@@ -8,7 +8,6 @@
 
 #import "LXCanvasViewController.h"
 #import "LXAppDelegate.h"
-#import "ALAssetsLibrary+CustomPhotoAlbum.h"
 #import "LXFilterFish.h"
 #import "LXShare.h"
 #import "LXImageFilter.h"
@@ -510,7 +509,9 @@
             if (buttonReset.enabled) {
                 imageFinalThumb = [self getFinalThumb];
                 imageFinalData = [self getFinalImage];
-                [self saveImageToLib:imageFinalData];
+                [self preparePipe];
+                [LXUtils saveImageDateToLib:imageFinalData metadata:nil];
+                
             } else {
                 NSData *jpeg = UIImageJPEGRepresentation(imageOriginal, 1.0);
                 imageFinalThumb = imagePreview;
@@ -715,41 +716,6 @@
     CFRelease(source);
     
     return ret;
-}
-
-- (void)saveImageToLib:(NSData*)imageData {
-    if (_delegate) {
-        [HUD hide:YES];
-        return;
-    }
-    
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-    
-    [library writeImageDataToSavedPhotosAlbum:imageData metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
-        [library addAssetURL:assetURL toAlbum:@"Latte camera" withCompletionBlock:^(NSError *error) {
-            
-        }];
-        if (!error) {
-            HUD.mode = MBProgressHUDModeText;
-            HUD.labelText = NSLocalizedString(@"saved_photo", @"Saved to Camera Roll") ;
-            HUD.margin = 10.f;
-            HUD.yOffset = 150.f;
-            HUD.removeFromSuperViewOnHide = YES;
-            HUD.dimBackground = NO;
-            [HUD hide:YES afterDelay:2];
-            
-        } else {
-            HUD.mode = MBProgressHUDModeText;
-            HUD.labelText = NSLocalizedString(@"cannot_save_photo", @"Cannot save to Camera Roll") ;
-            HUD.margin = 10.f;
-            HUD.yOffset = 150.f;
-            HUD.removeFromSuperViewOnHide = YES;
-            HUD.dimBackground = NO;
-            [HUD hide:YES afterDelay:3];
-        }
-        
-        [self preparePipe];
-    }];
 }
 
 - (IBAction)toggleControl:(UIButton*)sender {

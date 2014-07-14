@@ -21,6 +21,7 @@
 
 #import "NSDate+TKCategory.h"
 #import "NSDate+CalendarGrid.h"
+#import "ALAssetsLibrary+CustomPhotoAlbum.h"
 
 @implementation LXUtils
 
@@ -467,5 +468,82 @@ vm_size_t freeMemory(void) {
     else
         return [UIImage imageWithContentsOfFile:tonePath];
 }
+
++ (void)saveImageDateToLib:(NSData*)imageData metadata:(NSDictionary *)metadata {
+    
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    
+    [library writeImageDataToSavedPhotosAlbum:imageData metadata:metadata completionBlock:^(NSURL *assetURL, NSError *error) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        BOOL saveToAlbum;
+        if ([defaults objectForKey:@"LatteSaveToAlbum"]) {
+            saveToAlbum = [[defaults objectForKey:@"LatteSaveToAlbum"] boolValue];
+        } else {
+            saveToAlbum = YES;
+        }
+        
+        if (saveToAlbum) {
+            [library addAssetURL:assetURL toAlbum:@"Latte camera" withCompletionBlock:^(NSError *error) {
+                if (error) {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"C")
+                                                                    message:error.localizedDescription
+                                                                   delegate:nil
+                                                          cancelButtonTitle:NSLocalizedString(@"Close", @"")
+                                                          otherButtonTitles:nil];
+                    [alert show];
+                }
+            }];
+        }
+        
+        
+        if (error) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"cannot_save_photo", @"Cannot save to Camera Roll")
+                                                            message:error.localizedDescription
+                                                           delegate:nil
+                                                  cancelButtonTitle:NSLocalizedString(@"Close", @"")
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+    }];
+}
+
++ (void)saveImageRefToLib:(CGImageRef)imageRef metadata:(NSDictionary *)metadata {
+    
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    
+    [library writeImageToSavedPhotosAlbum:imageRef metadata:metadata completionBlock:^(NSURL *assetURL, NSError *error) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        BOOL saveToAlbum;
+        if ([defaults objectForKey:@"LatteSaveToAlbum"]) {
+            saveToAlbum = [[defaults objectForKey:@"LatteSaveToAlbum"] boolValue];
+        } else {
+            saveToAlbum = YES;
+        }
+        
+        if (saveToAlbum) {
+            [library addAssetURL:assetURL toAlbum:@"Latte camera" withCompletionBlock:^(NSError *error) {
+                if (error) {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"C")
+                                                                    message:error.localizedDescription
+                                                                   delegate:nil
+                                                          cancelButtonTitle:NSLocalizedString(@"Close", @"")
+                                                          otherButtonTitles:nil];
+                    [alert show];
+                }
+            }];
+        }
+        
+        
+        if (error) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"cannot_save_photo", @"Cannot save to Camera Roll")
+                                                            message:error.localizedDescription
+                                                           delegate:nil
+                                                  cancelButtonTitle:NSLocalizedString(@"Close", @"")
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+    }];
+}
+
 
 @end

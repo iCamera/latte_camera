@@ -93,6 +93,13 @@
     buttonUploadStatus.hidden = YES;
 
     [[UITabBar appearance] setTintColor:[UIColor colorWithRed:35.0/255.0 green:183.0/255.0 blue:223.0/255.00 alpha:1]];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:@"LatteCameraStartUp"]) {
+        if ([[defaults objectForKey:@"LatteCameraStartUp"] boolValue]) {
+            [self startCamera];
+        }
+    }
 }
 
 - (void)showNotify {
@@ -228,27 +235,30 @@
     }
 }
 
+- (void)startCamera {
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        
+        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                              message:@"Device has no camera"
+                                                             delegate:nil
+                                                    cancelButtonTitle:@"OK"
+                                                    otherButtonTitles: nil];
+        
+        [myAlertView show];
+        
+    } else {
+        UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+        
+        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        imagePicker.delegate = self;
+        
+        [self presentViewController:imagePicker animated:YES completion:nil];
+    }
+}
+
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
-        
-        if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-            
-            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                  message:@"Device has no camera"
-                                                                 delegate:nil
-                                                        cancelButtonTitle:@"OK"
-                                                        otherButtonTitles: nil];
-            
-            [myAlertView show];
-            
-        } else {
-            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-            
-            imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-            imagePicker.delegate = self;
-            
-            [self presentViewController:imagePicker animated:YES completion:nil];
-        }
+        [self startCamera];
     } else if (buttonIndex == 1) {
         UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
         
@@ -260,10 +270,25 @@
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    UIImage *image =  [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        BOOL save;
+        if ([defaults objectForKey:@"LatteSaveOrigin"]) {
+            save = [[defaults objectForKey:@"LatteSaveOrigin"] boolValue];
+        } else {
+            save = YES;
+        }
+        
+        if (save) {
+            [LXUtils saveImageRefToLib:image.CGImage metadata:[info objectForKey:UIImagePickerControllerMediaMetadata]];
+        }
+    }
+    
     UIStoryboard *storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
     LXImageCropViewController *controllerCrop = [storyCamera instantiateInitialViewController];
     
-    UIImage *image =  [info objectForKey:UIImagePickerControllerOriginalImage];
     controllerCrop.sourceImage = image;
     controllerCrop.doneCallback = ^(UIImage *editedImage, BOOL canceled){
         if(!canceled) {

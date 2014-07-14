@@ -49,5 +49,7 @@ typedef NS_ENUM(NSInteger, NotifyTarget) {
 + (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
 + (void)showFBAuthError:(NSError*)error;
 + (UIImage*)imageNamed:(NSString*)name;
++ (void)saveImageDateToLib:(NSData*)imageData metadata:(NSDictionary *)metadata;
++ (void)saveImageRefToLib:(CGImageRef)imageRef metadata:(NSDictionary *)metadata;
 
 @end
