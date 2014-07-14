@@ -85,19 +85,19 @@
             </objects>
             <point key="canvasLocation" x="292" y="-1329"/>
         </scene>
-        <!--Login View Controller - Login-->
+        <!--Login View Controller - Log In-->
         <scene sceneID="mca-47-kU6">
             <objects>
-                <viewController title="Login" id="Qbv-S2-pdO" customClass="LXLoginViewController" sceneMemberID="viewController">
+                <viewController id="Qbv-S2-pdO" customClass="LXLoginViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mbT-9B-9wl">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" id="Qdb-d6-fmU">
                                 <rect key="frame" x="6" y="6" width="308" height="81"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mail address" minimumFontSize="17" id="hr4-R1-WUo">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="E-mail address" minimumFontSize="17" id="hr4-R1-WUo">
                                         <rect key="frame" x="10" y="0.0" width="285" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
@@ -125,7 +125,7 @@
                                 <rect key="frame" x="85" y="197" width="150" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="16"/>
-                                <state key="normal" title="REGISTER">
+                                <state key="normal" title="SIGN UP">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -140,7 +140,7 @@
                                 <rect key="frame" x="85" y="99" width="150" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="16"/>
-                                <state key="normal" title="LOGIN">
+                                <state key="normal" title="LOG IN">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -155,7 +155,7 @@
                                 <rect key="frame" x="34" y="137" width="252" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
-                                <state key="normal" title="Forgot Password?">
+                                <state key="normal" title="Forgot your password?">
                                     <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -172,7 +172,7 @@
                                 <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="16"/>
                                 <inset key="contentEdgeInsets" minX="40" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <size key="titleShadowOffset" width="0.0" height="1"/>
-                                <state key="normal" title="LOGIN" backgroundImage="bt_twitter2.png">
+                                <state key="normal" title="LOG IN" backgroundImage="bt_twitter2.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" red="0.096989388440000004" green="0.19518149509999999" blue="0.24730947070000001" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -187,7 +187,7 @@
                                 <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="16"/>
                                 <inset key="contentEdgeInsets" minX="40" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <size key="titleShadowOffset" width="0.0" height="1"/>
-                                <state key="normal" title="LOGIN" backgroundImage="bt_facebook2.png">
+                                <state key="normal" title="LOG IN" backgroundImage="bt_facebook2.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" red="0.096989388440000004" green="0.19518149509999999" blue="0.24730947070000001" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -199,7 +199,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Login" id="hmJ-uv-mAd"/>
+                    <navigationItem key="navigationItem" title="Log In" id="hmJ-uv-mAd"/>
                     <connections>
                         <outlet property="tapView" destination="aMp-Ea-Wr7" id="yTU-wU-oh2"/>
                         <outlet property="textPass" destination="oBh-ro-Z0Z" id="DhO-Hz-ncl"/>
@@ -221,19 +221,19 @@
             <objects>
                 <viewController id="Sv6-cd-mvS" customClass="LXRegisterViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0L8-k6-fXG">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="0Bu-Ad-iFk">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" id="mEE-QY-CIy">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="DU2-gf-aqZ">
-                                                <rect key="frame" x="0.0" y="300" width="320" height="199"/>
+                                                <rect key="frame" x="0.0" y="300" width="320" height="155"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <color key="textColor" red="0.18039215689999999" green="0.15686274510000001" blue="0.098039215690000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -265,7 +265,7 @@
                                         <rect key="frame" x="85" y="246" width="150" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="16"/>
-                                        <state key="normal" title="REGISTER">
+                                        <state key="normal" title="SIGN UP">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -319,7 +319,7 @@
                                         <rect key="frame" x="6" y="161" width="308" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" minimumFontSize="17" id="DWD-3X-L5x">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Nickname" minimumFontSize="17" id="DWD-3X-L5x">
                                                 <rect key="frame" x="10" y="0.0" width="283" height="40"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
@@ -360,13 +360,11 @@
             </objects>
             <point key="canvasLocation" x="292" y="-658"/>
         </scene>
-        <!--Modal Navigation Controller - Login-->
+        <!--Modal Navigation Controller-->
         <scene sceneID="cI2-Th-REi">
             <objects>
-                <navigationController storyboardIdentifier="LoginModal" definesPresentationContext="YES" id="EFt-fq-8DL" customClass="LXModalNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Login" image="icon_login.png" id="9cH-yt-cfi"/>
+                <navigationController storyboardIdentifier="LoginModal" definesPresentationContext="YES" toolbarHidden="NO" id="EFt-fq-8DL" customClass="LXModalNavigationController" sceneMemberID="viewController">
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="90R-k6-oCe" customClass="LXNavBar">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -380,11 +378,11 @@
             </objects>
             <point key="canvasLocation" x="-978" y="-1216"/>
         </scene>
-        <!--Navigation Controller - Login-->
+        <!--Navigation Controller - Log In-->
         <scene sceneID="eVo-Xs-YHH">
             <objects>
                 <navigationController storyboardIdentifier="Login" definesPresentationContext="YES" id="mAe-Lg-ucz" customClass="LXNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Login" image="icon_login.png" id="dlf-VV-oNq"/>
+                    <tabBarItem key="tabBarItem" title="Log In" image="icon_login.png" id="dlf-VV-oNq"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="0xq-8F-8VS">
                         <autoresizingMask key="autoresizingMask"/>
@@ -417,6 +415,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="ftp-Rj-wXi"/>
+        <segue reference="wsB-vi-hoP"/>
     </inferredMetricsTieBreakers>
 </document>

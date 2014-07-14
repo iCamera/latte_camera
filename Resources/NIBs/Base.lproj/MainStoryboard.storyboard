@@ -319,7 +319,7 @@
             </objects>
             <point key="canvasLocation" x="511" y="764"/>
         </scene>
-        <!--Tag View Controller - Tag-->
+        <!--Tag View Controller - Tags-->
         <scene sceneID="qoJ-OX-aaX">
             <objects>
                 <tableViewController storyboardIdentifier="Tag" id="Hea-mo-ou6" customClass="LXTagViewController" sceneMemberID="viewController">
@@ -357,7 +357,7 @@
                             <outlet property="delegate" destination="Hea-mo-ou6" id="ODJ-Wt-tqd"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Tag" id="Siy-Pf-bZx"/>
+                    <navigationItem key="navigationItem" title="Tags" id="Siy-Pf-bZx"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="activityLoad" destination="tTQ-Zj-A8T" id="Tz9-ab-n12"/>
@@ -367,7 +367,7 @@
             </objects>
             <point key="canvasLocation" x="511" y="350"/>
         </scene>
-        <!--Notify Side View Controller - Notification-->
+        <!--Notify Side View Controller - Notifications-->
         <scene sceneID="kYt-5Z-oXR">
             <objects>
                 <tableViewController id="muX-Hh-Ats" customClass="LXNotifySideViewController" sceneMemberID="viewController">
@@ -528,8 +528,7 @@
                             <outlet property="delegate" destination="muX-Hh-Ats" id="cEX-5H-2kH"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Notification" id="yh9-EW-FKo">
-                        <barButtonItem key="backBarButtonItem" title="Back" id="Li0-4m-rwR"/>
+                    <navigationItem key="navigationItem" title="Notifications" id="yh9-EW-FKo">
                         <barButtonItem key="leftBarButtonItem" image="icon_menu_l.png" id="FYH-TZ-oCS">
                             <connections>
                                 <action selector="showMenu" destination="muX-Hh-Ats" id="pMJ-zW-hxS"/>
@@ -706,7 +705,7 @@
             </objects>
             <point key="canvasLocation" x="-140" y="607"/>
         </scene>
-        <!--Anouncement View Controller - Announcement-->
+        <!--Anouncement View Controller - Announcements-->
         <scene sceneID="HaE-IL-7CV">
             <objects>
                 <viewController id="Exj-Cm-MJZ" customClass="LXAnouncementViewController" sceneMemberID="viewController">
@@ -732,7 +731,7 @@
                             <constraint firstItem="Vso-y0-ez3" firstAttribute="leading" secondItem="Q1X-Fv-L59" secondAttribute="leading" id="qkx-4r-jje"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Announcement" id="yxY-1Y-Mtg"/>
+                    <navigationItem key="navigationItem" title="Announcements" id="yxY-1Y-Mtg"/>
                     <connections>
                         <outlet property="webView" destination="Vso-y0-ez3" id="17i-2n-6zJ"/>
                     </connections>
@@ -741,11 +740,11 @@
             </objects>
             <point key="canvasLocation" x="-274" y="1281"/>
         </scene>
-        <!--Navigation Controller - Notification-->
+        <!--Navigation Controller - Notifications-->
         <scene sceneID="NPe-9h-C9N">
             <objects>
                 <navigationController definesPresentationContext="YES" id="VwC-Ow-z6p" customClass="LXNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" enabled="NO" title="Notification" image="icon_notice.png" id="D39-Yx-4Gc"/>
+                    <tabBarItem key="tabBarItem" enabled="NO" title="Notifications" image="icon_notice.png" id="D39-Yx-4Gc"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="JEo-cs-8hT">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1227,7 +1226,7 @@
                                     <rect key="frame" x="35" y="50" width="250" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                    <state key="normal" title="Did not receive confirmation email?">
+                                    <state key="normal" title="You did not receive a confirmation email?">
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
@@ -1263,11 +1262,11 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="300" height="189"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                    <string key="text">Seem like you have not confirmed your email address yet. Please click on the URL in the email we have sent to you.
+                                                    <string key="text">Seems like you have not confirmed your email address yet. Please click on the URL in the email we have sent to you.
 
-In case you entered wrong email address, you can change at the box below. 
+In case you entered a wrong email address, you can change it at the box below, 
 
-Or you can resend confirmation email.</string>
+or you can try to send another confirmation email.</string>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
