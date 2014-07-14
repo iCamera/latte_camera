@@ -8,6 +8,7 @@
 
 #import "LXStreamViewController.h"
 #import "LXStreamBrickCell.h"
+#import "LXStreamFooter.h"
 #import "Feed.h"
 #import "Picture.h"
 #import "LatteAPIClient.h"
@@ -80,7 +81,9 @@
         NSString *countryImage = [NSString stringWithFormat:@"%@.png", browsingCountry];
         [_buttonCountry setImage:[UIImage imageNamed:countryImage] forState:UIControlStateNormal];
     }
-    
+    refresh = [[UIRefreshControl alloc] init];
+    [refresh addTarget:self action:@selector(reloadView) forControlEvents:UIControlEventValueChanged];
+    [self.collectionView addSubview:refresh];
     [self loadMore:YES];
 }
 
@@ -109,11 +112,12 @@
 
 
 - (void)reloadView {
+    [refresh beginRefreshing];
     [self loadMore:YES];
 }
 
 - (void)loadMore:(BOOL)reset {
-    if (loading || loadEnded) {
+    if (loading) {
         return;
     }
     
@@ -132,11 +136,13 @@
     }
     
     loading = true;
-    [refresh beginRefreshing];
     [[LatteAPIClient sharedClient] GET:@"user/everyone/timeline" parameters: param success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+        loading = false;
+        
         if (reset) {
             feeds = [Feed mutableArrayFromDictionary:JSON withKey:@"feeds"];
-            loadEnded = false;
+            loadEnded = feeds.count == 0;
+            layoutWaterfall.footerHeight = loadEnded?320:50;
             [self.collectionView reloadData];
         } else {
             NSMutableArray *newFeeds = [Feed mutableArrayFromDictionary:JSON withKey:@"feeds"];
@@ -154,7 +160,7 @@
                 loadEnded = true;
             }
         }
-        loading = false;
+        
         [refresh endRefreshing];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         loading = false;
@@ -233,18 +239,20 @@
         return header;
     }
     
-    if ([kind isEqualToString:CHTCollectionElementKindSectionFooter]) {
-        return [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                                                    withReuseIdentifier:@"Footer"
-                                                                           forIndexPath:indexPath];
+    if ([kind isEqualToString:CHTCollectionElementKindSectionFooter] || [kind isEqualToString:UICollectionElementKindSectionFooter]) {
+        LXStreamFooter *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                                        withReuseIdentifier:@"Footer"
+                                                                               forIndexPath:indexPath];
+        if (loadEnded) {
+            [footerView.indicatorLoading stopAnimating];
+            footerView.imageEmpty.hidden = feeds.count > 0;
+        } else {
+            [footerView.indicatorLoading startAnimating];
+            footerView.imageEmpty.hidden = YES;
+        }
+        return footerView;
     }
     
-    if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
-        return [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                                                    withReuseIdentifier:@"Footer"
-                                                                           forIndexPath:indexPath];
-    }
-
     return nil;
 }
 
@@ -268,7 +276,13 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
-    return CGSizeMake(320, layoutWaterfall.footerHeight);
+    if (loadEnded && feeds.count == 0) {
+        layoutWaterfall.footerHeight = 320;
+        return CGSizeMake(320, 320);
+    } else {
+        layoutWaterfall.footerHeight = 50;
+        return CGSizeMake(320, 50);
+    }
 }
 
 

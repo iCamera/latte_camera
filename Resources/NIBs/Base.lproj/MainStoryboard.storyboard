@@ -76,13 +76,17 @@
                             </subviews>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="xvn-h8-jAx">
-                            <rect key="frame" x="0.0" y="289" width="320" height="40"/>
+                            <rect key="frame" x="0.0" y="289" width="320" height="60"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="9Bq-Yq-rnc">
                                     <rect key="frame" x="150" y="10" width="20" height="20"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </activityIndicatorView>
+                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="nopict.png" translatesAutoresizingMaskIntoConstraints="NO" id="R0Z-F7-Jyf">
+                                    <rect key="frame" x="135" y="5" width="50" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
                             </subviews>
                         </view>
                         <prototypes>
@@ -266,6 +270,7 @@
                     </refreshControl>
                     <connections>
                         <outlet property="buttonCountry" destination="EH2-al-meD" id="ThX-lZ-Gxj"/>
+                        <outlet property="imageNopict" destination="R0Z-F7-Jyf" id="C2J-Se-sFY"/>
                         <outlet property="loadIndicator" destination="9Bq-Yq-rnc" id="XU9-cy-VSr"/>
                         <outlet property="segmentView" destination="3W1-ff-YM5" id="UIH-gm-DSm"/>
                         <outlet property="viewTab" destination="qhJ-TB-csr" id="ktt-CA-fl7"/>
@@ -2055,6 +2060,7 @@ or you can try to send another confirmation email.</string>
         <image name="icon_tag_m.png" width="16" height="16"/>
         <image name="icon_timeline.png" width="19" height="15"/>
         <image name="icon_trend_ltrend.png" width="13" height="15"/>
+        <image name="nopict.png" width="50" height="50"/>
         <image name="notify_all.png" width="19" height="15"/>
         <image name="notify_comment.png" width="15" height="15"/>
         <image name="notify_follow.png" width="15" height="15"/>

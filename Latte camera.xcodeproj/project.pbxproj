@@ -82,6 +82,7 @@
 		88120BF218F6B173000BFB5E /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88120B9D18F6B173000BFB5E /* libGoogleAnalyticsServices.a */; };
 		88120BF418F6B173000BFB5E /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88120BA018F6B173000BFB5E /* libTestFlight.a */; };
 		8818861316F30BEA009A9266 /* mymenu.png in Resources */ = {isa = PBXBuildFile; fileRef = 8818861216F30BEA009A9266 /* mymenu.png */; };
+		881C00AB1973B608009ED466 /* LXStreamFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 881C00AA1973B608009ED466 /* LXStreamFooter.m */; };
 		882054DC193816EF00D741BB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 882054DB193816EF00D741BB /* Images.xcassets */; };
 		882054F219381A7A00D741BB /* Icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 882054E219381A7A00D741BB /* Icon-40.png */; };
 		882054F319381A7A00D741BB /* Icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 882054E319381A7A00D741BB /* Icon-40@2x.png */; };
@@ -2005,6 +2006,8 @@
 		88120BA418F6B173000BFB5E /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
 		88120BA518F6B173000BFB5E /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		8818861216F30BEA009A9266 /* mymenu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mymenu.png; sourceTree = "<group>"; };
+		881C00A91973B608009ED466 /* LXStreamFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXStreamFooter.h; sourceTree = "<group>"; };
+		881C00AA1973B608009ED466 /* LXStreamFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXStreamFooter.m; sourceTree = "<group>"; };
 		882054DB193816EF00D741BB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Latte camera/Images.xcassets"; sourceTree = SOURCE_ROOT; };
 		882054E219381A7A00D741BB /* Icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40.png"; sourceTree = "<group>"; };
 		882054E319381A7A00D741BB /* Icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40@2x.png"; sourceTree = "<group>"; };
@@ -5013,6 +5016,8 @@
 				8C75515D193F108800CBFA2C /* LXPrivacySettingTableViewCell.m */,
 				8849E0021962D70700578987 /* LXGradientView.h */,
 				8849E0031962D70700578987 /* LXGradientView.m */,
+				881C00A91973B608009ED466 /* LXStreamFooter.h */,
+				881C00AA1973B608009ED466 /* LXStreamFooter.m */,
 			);
 			path = CustomControls;
 			sourceTree = "<group>";
@@ -8343,6 +8348,7 @@
 				885C061D16BB69B0000820E7 /* UIDeviceHardware.m in Sources */,
 				8883C07D16DCBCE1003510A1 /* LXGalleryViewController.m in Sources */,
 				88A5F41816E11D8B00118996 /* LXSettingRootViewController.m in Sources */,
+				881C00AB1973B608009ED466 /* LXStreamFooter.m in Sources */,
 				88F0075016E4A29B0071369C /* LXSettingNotifyViewController.m in Sources */,
 				8874DBC316E8BF3600FDF60B /* LXNavMypageController.m in Sources */,
 				8874DBD216E8C58200FDF60B /* LXNavGalleryViewController.m in Sources */,

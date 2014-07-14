@@ -19,6 +19,7 @@
 @property (strong, nonatomic) IBOutlet UIView *viewTab;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segmentView;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadIndicator;
+@property (strong, nonatomic) IBOutlet UIImageView *imageNopict;
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonCountry;
 

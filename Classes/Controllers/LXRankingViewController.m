@@ -237,6 +237,7 @@ typedef enum {
                                        rankLayout = kLayoutNormal;
                                        [self.tableView reloadData];
                                        [loadIndicator stopAnimating];
+                                       _imageNopict.hidden = pics.count > 0;
                                        [self.refreshControl endRefreshing];
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
