@@ -30,7 +30,7 @@
 - (void)reloadView;
 - (IBAction)touchProfilePic:(id)sender;
 - (IBAction)refresh:(id)sender;
-- (IBAction)switchView:(id)sender;
+- (IBAction)switchView:(UIButton*)sender;
 - (IBAction)touchFollow:(id)sender;
 
 @end

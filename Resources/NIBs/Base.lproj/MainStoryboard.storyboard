@@ -862,11 +862,11 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oG6-7W-Nd3">
-                                    <rect key="frame" x="177" y="0.0" width="143" height="44"/>
+                                    <rect key="frame" x="221" y="0.0" width="99" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
                                     <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    <state key="normal" title="Tags" image="icon_tag_m.png">
+                                    <state key="normal" image="icon36-tag-brown.png">
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
@@ -935,7 +935,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5bN-oa-kna">
                                         <rect key="frame" x="31" y="-3" width="40" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="icon_comment.png"/>
+                                        <state key="normal" image="icon40-chat-thin.png"/>
                                         <connections>
                                             <segue destination="IsL-ha-Fbg" kind="push" id="olk-MY-Zmq"/>
                                         </connections>
@@ -1530,19 +1530,6 @@ or you can try to send another confirmation email.</string>
                                         <segue destination="fNT-Qz-mIt" kind="custom" identifier="Profile" customClass="MZFormSheetSegue" id="s00-5A-NCH"/>
                                     </connections>
                                 </button>
-                                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="vj5-au-Je8">
-                                    <rect key="frame" x="20" y="155" width="280" height="29"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <segments>
-                                        <segment title="" image="icon_timeline.png"/>
-                                        <segment title="" image="icon_grid.png"/>
-                                        <segment title="" image="icon_calendar_blue.png"/>
-                                    </segments>
-                                    <color key="tintColor" red="0.20784313730000001" green="0.18823529410000001" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
-                                    <connections>
-                                        <action selector="switchView:" destination="21a-Kc-kfo" eventType="valueChanged" id="DRC-x5-NDx"/>
-                                    </connections>
-                                </segmentedControl>
                                 <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vEm-kz-mRV">
                                     <rect key="frame" x="130" y="20" width="60" height="60"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1551,6 +1538,50 @@ or you can try to send another confirmation email.</string>
                                     </state>
                                     <connections>
                                         <action selector="touchProfilePic:" destination="21a-Kc-kfo" eventType="touchUpInside" id="ml7-Rd-FvW"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dIM-YO-l6p" customClass="LXTabButton">
+                                    <rect key="frame" x="0.0" y="150" width="80" height="40"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="icon36-menu-brown.png">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="selected" image="icon36-menu-blue.png"/>
+                                    <connections>
+                                        <action selector="switchView:" destination="21a-Kc-kfo" eventType="touchUpInside" id="Gyp-2f-qmV"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qH4-dd-00c" customClass="LXTabButton">
+                                    <rect key="frame" x="80" y="150" width="80" height="40"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="icon36-grid-brown.png">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="selected" image="icon36-grid-blue.png"/>
+                                    <connections>
+                                        <action selector="switchView:" destination="21a-Kc-kfo" eventType="touchUpInside" id="KTo-ry-e98"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HYg-9W-cBj" customClass="LXTabButton">
+                                    <rect key="frame" x="160" y="150" width="80" height="40"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="icon36-tag-brown.png">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="selected" image="icon36-tag-blue.png"/>
+                                    <connections>
+                                        <action selector="switchView:" destination="21a-Kc-kfo" eventType="touchUpInside" id="2oh-rU-WBN"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SIh-u5-mBH" customClass="LXTabButton">
+                                    <rect key="frame" x="240" y="150" width="80" height="40"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="icon36-calendar-brown.png">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="selected" image="icon36-calendar-blue.png"/>
+                                    <connections>
+                                        <action selector="switchView:" destination="21a-Kc-kfo" eventType="touchUpInside" id="BrK-g5-3Da"/>
                                     </connections>
                                 </button>
                             </subviews>
@@ -1588,15 +1619,14 @@ or you can try to send another confirmation email.</string>
                     <navigationItem key="navigationItem" id="RFh-zs-rV7">
                         <nil key="title"/>
                         <barButtonItem key="rightBarButtonItem" style="done" id="Lmb-Nq-lOT">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="loZ-41-srG">
-                                <rect key="frame" x="233" y="5" width="71" height="33"/>
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="right" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="loZ-41-srG">
+                                <rect key="frame" x="231" y="11" width="73" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title="Follow">
+                                <state key="normal" image="icon40-follow-yellow.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <state key="selected" title="Following">
+                                <state key="selected" image="icon40-followed-blue.png">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -1620,7 +1650,6 @@ or you can try to send another confirmation email.</string>
                         <outlet property="buttonFollowing" destination="VG6-0T-eya" id="rxI-8X-OHp"/>
                         <outlet property="buttonUser" destination="vEm-kz-mRV" id="tqj-sD-Y4v"/>
                         <outlet property="imageCover" destination="XIy-D3-oA1" id="dbR-hE-DHa"/>
-                        <outlet property="segmentTab" destination="vj5-au-Je8" id="VSH-pG-0ca"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o8j-Qd-JPd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1948,13 +1977,21 @@ or you can try to send another confirmation email.</string>
         <image name="bt_info.png" width="25" height="25"/>
         <image name="camera.png" width="25" height="20"/>
         <image name="default-cover.gif" width="1200" height="100"/>
+        <image name="icon36-calendar-blue.png" width="18" height="18"/>
+        <image name="icon36-calendar-brown.png" width="18" height="18"/>
+        <image name="icon36-grid-blue.png" width="18" height="18"/>
+        <image name="icon36-grid-brown.png" width="18" height="18"/>
+        <image name="icon36-menu-blue.png" width="20" height="18"/>
+        <image name="icon36-menu-brown.png" width="20" height="18"/>
+        <image name="icon36-tag-blue.png" width="18" height="18"/>
+        <image name="icon36-tag-brown.png" width="18" height="18"/>
+        <image name="icon40-chat-thin.png" width="20" height="20"/>
+        <image name="icon40-follow-yellow.png" width="20" height="20"/>
+        <image name="icon40-followed-blue.png" width="20" height="20"/>
         <image name="icon_area.png" width="15" height="15"/>
-        <image name="icon_calendar_blue.png" width="15" height="15"/>
         <image name="icon_calendar_lbrown.png" width="15" height="15"/>
-        <image name="icon_comment.png" width="20" height="20"/>
         <image name="icon_follow_m.png" width="17" height="15"/>
         <image name="icon_follow_s.png" width="14" height="12"/>
-        <image name="icon_grid.png" width="15" height="15"/>
         <image name="icon_mail.png" width="15" height="11"/>
         <image name="icon_menu_l.png" width="19" height="15"/>
         <image name="icon_mypage.png" width="20" height="21"/>
@@ -1964,7 +2001,6 @@ or you can try to send another confirmation email.</string>
         <image name="icon_rank.png" width="20" height="21"/>
         <image name="icon_setting_m_ocher.png" width="15" height="15"/>
         <image name="icon_tag_m.png" width="16" height="16"/>
-        <image name="icon_timeline.png" width="19" height="15"/>
         <image name="icon_trend_ltrend.png" width="13" height="15"/>
         <image name="nopict.png" width="50" height="50"/>
         <image name="notify_all.png" width="19" height="15"/>

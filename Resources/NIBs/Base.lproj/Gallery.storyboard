@@ -21,15 +21,15 @@
                                 <rect key="frame" x="0.0" y="445" width="320" height="35"/>
                                 <subviews>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aai-dv-xYK">
-                                        <rect key="frame" x="0.0" y="1" width="107" height="34"/>
+                                        <rect key="frame" x="2" y="0.0" width="80" height="35"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="13"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <inset key="imageEdgeInsets" minX="-8" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        <state key="normal" title="---" image="icon_iine.png">
+                                        <state key="normal" title="---" image="icon28-like-white.png">
                                             <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <state key="selected" image="icon_iine_s_on.png">
+                                        <state key="selected" image="icon28-like-blue.png">
                                             <color key="titleColor" red="0.3675926679078666" green="0.59252089671395725" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
@@ -37,23 +37,24 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JNz-uA-38y">
-                                        <rect key="frame" x="108" y="1" width="107" height="34"/>
+                                        <rect key="frame" x="80" y="0.0" width="80" height="35"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="14"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        <state key="normal" title="---" image="icon_comment.png">
+                                        <state key="normal" title="---" image="icon28-comment-white.png">
                                             <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <state key="highlighted" image="icon28-comment-blue.png"/>
                                         <connections>
                                             <segue destination="Cl7-HT-jiB" kind="custom" identifier="Comment" customClass="MZFormSheetSegue" id="2NW-gr-wIO"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VOb-GG-DNn">
-                                        <rect key="frame" x="286" y="7" width="22" height="22"/>
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VOb-GG-DNn">
+                                        <rect key="frame" x="240" y="0.0" width="80" height="35"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <state key="normal">
+                                        <state key="normal" image="icon28-info-white.png">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" red="0.87843137250000003" green="0.87450980389999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
@@ -65,14 +66,14 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NXS-cb-RLu">
-                                        <rect key="frame" x="216" y="1" width="34" height="34"/>
+                                        <rect key="frame" x="160" y="0.0" width="80" height="35"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="icon_plus_s.png">
+                                        <state key="normal" image="icon28-more-white.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" red="0.87843137250000003" green="0.87450980389999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
-                                        <state key="highlighted">
+                                        <state key="highlighted" image="icon28-more-blue.png">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -135,7 +136,7 @@
                                             <constraint firstAttribute="width" constant="35" id="tYM-oF-Xxq"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="icon_close.png">
+                                        <state key="normal" image="icon28-close-white.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -527,16 +528,16 @@
                                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rxu-4E-T7t">
                                                     <rect key="frame" x="51" y="39" width="53" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                                     <inset key="titleEdgeInsets" minX="4" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                    <state key="normal" title="0" image="icon_iine_s.png">
+                                                    <state key="normal" title="0" image="icon28-like-brown.png">
                                                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <state key="disabled">
                                                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
-                                                    <state key="selected" image="icon_iine_s_on.png">
+                                                    <state key="selected" image="icon28-like-blue.png">
                                                         <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
                                                     <connections>
@@ -595,11 +596,11 @@
                                                     <rect key="frame" x="86" y="36" width="36" height="28"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
-                                                    <state key="normal" image="icon_reply_s.png">
+                                                    <state key="normal" image="icon28-re-brown.png">
                                                         <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
-                                                    <state key="highlighted">
+                                                    <state key="highlighted" image="icon28-re-blue.png">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
@@ -1189,13 +1190,17 @@
         <image name="bt_delete_on.png" width="300" height="30"/>
         <image name="checkbox_off.png" width="15" height="15"/>
         <image name="checkbox_on.png" width="15" height="15"/>
-        <image name="icon_close.png" width="20" height="20"/>
-        <image name="icon_comment.png" width="20" height="20"/>
-        <image name="icon_iine.png" width="20" height="20"/>
-        <image name="icon_iine_s.png" width="12" height="12"/>
-        <image name="icon_iine_s_on.png" width="12" height="12"/>
-        <image name="icon_plus_s.png" width="11" height="11"/>
-        <image name="icon_reply_s.png" width="12" height="9"/>
+        <image name="icon28-close-white.png" width="14" height="14"/>
+        <image name="icon28-comment-blue.png" width="14" height="14"/>
+        <image name="icon28-comment-white.png" width="14" height="14"/>
+        <image name="icon28-info-white.png" width="14" height="14"/>
+        <image name="icon28-like-blue.png" width="14" height="14"/>
+        <image name="icon28-like-brown.png" width="14" height="14"/>
+        <image name="icon28-like-white.png" width="14" height="14"/>
+        <image name="icon28-more-blue.png" width="18" height="14"/>
+        <image name="icon28-more-white.png" width="18" height="14"/>
+        <image name="icon28-re-blue.png" width="14" height="14"/>
+        <image name="icon28-re-brown.png" width="14" height="14"/>
         <image name="icon_setting.png" width="15" height="16"/>
         <image name="user.gif" width="100" height="100"/>
     </resources>

@@ -93,14 +93,14 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="14"/>
                                 <inset key="imageEdgeInsets" minX="-8" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="---" image="icon_iine_s.png">
+                                <state key="normal" title="---" image="icon28-like-brown.png">
                                     <color key="titleColor" red="0.20784313730000001" green="0.18823529410000001" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
                                     <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="disabled">
                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <state key="selected" image="icon_iine_s_on.png">
+                                <state key="selected" image="icon28-like-blue.png">
                                     <color key="titleColor" red="0.18090890849999999" green="0.29160622089999999" blue="0.49214504079999999" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -116,15 +116,16 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="14"/>
                                 <inset key="imageEdgeInsets" minX="-8" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="---" image="icon_comment_s.png">
+                                <state key="normal" title="---" image="icon28-comment-brown.png">
                                     <color key="titleColor" red="0.20784313730000001" green="0.18823529410000001" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
                                     <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </state>
+                                <state key="highlighted" image="icon28-comment-blue.png"/>
                                 <connections>
                                     <action selector="showComment:" destination="DKY-ng-ji8" eventType="touchUpInside" id="eSE-HL-tEv"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JjG-Mz-LKY">
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JjG-Mz-LKY">
                                 <rect key="frame" x="152" y="105" width="76" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <constraints>
@@ -132,17 +133,17 @@
                                     <constraint firstAttribute="width" constant="76" id="yuR-LM-BBY"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" image="icon_plus_s.png">
+                                <state key="normal" image="icon28-more-brown.png">
                                     <color key="titleShadowColor" red="0.87843137250000003" green="0.87450980389999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
-                                <state key="highlighted">
+                                <state key="highlighted" image="icon28-more-blue.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="moreAction:" destination="DKY-ng-ji8" eventType="touchUpInside" id="WGi-0l-pP6"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8rC-0c-fPF">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8rC-0c-fPF">
                                 <rect key="frame" x="228" y="105" width="76" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <constraints>
@@ -150,11 +151,11 @@
                                     <constraint firstAttribute="width" constant="76" id="hi4-Kt-vDF"/>
                                 </constraints>
                                 <color key="tintColor" red="0.20784313730000001" green="0.18823529410000001" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
-                                <state key="normal" image="icon_info.png">
+                                <state key="normal" image="icon28-info-brown.png">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" red="0.87843137250000003" green="0.87450980389999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
-                                <state key="highlighted">
+                                <state key="highlighted" image="icon28-info-blue.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -237,11 +238,14 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="icon_comment_s.png" width="12" height="12"/>
-        <image name="icon_iine_s.png" width="12" height="12"/>
-        <image name="icon_iine_s_on.png" width="12" height="12"/>
-        <image name="icon_info.png" width="17" height="16"/>
-        <image name="icon_plus_s.png" width="11" height="11"/>
+        <image name="icon28-comment-blue.png" width="14" height="14"/>
+        <image name="icon28-comment-brown.png" width="14" height="14"/>
+        <image name="icon28-info-blue.png" width="14" height="14"/>
+        <image name="icon28-info-brown.png" width="14" height="14"/>
+        <image name="icon28-like-blue.png" width="14" height="14"/>
+        <image name="icon28-like-brown.png" width="14" height="14"/>
+        <image name="icon28-more-blue.png" width="18" height="14"/>
+        <image name="icon28-more-brown.png" width="18" height="14"/>
         <image name="user.gif" width="100" height="100"/>
     </resources>
 </document>

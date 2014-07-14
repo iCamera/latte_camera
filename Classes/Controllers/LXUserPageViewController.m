@@ -270,15 +270,16 @@ typedef enum {
     [self reloadView];
 }
 
-- (IBAction)switchView:(id)sender {
-    switch (_segmentTab.selectedSegmentIndex) {
+- (IBAction)switchView:(UIButton*)sender {
+    sender.selected = YES;
+    switch (sender.tag) {
         case 0:
             photoMode = kPhotoTimeline;
             break;
         case 1:
             photoMode = kPhotoGrid;
             break;
-        case 2:
+        case 3:
             photoMode = kPhotoCalendar;
             break;
         default:
