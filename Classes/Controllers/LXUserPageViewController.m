@@ -35,7 +35,8 @@
 typedef enum {
     kPhotoTimeline = 0,
     kPhotoGrid = 1,
-    kPhotoCalendar = 2,
+    kPhotoTag = 2,
+    kPhotoCalendar = 3,
 } UserPagePhotoMode;
 
 @interface LXUserPageViewController ()
@@ -271,6 +272,11 @@ typedef enum {
 }
 
 - (IBAction)switchView:(UIButton*)sender {
+    _buttonTabTimeline.selected = NO;
+    _buttonTabGrid.selected = NO;
+    _buttonTabTag.selected = NO;
+    _buttonTabCalendar.selected = NO;
+
     sender.selected = YES;
     switch (sender.tag) {
         case 0:
@@ -278,6 +284,9 @@ typedef enum {
             break;
         case 1:
             photoMode = kPhotoGrid;
+            break;
+        case 2:
+            photoMode = kPhotoTag;
             break;
         case 3:
             photoMode = kPhotoCalendar;
