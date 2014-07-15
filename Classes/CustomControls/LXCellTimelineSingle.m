@@ -221,7 +221,7 @@
                                                         delegate:self
                                                cancelButtonTitle:NSLocalizedString(@"Cancel", @"")
                                           destructiveButtonTitle:nil
-                                               otherButtonTitles:@"Email", @"Twitter", @"Facebook", nil];
+                                               otherButtonTitles:@"Copy URL", @"Facebook", @"Twitter", @"Email", nil];
     [action showFromTabBar:viewController.navigationController.tabBarController.tabBar];
 }
 
@@ -235,14 +235,19 @@
     lxShare.text = pic.urlWeb;
     
     switch (buttonIndex) {
-        case 0: // email
-            [lxShare emailIt];
+        case 0: {
+            UIPasteboard *pb = [UIPasteboard generalPasteboard];
+            [pb setString:pic.urlWeb];
             break;
-        case 1: // twitter
+        }
+        case 1: // email
+            [lxShare facebookPost];
+            break;
+        case 2: // twitter
             [lxShare tweet];
             break;
-        case 2: // facebook
-            [lxShare facebookPost];
+        case 3: // facebook
+            [lxShare emailIt];
             break;
         default:
             break;
