@@ -13,6 +13,7 @@
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollPicture;
 @property (strong, nonatomic) IBOutlet UIImageView *imageZoom;
+@property (strong, nonatomic) IBOutlet UIProgressView *progessLoad;
 
 @property (strong, nonatomic) Picture *picture;
 @property (strong, nonatomic) User *user;

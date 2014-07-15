@@ -140,7 +140,7 @@
 
 - (void)setGuest {
     UIStoryboard* storyAuth = [UIStoryboard storyboardWithName:@"Authentication" bundle:nil];
-    UIViewController *navLogin = [storyAuth instantiateViewControllerWithIdentifier:@"Login"];
+    UIViewController *navLogin = [storyAuth instantiateViewControllerWithIdentifier:@"NavLogin"];
     
     NSMutableArray *views = [NSMutableArray arrayWithArray:self.viewControllers];
     views[4] = navLogin;

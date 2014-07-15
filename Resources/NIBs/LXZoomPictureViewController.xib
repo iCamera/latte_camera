@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LXZoomPictureViewController">
             <connections>
                 <outlet property="imageZoom" destination="41" id="42"/>
+                <outlet property="progessLoad" destination="U2X-ch-C9W" id="ghE-ZH-CWV"/>
                 <outlet property="scrollPicture" destination="12" id="27"/>
                 <outlet property="view" destination="1" id="26"/>
             </connections>
@@ -32,6 +33,12 @@
                         <outlet property="delegate" destination="-1" id="33"/>
                     </connections>
                 </scrollView>
+                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" id="U2X-ch-C9W">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="2"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                    <color key="progressTintColor" red="0.43529415129999999" green="0.74117648599999997" blue="0.73333334920000004" alpha="1" colorSpace="deviceRGB"/>
+                    <color key="trackTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </progressView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>

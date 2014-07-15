@@ -7,8 +7,10 @@
 //
 
 #import "LXZoomPictureViewController.h"
-#import "UIImageView+loadProgress.h"
+#import "UIImageView+AFNetworking.h"
 #import "UIButton+AFNetworking.h"
+
+#import "AFNetworking.h"
 #import "Picture.h"
 
 @interface LXZoomPictureViewController ()
@@ -55,7 +57,7 @@
     
     actualScale = MAX(orgWidth/screenWidth, orgHeight/screenHeight)*2.0;
 
-    [imageZoom loadProgess:_picture.urlMedium];
+    [self loadProgess:_picture.urlMedium];
 
     zoomLevel = [[NSMutableArray alloc]init];
     
@@ -93,11 +95,13 @@
     
     if (scrollView.zoomScale >= 2.0 && !loadedLarge) {
         loadedLarge = true;
-        [imageZoom loadProgess:_picture.urlLarge placeholderImage:imageZoom.image];
+        [self loadProgess:_picture.urlLarge];
+        [imageZoom setImageWithURL:[NSURL URLWithString:_picture.urlLarge] placeholderImage:imageZoom.image];
+
     } else if (scrollView.zoomScale >= 4.0 && !loadedOrg && actualScale >= 4.0) {
         loadedOrg = true;
         if (_picture.urlOrg) {
-            [imageZoom loadProgess:_picture.urlOrg placeholderImage:imageZoom.image];
+            [self loadProgess:_picture.urlOrg];
         }
     }
 }
@@ -154,5 +158,31 @@
 }
 
 
+- (void)loadProgess:(NSString *)url {
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]
+                                             cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                         timeoutInterval:60.0];
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    
+    void (^successDownload)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        [imageZoom setImage:[UIImage imageWithData:responseObject]];
+        _progessLoad.hidden = YES;
+    };
+    
+    void (^failDownload)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
+        _progessLoad.hidden = YES;
+    };
+    
+    [operation setCompletionBlockWithSuccess: successDownload failure: failDownload];
+    
+    [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+        _progessLoad.progress = (float)totalBytesRead/(float)totalBytesExpectedToRead;
+    }];
+    
+    _progessLoad.progress = 0;
+    _progessLoad.hidden = NO;
+    [operation start];
+}
 
 @end

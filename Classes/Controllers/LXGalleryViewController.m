@@ -18,12 +18,12 @@
 #import "LXPicEditViewController.h"
 #import "LXMyPageViewController.h"
 #import "LXShare.h"
-#import "UIButton+AsyncImage.h"
 #import "Comment.h"
 #import "LXTagHome.h"
 #import "LXUserPageViewController.h"
 #import "LXSocketIO.h"
 #import "LXReportAbuseViewController.h"
+#import "UIButton+AFNetworking.h"
 
 
 @interface LXGalleryViewController ()
@@ -382,12 +382,12 @@
         if (currentPage.user) {
             labelNickname.text = currentPage.user.name;
             [LXUtils setNationalityOfUser:currentPage.user forImage:imageNationality nextToLabel:labelNickname];
-            [buttonUser loadBackground:currentPage.user.profilePicture placeholderImage:@"user.gif"];
+            [buttonUser setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:currentPage.user.profilePicture]];
             
         } else if (newPicture.user) {
             labelNickname.text = currentPage.picture.user.name;
             [LXUtils setNationalityOfUser:newPicture.user forImage:imageNationality nextToLabel:labelNickname];
-            [buttonUser loadBackground:newPicture.user.profilePicture placeholderImage:@"user.gif"];
+            [buttonUser setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:newPicture.user.profilePicture]];
         } else {
             NSString *url = [NSString stringWithFormat:@"user/%ld", [newPicture.userId longValue]];
             [[LatteAPIClient sharedClient] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
@@ -395,7 +395,7 @@
                 currentPage.user = user;
                 labelNickname.text = user.name;
                 [LXUtils setNationalityOfUser:user forImage:imageNationality nextToLabel:labelNickname];
-                [buttonUser loadBackground:user.profilePicture placeholderImage:@"user.gif"];
+                [buttonUser setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:user.profilePicture]];
             } failure:nil];
         }
         
@@ -451,7 +451,15 @@
     if (currentPage.picture.isOwner) {
         [self performSegueWithIdentifier:@"Like" sender:self];
     } else {
-        [LXUtils toggleLike:sender ofPicture:currentPage.picture];
+        LXAppDelegate* app = [LXAppDelegate currentDelegate];
+        if (!app.currentUser) {
+            UIStoryboard *storyAuth = [UIStoryboard storyboardWithName:@"Authentication" bundle:nil];
+            UIViewController *viewLogin = [storyAuth instantiateViewControllerWithIdentifier:@"Login"];
+            
+            [self.navigationController pushViewController:viewLogin animated:YES];
+        } else {
+            [LXUtils toggleLike:sender ofPicture:currentPage.picture];
+        }
     }
 }
 

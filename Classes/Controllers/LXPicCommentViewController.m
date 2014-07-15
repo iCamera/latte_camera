@@ -74,6 +74,11 @@
     
     [LXUtils globalShadow:viewHeader];
     
+}
+
+- (void)setPicture:(Picture *)picture {
+    _picture = picture;
+    
     if (_picture.comments) {
         comments = _picture.comments;
         [self.tableView reloadData];
@@ -94,6 +99,7 @@
             [activityLoad stopAnimating];
         }];
     }
+
 }
 
 - (void)scrollToComment {
@@ -316,10 +322,11 @@
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    LXCellComment* cellComment = [tableView dequeueReusableCellWithIdentifier:@"Comment"];
+    LXCellComment* cellComment = [tableView dequeueReusableCellWithIdentifier:@"Comment" forIndexPath:indexPath];
         
     Comment *comment = comments[indexPath.row];
     
+    cellComment.parent = self;
     cellComment.comment = comment;
     
     if (!comment.user.isUnregister) {

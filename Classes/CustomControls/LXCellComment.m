@@ -8,6 +8,7 @@
 
 #import "LXCellComment.h"
 #import "LXAppDelegate.h"
+#import "MZFormSheetController.h"
 
 @implementation LXCellComment
 @synthesize textComment;
@@ -54,18 +55,16 @@
         labelAuthor.text = comment.user.name;
     }
 
+    buttonLike.selected = comment.isVoted;
+    
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
     if (app.currentUser != nil) {
-        buttonLike.hidden = [comment.user.userId integerValue] == [app.currentUser.userId integerValue];
-        buttonReply.hidden = [comment.user.userId integerValue] == [app.currentUser.userId integerValue];
+        buttonLike.enabled = [comment.user.userId integerValue] != [app.currentUser.userId integerValue];
+        buttonReply.enabled = [comment.user.userId integerValue] != [app.currentUser.userId integerValue];
         buttonReport.hidden = [comment.user.userId integerValue] == [app.currentUser.userId integerValue];
-        buttonLike.selected = comment.isVoted;
-        buttonLike.enabled = true;
-    }
-    else {
-        buttonLike.hidden = false;
-        buttonReply.hidden = YES;
-        buttonLike.enabled = !comment.isVoted;
+    } else {
+        buttonLike.enabled = YES;
+        buttonReply.enabled = YES;
     }
     
     [LXUtils setNationalityOfUser:comment.user forImage:imageNationality nextToLabel:labelAuthor];
@@ -75,8 +74,18 @@
 - (IBAction)toggleLike:(UIButton*)sender {
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
     if (!app.currentUser) {
-        sender.enabled = NO;
-        sender.selected = _comment.isVoted;
+        UIStoryboard *storyAuth = [UIStoryboard storyboardWithName:@"Authentication" bundle:nil];
+        UIViewController *viewLogin = [storyAuth instantiateViewControllerWithIdentifier:@"Login"];
+        
+        if (_parent.isModal) {
+            [_parent mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController *formSheetController) {
+                [_parent.parent.navigationController pushViewController:viewLogin animated:YES];
+            }];
+        } else {
+            [_parent.navigationController pushViewController:viewLogin animated:YES];
+        }
+
+        return;
     } else {
         sender.selected = !_comment.isVoted;
     }
