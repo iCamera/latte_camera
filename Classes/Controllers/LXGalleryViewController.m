@@ -376,40 +376,39 @@
                          [viewDesc flashScrollIndicators];
                      }];
     
-    if (currentPage.user) {
-        labelNickname.text = currentPage.user.name;
-        [LXUtils setNationalityOfUser:currentPage.user forImage:imageNationality nextToLabel:labelNickname];
-        [buttonUser loadBackground:currentPage.user.profilePicture placeholderImage:@"user.gif"];
+    [UIView transitionWithView:self.viewInfoTop duration:kGlobalAnimationSpeed options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+        if (currentPage.user) {
+            labelNickname.text = currentPage.user.name;
+            [LXUtils setNationalityOfUser:currentPage.user forImage:imageNationality nextToLabel:labelNickname];
+            [buttonUser loadBackground:currentPage.user.profilePicture placeholderImage:@"user.gif"];
+            
+        } else if (newPicture.user) {
+            labelNickname.text = currentPage.picture.user.name;
+            [LXUtils setNationalityOfUser:newPicture.user forImage:imageNationality nextToLabel:labelNickname];
+            [buttonUser loadBackground:newPicture.user.profilePicture placeholderImage:@"user.gif"];
+        } else {
+            NSString *url = [NSString stringWithFormat:@"user/%ld", [newPicture.userId longValue]];
+            [[LatteAPIClient sharedClient] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+                User *user = [User instanceFromDictionary:JSON[@"user"]];
+                currentPage.user = user;
+                labelNickname.text = user.name;
+                [LXUtils setNationalityOfUser:user forImage:imageNationality nextToLabel:labelNickname];
+                [buttonUser loadBackground:user.profilePicture placeholderImage:@"user.gif"];
+            } failure:nil];
+        }
         
-    } else if (newPicture.user) {
-        labelNickname.text = currentPage.picture.user.name;
-        [LXUtils setNationalityOfUser:newPicture.user forImage:imageNationality nextToLabel:labelNickname];
-        [buttonUser loadBackground:newPicture.user.profilePicture placeholderImage:@"user.gif"];
-    } else {
-        NSString *url = [NSString stringWithFormat:@"user/%ld", [newPicture.userId longValue]];
-        [[LatteAPIClient sharedClient] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
-            User *user = [User instanceFromDictionary:JSON[@"user"]];
-            currentPage.user = user;
-            labelNickname.text = user.name;
-            [LXUtils setNationalityOfUser:user forImage:imageNationality nextToLabel:labelNickname];
-            [buttonUser loadBackground:user.profilePicture placeholderImage:@"user.gif"];
-        } failure:nil];
-    }
+        labelView.text = [NSString stringWithFormat:NSLocalizedString(@"d_views", @""), [newPicture.pageviews integerValue]];
+        
+        buttonEdit.hidden = !newPicture.isOwner;
+    } completion:nil];
     
-    labelView.text = [NSString stringWithFormat:NSLocalizedString(@"d_views", @""), [newPicture.pageviews integerValue]];
-    
-    LXAppDelegate *app = [LXAppDelegate currentDelegate];
-    
-    buttonLike.enabled = NO;
-    if (!(currentPage.picture.isVoted && !app.currentUser))
-        buttonLike.enabled = YES;
+
     buttonLike.selected = newPicture.isVoted;
     [buttonLike setTitle:[newPicture.voteCount stringValue] forState:UIControlStateNormal];
     
     [buttonComment setTitle:[newPicture.commentCount stringValue] forState:UIControlStateNormal];
     
     buttonEdit.hidden = !newPicture.isOwner;
-    
 }
 
 - (void)increaseCounter {

@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet LXTabButton *buttonTabGrid;
 @property (weak, nonatomic) IBOutlet LXTabButton *buttonTabTag;
 @property (weak, nonatomic) IBOutlet LXTabButton *buttonTabCalendar;
+@property (strong, nonatomic) IBOutlet UILabel *labelIntro;
 
 @property (strong, nonatomic) User *user;
 @property (assign, nonatomic) NSInteger userId;

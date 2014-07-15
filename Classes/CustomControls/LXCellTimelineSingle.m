@@ -63,6 +63,8 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideDesc) name:@"TimelineHideDesc" object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pictureUpdate:) name:@"picture_update" object:nil];
+        
+        _scrollTags.parent = self;
     }
     return self;
 }
@@ -98,6 +100,7 @@
     [buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:_feed.user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
     
     [self increaseCounter];
+    _scrollTags.parent = self;
 
     [self renderPicture];
 }
@@ -108,11 +111,6 @@
     [buttonComment setTitle:[pic.commentCount stringValue] forState:UIControlStateNormal];
     [buttonLike setTitle:[pic.voteCount stringValue] forState:UIControlStateNormal];
     
-    LXAppDelegate* app = (LXAppDelegate*)[[UIApplication sharedApplication] delegate];
-    
-    buttonLike.enabled = NO;
-    if (!(pic.isVoted && !app.currentUser))
-        buttonLike.enabled = YES;
     buttonLike.selected = pic.isVoted;
     
     labelTitle.text = _feed.user.name;
@@ -124,8 +122,6 @@
     _viewDescBg.hidden = pic.descriptionText.length == 0;
     
     // Tag
-    
-    _scrollTags.parent = self;
     _scrollTags.tags = pic.tagsOld;
 
 }
@@ -274,7 +270,9 @@
     if ([picture.pictureId longValue] == [raw[@"id"] longValue]) {
         [picture setAttributesFromDictionary:raw];
         
-        [self renderPicture];
+        [UIView transitionWithView:self.contentView duration:kGlobalAnimationSpeed options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+            [self renderPicture];
+        } completion:nil];
     }
 }
 

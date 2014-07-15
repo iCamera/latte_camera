@@ -115,7 +115,8 @@ typedef enum {
     
     _buttonUser.layer.cornerRadius = 30;
     
-    [_buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:_user.profilePicture]];
+    [self renderProfile];
+    
     self.navigationItem.title = _user.name;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTimelineSingle" bundle:nil] forCellReuseIdentifier:@"Single"];
@@ -123,6 +124,7 @@ typedef enum {
     
     [self reloadView];
     [self reloadProfile];
+    
     
     if (app.currentUser && (_userId == [app.currentUser.userId integerValue])) {
         _buttonFollow.hidden = YES;
@@ -132,6 +134,17 @@ typedef enum {
     [socket sendEvent:@"join" withData:[NSString stringWithFormat:@"user_%ld", (long)_userId]];
 }
 
+- (void)renderProfile {
+    [UIView transitionWithView:self.tableView.tableHeaderView
+                      duration:kGlobalAnimationSpeed
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^{
+                        [_buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:_user.profilePicture]];
+                        [_buttonFollower setTitle:[_user.countFollowers stringValue] forState:UIControlStateNormal];
+                        [_buttonFollowing setTitle:[_user.countFollows stringValue] forState:UIControlStateNormal];
+                        _labelIntro.text = _user.introduction;
+                    } completion:nil];
+}
 
 
 - (void)reloadProfile {
@@ -140,13 +153,17 @@ typedef enum {
     
     [[LatteAPIv2Client sharedClient] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
         self.navigationItem.title = JSON[@"name"];
-        [_buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:JSON[@"profile_picture"]]];
-        [_imageCover setImageWithURL:[NSURL URLWithString:JSON[@"cover_picture"]]];
+        _user.profilePicture = JSON[@"profile_picture"];
+        _user.countFollows = JSON[@"count_follows"];
+        _user.countFollowers = JSON[@"count_followers"];
+        _user.introduction = JSON[@"introduction"];
+        
+        [self renderProfile];
+
         
         if (app.currentUser) {
             _buttonFollow.enabled = true;
             _buttonFollow.selected = [JSON[@"is_following"] boolValue];
-            
         }
     } failure:nil];
 }

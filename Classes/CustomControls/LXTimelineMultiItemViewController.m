@@ -80,8 +80,10 @@
     NSDictionary *raw = notify.object;
     if ([_pic.pictureId longValue] == [raw[@"id"] longValue]) {
         [_pic setAttributesFromDictionary:raw];
-        
-        [self renderPicture];
+
+        [UIView transitionWithView:self.view duration:kGlobalAnimationSpeed options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+            [self renderPicture];
+        } completion:nil];
     }
 }
 
