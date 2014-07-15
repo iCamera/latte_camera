@@ -223,13 +223,14 @@
                     
                     UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                                            bundle:nil];
-                    UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
-                    LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
+                    LXPicCommentViewController *viewComment = [storyGallery instantiateViewControllerWithIdentifier:@"Comment"];
+                    viewComment.commentId = [comment.commentId integerValue];
+                    Picture *picture = [Picture instanceFromDictionary:[JSON objectForKey:@"picture"]];
+                    picture.comments = [Comment mutableArrayFromDictionary:JSON withKey:@"comments"];
+                    viewComment.picture = picture;
                     
-                    viewGallery.user = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
-                    viewGallery.picture = [Picture instanceFromDictionary:[JSON objectForKey:@"picture"]];
-                    viewGallery.delegate = self;
-                    [self presentViewController:navGalerry animated:YES completion:nil];
+                    
+                    [self.navigationController pushViewController:viewComment animated:YES];
                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                     [MBProgressHUD hideHUDForView:self.view animated:YES];
                 }];

@@ -21,6 +21,7 @@
 @end
 
 @implementation LXPicCommentViewController {
+    NSMutableArray *comments;
     UITapGestureRecognizer *gestureTap;
     NSInteger heightHeader;
     NSMutableArray *userTag;
@@ -74,14 +75,36 @@
     [LXUtils globalShadow:viewHeader];
 }
 
+- (void)scrollToComment {
+    if (_commentId != 0) {
+        NSInteger idx = 0;
+        for (NSInteger i = 0; i < comments.count; i++) {
+            Comment *comment = _picture.comments[i];
+            
+            if ([comment.commentId integerValue] == _commentId) {
+                idx = i;
+                break;
+            }
+        }
+        if (idx > 0) {
+            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:idx inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        }
+        
+    } else if (comments.count > 0) {
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(comments.count-1) inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self scrollToComment];
+}
+
 - (void)setPicture:(Picture *)picture {
     _picture = picture;
     if (_picture.comments) {
-        _comments = _picture.comments;
+        comments = _picture.comments;
         [self.tableView reloadData];
-        if (_comments.count > 0) {
-            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(_comments.count-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-        }
         [activityLoad stopAnimating];
         self.tableView.tableFooterView = nil;
         
@@ -90,12 +113,9 @@
         [activityLoad startAnimating];
         self.tableView.tableFooterView = _viewFooter;
         [[LatteAPIClient sharedClient] GET:urlDetail parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-            _comments = [Comment mutableArrayFromDictionary:JSON withKey:@"comments"];
+            comments = [Comment mutableArrayFromDictionary:JSON withKey:@"comments"];
             [self.tableView reloadData];
-            if (_comments.count > 0) {
-                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(_comments.count-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-            }
-            
+            [self scrollToComment];
             [activityLoad stopAnimating];
             self.tableView.tableFooterView = nil;
         } failure:nil];
@@ -212,8 +232,8 @@
                                      parameters:param
                                         success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                             Comment *comment = [Comment instanceFromDictionary:[JSON objectForKey:@"comment"]];
-                                            [_comments addObject:comment];
-                                            NSIndexPath *path = [NSIndexPath indexPathForRow:_comments.count-1 inSection:0];
+                                            [comments addObject:comment];
+                                            NSIndexPath *path = [NSIndexPath indexPathForRow:comments.count-1 inSection:0];
                                             [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationRight];
                                             [self.tableView scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionTop animated:YES];
                                             growingComment.text = @"";
@@ -248,7 +268,7 @@
 
 
 - (void)showUser:(UIButton *)sender {
-    Comment *comment = _comments[sender.tag];
+    Comment *comment = comments[sender.tag];
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
     LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
@@ -264,8 +284,8 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        Comment* comment = _comments[indexPath.row];
-        [_comments removeObject:comment];
+        Comment* comment = comments[indexPath.row];
+        [comments removeObject:comment];
         [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         
         LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
@@ -275,7 +295,7 @@
                                      parameters:[NSDictionary dictionaryWithObject:[app getToken] forKey:@"token"]
                                         success:nil
                                         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                            [_comments insertObject:comment atIndex:indexPath.row];
+                                            [comments insertObject:comment atIndex:indexPath.row];
                                             [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
                                         }];
     }
@@ -293,13 +313,13 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return _comments.count;
+    return comments.count;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LXCellComment* cellComment = [tableView dequeueReusableCellWithIdentifier:@"Comment"];
         
-    Comment *comment = _comments[indexPath.row];
+    Comment *comment = comments[indexPath.row];
     
     cellComment.comment = comment;
     
@@ -317,7 +337,7 @@
 }
 
 - (void)touchReply:(UIButton*)sender {
-    Comment *comment = _comments[sender.tag];
+    Comment *comment = comments[sender.tag];
     NSString *append = [NSString stringWithFormat:@"> %@: ", comment.user.name];
     growingComment.text = [growingComment.text stringByAppendingString:append];
     if ([userTag indexOfObject:comment.user.userId] == NSNotFound)
@@ -327,7 +347,7 @@
 }
 
 - (void)touchReport:(UIButton*)sender {
-    Comment *comment = _comments[sender.tag];
+    Comment *comment = comments[sender.tag];
     UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery" bundle:nil];
     LXReportAbuseCommentViewController *controllerReport = [storyGallery instantiateViewControllerWithIdentifier:@"ReportComment"];
     controllerReport.comment = comment;
@@ -343,7 +363,7 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Comment *comment = _comments[indexPath.row];
+    Comment *comment = comments[indexPath.row];
     NSString *strComment = comment.descriptionText;
 
     CGRect labelRect = [strComment boundingRectWithSize:CGSizeMake(261.0f, MAXFLOAT)
@@ -357,7 +377,7 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    Comment* comment = _comments[indexPath.row];
+    Comment* comment = comments[indexPath.row];
     return ([comment.user.userId integerValue] == [app.currentUser.userId integerValue]) || _picture.isOwner;
 }
 
