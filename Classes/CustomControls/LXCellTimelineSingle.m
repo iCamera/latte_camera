@@ -76,6 +76,7 @@
     buttonUser.layer.rasterizationScale = [[UIScreen mainScreen] scale];
     
     _viewWrap.layer.cornerRadius = 3;
+    _imageStatus.layer.cornerRadius = 3;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -99,6 +100,19 @@
     [buttonPic setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pic.urlMedium] placeholderImage:nil];
     _contraintHeight.constant = [LXUtils heightFromWidth:304.0 width:[pic.width floatValue] height:[pic.height floatValue]];
     [buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:_feed.user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
+    
+    _imageStatus.hidden = !pic.isOwner;
+    if (pic.isOwner) {
+        if (pic.status == PictureStatusPublic) {
+            [_imageStatus setImage:[UIImage imageNamed:@"icon28-status40-white.png"]];
+        } else if (pic.status == PictureStatusMember) {
+            [_imageStatus setImage:[UIImage imageNamed:@"icon28-status30-white.png"]];
+        } else if (pic.status == PictureStatusFriendsOnly) {
+            [_imageStatus setImage:[UIImage imageNamed:@"icon28-status10-white.png"]];
+        } else if (pic.status == PictureStatusPrivate) {
+            [_imageStatus setImage:[UIImage imageNamed:@"icon28-status0-white.png"]];
+        }
+    }
     
     [self increaseCounter];
     _scrollTags.parent = self;

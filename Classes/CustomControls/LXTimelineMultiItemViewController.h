@@ -16,6 +16,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonComment;
 @property (strong, nonatomic) IBOutlet UIButton *buttonImage;
 @property (strong, nonatomic) IBOutlet UIButton *buttonVote;
+@property (strong, nonatomic) IBOutlet UIImageView *imageStatus;
 
 @property (strong, nonatomic) Picture *pic;
 @property (assign, nonatomic) NSInteger *index;

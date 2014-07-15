@@ -29,6 +29,7 @@
 @property (strong, nonatomic) IBOutlet LXGradientView *viewDescBg;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *contraintHeight;
 @property (strong, nonatomic) IBOutlet LXScrollTag *scrollTags;
+@property (strong, nonatomic) IBOutlet UIImageView *imageStatus;
 
 @property (weak, nonatomic) UIViewController<LXGalleryViewControllerDataSource> *viewController;
 @property (strong, nonatomic) Feed *feed;

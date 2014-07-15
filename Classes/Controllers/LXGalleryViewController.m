@@ -178,6 +178,7 @@
     
     buttonEdit.layer.cornerRadius = 17.5;
     _buttonClose.layer.cornerRadius = 17.5;
+    _buttonStatus.layer.cornerRadius = 17.5;
 
     
     lxShare = [[LXShare alloc] init];
@@ -403,6 +404,19 @@
         buttonEdit.hidden = !newPicture.isOwner;
     } completion:nil];
     
+    _buttonStatus.hidden = !newPicture.isOwner;
+    if (newPicture.isOwner) {
+        if (newPicture.status == PictureStatusPublic) {
+            [_buttonStatus setImage:[UIImage imageNamed:@"icon28-status40-white.png"] forState:UIControlStateNormal];
+        } else if (newPicture.status == PictureStatusMember) {
+            [_buttonStatus setImage:[UIImage imageNamed:@"icon28-status30-white.png"] forState:UIControlStateNormal];
+        } else if (newPicture.status == PictureStatusFriendsOnly) {
+            [_buttonStatus setImage:[UIImage imageNamed:@"icon28-status10-white.png"] forState:UIControlStateNormal];
+        } else if (newPicture.status == PictureStatusPrivate) {
+            [_buttonStatus setImage:[UIImage imageNamed:@"icon28-status0-white.png"] forState:UIControlStateNormal];
+        }
+    }
+    
 
     buttonLike.selected = newPicture.isVoted;
     [buttonLike setTitle:[newPicture.voteCount stringValue] forState:UIControlStateNormal];
@@ -463,6 +477,21 @@
     [self showShare];
 }
 
+- (IBAction)touchStatus:(id)sender {
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"privacy_setting", @"公開設定")
+                                                       delegate:self
+                                              cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
+                                         destructiveButtonTitle:nil
+                                              otherButtonTitles:
+                            NSLocalizedString(@"status_public", @"公開"),
+                            NSLocalizedString(@"status_members", @"会員まで"),
+                            NSLocalizedString(@"status_friends", @"友達まで"),
+                            NSLocalizedString(@"status_private", @"非公開"), nil];
+    sheet.tag = 1;
+    sheet.delegate = self;
+    [sheet showInView:self.view];
+}
+
 - (IBAction)holdShare:(UILongPressGestureRecognizer*)sender {
     if (sender.state == UIGestureRecognizerStateBegan){
         [self showShare];
@@ -484,6 +513,7 @@
                                                cancelButtonTitle:NSLocalizedString(@"Cancel", @"")
                                           destructiveButtonTitle:destructiveButtonTitle
                                                otherButtonTitles:@"Copy URL", @"Facebook", @"Twitter", @"Email", nil];
+    action.tag = 2;
     [action showInView:self.view];
 }
 
@@ -491,8 +521,32 @@
     LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
     
     Picture *pic = currentPage.picture;
-    
-    if (actionSheet.tag == 10) {
+    if (actionSheet.tag == 1) {
+        PictureStatus status = PictureStatusPublic;
+        switch (buttonIndex) {
+            case 0:
+                status = PictureStatusPublic;
+                break;
+            case 1:
+                status = PictureStatusMember;
+                break;
+            case 2:
+                status = PictureStatusFriendsOnly;
+                break;
+            case 3:
+                status = PictureStatusPrivate;
+                break;
+            default:
+                return;
+                break;
+        }
+        
+        
+        NSString *url = [NSString stringWithFormat:@"picture/%ld/edit", [_picture.pictureId longValue]];
+        pic.status = status;
+        [self renderPicture];
+        [[LatteAPIClient sharedClient] POST:url parameters: @{@"status": [NSNumber numberWithInteger:status]} success:nil failure:nil];
+    } else if (actionSheet.tag == 10) {
         if (buttonIndex == 0) { // Remove Pic
             NSString *url = [NSString stringWithFormat:@"picture/%ld/delete", [pic.pictureId longValue]];
             
@@ -505,7 +559,7 @@
                 
             } failure:nil];
         }
-    } else {
+    } else if (actionSheet.tag == 2) {
         lxShare = [[LXShare alloc] init];
         
         lxShare.url = pic.urlWeb;

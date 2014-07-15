@@ -57,9 +57,21 @@
     [socket sendEvent:@"join" withData:[NSString stringWithFormat:@"picture_%ld", [_pic.pictureId longValue]]];
     
     [_imagePicture setImageWithURL:[NSURL URLWithString:_pic.urlMedium]];
+    
+    _imageStatus.hidden = !_pic.isOwner;
+    if (_pic.isOwner) {
+        if (_pic.status == PictureStatusPublic) {
+            [_imageStatus setImage:[UIImage imageNamed:@"icon28-status40-white.png"]];
+        } else if (_pic.status == PictureStatusMember) {
+            [_imageStatus setImage:[UIImage imageNamed:@"icon28-status30-white.png"]];
+        } else if (_pic.status == PictureStatusFriendsOnly) {
+            [_imageStatus setImage:[UIImage imageNamed:@"icon28-status10-white.png"]];
+        } else if (_pic.status == PictureStatusPrivate) {
+            [_imageStatus setImage:[UIImage imageNamed:@"icon28-status0-white.png"]];
+        }
+    }
+    
     [self renderPicture];
-//    buttonComment.hidden = !_showButton;
-//    buttonVote.hidden = !_showButton;
 
     // Do any additional setup after loading the view from its nib.
 }
