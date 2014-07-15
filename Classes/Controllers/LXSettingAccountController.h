@@ -10,5 +10,6 @@
 
 @interface LXSettingAccountController : UITableViewController
 @property (strong, nonatomic) IBOutlet UILabel *textEmail;
+@property (strong, nonatomic) IBOutlet UITableViewCell *cellCountry;
 
 @end

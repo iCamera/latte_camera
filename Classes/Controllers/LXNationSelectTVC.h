@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface LXNationSelectTVC : UITableViewController
-@property (nonatomic, strong) NSDictionary *data;
--(void)initData:(NSDictionary *)_data;
+
+@property (nonatomic, strong) NSString *key;
+
 @end

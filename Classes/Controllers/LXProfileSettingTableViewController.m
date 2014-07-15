@@ -18,6 +18,7 @@
 #import "LatteAPIClient.h"
 #import "LXUtils.h"
 #import "User.h"
+#import "LXNationSelectTVC.h"
 
 @interface LXProfileSettingTableViewController ()
 @property (strong, nonatomic) User *user;
@@ -269,6 +270,8 @@
         height = 210;
     } else if ([[segue identifier] isEqualToString:@"nationality"]){
         data = @{ @"value" : self.user.nationality ? self.user.nationality : @"" };
+        LXNationSelectTVC *viewNation = segue.destinationViewController;
+        viewNation.key = @"nationality";
     }
     
     sheet.formSheetController.presentedFormSheetSize = CGSizeMake(300, height);

@@ -24,7 +24,6 @@
 
 @implementation LXNationSelectTVC
 
-@synthesize data;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -35,20 +34,6 @@
     return self;
 }
 
--(void)initData:(NSDictionary *)_data{
-    //Convert string to date.
-    self.data = _data;
-    
-//    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-//    [dateFormat setDateFormat:@"yyyy-MM-dd"];
-//    NSDate *date = [dateFormat dateFromString:[_data valueForKey:@"value"]];
-//    if (date) {
-//        [datePicker setDate:date animated:YES];
-//    }
-//    
-//    [datePicker setMaximumDate:[NSDate date]];
-    
-}
 
 - (void)viewDidLoad
 {
@@ -83,16 +68,20 @@
     // Dispose of any resources that can be recreated.
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    //NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    //defaults setObject:countryCodes[indexPath.row] forKey:@"BrowsingCountry"];
-    //object:countryCodes[indexPath.row]];
+    LXAppDelegate* app = [LXAppDelegate currentDelegate];
     
-    //[self mz_dismissFormSheetControllerAnimated:YES completionHandler:nil];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
-    [self saveField:countryCodes[indexPath.row]];
-    //close modal window.
-    [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController *formSheetController) {
-    }];
+    [[LatteAPIClient sharedClient] POST:@"user/me/update"
+                             parameters: @{_key: countryCodes[indexPath.row]}
+                                success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                    app.currentUser = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
+                                    
+                                    [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController *formSheetController) {
+                                    }];
+
+                                } failure:nil];
 
 }
 
@@ -123,44 +112,6 @@
 
 #pragma mark - Save actions
 - (void)saveField:(NSString *)code {
-    LXAppDelegate* app = [LXAppDelegate currentDelegate];
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:[app getToken] forKey:@"token"];
-    MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.view];
-    [self.view addSubview:HUD];
-    HUD.mode = MBProgressHUDModeIndeterminate;
-    [HUD show:YES];
-    
-    NSLog(@"Code : %@", code);
-    [params setObject:code forKey:@"nationality"];
-    
-    [[LatteAPIClient sharedClient] POST:@"user/me/update"
-                             parameters: params
-                                success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                    [HUD hide:YES];
-                                    if ([[JSON objectForKey:@"status"] integerValue] == 0) {
-                                        NSString *error = @"";
-                                        NSDictionary *errors = [JSON objectForKey:@"errors"];
-                                        for (NSString *tmp in [JSON objectForKey:@"errors"]) {
-                                            error = [error stringByAppendingFormat:@"\n%@", [errors objectForKey:tmp]];
-                                        }
-                                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"エラー" message:error delegate:self cancelButtonTitle:@"YES!" otherButtonTitles:nil];
-                                        [alert show];
-                                    } else {
-                                        
-                                        app.currentUser = [User instanceFromDictionary:[JSON objectForKey:@"user"]];
-                                    }
-                                    
-                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
-                                                                                    message:error.localizedDescription
-                                                                                   delegate:nil
-                                                                          cancelButtonTitle:NSLocalizedString(@"close", "Close")
-                                                                          otherButtonTitles:nil];
-                                    [alert show];
-                                }];
-    
-    
-    
     
 }
 

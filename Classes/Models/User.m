@@ -129,6 +129,8 @@
         [self setValue:value forKey:@"_defaultShowLarge"];
     } else if ([key isEqualToString:@"nationality"]) {
         [self setValue:value forKey:@"_nationality"];
+    } else if ([key isEqualToString:@"country"]) {
+        [self setValue:value forKey:@"_country"];
     } else if ([key isEqualToString:@"nationality_public"]) {
         [self setValue:value forKey:@"_nationalityPublic"];
     } else if ([key isEqualToString:@"picture_auto_facebook_upload"]) {

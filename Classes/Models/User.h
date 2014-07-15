@@ -85,6 +85,7 @@
 @property (nonatomic, copy) NSString *profilePicture;
 @property (nonatomic, copy) NSString *profilePictureHi;
 @property (nonatomic, copy) NSString *nationality;
+@property (nonatomic, copy) NSString *country;
 @property (nonatomic, copy) NSNumber *nationalityPublic;
 @property (nonatomic, copy) NSString *mail;
 @property (nonatomic, copy) NSNumber *voteCount;
@@ -113,8 +114,3 @@
 + (NSMutableArray *)mutableArrayFromDictionary:(NSDictionary *)aDictionary withKey:(NSString *)aKey;
 + (void)updatePermission:(NSNumber *)value forObject:(NSString *)name success:(void (^)(id))success failure:(void (^)(NSError *))failure;
 @end
-
-
-
-
-
