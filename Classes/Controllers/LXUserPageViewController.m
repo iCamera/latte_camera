@@ -965,6 +965,8 @@ typedef enum {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [api2 POST:@"user/me/profile_picture" parameters:nil constructingBodyWithBlock:createForm success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
         [_buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:JSON[@"profile_picture"]]];
+        LXAppDelegate *app = [LXAppDelegate currentDelegate];
+        app.currentUser.profilePicture = JSON[@"profile_picture"];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];

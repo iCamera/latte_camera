@@ -104,6 +104,7 @@
     root.menuViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"menuController"];
 
     
+    window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     window.rootViewController = root;
     [window makeKeyAndVisible];
     

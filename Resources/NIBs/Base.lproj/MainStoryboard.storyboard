@@ -1867,6 +1867,10 @@ or you can try to send another confirmation email.</string>
                                 <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v2f-gk-gff">
                                     <rect key="frame" x="110" y="38" width="100" height="100"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="100" id="IPd-o5-UmE"/>
+                                        <constraint firstAttribute="width" constant="100" id="MLf-iB-6ml"/>
+                                    </constraints>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
                                     <size key="titleShadowOffset" width="0.0" height="1"/>
                                     <state key="normal" backgroundImage="user.gif">
@@ -1891,7 +1895,7 @@ or you can try to send another confirmation email.</string>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="v2f-gk-gff" firstAttribute="centerX" secondItem="Wuz-sA-siW" secondAttribute="centerX" id="I7m-Ex-X7D"/>
-                                <constraint firstItem="Wuz-sA-siW" firstAttribute="top" secondItem="v2f-gk-gff" secondAttribute="bottom" constant="8" symbolic="YES" id="WKc-tv-zzt"/>
+                                <constraint firstItem="Wuz-sA-siW" firstAttribute="top" secondItem="v2f-gk-gff" secondAttribute="bottom" constant="8" id="L66-bH-KEI"/>
                                 <constraint firstAttribute="centerX" secondItem="v2f-gk-gff" secondAttribute="centerX" id="xlg-ro-hYa"/>
                                 <constraint firstAttribute="centerY" secondItem="v2f-gk-gff" secondAttribute="centerY" id="zum-yX-Eck"/>
                             </constraints>

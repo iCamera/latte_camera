@@ -86,7 +86,7 @@
     [app.tracker set:kGAIScreenName
                value:@"Left Home Menu Screen"];
     [app.tracker send:[[GAIDictionaryBuilder createAppView] build]];
-    _buttonProfilePicture.layer.cornerRadius = 37;
+    _buttonProfilePicture.layer.cornerRadius = 50;
 }
 
 - (void)didReceiveMemoryWarning

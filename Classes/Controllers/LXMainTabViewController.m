@@ -93,11 +93,19 @@
     buttonUploadStatus.hidden = YES;
 
     [[UITabBar appearance] setTintColor:[UIColor colorWithRed:35.0/255.0 green:183.0/255.0 blue:223.0/255.00 alpha:1]];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([defaults objectForKey:@"LatteCameraStartUp"]) {
         if ([[defaults objectForKey:@"LatteCameraStartUp"] boolValue]) {
-            [self startCamera];
+            if (isFirst) {
+                isFirst = false;
+                [self startCamera];
+            }
+
         }
     }
 }
