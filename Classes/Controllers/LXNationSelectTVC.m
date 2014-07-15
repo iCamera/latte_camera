@@ -81,7 +81,9 @@
                                     [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController *formSheetController) {
                                     }];
 
-                                } failure:nil];
+                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                }];
 
 }
 
