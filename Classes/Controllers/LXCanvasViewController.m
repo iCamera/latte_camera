@@ -510,6 +510,7 @@
                 imageFinalThumb = [self getFinalThumb];
                 imageFinalData = [self getFinalImage];
                 [self preparePipe];
+                [HUD hide:YES];
                 [LXUtils saveImageDateToLib:imageFinalData metadata:nil];
                 
             } else {
