@@ -908,7 +908,7 @@ typedef enum {
                 
             } else {
                 UIStoryboard* storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
-                UIImagePickerController *imagePicker = [storyCamera instantiateViewControllerWithIdentifier:@"Picker"];
+                UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
                 
                 imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
                 imagePicker.delegate = self;
@@ -948,60 +948,24 @@ typedef enum {
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [picker dismissViewControllerAnimated:YES completion:nil];
     
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    
-    MBProgressHUD *progessHUD = [[MBProgressHUD alloc] initWithView:self.view];
-    [self.view addSubview:progessHUD];
-    
-    progessHUD.mode = MBProgressHUDModeDeterminate;
-    [progessHUD show:YES];
-    
     void (^createForm)(id<AFMultipartFormData>) = ^(id<AFMultipartFormData> formData) {
-        [formData appendPartWithFileData:info[UIImagePickerControllerEditedImage]
+        NSData *imageData = UIImageJPEGRepresentation(info[UIImagePickerControllerOriginalImage], 1);
+        [formData appendPartWithFileData:imageData
                                     name:@"file"
                                 fileName:@"latte.jpg"
                                 mimeType:@"image/jpeg"];
     };
     
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            [app getToken], @"token", nil];
     
-    LatteAPIClient *api = [LatteAPIClient sharedClient];
-    NSMutableURLRequest *request = [api.requestSerializer multipartFormRequestWithMethod:@"POST"
-                                                                               URLString:[[NSURL URLWithString:@"user/me/profile_picture" relativeToURL:api.baseURL] absoluteString]
-                                                                              parameters:params
-                                                               constructingBodyWithBlock:createForm error:nil];
+    LatteAPIv2Client *api2 = [LatteAPIv2Client sharedClient];
     
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    
-    void (^successUpload)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
-        progessHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
-        progessHUD.mode = MBProgressHUDModeCustomView;
-        [progessHUD hide:YES afterDelay:1];
-    };
-    
-    void (^failUpload)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
-        if([operation.response statusCode] != 200){
-            DLog(@"Upload Failed");
-            return;
-        }
-        DLog(@"error: %@", [operation error]);
-        progessHUD.mode = MBProgressHUDModeText;
-        progessHUD.labelText = @"Error";
-        progessHUD.margin = 10.f;
-        progessHUD.yOffset = 150.f;
-        progessHUD.removeFromSuperViewOnHide = YES;
-        
-        [progessHUD hide:YES afterDelay:2];
-    };
-    
-    [operation setCompletionBlockWithSuccess: successUpload failure: failUpload];
-    
-    [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
-        progessHUD.progress = (float)totalBytesWritten/(float)totalBytesExpectedToWrite;
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [api2 POST:@"user/me/profile_picture" parameters:nil constructingBodyWithBlock:createForm success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+        [_buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:JSON[@"profile_picture"]]];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
-    
-    [operation start];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {

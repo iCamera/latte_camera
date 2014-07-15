@@ -210,7 +210,7 @@
     [picker dismissViewControllerAnimated:NO completion:nil];
     
     void (^createForm)(id<AFMultipartFormData>) = ^(id<AFMultipartFormData> formData) {
-        NSData *imageData = UIImagePNGRepresentation(info[UIImagePickerControllerOriginalImage]);
+        NSData *imageData = UIImageJPEGRepresentation(info[UIImagePickerControllerOriginalImage], 1);
         [formData appendPartWithFileData:imageData
                                     name:@"file"
                                 fileName:@"latte.jpg"
