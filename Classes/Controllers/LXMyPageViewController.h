@@ -22,7 +22,6 @@
 - (IBAction)showMenu;
 
 - (IBAction)switchTab:(UIButton*)sender;
-- (IBAction)switchTimeline:(UIButton*)sender;
 - (IBAction)refresh:(id)sender;
 - (void)reloadView;
 

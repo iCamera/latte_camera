@@ -31,7 +31,8 @@
 typedef enum {
     kTimelineAll = 10,
     kTimelineFriends = 12,
-    kTimelineFollowing = 13
+    kTimelineFollowing = 13,
+    kTimelineMe = 11
 } LatteTimeline;
 
 typedef enum {
@@ -310,35 +311,43 @@ typedef enum {
 }
 
 - (IBAction)switchTab:(UIButton*)sender {
-    [UIView transitionWithView:self.tableView.tableHeaderView
-                      duration:kGlobalAnimationSpeed
-                       options:UIViewAnimationOptionTransitionCrossDissolve
-                    animations:^{
-                        _buttonTag.selected = NO;
-                        _buttonUser.selected = NO;
-                        sender.selected = YES;
-                    }
-                    completion:nil];
-    
-    switch (sender.tag) {
-        case 0:
-            homeTab = kHomeUser;
-            [self loadMore:YES];
-
-            break;
-        case 1:
-            homeTab = kHomeTag;
-            [self loadMoreTag:YES];
-            break;
-        default:
-            break;
-            
+    if (_buttonUser.selected && sender.tag == 0) {
+        UIActionSheet *actionSwitchTimeline = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Timeline", @"")
+                                                                          delegate:self
+                                                                 cancelButtonTitle:NSLocalizedString(@"Close", @"")
+                                                            destructiveButtonTitle:nil
+                                                                 otherButtonTitles:NSLocalizedString(@"All", @""), NSLocalizedString(@"Follow", @""), NSLocalizedString(@"Mutual Follow", @""), NSLocalizedString(@"Me Only", @""), nil];
+        [actionSwitchTimeline showFromTabBar:self.tabBarController.tabBar];
+    } else {
+        [UIView transitionWithView:self.tableView.tableHeaderView
+                          duration:kGlobalAnimationSpeed
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:^{
+                            _buttonTag.selected = NO;
+                            _buttonUser.selected = NO;
+                            sender.selected = YES;
+                        }
+                        completion:nil];
+        
+        switch (sender.tag) {
+            case 0:
+                homeTab = kHomeUser;
+                [self loadMore:YES];
+                
+                break;
+            case 1:
+                homeTab = kHomeTag;
+                [self loadMoreTag:YES];
+                break;
+            default:
+                break;
+                
+        }
     }
 }
 
-
-- (IBAction)switchTimeline:(UIButton*)sender {
-    switch (sender.tag) {
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
         case 0:
             timelineKind = kTimelineAll;
             break;
@@ -348,14 +357,17 @@ typedef enum {
         case 2:
             timelineKind = kTimelineFriends;
             break;
+        case 3:
+            timelineKind = kTimelineMe;
+            break;
         default:
             break;
             
     }
     
     [self loadMore:YES];
-    
 }
+
 
 - (IBAction)touchRightBar:(UISegmentedControl*)sender {
     if (sender.selectedSegmentIndex == 0) {
