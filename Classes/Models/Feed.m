@@ -34,6 +34,17 @@
     return ret;
 }
 
+- (NSArray *)tags {
+    if ([model integerValue] != 1) return nil;
+    NSMutableArray *ret = [[NSMutableArray alloc] init];
+    for (Picture *picture in targets) {
+        if (picture.tagsOld.count > 0) {
+            [ret addObjectsFromArray:picture.tagsOld];
+        }
+    }
+    return ret;
+}
+
 - (void)setAttributesFromDictionary:(NSDictionary *)aDictionary {
 
     if (![aDictionary isKindOfClass:[NSDictionary class]]) {

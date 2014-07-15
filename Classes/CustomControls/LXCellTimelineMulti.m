@@ -18,7 +18,7 @@
 #import "LXGalleryViewController.h"
 #import "LXPicVoteCollectionController.h"
 #import "LXPicCommentViewController.h"
-
+#import "LXTagHome.h"
 
 @implementation LXCellTimelineMulti {
     NSMutableArray *thumbControllers;
@@ -90,6 +90,9 @@
     labelTitle.text = feed.user.name;
     labelUserDate.text = [LXUtils timeDeltaFromNow:feed.updatedAt];
     
+    _scrollTags.parent = self;
+    _scrollTags.tags = _feed.tags;
+    
     
     [LXUtils setNationalityOfUser:feed.user forImage:imageNationality nextToLabel:labelTitle];
 }
@@ -135,6 +138,18 @@
     } else {
         [LXUtils toggleLike:sender ofPicture:picture];
     }
+}
+
+- (void)showNormalTag:(UIButton*)button {
+    NSString *tag = _feed.tags[0];
+    
+    UIStoryboard *storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                        bundle:nil];
+    
+    LXTagHome *viewTag = [storyMain instantiateViewControllerWithIdentifier:@"TagHome"];
+    viewTag.tag = tag;
+    
+    [_parent.navigationController pushViewController:viewTag animated:YES];
 }
 
 @end

@@ -4,16 +4,16 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LXCellTimelineMulti"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Multi" rowHeight="260" id="qSZ-3j-jQu" customClass="LXCellTimelineMulti">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="260"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Multi" rowHeight="262" id="qSZ-3j-jQu" customClass="LXCellTimelineMulti">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="261"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qSZ-3j-jQu" id="8Vf-W0-a8C">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="259"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="260"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dLJ-g2-uPx">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dLJ-g2-uPx">
                         <rect key="frame" x="8" y="8" width="304" height="252"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -46,10 +46,17 @@
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
-                    <scrollView multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cWc-V3-yeg">
+                    <scrollView multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cWc-V3-yeg">
                         <rect key="frame" x="8" y="60" width="304" height="200"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="200" id="B9a-IF-53n"/>
+                        </constraints>
+                    </scrollView>
+                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d6C-Z3-29s" customClass="LXScrollTag">
+                        <rect key="frame" x="8" y="60" width="304" height="37"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </scrollView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="81W-bV-dZq">
                         <rect key="frame" x="82" y="17" width="16" height="16"/>
@@ -63,10 +70,17 @@
                     </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="dLJ-g2-uPx" firstAttribute="top" secondItem="8Vf-W0-a8C" secondAttribute="top" constant="8" id="1b1-8g-B7L"/>
+                    <constraint firstAttribute="bottom" secondItem="cWc-V3-yeg" secondAttribute="bottom" id="HOE-U5-Nln"/>
                     <constraint firstItem="Ijy-pY-iTJ" firstAttribute="leading" secondItem="aYS-oY-FVA" secondAttribute="trailing" constant="6" id="HVE-5a-oQx"/>
+                    <constraint firstItem="dLJ-g2-uPx" firstAttribute="leading" secondItem="8Vf-W0-a8C" secondAttribute="leading" constant="8" id="Iyp-CK-n7J"/>
                     <constraint firstItem="aYS-oY-FVA" firstAttribute="leading" secondItem="8Vf-W0-a8C" secondAttribute="leading" constant="16" id="QmG-l6-6dg"/>
+                    <constraint firstItem="cWc-V3-yeg" firstAttribute="leading" secondItem="8Vf-W0-a8C" secondAttribute="leading" constant="8" id="SWJ-1R-PnI"/>
+                    <constraint firstAttribute="trailing" secondItem="cWc-V3-yeg" secondAttribute="trailing" constant="8" id="ZxB-HH-1Af"/>
                     <constraint firstItem="81W-bV-dZq" firstAttribute="leading" secondItem="Ijy-pY-iTJ" secondAttribute="trailing" constant="8" id="dUH-Lb-pZF"/>
+                    <constraint firstAttribute="trailing" secondItem="dLJ-g2-uPx" secondAttribute="trailing" constant="8" id="l5B-5x-TYE"/>
                     <constraint firstItem="aYS-oY-FVA" firstAttribute="top" secondItem="8Vf-W0-a8C" secondAttribute="top" constant="16" id="pkb-wY-qSd"/>
+                    <constraint firstAttribute="bottom" secondItem="dLJ-g2-uPx" secondAttribute="bottom" id="vwU-BE-gVR"/>
                     <constraint firstItem="Ijy-pY-iTJ" firstAttribute="top" secondItem="8Vf-W0-a8C" secondAttribute="top" constant="16" id="wEv-6k-naL"/>
                     <constraint firstItem="81W-bV-dZq" firstAttribute="top" secondItem="8Vf-W0-a8C" secondAttribute="top" constant="17" id="zo5-6G-cC7"/>
                 </constraints>
@@ -78,6 +92,7 @@
                 <outlet property="labelTitle" destination="Ijy-pY-iTJ" id="fBE-cv-U35"/>
                 <outlet property="labelUserDate" destination="l4S-xG-sWL" id="XkR-cl-rlM"/>
                 <outlet property="scrollPic" destination="cWc-V3-yeg" id="nkH-kI-oPC"/>
+                <outlet property="scrollTags" destination="d6C-Z3-29s" id="Sjl-Yo-scP"/>
                 <outlet property="viewWrap" destination="dLJ-g2-uPx" id="IIS-dY-7l7"/>
             </connections>
         </tableViewCell>

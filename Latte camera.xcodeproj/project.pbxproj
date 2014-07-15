@@ -199,6 +199,7 @@
 		881C01921973EADD009ED466 /* icon48-noon.png in Resources */ = {isa = PBXBuildFile; fileRef = 881C01201973EADD009ED466 /* icon48-noon.png */; };
 		881C01931973EADD009ED466 /* icon48-noon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 881C01211973EADD009ED466 /* icon48-noon@2x.png */; };
 		881C01961973F62B009ED466 /* LXTabButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 881C01951973F62B009ED466 /* LXTabButton.m */; };
+		881C01991974D8FE009ED466 /* LXScrollTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 881C01981974D8FE009ED466 /* LXScrollTag.m */; };
 		882054DC193816EF00D741BB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 882054DB193816EF00D741BB /* Images.xcassets */; };
 		882054F219381A7A00D741BB /* Icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 882054E219381A7A00D741BB /* Icon-40.png */; };
 		882054F319381A7A00D741BB /* Icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 882054E319381A7A00D741BB /* Icon-40@2x.png */; };
@@ -2242,6 +2243,8 @@
 		881C01211973EADD009ED466 /* icon48-noon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon48-noon@2x.png"; sourceTree = "<group>"; };
 		881C01941973F62B009ED466 /* LXTabButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXTabButton.h; sourceTree = "<group>"; };
 		881C01951973F62B009ED466 /* LXTabButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXTabButton.m; sourceTree = "<group>"; };
+		881C01971974D8FE009ED466 /* LXScrollTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXScrollTag.h; sourceTree = "<group>"; };
+		881C01981974D8FE009ED466 /* LXScrollTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXScrollTag.m; sourceTree = "<group>"; };
 		882054DB193816EF00D741BB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Latte camera/Images.xcassets"; sourceTree = SOURCE_ROOT; };
 		882054E219381A7A00D741BB /* Icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40.png"; sourceTree = "<group>"; };
 		882054E319381A7A00D741BB /* Icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40@2x.png"; sourceTree = "<group>"; };
@@ -5377,6 +5380,8 @@
 				881C00AA1973B608009ED466 /* LXStreamFooter.m */,
 				881C01941973F62B009ED466 /* LXTabButton.h */,
 				881C01951973F62B009ED466 /* LXTabButton.m */,
+				881C01971974D8FE009ED466 /* LXScrollTag.h */,
+				881C01981974D8FE009ED466 /* LXScrollTag.m */,
 			);
 			path = CustomControls;
 			sourceTree = "<group>";
@@ -8883,6 +8888,7 @@
 				8849E00019614BA200578987 /* LXTagHome.m in Sources */,
 				882055041938550D00D741BB /* LXPicVoteCollectionController.m in Sources */,
 				8C0E16FF193DD19600B50887 /* LXCompanyPolicyViewController.m in Sources */,
+				881C01991974D8FE009ED466 /* LXScrollTag.m in Sources */,
 				88963E8E195A731B000B1DDC /* LXCountrySelectViewController.m in Sources */,
 				88AAA2C01769EC52007610BB /* UIImage+Resize.m in Sources */,
 				884ACB2418EEB8F900B2924B /* LXStreamBrickCell.m in Sources */,

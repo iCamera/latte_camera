@@ -10,6 +10,7 @@
 #import "Feed.h"
 #import "LXGalleryViewController.h"
 #import "LXGradientView.h"
+#import "LXScrollTag.h"
 
 @interface LXCellTimelineSingle : UITableViewCell<UIActionSheetDelegate>
 
@@ -27,7 +28,7 @@
 @property (strong, nonatomic) IBOutlet UIView *viewWrap;
 @property (strong, nonatomic) IBOutlet LXGradientView *viewDescBg;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *contraintHeight;
-@property (strong, nonatomic) IBOutlet UIScrollView *scrollTags;
+@property (strong, nonatomic) IBOutlet LXScrollTag *scrollTags;
 
 @property (weak, nonatomic) UIViewController<LXGalleryViewControllerDataSource> *viewController;
 @property (strong, nonatomic) Feed *feed;

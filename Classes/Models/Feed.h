@@ -24,5 +24,6 @@
 + (Feed *)instanceFromDictionary:(NSDictionary *)aDictionary;
 + (NSMutableArray *)mutableArrayFromPictures:(NSArray *)pictures;
 - (void)setAttributesFromDictionary:(NSDictionary *)aDictionary;
+- (NSArray*)tags;
 
 @end

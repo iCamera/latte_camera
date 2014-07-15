@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 
 #import "LXGalleryViewController.h"
+#import "LXScrollTag.h"
 
 @interface LXCellInfoTag : UITableViewCell
-@property (strong, nonatomic) IBOutlet UIScrollView *scrollTag;
+@property (strong, nonatomic) IBOutlet LXScrollTag *scrollTag;
 @property (strong, nonatomic) NSArray *tags;
 
 @property (assign, nonatomic) BOOL isModal;

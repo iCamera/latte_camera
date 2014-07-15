@@ -10,12 +10,14 @@
 
 #import "Feed.h"
 #import "LXGalleryViewController.h"
+#import "LXScrollTag.h"
 
 @interface LXCellTimelineMulti : UITableViewCell {
     BOOL showControl;
 }
 @property (strong, nonatomic) IBOutlet UIButton *buttonUser;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollPic;
+@property (strong, nonatomic) IBOutlet LXScrollTag *scrollTags;
 @property (strong, nonatomic) IBOutlet UILabel *labelTitle;
 @property (strong, nonatomic) IBOutlet UILabel *labelUserDate;
 
