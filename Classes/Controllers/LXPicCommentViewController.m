@@ -73,6 +73,27 @@
     userTag = [[NSMutableArray alloc] init];
     
     [LXUtils globalShadow:viewHeader];
+    
+    if (_picture.comments) {
+        comments = _picture.comments;
+        [self.tableView reloadData];
+        [activityLoad stopAnimating];
+        self.tableView.tableFooterView = nil;
+        
+    } else {
+        NSString *urlDetail = [NSString stringWithFormat:@"picture/%ld", [_picture.pictureId longValue]];
+        [activityLoad startAnimating];
+        self.tableView.tableFooterView = _viewFooter;
+        [[LatteAPIClient sharedClient] GET:urlDetail parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+            comments = [Comment mutableArrayFromDictionary:JSON withKey:@"comments"];
+            [self.tableView reloadData];
+            [self scrollToComment];
+            [activityLoad stopAnimating];
+            self.tableView.tableFooterView = nil;
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [activityLoad stopAnimating];
+        }];
+    }
 }
 
 - (void)scrollToComment {
@@ -98,28 +119,6 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self scrollToComment];
-}
-
-- (void)setPicture:(Picture *)picture {
-    _picture = picture;
-    if (_picture.comments) {
-        comments = _picture.comments;
-        [self.tableView reloadData];
-        [activityLoad stopAnimating];
-        self.tableView.tableFooterView = nil;
-        
-    } else {
-        NSString *urlDetail = [NSString stringWithFormat:@"picture/%ld", [_picture.pictureId longValue]];
-        [activityLoad startAnimating];
-        self.tableView.tableFooterView = _viewFooter;
-        [[LatteAPIClient sharedClient] GET:urlDetail parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-            comments = [Comment mutableArrayFromDictionary:JSON withKey:@"comments"];
-            [self.tableView reloadData];
-            [self scrollToComment];
-            [activityLoad stopAnimating];
-            self.tableView.tableFooterView = nil;
-        } failure:nil];
-    }
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification

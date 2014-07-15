@@ -59,21 +59,66 @@
                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="3W1-ff-YM5">
-                                    <rect key="frame" x="20" y="8" width="280" height="29"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                    <segments>
-                                        <segment title="" image="icon_calendar_lbrown.png"/>
-                                        <segment title="" image="icon_trend_ltrend.png"/>
-                                        <segment title="Daily"/>
-                                        <segment title="Weekly"/>
-                                    </segments>
-                                    <color key="tintColor" red="0.20784313730000001" green="0.18823529410000001" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c2W-ee-cym" customClass="LXTabButton">
+                                    <rect key="frame" x="0.0" y="0.0" width="80" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="icon36-calendar-brown.png">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="selected" image="icon36-calendar-blue.png">
+                                        <color key="titleColor" red="0.37254902720451355" green="0.69411766529083252" blue="0.67843139171600342" alpha="1" colorSpace="deviceRGB"/>
+                                    </state>
                                     <connections>
-                                        <action selector="touchTab:" destination="HL7-KM-o46" eventType="valueChanged" id="H4k-U2-rOr"/>
+                                        <action selector="touchTab:" destination="HL7-KM-o46" eventType="touchUpInside" id="Khb-Y9-YxX"/>
                                     </connections>
-                                </segmentedControl>
+                                </button>
+                                <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ubU-vN-IPO" customClass="LXTabButton">
+                                    <rect key="frame" x="80" y="0.0" width="80" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="icon36-calendar-brown.png">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="selected" image="icon36-calendar-blue.png">
+                                        <color key="titleColor" red="0.37254902720451355" green="0.69411766529083252" blue="0.67843139171600342" alpha="1" colorSpace="deviceRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="touchTab:" destination="HL7-KM-o46" eventType="touchUpInside" id="pZ8-7g-HCE"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7vd-US-Hyy" customClass="LXTabButton">
+                                    <rect key="frame" x="160" y="0.0" width="80" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <state key="normal" title="Daily">
+                                        <color key="titleColor" red="0.2078431547" green="0.18823531269999999" blue="0.13333334029999999" alpha="1" colorSpace="deviceRGB"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="selected">
+                                        <color key="titleColor" red="0.37254902720451355" green="0.69411766529083252" blue="0.67843139171600342" alpha="1" colorSpace="deviceRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="touchTab:" destination="HL7-KM-o46" eventType="touchUpInside" id="jZD-aS-LMd"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ly0-yj-QHN" customClass="LXTabButton">
+                                    <rect key="frame" x="240" y="0.0" width="80" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <state key="normal" title="Weekly">
+                                        <color key="titleColor" red="0.2078431547" green="0.18823531269999999" blue="0.13333334029999999" alpha="1" colorSpace="deviceRGB"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="selected">
+                                        <color key="titleColor" red="0.37254902720451355" green="0.69411766529083252" blue="0.67843139171600342" alpha="1" colorSpace="deviceRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="touchTab:" destination="HL7-KM-o46" eventType="touchUpInside" id="Gv7-U9-Ngh"/>
+                                    </connections>
+                                </button>
                             </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="xvn-h8-jAx">
                             <rect key="frame" x="0.0" y="289" width="320" height="60"/>
@@ -270,9 +315,12 @@
                     </refreshControl>
                     <connections>
                         <outlet property="buttonCountry" destination="EH2-al-meD" id="ThX-lZ-Gxj"/>
+                        <outlet property="buttonTabCalendar" destination="c2W-ee-cym" id="lFg-ql-Fpk"/>
+                        <outlet property="buttonTabDaily" destination="7vd-US-Hyy" id="Leu-kP-yzR"/>
+                        <outlet property="buttonTabTrend" destination="ubU-vN-IPO" id="kel-jC-7KT"/>
+                        <outlet property="buttonTabWeekly" destination="Ly0-yj-QHN" id="GjS-br-Cvo"/>
                         <outlet property="imageNopict" destination="R0Z-F7-Jyf" id="C2J-Se-sFY"/>
                         <outlet property="loadIndicator" destination="9Bq-Yq-rnc" id="XU9-cy-VSr"/>
-                        <outlet property="segmentView" destination="3W1-ff-YM5" id="UIH-gm-DSm"/>
                         <outlet property="viewTab" destination="qhJ-TB-csr" id="ktt-CA-fl7"/>
                     </connections>
                 </tableViewController>
@@ -385,22 +433,62 @@
                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="gqS-1r-8jL">
-                                    <rect key="frame" x="20" y="8" width="280" height="29"/>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rtd-Yg-sFx" customClass="LXTabButton">
+                                    <rect key="frame" x="0.0" y="0.0" width="64" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <segments>
-                                        <segment title="" image="notify_all.png"/>
-                                        <segment title="" image="notify_like.png"/>
-                                        <segment title="" image="notify_comment.png"/>
-                                        <segment title="" image="notify_follow.png"/>
-                                        <segment title="" image="notify_info.png"/>
-                                    </segments>
-                                    <color key="tintColor" red="0.20784313730000001" green="0.18823529410000001" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
+                                    <state key="normal" image="icon36-menu-brown.png">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="selected" image="icon36-menu-blue.png"/>
                                     <connections>
-                                        <action selector="switchTab:" destination="muX-Hh-Ats" eventType="valueChanged" id="jlP-2C-VyQ"/>
+                                        <action selector="switchTab:" destination="muX-Hh-Ats" eventType="touchUpInside" id="hTH-Nr-Kdk"/>
                                     </connections>
-                                </segmentedControl>
+                                </button>
+                                <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sCA-mC-hmb" customClass="LXTabButton">
+                                    <rect key="frame" x="64" y="0.0" width="64" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="icon28-like-brown.png">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="selected" image="icon28-like-blue.png"/>
+                                    <connections>
+                                        <action selector="switchTab:" destination="muX-Hh-Ats" eventType="touchUpInside" id="dvK-A1-d3y"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0nd-mh-c4W" customClass="LXTabButton">
+                                    <rect key="frame" x="128" y="0.0" width="64" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="icon28-comment-brown.png">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="selected" image="icon28-comment-blue.png"/>
+                                    <connections>
+                                        <action selector="switchTab:" destination="muX-Hh-Ats" eventType="touchUpInside" id="Qim-9Y-sPW"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hKI-wG-LLz" customClass="LXTabButton">
+                                    <rect key="frame" x="192" y="0.0" width="64" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="icon40-follow-yellow.png">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="switchTab:" destination="muX-Hh-Ats" eventType="touchUpInside" id="2og-f9-9l3"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LLs-SG-FqR" customClass="LXTabButton">
+                                    <rect key="frame" x="256" y="0.0" width="64" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="icon28-info-brown.png">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="selected" image="icon28-info-blue.png"/>
+                                    <connections>
+                                        <action selector="switchTab:" destination="muX-Hh-Ats" eventType="touchUpInside" id="B3K-XN-Po7"/>
+                                    </connections>
+                                </button>
                             </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Notify" rowHeight="60" id="xwb-NW-Qpl" customClass="LXCellNotify">
@@ -552,6 +640,11 @@
                         </connections>
                     </refreshControl>
                     <connections>
+                        <outlet property="buttonTabAll" destination="Rtd-Yg-sFx" id="Uph-EF-2Eh"/>
+                        <outlet property="buttonTabAnnouncement" destination="LLs-SG-FqR" id="lJb-gg-uD7"/>
+                        <outlet property="buttonTabComment" destination="0nd-mh-c4W" id="aMt-DI-Onf"/>
+                        <outlet property="buttonTabFollow" destination="hKI-wG-LLz" id="Yio-TT-v61"/>
+                        <outlet property="buttonTabLike" destination="sCA-mC-hmb" id="Pnl-eL-sC5"/>
                         <segue destination="Exj-Cm-MJZ" kind="push" identifier="Announcement" id="smk-EV-Xaq"/>
                     </connections>
                 </tableViewController>
@@ -991,7 +1084,7 @@
                     <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" keyboardDismissMode="interactive" dataMode="prototypes" id="5Av-RC-rwD">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.90588241820000004" green="0.89411771299999998" blue="0.85490202900000001" alpha="1" colorSpace="deviceRGB"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="4" minimumInteritemSpacing="4" id="JDe-yf-edu">
                             <size key="itemSize" width="50" height="50"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -1988,6 +2081,12 @@ or you can try to send another confirmation email.</string>
         <image name="bt_info.png" width="25" height="25"/>
         <image name="camera.png" width="25" height="20"/>
         <image name="default-cover.gif" width="1200" height="100"/>
+        <image name="icon28-comment-blue.png" width="14" height="14"/>
+        <image name="icon28-comment-brown.png" width="14" height="14"/>
+        <image name="icon28-info-blue.png" width="14" height="14"/>
+        <image name="icon28-info-brown.png" width="14" height="14"/>
+        <image name="icon28-like-blue.png" width="14" height="14"/>
+        <image name="icon28-like-brown.png" width="14" height="14"/>
         <image name="icon36-calendar-blue.png" width="18" height="18"/>
         <image name="icon36-calendar-brown.png" width="18" height="18"/>
         <image name="icon36-grid-blue.png" width="18" height="18"/>
@@ -2000,7 +2099,6 @@ or you can try to send another confirmation email.</string>
         <image name="icon40-follow-yellow.png" width="20" height="20"/>
         <image name="icon40-followed-blue.png" width="20" height="20"/>
         <image name="icon_area.png" width="15" height="15"/>
-        <image name="icon_calendar_lbrown.png" width="15" height="15"/>
         <image name="icon_follow_m.png" width="17" height="15"/>
         <image name="icon_follow_s.png" width="14" height="12"/>
         <image name="icon_friend_m.png" width="19" height="14"/>
@@ -2013,13 +2111,7 @@ or you can try to send another confirmation email.</string>
         <image name="icon_rank.png" width="20" height="21"/>
         <image name="icon_setting_m_ocher.png" width="15" height="15"/>
         <image name="icon_tag_m.png" width="16" height="16"/>
-        <image name="icon_trend_ltrend.png" width="13" height="15"/>
         <image name="nopict.png" width="50" height="50"/>
-        <image name="notify_all.png" width="19" height="15"/>
-        <image name="notify_comment.png" width="15" height="15"/>
-        <image name="notify_follow.png" width="15" height="15"/>
-        <image name="notify_info.png" width="15" height="15"/>
-        <image name="notify_like.png" width="15" height="15"/>
         <image name="user.gif" width="100" height="100"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -2028,9 +2120,9 @@ or you can try to send another confirmation email.</string>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="gji-Cu-gYb"/>
-        <segue reference="gJK-ni-fiN"/>
-        <segue reference="kV3-JH-Oaz"/>
         <segue reference="nqr-PV-YRj"/>
+        <segue reference="kV3-JH-Oaz"/>
+        <segue reference="gJK-ni-fiN"/>
+        <segue reference="gji-Cu-gYb"/>
     </inferredMetricsTieBreakers>
 </document>

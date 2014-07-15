@@ -8,11 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "LXGalleryViewController.h"
+#import "LXTabButton.h"
 
 @interface LXNotifySideViewController : UITableViewController<LXGalleryViewControllerDataSource>
+@property (strong, nonatomic) IBOutlet LXTabButton *buttonTabAll;
+@property (strong, nonatomic) IBOutlet LXTabButton *buttonTabLike;
+@property (strong, nonatomic) IBOutlet LXTabButton *buttonTabComment;
+@property (strong, nonatomic) IBOutlet LXTabButton *buttonTabFollow;
+@property (strong, nonatomic) IBOutlet LXTabButton *buttonTabAnnouncement;
 
 - (IBAction)showMenu;
-- (IBAction)switchTab:(UISegmentedControl *)sender;
+- (IBAction)switchTab:(UIButton *)sender;
 - (IBAction)refresh:(id)sender;
 - (IBAction)showSetting:(id)sender;
 - (void)reloadView;

@@ -38,10 +38,13 @@
     if ([model integerValue] != 1) return nil;
     NSMutableArray *ret = [[NSMutableArray alloc] init];
     for (Picture *picture in targets) {
-        if (picture.tagsOld.count > 0) {
-            [ret addObjectsFromArray:picture.tagsOld];
+        for (NSString *tag in picture.tagsOld) {
+            if (![ret containsObject:tag]) {
+                [ret addObject:tag];
+            }
         }
     }
+    
     return ret;
 }
 

@@ -298,8 +298,21 @@
     return 90;
 }
 
-- (IBAction)switchTab:(UISegmentedControl *)sender {
-    currentTab = sender.selectedSegmentIndex;
+- (IBAction)switchTab:(UIButton *)sender {
+    [UIView transitionWithView:self.tableView.tableHeaderView
+                      duration:kGlobalAnimationSpeed
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^{
+                        _buttonTabAll.selected = NO;
+                        _buttonTabAnnouncement.selected = NO;
+                        _buttonTabComment.selected = NO;
+                        _buttonTabFollow.selected = NO;
+                        _buttonTabLike.selected = NO;
+                        sender.selected = YES;
+                    }
+                    completion:nil];
+    
+    currentTab = sender.tag;
     [self loadNotify:YES setRead:YES];
 }
 

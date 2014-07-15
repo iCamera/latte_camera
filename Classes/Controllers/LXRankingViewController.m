@@ -39,12 +39,8 @@ typedef enum {
     NSString *browsingCountry;
 }
 
-@synthesize buttonWeekly;
-@synthesize buttonMonthly;
-@synthesize buttonCalendar;
 @synthesize viewTab;
 @synthesize loadIndicator;
-@synthesize buttonDaily;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -298,17 +294,22 @@ typedef enum {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (IBAction)touchTab:(UISegmentedControl*)sender {
+- (IBAction)touchTab:(UIButton*)sender {
     loadEnded = false;
     
-    buttonDaily.selected = false;
-    buttonWeekly.selected = false;
-    buttonMonthly.selected = false;
-    buttonCalendar.selected = false;
+    [UIView transitionWithView:self.tableView.tableHeaderView
+                      duration:kGlobalAnimationSpeed
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^{
+                        _buttonTabCalendar.selected = false;
+                        _buttonTabDaily.selected = false;
+                        _buttonTabTrend.selected = false;
+                        _buttonTabWeekly.selected = false;
+                        
+                        sender.selected = true;
+                    } completion:nil];
     
-    sender.selected = true;
-    
-    switch (sender.selectedSegmentIndex) {
+    switch (sender.tag) {
         case 0:{
             ranktype = @"calendar";
             rankpage = 1;
