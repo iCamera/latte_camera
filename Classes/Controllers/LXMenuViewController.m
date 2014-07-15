@@ -22,6 +22,7 @@
 #import "UIImageView+AFNetworking.h"
 
 #import "LXUserPageViewController.h"
+#import "LXPhotoGridCVC.h"
 
 //#import "UIStoryboard.h"
 
@@ -109,11 +110,12 @@
     // Setting
     [self.frostedViewController hideMenuViewController];
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     
     if ([tableView cellForRowAtIndexPath:indexPath] == menuFollowingTags) {
         //app.viewMainTab.selectedIndex = 4;
         UINavigationController *navCurrent = (UINavigationController*)app.viewMainTab.selectedViewController;
-        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    
         [navCurrent pushViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"FollowingTag"] animated:YES];
     } else if ([tableView cellForRowAtIndexPath:indexPath] ==  menuSettings) {
         UIStoryboard* storySetting = [UIStoryboard storyboardWithName:@"Setting" bundle:nil];
@@ -129,13 +131,14 @@
     } else if ([tableView cellForRowAtIndexPath:indexPath] == menuSearch) {
         //app.viewMainTab.selectedIndex = 4;
         UINavigationController *navCurrent = (UINavigationController*)app.viewMainTab.selectedViewController;
-        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+
         [navCurrent pushViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"Search"] animated:YES];
     } else if ([tableView cellForRowAtIndexPath:indexPath] == menuLikedPhotos) {
         //app.viewMainTab.selectedIndex = 4;
         UINavigationController *navCurrent = (UINavigationController*)app.viewMainTab.selectedViewController;
-        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-        [navCurrent pushViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"LikedPhotos"] animated:YES];
+        LXPhotoGridCVC *viewLikedGrid = [mainStoryboard instantiateViewControllerWithIdentifier:@"PhotoGrid"];
+        viewLikedGrid.gridType = kPhotoGridUserLiked;
+        [navCurrent pushViewController:viewLikedGrid animated:YES];
     } else if ([tableView cellForRowAtIndexPath:indexPath] == menuLogin) {
         UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"Authentication" bundle:nil];
         [self presentViewController:[storyMain instantiateViewControllerWithIdentifier:@"LoginModal"] animated:YES completion:nil];

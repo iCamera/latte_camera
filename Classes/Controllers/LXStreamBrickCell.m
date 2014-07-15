@@ -50,14 +50,11 @@
 
 }
 
-- (void)setFeed:(Feed *)feed {
-    _feed = feed;
-    Picture *picture = feed.targets[0];
-
+- (void)setPicture:(Picture *)picture {
+    _picture = picture;
+    
     _imagePicture.image = nil;
     [_imagePicture setImageWithURL:[NSURL URLWithString:picture.urlSmall]];
-    [_buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:feed.user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
-    _labelUsername.text = feed.user.name;
     
     NSString *urlCounter = [NSString stringWithFormat:@"picture/counter/%ld/%ld",
                             [picture.pictureId longValue],
@@ -66,10 +63,16 @@
     [[LatteAPIClient sharedClient] GET:urlCounter parameters:nil success:nil failure:nil];
 }
 
+- (void)setUser:(User *)user {
+    _user = user;
+    
+    [_buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
+    _labelUsername.text = user.name;
+
+}
+
 
 - (IBAction)touchPicture:(UIButton *)sender {
-    Picture *picture = _feed.targets[0];
-    
     UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                            bundle:nil];
     UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
@@ -78,8 +81,8 @@
     
     LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
     viewGallery.delegate = _delegate;
-    viewGallery.picture = picture;
-    viewGallery.user = _feed.user;
+    viewGallery.picture = _picture;
+    viewGallery.user = _user;
     
     [_delegate presentViewController:navGalerry animated:YES completion:nil];
 }
@@ -89,7 +92,7 @@
                                                              bundle:nil];
     LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
     
-    viewUserPage.user = _feed.user;
+    viewUserPage.user = _user;
     
     [_delegate.navigationController pushViewController:viewUserPage animated:YES];
 }

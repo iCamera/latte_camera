@@ -200,6 +200,9 @@
 		881C01931973EADD009ED466 /* icon48-noon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 881C01211973EADD009ED466 /* icon48-noon@2x.png */; };
 		881C01961973F62B009ED466 /* LXTabButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 881C01951973F62B009ED466 /* LXTabButton.m */; };
 		881C01991974D8FE009ED466 /* LXScrollTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 881C01981974D8FE009ED466 /* LXScrollTag.m */; };
+		881C019B197570E7009ED466 /* LXCellTag.xib in Resources */ = {isa = PBXBuildFile; fileRef = 881C019A197570E7009ED466 /* LXCellTag.xib */; };
+		881C019D197586BA009ED466 /* LXCellBrick.xib in Resources */ = {isa = PBXBuildFile; fileRef = 881C019C197586BA009ED466 /* LXCellBrick.xib */; };
+		881C01A0197587AB009ED466 /* LXPhotoGridCVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 881C019F197587AB009ED466 /* LXPhotoGridCVC.m */; };
 		882054DC193816EF00D741BB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 882054DB193816EF00D741BB /* Images.xcassets */; };
 		882054F219381A7A00D741BB /* Icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 882054E219381A7A00D741BB /* Icon-40.png */; };
 		882054F319381A7A00D741BB /* Icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 882054E319381A7A00D741BB /* Icon-40@2x.png */; };
@@ -255,7 +258,6 @@
 		882E14A516EF0BF100839B92 /* LXFacebookFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 882E14A416EF0BF100839B92 /* LXFacebookFriendViewController.m */; };
 		882E14AD16EF0FDE00839B92 /* LXCellFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 882E14AC16EF0FDE00839B92 /* LXCellFacebook.m */; };
 		882E14BF16F0928700839B92 /* LXCellGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 882E14BE16F0928700839B92 /* LXCellGrid.m */; };
-		882E14C216F09B4C00839B92 /* LXTagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 882E14C116F09B4A00839B92 /* LXTagViewController.m */; };
 		883274D9170146FA0053C8A2 /* LXCellTags.m in Sources */ = {isa = PBXBuildFile; fileRef = 883274D8170146FA0053C8A2 /* LXCellTags.m */; };
 		883276C1170173690053C8A2 /* AD.png in Resources */ = {isa = PBXBuildFile; fileRef = 883274DF170173650053C8A2 /* AD.png */; };
 		883276C2170173690053C8A2 /* AD@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 883274E0170173650053C8A2 /* AD@2x.png */; };
@@ -939,7 +941,6 @@
 		88679D6517180CD900F7EB55 /* curve18.png in Resources */ = {isa = PBXBuildFile; fileRef = 88679D6417180CD800F7EB55 /* curve18.png */; };
 		886C63A41681A68C0007D952 /* bg_canvas.png in Resources */ = {isa = PBXBuildFile; fileRef = 886C63A21681A68C0007D952 /* bg_canvas.png */; };
 		886C63A51681A68C0007D952 /* bg_canvas@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 886C63A31681A68C0007D952 /* bg_canvas@2x.png */; };
-		886E540B16FC469B00629D76 /* LXLikedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 886E540A16FC469B00629D76 /* LXLikedViewController.m */; };
 		887379BB17586FF400C1549B /* LXCellFontPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 887379BA17586FF400C1549B /* LXCellFontPreview.m */; };
 		887379BD1758842F00C1549B /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 887379BC1758842F00C1549B /* CoreText.framework */; };
 		887379BE1758CC3500C1549B /* fonts.plist in Resources */ = {isa = PBXBuildFile; fileRef = 887379C01758CC3500C1549B /* fonts.plist */; };
@@ -2245,6 +2246,10 @@
 		881C01951973F62B009ED466 /* LXTabButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXTabButton.m; sourceTree = "<group>"; };
 		881C01971974D8FE009ED466 /* LXScrollTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXScrollTag.h; sourceTree = "<group>"; };
 		881C01981974D8FE009ED466 /* LXScrollTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXScrollTag.m; sourceTree = "<group>"; };
+		881C019A197570E7009ED466 /* LXCellTag.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LXCellTag.xib; sourceTree = "<group>"; };
+		881C019C197586BA009ED466 /* LXCellBrick.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LXCellBrick.xib; sourceTree = "<group>"; };
+		881C019E197587AB009ED466 /* LXPhotoGridCVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXPhotoGridCVC.h; sourceTree = "<group>"; };
+		881C019F197587AB009ED466 /* LXPhotoGridCVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXPhotoGridCVC.m; sourceTree = "<group>"; };
 		882054DB193816EF00D741BB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Latte camera/Images.xcassets"; sourceTree = SOURCE_ROOT; };
 		882054E219381A7A00D741BB /* Icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40.png"; sourceTree = "<group>"; };
 		882054E319381A7A00D741BB /* Icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40@2x.png"; sourceTree = "<group>"; };
@@ -2305,8 +2310,6 @@
 		882E14AC16EF0FDE00839B92 /* LXCellFacebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCellFacebook.m; sourceTree = "<group>"; };
 		882E14BD16F0928700839B92 /* LXCellGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCellGrid.h; sourceTree = "<group>"; };
 		882E14BE16F0928700839B92 /* LXCellGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCellGrid.m; sourceTree = "<group>"; };
-		882E14C016F09B4A00839B92 /* LXTagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXTagViewController.h; sourceTree = "<group>"; };
-		882E14C116F09B4A00839B92 /* LXTagViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXTagViewController.m; sourceTree = "<group>"; };
 		883274D7170146FA0053C8A2 /* LXCellTags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCellTags.h; sourceTree = "<group>"; };
 		883274D8170146FA0053C8A2 /* LXCellTags.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCellTags.m; sourceTree = "<group>"; };
 		883274DF170173650053C8A2 /* AD.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AD.png; sourceTree = "<group>"; };
@@ -3036,8 +3039,6 @@
 		88679D6417180CD800F7EB55 /* curve18.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = curve18.png; sourceTree = "<group>"; };
 		886C63A21681A68C0007D952 /* bg_canvas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_canvas.png; sourceTree = "<group>"; };
 		886C63A31681A68C0007D952 /* bg_canvas@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_canvas@2x.png"; sourceTree = "<group>"; };
-		886E540916FC469A00629D76 /* LXLikedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXLikedViewController.h; sourceTree = "<group>"; };
-		886E540A16FC469B00629D76 /* LXLikedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXLikedViewController.m; sourceTree = "<group>"; };
 		887379B917586FF400C1549B /* LXCellFontPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCellFontPreview.h; sourceTree = "<group>"; };
 		887379BA17586FF400C1549B /* LXCellFontPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCellFontPreview.m; sourceTree = "<group>"; };
 		887379BC1758842F00C1549B /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
@@ -4480,6 +4481,8 @@
 				88992C8A196A77000002E502 /* LXCellTimelineMulti.xib */,
 				88992C8C196A77800002E502 /* LXCellTimelineSingle.xib */,
 				88992C93196D4C7C0002E502 /* LXCellFriend.xib */,
+				881C019A197570E7009ED466 /* LXCellTag.xib */,
+				881C019C197586BA009ED466 /* LXCellBrick.xib */,
 			);
 			path = NIBs;
 			sourceTree = "<group>";
@@ -5200,8 +5203,6 @@
 				888F651516FC09E000ED74BB /* LXLeftGuestViewController.m */,
 				888F651116FBFB8D00ED74BB /* LXLeftSideUserViewController.h */,
 				888F651216FBFB8E00ED74BB /* LXLeftSideUserViewController.m */,
-				886E540916FC469A00629D76 /* LXLikedViewController.h */,
-				886E540A16FC469B00629D76 /* LXLikedViewController.m */,
 				8890723616770EBB0013DF7A /* LXLoginViewController.h */,
 				8890723716770EBB0013DF7A /* LXLoginViewController.m */,
 				8890724E16770EBB0013DF7A /* LXMainTabViewController.h */,
@@ -5262,8 +5263,6 @@
 				8C8F582D193EF35E004A9EB9 /* LXTableSettingViewController.m */,
 				88EB47C619471B2E00D0F026 /* LXTagDiscussionViewController.h */,
 				88EB47C719471B2E00D0F026 /* LXTagDiscussionViewController.m */,
-				882E14C016F09B4A00839B92 /* LXTagViewController.h */,
-				882E14C116F09B4A00839B92 /* LXTagViewController.m */,
 				8883EED5173220E900AA2D5E /* LXTextTemplateViewController.h */,
 				8883EED6173220E900AA2D5E /* LXTextTemplateViewController.m */,
 				88FB7CF41782DD590038B067 /* LXUploadStatusViewController.h */,
@@ -5285,6 +5284,8 @@
 				88992C96196E44720002E502 /* LXFollowingTagTVC.m */,
 				881C00AC1973C45B009ED466 /* LXCameraSettingTVC.h */,
 				881C00AD1973C45B009ED466 /* LXCameraSettingTVC.m */,
+				881C019E197587AB009ED466 /* LXPhotoGridCVC.h */,
+				881C019F197587AB009ED466 /* LXPhotoGridCVC.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -7585,6 +7586,7 @@
 				8832772B170173690053C8A2 /* CY.png in Resources */,
 				8832772C170173690053C8A2 /* CY@2x.png in Resources */,
 				8832772D170173690053C8A2 /* CZ.png in Resources */,
+				881C019D197586BA009ED466 /* LXCellBrick.xib in Resources */,
 				8832772E170173690053C8A2 /* CZ@2x.png in Resources */,
 				881C017B1973EADD009ED466 /* icon40-gear-thin@2x.png in Resources */,
 				8832772F170173690053C8A2 /* DE.png in Resources */,
@@ -7801,6 +7803,7 @@
 				883277F0170173690053C8A2 /* MV@2x.png in Resources */,
 				883277F1170173690053C8A2 /* MW.png in Resources */,
 				883277F2170173690053C8A2 /* MW@2x.png in Resources */,
+				881C019B197570E7009ED466 /* LXCellTag.xib in Resources */,
 				883277F3170173690053C8A2 /* MX.png in Resources */,
 				883277F4170173690053C8A2 /* MX@2x.png in Resources */,
 				883277F5170173690053C8A2 /* MY.png in Resources */,
@@ -8835,11 +8838,11 @@
 				882E14BF16F0928700839B92 /* LXCellGrid.m in Sources */,
 				C54E591E1953D128003EC0F5 /* LXCellSelectItem.m in Sources */,
 				C54E59241953D190003EC0F5 /* LXCellTextView.m in Sources */,
-				882E14C216F09B4C00839B92 /* LXTagViewController.m in Sources */,
 				C54E59161952CCDD003EC0F5 /* LXProfileSettingEditTVC.m in Sources */,
 				881C01961973F62B009ED466 /* LXTabButton.m in Sources */,
 				88B3A3AB16F39951002A6BDA /* LXUploadObject.m in Sources */,
 				8824FAD916F6DD6C00357ADB /* LXCellUpload.m in Sources */,
+				881C01A0197587AB009ED466 /* LXPhotoGridCVC.m in Sources */,
 				8824FB0B16F72A6E00357ADB /* LXZoomPictureViewController.m in Sources */,
 				889093EF16F8714C00E98DF4 /* LXNavigationController.m in Sources */,
 				889093F716F88C4700E98DF4 /* LXTextView.m in Sources */,
@@ -8849,7 +8852,6 @@
 				888F64BC16FB2BB500ED74BB /* LXCellInfoTag.m in Sources */,
 				888F651316FBFB8F00ED74BB /* LXLeftSideUserViewController.m in Sources */,
 				888F651616FC09E100ED74BB /* LXLeftGuestViewController.m in Sources */,
-				886E540B16FC469B00629D76 /* LXLikedViewController.m in Sources */,
 				88673B6616FF5219007CF6BD /* LXCellSearchConnection.m in Sources */,
 				88992C97196E44720002E502 /* LXFollowingTagTVC.m in Sources */,
 				883274D9170146FA0053C8A2 /* LXCellTags.m in Sources */,

@@ -378,27 +378,28 @@
                          [viewDesc flashScrollIndicators];
                      }];
     
-    [UIView transitionWithView:self.viewInfoTop duration:kGlobalAnimationSpeed options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-        if (currentPage.user) {
-            labelNickname.text = currentPage.user.name;
-            [LXUtils setNationalityOfUser:currentPage.user forImage:imageNationality nextToLabel:labelNickname];
-            [buttonUser setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:currentPage.user.profilePicture]];
-            
-        } else if (newPicture.user) {
-            labelNickname.text = currentPage.picture.user.name;
-            [LXUtils setNationalityOfUser:newPicture.user forImage:imageNationality nextToLabel:labelNickname];
-            [buttonUser setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:newPicture.user.profilePicture]];
-        } else {
-            NSString *url = [NSString stringWithFormat:@"user/%ld", [newPicture.userId longValue]];
-            [[LatteAPIClient sharedClient] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
-                User *user = [User instanceFromDictionary:JSON[@"user"]];
-                currentPage.user = user;
-                labelNickname.text = user.name;
-                [LXUtils setNationalityOfUser:user forImage:imageNationality nextToLabel:labelNickname];
-                [buttonUser setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:user.profilePicture]];
-            } failure:nil];
-        }
+    
+    if (currentPage.user) {
+        labelNickname.text = currentPage.user.name;
+        [LXUtils setNationalityOfUser:currentPage.user forImage:imageNationality nextToLabel:labelNickname];
+        [buttonUser setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:currentPage.user.profilePicture]];
         
+    } else if (newPicture.user) {
+        labelNickname.text = currentPage.picture.user.name;
+        [LXUtils setNationalityOfUser:newPicture.user forImage:imageNationality nextToLabel:labelNickname];
+        [buttonUser setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:newPicture.user.profilePicture]];
+    } else {
+        NSString *url = [NSString stringWithFormat:@"user/%ld", [newPicture.userId longValue]];
+        [[LatteAPIClient sharedClient] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+            User *user = [User instanceFromDictionary:JSON[@"user"]];
+            currentPage.user = user;
+            labelNickname.text = user.name;
+            [LXUtils setNationalityOfUser:user forImage:imageNationality nextToLabel:labelNickname];
+            [buttonUser setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:user.profilePicture]];
+        } failure:nil];
+    }
+    
+    [UIView transitionWithView:self.viewInfoTop duration:kGlobalAnimationSpeed options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
         labelView.text = [NSString stringWithFormat:NSLocalizedString(@"d_views", @""), [newPicture.pageviews integerValue]];
         
         buttonEdit.hidden = !newPicture.isOwner;

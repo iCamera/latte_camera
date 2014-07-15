@@ -76,7 +76,6 @@
     NSDictionary *conversation = conversations[indexPath.row];
     cell.textLabel.text = conversation[@"title"];
     cell.detailTextLabel.text = conversation[@"preview"];
-    cell.tag = indexPath.row;
     // Configure the cell...
     
     return cell;
@@ -112,7 +111,15 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    LXTagDiscussionViewController *viewConversation = [mainStoryboard instantiateViewControllerWithIdentifier:@"Discussion"];
     
+    NSDictionary* conversation = conversations[indexPath.row];
+    viewConversation.navigationItem.title = conversation[@"title"];
+    viewConversation.conversationHash = conversation[@"hash"];
+
+    [self.navigationController pushViewController:viewConversation animated:YES];
 }
 
 /*
@@ -149,11 +156,7 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    LXTagDiscussionViewController *viewConversation = segue.destinationViewController;
-    UITableViewCell *cell = sender;
-    NSDictionary* conversation = conversations[cell.tag];
-    viewConversation.navigationItem.title = conversation[@"title"];
-    viewConversation.conversationHash = conversation[@"hash"];
+    
 }
 
 @end

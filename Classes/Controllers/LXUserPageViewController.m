@@ -23,6 +23,7 @@
 #import "LXCellTimelineSingle.h"
 #import "LXCellTimelineMulti.h"
 #import "MBProgressHUD.h"
+#import "LXPhotoGridCVC.h"
 
 #import "LXCellGrid.h"
 #import "LXCellDataField.h"
@@ -59,6 +60,7 @@ typedef enum {
     NSMutableDictionary *currentMonthPics;
     NSMutableDictionary *currentDayPics;
     NSMutableArray *feeds;
+    NSArray *tags;
     
     NSDate *currentMonth;
     NSDate *selectedCalendarDate;
@@ -121,6 +123,7 @@ typedef enum {
     
     [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTimelineSingle" bundle:nil] forCellReuseIdentifier:@"Single"];
     [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTimelineMulti" bundle:nil] forCellReuseIdentifier:@"Multi"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTag" bundle:nil] forCellReuseIdentifier:@"Tag"];
     
     [self reloadView];
     [self reloadProfile];
@@ -219,6 +222,25 @@ typedef enum {
                                }];
 }
 
+- (void)loadTag {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    currentRequest = [[LatteAPIv2Client sharedClient] GET: @"picture"
+                                               parameters: @{@"user_id": [NSNumber numberWithInteger:_userId]}
+                                                success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                                    
+                                                    tags = JSON[@"result"][@"facets"][@"tags"][@"terms"];
+                                                    
+                                                    endedPic = YES;
+                                                    
+                                                    [self.tableView reloadData];
+                                                    [self.refreshControl endRefreshing];
+                                                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                                    [self.refreshControl endRefreshing];
+                                                }];
+}
+
 
 - (void)loadPicture:(BOOL)reset {
     if (reset) {
@@ -276,6 +298,8 @@ typedef enum {
          [self loadTimeline:YES];
     } else if (photoMode == kPhotoGrid) {
         [self loadPicture:YES];
+    } else if (photoMode == kPhotoTag) {
+        [self loadTag];
     } else if (photoMode == kPhotoCalendar)
         [self reloadCalendar];
 }
@@ -419,6 +443,8 @@ typedef enum {
         return feeds.count;
     } else if (photoMode == kPhotoGrid) {
         return (pictures.count/3) + (pictures.count%3>0?1:0);
+    } else if (photoMode == kPhotoTag) {
+        return tags.count;
     } else if (photoMode == kPhotoCalendar) {
         if (selectedCalendarDate && section > 0) {
             NSArray *rangeDates = [LXUtils rangeOfDatesInMonthGrid:currentMonth startOnSunday:YES timeZone:[NSTimeZone localTimeZone]];
@@ -458,6 +484,10 @@ typedef enum {
             return feedHeight;
         } else
             return 1;
+    }
+    
+    if (photoMode == kPhotoTag) {
+        return 44;
     }
 
     if (photoMode == kPhotoGrid) {
@@ -742,12 +772,17 @@ typedef enum {
             return cell;
         }
     } else if (photoMode == kPhotoGrid) {
-        LXCellGrid *cellPic = [tableView dequeueReusableCellWithIdentifier:@"Grid"];
+        LXCellGrid *cellPic = [tableView dequeueReusableCellWithIdentifier:@"Grid" forIndexPath:indexPath];
         
         cellPic.viewController = self;
         [cellPic setPictures:pictures forRow:indexPath.row];
         
         return cellPic;
+    } else if (photoMode == kPhotoTag) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Tag" forIndexPath:indexPath];
+        cell.textLabel.text = tags[indexPath.row][@"term"];
+        cell.detailTextLabel.text = [tags[indexPath.row][@"count"] stringValue];
+        return cell;
     } else if (photoMode == kPhotoCalendar) {
         UITableViewCell *cell = [[UITableViewCell alloc] init];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -1082,6 +1117,8 @@ typedef enum {
             }
             break;
         }
+        default:
+            return nil;
     }
     return nil;
 }
@@ -1125,10 +1162,22 @@ typedef enum {
             }
             break;
         }
+        default:
+            return nil;
     }
     return nil;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (photoMode == kPhotoTag) {
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+        LXPhotoGridCVC *viewLikedGrid = [mainStoryboard instantiateViewControllerWithIdentifier:@"PhotoGrid"];
+        viewLikedGrid.keyword = tags[indexPath.row][@"term"];
+        viewLikedGrid.userId = _userId;
+        viewLikedGrid.gridType = kPhotoGridUserTag;
+        [self.navigationController pushViewController:viewLikedGrid animated:YES];
+    }
+}
 
 - (void)showUser:(User *)user fromGallery:(LXGalleryViewController *)gallery {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"

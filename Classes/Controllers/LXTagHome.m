@@ -8,7 +8,7 @@
 
 #import "LXTagHome.h"
 #import "LXTagDiscussionViewController.h"
-#import "LXTagViewController.h"
+#import "LXPhotoGridCVC.h"
 #import "LXAppDelegate.h"
 #import "LatteAPIv2Client.h"
 
@@ -78,7 +78,8 @@
         LXTagDiscussionViewController *tagChat = segue.destinationViewController;
         tagChat.tag = _tag;
     } else if ([segue.identifier isEqualToString:@"TagPhoto"]) {
-        LXTagViewController *tagPhoto = segue.destinationViewController;
+        LXPhotoGridCVC *tagPhoto = segue.destinationViewController;
+        tagPhoto.gridType = kPhotoGridPublicTag;
         tagPhoto.keyword = _tag;
     }
     // Get the new view controller using [segue destinationViewController].

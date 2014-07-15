@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Brick" id="PmQ-y9-HqH" customClass="LXStreamBrickCell">
+            <rect key="frame" x="0.0" y="0.0" width="152" height="152"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="152" height="152"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="c0g-dg-1BT">
+                        <rect key="frame" x="0.0" y="0.0" width="152" height="152"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    </imageView>
+                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m3m-W5-azk">
+                        <rect key="frame" x="0.0" y="0.0" width="152" height="152"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <state key="normal">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="touchPicture:" destination="PmQ-y9-HqH" eventType="touchUpInside" id="q75-4A-MwY"/>
+                        </connections>
+                    </button>
+                    <view clipsSubviews="YES" alpha="0.75" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zHw-pU-dnL" customClass="LXGradientView">
+                        <rect key="frame" x="0.0" y="122" width="152" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="IRc-d5-Ftz"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rVP-Wh-WfC">
+                        <rect key="frame" x="40" y="124" width="106" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                        <color key="shadowColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                        <size key="shadowOffset" width="0.0" height="1"/>
+                    </label>
+                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OuM-BW-Tzo">
+                        <rect key="frame" x="4" y="118" width="30" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="30" id="DOn-Ok-3zI"/>
+                            <constraint firstAttribute="height" constant="30" id="Kle-Cu-A3i"/>
+                        </constraints>
+                        <state key="normal" backgroundImage="user.gif">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="touchUser:" destination="PmQ-y9-HqH" eventType="touchUpInside" id="mmg-cf-ISy"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <constraints>
+                <constraint firstItem="c0g-dg-1BT" firstAttribute="leading" secondItem="PmQ-y9-HqH" secondAttribute="leading" id="04f-WD-ETA"/>
+                <constraint firstAttribute="bottom" secondItem="m3m-W5-azk" secondAttribute="bottom" id="6eh-UR-Vbe"/>
+                <constraint firstAttribute="bottom" secondItem="rVP-Wh-WfC" secondAttribute="bottom" constant="10" id="JnT-Ge-j6B"/>
+                <constraint firstAttribute="bottom" secondItem="c0g-dg-1BT" secondAttribute="bottom" id="Lm6-zK-LFQ"/>
+                <constraint firstItem="c0g-dg-1BT" firstAttribute="top" secondItem="PmQ-y9-HqH" secondAttribute="top" id="N3S-EE-UY3"/>
+                <constraint firstAttribute="bottom" secondItem="OuM-BW-Tzo" secondAttribute="bottom" constant="4" id="bCT-Sl-hgh"/>
+                <constraint firstItem="m3m-W5-azk" firstAttribute="top" secondItem="PmQ-y9-HqH" secondAttribute="top" id="bcB-Fr-p9K"/>
+                <constraint firstItem="zHw-pU-dnL" firstAttribute="leading" secondItem="PmQ-y9-HqH" secondAttribute="leading" id="dd8-Eg-pyH"/>
+                <constraint firstItem="m3m-W5-azk" firstAttribute="leading" secondItem="PmQ-y9-HqH" secondAttribute="leading" id="fNP-K6-mQS"/>
+                <constraint firstAttribute="trailing" secondItem="zHw-pU-dnL" secondAttribute="trailing" id="k3X-Ko-X2Q"/>
+                <constraint firstAttribute="trailing" secondItem="c0g-dg-1BT" secondAttribute="trailing" id="lcY-cc-bWH"/>
+                <constraint firstAttribute="trailing" secondItem="m3m-W5-azk" secondAttribute="trailing" id="oct-Ma-oxw"/>
+                <constraint firstAttribute="bottom" secondItem="zHw-pU-dnL" secondAttribute="bottom" id="otk-L9-4Ke"/>
+                <constraint firstItem="rVP-Wh-WfC" firstAttribute="leading" secondItem="OuM-BW-Tzo" secondAttribute="trailing" constant="6" id="sXB-5M-Mfc"/>
+                <constraint firstAttribute="trailing" secondItem="rVP-Wh-WfC" secondAttribute="trailing" constant="6" id="uAP-9J-Xls"/>
+                <constraint firstItem="OuM-BW-Tzo" firstAttribute="leading" secondItem="PmQ-y9-HqH" secondAttribute="leading" constant="4" id="wfO-Ze-8a3"/>
+            </constraints>
+            <size key="customSize" width="152" height="152"/>
+            <connections>
+                <outlet property="buttonPicture" destination="m3m-W5-azk" id="k9a-q4-VwZ"/>
+                <outlet property="buttonUser" destination="OuM-BW-Tzo" id="CmE-GY-sGO"/>
+                <outlet property="imagePicture" destination="c0g-dg-1BT" id="hnW-6b-7de"/>
+                <outlet property="labelUsername" destination="rVP-Wh-WfC" id="kE2-di-xtL"/>
+                <outlet property="viewBg" destination="zHw-pU-dnL" id="gCX-tu-yPG"/>
+            </connections>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="user.gif" width="100" height="100"/>
+    </resources>
+</document>

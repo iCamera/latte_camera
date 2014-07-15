@@ -57,6 +57,8 @@
 //    UICollectionViewFlowLayout
     [self.collectionView setCollectionViewLayout:layoutWaterfall animated:NO];
     
+    [self.collectionView registerNib:[UINib nibWithNibName:@"LXCellBrick" bundle:nil] forCellWithReuseIdentifier:@"Brick"];
+    
     [self.collectionView registerNib:[UINib nibWithNibName:@"LXStreamHeader" bundle:nil] forSupplementaryViewOfKind:CHTCollectionElementKindSectionHeader withReuseIdentifier:@"Header"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"LXStreamHeader" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"Header"];
     
@@ -259,7 +261,9 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     LXStreamBrickCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Brick" forIndexPath:indexPath];
-    cell.feed = feeds[indexPath.item];
+    Feed *feed = feeds[indexPath.item];
+    cell.picture = feed.targets[0];
+    cell.user = feed.user;
     cell.delegate = self;
     return cell;
 }

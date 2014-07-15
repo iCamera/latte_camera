@@ -361,6 +361,7 @@ typedef enum {
             timelineKind = kTimelineMe;
             break;
         default:
+            return;
             break;
             
     }

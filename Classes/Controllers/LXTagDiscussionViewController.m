@@ -7,7 +7,6 @@
 //
 
 #import "LXTagDiscussionViewController.h"
-#import "LXTagViewController.h"
 #import "JSQMessages.h"
 #import "LatteAPIv2Client.h"
 #import "UIImageView+AFNetworking.h"
@@ -375,10 +374,6 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    if ([segue.identifier isEqualToString:@"Tag"]) {
-        LXTagViewController *view = segue.destinationViewController;
-        view.keyword = _tag;
-    }
 }
 
 - (void)newMessage:(NSNotification *)notification {
