@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface LXStreamHeader : UICollectionReusableView
-@property (strong, nonatomic) IBOutlet UISegmentedControl *segmentView;
-@property (strong, nonatomic) IBOutlet UIButton *buttonRefresh;
+
+@property (strong, nonatomic) IBOutlet UIButton *buttonWaterfall;
+@property (strong, nonatomic) IBOutlet UIButton *buttonGrid;
 
 @end

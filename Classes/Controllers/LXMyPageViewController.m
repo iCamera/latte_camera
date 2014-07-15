@@ -306,17 +306,24 @@ typedef enum {
 }
 
 - (IBAction)switchTab:(UIButton*)sender {
+    [UIView transitionWithView:self.tableView.tableHeaderView
+                      duration:kGlobalAnimationSpeed
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^{
+                        _buttonTag.selected = NO;
+                        _buttonUser.selected = NO;
+                        sender.selected = YES;
+                    }
+                    completion:nil];
+    
     switch (sender.tag) {
         case 0:
             homeTab = kHomeUser;
             [self loadMore:YES];
-            _buttonTag.enabled = YES;
-            _buttonUser.enabled = NO;
+
             break;
         case 1:
             homeTab = kHomeTag;
-            _buttonTag.enabled = NO;
-            _buttonUser.enabled = YES;
             [self loadMoreTag:YES];
             break;
         default:

@@ -224,8 +224,8 @@
         LXStreamHeader *header = [collectionView dequeueReusableSupplementaryViewOfKind:kind
                                                           withReuseIdentifier:@"Header"
                                                                  forIndexPath:indexPath];
-        [header.segmentView addTarget:self action:@selector(switchTab:) forControlEvents:UIControlEventValueChanged];
-        [header.buttonRefresh addTarget:self action:@selector(reloadView) forControlEvents:UIControlEventValueChanged];
+        [header.buttonWaterfall addTarget:self action:@selector(switchTab:) forControlEvents:UIControlEventTouchUpInside];
+        [header.buttonGrid addTarget:self action:@selector(switchTab:) forControlEvents:UIControlEventTouchUpInside];
         return header;
     }
     
@@ -233,9 +233,10 @@
         LXStreamHeader *header = [collectionView dequeueReusableSupplementaryViewOfKind:kind
                                                                     withReuseIdentifier:@"Header"
                                                                            forIndexPath:indexPath];
-        [header.segmentView addTarget:self action:@selector(switchTab:) forControlEvents:UIControlEventValueChanged];
-        [header.buttonRefresh addTarget:self action:@selector(reloadView) forControlEvents:UIControlEventValueChanged];
-        header.segmentView.selectedSegmentIndex = 1;
+        [header.buttonWaterfall addTarget:self action:@selector(switchTab:) forControlEvents:UIControlEventTouchUpInside];
+        [header.buttonGrid addTarget:self action:@selector(switchTab:) forControlEvents:UIControlEventTouchUpInside];
+        header.buttonWaterfall.selected = NO;
+        header.buttonGrid.selected = YES;
         return header;
     }
     
@@ -330,8 +331,8 @@
     // Pass the selected object to the new view controller.
 }
 
-- (void)switchTab:(UISegmentedControl *)sender {
-    currentTab = sender.selectedSegmentIndex;
+- (void)switchTab:(UIButton *)sender {
+    currentTab = sender.tag;
     if (currentTab == 0) {
         [self.collectionView selectItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] animated:NO scrollPosition:UICollectionViewScrollPositionNone];
         [self.collectionView setCollectionViewLayout:layoutWaterfall animated:YES];

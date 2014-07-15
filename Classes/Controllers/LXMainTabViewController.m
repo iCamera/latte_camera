@@ -137,7 +137,8 @@
     NSMutableArray *views = [NSMutableArray arrayWithArray:self.viewControllers];
     views[4] = navLogin;
     self.selectedIndex = 0;
-    self.viewControllers = views;
+    
+    [self setViewControllers:views animated:YES];
 }
 
 - (void)setUser {
@@ -147,7 +148,8 @@
     NSMutableArray *views = [NSMutableArray arrayWithArray:self.viewControllers];
     views[4] = viewMypage;
     self.selectedIndex = 0;
-    self.viewControllers = views;
+    
+    [self setViewControllers:views animated:YES];
 }
 
 - (void)receiveLoggedIn:(NSNotification *) notification {

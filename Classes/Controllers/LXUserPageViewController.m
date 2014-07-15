@@ -272,12 +272,20 @@ typedef enum {
 }
 
 - (IBAction)switchView:(UIButton*)sender {
-    _buttonTabTimeline.selected = NO;
-    _buttonTabGrid.selected = NO;
-    _buttonTabTag.selected = NO;
-    _buttonTabCalendar.selected = NO;
+    [UIView transitionWithView:self.tableView.tableHeaderView
+                      duration:kGlobalAnimationSpeed
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^{
+                        _buttonTabTimeline.selected = NO;
+                        _buttonTabGrid.selected = NO;
+                        _buttonTabTag.selected = NO;
+                        _buttonTabCalendar.selected = NO;
+                        
+                        sender.selected = YES;
 
-    sender.selected = YES;
+                    }
+                    completion:nil];
+    
     switch (sender.tag) {
         case 0:
             photoMode = kPhotoTimeline;

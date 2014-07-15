@@ -115,8 +115,6 @@
         buttonLike.enabled = YES;
     buttonLike.selected = pic.isVoted;
     
-    buttonComment.enabled = pic.canComment;
-    
     labelTitle.text = _feed.user.name;
     labelUser.text = [LXUtils timeDeltaFromNow:_feed.updatedAt];
     
