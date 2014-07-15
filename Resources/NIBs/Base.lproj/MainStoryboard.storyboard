@@ -32,7 +32,7 @@
         <scene sceneID="0hi-1C-sJs">
             <objects>
                 <navigationController storyboardIdentifier="NavigationRank" definesPresentationContext="YES" id="xio-iO-9Qi" customClass="LXNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Trending" image="icon_rank.png" id="FCv-Eh-u4w"/>
+                    <tabBarItem key="tabBarItem" title="Trending" image="icon40-rank-brown.png" id="FCv-Eh-u4w"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="e2T-D0-L2O" customClass="LXNavBar">
                         <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -841,7 +841,7 @@
         <scene sceneID="NPe-9h-C9N">
             <objects>
                 <navigationController definesPresentationContext="YES" id="VwC-Ow-z6p" customClass="LXNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" enabled="NO" title="Notifications" image="icon_notice.png" id="D39-Yx-4Gc"/>
+                    <tabBarItem key="tabBarItem" enabled="NO" title="Notifications" image="icon40-notify-brown.png" id="D39-Yx-4Gc"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="JEo-cs-8hT">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1058,7 +1058,7 @@
         <scene sceneID="w3S-Mf-elA">
             <objects>
                 <navigationController storyboardIdentifier="MyPage" definesPresentationContext="YES" id="xVP-9E-OKe" customClass="LXNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="5" title="Home" image="icon_mypage.png" id="SW9-u7-WQa"/>
+                    <tabBarItem key="tabBarItem" tag="5" title="Home" image="icon40-home-brown.png" id="SW9-u7-WQa"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="TbP-bX-20h" customClass="LXNavBar">
                         <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
@@ -2114,15 +2114,15 @@ or you can try to send another confirmation email.</string>
         <image name="icon40-chat-thin.png" width="20" height="20"/>
         <image name="icon40-follow-yellow.png" width="20" height="20"/>
         <image name="icon40-followed-blue.png" width="20" height="20"/>
+        <image name="icon40-home-brown.png" width="20" height="20"/>
+        <image name="icon40-notify-brown.png" width="20" height="20"/>
+        <image name="icon40-rank-brown.png" width="20" height="20"/>
         <image name="icon_area.png" width="15" height="15"/>
         <image name="icon_friend_m.png" width="19" height="14"/>
         <image name="icon_mail.png" width="15" height="11"/>
         <image name="icon_menu_l.png" width="19" height="15"/>
-        <image name="icon_mypage.png" width="20" height="21"/>
         <image name="icon_newpict_l.png" width="20" height="20"/>
-        <image name="icon_notice.png" width="20" height="21"/>
         <image name="icon_phot_m.png" width="15" height="12"/>
-        <image name="icon_rank.png" width="20" height="21"/>
         <image name="icon_setting_m_ocher.png" width="15" height="15"/>
         <image name="icon_tag_m.png" width="16" height="16"/>
         <image name="nopict.png" width="50" height="50"/>
