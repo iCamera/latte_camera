@@ -104,13 +104,6 @@
     // Release any retained subviews of the main view.
 }
 
-- (IBAction)touchReport:(id)sender {
-    UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery" bundle:nil];
-    LXReportAbuseViewController *controllerReport = [storyGallery instantiateViewControllerWithIdentifier:@"Report"];
-    controllerReport.picture = _picture;
-    [self.navigationController pushViewController:controllerReport animated:YES];
-}
-
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
 }
 

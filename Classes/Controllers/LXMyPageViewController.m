@@ -165,7 +165,7 @@ typedef enum {
         
         if (reset) {
             feeds = newFeed;
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         } else {
             [feeds addObjectsFromArray:newFeed];
         }
@@ -174,7 +174,7 @@ typedef enum {
         [self.refreshControl endRefreshing];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (reset) {
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         }
         
         [self.refreshControl endRefreshing];
@@ -199,7 +199,7 @@ typedef enum {
         
         if (reset) {
             feeds = newFeed;
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         } else {
             [feeds addObjectsFromArray:newFeed];
         }
@@ -208,7 +208,7 @@ typedef enum {
         [self.refreshControl endRefreshing];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (reset) {
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         }
         [self.refreshControl endRefreshing];
     }];

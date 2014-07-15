@@ -16,6 +16,7 @@
 #import "LXUserPageViewController.h"
 #import <CommonCrypto/CommonDigest.h>
 #import "LXSocketIO.h"
+#import "User.h"
 
 @interface LXTagDiscussionViewController ()
 
@@ -352,9 +353,9 @@
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
     LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
-    NSInteger userId = [rawMessages[indexPath.item][@"user"][@"id"] integerValue];
-    viewUserPage.userId = userId;
-    NSLog(@"%ld", (long)userId);
+    
+    User *user = [User instanceFromDictionary:rawMessages[indexPath.item][@"user"]];
+    viewUserPage.user = user;
     
     [self.navigationController pushViewController:viewUserPage animated:YES];
 

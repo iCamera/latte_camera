@@ -17,6 +17,7 @@
 #import "LXPicVoteCollectionController.h"
 #import "LXPicCommentViewController.h"
 #import "LXPicInfoViewController.h"
+#import "LXReportAbuseViewController.h"
 #import "LXTagHome.h"
 #import "LXSocketIO.h"
 
@@ -213,10 +214,17 @@
 }
 
 - (IBAction)moreAction:(id)sender {
+    Picture *pic = _feed.targets[0];
+    NSString *destructiveButtonTitle;
+    if (pic.isOwner) {
+        destructiveButtonTitle = NSLocalizedString(@"delete_photo", @"");
+    } else {
+        destructiveButtonTitle = NSLocalizedString(@"report", @"");
+    }
     UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:nil
                                                         delegate:self
                                                cancelButtonTitle:NSLocalizedString(@"Cancel", @"")
-                                          destructiveButtonTitle:nil
+                                          destructiveButtonTitle:destructiveButtonTitle
                                                otherButtonTitles:@"Copy URL", @"Facebook", @"Twitter", @"Email", nil];
     [action showFromTabBar:viewController.navigationController.tabBarController.tabBar];
 }
@@ -224,29 +232,60 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     Picture *pic = _feed.targets[0];
     
-    lxShare = [[LXShare alloc] init];
-    lxShare.controller = viewController;
-    
-    lxShare.url = pic.urlWeb;
-    lxShare.text = pic.urlWeb;
-    
-    switch (buttonIndex) {
-        case 0: {
-            UIPasteboard *pb = [UIPasteboard generalPasteboard];
-            [pb setString:pic.urlWeb];
-            break;
+    if (actionSheet.tag == 10) {
+        if (buttonIndex == 0) { // Remove Pic
+            NSString *url = [NSString stringWithFormat:@"picture/%ld/delete", [pic.pictureId longValue]];
+            
+            [[LatteAPIClient sharedClient] POST:url parameters: nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                if ([viewController respondsToSelector:@selector(reloadView)]) {
+                    [viewController performSelector:@selector(reloadView)];
+                }
+                
+            } failure:nil];
         }
-        case 1: // email
-            [lxShare facebookPost];
-            break;
-        case 2: // twitter
-            [lxShare tweet];
-            break;
-        case 3: // facebook
-            [lxShare emailIt];
-            break;
-        default:
-            break;
+    } else {
+        lxShare = [[LXShare alloc] init];
+        lxShare.controller = viewController;
+        
+        lxShare.url = pic.urlWeb;
+        lxShare.text = pic.urlWeb;
+        
+        switch (buttonIndex) {
+            case 1: {
+                UIPasteboard *pb = [UIPasteboard generalPasteboard];
+                [pb setString:pic.urlWeb];
+                break;
+            }
+            case 2: // email
+                [lxShare facebookPost];
+                break;
+            case 3: // twitter
+                [lxShare tweet];
+                break;
+            case 4: // facebook
+                [lxShare emailIt];
+                break;
+            case 0: {
+                if (pic.isOwner) {
+                    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                                       delegate:self
+                                                              cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
+                                                         destructiveButtonTitle:NSLocalizedString(@"delete_photo", @"この写真を削除する")
+                                                              otherButtonTitles:nil];
+                    sheet.tag = 10;
+                    sheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+                    [sheet showInView:viewController.navigationController.tabBarController.tabBar];
+                } else {
+                    UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery" bundle:nil];
+                    LXReportAbuseViewController *controllerReport = [storyGallery instantiateViewControllerWithIdentifier:@"Report"];
+                    controllerReport.picture = pic;
+                    [viewController.navigationController pushViewController:controllerReport animated:YES];
+                }
+            }
+                break;
+            default:
+                break;
+        }
     }
 }
 

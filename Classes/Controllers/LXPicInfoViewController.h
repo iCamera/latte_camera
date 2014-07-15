@@ -18,5 +18,4 @@
 
 @property (weak, nonatomic) UIViewController *parent;
 
-- (IBAction)touchReport:(id)sender;
 @end

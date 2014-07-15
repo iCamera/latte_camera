@@ -152,7 +152,10 @@ typedef enum {
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
     
     [[LatteAPIv2Client sharedClient] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+        [_imageCover setImageWithURL:[NSURL URLWithString:JSON[@"cover_picture"]]];
+
         self.navigationItem.title = JSON[@"name"];
+        
         _user.profilePicture = JSON[@"profile_picture"];
         _user.countFollows = JSON[@"count_follows"];
         _user.countFollowers = JSON[@"count_followers"];
@@ -199,7 +202,7 @@ typedef enum {
                                    
                                    if (reset) {
                                        feeds = newFeed;
-                                       [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                       [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                                    } else {
                                        [feeds addObjectsFromArray:newFeed];
                                    }
@@ -209,7 +212,7 @@ typedef enum {
                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                    DLog(@"Something went wrong (Timeline)");
                                    if (reset) {
-                                       [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                       [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                                    }
                                    
                                    [self.refreshControl endRefreshing];
@@ -245,7 +248,7 @@ typedef enum {
                                        
                                        if (reset) {
                                            pictures = [NSMutableArray arrayWithArray:newPics];
-                                           [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                           [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                                        } else {
                                            [pictures addObjectsFromArray:newPics];
                                        }
@@ -255,7 +258,7 @@ typedef enum {
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        endedPic = true;
                                        if (reset) {
-                                           [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                           [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                                        }
                                        [self.refreshControl endRefreshing];
                                    }];
@@ -394,11 +397,11 @@ typedef enum {
                                        
                                        [self.tableView reloadData];
                                        
-                                       [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                       [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                                        
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        DLog(@"Something went wrong (User - Calendar)");
-                                       [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                       [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                                    }];
 }
 
@@ -984,9 +987,9 @@ typedef enum {
         [_buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:JSON[@"profile_picture"]]];
         LXAppDelegate *app = [LXAppDelegate currentDelegate];
         app.currentUser.profilePicture = JSON[@"profile_picture"];
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     }];
 }
 

@@ -399,14 +399,7 @@
                             <outlet property="delegate" destination="1Vb-iL-LK1" id="8Fh-Zc-s4Y"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="tou-Gg-92E">
-                        <barButtonItem key="rightBarButtonItem" title="Report" id="oDg-gz-68g">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="touchReport:" destination="1Vb-iL-LK1" id="V75-9K-jBK"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="tou-Gg-92E"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fah-AR-fTU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -538,7 +531,7 @@
                                                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <state key="selected" image="icon28-like-blue.png">
-                                                        <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleColor" red="0.37254902719999999" green="0.69411766529999996" blue="0.6784313917" alpha="1" colorSpace="deviceRGB"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="toggleLike:" destination="sXR-T7-xsm" eventType="touchUpInside" id="b5L-HN-ADa"/>
