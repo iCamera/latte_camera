@@ -100,7 +100,7 @@
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([defaults objectForKey:@"LatteCameraStartUp"]) {
-        if ([[defaults objectForKey:@"LatteCameraStartUp"] boolValue]) {
+        if ([defaults boolForKey:@"LatteCameraStartUp"]) {
             if (isFirst) {
                 isFirst = false;
                 [self startCamera];
@@ -286,7 +286,7 @@
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         BOOL save;
         if ([defaults objectForKey:@"LatteSaveOrigin"]) {
-            save = [[defaults objectForKey:@"LatteSaveOrigin"] boolValue];
+            save = [defaults boolForKey:@"LatteSaveOrigin"];
         } else {
             save = YES;
         }

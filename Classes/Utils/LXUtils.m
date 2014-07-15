@@ -477,7 +477,7 @@ vm_size_t freeMemory(void) {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         BOOL saveToAlbum;
         if ([defaults objectForKey:@"LatteSaveToAlbum"]) {
-            saveToAlbum = [[defaults objectForKey:@"LatteSaveToAlbum"] boolValue];
+            saveToAlbum = [defaults boolForKey:@"LatteSaveToAlbum"];
         } else {
             saveToAlbum = YES;
         }
@@ -515,7 +515,7 @@ vm_size_t freeMemory(void) {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         BOOL saveToAlbum;
         if ([defaults objectForKey:@"LatteSaveToAlbum"]) {
-            saveToAlbum = [[defaults objectForKey:@"LatteSaveToAlbum"] boolValue];
+            saveToAlbum = [defaults boolForKey:@"LatteSaveToAlbum"];
         } else {
             saveToAlbum = YES;
         }

@@ -1717,9 +1717,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                     <rect key="frame" x="251" y="8" width="51" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                                     <connections>
-                                                        <action selector="changeCamera:" destination="9cQ-4Y-np3" eventType="valueChanged" id="OL3-R6-4Ti"/>
                                                         <action selector="changeOrigin:" destination="9cQ-4Y-np3" eventType="valueChanged" id="Yrz-eF-VjF"/>
-                                                        <action selector="changeSave:" destination="9cQ-4Y-np3" eventType="valueChanged" id="TRy-lQ-swg"/>
                                                     </connections>
                                                 </switch>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Save original photos" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qQI-nU-ArZ">
@@ -1743,7 +1741,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                     <rect key="frame" x="251" y="8" width="51" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                                     <connections>
-                                                        <action selector="changeCamera:" destination="9cQ-4Y-np3" eventType="valueChanged" id="Tgr-IB-Uwc"/>
                                                         <action selector="changeSave:" destination="9cQ-4Y-np3" eventType="valueChanged" id="UYF-es-C7y"/>
                                                     </connections>
                                                 </switch>
@@ -1793,7 +1790,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     <connections>
                         <outlet property="switchCamera" destination="eR1-HJ-Gm2" id="imV-5x-6cg"/>
                         <outlet property="switchOrigin" destination="5k7-gf-lYz" id="PY4-Oy-LL5"/>
-                        <outlet property="switchSave" destination="5k7-gf-lYz" id="HGM-uj-7K5"/>
+                        <outlet property="switchSave" destination="itf-7a-eAg" id="xah-tj-kGx"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AOl-jW-Q5t" userLabel="First Responder" sceneMemberID="firstResponder"/>
