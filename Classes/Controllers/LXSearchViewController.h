@@ -10,8 +10,9 @@
 #import "LXGalleryViewController.h"
 #import "LXButtonBrown30.h"
 
-@interface LXSearchViewController : UITableViewController<LXGalleryViewControllerDataSource, UIScrollViewDelegate, UISearchDisplayDelegate, UISearchBarDelegate>
+@interface LXSearchViewController : UITableViewController<LXGalleryViewControllerDataSource, UIScrollViewDelegate, UISearchBarDelegate>
 
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityLoad;
+@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @end

@@ -27,7 +27,7 @@
 @implementation LXSearchViewController {
     NSMutableArray *pictures;
     NSMutableArray *users;
-    NSArray *tags;
+    NSMutableArray *tags;
     NSInteger page;
     BOOL loadEnded;
     AFHTTPRequestOperation *currentRequest;
@@ -56,25 +56,16 @@
     
     [app.tracker send:[[GAIDictionaryBuilder createAppView] build]];
 
-    [self.searchDisplayController.searchResultsTableView registerNib:[UINib nibWithNibName:@"LXCellFriend" bundle:nil] forCellReuseIdentifier:@"User"];
-    [self.searchDisplayController.searchResultsTableView registerClass:[LXCellGrid class] forCellReuseIdentifier:@"Grid"];
-    [self.tableView registerNib:[UINib nibWithNibName:@"LXCellSearchUser" bundle:nil] forCellReuseIdentifier:@"User"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"LXCellFriend" bundle:nil] forCellReuseIdentifier:@"User"];
+    [self.tableView registerClass:[LXCellGrid class] forCellReuseIdentifier:@"Grid"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTag" bundle:nil] forCellReuseIdentifier:@"Tag"];
     
-    [self reloadTags];
+    _searchBar.showsCancelButton = NO;
+    
+    page = 1;
+    [self loadPhotoSearch];
 }
 
-- (void)reloadTags {
-    [activityLoad startAnimating];
-    [[LatteAPIClient sharedClient] GET:@"picture/trending/popular"
-                                parameters:nil
-                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       tags = [JSON objectForKey:@"tags"];
-                                       [self.tableView reloadData];
-                                       [activityLoad stopAnimating];
-                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       [activityLoad stopAnimating];
-                                   }];
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -88,39 +79,44 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        if (self.searchDisplayController.searchBar.selectedScopeButtonIndex == 0) {
-            return (pictures.count/3) + (pictures.count%3>0?1:0);
-        }
-        
-        if (self.searchDisplayController.searchBar.selectedScopeButtonIndex == 1) {
-            return users.count;
-        }
-    } else {
+    if (_searchBar.selectedScopeButtonIndex == 0) {
+        return (pictures.count/3) + (pictures.count%3>0?1:0);
+    }
+    
+    if (_searchBar.selectedScopeButtonIndex == 1) {
+        return users.count;
+    }
+    
+    if (_searchBar.selectedScopeButtonIndex == 2) {
         return tags.count;
     }
+    
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        if (self.searchDisplayController.searchBar.selectedScopeButtonIndex == 0) {
-            LXCellGrid *cell = [tableView dequeueReusableCellWithIdentifier:@"Grid" forIndexPath:indexPath];
-            cell.viewController = self;
-            [cell setPictures:pictures forRow:indexPath.row];
-            return cell;
-        }
-
-        if (self.searchDisplayController.searchBar.selectedScopeButtonIndex == 1) {
-            LXCellFriend *cell = [tableView dequeueReusableCellWithIdentifier:@"User" forIndexPath:indexPath];
-            cell.user = users[indexPath.row];
-            return cell;
-        }
-    } else {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Tags" forIndexPath:indexPath];
-        cell.textLabel.text = tags[indexPath.row];
+    if (_searchBar.selectedScopeButtonIndex == 0) {
+        LXCellGrid *cell = [tableView dequeueReusableCellWithIdentifier:@"Grid" forIndexPath:indexPath];
+        cell.viewController = self;
+        [cell setPictures:pictures forRow:indexPath.row];
         return cell;
     }
+    
+    if (_searchBar.selectedScopeButtonIndex == 1) {
+        LXCellFriend *cell = [tableView dequeueReusableCellWithIdentifier:@"User" forIndexPath:indexPath];
+        cell.user = users[indexPath.row];
+        return cell;
+    }
+    
+    if (_searchBar.selectedScopeButtonIndex == 2) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Tag" forIndexPath:indexPath];
+        cell.textLabel.text = tags[indexPath.row][@"term"];
+        cell.detailTextLabel.text = [tags[indexPath.row][@"count"] stringValue];
+        return cell;
+    }
+    
+    return nil;
 }
 
 - (void)showPic:(UIButton*)sender {
@@ -166,39 +162,38 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        if (self.searchDisplayController.searchBar.selectedScopeButtonIndex == 0) {
-            return 104;
-        }
-        
-        if (self.searchDisplayController.searchBar.selectedScopeButtonIndex == 1) {
-            return 44;
-        }
-    } else {
-        return 30;
+    if (_searchBar.selectedScopeButtonIndex == 0) {
+        return 104;
     }
+    
+    if (_searchBar.selectedScopeButtonIndex == 1) {
+        return 44;
+    }
+    
+    if (_searchBar.selectedScopeButtonIndex == 2) {
+        return 44;
+    }
+    
+    return 0;
+    
 }
 
 #pragma mark - Table view delegate
 
 - (void)loadMore {
-    if (self.searchDisplayController.active) {
-        if (self.searchDisplayController.searchBar.selectedScopeButtonIndex == 0) {
-            [self loadPhotoSearch];
-        }
-        if (self.searchDisplayController.searchBar.selectedScopeButtonIndex == 1) {
-            [self loadUserSearch];
-        }
+    if (_searchBar.selectedScopeButtonIndex == 0) {
+        [self loadPhotoSearch];
     }
 }
 
 - (void)loadPhotoSearch {
-    NSDictionary *param = @{@"keyword": self.searchDisplayController.searchBar.text,
+    NSDictionary *param = @{@"keyword": _searchBar.text,
+                            @"limit": @"30",
                             @"page": [NSNumber numberWithInteger:page]};
     
     if (currentRequest && currentRequest.isExecuting)
         [currentRequest cancel];
-    currentRequest = [[LatteAPIClient sharedClient] GET:@"picture/tag"
+    currentRequest = [[LatteAPIv2Client sharedClient] GET:@"picture"
                                 parameters:param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                        NSMutableArray *data = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
@@ -211,7 +206,7 @@
                                        page += 1;
                                        loadEnded = data.count == 0;
                                        
-                                       [self.searchDisplayController.searchResultsTableView reloadData];
+                                       [self.tableView reloadData];
                                        [activityLoad stopAnimating];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        [activityLoad stopAnimating];
@@ -221,7 +216,7 @@
 - (void)loadUserSearch {
     [activityLoad startAnimating];
     
-    if (self.searchDisplayController.searchBar.text.length == 0) {
+    if (_searchBar.text.length == 0) {
         NSString *url = [NSString stringWithFormat:@"user/popular"];
         
         NSDictionary *param = @{@"limit": [NSNumber numberWithInteger:20],
@@ -236,7 +231,7 @@
                                          loadEnded = users.count >= [JSON[@"total"] integerValue];
                                          page += 1;
                                          
-                                         [self.searchDisplayController.searchResultsTableView reloadData];
+                                         [self.tableView reloadData];
                                          [activityLoad stopAnimating];
                                      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                          loadEnded = true;
@@ -245,7 +240,7 @@
     } else {
         NSString *url = [NSString stringWithFormat:@"user/search"];
         
-        NSDictionary *param = @{@"keyword": self.searchDisplayController.searchBar.text,
+        NSDictionary *param = @{@"keyword": _searchBar.text,
                                 @"page": [NSNumber numberWithInteger:page]};
         
         if (currentRequest && currentRequest.isExecuting)
@@ -263,7 +258,7 @@
                                          page += 1;
                                          loadEnded = users.count >= [JSON[@"total"] integerValue];
                                          
-                                         [self.searchDisplayController.searchResultsTableView reloadData];
+                                         [self.tableView reloadData];
                                          [activityLoad stopAnimating];
                                      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                          loadEnded = true;
@@ -272,25 +267,61 @@
     }
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        if (self.searchDisplayController.searchBar.selectedScopeButtonIndex == 0) {
-            
-        }
+- (void)loadTagSearch {
+    [activityLoad startAnimating];
+    if (currentRequest && currentRequest.isExecuting)
+        [currentRequest cancel];
+    
+    if (_searchBar.text.length < 3) {
         
-        if (self.searchDisplayController.searchBar.selectedScopeButtonIndex == 1) {
-            UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                                     bundle:nil];
-            LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
-            viewUserPage.user = users[indexPath.row];
-            [self.navigationController pushViewController:viewUserPage animated:YES];
-
-        }
+        currentRequest = [[LatteAPIv2Client sharedClient] GET:@"picture/get_tag_cloud"
+                                                   parameters:@{@"type": @"popular"}
+                                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                                        tags = [JSON objectForKey:@"tags"];
+                                                        [self.tableView reloadData];
+                                                        [activityLoad stopAnimating];
+                                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                        [activityLoad stopAnimating];
+                                                    }];
     } else {
-        UIStoryboard *mainStory = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+        currentRequest = [[LatteAPIv2Client sharedClient] GET:@"tag/search" parameters:@{@"keyword": _searchBar.text, @"app": @"true"} success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+            tags = [[NSMutableArray alloc] init];
+            for (NSDictionary *tag in JSON[@"tags"]) {
+                [tags addObject:@{@"term": tag[@"label"], @"count": tag[@"picture_count"]}];
+            }
+            
+            loadEnded = YES;
+            
+            [self.tableView reloadData];
+            [activityLoad stopAnimating];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [self.tableView reloadData];
+            loadEnded = true;
+            [activityLoad stopAnimating];
+        }];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    UIStoryboard *mainStory = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    
+    if (_searchBar.selectedScopeButtonIndex == 0) {
+        
+    }
+    
+    if (_searchBar.selectedScopeButtonIndex == 1) {
+        LXUserPageViewController *viewUserPage = [mainStory instantiateViewControllerWithIdentifier:@"UserPage"];
+        viewUserPage.user = users[indexPath.row];
+        [self.navigationController pushViewController:viewUserPage animated:YES];
+        
+    }
+    
+    if (_searchBar.selectedScopeButtonIndex == 2) {
+        [_searchBar resignFirstResponder];
         LXTagHome *controllerTag = (LXTagHome*)[mainStory instantiateViewControllerWithIdentifier:@"TagHome"];
-        controllerTag.tag = tags[indexPath.row];
+        controllerTag.tag = tags[indexPath.row][@"term"];
         [self.navigationController pushViewController:controllerTag animated:YES];
+        
     }
 }
 
@@ -313,40 +344,40 @@
     }
 }
 
-
 #pragma mark - UISearchDisplayController delegate methods
-- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     page = 1;
     
-    if (controller.searchBar.selectedScopeButtonIndex == 0) {
+    if (searchBar.selectedScopeButtonIndex == 0) {
         [self loadPhotoSearch];
     }
     
-    if (controller.searchBar.selectedScopeButtonIndex == 1) {
+    if (searchBar.selectedScopeButtonIndex == 1) {
         [self loadUserSearch];
+    }
+    
+    if (searchBar.selectedScopeButtonIndex == 2) {
+        [self loadTagSearch];
         
     }
-    return NO;
 }
 
 
-- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption {
+- (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
     page = 1;
-    if (searchOption == 0) {
+    if (selectedScope == 0) {
         [self loadPhotoSearch];
     }
     
-    if (searchOption == 1) {
+    if (selectedScope == 1) {
         [self loadUserSearch];
     }
-
-    return NO;
+    
+    if (selectedScope == 2) {
+        [self loadTagSearch];
+    }
 }
-
-- (void)searchDisplayController:(UISearchDisplayController *)controller willHideSearchResultsTableView:(UITableView *)tableView {
-    [self.tableView reloadData];
-}
-
 
 - (void)viewDidUnload {
     [super viewDidUnload];

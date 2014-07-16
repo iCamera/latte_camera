@@ -849,7 +849,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="sectionIndexBackgroundColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" showsScopeBar="YES" id="K6u-yQ-uby">
+                        <searchBar key="tableHeaderView" contentMode="redraw" translucent="NO" showsScopeBar="YES" id="Lbv-wb-bwt">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="88"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <color key="tintColor" red="0.20784313730000001" green="0.18823529410000001" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
@@ -857,44 +857,20 @@
                             <scopeButtonTitles>
                                 <string>Photo</string>
                                 <string>User</string>
+                                <string>Tag</string>
                             </scopeButtonTitles>
                             <connections>
-                                <outlet property="delegate" destination="oup-QU-2wo" id="gEA-Z2-0e9"/>
+                                <outlet property="delegate" destination="oup-QU-2wo" id="G2i-kT-Wc6"/>
                             </connections>
                         </searchBar>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="UoP-3C-vtX">
-                            <rect key="frame" x="0.0" y="524" width="320" height="44"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="fre-cb-D46">
-                                    <rect key="frame" x="150" y="12" width="20" height="20"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                </activityIndicatorView>
-                            </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Tags" textLabel="sBH-7d-j7T" imageView="BUC-HU-pCp" rowHeight="30" style="IBUITableViewCellStyleDefault" id="LzS-1k-5Kb" customClass="LXCellTags">
-                                <rect key="frame" x="0.0" y="110" width="320" height="30"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Rk6-Pe-t4k">
+                                <rect key="frame" x="0.0" y="110" width="320" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LzS-1k-5Kb" id="UER-Ax-ob1">
-                                    <rect key="frame" x="0.0" y="0.0" width="287" height="29"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Rk6-Pe-t4k" id="8Ez-nt-Yaq">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="39"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Tag" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sBH-7d-j7T">
-                                            <rect key="frame" x="46" y="0.0" width="239" height="29"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="icon_tag_m.png" id="BUC-HU-pCp">
-                                            <rect key="frame" x="15" y="6" width="16" height="16"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </imageView>
-                                    </subviews>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -904,20 +880,10 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Search" id="2hN-W4-E2Z"/>
                     <connections>
-                        <outlet property="activityLoad" destination="fre-cb-D46" id="5qr-fJ-Cfy"/>
-                        <outlet property="searchDisplayController" destination="Sdh-2i-EVC" id="AOb-BG-OrO"/>
+                        <outlet property="searchBar" destination="Lbv-wb-bwt" id="rW1-Xy-OQ6"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U2c-Yq-iFg" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="Sdh-2i-EVC">
-                    <connections>
-                        <outlet property="delegate" destination="oup-QU-2wo" id="iGk-2t-UlS"/>
-                        <outlet property="searchBar" destination="K6u-yQ-uby" id="wLH-LU-ICe"/>
-                        <outlet property="searchContentsController" destination="oup-QU-2wo" id="8Ok-bC-NDD"/>
-                        <outlet property="searchResultsDataSource" destination="oup-QU-2wo" id="66d-Oe-N5y"/>
-                        <outlet property="searchResultsDelegate" destination="oup-QU-2wo" id="1jJ-is-9rd"/>
-                    </connections>
-                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="-2195" y="1260"/>
         </scene>
@@ -1998,7 +1964,6 @@ or you can try to send another confirmation email.</string>
         <image name="icon_menu_l.png" width="19" height="15"/>
         <image name="icon_phot_m.png" width="15" height="12"/>
         <image name="icon_setting_m_ocher.png" width="15" height="15"/>
-        <image name="icon_tag_m.png" width="16" height="16"/>
         <image name="nopict.png" width="50" height="50"/>
         <image name="user.gif" width="100" height="100"/>
     </resources>
