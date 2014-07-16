@@ -42,23 +42,24 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self reloadInfo];
+}
+
+- (void)reloadInfo {
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
     User *user = app.currentUser;
     
     textEmail.text = app.currentUser.mail;
     
-    
-    
     if (user.country && [user.country length]) {
         NSLocale *locale = [NSLocale currentLocale];
         NSString *countryImage = [NSString stringWithFormat:@"%@.png", user.country];
         _cellCountry.imageView.image = [UIImage imageNamed:countryImage];
-        NSString *displayNameString = [locale displayNameForKey:NSLocaleCountryCode value:user.nationality];
+        NSString *displayNameString = [locale displayNameForKey:NSLocaleCountryCode value:user.country];
         _cellCountry.textLabel.text = displayNameString;
     } else {
         _cellCountry.textLabel.text = @"";
     }
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -91,6 +92,10 @@
         
         formSheet.cornerRadius = 0;
         formSheet.shouldDismissOnBackgroundViewTap = YES;
+        formSheet.didDismissCompletionHandler = ^(UIViewController *vc){
+            [self reloadInfo];
+        };
+
         
         [self mz_presentFormSheetController:formSheet animated:YES completionHandler:^(MZFormSheetController *formSheetController) {
             //do sth
