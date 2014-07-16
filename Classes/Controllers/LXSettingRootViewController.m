@@ -74,6 +74,23 @@
     } else {
         self.tableView.tableHeaderView = nil;
     }
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:@"LatteCameraStartUp"]) {
+        _switchCamera.on = [defaults boolForKey:@"LatteCameraStartUp"];
+    }
+    
+    if ([defaults objectForKey:@"LatteSaveToAlbum"]) {
+        _switchSave.on = [defaults boolForKey:@"LatteSaveToAlbum"];
+    } else {
+        _switchSave.on = YES;
+    }
+    
+    if ([defaults objectForKey:@"LatteSaveOrigin"]) {
+        _switchOrigin.on = [defaults boolForKey:@"LatteSaveOrigin"];
+    } else {
+        _switchOrigin.on = YES;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -102,11 +119,11 @@
     }
     
     
-    if (indexPath.section == 2) {
+    if (indexPath.section == 3) {
         [lxShare inviteFriend];
     }
     
-    if (indexPath.section == 4) {
+    if (indexPath.section == 5) {
         LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
         
         [[FBSession activeSession] closeAndClearTokenInformation];
@@ -244,6 +261,25 @@
     }
 
 }
+
+- (IBAction)changeOrigin:(id)sender {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:_switchOrigin.on forKey:@"LatteSaveOrigin"];
+    [defaults synchronize];
+}
+
+- (IBAction)changeCamera:(id)sender {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:_switchCamera.on forKey:@"LatteCameraStartUp"];
+    [defaults synchronize];
+}
+
+- (IBAction)changeSave:(id)sender {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:_switchSave.on forKey:@"LatteSaveToAlbum"];
+    [defaults synchronize];
+}
+
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [picker dismissViewControllerAnimated:YES completion:nil];

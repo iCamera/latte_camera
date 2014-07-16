@@ -19,6 +19,14 @@
 @property (strong, nonatomic) IBOutlet UILabel *labelPV;
 @property (strong, nonatomic) IBOutlet UILabel *labelLike;
 
+@property (strong, nonatomic) IBOutlet UISwitch *switchCamera;
+@property (strong, nonatomic) IBOutlet UISwitch *switchSave;
+@property (strong, nonatomic) IBOutlet UISwitch *switchOrigin;
+
+- (IBAction)changeOrigin:(id)sender;
+- (IBAction)changeCamera:(id)sender;
+- (IBAction)changeSave:(id)sender;
+
 - (IBAction)touchSetPicture:(id)sender;
 - (IBAction)touchSetCover:(id)sender;
 

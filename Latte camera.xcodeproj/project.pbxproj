@@ -83,7 +83,6 @@
 		88120BF418F6B173000BFB5E /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88120BA018F6B173000BFB5E /* libTestFlight.a */; };
 		8818861316F30BEA009A9266 /* mymenu.png in Resources */ = {isa = PBXBuildFile; fileRef = 8818861216F30BEA009A9266 /* mymenu.png */; };
 		881C00AB1973B608009ED466 /* LXStreamFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 881C00AA1973B608009ED466 /* LXStreamFooter.m */; };
-		881C00AE1973C45B009ED466 /* LXCameraSettingTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 881C00AD1973C45B009ED466 /* LXCameraSettingTVC.m */; };
 		881C01221973EADD009ED466 /* icon28-close-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 881C00B01973EADC009ED466 /* icon28-close-white.png */; };
 		881C01231973EADD009ED466 /* icon28-close-white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 881C00B11973EADC009ED466 /* icon28-close-white@2x.png */; };
 		881C01241973EADD009ED466 /* icon28-comment-blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 881C00B21973EADC009ED466 /* icon28-comment-blue.png */; };
@@ -2126,8 +2125,6 @@
 		8818861216F30BEA009A9266 /* mymenu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mymenu.png; sourceTree = "<group>"; };
 		881C00A91973B608009ED466 /* LXStreamFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXStreamFooter.h; sourceTree = "<group>"; };
 		881C00AA1973B608009ED466 /* LXStreamFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXStreamFooter.m; sourceTree = "<group>"; };
-		881C00AC1973C45B009ED466 /* LXCameraSettingTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCameraSettingTVC.h; sourceTree = "<group>"; };
-		881C00AD1973C45B009ED466 /* LXCameraSettingTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCameraSettingTVC.m; sourceTree = "<group>"; };
 		881C00B01973EADC009ED466 /* icon28-close-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon28-close-white.png"; sourceTree = "<group>"; };
 		881C00B11973EADC009ED466 /* icon28-close-white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon28-close-white@2x.png"; sourceTree = "<group>"; };
 		881C00B21973EADC009ED466 /* icon28-comment-blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon28-comment-blue.png"; sourceTree = "<group>"; };
@@ -5183,14 +5180,20 @@
 				8837736A17AA81A4005B0826 /* LXChangeEmailViewController.m */,
 				8837736617AA7B1F005B0826 /* LXChangePasswordViewController.h */,
 				8837736717AA7B1F005B0826 /* LXChangePasswordViewController.m */,
+				88F550B919513315007217CF /* LXChatViewController.h */,
+				88F550BA19513315007217CF /* LXChatViewController.m */,
 				8C0E16FD193DD19600B50887 /* LXCompanyPolicyViewController.h */,
 				8C0E16FE193DD19600B50887 /* LXCompanyPolicyViewController.m */,
+				88963E8C195A731B000B1DDC /* LXCountrySelectViewController.h */,
+				88963E8D195A731B000B1DDC /* LXCountrySelectViewController.m */,
 				8837738617B0C15F005B0826 /* LXEmailConfirmPopupController.h */,
 				8837738717B0C161005B0826 /* LXEmailConfirmPopupController.m */,
 				882E14A316EF0BF100839B92 /* LXFacebookFriendViewController.h */,
 				882E14A416EF0BF100839B92 /* LXFacebookFriendViewController.m */,
 				889790FE179FD64A00BDC803 /* LXFAQViewController.h */,
 				889790FF179FD64A00BDC803 /* LXFAQViewController.m */,
+				88992C95196E44720002E502 /* LXFollowingTagTVC.h */,
+				88992C96196E44720002E502 /* LXFollowingTagTVC.m */,
 				8883C07B16DCBCE0003510A1 /* LXGalleryViewController.h */,
 				8883C07C16DCBCE1003510A1 /* LXGalleryViewController.m */,
 				884C54D316B22EF500DA318E /* LXHelpBokehViewController.h */,
@@ -5219,6 +5222,8 @@
 				8874DBC216E8BF3500FDF60B /* LXNavMypageController.m */,
 				8890724A16770EBB0013DF7A /* LXNotifySideViewController.h */,
 				8890724B16770EBB0013DF7A /* LXNotifySideViewController.m */,
+				881C019E197587AB009ED466 /* LXPhotoGridCVC.h */,
+				881C019F197587AB009ED466 /* LXPhotoGridCVC.m */,
 				88FB5C22192461A50018F757 /* LXPicCommentViewController.h */,
 				88FB5C23192461A50018F757 /* LXPicCommentViewController.m */,
 				888F64B416FAD74400ED74BB /* LXPicDumbTabViewController.h */,
@@ -5263,29 +5268,19 @@
 				8C8F582D193EF35E004A9EB9 /* LXTableSettingViewController.m */,
 				88EB47C619471B2E00D0F026 /* LXTagDiscussionViewController.h */,
 				88EB47C719471B2E00D0F026 /* LXTagDiscussionViewController.m */,
+				8849DFFE19614BA200578987 /* LXTagHome.h */,
+				8849DFFF19614BA200578987 /* LXTagHome.m */,
 				8883EED5173220E900AA2D5E /* LXTextTemplateViewController.h */,
 				8883EED6173220E900AA2D5E /* LXTextTemplateViewController.m */,
 				88FB7CF41782DD590038B067 /* LXUploadStatusViewController.h */,
 				88FB7CF51782DD590038B067 /* LXUploadStatusViewController.m */,
-				88FB5C1F192374720018F757 /* LXUserPageViewController.h */,
-				88FB5C20192374720018F757 /* LXUserPageViewController.m */,
-				C575B9CF195422B7008D6E43 /* Profile Settings */,
-				88F550B919513315007217CF /* LXChatViewController.h */,
-				88F550BA19513315007217CF /* LXChatViewController.m */,
-				887D5DD01957F50A00519186 /* LXUserProfileViewController.h */,
-				887D5DD11957F50A00519186 /* LXUserProfileViewController.m */,
-				88963E8C195A731B000B1DDC /* LXCountrySelectViewController.h */,
-				88963E8D195A731B000B1DDC /* LXCountrySelectViewController.m */,
-				8849DFFE19614BA200578987 /* LXTagHome.h */,
-				8849DFFF19614BA200578987 /* LXTagHome.m */,
 				8849E00819652ED700578987 /* LXUserListViewController.h */,
 				8849E00919652ED800578987 /* LXUserListViewController.m */,
-				88992C95196E44720002E502 /* LXFollowingTagTVC.h */,
-				88992C96196E44720002E502 /* LXFollowingTagTVC.m */,
-				881C00AC1973C45B009ED466 /* LXCameraSettingTVC.h */,
-				881C00AD1973C45B009ED466 /* LXCameraSettingTVC.m */,
-				881C019E197587AB009ED466 /* LXPhotoGridCVC.h */,
-				881C019F197587AB009ED466 /* LXPhotoGridCVC.m */,
+				88FB5C1F192374720018F757 /* LXUserPageViewController.h */,
+				88FB5C20192374720018F757 /* LXUserPageViewController.m */,
+				887D5DD01957F50A00519186 /* LXUserProfileViewController.h */,
+				887D5DD11957F50A00519186 /* LXUserProfileViewController.m */,
+				C575B9CF195422B7008D6E43 /* Profile Settings */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -8890,7 +8885,6 @@
 				88963E8E195A731B000B1DDC /* LXCountrySelectViewController.m in Sources */,
 				88AAA2C01769EC52007610BB /* UIImage+Resize.m in Sources */,
 				884ACB2418EEB8F900B2924B /* LXStreamBrickCell.m in Sources */,
-				881C00AE1973C45B009ED466 /* LXCameraSettingTVC.m in Sources */,
 				88FB7CF61782DD590038B067 /* LXUploadStatusViewController.m in Sources */,
 				C54E59211953D172003EC0F5 /* LXCellDatePicker.m in Sources */,
 				88979100179FD64B00BDC803 /* LXFAQViewController.m in Sources */,

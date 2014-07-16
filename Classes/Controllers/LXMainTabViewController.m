@@ -97,16 +97,14 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
+    isFirst = false;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:@"LatteCameraStartUp"]) {
-        if ([defaults boolForKey:@"LatteCameraStartUp"]) {
-            if (isFirst) {
-                isFirst = false;
-                [self startCamera];
-            }
 
+    if ([defaults boolForKey:@"LatteCameraStartUp"]) {
+        if (isFirst) {
+            [self startCamera];
         }
+        
     }
 }
 
