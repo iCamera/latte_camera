@@ -147,12 +147,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    if (searchText.length < 3) {
+    if (searchText.length > 0) {
+        [self loadResult:searchText];
+    } else {
         tableMode = kTagTableInput;
         [self.tableView setEditing:YES animated:YES];
-        [self.tableView reloadData];
-    } else {
-        [self loadResult:searchText];
+        [self.tableView reloadData];   
     }
 }
 

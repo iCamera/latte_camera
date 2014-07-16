@@ -272,7 +272,7 @@
     if (currentRequest && currentRequest.isExecuting)
         [currentRequest cancel];
     
-    if (_searchBar.text.length < 3) {
+    if (_searchBar.text.length == 0) {
         
         currentRequest = [[LatteAPIv2Client sharedClient] GET:@"picture/get_tag_cloud"
                                                    parameters:@{@"type": @"popular"}
