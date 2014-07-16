@@ -9,14 +9,22 @@
 #import "LXPicDumbTabViewController.h"
 #import "LXCellTag.h"
 #import "LXButtonBack.h"
+#import "LatteAPIv2Client.h"
 
-@interface LXPicDumbTabViewController () {
-    NSArray *results;
-}
+typedef enum {
+    kTagTableInput,
+    kTagTableResult
+} TagTable;
+
+@interface LXPicDumbTabViewController ()
 
 @end
 
-@implementation LXPicDumbTabViewController
+@implementation LXPicDumbTabViewController {
+    TagTable tableMode;
+    AFHTTPRequestOperation *currentRequest;
+    NSArray *results;
+}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -30,44 +38,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
- 
+    
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-
+    [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTag" bundle:nil] forCellReuseIdentifier:@"Tag"];
+    
+    tableMode = kTagTableInput;
     [self.tableView setEditing:YES animated:YES];
-    
-    for (UIView *subView in self.searchDisplayController.searchBar.subviews) {
-        //        if ([subView isKindOfClass:NSClassFromString(@"UINavigationButton")]) {
-        //            UIButton *cancelButton = (UIButton*)subView;
-        //            [cancelButton setTitle:@"OK" forState:UIControlStateNormal];
-        //        }
-        for (UIView *subSubview in subView.subviews)
-        {
-            if ([subSubview conformsToProtocol:@protocol(UITextInputTraits)])
-            {
-                UITextField *textField = (UITextField *)subSubview;
-                //                [textField setKeyboardAppearance: UIKeyboardAppearanceAlert];
-                textField.returnKeyType = UIReturnKeyDone;
-                break;
-            }
-        }
-    }
-
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillAppear:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-//    [self.searchDisplayController setActive:YES animated:NO];
-//    [self.searchDisplayController.searchBar becomeFirstResponder];
-}
-
-- (void)keyboardWillAppear:(NSNotification *)notification
-{
-    //[self.searchDisplayController.searchBar setShowsCancelButton:NO animated:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -83,45 +63,57 @@
     return 1;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        if (![_tags containsObject:results[indexPath.row]]) {
-            [_tags addObject:results[indexPath.row]];
-        } else {
-            [_tags removeObject:results[indexPath.row]];
-        }
-        [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    }
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        return results.count;
+    if (tableMode == kTagTableInput) {
+        return _tags.count + 1;
     } else {
-        return _tags.count;
+        return results.count;
     }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Result"];
-        cell.textLabel.text = results[indexPath.row];
-        if ([_tags containsObject:results[indexPath.row]]) {
-            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    if (tableMode == kTagTableInput) {
+        LXCellTag *cell = [tableView dequeueReusableCellWithIdentifier:@"Input" forIndexPath:indexPath];
+        [cell.textTag addTarget:self action:@selector(editEnd:) forControlEvents:UIControlEventEditingDidEnd];
+        [cell.textTag addTarget:self action:@selector(editBegin:) forControlEvents:UIControlEventEditingDidBegin];
+        
+        cell.textTag.tag = indexPath.row;
+        if (indexPath.row < _tags.count) {
+            cell.textTag.text = _tags[indexPath.row];
         } else {
-            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.textTag.text = @"";
         }
+        
         return cell;
     } else {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Tag" forIndexPath:indexPath];
-        cell.textLabel.text = _tags[indexPath.row];
-        
+        cell.textLabel.text = results[indexPath.row][@"label"];
+        cell.detailTextLabel.text = [results[indexPath.row][@"picture_count"] stringValue];
         return cell;
     }
 }
 
+- (void)editEnd:(UITextField*)textField {
+    if (textField.text.length == 0) {
+        //        [picture.tags removeObjectAtIndex:textField.tag];
+        //        [self.tableView reloadData];
+        //        NSArray* indexes = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:textField.tag inSection:0]];
+        //        [textField resignFirstResponder];
+        //        [self.tableView deleteRowsAtIndexPaths:indexes withRowAnimation:UITableViewRowAnimationAutomatic];
+    } else {
+        _tags[textField.tag] = textField.text;
+    }
+}
+
+- (void)editBegin:(UITextField*)textField {
+    if (textField.tag == _tags.count) {
+        [_tags addObject:@""];
+        NSArray* indexes = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:_tags.count inSection:0]];
+        [self.tableView insertRowsAtIndexPaths:indexes withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+}
 
 // Update the data model according to edit actions delete or insert.
 - (void)tableView:(UITableView *)aTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
@@ -129,15 +121,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [_tags removeObjectAtIndex:indexPath.row];
 		[aTableView reloadData];
+    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        [_tags addObject:@""];
+		[aTableView reloadData];
     }
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        return NO;
-    } else {
-        return YES;
-    }
+    return indexPath.row < _tags.count;
 }
 
 #pragma mark Row reordering
@@ -155,34 +146,48 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
-#pragma mark - UISearchDisplayController delegate methods
--(BOOL)searchDisplayController:(UISearchDisplayController *)controller
-shouldReloadTableForSearchString:(NSString *)searchString
-{
-    results = [NSArray arrayWithObject:searchString];
-    return YES;
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    if (searchText.length < 3) {
+        tableMode = kTagTableInput;
+        [self.tableView setEditing:YES animated:YES];
+        [self.tableView reloadData];
+    } else {
+        [self loadResult:searchText];
+    }
 }
 
-- (void)searchDisplayController:(UISearchDisplayController *)controller willHideSearchResultsTableView:(UITableView *)tableView {
+- (void)loadResult: (NSString*)searchText {
+    if (currentRequest && currentRequest.isExecuting)
+        [currentRequest cancel];
+    
+    currentRequest = [[LatteAPIv2Client sharedClient] GET:@"tag/search" parameters:@{@"keyword": _searchBar.text, @"app": @"true"} success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+        [self.tableView setEditing:NO animated:YES];
+        tableMode = kTagTableResult;
+        results = JSON[@"tags"];
+        [self.tableView reloadData];
+    } failure:nil];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    tableMode = kTagTableInput;
+    [self.tableView setEditing:YES animated:YES];
     [self.tableView reloadData];
+    [searchBar resignFirstResponder];
 }
 
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    [self.searchDisplayController setActive:NO animated:YES];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (tableMode == kTagTableResult) {
+        NSString *tag = results[indexPath.row][@"label"];
+        if (![_tags containsObject:tag]) {
+            [_tags addObject:tag];
+        }
+    }
+    
+    _searchBar.text = @"";
+    tableMode = kTagTableInput;
+    [self.tableView setEditing:YES animated:YES];
+    [self.tableView reloadData];
+    
 }
-
-/*
- - (BOOL)searchDisplayController:(UISearchDisplayController *)controller
- shouldReloadTableForSearchScope:(NSInteger)searchOption
- {
- [self filterContentForSearchText:[self.searchDisplayController.searchBar text]
- scope:[[self.searchDisplayController.searchBar scopeButtonTitles]
- objectAtIndex:searchOption]];
- 
- return YES;
- }
- 
- */
-
 
 @end

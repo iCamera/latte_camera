@@ -48,6 +48,7 @@ typedef enum {
     NSInteger daysInMonth;
     
     UserPagePhotoMode photoMode;
+    NSDictionary *userv2;
     NSArray *allTab;
     BOOL reloading;
     BOOL endedPic;
@@ -129,8 +130,13 @@ typedef enum {
     [self reloadProfile];
     
     
+    if (!app.currentUser) {
+        _buttonMore.hidden = YES;
+    }
+
     if (app.currentUser && (_userId == [app.currentUser.userId integerValue])) {
         _buttonFollow.hidden = YES;
+        _buttonMore.hidden = YES;
     }
     
     LXSocketIO *socket = [LXSocketIO sharedClient];
@@ -155,6 +161,7 @@ typedef enum {
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
     
     [[LatteAPIv2Client sharedClient] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+        userv2 = JSON;
         [_imageCover setImageWithURL:[NSURL URLWithString:JSON[@"cover_picture"]]];
 
         self.navigationItem.title = JSON[@"name"];
@@ -375,12 +382,21 @@ typedef enum {
 }
 
 - (IBAction)touchMore:(id)sender {
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                       delegate:self
-                                              cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
-                                         destructiveButtonTitle:NSLocalizedString(@"Block User", @"ブロックする")
-                                              otherButtonTitles:nil];
-    [sheet showInView:self.view];
+    if ([userv2[@"is_blocking"] boolValue]) {
+        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                           delegate:self
+                                                  cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
+                                             destructiveButtonTitle:NSLocalizedString(@"Unblock User", @"ブロックを解除")
+                                                  otherButtonTitles:nil];
+        [sheet showInView:self.view];
+    } else {
+        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                           delegate:self
+                                                  cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
+                                             destructiveButtonTitle:NSLocalizedString(@"Block User", @"ブロックする")
+                                                  otherButtonTitles:nil];
+        [sheet showInView:self.view];
+    }
 }
 
 - (void)loadMore {
@@ -943,10 +959,17 @@ typedef enum {
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     switch (buttonIndex) {
         case 0: {
-            NSString *url = [NSString stringWithFormat:@"user/%ld/block", (long)_userId];
-            [[LatteAPIv2Client sharedClient] POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                [self.navigationController popViewControllerAnimated:YES];
-            } failure:nil];
+            if ([userv2[@"is_blocking"] boolValue]) {
+                NSString *url = [NSString stringWithFormat:@"user/%ld/unblock", (long)_userId];
+                [[LatteAPIv2Client sharedClient] POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                    [self reloadProfile];
+                } failure:nil];
+            } else {
+                NSString *url = [NSString stringWithFormat:@"user/%ld/block", (long)_userId];
+                [[LatteAPIv2Client sharedClient] POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                    [self reloadProfile];
+                } failure:nil];
+            }
         }
             break;
         default:
