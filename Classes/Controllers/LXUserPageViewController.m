@@ -168,8 +168,17 @@ typedef enum {
 
         
         if (app.currentUser) {
-            _buttonFollow.enabled = true;
+            _buttonFollow.enabled = ![JSON[@"is_blocking"] boolValue];
             _buttonFollow.selected = [JSON[@"is_following"] boolValue];
+            if ([JSON[@"is_following"] boolValue]) {
+                
+                if ([JSON[@"is_followed_by"] boolValue]) {
+                    [_buttonFollow setImage:[UIImage imageNamed:@"icon40-f4f-green.png"] forState:UIControlStateSelected];
+                } else {
+                    [_buttonFollow setImage:[UIImage imageNamed:@"icon40-followed-blue.png"] forState:UIControlStateSelected];
+                }
+            }
+            
         }
     } failure:nil];
 }
@@ -304,13 +313,6 @@ typedef enum {
         [self reloadCalendar];
 }
 
-- (IBAction)touchProfilePic:(id)sender {
-    LXAppDelegate* app = [LXAppDelegate currentDelegate];
-    if (app.currentUser &&  (_userId == [app.currentUser.userId integerValue])) {
-        [self touchSetProfilePic];
-    }
-}
-
 - (IBAction)refresh:(id)sender {
     [self reloadView];
 }
@@ -354,8 +356,6 @@ typedef enum {
     _user.isFollowing = _buttonFollow.selected;
     NSString *url;
     
-    LXAppDelegate* app = [LXAppDelegate currentDelegate];
-    
     if (_user.isFollowing) {
         url = [NSString stringWithFormat:@"user/follow/%ld", (long)_userId];
         
@@ -364,7 +364,7 @@ typedef enum {
     }
     
     [[LatteAPIClient sharedClient] POST:url
-                             parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
+                             parameters:nil
                                 success:nil
                                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                     _buttonFollow.selected = !_buttonFollow.selected;
@@ -372,6 +372,15 @@ typedef enum {
                                     DLog(@"Something went wrong (User - follow)");
                                 }];
 
+}
+
+- (IBAction)touchMore:(id)sender {
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                       delegate:self
+                                              cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
+                                         destructiveButtonTitle:NSLocalizedString(@"Block User", @"ブロックする")
+                                              otherButtonTitles:nil];
+    [sheet showInView:self.view];
 }
 
 - (void)loadMore {
@@ -923,24 +932,6 @@ typedef enum {
     self.tableView.tableHeaderView = viewHeader;
 }
 
-- (void)touchSetProfilePic {
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"change_profile_pic", @"プロフィール")
-                                                       delegate:self
-                                              cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
-                                         destructiveButtonTitle:NSLocalizedString(@"remove_profile_pic", @"削除する")
-                                              otherButtonTitles:NSLocalizedString(@"Camera", @""), NSLocalizedString(@"Photo Library", @""), nil];
-    [sheet showFromTabBar:self.tabBarController.tabBar];
-}
-
-
-- (void)didPresentActionSheet:(UIActionSheet *)actionSheet {
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    if (app.currentUser.profilePicture == nil) {
-        [actionSheet setButton:0 toState:false];
-    }
-}
-
-
 - (void)becomeActive:(NSNotification *) notification {
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     if (app.currentUser != nil) {
@@ -951,85 +942,16 @@ typedef enum {
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     switch (buttonIndex) {
-        case 0:
-            [self deleteProfilePic];
-            break;
-        case 1:
-            if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-                
-                UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                      message:@"Device has no camera"
-                                                                     delegate:nil
-                                                            cancelButtonTitle:@"OK"
-                                                            otherButtonTitles: nil];
-                
-                [myAlertView show];
-                
-            } else {
-                UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-                
-                imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-                imagePicker.delegate = self;
-                
-                [self presentViewController:imagePicker animated:YES completion:nil];
-            }
-            break;
-        case 2: {
-            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-            
-            imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-            imagePicker.delegate = self;
-            
-            [self presentViewController:imagePicker animated:YES completion:nil];
+        case 0: {
+            NSString *url = [NSString stringWithFormat:@"user/%ld/block", (long)_userId];
+            [[LatteAPIv2Client sharedClient] POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                [self.navigationController popViewControllerAnimated:YES];
+            } failure:nil];
         }
             break;
         default:
             break;
     }
-}
-
-- (void)deleteProfilePic {
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-    
-    [[LatteAPIClient sharedClient] POST:@"user/me/profile_picture_delete"
-                             parameters:[NSDictionary dictionaryWithObjectsAndKeys:
-                                         [app getToken], @"token", nil]
-                                success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                    
-                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                    DLog(@"Something went wrong (Delete profile pic)");
-                                }];
-    
-}
-
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    [picker dismissViewControllerAnimated:YES completion:nil];
-    
-    void (^createForm)(id<AFMultipartFormData>) = ^(id<AFMultipartFormData> formData) {
-        NSData *imageData = UIImageJPEGRepresentation(info[UIImagePickerControllerOriginalImage], 1);
-        [formData appendPartWithFileData:imageData
-                                    name:@"file"
-                                fileName:@"latte.jpg"
-                                mimeType:@"image/jpeg"];
-    };
-    
-    
-    LatteAPIv2Client *api2 = [LatteAPIv2Client sharedClient];
-    
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [api2 POST:@"user/me/profile_picture" parameters:nil constructingBodyWithBlock:createForm success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-        [_buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:JSON[@"profile_picture"]]];
-        LXAppDelegate *app = [LXAppDelegate currentDelegate];
-        app.currentUser.profilePicture = JSON[@"profile_picture"];
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    }];
-}
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)showPic:(UIButton*)sender {
@@ -1195,6 +1117,7 @@ typedef enum {
         MZFormSheetSegue *sheet = (MZFormSheetSegue*)segue;
         sheet.formSheetController.cornerRadius = 0;
         sheet.formSheetController.shouldDismissOnBackgroundViewTap = YES;
+        sheet.formSheetController.presentedFormSheetSize = CGSizeMake(250, self.view.bounds.size.height - sheet.formSheetController.portraitTopInset);
     }
     
     if ([segue.identifier isEqualToString:@"Follower"]) {
@@ -1204,6 +1127,7 @@ typedef enum {
         MZFormSheetSegue *sheet = (MZFormSheetSegue*)segue;
         sheet.formSheetController.cornerRadius = 0;
         sheet.formSheetController.shouldDismissOnBackgroundViewTap = YES;
+        sheet.formSheetController.presentedFormSheetSize = CGSizeMake(250, self.view.bounds.size.height - sheet.formSheetController.portraitTopInset);
     }
     
     if ([segue.identifier isEqualToString:@"Following"]) {
@@ -1213,6 +1137,7 @@ typedef enum {
         MZFormSheetSegue *sheet = (MZFormSheetSegue*)segue;
         sheet.formSheetController.cornerRadius = 0;
         sheet.formSheetController.shouldDismissOnBackgroundViewTap = YES;
+        sheet.formSheetController.presentedFormSheetSize = CGSizeMake(250, self.view.bounds.size.height - sheet.formSheetController.portraitTopInset);
     }
 }
 

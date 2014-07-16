@@ -1452,15 +1452,15 @@ or you can try to send another confirmation email.</string>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kc8-8B-lDc">
-                                    <rect key="frame" x="278" y="27" width="22" height="22"/>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kc8-8B-lDc">
+                                    <rect key="frame" x="280" y="110" width="40" height="40"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <state key="normal">
+                                    <state key="normal" image="icon28-more-white.png">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <connections>
-                                        <segue destination="fNT-Qz-mIt" kind="custom" identifier="Profile" customClass="MZFormSheetSegue" id="s00-5A-NCH"/>
+                                        <action selector="touchMore:" destination="21a-Kc-kfo" eventType="touchUpInside" id="AXH-fP-NfK"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vEm-kz-mRV">
@@ -1470,7 +1470,7 @@ or you can try to send another confirmation email.</string>
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <connections>
-                                        <action selector="touchProfilePic:" destination="21a-Kc-kfo" eventType="touchUpInside" id="ml7-Rd-FvW"/>
+                                        <segue destination="fNT-Qz-mIt" kind="custom" identifier="Profile" customClass="MZFormSheetSegue" id="mAb-gT-dP3"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dIM-YO-l6p" customClass="LXTabButton">
@@ -1517,32 +1517,34 @@ or you can try to send another confirmation email.</string>
                                         <action selector="switchView:" destination="21a-Kc-kfo" eventType="touchUpInside" id="BrK-g5-3Da"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ylh-RA-SXN">
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ylh-RA-SXN">
                                     <rect key="frame" x="18" y="56" width="100" height="26"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="22"/>
                                     <inset key="titleEdgeInsets" minX="6" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <size key="titleShadowOffset" width="0.0" height="1"/>
                                     <state key="normal" title="0" image="icon36-follower-white.png">
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="titleShadowColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                                     </state>
                                     <connections>
                                         <segue destination="OZE-UL-Mh9" kind="custom" identifier="Following" customClass="MZFormSheetSegue" id="bsm-XB-qQP"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VG6-0T-eya">
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VG6-0T-eya">
                                     <rect key="frame" x="18" y="25" width="100" height="26"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="22"/>
                                     <inset key="titleEdgeInsets" minX="6" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <size key="titleShadowOffset" width="0.0" height="1"/>
                                     <state key="normal" title="0" image="icon36-following-white.png">
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="titleShadowColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                                     </state>
                                     <connections>
                                         <segue destination="OZE-UL-Mh9" kind="custom" identifier="Follower" customClass="MZFormSheetSegue" id="nqr-PV-YRj"/>
                                     </connections>
                                 </button>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="tdE-Mv-kGb">
-                                    <rect key="frame" x="20" y="88" width="280" height="50"/>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="252" translatesAutoresizingMaskIntoConstraints="NO" id="tdE-Mv-kGb">
+                                    <rect key="frame" x="20" y="88" width="252" height="50"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -1585,7 +1587,7 @@ or you can try to send another confirmation email.</string>
                     <navigationItem key="navigationItem" id="RFh-zs-rV7">
                         <nil key="title"/>
                         <barButtonItem key="rightBarButtonItem" style="done" id="Lmb-Nq-lOT">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="right" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="loZ-41-srG">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="right" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="loZ-41-srG">
                                 <rect key="frame" x="231" y="11" width="73" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="icon40-follow-yellow.png">
@@ -1614,6 +1616,7 @@ or you can try to send another confirmation email.</string>
                         <outlet property="buttonFollow" destination="loZ-41-srG" id="aZR-j9-mgO"/>
                         <outlet property="buttonFollower" destination="ylh-RA-SXN" id="hJZ-aE-Gap"/>
                         <outlet property="buttonFollowing" destination="VG6-0T-eya" id="rxI-8X-OHp"/>
+                        <outlet property="buttonMore" destination="Kc8-8B-lDc" id="kCz-J2-xdp"/>
                         <outlet property="buttonTabCalendar" destination="SIh-u5-mBH" id="ZD9-zU-qWO"/>
                         <outlet property="buttonTabGrid" destination="qH4-dd-00c" id="i2t-db-YXR"/>
                         <outlet property="buttonTabTag" destination="HYg-9W-cBj" id="MpT-kz-e2w"/>
@@ -1683,9 +1686,18 @@ or you can try to send another confirmation email.</string>
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <imageView key="tableHeaderView" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user.gif" id="Oy1-h0-qUE">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="ovF-mN-A30">
+                            <rect key="frame" x="0.0" y="316" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Profile" textLabel="bLv-FE-9X8" detailTextLabel="CFT-nW-GTN" style="IBUITableViewCellStyleValue2" id="0F6-2D-nq5">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="272" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0F6-2D-nq5" id="Rcf-ck-BvK">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -1714,6 +1726,9 @@ or you can try to send another confirmation email.</string>
                             <outlet property="delegate" destination="fNT-Qz-mIt" id="x75-YW-3q3"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="imageProfile" destination="Oy1-h0-qUE" id="pIb-9r-eiw"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Ii-cU-EWi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1957,6 +1972,7 @@ or you can try to send another confirmation email.</string>
         <image name="icon28-info-brown.png" width="14" height="14"/>
         <image name="icon28-like-blue.png" width="14" height="14"/>
         <image name="icon28-like-brown.png" width="14" height="14"/>
+        <image name="icon28-more-white.png" width="18" height="14"/>
         <image name="icon36-calendar-blue.png" width="18" height="18"/>
         <image name="icon36-calendar-brown.png" width="18" height="18"/>
         <image name="icon36-follower-white.png" width="25" height="18"/>
@@ -1993,6 +2009,6 @@ or you can try to send another confirmation email.</string>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="myE-qi-b3h"/>
-        <segue reference="nqr-PV-YRj"/>
+        <segue reference="bsm-XB-qQP"/>
     </inferredMetricsTieBreakers>
 </document>

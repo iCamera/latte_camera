@@ -149,7 +149,7 @@
 }
 
 - (void)showNormalTag:(UIButton*)button {
-    NSString *tag = _feed.tags[0];
+    NSString *tag = _feed.tags[button.tag];
     
     UIStoryboard *storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                         bundle:nil];

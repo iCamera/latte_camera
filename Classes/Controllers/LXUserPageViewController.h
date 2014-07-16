@@ -14,7 +14,7 @@
 
 @class User;
 
-@interface LXUserPageViewController : UITableViewController <UIActionSheetDelegate, LXGalleryViewControllerDataSource, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface LXUserPageViewController : UITableViewController <UIActionSheetDelegate, LXGalleryViewControllerDataSource, UINavigationControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonUser;
 @property (strong, nonatomic) IBOutlet UIImageView *imageCover;
@@ -29,13 +29,17 @@
 
 @property (strong, nonatomic) User *user;
 @property (assign, nonatomic) NSInteger userId;
+@property (strong, nonatomic) IBOutlet UIButton *buttonMore;
 
 - (void)expandHeader;
 - (void)collapseHeader;
 - (void)reloadView;
-- (IBAction)touchProfilePic:(id)sender;
+
 - (IBAction)refresh:(id)sender;
 - (IBAction)switchView:(UIButton*)sender;
 - (IBAction)touchFollow:(id)sender;
+- (IBAction)touchMore:(id)sender;
+
+
 
 @end

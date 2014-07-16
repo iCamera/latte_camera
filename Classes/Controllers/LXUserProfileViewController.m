@@ -7,6 +7,7 @@
 //
 
 #import "LXUserProfileViewController.h"
+#import "UIImageView+AFNetworking.h"
 #import "LXAppDelegate.h"
 
 @interface LXUserProfileViewController () {
@@ -56,6 +57,8 @@
                                    
                                    [showSet intersectSet:allField];
                                    showField = [showSet allObjects];
+                                   
+                                   [_imageProfile setImageWithURL:[NSURL URLWithString:userDict[@"profile_picture_hi"]]];
                                    
                                    [self.tableView reloadData];
                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

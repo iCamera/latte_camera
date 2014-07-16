@@ -59,18 +59,7 @@
     _buttonProfilePicture.layer.cornerRadius = 25;
     
     if (app.currentUser) {
-        [[LatteAPIv2Client sharedClient] GET:@"user/me"
-                                parameters: nil
-                                   success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       [_buttonProfilePicture setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:JSON[@"profile_picture"]]];
-                                       [_imageCover setImageWithURL:[NSURL URLWithString:JSON[@"cover_picture"]]];
-                                       _labelLike.text = [JSON[@"vote_count"] stringValue];
-                                       _labelPV.text = [JSON[@"page_views"] stringValue];
-                                       
-                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       DLog(@"Something went wrong (Profile)");
-                                   }];
-
+        [self reloadInfo];
     } else {
         self.tableView.tableHeaderView = nil;
     }
@@ -91,6 +80,18 @@
     } else {
         _switchOrigin.on = YES;
     }
+}
+
+- (void)reloadInfo {
+    [[LatteAPIv2Client sharedClient] GET:@"user/me"
+                              parameters: nil
+                                 success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                     [_buttonProfilePicture setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:JSON[@"profile_picture"]]];
+                                     [_imageCover setImageWithURL:[NSURL URLWithString:JSON[@"cover_picture"]]];
+                                     _labelLike.text = [JSON[@"vote_count"] stringValue];
+                                     _labelPV.text = [JSON[@"page_views"] stringValue];
+                                     
+                                 } failure:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -175,7 +176,7 @@
     UIActionSheet *actionUpload = [[UIActionSheet alloc] initWithTitle:@""
                                                               delegate:self
                                                      cancelButtonTitle:NSLocalizedString(@"Cancel", @"")
-                                                destructiveButtonTitle:nil
+                                                destructiveButtonTitle:NSLocalizedString(@"remove_profile_pic", @"削除する")
                                                      otherButtonTitles:NSLocalizedString(@"Camera", @""), NSLocalizedString(@"Photo Library", @""), nil];
     
     [actionUpload showInView:self.view];
@@ -186,7 +187,7 @@
     UIActionSheet *actionUpload = [[UIActionSheet alloc] initWithTitle:@""
                                                               delegate:self
                                                      cancelButtonTitle:NSLocalizedString(@"Cancel", @"")
-                                                destructiveButtonTitle:nil
+                                                destructiveButtonTitle:NSLocalizedString(@"remove_profile_pic", @"削除する")
                                                      otherButtonTitles:NSLocalizedString(@"Camera", @""), NSLocalizedString(@"Photo Library", @""), nil];
     
     [actionUpload showInView:self.view];
@@ -194,6 +195,21 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
+        if (photoMode == 1) {
+            [_buttonProfilePicture setBackgroundImage:[UIImage imageNamed:@"user.gif"] forState:UIControlStateNormal];
+            [[LatteAPIv2Client sharedClient] DELETE:@"user/me/profile_picture" parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                [self reloadInfo];
+            } failure:nil];
+        }
+        
+        if (photoMode == 2) {
+            [_imageCover setImage:[UIImage imageNamed:@"default-cover.gif"]];
+            [[LatteAPIv2Client sharedClient] DELETE:@"user/me/cover_picture" parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                [self reloadInfo];
+            } failure:nil];
+        }
+
+    } else if (buttonIndex == 1) {
         
         if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
             
@@ -213,7 +229,7 @@
             
             [self presentViewController:imagePicker animated:YES completion:nil];
         }
-    } else if (buttonIndex == 1) {
+    } else if (buttonIndex == 2) {
         UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
         
         imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
@@ -238,6 +254,7 @@
     
     if (photoMode == 1) {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        
         [api2 POST:@"user/me/profile_picture" parameters:nil constructingBodyWithBlock:createForm success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
             [_buttonProfilePicture setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:JSON[@"profile_picture"]]];
             LXAppDelegate *app = [LXAppDelegate currentDelegate];
@@ -251,6 +268,7 @@
     
     if (photoMode == 2) {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        
         [api2 POST:@"user/me/cover_picture" parameters:nil constructingBodyWithBlock:createForm success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
             [_imageCover setImageWithURL:[NSURL URLWithString:JSON[@"cover_picture"]]];
             [MBProgressHUD hideHUDForView:self.view animated:YES];

@@ -19,6 +19,8 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedClient = [[LatteAPIClient alloc] initWithBaseURL:[NSURL URLWithString:kLatteAPIBaseURLString]];
+        _sharedClient.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions: NSJSONReadingMutableContainers];
+        
         [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
         
         if (![kLatteAPIBaseURLString isEqualToString:@"http://latte.la/api/"]) {

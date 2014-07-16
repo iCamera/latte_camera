@@ -11,6 +11,7 @@
 
 @interface LXUserProfileViewController : UITableViewController
 
+@property (strong, nonatomic) IBOutlet UIImageView *imageProfile;
 @property (strong, nonatomic) User *user;
 
 @end

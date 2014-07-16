@@ -238,8 +238,9 @@
     UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:nil
                                                         delegate:self
                                                cancelButtonTitle:NSLocalizedString(@"Cancel", @"")
-                                          destructiveButtonTitle:destructiveButtonTitle
-                                               otherButtonTitles:@"Copy URL", @"Facebook", @"Twitter", @"Email", nil];
+                                          destructiveButtonTitle:nil
+                                               otherButtonTitles:@"Copy URL", @"Facebook", @"Twitter", @"Email", destructiveButtonTitle, nil];
+    action.destructiveButtonIndex = 4;
     [action showFromTabBar:viewController.navigationController.tabBarController.tabBar];
 }
 
@@ -265,21 +266,21 @@
         lxShare.text = pic.urlWeb;
         
         switch (buttonIndex) {
-            case 1: {
+            case 0: {
                 UIPasteboard *pb = [UIPasteboard generalPasteboard];
                 [pb setString:pic.urlWeb];
                 break;
             }
-            case 2: // email
+            case 1: // email
                 [lxShare facebookPost];
                 break;
-            case 3: // twitter
+            case 2: // twitter
                 [lxShare tweet];
                 break;
-            case 4: // facebook
+            case 3: // facebook
                 [lxShare emailIt];
                 break;
-            case 0: {
+            case 4: {
                 if (pic.isOwner) {
                     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil
                                                                        delegate:self

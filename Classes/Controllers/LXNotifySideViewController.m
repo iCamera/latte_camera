@@ -200,7 +200,10 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *notify = notifies[indexPath.row];
+    NSMutableDictionary *notify = notifies[indexPath.row];
+    notify[@"read"] = [NSNumber numberWithBool:YES];
+    [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    
     NotifyTarget notifyTarget = [[notify objectForKey:@"target_model"] integerValue];
     NotifyKind notifyKind = [[notify objectForKey:@"kind"] integerValue];
     
