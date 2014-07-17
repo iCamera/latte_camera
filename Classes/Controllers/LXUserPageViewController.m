@@ -197,8 +197,8 @@ typedef enum {
         endedPic = false;
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         
-        if (currentRequest.isExecuting)
-            return;
+        if (currentRequest && currentRequest.isExecuting)
+            [currentRequest cancel];
     } else {
         if (currentRequest.isExecuting)
             return;
@@ -240,6 +240,9 @@ typedef enum {
 
 - (void)loadTag {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    if (currentRequest && currentRequest.isExecuting)
+        [currentRequest cancel];
+    
     currentRequest = [[LatteAPIv2Client sharedClient] GET: @"picture"
                                                parameters: @{@"user_id": [NSNumber numberWithInteger:_userId]}
                                                 success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -306,9 +309,6 @@ typedef enum {
 
 - (void)reloadView {
     endedPic = false;
-    
-    if (currentRequest && currentRequest.isExecuting)
-        [currentRequest cancel];
 
     if (photoMode == kPhotoTimeline) {
          [self loadTimeline:YES];

@@ -57,10 +57,8 @@
     LXSocketIO *socket = [LXSocketIO sharedClient];
     [socket sendEvent:@"join" withData:[NSString stringWithFormat:@"picture_%ld", [_pic.pictureId longValue]]];
     
-    _progressLoad.hidden = NO;
     _progressLoad.progress = 0;
     [_imagePicture loadProgess:_pic.urlMedium withCompletion:^{
-        _progressLoad.hidden = YES;
         _imagePicture.alpha = 0;
         [UIView animateWithDuration:0.3 animations:^{
             _imagePicture.alpha = 1;

@@ -57,9 +57,7 @@
     actualScale = MAX(orgWidth/screenWidth, orgHeight/screenHeight)*2.0;
 
     _progressCircle.progress = 0;
-    _progressCircle.hidden = NO;
     [imageZoom loadProgess:_picture.urlMedium withCompletion:^{
-        _progressCircle.hidden = YES;
         imageZoom.alpha = 0;
         [UIView animateWithDuration:0.3 animations:^{
             imageZoom.alpha = 1;

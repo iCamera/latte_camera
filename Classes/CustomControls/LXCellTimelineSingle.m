@@ -98,11 +98,8 @@
     buttonLike.tag = [pic.pictureId integerValue];
     buttonInfo.tag = [pic.pictureId integerValue];
     
-    _progressLoad.hidden = NO;
     _progressLoad.progress = 0;
     [buttonPic loadProgessBackground:pic.urlMedium forState:UIControlStateNormal withCompletion:^{
-        _progressLoad.hidden = YES;
-        
         buttonPic.alpha = 0;
         [UIView animateWithDuration:0.3 animations:^{
             buttonPic.alpha = 1;
