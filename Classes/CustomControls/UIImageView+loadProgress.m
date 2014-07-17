@@ -35,21 +35,21 @@
     progess.progress = 0;
     [self addSubview:progess];
     
-    [self loadProgess:url withCompletion:^{
-        [progess removeFromSuperview];
+    [self loadProgess:url withCompletion:^(BOOL isCache) {
+        
     } progress:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
         progess.progress = (float)totalBytesRead/(float)totalBytesExpectedToRead;
     } placeholderImage:placeholder];
 }
 
 - (void)loadProgess:(NSString *)url
-     withCompletion:(void (^)(void))completionBlock
+     withCompletion:(void (^)(BOOL isCache))completionBlock
            progress:(void (^)(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead))progress {
     [self loadProgess:url withCompletion:completionBlock progress:progress placeholderImage:nil];
 }
 
 - (void)loadProgess:(NSString *)url
-     withCompletion:(void (^)(void))completionBlock
+     withCompletion:(void (^)(BOOL isCache))completionBlock
            progress:(void (^)(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead))progress
    placeholderImage:(UIImage*)placeholderImage {
     
@@ -61,10 +61,18 @@
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         
         strongSelf.image = image;
+        if (response) {
+            completionBlock(true);
+        } else {
+            completionBlock(false);
+        }
         
-        completionBlock();
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-        completionBlock();
+        if (request) {
+            completionBlock(true);
+        } else {
+            completionBlock(false);
+        }
     }];
     
     [self.af_imageRequestOperation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {

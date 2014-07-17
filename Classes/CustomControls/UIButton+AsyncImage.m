@@ -59,7 +59,7 @@
 
 - (void)loadProgessBackground:(NSString *)url
                      forState:(UIControlState)state
-               withCompletion:(void (^)(void))completionBlock
+               withCompletion:(void (^)(BOOL isCache))completionBlock
                      progress:(void (^)(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead))progress
              placeholderImage:(UIImage*)placeholderImage {
     [self setBackgroundImageForState:state withURL:[NSURL URLWithString:url] placeholderImage:placeholderImage];
@@ -73,10 +73,14 @@
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         
         [strongSelf setBackgroundImage:image forState:state];
+        if (response) {
+            completionBlock(true);
+        } else {
+            completionBlock(false);
+        }
         
-        completionBlock();
     } failure:^(NSError *error) {
-        completionBlock();
+        completionBlock(false);
     }];
     
     [self.af_backgroundImageRequestOperation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {

@@ -99,11 +99,14 @@
     buttonInfo.tag = [pic.pictureId integerValue];
     
     _progressLoad.progress = 0;
-    [buttonPic loadProgessBackground:pic.urlMedium forState:UIControlStateNormal withCompletion:^{
-        buttonPic.alpha = 0;
-        [UIView animateWithDuration:0.3 animations:^{
-            buttonPic.alpha = 1;
-        }];
+    [buttonPic loadProgessBackground:pic.urlMedium forState:UIControlStateNormal withCompletion:^(BOOL isCache){
+        if (!isCache) {
+            buttonPic.alpha = 0;
+            [UIView animateWithDuration:0.3 animations:^{
+                buttonPic.alpha = 1;
+            }];
+        }
+
         
     } progress:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
         _progressLoad.progress = (float)totalBytesRead/(float)totalBytesExpectedToRead;

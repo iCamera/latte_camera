@@ -13,6 +13,6 @@
 - (void)loadProgess:(NSString *)url;
 - (void)loadProgess:(NSString *)url placeholderImage:(UIImage*)placeholder;
 - (void)loadProgess:(NSString *)url
-     withCompletion:(void (^)(void))completionBlock
+     withCompletion:(void (^)(BOOL isCache))completionBlock
            progress:(void (^)(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead))progress;
 @end

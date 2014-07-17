@@ -14,7 +14,7 @@
 - (void)loadBackground:(NSString *)url animated:(BOOL)animated;
 - (void)loadProgessBackground:(NSString *)url
                      forState:(UIControlState)state
-               withCompletion:(void (^)(void))completionBlock
+               withCompletion:(void (^)(BOOL isCache))completionBlock
                      progress:(void (^)(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead))progress
              placeholderImage:(UIImage*)placeholderImage;
 @end

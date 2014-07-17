@@ -57,12 +57,14 @@
     actualScale = MAX(orgWidth/screenWidth, orgHeight/screenHeight)*2.0;
 
     _progressCircle.progress = 0;
-    [imageZoom loadProgess:_picture.urlMedium withCompletion:^{
-        imageZoom.alpha = 0;
-        [UIView animateWithDuration:0.3 animations:^{
-            imageZoom.alpha = 1;
-        }];
-        
+    [imageZoom loadProgess:_picture.urlMedium withCompletion:^(BOOL isCache) {
+        if (!isCache) {
+            imageZoom.alpha = 0;
+            [UIView animateWithDuration:0.3 animations:^{
+                imageZoom.alpha = 1;
+                _progressCircle.alpha = 0;
+            }];
+        }
     } progress:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
         _progressCircle.progress = (float)totalBytesRead/(float)totalBytesExpectedToRead;
     }];
@@ -168,7 +170,7 @@
     _progessLoad.progress = 0;
     _progessLoad.hidden = NO;
     
-    [imageZoom loadProgess:url withCompletion:^(void){
+    [imageZoom loadProgess:url withCompletion:^(BOOL isCache){
         _progessLoad.hidden = YES;
     } progress:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
         _progessLoad.progress = (float)totalBytesRead/(float)totalBytesExpectedToRead;

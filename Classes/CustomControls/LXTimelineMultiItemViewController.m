@@ -58,11 +58,14 @@
     [socket sendEvent:@"join" withData:[NSString stringWithFormat:@"picture_%ld", [_pic.pictureId longValue]]];
     
     _progressLoad.progress = 0;
-    [_imagePicture loadProgess:_pic.urlMedium withCompletion:^{
-        _imagePicture.alpha = 0;
-        [UIView animateWithDuration:0.3 animations:^{
-            _imagePicture.alpha = 1;
-        }];
+    [_imagePicture loadProgess:_pic.urlMedium withCompletion:^(BOOL isCache){
+        if (!isCache) {
+            _imagePicture.alpha = 0;
+            [UIView animateWithDuration:0.3 animations:^{
+                _imagePicture.alpha = 1;
+            }];
+        }
+
     } progress:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
         _progressLoad.progress = (float)totalBytesRead/(float)totalBytesExpectedToRead;
     }];
