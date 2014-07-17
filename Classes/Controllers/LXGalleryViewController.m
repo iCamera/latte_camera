@@ -121,6 +121,7 @@
     [pageController didMoveToParentViewController:self];
     
     labelDesc = [[STTweetLabel alloc] initWithFrame:CGRectMake(6, 6, 308, 0)];
+    labelDesc.textSelectable = NO;
     [labelDesc setAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0]}];
     [labelDesc setAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0]} hotWord:STTweetHandle];
     [labelDesc setAttributes:@{NSForegroundColorAttributeName: [UIColor cyanColor], NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0]} hotWord:STTweetHashtag];
