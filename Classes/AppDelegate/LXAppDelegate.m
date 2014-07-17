@@ -83,8 +83,6 @@
         [self checkTokenValidity];
     }
     
-    
-    
     // Clear notify but save badge
     [self clearNotification];
 
@@ -99,12 +97,18 @@
                                                              bundle:nil];
     
     _viewMainTab = [mainStoryboard instantiateViewControllerWithIdentifier:@"contentController"];
+    UIViewController *underLeftViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"menuController"];
+    UIViewController *underRightViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"FollowingTag"];
+    
     REFrostedViewController *root = [[REFrostedViewController alloc] init];
     root.contentViewController = _viewMainTab;
-    root.menuViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"menuController"];
-
+    root.menuViewController = underLeftViewController;
     
     window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    self.window.rootViewController = root;
+    [self.window makeKeyAndVisible];
+    
     window.rootViewController = root;
     [window makeKeyAndVisible];
     

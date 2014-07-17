@@ -152,7 +152,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     } else {
         tableMode = kTagTableInput;
         [self.tableView setEditing:YES animated:YES];
-        [self.tableView reloadData];   
+        [self.tableView reloadData];
     }
 }
 
