@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AFHTTPRequestOperation.h"
 
 @interface UIImageView (loadProgress)
 - (void)loadProgess:(NSString *)url;
 - (void)loadProgess:(NSString *)url placeholderImage:(UIImage*)placeholder;
+- (void)loadProgess:(NSString *)url
+     withCompletion:(void (^)(void))completionBlock
+           progress:(void (^)(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead))progress;
 @end

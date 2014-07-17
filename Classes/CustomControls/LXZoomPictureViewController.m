@@ -7,8 +7,7 @@
 //
 
 #import "LXZoomPictureViewController.h"
-#import "UIImageView+AFNetworking.h"
-#import "UIButton+AFNetworking.h"
+#import "UIImageView+loadProgress.h"
 
 #import "AFNetworking.h"
 #import "Picture.h"
@@ -57,7 +56,13 @@
     
     actualScale = MAX(orgWidth/screenWidth, orgHeight/screenHeight)*2.0;
 
-    [self loadProgess:_picture.urlMedium];
+    _progressCircle.progress = 0;
+    _progressCircle.hidden = NO;
+    [imageZoom loadProgess:_picture.urlMedium withCompletion:^{
+        _progressCircle.hidden = YES;
+    } progress:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+        _progressCircle.progress = (float)totalBytesRead/(float)totalBytesExpectedToRead;
+    }];
 
     zoomLevel = [[NSMutableArray alloc]init];
     
@@ -96,8 +101,6 @@
     if (scrollView.zoomScale >= 2.0 && !loadedLarge) {
         loadedLarge = true;
         [self loadProgess:_picture.urlLarge];
-        [imageZoom setImageWithURL:[NSURL URLWithString:_picture.urlLarge] placeholderImage:imageZoom.image];
-
     } else if (scrollView.zoomScale >= 4.0 && !loadedOrg && actualScale >= 4.0) {
         loadedOrg = true;
         if (_picture.urlOrg) {
@@ -159,30 +162,14 @@
 
 
 - (void)loadProgess:(NSString *)url {
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]
-                                             cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                         timeoutInterval:60.0];
-    
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    
-    void (^successDownload)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
-        [imageZoom setImage:[UIImage imageWithData:responseObject]];
-        _progessLoad.hidden = YES;
-    };
-    
-    void (^failDownload)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
-        _progessLoad.hidden = YES;
-    };
-    
-    [operation setCompletionBlockWithSuccess: successDownload failure: failDownload];
-    
-    [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
-        _progessLoad.progress = (float)totalBytesRead/(float)totalBytesExpectedToRead;
-    }];
-    
     _progessLoad.progress = 0;
     _progessLoad.hidden = NO;
-    [operation start];
+    
+    [imageZoom loadProgess:url withCompletion:^(void){
+        _progessLoad.hidden = YES;
+    } progress:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+        _progessLoad.progress = (float)totalBytesRead/(float)totalBytesExpectedToRead;
+    }];
 }
 
 @end

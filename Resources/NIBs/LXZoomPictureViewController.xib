@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment version="1280" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="imageZoom" destination="41" id="42"/>
                 <outlet property="progessLoad" destination="U2X-ch-C9W" id="ghE-ZH-CWV"/>
+                <outlet property="progressCircle" destination="LdK-UJ-NjK" id="FMH-xr-nho"/>
                 <outlet property="scrollPicture" destination="12" id="27"/>
                 <outlet property="view" destination="1" id="26"/>
             </connections>
@@ -26,6 +27,12 @@
                             <rect key="frame" x="0.0" y="136" width="320" height="293"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         </imageView>
+                        <view contentMode="scaleToFill" id="LdK-UJ-NjK" customClass="UAProgressView">
+                            <rect key="frame" x="110" y="234" width="100" height="100"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" red="0.43529415129999999" green="0.74117648599999997" blue="0.73333334920000004" alpha="1" colorSpace="deviceRGB"/>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" red="0.2078431547" green="0.18823531269999999" blue="0.13333334029999999" alpha="1" colorSpace="deviceRGB"/>
                     <gestureRecognizers/>

@@ -11,6 +11,7 @@
 #import "LXGalleryViewController.h"
 #import "LXGradientView.h"
 #import "LXScrollTag.h"
+#import "UAProgressView.h"
 
 @interface LXCellTimelineSingle : UITableViewCell<UIActionSheetDelegate>
 
@@ -30,6 +31,7 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *contraintHeight;
 @property (strong, nonatomic) IBOutlet LXScrollTag *scrollTags;
 @property (strong, nonatomic) IBOutlet UIImageView *imageStatus;
+@property (weak, nonatomic) IBOutlet UAProgressView *progressLoad;
 
 @property (weak, nonatomic) UIViewController<LXGalleryViewControllerDataSource> *viewController;
 @property (strong, nonatomic) Feed *feed;

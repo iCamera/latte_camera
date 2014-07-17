@@ -7,9 +7,16 @@
 //
 
 #import "UIButton+AsyncImage.h"
-#import "AFNetworking.h"
+#import "UIButton+AFNetworking.h"
+#import "AFHTTPRequestOperation.h"
 
-@implementation UIButton (AsyncImage)
+@interface UIButton (_AsyncImage)
+@property (readwrite, nonatomic, strong, setter = af_setBackgroundImageRequestOperation:) AFHTTPRequestOperation *af_backgroundImageRequestOperation;
+@end
+
+@implementation UIButton (_AsyncImage)
+
+@dynamic af_backgroundImageRequestOperation;
 
 - (void)loadBackground:(NSString *)url animated:(BOOL)animated {
     [self loadBackground:url placeholderImage:nil];
@@ -48,6 +55,25 @@
 //    }];
     
     [operation start];
+}
+
+- (void)loadProgessBackground:(NSString *)url
+                     forState:(UIControlState)state
+               withCompletion:(void (^)(void))completionBlock
+                     progress:(void (^)(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead))progress
+             placeholderImage:(UIImage*)placeholderImage {
+    [self setBackgroundImageForState:state withURL:[NSURL URLWithString:url] placeholderImage:placeholderImage];
+    
+    void (^originCompletion)(void) = self.af_backgroundImageRequestOperation.completionBlock;
+    
+    self.af_backgroundImageRequestOperation.completionBlock = ^{
+        completionBlock();
+        originCompletion();
+    };
+    
+    [self.af_backgroundImageRequestOperation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+        progress(bytesRead, totalBytesRead, totalBytesExpectedToRead);
+    }];
 }
 
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Ydg-c4-h7a">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Ydg-c4-h7a">
     <dependencies>
         <deployment version="1536" defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
@@ -55,7 +55,7 @@
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="vfX-a7-nyP">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.90588241820000004" green="0.89411771299999998" blue="0.85490202900000001" alpha="1" colorSpace="deviceRGB"/>
                         <view key="tableHeaderView" autoresizesSubviews="NO" contentMode="scaleToFill" id="qhJ-TB-csr">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -629,7 +629,6 @@
                         <outlet property="buttonTabComment" destination="0nd-mh-c4W" id="aMt-DI-Onf"/>
                         <outlet property="buttonTabFollow" destination="hKI-wG-LLz" id="Yio-TT-v61"/>
                         <outlet property="buttonTabLike" destination="sCA-mC-hmb" id="Pnl-eL-sC5"/>
-                        <segue destination="Exj-Cm-MJZ" kind="push" identifier="Announcement" id="smk-EV-Xaq"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c8R-3X-3cs" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -679,7 +678,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RKB-t0-6If" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-140" y="18"/>
+            <point key="canvasLocation" x="776" y="594"/>
         </scene>
         <!--Tag Home-->
         <scene sceneID="bzC-la-srv">
@@ -783,41 +782,6 @@
             </objects>
             <point key="canvasLocation" x="-140" y="607"/>
         </scene>
-        <!--Anouncement View Controller - Announcements-->
-        <scene sceneID="HaE-IL-7CV">
-            <objects>
-                <viewController id="Exj-Cm-MJZ" customClass="LXAnouncementViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="RCr-Nu-IhG"/>
-                        <viewControllerLayoutGuide type="bottom" id="gdB-Yh-JIb"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Q1X-Fv-L59">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vso-y0-ez3">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            </webView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="bottom" secondItem="Vso-y0-ez3" secondAttribute="bottom" id="5hv-b7-2Xb"/>
-                            <constraint firstAttribute="trailing" secondItem="Vso-y0-ez3" secondAttribute="trailing" id="TJm-ES-fE6"/>
-                            <constraint firstItem="Vso-y0-ez3" firstAttribute="top" secondItem="RCr-Nu-IhG" secondAttribute="bottom" id="cdh-Yc-rQ1"/>
-                            <constraint firstItem="Vso-y0-ez3" firstAttribute="leading" secondItem="Q1X-Fv-L59" secondAttribute="leading" id="qkx-4r-jje"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Announcements" id="yxY-1Y-Mtg"/>
-                    <connections>
-                        <outlet property="webView" destination="Vso-y0-ez3" id="17i-2n-6zJ"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jGe-yY-qBG" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-146" y="1281"/>
-        </scene>
         <!--Navigation Controller - Notifications-->
         <scene sceneID="NPe-9h-C9N">
             <objects>
@@ -853,11 +817,11 @@
                             <rect key="frame" x="0.0" y="0.0" width="320" height="88"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <color key="tintColor" red="0.20784313730000001" green="0.18823529410000001" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
+                            <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <textInputTraits key="textInputTraits"/>
                             <scopeButtonTitles>
                                 <string>Photo</string>
                                 <string>User</string>
-                                <string>Tag</string>
                             </scopeButtonTitles>
                             <connections>
                                 <outlet property="delegate" destination="oup-QU-2wo" id="G2i-kT-Wc6"/>
@@ -967,32 +931,6 @@
                                 <action selector="showMenu" destination="Ftc-ZZ-Upd" id="Qgd-lF-DeG"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="YtF-Jd-3VD">
-                            <view key="customView" contentMode="scaleToFill" id="h2W-wz-VDd">
-                                <rect key="frame" x="233" y="5" width="71" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5bN-oa-kna">
-                                        <rect key="frame" x="31" y="-3" width="40" height="40"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="icon36-tag-white.png"/>
-                                        <connections>
-                                            <segue destination="3Rl-AM-Gib" kind="push" id="kuL-sb-e6U"/>
-                                        </connections>
-                                    </button>
-                                    <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uq7-Z6-aDe">
-                                        <rect key="frame" x="27" y="0.0" width="20" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                        <size key="shadowOffset" width="0.0" height="0.0"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
-                        </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="hgg-06-ltH">
@@ -1004,7 +942,6 @@
                     <connections>
                         <outlet property="buttonTag" destination="oG6-7W-Nd3" id="BUC-GU-wRF"/>
                         <outlet property="buttonUser" destination="7Po-fa-u3n" id="SMS-w5-4Og"/>
-                        <outlet property="labelMessage" destination="uq7-Z6-aDe" id="fBO-qX-8TZ"/>
                         <segue destination="9YB-Rx-kkz" kind="push" id="aAa-9F-ZgU"/>
                     </connections>
                 </tableViewController>
@@ -1653,7 +1590,7 @@ or you can try to send another confirmation email.</string>
                     </prototypes>
                 </tableView>
             </objects>
-            <point key="canvasLocation" x="383" y="-273"/>
+            <point key="canvasLocation" x="433" y="-559"/>
         </scene>
         <!--User Profile View Controller-->
         <scene sceneID="RFo-4z-rFb">
@@ -1898,24 +1835,34 @@ or you can try to send another confirmation email.</string>
             <objects>
                 <tableViewController storyboardIdentifier="FollowingTag" id="3Rl-AM-Gib" customClass="LXFollowingTagTVC" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="aZC-W5-Pc7">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" translucent="NO" id="1PT-5c-PN7">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </searchBar>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Tag" textLabel="YvB-an-A3j" style="IBUITableViewCellStyleDefault" id="U1T-Y0-EdM">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Tag" textLabel="YvB-an-A3j" imageView="cJ2-kO-d1j" style="IBUITableViewCellStyleDefault" id="U1T-Y0-EdM">
+                                <rect key="frame" x="0.0" y="66" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="U1T-Y0-EdM" id="e6X-QP-SRm">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YvB-an-A3j">
-                                            <rect key="frame" x="15" y="0.0" width="270" height="43"/>
+                                            <rect key="frame" x="48" y="0.0" width="237" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="icon36-tag-blue.png" id="cJ2-kO-d1j">
+                                            <rect key="frame" x="15" y="12" width="18" height="18"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -1929,7 +1876,7 @@ or you can try to send another confirmation email.</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H4D-xI-fOL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="222" y="18"/>
+            <point key="canvasLocation" x="-124" y="18"/>
         </scene>
     </scenes>
     <resources>
@@ -1960,7 +1907,6 @@ or you can try to send another confirmation email.</string>
         <image name="icon36-menu-brown.png" width="20" height="18"/>
         <image name="icon36-tag-blue.png" width="18" height="18"/>
         <image name="icon36-tag-brown.png" width="18" height="18"/>
-        <image name="icon36-tag-white.png" width="14" height="14"/>
         <image name="icon40-addphoto-brown.png" width="20" height="20"/>
         <image name="icon40-camera-brown.png" width="20" height="20"/>
         <image name="icon40-follow-yellow.png" width="20" height="20"/>
@@ -1984,7 +1930,7 @@ or you can try to send another confirmation email.</string>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="myE-qi-b3h"/>
+        <segue reference="kV3-JH-Oaz"/>
         <segue reference="bsm-XB-qQP"/>
     </inferredMetricsTieBreakers>
 </document>

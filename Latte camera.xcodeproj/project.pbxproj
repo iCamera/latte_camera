@@ -884,7 +884,6 @@
 		88418F4E174382F8004EFBA1 /* print24.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88418F3C174382F8004EFBA1 /* print24.jpg */; };
 		88418F4F174382F8004EFBA1 /* print25.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88418F3D174382F8004EFBA1 /* print25.jpg */; };
 		88418F5317438302004EFBA1 /* blend6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88418F5217438302004EFBA1 /* blend6.jpg */; };
-		88491EBB1921B4A400CAF0A2 /* LXAnouncementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88491EBA1921B4A400CAF0A2 /* LXAnouncementViewController.m */; };
 		88491EC11921BD1700CAF0A2 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88491EBF1921BD1700CAF0A2 /* MainStoryboard.storyboard */; };
 		8849E00019614BA200578987 /* LXTagHome.m in Sources */ = {isa = PBXBuildFile; fileRef = 8849DFFF19614BA200578987 /* LXTagHome.m */; };
 		8849E0041962D70700578987 /* LXGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8849E0031962D70700578987 /* LXGradientView.m */; };
@@ -3038,8 +3037,6 @@
 		88418F3C174382F8004EFBA1 /* print24.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = print24.jpg; sourceTree = "<group>"; };
 		88418F3D174382F8004EFBA1 /* print25.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = print25.jpg; sourceTree = "<group>"; };
 		88418F5217438302004EFBA1 /* blend6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = blend6.jpg; sourceTree = "<group>"; };
-		88491EB91921B4A400CAF0A2 /* LXAnouncementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXAnouncementViewController.h; sourceTree = "<group>"; };
-		88491EBA1921B4A400CAF0A2 /* LXAnouncementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXAnouncementViewController.m; sourceTree = "<group>"; };
 		88491EC01921BD1700CAF0A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		88491EC21921BD2100CAF0A2 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
 		88491EC31921BD2700CAF0A2 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
@@ -5451,8 +5448,6 @@
 			children = (
 				880E35A616A7BECA0097B97F /* LXAboutViewController.h */,
 				880E35A716A7BECA0097B97F /* LXAboutViewController.m */,
-				88491EB91921B4A400CAF0A2 /* LXAnouncementViewController.h */,
-				88491EBA1921B4A400CAF0A2 /* LXAnouncementViewController.m */,
 				8890723016770EBB0013DF7A /* LXCanvasViewController.h */,
 				8890723116770EBB0013DF7A /* LXCanvasViewController.m */,
 				8837736917AA81A4005B0826 /* LXChangeEmailViewController.h */,
@@ -9189,7 +9184,6 @@
 				8890730116770EBB0013DF7A /* LXUtils.m in Sources */,
 				880E35A816A7BECA0097B97F /* LXAboutViewController.m in Sources */,
 				88D2DC211924A25A0027D88A /* UIImageView+loadProgress.m in Sources */,
-				88491EBB1921B4A400CAF0A2 /* LXAnouncementViewController.m in Sources */,
 				8884E45916A9012E00DCBAC7 /* LXShare.m in Sources */,
 				884C54D516B22EF500DA318E /* LXHelpBokehViewController.m in Sources */,
 				885C061D16BB69B0000820E7 /* UIDeviceHardware.m in Sources */,

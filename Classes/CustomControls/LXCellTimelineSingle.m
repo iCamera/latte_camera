@@ -13,6 +13,7 @@
 #import "LXAppDelegate.h"
 #import "LXShare.h"
 #import "UIButton+AFNetworking.h"
+#import "UIButton+AsyncImage.h"
 #import "LXUserPageViewController.h"
 #import "LXPicVoteCollectionController.h"
 #import "LXPicCommentViewController.h"
@@ -97,7 +98,14 @@
     buttonLike.tag = [pic.pictureId integerValue];
     buttonInfo.tag = [pic.pictureId integerValue];
     
-    [buttonPic setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pic.urlMedium] placeholderImage:nil];
+    _progressLoad.hidden = NO;
+    _progressLoad.progress = 0;
+    [buttonPic loadProgessBackground:pic.urlMedium forState:UIControlStateNormal withCompletion:^{
+        _progressLoad.hidden = YES;
+    } progress:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+        _progressLoad.progress = (float)totalBytesRead/(float)totalBytesExpectedToRead;
+    } placeholderImage:nil];
+    
     _contraintHeight.constant = [LXUtils heightFromWidth:304.0 width:[pic.width floatValue] height:[pic.height floatValue]];
     [buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:_feed.user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
     

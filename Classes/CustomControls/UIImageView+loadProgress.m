@@ -7,9 +7,17 @@
 //
 
 #import "UIImageView+loadProgress.h"
+#import "UIImageView+AFNetworking.h"
 #import "AFNetworking.h"
 
-@implementation UIImageView (loadProgress)
+@interface UIImageView (_loadProgress)
+@property (readwrite, nonatomic, strong, setter = af_setImageRequestOperation:) AFHTTPRequestOperation *af_imageRequestOperation;
+@end
+
+@implementation UIImageView (_loadProgress)
+
+@dynamic af_imageRequestOperation;
+
 - (void)loadProgess:(NSString *)url {
     [self loadProgess:url placeholderImage:nil];
 }
@@ -27,28 +35,36 @@
     progess.progress = 0;
     [self addSubview:progess];
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]
-                                             cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                         timeoutInterval:60.0];
-    
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    
-    void (^successDownload)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self setImage:[UIImage imageWithData:responseObject]];
+    [self loadProgess:url withCompletion:^{
         [progess removeFromSuperview];
-    };
-    
-    void (^failDownload)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
-        [progess removeFromSuperview];
-    };
-    
-    [operation setCompletionBlockWithSuccess: successDownload failure: failDownload];
-    
-    [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+    } progress:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
         progess.progress = (float)totalBytesRead/(float)totalBytesExpectedToRead;
-    }];
-    
-    
-    [operation start];
+    } placeholderImage:placeholder];
 }
+
+- (void)loadProgess:(NSString *)url
+     withCompletion:(void (^)(void))completionBlock
+           progress:(void (^)(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead))progress {
+    [self loadProgess:url withCompletion:completionBlock progress:progress placeholderImage:nil];
+}
+
+- (void)loadProgess:(NSString *)url
+     withCompletion:(void (^)(void))completionBlock
+           progress:(void (^)(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead))progress
+   placeholderImage:(UIImage*)placeholderImage {
+    [self setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeholderImage];
+    
+
+    void (^originCompletion)(void) = self.af_imageRequestOperation.completionBlock;
+    
+    self.af_imageRequestOperation.completionBlock = ^{
+        completionBlock();
+        originCompletion();
+    };
+    
+    [self.af_imageRequestOperation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+        progress(bytesRead, totalBytesRead, totalBytesExpectedToRead);
+    }];
+}
+
 @end
