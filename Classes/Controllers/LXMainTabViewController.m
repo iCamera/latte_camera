@@ -258,6 +258,7 @@
         UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
         
         imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        imagePicker.cameraFlashMode = UIImagePickerControllerCameraFlashModeOff;
         imagePicker.delegate = self;
         
         [self presentViewController:imagePicker animated:YES completion:nil];
