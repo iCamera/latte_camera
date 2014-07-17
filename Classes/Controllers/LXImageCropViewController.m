@@ -14,7 +14,9 @@
 
 @end
 
-@implementation LXImageCropViewController
+@implementation LXImageCropViewController {
+    CGSize originalSize;
+}
 
 @synthesize imageCropSize;
 
@@ -31,9 +33,12 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.cropSize = CGSizeMake(280,280);
+    originalSize = CGSizeMake(300.0, 300.0*self.sourceImage.size.height/self.sourceImage.size.width);
+    self.cropSize = originalSize;
     self.minimumScale = 0.2;
     self.maximumScale = 10;
+    self.checkBounds = YES;
+    
     [self reset:NO];
     [super viewWillAppear:YES];
 }
@@ -93,6 +98,11 @@
             self.cropSize = CGSizeMake(300, 400);
             [self reset:YES];
             break;
+        case 4: {
+            self.cropSize = originalSize;
+            [self reset:YES];
+            break;
+        }
         default:
             break;
     }
@@ -101,5 +111,7 @@
 - (IBAction)noCrop:(id)sender {
     self.doneCallback(self.sourceImage, NO);
 }
+
+
 
 @end
