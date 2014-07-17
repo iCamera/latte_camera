@@ -29,7 +29,6 @@
     NSArray *keyExif;
     NSInteger sections;
     PicturePin *pin;
-    MKMapView *mapPic;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -48,6 +47,12 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [self render];
+    _imageStatus.layer.cornerRadius = 3;
+}
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    
 }
 
 - (void)render {
@@ -79,15 +84,27 @@
         location.longitude = [_picture.longitude floatValue];
         pin = [[PicturePin alloc] initWithCoordinate:location];
         
-        mapPic = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 320, 150)];
         MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(pin.coordinate, 0.5*METERS_PER_MILE, 0.5*METERS_PER_MILE);
-        MKCoordinateRegion adjustedRegion = [mapPic regionThatFits:viewRegion];
+        MKCoordinateRegion adjustedRegion = [_mapPic regionThatFits:viewRegion];
         
-        [mapPic addAnnotation:pin];
-        [mapPic setRegion:adjustedRegion animated:YES];
-        [mapPic regionThatFits:adjustedRegion];
+        [_mapPic addAnnotation:pin];
+        [_mapPic setRegion:adjustedRegion animated:YES];
+        [_mapPic regionThatFits:adjustedRegion];
         
-        self.tableView.tableHeaderView = mapPic;
+        _imageStatus.hidden = !_picture.isOwner;
+        if (_picture.isOwner) {
+            if (_picture.showGPS == PictureStatusPublic) {
+                [_imageStatus setImage:[UIImage imageNamed:@"icon28-status40-white.png"]];
+            } else if (_picture.showGPS == PictureStatusMember) {
+                [_imageStatus setImage:[UIImage imageNamed:@"icon28-status30-white.png"]];
+            } else if (_picture.showGPS == PictureStatusFriendsOnly) {
+                [_imageStatus setImage:[UIImage imageNamed:@"icon28-status10-white.png"]];
+            } else if (_picture.showGPS == PictureStatusPrivate) {
+                [_imageStatus setImage:[UIImage imageNamed:@"icon28-status0-white.png"]];
+            }
+        }
+    } else {
+        self.tableView.tableHeaderView = nil;
     }
     
     [self.tableView reloadData];

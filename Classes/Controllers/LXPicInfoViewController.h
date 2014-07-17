@@ -15,6 +15,8 @@
 
 @property (strong, nonatomic) Picture *picture;
 @property (assign, nonatomic) BOOL isModal;
+@property (weak, nonatomic) IBOutlet MKMapView *mapPic;
+@property (weak, nonatomic) IBOutlet UIImageView *imageStatus;
 
 @property (weak, nonatomic) UIViewController *parent;
 
