@@ -52,15 +52,20 @@
      withCompletion:(void (^)(void))completionBlock
            progress:(void (^)(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead))progress
    placeholderImage:(UIImage*)placeholderImage {
-    [self setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeholderImage];
     
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+    [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
 
-    void (^originCompletion)(void) = self.af_imageRequestOperation.completionBlock;
-    
-    self.af_imageRequestOperation.completionBlock = ^{
+    __weak __typeof(self)weakSelf = self;
+    [self setImageWithURLRequest:request placeholderImage:placeholderImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        
+        strongSelf.image = image;
+        
         completionBlock();
-        originCompletion();
-    };
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+        completionBlock();
+    }];
     
     [self.af_imageRequestOperation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
         progress(bytesRead, totalBytesRead, totalBytesExpectedToRead);

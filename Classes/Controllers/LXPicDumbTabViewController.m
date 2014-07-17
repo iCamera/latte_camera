@@ -190,4 +190,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
 }
 
+- (IBAction)touchDone:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 @end

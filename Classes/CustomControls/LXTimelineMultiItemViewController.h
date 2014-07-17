@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Picture.h"
 #import "LXGalleryViewController.h"
+#import "UAProgressView.h"
 
 @interface LXTimelineMultiItemViewController : UIViewController {
 }
@@ -17,6 +18,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonImage;
 @property (strong, nonatomic) IBOutlet UIButton *buttonVote;
 @property (strong, nonatomic) IBOutlet UIImageView *imageStatus;
+@property (strong, nonatomic) IBOutlet UAProgressView *progressLoad;
 
 @property (strong, nonatomic) Picture *pic;
 @property (assign, nonatomic) NSInteger *index;

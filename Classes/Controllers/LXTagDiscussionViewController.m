@@ -76,13 +76,13 @@
         params[@"last_id"] = rawMessages[0][@"id"];
     }
     
-    [api2 GET:@"message" parameters:params success:^(AFHTTPRequestOperation *operation, NSMutableArray *JSON) {
+    [api2 GET:@"message" parameters:params success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
         if (reset) {
             rawMessages = [[NSMutableArray alloc] init];
             self.messages = [[NSMutableArray alloc] init];
         }
 
-        for (NSDictionary *rawMessage in JSON) {
+        for (NSDictionary *rawMessage in JSON[@"messages"]) {
             [rawMessages insertObject:rawMessage atIndex:0];
             
             JSQMessage *message = [[JSQMessage alloc] initWithText:rawMessage[@"body"] sender:rawMessage[@"user"][@"name"] date:[LXUtils dateFromString:rawMessage[@"created_at"]]];

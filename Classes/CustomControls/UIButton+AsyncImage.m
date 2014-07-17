@@ -64,12 +64,20 @@
              placeholderImage:(UIImage*)placeholderImage {
     [self setBackgroundImageForState:state withURL:[NSURL URLWithString:url] placeholderImage:placeholderImage];
     
-    void (^originCompletion)(void) = self.af_backgroundImageRequestOperation.completionBlock;
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+    [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
     
-    self.af_backgroundImageRequestOperation.completionBlock = ^{
+    __weak __typeof(self)weakSelf = self;
+    
+    [self setBackgroundImageForState:state withURLRequest:request placeholderImage:placeholderImage success:^(NSHTTPURLResponse *response, UIImage *image) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        
+        [strongSelf setBackgroundImage:image forState:state];
+        
         completionBlock();
-        originCompletion();
-    };
+    } failure:^(NSError *error) {
+        completionBlock();
+    }];
     
     [self.af_backgroundImageRequestOperation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
         progress(bytesRead, totalBytesRead, totalBytesExpectedToRead);

@@ -9,6 +9,7 @@
 #import "LXTimelineMultiItemViewController.h"
 #import "LXAppDelegate.h"
 #import "UIImageView+AFNetworking.h"
+#import "UIImageView+loadProgress.h"
 #import "LXSocketIO.h"
 
 @interface LXTimelineMultiItemViewController ()
@@ -56,7 +57,17 @@
     LXSocketIO *socket = [LXSocketIO sharedClient];
     [socket sendEvent:@"join" withData:[NSString stringWithFormat:@"picture_%ld", [_pic.pictureId longValue]]];
     
-    [_imagePicture setImageWithURL:[NSURL URLWithString:_pic.urlMedium]];
+    _progressLoad.hidden = NO;
+    _progressLoad.progress = 0;
+    [_imagePicture loadProgess:_pic.urlMedium withCompletion:^{
+        _progressLoad.hidden = YES;
+        _imagePicture.alpha = 0;
+        [UIView animateWithDuration:0.3 animations:^{
+            _imagePicture.alpha = 1;
+        }];
+    } progress:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+        _progressLoad.progress = (float)totalBytesRead/(float)totalBytesExpectedToRead;
+    }];
     
     _imageStatus.hidden = !_pic.isOwner;
     if (_pic.isOwner) {

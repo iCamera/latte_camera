@@ -13,5 +13,6 @@
 
 @property (strong, nonatomic) NSMutableArray *tags;
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
+- (IBAction)touchDone:(id)sender;
 
 @end
