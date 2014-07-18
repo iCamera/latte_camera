@@ -16,7 +16,6 @@
 #import "LXCellFriend.h"
 #import "LXUtils.h"
 #import "LXPicInfoViewController.h"
-#import "LXPicMapViewController.h"
 #import "Feed.h"
 #import "User.h"
 #import "Picture.h"

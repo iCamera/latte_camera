@@ -100,7 +100,7 @@
         ACAccountStore *account = [[ACAccountStore alloc] init];
         ACAccountType *accountType = [account accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
         
-        [account requestAccessToAccountsWithType:accountType withCompletionHandler:^(BOOL granted, NSError *error) {
+        [account requestAccessToAccountsWithType:accountType options:nil completion:^(BOOL granted, NSError *error) {
             if(granted) {
                 NSArray *arrayOfAccounts = [account accountsWithAccountType:accountType];
                 

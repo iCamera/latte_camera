@@ -16,7 +16,6 @@
 #import "LXUtils.h"
 #import "UIButton+AFNetworking.h"
 #import "LXPicInfoViewController.h"
-#import "LXPicMapViewController.h"
 #import "User.h"
 #import "Picture.h"
 #import "UIActionSheet+ButtonState.h"

@@ -20,8 +20,7 @@
     ACAccountType *accountType = [account accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
     
     // Request access from the user to access their Twitter account
-    [account requestAccessToAccountsWithType:accountType withCompletionHandler:^(BOOL granted, NSError *error)
-     {
+    [account requestAccessToAccountsWithType:accountType options:nil completion:^(BOOL granted, NSError *error) {
          // Did user allow us access?
          if (granted == YES)
          {
@@ -35,11 +34,13 @@
                  ACAccount *acct = [arrayOfAccounts objectAtIndex:0];
                  
                  // Build a twitter request
-                 TWRequest *postRequest = [[TWRequest alloc] initWithURL:[NSURL URLWithString:@"https://upload.twitter.com/1/statuses/update_with_media.json"] parameters:nil requestMethod:TWRequestMethodPOST];
-                 [postRequest addMultiPartData:_imageFile withName:@"media" type:@"image/jpeg"];
+                 NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
                  if (_imageDescription) {
-                     [postRequest addMultiPartData:[_imageDescription dataUsingEncoding:NSUTF8StringEncoding] withName:@"status" type:@"text/plain"];
+                     params[@"status"] = _imageDescription;
+                 } else {
+                     params[@"status"] = @"Latte camera!";
                  }
+                 SLRequest *postRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodPOST URL:[NSURL URLWithString:@"https://upload.twitter.com/1/statuses/update_with_media.json"] parameters:params];
                  
                  // Post the request
                  [postRequest setAccount:acct];

@@ -14,7 +14,6 @@
 #import "LXPicVoteCollectionController.h"
 #import "LXPicInfoViewController.h"
 #import "LXPicCommentViewController.h"
-#import "LXPicMapViewController.h"
 #import "LXPicEditViewController.h"
 #import "LXMyPageViewController.h"
 #import "LXShare.h"

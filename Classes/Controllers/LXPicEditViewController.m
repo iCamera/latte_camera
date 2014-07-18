@@ -11,6 +11,7 @@
 #import "LXUploadObject.h"
 #import "LXCanvasViewController.h"
 #import "LXPicDumbTabViewController.h"
+#import "LatteAPIv2Client.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "GAI.h"
 
@@ -24,7 +25,6 @@
     PictureStatus imageExifStatus;
     PictureStatus imageTakenAtStatus;
     PictureStatus imageShowOriginal;
-    LXShare *share;
     NSMutableArray *tags;
 }
 
@@ -63,8 +63,6 @@
     
     [app.tracker send:[[GAIDictionaryBuilder createAppView] build]];
     
-    share = [[LXShare alloc] init];
-    share.controller = self;
         
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object:nil];
@@ -85,9 +83,6 @@
         tags = [NSMutableArray arrayWithArray:_picture.tagsOld];
         buttonDelete.hidden = false;
     } else {
-        share.imageData = _imageData;
-        share.imagePreview = _preview;
-        
         LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
         imagePic.image = _preview;
         imageStatus = app.currentUser.pictureStatus;
@@ -145,8 +140,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if ((indexPath.section == 2))
-    {
+    if ((indexPath.section == 1)) {
         UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"privacy_setting", @"公開設定")
                                                            delegate:self
                                                   cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
@@ -164,15 +158,6 @@
         }
         else
             [sheet showInView:self.view];
-    } else if (indexPath.section == 1) {
-        share.text = textDesc.text;
-        switch (indexPath.row) {
-            case 1:
-                [share emailIt];
-                break;
-            default:
-                break;
-        }
     }
 }
 
@@ -234,25 +219,21 @@
             [self.navigationController.view addSubview:HUD];
             HUD.mode = MBProgressHUDModeIndeterminate;
             [HUD show:YES];
-            LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
             
-            NSString *url = [NSString stringWithFormat:@"picture/%ld/delete", (long)[_picture.pictureId integerValue]];
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    [app getToken], @"token", nil];
+            NSString *url = [NSString stringWithFormat:@"picture/%ld", (long)[_picture.pictureId integerValue]];
             
-            [[LatteAPIClient sharedClient] POST:url
-                                         parameters: params
-                                            success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                [HUD hide:YES];
-                                                [self.navigationController dismissViewControllerAnimated:YES completion:^{
-                                                    if ([self.navigationController.parentViewController respondsToSelector:@selector(reloadView)]) {
-                                                        [self.navigationController.parentViewController performSelector:@selector(reloadView)];
-                                                    }
-                                                }];
-                                            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                                [HUD hide:YES];
-                                                DLog(@"Something went wrong (Login)");
-                                            }];
+            [[LatteAPIv2Client sharedClient] DELETE:url
+                                       parameters: nil
+                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                              [HUD hide:YES];
+                                              [self.navigationController dismissViewControllerAnimated:YES completion:^{
+                                                  if ([self.navigationController.presentingViewController respondsToSelector:@selector(reloadView)]) {
+                                                      [self.navigationController.presentingViewController performSelector:@selector(reloadView)];
+                                                  }
+                                              }];
+                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                              [HUD hide:YES];
+                                          }];
         }
     }
 }
@@ -312,15 +293,13 @@
     [self.navigationController.view addSubview:HUD];
     HUD.mode = MBProgressHUDModeIndeterminate;
     [HUD show:YES];
-    LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
-    NSString *url = [NSString stringWithFormat:@"picture/%ld/edit", (long)[_picture.pictureId integerValue]];
+    NSString *url = [NSString stringWithFormat:@"picture/%ld", (long)[_picture.pictureId integerValue]];
     NSMutableArray *tagsPolish = [[NSMutableArray alloc] init];
     for (NSString *tag in tags)
         if (tag.length > 0)
             [tagsPolish addObject:tag];
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            [app getToken], @"token",
                             textDesc.text, @"comment",
                             [NSNumber numberWithInteger:imageExifStatus], @"show_exif",
                             [NSNumber numberWithInteger:imageGPSStatus], @"show_gps",
@@ -337,24 +316,24 @@
     _picture.showLarge = imageShowOriginal;
     _picture.tagsOld = tags;
     
-    [[LatteAPIClient sharedClient] POST:url
-                                 parameters: params
-                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                        [HUD hide:YES];
-                                                                                
-                                        [self.navigationController popViewControllerAnimated:YES];
-                                        
-                                        
-                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        [HUD hide:YES];
-                                        
-                                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
-                                                                                        message:error.localizedDescription
-                                                                                       delegate:nil
-                                                                              cancelButtonTitle:NSLocalizedString(@"close", "Close")
-                                                                              otherButtonTitles:nil];
-                                        [alert show];
-                                    }];
+    [[LatteAPIv2Client sharedClient] POST:url
+                               parameters: params
+                                  success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                      [HUD hide:YES];
+                                      
+                                      [self.navigationController popViewControllerAnimated:YES];
+                                      
+                                      
+                                  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                      [HUD hide:YES];
+                                      
+                                      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", "Error")
+                                                                                      message:error.localizedDescription
+                                                                                     delegate:nil
+                                                                            cancelButtonTitle:NSLocalizedString(@"close", "Close")
+                                                                            otherButtonTitles:nil];
+                                      [alert show];
+                                  }];
 }
 
 - (void)backToCamera {
@@ -414,6 +393,13 @@
     }
     
     [self backToCamera];
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if (_picture)
+        return 2;
+    else
+        return 3;
 }
 
 
