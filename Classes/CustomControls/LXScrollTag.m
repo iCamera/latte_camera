@@ -20,14 +20,10 @@
 }
 
 - (void)setTags:(NSArray *)tags {
-    CGSize size = CGSizeMake(30, 36);
+    CGSize size = CGSizeMake(6, 36);
     for (UIView *subview in self.subviews) {
         [subview removeFromSuperview];
     }
-    
-    UIImageView *head = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon36-tag-brown.png"]];
-    head.frame = CGRectMake(6, 9, 18, 18);
-    [self addSubview:head];
     
     NSInteger idx = 0;
     for (NSString *tag in tags) {

@@ -161,7 +161,7 @@
         }
     }];
     viewDesc = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 480, 320, 0)];
-    viewDesc.backgroundColor = [UIColor colorWithWhite:0 alpha:0.15];
+    viewDesc.backgroundColor = [UIColor colorWithWhite:0 alpha:0.25];
     viewDesc.indicatorStyle = UIScrollViewIndicatorStyleWhite;
 
     [self.view addSubview:viewDesc];
