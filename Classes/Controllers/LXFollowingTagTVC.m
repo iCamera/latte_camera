@@ -16,6 +16,8 @@
 
 @implementation LXFollowingTagTVC {
     NSMutableArray *tags;
+    NSMutableArray *results;
+    AFHTTPRequestOperation *currentRequest;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -37,12 +39,18 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
+    [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTag" bundle:nil] forCellReuseIdentifier:@"Tag"];
+    
     LatteAPIv2Client *api2 = [LatteAPIv2Client sharedClient];
     
+    [_activityLoad startAnimating];
     [api2 GET:@"tag/following" parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
         tags = JSON[@"tags"];
         [self.tableView reloadData];
-    } failure:nil];
+        [_activityLoad stopAnimating];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [_activityLoad stopAnimating];
+    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -60,17 +68,32 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return tags.count;
+    if (_searchBar.text.length > 0) {
+        return results.count;
+    } else {
+        return tags.count;
+    }
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Tag" forIndexPath:indexPath];
-    
-    cell.textLabel.text = tags[indexPath.row];
-    
-    return cell;
+    if (_searchBar.text.length > 0) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Tag" forIndexPath:indexPath];
+        cell.textLabel.text = results[indexPath.row][@"term"];
+        cell.detailTextLabel.text = [results[indexPath.row][@"count"] stringValue];
+        cell.imageView.highlighted = [tags containsObject:results[indexPath.row][@"term"]];
+        
+        return cell;
+    } else {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Tag" forIndexPath:indexPath];
+        
+        cell.textLabel.text = tags[indexPath.row];
+        cell.detailTextLabel.text = @"";
+        cell.imageView.highlighted = YES;
+        
+        return cell;
+    }
 }
 
 
@@ -99,12 +122,55 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [_searchBar resignFirstResponder];
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
     LXTagHome *viewTag = [mainStoryboard instantiateViewControllerWithIdentifier:@"TagHome"];
-    viewTag.tag = tags[indexPath.row];
+    if (_searchBar.text.length > 0) {
+        viewTag.tag = results[indexPath.row][@"term"];
+    } else {
+        viewTag.tag = tags[indexPath.row];
+    }
+    
     [self.navigationController pushViewController:viewTag animated:YES];
 }
+
+
+- (void)loadTagSearch {
+    [_activityLoad startAnimating];
+    if (currentRequest && currentRequest.isExecuting)
+        [currentRequest cancel];
+    
+    currentRequest = [[LatteAPIv2Client sharedClient] GET:@"tag/search" parameters:@{@"keyword": _searchBar.text, @"app": @"true"} success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+        results = [[NSMutableArray alloc] init];
+        for (NSDictionary *tag in JSON[@"tags"]) {
+            [results addObject:@{@"term": tag[@"label"], @"count": tag[@"picture_count"]}];
+        }
+        
+        [self.tableView reloadData];
+        [_activityLoad stopAnimating];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [_activityLoad stopAnimating];
+    }];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    if (searchText.length > 0) {
+        [self loadTagSearch];
+        self.navigationItem.rightBarButtonItem = nil;
+        [self.tableView setEditing:NO animated:NO];
+    } else {
+        self.navigationItem.rightBarButtonItem = self.editButtonItem;
+        [self.tableView reloadData];
+    }
+
+}
+
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [searchBar resignFirstResponder];
+}
+
 
 /*
 #pragma mark - Navigation

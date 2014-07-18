@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface LXFollowingTagTVC : UITableViewController
+@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityLoad;
 
 @end

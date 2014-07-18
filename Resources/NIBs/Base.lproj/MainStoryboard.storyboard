@@ -894,7 +894,7 @@
                             <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Ba8-BL-TZh">
+                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Ba8-BL-TZh">
                                     <rect key="frame" x="150" y="12" width="20" height="20"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </activityIndicatorView>
@@ -918,6 +918,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Search" id="2hN-W4-E2Z"/>
                     <connections>
+                        <outlet property="activityLoad" destination="Ba8-BL-TZh" id="EXa-b3-7rU"/>
                         <outlet property="searchBar" destination="Lbv-wb-bwt" id="rW1-Xy-OQ6"/>
                     </connections>
                 </tableViewController>
@@ -1906,9 +1907,23 @@ or you can try to send another confirmation email.</string>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="3Rl-AM-Gib" id="SQG-a4-3nl"/>
+                            </connections>
                         </searchBar>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="tbo-cs-naj">
+                            <rect key="frame" x="0.0" y="416" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="KAz-LT-gDt">
+                                    <rect key="frame" x="150" y="12" width="20" height="20"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </activityIndicatorView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Tag" textLabel="YvB-an-A3j" imageView="cJ2-kO-d1j" style="IBUITableViewCellStyleDefault" id="U1T-Y0-EdM">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Following" textLabel="YvB-an-A3j" imageView="cJ2-kO-d1j" style="IBUITableViewCellStyleDefault" id="U1T-Y0-EdM">
                                 <rect key="frame" x="0.0" y="66" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="U1T-Y0-EdM" id="e6X-QP-SRm">
@@ -1936,6 +1951,10 @@ or you can try to send another confirmation email.</string>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Following Tags" id="CWE-hg-mls"/>
+                    <connections>
+                        <outlet property="activityLoad" destination="KAz-LT-gDt" id="d4t-UX-Gw5"/>
+                        <outlet property="searchBar" destination="1PT-5c-PN7" id="lUv-OJ-fgi"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H4D-xI-fOL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
