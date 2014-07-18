@@ -13,6 +13,7 @@
 @property (strong, nonatomic) IBOutlet UITableViewCell *menuFollowingTags;
 @property (strong, nonatomic) IBOutlet UITableViewCell *menuLikedPhotos;
 @property (strong, nonatomic) IBOutlet UITableViewCell *menuLogOut;
+@property (weak, nonatomic) IBOutlet UITableViewCell *menuFeedback;
 @property (strong, nonatomic) IBOutlet UITableViewCell *menuLogin;
 @property (strong, nonatomic) IBOutlet UITableViewCell *menuSettings;
 

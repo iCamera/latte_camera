@@ -305,7 +305,7 @@
         LXAppDelegate* app = [LXAppDelegate currentDelegate];
         app.currentUser.pictureAutoFacebookUpload = true;
         [FBSession openActiveSessionWithPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]
-                                           defaultAudience:FBSessionDefaultAudienceFriends
+                                           defaultAudience:FBSessionDefaultAudienceEveryone
                                               allowLoginUI:YES
                                          completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
                                              switch (state) {

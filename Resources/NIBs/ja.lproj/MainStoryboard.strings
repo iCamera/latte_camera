@@ -1,17 +1,14 @@
 /* Class = "IBUILabel"; text = "Subtitle"; ObjectID = "10z-L4-g04"; */
 "10z-L4-g04.text" = "Subtitle";
 
+/* Class = "IBUISearchBar"; placeholder = "Anything"; ObjectID = "1PT-5c-PN7"; */
+"1PT-5c-PN7.placeholder" = "キーワード";
+
 /* Class = "IBUILabel"; text = "Today"; ObjectID = "2Ws-Jw-Bgl"; */
 "2Ws-Jw-Bgl.text" = "今日";
 
 /* Class = "IBUINavigationItem"; title = "Search"; ObjectID = "2hN-W4-E2Z"; */
 "2hN-W4-E2Z.title" = "検索";
-
-/* Class = "IBUISegmentedControl"; 3W1-ff-YM5.segmentTitles[2] = "Daily"; ObjectID = "3W1-ff-YM5"; */
-"3W1-ff-YM5.segmentTitles[2]" = "Daily";
-
-/* Class = "IBUISegmentedControl"; 3W1-ff-YM5.segmentTitles[3] = "Weekly"; ObjectID = "3W1-ff-YM5"; */
-"3W1-ff-YM5.segmentTitles[3]" = "Weekly";
 
 /* Class = "IBUILabel"; text = "Today"; ObjectID = "4pz-Wh-ZNM"; */
 "4pz-Wh-ZNM.text" = "今日";
@@ -22,25 +19,16 @@
 /* Class = "IBUILabel"; text = "4"; ObjectID = "7Fd-bi-tzQ"; */
 "7Fd-bi-tzQ.text" = "4";
 
-/* Class = "IBUIButton"; normalTitle = "All"; ObjectID = "7Po-fa-u3n"; */
-"7Po-fa-u3n.normalTitle" = "すべて";
+/* Class = "IBUIButton"; normalTitle = "Daily"; ObjectID = "7vd-US-Hyy"; */
+"7vd-US-Hyy.normalTitle" = "Daily";
 
 /* Class = "IBUITextView"; text = "Seems like you have not confirmed your email address yet. Please click on the URL in the email we have sent to you.\n\nIn case you entered a wrong email address, you can change it at the box below, \n\nor you can try to send another confirmation email."; ObjectID = "848-T9-fd0"; */
 "848-T9-fd0.text" = "メールアドレスに登録確認メールを送信しました。まだ本登録の手続きは完了しておりません。本登録の手続きを完了するには、登録確認メールに記載されているURLをクリックしてください。\n\n登録確認メールが届かない場合、お手数ですが入力されたアドレスに誤りがないかをご確認の上、「再送する」ボタンを押してください。";
 
-/* Class = "IBUIButton"; normalTitle = "Follow"; ObjectID = "B47-Oy-2yj"; */
-"B47-Oy-2yj.normalTitle" = "フォロー";
-
-/* Class = "IBUIButton"; selectedTitle = "Following"; ObjectID = "B47-Oy-2yj"; */
-"B47-Oy-2yj.selectedTitle" = "フォロー中";
-
-/* Class = "IBUILabel"; text = "Settings"; ObjectID = "B9W-ZH-Sed"; */
-"B9W-ZH-Sed.text" = "設定";
-
 /* Class = "IBUILabel"; text = "Log Out"; ObjectID = "BNE-Js-T0Z"; */
 "BNE-Js-T0Z.text" = "ログアウト";
 
-/* Class = "IBUILabel"; text = "Details”; ObjectID = "CFT-nW-GTN"; */
+/* Class = "IBUILabel"; text = "Detail"; ObjectID = "CFT-nW-GTN"; */
 "CFT-nW-GTN.text" = "詳細情報";
 
 /* Class = "IBUINavigationItem"; title = "Following Tags"; ObjectID = "CWE-hg-mls"; */
@@ -55,9 +43,6 @@
 /* Class = "IBUITabBarItem"; title = "Trending"; ObjectID = "FCv-Eh-u4w"; */
 "FCv-Eh-u4w.title" = "ランキング";
 
-/* Class = "IBUILabel"; text = "Nickname"; ObjectID = "GsV-i8-MRg"; */
-"GsV-i8-MRg.text" = "ニックネーム";
-
 /* Class = "IBUILabel"; text = "Liked Photos"; ObjectID = "HKT-Vj-lyU"; */
 "HKT-Vj-lyU.text" = "いいね！した写真";
 
@@ -67,17 +52,26 @@
 /* Class = "IBUINavigationItem"; title = "Home"; ObjectID = "IuJ-4O-GVS"; */
 "IuJ-4O-GVS.title" = "ホーム";
 
-/* Class = "IBUISearchBar"; K6u-yQ-uby.scopeButtonTitles[0] = "Photo"; ObjectID = "K6u-yQ-uby"; */
-"K6u-yQ-uby.scopeButtonTitles[0]" = "写真";
-
-/* Class = "IBUISearchBar"; K6u-yQ-uby.scopeButtonTitles[1] = "User"; ObjectID = "K6u-yQ-uby"; */
-"K6u-yQ-uby.scopeButtonTitles[1]" = "ユーザー";
-
 /* Class = "IBUILabel"; text = "Log In"; ObjectID = "KOh-sr-H4a"; */
 "KOh-sr-H4a.text" = "ログイン";
 
-/* Class = "IBUIBarButtonItem"; title = "Back"; ObjectID = "Li0-4m-rwR"; */
-"Li0-4m-rwR.title" = "戻る";
+/* Class = "IBUISearchBar"; placeholder = "Anything"; ObjectID = "Lbv-wb-bwt"; */
+"Lbv-wb-bwt.placeholder" = "キーワード";
+
+/* Class = "IBUISearchBar"; Lbv-wb-bwt.scopeButtonTitles[0] = "Photo"; ObjectID = "Lbv-wb-bwt"; */
+"Lbv-wb-bwt.scopeButtonTitles[0]" = "写真";
+
+/* Class = "IBUISearchBar"; Lbv-wb-bwt.scopeButtonTitles[1] = "User"; ObjectID = "Lbv-wb-bwt"; */
+"Lbv-wb-bwt.scopeButtonTitles[1]" = "ユーザー";
+
+/* Class = "IBUISearchBar"; Lbv-wb-bwt.scopeButtonTitles[2] = "Tag"; ObjectID = "Lbv-wb-bwt"; */
+"Lbv-wb-bwt.scopeButtonTitles[2]" = "タグ";
+
+/* Class = "IBUIButton"; normalTitle = "Weekly"; ObjectID = "Ly0-yj-QHN"; */
+"Ly0-yj-QHN.normalTitle" = "Weekly";
+
+/* Class = "IBUILabel"; text = "Nickname"; ObjectID = "MUW-z0-fKG"; */
+"MUW-z0-fKG.text" = "ニックネーム";
 
 /* Class = "IBUILabel"; text = "Discussion"; ObjectID = "Noh-UG-Bb8"; */
 "Noh-UG-Bb8.text" = "掲示板";
@@ -91,9 +85,6 @@
 /* Class = "IBUITabBarItem"; title = "Home"; ObjectID = "SW9-u7-WQa"; */
 "SW9-u7-WQa.title" = "ホーム";
 
-/* Class = "IBUINavigationItem"; title = "Tags"; ObjectID = "Siy-Pf-bZx"; */
-"Siy-Pf-bZx.title" = "タグ";
-
 /* Class = "IBUILabel"; text = "Labelg sdg dgsdg sdgd fgdf dfhdfh dfh dfh sdgsgdsg"; ObjectID = "U94-F5-1pa"; */
 "U94-F5-1pa.text" = "Labelg sdg dgsdg sdgd fgdf dfhdfh dfh dfh sdgsgdsg";
 
@@ -102,6 +93,9 @@
 
 /* Class = "IBUILabel"; text = "Nickname"; ObjectID = "Wuz-sA-siW"; */
 "Wuz-sA-siW.text" = "ニックネーム";
+
+/* Class = "IBUILabel"; text = "Feedback"; ObjectID = "Wz1-jS-OP8"; */
+"Wz1-jS-OP8.text" = "機能要望・ご意見;
 
 /* Class = "IBUILabel"; text = "Title"; ObjectID = "YvB-an-A3j"; */
 "YvB-an-A3j.text" = "Title";
@@ -115,8 +109,8 @@
 /* Class = "IBUINavigationItem"; title = "Stream"; ObjectID = "bjP-Z5-U6b"; */
 "bjP-Z5-U6b.title" = "新着";
 
-/* Class = "IBUINavigationItem"; title = "Chat"; ObjectID = "cG7-hG-WGl"; */
-"cG7-hG-WGl.title" = "チャット";
+/* Class = "IBUINavigationItem"; title = "Message"; ObjectID = "cG7-hG-WGl"; */
+"cG7-hG-WGl.title" = "メッセージ";
 
 /* Class = "IBUILabel"; text = "Labelg sdg dgsdg sdgd fgdf dfhdfh dfh dfh "; ObjectID = "ccc-ma-BEa"; */
 "ccc-ma-BEa.text" = "Labelg sdg dgsdg sdgd fgdf dfhdfh dfh dfh ";
@@ -136,26 +130,11 @@
 /* Class = "IBUIButton"; normalTitle = "You did not receive a confirmation email?"; ObjectID = "lY7-Fz-2rX"; */
 "lY7-Fz-2rX.normalTitle" = "登録確認メールが届かない場合";
 
-/* Class = "IBUIButton"; normalTitle = "Follow"; ObjectID = "loZ-41-srG"; */
-"loZ-41-srG.normalTitle" = "フォロー";
-
-/* Class = "IBUIButton"; selectedTitle = "Following"; ObjectID = "loZ-41-srG"; */
-"loZ-41-srG.selectedTitle" = "フォロー中";
-
-/* Class = "IBUIButton"; normalTitle = "Tags"; ObjectID = "oG6-7W-Nd3"; */
-"oG6-7W-Nd3.normalTitle" = "タグ";
-
 /* Class = "IBUITabBarItem"; title = "Stream"; ObjectID = "oj4-fP-8Qc"; */
 "oj4-fP-8Qc.title" = "新着";
 
 /* Class = "IBUITabBarItem"; title = "Post"; ObjectID = "pGG-TV-7yk"; */
 "pGG-TV-7yk.title" = "投稿";
-
-/* Class = "IBUILabel"; text = "Search"; ObjectID = "q10-Xg-gKt"; */
-"q10-Xg-gKt.text" = "検索";
-
-/* Class = "IBUILabel"; text = "Tags"; ObjectID = "sBH-7d-j7T"; */
-"sBH-7d-j7T.text" = "タグ";
 
 /* Class = "IBUILabel"; text = "sample@mail.com"; ObjectID = "sUh-yN-TTT"; */
 "sUh-yN-TTT.text" = "sample@mail.com";
@@ -166,22 +145,12 @@
 /* Class = "IBUILabel"; text = "1"; ObjectID = "sjW-C3-OCM"; */
 "sjW-C3-OCM.text" = "1";
 
-/* Class = "IBUILabel"; text = "0"; ObjectID = "uq7-Z6-aDe"; */
-"uq7-Z6-aDe.text" = "0";
+/* Class = "IBUILabel"; text = "1 line 2 line 3 line"; ObjectID = "xAM-Jx-dAd"; */
+"xAM-Jx-dAd.text" = "1 line 2 line 3 line";
 
-/* Class = "IBUILabel"; text = "1 line
-2 line
-3 line"; ObjectID = "xAM-Jx-dAd"; */
-"xAM-Jx-dAd.text" = "1 line
-2 line
-3 line";
-
-/* Class = "IBUINavigationItem"; title = "Notifications”; ObjectID = "yh9-EW-FKo"; */
+/* Class = "IBUINavigationItem"; title = "Notifications"; ObjectID = "yh9-EW-FKo"; */
 "yh9-EW-FKo.title" = "通知";
 
 /* Class = "IBUIButton"; normalTitle = "0"; ObjectID = "ylh-RA-SXN"; */
 "ylh-RA-SXN.normalTitle" = "0";
-
-/* Class = "IBUINavigationItem"; title = "Announcements"; ObjectID = "yxY-1Y-Mtg"; */
-"yxY-1Y-Mtg.title" = "お知らせ";
 

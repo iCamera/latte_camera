@@ -38,6 +38,7 @@
 @synthesize menuSearch;
 @synthesize menuLogin;
 @synthesize menuSettings;
+@synthesize menuFeedback;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -111,14 +112,13 @@
     [self.frostedViewController hideMenuViewController];
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    UINavigationController *navCurrent = (UINavigationController*)app.viewMainTab.selectedViewController;
+    UIStoryboard* storySetting = [UIStoryboard storyboardWithName:@"Setting" bundle:nil];
     
     if ([tableView cellForRowAtIndexPath:indexPath] == menuFollowingTags) {
-        //app.viewMainTab.selectedIndex = 4;
-        UINavigationController *navCurrent = (UINavigationController*)app.viewMainTab.selectedViewController;
-    
         [navCurrent pushViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"FollowingTag"] animated:YES];
     } else if ([tableView cellForRowAtIndexPath:indexPath] ==  menuSettings) {
-        UIStoryboard* storySetting = [UIStoryboard storyboardWithName:@"Setting" bundle:nil];
+        
         [self presentViewController:[storySetting instantiateInitialViewController] animated:YES completion:nil];
 
     } else if ([tableView cellForRowAtIndexPath:indexPath] == menuLogOut) {
@@ -129,19 +129,16 @@
         [self dismissViewControllerAnimated:YES completion:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"LoggedOut" object:self];
     } else if ([tableView cellForRowAtIndexPath:indexPath] == menuSearch) {
-        //app.viewMainTab.selectedIndex = 4;
-        UINavigationController *navCurrent = (UINavigationController*)app.viewMainTab.selectedViewController;
-
         [navCurrent pushViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"Search"] animated:YES];
     } else if ([tableView cellForRowAtIndexPath:indexPath] == menuLikedPhotos) {
-        //app.viewMainTab.selectedIndex = 4;
-        UINavigationController *navCurrent = (UINavigationController*)app.viewMainTab.selectedViewController;
         LXPhotoGridCVC *viewLikedGrid = [mainStoryboard instantiateViewControllerWithIdentifier:@"PhotoGrid"];
         viewLikedGrid.gridType = kPhotoGridUserLiked;
         [navCurrent pushViewController:viewLikedGrid animated:YES];
     } else if ([tableView cellForRowAtIndexPath:indexPath] == menuLogin) {
         UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"Authentication" bundle:nil];
         [self presentViewController:[storyMain instantiateViewControllerWithIdentifier:@"LoginModal"] animated:YES completion:nil];
+    } else if ([tableView cellForRowAtIndexPath:indexPath] == menuFeedback) {
+        [navCurrent pushViewController:[storySetting instantiateViewControllerWithIdentifier:@"About"] animated:YES];
     }
 }
 
