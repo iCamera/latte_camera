@@ -100,7 +100,13 @@
     labelUserDate.text = [LXUtils timeDeltaFromNow:feed.updatedAt];
     
     _scrollTags.parent = self;
-    _scrollTags.tags = _feed.tags;
+    
+    if (_feed.tags.count > 0) {
+        _scrollTags.tags = _feed.tags;
+        _scrollTags.hidden = NO;
+    } else {
+        _scrollTags.hidden = YES;
+    }
     
     [LXUtils setNationalityOfUser:feed.user forImage:imageNationality nextToLabel:labelTitle];
 }

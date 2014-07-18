@@ -151,7 +151,13 @@
     _viewDescBg.hidden = pic.descriptionText.length == 0;
     
     // Tag
-    _scrollTags.tags = pic.tagsOld;
+    if (pic.tagsOld.count > 0) {
+        _scrollTags.tags = pic.tagsOld;
+        _scrollTags.hidden = NO;
+    } else {
+        _scrollTags.hidden = YES;
+    }
+    
 
 }
 
