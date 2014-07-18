@@ -379,6 +379,10 @@
     }
 }
 
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [searchBar resignFirstResponder];
+}
+
 - (void)viewDidUnload {
     [super viewDidUnload];
 }
