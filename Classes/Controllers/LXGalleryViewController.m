@@ -573,7 +573,7 @@
         lxShare = [[LXShare alloc] init];
         
         lxShare.url = pic.urlWeb;
-        lxShare.text = pic.urlWeb;
+        lxShare.controller = self;
         
         switch (buttonIndex) {
             case 0: {

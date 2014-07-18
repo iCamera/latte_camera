@@ -277,7 +277,6 @@
         lxShare.controller = viewController;
         
         lxShare.url = pic.urlWeb;
-        lxShare.text = pic.urlWeb;
         
         switch (buttonIndex) {
             case 0: {
