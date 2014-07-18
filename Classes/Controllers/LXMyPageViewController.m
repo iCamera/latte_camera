@@ -171,17 +171,19 @@ typedef enum {
             [self.tableView reloadData];
             [self.refreshControl endRefreshing];
         } else {
-            NSMutableArray *arrayOfIndexPaths = [[NSMutableArray alloc] init];
-            
-            for(int i = 0 ; i < newFeed.count ; i++)
-            {
-                NSIndexPath *path = [NSIndexPath indexPathForRow:feeds.count+i inSection:0];
-                [arrayOfIndexPaths addObject:path];
+            if (newFeed.count > 0) {
+                NSMutableArray *arrayOfIndexPaths = [[NSMutableArray alloc] init];
+                
+                for(int i = 0 ; i < newFeed.count ; i++)
+                {
+                    NSIndexPath *path = [NSIndexPath indexPathForRow:feeds.count+i inSection:0];
+                    [arrayOfIndexPaths addObject:path];
+                }
+                
+                [feeds addObjectsFromArray:newFeed];
+                
+                [self.tableView insertRowsAtIndexPaths:arrayOfIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
             }
-            
-            [feeds addObjectsFromArray:newFeed];
-          
-            [self.tableView insertRowsAtIndexPaths:arrayOfIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
             [_loadIndicator stopAnimating];
         }
 
@@ -219,17 +221,20 @@ typedef enum {
             feeds = newFeed;
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         } else {
-            NSMutableArray *arrayOfIndexPaths = [[NSMutableArray alloc] init];
-            
-            for(int i = 0 ; i < newFeed.count ; i++)
-            {
-                NSIndexPath *path = [NSIndexPath indexPathForRow:feeds.count+i inSection:0];
-                [arrayOfIndexPaths addObject:path];
+            if (newFeed.count > 0) {
+                
+                NSMutableArray *arrayOfIndexPaths = [[NSMutableArray alloc] init];
+                
+                for(int i = 0 ; i < newFeed.count ; i++)
+                {
+                    NSIndexPath *path = [NSIndexPath indexPathForRow:feeds.count+i inSection:0];
+                    [arrayOfIndexPaths addObject:path];
+                }
+                
+                [feeds addObjectsFromArray:newFeed];
+                
+                [self.tableView insertRowsAtIndexPaths:arrayOfIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
             }
-            
-            [feeds addObjectsFromArray:newFeed];
-            
-            [self.tableView insertRowsAtIndexPaths:arrayOfIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
             [_loadIndicator stopAnimating];
         }
         

@@ -117,16 +117,11 @@ typedef enum {
     
     _buttonUser.layer.cornerRadius = 30;
     
-    [self renderProfile];
-    
     self.navigationItem.title = _user.name;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTimelineSingle" bundle:nil] forCellReuseIdentifier:@"Single"];
     [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTimelineMulti" bundle:nil] forCellReuseIdentifier:@"Multi"];
     [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTag" bundle:nil] forCellReuseIdentifier:@"Tag"];
-    
-    [self reloadView];
-    [self reloadProfile];
     
     
     if (!app.currentUser) {
@@ -140,6 +135,10 @@ typedef enum {
     
     LXSocketIO *socket = [LXSocketIO sharedClient];
     [socket sendEvent:@"join" withData:[NSString stringWithFormat:@"user_%ld", (long)_userId]];
+    
+    [self renderProfile];
+    [self reloadProfile];
+    [self loadTimeline:YES];
 }
 
 - (void)renderProfile {
@@ -205,10 +204,12 @@ typedef enum {
         if (feed) {
             [params setObject:feed.feedID forKey:@"last_id"];
         }
+        [_indicatorLoad startAnimating];
     }
     
     
     NSString *url = [NSString stringWithFormat:@"user/%ld/timeline", (long)_userId];
+    
     currentRequest = [[LatteAPIClient sharedClient] GET: url
                             parameters: params
                                success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
@@ -225,24 +226,27 @@ typedef enum {
                                        [self.tableView reloadData];
                                        [self.refreshControl endRefreshing];
                                    } else {
-                                       NSMutableArray *arrayOfIndexPaths = [[NSMutableArray alloc] init];
-                                       
-                                       for(int i = 0 ; i < newFeed.count ; i++)
-                                       {
-                                           NSIndexPath *path = [NSIndexPath indexPathForRow:feeds.count+i inSection:0];
-                                           [arrayOfIndexPaths addObject:path];
+                                       if (newFeed.count > 0) {
+                                           NSMutableArray *arrayOfIndexPaths = [[NSMutableArray alloc] init];
+                                           
+                                           for(int i = 0 ; i < newFeed.count ; i++)
+                                           {
+                                               NSIndexPath *path = [NSIndexPath indexPathForRow:feeds.count+i inSection:0];
+                                               [arrayOfIndexPaths addObject:path];
+                                           }
+                                           
+                                           [feeds addObjectsFromArray:newFeed];
+                                           [self.tableView insertRowsAtIndexPaths:arrayOfIndexPaths withRowAnimation:UITableViewRowAnimationBottom];
                                        }
-                                       
-                                       [feeds addObjectsFromArray:newFeed];
-                                       [self.tableView insertRowsAtIndexPaths:arrayOfIndexPaths withRowAnimation:UITableViewRowAnimationBottom];
                                    }
                                    
-                                   
+                                   [_indicatorLoad stopAnimating];
                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                    if (reset) {
                                        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                                        [self.refreshControl endRefreshing];
                                    }
+                                   [_indicatorLoad stopAnimating];
                                }];
 }
 
@@ -279,6 +283,8 @@ typedef enum {
     } else {
         if (currentRequest.isExecuting)
             return;
+        
+        [_indicatorLoad startAnimating];
     }
 
     NSDictionary *param = @{@"page": [NSNumber numberWithInteger:pagePic],
@@ -299,18 +305,38 @@ typedef enum {
                                            pictures = [NSMutableArray arrayWithArray:newPics];
                                            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                                            photoMode = kPhotoGrid;
+                                           [self.tableView reloadData];
                                        } else {
-                                           [pictures addObjectsFromArray:newPics];
+                                           if (newPics.count > 0) {
+                                               NSInteger rowCountPrev = [self.tableView numberOfRowsInSection:0];
+                                               
+                                               [pictures addObjectsFromArray:newPics];
+                                               
+                                               NSInteger newRows = [self tableView:self.tableView numberOfRowsInSection:0] - rowCountPrev;
+                                               
+                                               if (newRows > 0) {
+                                                   NSMutableArray *paths = [[NSMutableArray alloc] init];
+                                                   for (int i = 0; i < newRows ; i++) {
+                                                       [paths addObject:[NSIndexPath indexPathForRow:i+rowCountPrev inSection:0]];
+                                                   }
+                                                   [self.tableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationAutomatic];
+                                               } else {
+                                                   [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:rowCountPrev-1 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+                                               }
+
+                                           }
                                        }
                                        
-                                       [self.tableView reloadData];
+                                       
                                        [self.refreshControl endRefreshing];
+                                       [_indicatorLoad stopAnimating];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        endedPic = true;
                                        if (reset) {
                                            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                                        }
                                        [self.refreshControl endRefreshing];
+                                       [_indicatorLoad stopAnimating];
                                    }];
 }
 

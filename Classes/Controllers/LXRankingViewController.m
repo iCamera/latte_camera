@@ -260,25 +260,28 @@ typedef enum {
     [[LatteAPIClient sharedClient] GET:url
                                 parameters:param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       [self.tableView beginUpdates];
-                                       NSInteger rowCountPrev = [self.tableView numberOfRowsInSection:0];
-                                       NSArray *newPics = [JSON objectForKey:@"pics"];
-                                       for (NSDictionary *pic in newPics) {
-                                           [pics addObject:[Picture instanceFromDictionary:pic]];
-                                       }
-                                       
-                                       if (newPics.count == 0)
+                                       NSArray *newPics = [Picture mutableArrayFromDictionary:JSON withKey:@"pics"];
+
+                                       if (newPics.count == 0) {
                                            loadEnded = true;
-                                       else {
+                                       } else {
+                                           NSInteger rowCountPrev = [self.tableView numberOfRowsInSection:0];
+                                           
+                                           [pics addObjectsFromArray:newPics];
+                                           
                                            NSInteger newRows = [self tableView:self.tableView numberOfRowsInSection:0] - rowCountPrev;
-                                           NSMutableArray *paths = [[NSMutableArray alloc] init];
-                                           for (int i = 0; i < newRows ; i++) {
-                                               [paths addObject:[NSIndexPath indexPathForRow:i+rowCountPrev inSection:0]];
+                                           
+                                           if (newRows > 0) {
+                                               NSMutableArray *paths = [[NSMutableArray alloc] init];
+                                               for (int i = 0; i < newRows ; i++) {
+                                                   [paths addObject:[NSIndexPath indexPathForRow:i+rowCountPrev inSection:0]];
+                                               }
+                                               [self.tableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationAutomatic];
+                                           } else {
+                                               [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:rowCountPrev-1 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
                                            }
-                                           [self.tableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationAutomatic];
                                        }
                                        
-                                       [self.tableView endUpdates];
                                        [loadIndicator stopAnimating];
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {

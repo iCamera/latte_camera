@@ -30,6 +30,7 @@
 @property (strong, nonatomic) User *user;
 @property (assign, nonatomic) NSInteger userId;
 @property (strong, nonatomic) IBOutlet UIButton *buttonMore;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicatorLoad;
 
 - (void)expandHeader;
 - (void)collapseHeader;
