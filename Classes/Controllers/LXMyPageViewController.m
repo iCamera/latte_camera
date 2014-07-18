@@ -54,6 +54,7 @@ typedef enum {
     NSMutableArray *feeds;
     LatteTimeline timelineKind;
     LatteHomeTab homeTab;
+    AFHTTPRequestOperation *currentRequest;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -98,8 +99,6 @@ typedef enum {
     [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTimelineSingle" bundle:nil] forCellReuseIdentifier:@"Single"];
     [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTimelineMulti" bundle:nil] forCellReuseIdentifier:@"Multi"];
     
-    // This will remove extra separators from tableview
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     _labelMessage.layer.cornerRadius = 7;
     
     [self reloadView];
@@ -145,17 +144,21 @@ typedef enum {
 - (void)loadMore:(BOOL)reset {
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:@{@"listtype": [NSNumber numberWithInteger:timelineKind]}];
     if (reset) {
+        if (currentRequest.isExecuting) [currentRequest cancel];
         endedTimeline = false;
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     } else {
+        if (currentRequest.isExecuting) return;
         Feed *feed = feeds.lastObject;
         if (feed) {
             [params setObject:feed.feedID forKey:@"last_id"];
         }
+        [_loadIndicator startAnimating];
+        
     }
     
     
-    [[LatteAPIClient sharedClient] GET: @"user/me/timeline" parameters: params success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+    currentRequest = [[LatteAPIClient sharedClient] GET: @"user/me/timeline" parameters: params success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
         
         NSMutableArray *newFeed = [Feed mutableArrayFromDictionary:JSON
                                                            withKey:@"feeds"];
@@ -165,30 +168,46 @@ typedef enum {
         if (reset) {
             feeds = newFeed;
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [self.tableView reloadData];
+            [self.refreshControl endRefreshing];
         } else {
+            NSMutableArray *arrayOfIndexPaths = [[NSMutableArray alloc] init];
+            
+            for(int i = 0 ; i < newFeed.count ; i++)
+            {
+                NSIndexPath *path = [NSIndexPath indexPathForRow:feeds.count+i inSection:0];
+                [arrayOfIndexPaths addObject:path];
+            }
+            
             [feeds addObjectsFromArray:newFeed];
+          
+            [self.tableView insertRowsAtIndexPaths:arrayOfIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+            [_loadIndicator stopAnimating];
         }
-        
-        [self.tableView reloadData];
-        [self.refreshControl endRefreshing];
+
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (reset) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [self.refreshControl endRefreshing];
+        } else {
+            [_loadIndicator stopAnimating];
         }
-        
-        [self.refreshControl endRefreshing];
     }];
 }
 
 - (void)loadMoreTag:(BOOL)reset {
     if (reset) {
+        if (currentRequest.isExecuting) [currentRequest cancel];
         endedTimeline = false;
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         pagePic = 1;
+    } else {
+        if (currentRequest.isExecuting) return;
+        [_loadIndicator startAnimating];
     }
     
     
-    [[LatteAPIv2Client sharedClient] GET: @"picture" parameters: @{@"follow_tag": @"True", @"page": [NSNumber numberWithInteger:pagePic]} success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+    currentRequest = [[LatteAPIv2Client sharedClient] GET: @"picture" parameters: @{@"follow_tag": @"True", @"page": [NSNumber numberWithInteger:pagePic]} success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
         
         pagePic += 1;
 
@@ -200,7 +219,18 @@ typedef enum {
             feeds = newFeed;
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         } else {
+            NSMutableArray *arrayOfIndexPaths = [[NSMutableArray alloc] init];
+            
+            for(int i = 0 ; i < newFeed.count ; i++)
+            {
+                NSIndexPath *path = [NSIndexPath indexPathForRow:feeds.count+i inSection:0];
+                [arrayOfIndexPaths addObject:path];
+            }
+            
             [feeds addObjectsFromArray:newFeed];
+            
+            [self.tableView insertRowsAtIndexPaths:arrayOfIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+            [_loadIndicator stopAnimating];
         }
         
         [self.tableView reloadData];
@@ -208,8 +238,11 @@ typedef enum {
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (reset) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [self.refreshControl endRefreshing];
+        } else {
+            [_loadIndicator stopAnimating];
         }
-        [self.refreshControl endRefreshing];
+        
     }];
 }
 
@@ -218,19 +251,10 @@ typedef enum {
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (feeds.count > 0 && !endedTimeline) {
-        return feeds.count + 1;
-    } else {
-        return feeds.count;
-    }
-    
+    return feeds.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row > feeds.count - 1) {
-        return 45;
-    }
-
     Feed *feed = feeds[indexPath.row];
     if (feed.targets.count > 1) {
         CGFloat feedHeight = 260;
@@ -273,34 +297,24 @@ typedef enum {
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == feeds.count) {
-        if (homeTab == kHomeUser) {
-            [self loadMore:NO];
-        } else {
-            [self loadMoreTag:NO];
-        }
+    Feed *feed = [feeds objectAtIndex:indexPath.row];
+    if (feed.targets.count == 1) {
         
-        return [tableView dequeueReusableCellWithIdentifier:@"Load" forIndexPath:indexPath];
+        LXCellTimelineSingle *cell = [tableView dequeueReusableCellWithIdentifier:@"Single" forIndexPath:indexPath];
+        
+        cell.viewController = self;
+        cell.feed = feed;
+        cell.buttonUser.tag = indexPath.row;
+        
+        return cell;
     } else {
-        Feed *feed = [feeds objectAtIndex:indexPath.row];
-        if (feed.targets.count == 1) {
-            
-            LXCellTimelineSingle *cell = [tableView dequeueReusableCellWithIdentifier:@"Single" forIndexPath:indexPath];
-            
-            cell.viewController = self;
-            cell.feed = feed;
-            cell.buttonUser.tag = indexPath.row;
-            
-            return cell;
-        } else {
-            LXCellTimelineMulti *cell = [tableView dequeueReusableCellWithIdentifier:@"Multi" forIndexPath:indexPath];
-            
-            cell.parent = self;
-            cell.feed = feed;
-            cell.buttonUser.tag = indexPath.row;
-            
-            return cell;
-        }
+        LXCellTimelineMulti *cell = [tableView dequeueReusableCellWithIdentifier:@"Multi" forIndexPath:indexPath];
+        
+        cell.parent = self;
+        cell.feed = feed;
+        cell.buttonUser.tag = indexPath.row;
+        
+        return cell;
     }
 }
 
@@ -481,6 +495,25 @@ typedef enum {
                 _labelMessage.text = [NSString stringWithFormat:@"%ld", (long)messageCount];
             }
         }
+    }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGPoint offset = scrollView.contentOffset;
+    CGRect bounds = scrollView.bounds;
+    CGSize size = scrollView.contentSize;
+    UIEdgeInsets inset = scrollView.contentInset;
+    float y = offset.y + bounds.size.height - inset.bottom;
+    float h = size.height;
+    
+    float reload_distance = -100;
+    if(y > h + reload_distance) {
+        if (homeTab == kHomeUser) {
+            [self loadMore:NO];
+        } else {
+            [self loadMoreTag:NO];
+        }
+
     }
 }
 

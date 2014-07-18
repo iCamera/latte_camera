@@ -196,7 +196,7 @@ typedef enum {
         endedPic = false;
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         
-        if (currentRequest && currentRequest.isExecuting)
+        if (currentRequest)
             [currentRequest cancel];
     } else {
         if (currentRequest.isExecuting)
@@ -221,25 +221,34 @@ typedef enum {
                                    if (reset) {
                                        feeds = newFeed;
                                        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                       photoMode = kPhotoTimeline;
+                                       [self.tableView reloadData];
+                                       [self.refreshControl endRefreshing];
                                    } else {
+                                       NSMutableArray *arrayOfIndexPaths = [[NSMutableArray alloc] init];
+                                       
+                                       for(int i = 0 ; i < newFeed.count ; i++)
+                                       {
+                                           NSIndexPath *path = [NSIndexPath indexPathForRow:feeds.count+i inSection:0];
+                                           [arrayOfIndexPaths addObject:path];
+                                       }
+                                       
                                        [feeds addObjectsFromArray:newFeed];
+                                       [self.tableView insertRowsAtIndexPaths:arrayOfIndexPaths withRowAnimation:UITableViewRowAnimationBottom];
                                    }
                                    
-                                   [self.tableView reloadData];
-                                   [self.refreshControl endRefreshing];
+                                   
                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                   DLog(@"Something went wrong (Timeline)");
                                    if (reset) {
                                        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                       [self.refreshControl endRefreshing];
                                    }
-                                   
-                                   [self.refreshControl endRefreshing];
                                }];
 }
 
 - (void)loadTag {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    if (currentRequest && currentRequest.isExecuting)
+    if (currentRequest)
         [currentRequest cancel];
     
     currentRequest = [[LatteAPIv2Client sharedClient] GET: @"picture"
@@ -247,7 +256,7 @@ typedef enum {
                                                 success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                                     
                                                     tags = JSON[@"result"][@"facets"][@"tags"][@"terms"];
-                                                    
+                                                    photoMode = kPhotoTag;
                                                     endedPic = YES;
                                                     
                                                     [self.tableView reloadData];
@@ -265,10 +274,10 @@ typedef enum {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         pagePic = 1;
         
-        if (currentRequest && currentRequest.isExecuting)
+        if (currentRequest)
             [currentRequest cancel];
     } else {
-        if (currentRequest && currentRequest.isExecuting)
+        if (currentRequest.isExecuting)
             return;
     }
 
@@ -289,6 +298,7 @@ typedef enum {
                                        if (reset) {
                                            pictures = [NSMutableArray arrayWithArray:newPics];
                                            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                           photoMode = kPhotoGrid;
                                        } else {
                                            [pictures addObjectsFromArray:newPics];
                                        }
@@ -340,21 +350,20 @@ typedef enum {
     
     switch (sender.tag) {
         case 0:
-            photoMode = kPhotoTimeline;
+            [self loadTimeline:YES];
             break;
         case 1:
-            photoMode = kPhotoGrid;
+            [self loadPicture:YES];
             break;
         case 2:
-            photoMode = kPhotoTag;
+            [self loadTag];
             break;
         case 3:
-            photoMode = kPhotoCalendar;
+            [self reloadCalendar];
             break;
         default:
             break;
     }
-    [self reloadView];
 }
 
 - (IBAction)touchFollow:(id)sender {
@@ -413,10 +422,15 @@ typedef enum {
     
     NSString* urlPhotos = [NSString stringWithFormat:@"picture/album/by_month/%@/%ld", [dateFormat stringFromDate:currentMonth], (long)_userId];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    if (currentRequest) {
+        [currentRequest cancel];
+    }
 
-    [[LatteAPIClient sharedClient] GET:urlPhotos
+    currentRequest = [[LatteAPIClient sharedClient] GET:urlPhotos
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       photoMode = kPhotoCalendar;
                                        currentMonthPicsFlat = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
                                        currentMonthPics = [[NSMutableDictionary alloc]init];
                                        currentDayPics = [[NSMutableDictionary alloc]init];

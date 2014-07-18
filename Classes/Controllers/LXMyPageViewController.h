@@ -18,6 +18,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *labelMessage;
 @property (strong, nonatomic) IBOutlet UIButton *buttonTag;
 @property (strong, nonatomic) IBOutlet UIButton *buttonUser;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadIndicator;
 
 - (IBAction)showMenu;
 
