@@ -76,10 +76,10 @@
                                 <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ubU-vN-IPO" customClass="LXTabButton">
                                     <rect key="frame" x="80" y="0.0" width="80" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" image="icon36-calendar-brown.png">
+                                    <state key="normal" image="icon-trend-brown.png">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
-                                    <state key="selected" image="icon36-calendar-blue.png">
+                                    <state key="selected" image="icon-trend-blue.png">
                                         <color key="titleColor" red="0.37254902720451355" green="0.69411766529083252" blue="0.67843139171600342" alpha="1" colorSpace="deviceRGB"/>
                                     </state>
                                     <connections>
@@ -298,7 +298,7 @@
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="EH2-al-meD">
                                 <rect key="frame" x="274" y="11" width="30" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="icon_area.png">
+                                <state key="normal" image="icon40-earth-color.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -431,10 +431,10 @@
                                 <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sCA-mC-hmb" customClass="LXTabButton">
                                     <rect key="frame" x="64" y="0.0" width="64" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" image="icon28-like-brown.png">
+                                    <state key="normal" image="icon36-like-brown.png">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
-                                    <state key="selected" image="icon28-like-blue.png"/>
+                                    <state key="selected" image="icon36-like-blue.png"/>
                                     <connections>
                                         <action selector="switchTab:" destination="muX-Hh-Ats" eventType="touchUpInside" id="dvK-A1-d3y"/>
                                     </connections>
@@ -442,10 +442,10 @@
                                 <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0nd-mh-c4W" customClass="LXTabButton">
                                     <rect key="frame" x="128" y="0.0" width="64" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" image="icon28-comment-brown.png">
+                                    <state key="normal" image="icon36-comment-bronw.png">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
-                                    <state key="selected" image="icon28-comment-blue.png"/>
+                                    <state key="selected" image="icon36-comment-blue.png"/>
                                     <connections>
                                         <action selector="switchTab:" destination="muX-Hh-Ats" eventType="touchUpInside" id="Qim-9Y-sPW"/>
                                     </connections>
@@ -453,9 +453,10 @@
                                 <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hKI-wG-LLz" customClass="LXTabButton">
                                     <rect key="frame" x="192" y="0.0" width="64" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" image="icon_follow_m.png">
+                                    <state key="normal" image="icon36-follower-brown.png">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
+                                    <state key="selected" image="icon36-follower-blue.png"/>
                                     <connections>
                                         <action selector="switchTab:" destination="muX-Hh-Ats" eventType="touchUpInside" id="2og-f9-9l3"/>
                                     </connections>
@@ -463,10 +464,10 @@
                                 <button opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LLs-SG-FqR" customClass="LXTabButton">
                                     <rect key="frame" x="256" y="0.0" width="64" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" image="icon28-info-brown.png">
+                                    <state key="normal" image="icon36-info-brown.png">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
-                                    <state key="selected" image="icon28-info-blue.png"/>
+                                    <state key="selected" image="icon36-info-blue.png"/>
                                     <connections>
                                         <action selector="switchTab:" destination="muX-Hh-Ats" eventType="touchUpInside" id="B3K-XN-Po7"/>
                                     </connections>
@@ -746,7 +747,7 @@
                             <button key="customView" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="right" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="B47-Oy-2yj">
                                 <rect key="frame" x="284" y="11" width="20" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="icon40-follow-yellow.png">
+                                <state key="normal" image="icon40-tagfollow-yellow.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -891,10 +892,11 @@
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Po-fa-u3n" customClass="LXTabButton">
                                     <rect key="frame" x="0.0" y="0.0" width="160" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" image="icon_friend_m.png">
+                                    <state key="normal" image="icon36-following-brown.png">
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
+                                    <state key="selected" image="icon36-following-blue.png"/>
                                     <connections>
                                         <action selector="switchTab:" destination="Ftc-ZZ-Upd" eventType="touchUpInside" id="azQ-pt-hWa"/>
                                     </connections>
@@ -996,7 +998,7 @@
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Ujf-iu-3bB">
                                 <rect key="frame" x="274" y="11" width="30" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="icon_area.png">
+                                <state key="normal" image="icon40-earth-color.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -1884,33 +1886,38 @@ or you can try to send another confirmation email.</string>
         <image name="box_warning.png" width="22" height="22"/>
         <image name="bt_info.png" width="25" height="25"/>
         <image name="default-cover.gif" width="1200" height="100"/>
-        <image name="icon28-comment-blue.png" width="14" height="14"/>
-        <image name="icon28-comment-brown.png" width="14" height="14"/>
-        <image name="icon28-info-blue.png" width="14" height="14"/>
-        <image name="icon28-info-brown.png" width="14" height="14"/>
-        <image name="icon28-like-blue.png" width="14" height="14"/>
-        <image name="icon28-like-brown.png" width="14" height="14"/>
+        <image name="icon-trend-blue.png" width="14" height="14"/>
+        <image name="icon-trend-brown.png" width="14" height="14"/>
         <image name="icon28-more-white.png" width="18" height="14"/>
         <image name="icon36-calendar-blue.png" width="18" height="18"/>
         <image name="icon36-calendar-brown.png" width="18" height="18"/>
+        <image name="icon36-comment-blue.png" width="18" height="18"/>
+        <image name="icon36-comment-bronw.png" width="18" height="18"/>
+        <image name="icon36-follower-blue.png" width="25" height="18"/>
+        <image name="icon36-follower-brown.png" width="25" height="18"/>
         <image name="icon36-follower-white.png" width="25" height="18"/>
+        <image name="icon36-following-blue.png" width="25" height="18"/>
+        <image name="icon36-following-brown.png" width="25" height="18"/>
         <image name="icon36-following-white.png" width="25" height="18"/>
         <image name="icon36-grid-blue.png" width="18" height="18"/>
         <image name="icon36-grid-brown.png" width="18" height="18"/>
+        <image name="icon36-info-blue.png" width="18" height="18"/>
+        <image name="icon36-info-brown.png" width="18" height="18"/>
+        <image name="icon36-like-blue.png" width="14" height="14"/>
+        <image name="icon36-like-brown.png" width="14" height="14"/>
         <image name="icon36-menu-blue.png" width="20" height="18"/>
         <image name="icon36-menu-brown.png" width="20" height="18"/>
         <image name="icon36-tag-blue.png" width="18" height="18"/>
         <image name="icon36-tag-brown.png" width="18" height="18"/>
         <image name="icon40-addphoto-brown.png" width="20" height="20"/>
         <image name="icon40-camera-brown.png" width="20" height="20"/>
+        <image name="icon40-earth-color.png" width="20" height="20"/>
         <image name="icon40-follow-yellow.png" width="20" height="20"/>
         <image name="icon40-followed-blue.png" width="20" height="20"/>
         <image name="icon40-home-brown.png" width="20" height="20"/>
         <image name="icon40-notify-brown.png" width="20" height="20"/>
         <image name="icon40-rank-brown.png" width="20" height="20"/>
-        <image name="icon_area.png" width="15" height="15"/>
-        <image name="icon_follow_m.png" width="17" height="15"/>
-        <image name="icon_friend_m.png" width="19" height="14"/>
+        <image name="icon40-tagfollow-yellow.png" width="20" height="20"/>
         <image name="icon_mail.png" width="15" height="11"/>
         <image name="icon_menu_l.png" width="19" height="15"/>
         <image name="icon_phot_m.png" width="15" height="12"/>
