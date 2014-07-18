@@ -193,6 +193,7 @@
     
     if (currentRequest && currentRequest.isExecuting)
         [currentRequest cancel];
+    [activityLoad startAnimating];
     currentRequest = [[LatteAPIv2Client sharedClient] GET:@"picture"
                                 parameters:param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
