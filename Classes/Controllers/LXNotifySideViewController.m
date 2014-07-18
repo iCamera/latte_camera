@@ -201,17 +201,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSMutableDictionary *notify = notifies[indexPath.row];
-    notify[@"read"] = [NSNumber numberWithBool:YES];
-    [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    
     NotifyTarget notifyTarget = [[notify objectForKey:@"target_model"] integerValue];
-    NotifyKind notifyKind = [[notify objectForKey:@"kind"] integerValue];
     
-    if (currentTab == 4 && !notifyTarget) {
-                //For Animation
+    if (currentTab == 4) {
+        //For Animation
         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         return;
     }
+    
+    notify[@"read"] = [NSNumber numberWithBool:YES];
+    [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    NotifyKind notifyKind = [[notify objectForKey:@"kind"] integerValue];
     
     switch (notifyTarget) {
         case kNotifyTargetComment: {

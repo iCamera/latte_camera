@@ -24,6 +24,7 @@
     NSInteger limit;
     BOOL loadEnded;
     AFHTTPRequestOperation *currentRequest;
+    UIActivityIndicatorView *indicatorLoading;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -69,6 +70,7 @@
 }
 
 - (void)loadMorePublicTagPhoto:(BOOL)reset {
+    [indicatorLoading startAnimating];
     currentRequest = [[LatteAPIClient sharedClient] GET:@"picture/tag"
                             parameters:@{@"tag": _keyword,
                                          @"limit": [NSNumber numberWithInteger:limit],
@@ -87,12 +89,15 @@
                                    loadEnded = data.count == 0;
                                    //[self.refreshControl endRefreshing];
                                    [self.collectionView reloadData];
+                                   [indicatorLoading stopAnimating];
                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                   [indicatorLoading stopAnimating];
                                    //[self.refreshControl endRefreshing];
                                }];
 }
 
 - (void)loadMoreUserLiked:(BOOL)reset {
+    [indicatorLoading startAnimating];
     currentRequest = [[LatteAPIClient sharedClient] GET:@"picture/user/me/voted"
                             parameters:@{@"limit": [NSNumber numberWithInteger:limit],
                                          @"page": [NSNumber numberWithInteger:page]}
@@ -110,12 +115,15 @@
                                    loadEnded = data.count == 0;
                                    //[self.refreshControl endRefreshing];
                                    [self.collectionView reloadData];
+                                   [indicatorLoading stopAnimating];
                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                    //[self.refreshControl endRefreshing];
+                                   [indicatorLoading stopAnimating];
                                }];
 }
 
 - (void)loadMoreUserTag:(BOOL)reset {
+    [indicatorLoading startAnimating];
     currentRequest = [[LatteAPIv2Client sharedClient] GET:@"picture"
                                              parameters:@{@"user_id": [NSNumber numberWithInteger:_userId],
                                                           @"tag": _keyword,
@@ -135,7 +143,9 @@
                                                     loadEnded = data.count == 0;
                                                     //[self.refreshControl endRefreshing];
                                                     [self.collectionView reloadData];
+                                                    [indicatorLoading stopAnimating];
                                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                    [indicatorLoading stopAnimating];
                                                     //[self.refreshControl endRefreshing];
                                                 }];
 }
@@ -190,15 +200,18 @@
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    if ([kind isEqualToString:UICollectionElementKindSectionHeader] && (_gridType == kPhotoGridPublicTag)) {
+        return [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"Header" forIndexPath:indexPath];
+    }
+    
     if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
         LXStreamFooter *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind
                                                                         withReuseIdentifier:@"Footer"
                                                                                forIndexPath:indexPath];
+        indicatorLoading = footerView.indicatorLoading;
         if (loadEnded) {
-            [footerView.indicatorLoading stopAnimating];
             footerView.imageEmpty.hidden = pictures.count > 0;
         } else {
-            [footerView.indicatorLoading startAnimating];
             footerView.imageEmpty.hidden = YES;
         }
         return footerView;
@@ -244,6 +257,7 @@
 {
     return CGSizeMake(100, 100);
 }
+
 
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {

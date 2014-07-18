@@ -181,6 +181,7 @@
                                         <constraint firstAttribute="bottom" secondItem="Aii-ag-xHv" secondAttribute="bottom" constant="3" id="zc1-g9-PbG"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="buttonPic1" destination="Aii-ag-xHv" id="13M-0a-8It"/>
                                 </connections>
@@ -263,6 +264,7 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="buttonPic2" destination="qMb-QU-HQ6" id="sd1-XC-R8y"/>
                                     <outlet property="buttonPic3" destination="l5b-L0-qEt" id="aa5-BC-HuN"/>
@@ -281,6 +283,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -376,16 +379,16 @@
                     <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="hKB-MS-wkZ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.90588241820000004" green="0.89411771299999998" blue="0.85490202900000001" alpha="1" colorSpace="deviceRGB"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="4" minimumInteritemSpacing="4" id="3lv-OV-Awf">
                             <size key="itemSize" width="50" height="50"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="headerReferenceSize" width="50" height="40"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="6" minY="6" maxX="6" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Kpf-oc-slb">
-                                <rect key="frame" x="6" y="6" width="50" height="50"/>
+                                <rect key="frame" x="6" y="46" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -393,7 +396,66 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                             </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="User" id="xyC-TE-XJv" customClass="LXCollectionCellUser">
+                                <rect key="frame" x="71" y="46" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="user.gif" translatesAutoresizingMaskIntoConstraints="NO" id="Ow4-wr-Dnr">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </imageView>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Nickname" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MUW-z0-fKG">
+                                            <rect key="frame" x="0.0" y="32" width="50" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="10"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <connections>
+                                    <outlet property="imageUser" destination="Ow4-wr-Dnr" id="20h-JQ-g0X"/>
+                                    <outlet property="labelUser" destination="MUW-z0-fKG" id="c8V-j1-X6C"/>
+                                </connections>
+                            </collectionViewCell>
                         </cells>
+                        <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Header" id="QeL-4d-cof">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vlb-Ex-dog" customClass="LXTabButton">
+                                    <rect key="frame" x="0.0" y="0.0" width="120" height="40"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="icon36-grid-brown.png">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="selected" image="icon36-grid-blue.png"/>
+                                    <state key="highlighted" image="icon36-grid-blue.png"/>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PPs-e2-MjR" customClass="LXTabButton">
+                                    <rect key="frame" x="120" y="0.0" width="120" height="40"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="icon36-following-brown.png">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="selected" image="icon36-following-blue.png"/>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoDark" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aWP-t7-5C9">
+                                    <rect key="frame" x="279" y="9" width="22" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="tintColor" red="0.2078431547" green="0.18823531269999999" blue="0.13333334029999999" alpha="1" colorSpace="deviceRGB"/>
+                                    <state key="normal">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </collectionReusableView>
                         <connections>
                             <outlet property="dataSource" destination="64y-Lt-Fes" id="VAi-6i-bKt"/>
                             <outlet property="delegate" destination="64y-Lt-Fes" id="K4u-Yc-nnP"/>
@@ -813,16 +875,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="sectionIndexBackgroundColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" translucent="NO" showsScopeBar="YES" id="Lbv-wb-bwt">
+                        <searchBar key="tableHeaderView" contentMode="redraw" placeholder="Anything" translucent="NO" showsScopeBar="YES" id="Lbv-wb-bwt">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="88"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <color key="tintColor" red="0.20784313730000001" green="0.18823529410000001" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
-                            <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="barTintColor" red="0.90588241820000004" green="0.89411771299999998" blue="0.85490202900000001" alpha="1" colorSpace="deviceRGB"/>
                             <textInputTraits key="textInputTraits"/>
                             <scopeButtonTitles>
                                 <string>Photo</string>
                                 <string>User</string>
+                                <string>Tag</string>
                             </scopeButtonTitles>
                             <connections>
                                 <outlet property="delegate" destination="oup-QU-2wo" id="G2i-kT-Wc6"/>
@@ -1839,7 +1901,7 @@ or you can try to send another confirmation email.</string>
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" translucent="NO" id="1PT-5c-PN7">
+                        <searchBar key="tableHeaderView" contentMode="redraw" placeholder="Anything" translucent="NO" id="1PT-5c-PN7">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1902,6 +1964,7 @@ or you can try to send another confirmation email.</string>
         <image name="icon36-follower-brown.png" width="25" height="18"/>
         <image name="icon36-follower-white.png" width="25" height="18"/>
         <image name="icon36-following-blue.png" width="25" height="18"/>
+        <image name="icon36-following-brown.png" width="25" height="18"/>
         <image name="icon36-following-white.png" width="25" height="18"/>
         <image name="icon36-grid-blue.png" width="18" height="18"/>
         <image name="icon36-grid-brown.png" width="18" height="18"/>
@@ -1937,7 +2000,7 @@ or you can try to send another confirmation email.</string>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="myE-qi-b3h"/>
+        <segue reference="kV3-JH-Oaz"/>
         <segue reference="bsm-XB-qQP"/>
     </inferredMetricsTieBreakers>
 </document>
