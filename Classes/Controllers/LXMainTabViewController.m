@@ -21,6 +21,7 @@
 #import "LXTableConfirmEmailController.h"
 #import "MZFormSheetSegue.h"
 #import "LXNotifySideViewController.h"
+#import "UAProgressView.h"
 
 @interface LXMainTabViewController ()
 
@@ -30,8 +31,7 @@
     UIView *viewCamera;
     BOOL isFirst;
 
-    UIButton *buttonUploadStatus;
-    MBRoundProgressView *hudUpload;
+    UAProgressView *hudUpload;
 }
 
 
@@ -84,13 +84,18 @@
     
     UIScreen *screen = [UIScreen mainScreen];
     
-    buttonUploadStatus = [[UIButton alloc] initWithFrame:CGRectMake(280, screen.bounds.size.height-110, 30, 30)];
-    [buttonUploadStatus addTarget:self action:@selector(toggleUpload:) forControlEvents:UIControlEventTouchUpInside];
-    hudUpload = [[MBRoundProgressView alloc] initWithFrame:buttonUploadStatus.bounds];
-    hudUpload.userInteractionEnabled = NO;
-    [buttonUploadStatus addSubview:hudUpload];
-    [self.view addSubview:buttonUploadStatus];
-    buttonUploadStatus.hidden = YES;
+    hudUpload = [[UAProgressView alloc] initWithFrame:CGRectMake(280, screen.bounds.size.height-110, 30, 30)];
+    hudUpload.tintColor = [UIColor colorWithRed:35.0/255.0 green:183.0/255.0 blue:223.0/255.00 alpha:1];
+
+    __weak __typeof(self)weakSelf = self;
+    [hudUpload setDidSelectBlock:^(UAProgressView *progressView) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf toggleUpload:strongSelf];
+    }];
+
+    hudUpload.hidden = YES;
+    [self.view addSubview:hudUpload];
+    
 
     [[UITabBar appearance] setTintColor:[UIColor colorWithRed:35.0/255.0 green:183.0/255.0 blue:223.0/255.00 alpha:1]];
 }
@@ -192,12 +197,12 @@
 }
 
 - (void)uploadStart:(NSNotification *) notification {
-    buttonUploadStatus.hidden = NO;
+    hudUpload.hidden = NO;
 }
 
 - (void)uploadSuccess:(NSNotification *) notification {
     LXAppDelegate* app = [LXAppDelegate currentDelegate];
-    buttonUploadStatus.hidden = app.uploader.count == 0;
+    hudUpload.hidden = app.uploader.count == 0;
     if (app.uploader.count == 0) {
         self.selectedIndex = 4;
         UINavigationController *navMypage = (UINavigationController*)self.selectedViewController;

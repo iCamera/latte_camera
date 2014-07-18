@@ -8,120 +8,61 @@
 
 #import "LXUploadObject.h"
 #import "AFNetworking.h"
-#import "LatteAPIClient.h"
+#import "LatteAPIv2Client.h"
 #import "LXAppDelegate.h"
 
 @implementation LXUploadObject {
     Picture *picture;
 }
 
-- (void)uploadTwitter {
-    ACAccountStore *account = [[ACAccountStore alloc] init];
-    ACAccountType *accountType = [account accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+- (void)uploadTwitter:(ACAccount*)account {
+    // Build a twitter request
     
-    // Request access from the user to access their Twitter account
-    [account requestAccessToAccountsWithType:accountType options:nil completion:^(BOOL granted, NSError *error) {
-         // Did user allow us access?
-         if (granted == YES)
-         {
-             // Populate array with all available Twitter accounts
-             NSArray *arrayOfAccounts = [account accountsWithAccountType:accountType];
-             
-             // Sanity check
-             if ([arrayOfAccounts count] > 0)
-             {
-                 // Keep it simple, use the first account available
-                 ACAccount *acct = [arrayOfAccounts objectAtIndex:0];
-                 
-                 // Build a twitter request
-                 NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-                 if (_imageDescription) {
-                     params[@"status"] = _imageDescription;
-                 } else {
-                     params[@"status"] = @"Latte camera!";
-                 }
-                 SLRequest *postRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodPOST URL:[NSURL URLWithString:@"https://upload.twitter.com/1/statuses/update_with_media.json"] parameters:params];
-                 
-                 // Post the request
-                 [postRequest setAccount:acct];
-                 
-                 // Block handler to manage the response
-                 [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderStart" object:self];
-                 
-                 [postRequest performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error)
-                  {
-                      if (error) {
-                          [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderFail" object:self];
-                          _uploadState = kUploadStateFail;
-                      } else {
-                          [self finishedUpload];
-                      }
-                      NSLog(@"Twitter response, HTTP response: %li", (long)[urlResponse statusCode]);
-                  }];
-             }
-         }
-     }];
-}
-
-- (void)uploadFacebook {
-    if (picture.status == PictureStatusPublic) {
-        NSMutableDictionary<FBGraphObject> *action = [FBGraphObject graphObject];
-        action[@"photo"] = picture.urlWeb;
-        action[@"image[0][url]"] = picture.urlLarge;
-        action[@"image[0][user_generated]"] = @"true";
-        action[@"fb:explicitly_shared"] = @"true";
-        if (_imageDescription) {
-            action[@"message"] = _imageDescription;
+    SLRequestHandler requestHandler =
+    ^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
+        if (responseData) {
+            NSInteger statusCode = urlResponse.statusCode;
+            if (statusCode >= 200 && statusCode < 300) {
+                NSDictionary *postResponseData =
+                [NSJSONSerialization JSONObjectWithData:responseData
+                                                options:NSJSONReadingMutableContainers
+                                                  error:NULL];
+                NSLog(@"[SUCCESS!] Created Tweet with ID: %@", postResponseData[@"id_str"]);
+                [self finishedUpload];
+            }
+            else {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderFail" object:self];
+                _uploadState = kUploadStateFail;
+                NSLog(@"[ERROR] Server responded: status code %d %@", statusCode,
+                      [NSHTTPURLResponse localizedStringForStatusCode:statusCode]);
+            }
         }
-        
-        [FBRequestConnection startForPostWithGraphPath:@"me/latte_prod:upload"
-                                           graphObject:action
-                                     completionHandler:^(FBRequestConnection *connection,
-                                                         id result,
-                                                         NSError *error) {
-                                         if (error) {
-                                             [_delegate uploader:self fail:error];
-                                             [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderFail" object:self];
-                                             _uploadState = kUploadStateFail;
-                                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"")
-                                                                                             message:error.localizedDescription
-                                                                                            delegate:nil cancelButtonTitle:NSLocalizedString(@"close", @"")
-                                                                                   otherButtonTitles:nil];
-                                             [alert show];
-                                         }
-                                         else {
-                                             [self finishedUpload];
-                                         }
-                                     }];
-    } else {
-        NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-        [params setObject:_imageFile forKey:@"picture"];
-        if (_imageDescription) {
-            [params setObject:_imageDescription forKey:@"message"];
+        else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderFail" object:self];
+            _uploadState = kUploadStateFail;
+            NSLog(@"[ERROR] An error occurred while posting: %@", [error localizedDescription]);
         }
-        
-        [FBRequestConnection startWithGraphPath:@"me/photos"
-                                     parameters:params
-                                     HTTPMethod:@"POST"
-                              completionHandler:^(FBRequestConnection *connection,
-                                                  id result,
-                                                  NSError *error) {
-                                  if (error) {
-                                      [_delegate uploader:self fail:error];
-                                      [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderFail" object:self];
-                                      _uploadState = kUploadStateFail;
-                                      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"")
-                                                                                      message:error.localizedDescription
-                                                                                     delegate:nil cancelButtonTitle:NSLocalizedString(@"close", @"")
-                                                                            otherButtonTitles:nil];
-                                      [alert show];
-                                  }
-                                  else {
-                                      [self finishedUpload];
-                                  }
-                              }];
-        
-    }
+    };
+    
+    
+    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com"
+                  @"/1.1/statuses/update_with_media.json"];
+    NSDictionary *params = @{@"status" : _imageDescription};
+    SLRequest *request = [SLRequest requestForServiceType:SLServiceTypeTwitter
+                                            requestMethod:SLRequestMethodPOST
+                                                      URL:url
+                                               parameters:params];
+    
+    [request addMultipartData:_imageFile
+                     withName:@"media[]"
+                         type:@"image/jpeg"
+                     filename:@"image.jpg"];
+    [request setAccount:account];
+    
+    // Block handler to manage the response
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderStart" object:self];
+    [request performRequestWithHandler:requestHandler];
+    
 }
 
 - (void)uploadLatte {
@@ -150,9 +91,9 @@
                             [tagsPolish componentsJoinedByString:@","], @"tags",
                             nil];
     
-    LatteAPIClient *api = [LatteAPIClient sharedClient];
+    LatteAPIv2Client *api = [LatteAPIv2Client sharedClient];
     NSURLRequest *request = [api.requestSerializer multipartFormRequestWithMethod:@"POST"
-                                                                        URLString:[[NSURL URLWithString:@"picture/upload" relativeToURL:api.baseURL] absoluteString]
+                                                                        URLString:[[NSURL URLWithString:@"picture" relativeToURL:api.baseURL] absoluteString]
                                                                        parameters:params
                                                         constructingBodyWithBlock:createForm
                                                                             error:nil];
@@ -160,14 +101,7 @@
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     
     void (^successUpload)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, NSData *data) {
-        if (_facebook) {
-            NSError *error;
-            NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-            picture = [Picture instanceFromDictionary:JSON[@"pic"]];
-            [self uploadFacebook];
-        } else {
-            [self finishedUpload];
-        }
+        [self finishedUpload];
     };
     
     void (^failUpload)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -191,10 +125,7 @@
 }
 
 - (void)upload {
-    if (_facebook && picture && _uploadState == kUploadStateFail ) {
-        [self uploadFacebook];
-    } else
-        [self uploadLatte];
+    [self uploadLatte];
 }
 
 - (void)finishedUpload {

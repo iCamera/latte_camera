@@ -17,6 +17,9 @@
 
 @interface LXPicEditViewController ()
 
+@property (nonatomic, strong) ACAccountStore *accountStore;
+@property (nonatomic, strong) NSArray *accounts;
+
 @end
 
 @implementation LXPicEditViewController {
@@ -26,6 +29,7 @@
     PictureStatus imageTakenAtStatus;
     PictureStatus imageShowOriginal;
     NSMutableArray *tags;
+    ACAccount *accountTwitter;
 }
 
 @synthesize imagePic;
@@ -91,7 +95,33 @@
         imageTakenAtStatus = app.currentUser.defaultShowTakenAt;
         imageShowOriginal = app.currentUser.defaultShowLarge;
         buttonFacebook.selected = app.currentUser.pictureAutoFacebookUpload;
-        buttonTwitter.selected = app.currentUser.pictureAutoTweet;
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        buttonTwitter.selected = [defaults boolForKey:@"LatteAutoTweet"];;
+        
+        if (buttonTwitter.selected) {
+            ACAccountStore *account = [[ACAccountStore alloc] init];
+            ACAccountType *accountType = [account accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+            
+            [account requestAccessToAccountsWithType:accountType options:nil completion:^(BOOL granted, NSError *error) {
+                if(granted) {
+                    NSArray *arrayOfAccounts = [account accountsWithAccountType:accountType];
+                    
+                    if ([arrayOfAccounts count] == 0) {
+                        
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            buttonTwitter.selected = NO;
+                        });
+                    }
+                } else {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        buttonTwitter.selected = NO;
+                    });
+                    
+                }
+                // Handle any error state here as you wish
+            }];
+        }
         
         tags = [[NSMutableArray alloc]init];
     }
@@ -101,7 +131,6 @@
     [self setStatusLabel:labelGPSStatus status:imageGPSStatus];
     [self setStatusLabel:labelTakenDateStatus status:imageTakenAtStatus];
     [self setStatusLabel:labelShowOriginalStatus status:imageShowOriginal];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -271,11 +300,117 @@
 }
 
 - (IBAction)touchFacebook:(id)sender {
-    buttonFacebook.selected = !buttonFacebook.selected;
+    if (!buttonFacebook.selected) {
+        buttonFacebook.selected = true;
+        LXAppDelegate* app = [LXAppDelegate currentDelegate];
+        app.currentUser.pictureAutoFacebookUpload = true;
+        [FBSession openActiveSessionWithPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]
+                                           defaultAudience:FBSessionDefaultAudienceFriends
+                                              allowLoginUI:YES
+                                         completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
+                                             switch (state) {
+                                                 case FBSessionStateOpen:
+                                                     if (!error) {
+                                                         // We have a valid session
+                                                         FBAccessTokenData *tokenData = FBSession.activeSession.accessTokenData;
+                                                         
+                                                         [[LatteAPIv2Client sharedClient] POST:@"user/login_facebook"
+                                                                                    parameters:@{@"access_token": tokenData.accessToken,
+                                                                                                 @"connect_only": @"true"}
+                                                                                       success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                                                                           
+                                                                                           [[LatteAPIv2Client sharedClient] POST:@"user/me"
+                                                                                                                    parameters:@{@"picture_auto_facebook_upload": [NSNumber numberWithBool:true]}
+                                                                                                                       success:nil failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                                                                                           buttonFacebook.selected = false;
+                                                                                                                       }];
+                                                                                       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                                                           buttonFacebook.selected = false;
+                                                                                       }];
+                                                         
+                                                     }
+                                                     break;
+                                                 case FBSessionStateClosed:
+                                                 case FBSessionStateClosedLoginFailed:
+                                                     buttonFacebook.selected = false;
+                                                     [FBSession.activeSession closeAndClearTokenInformation];
+                                                     [FBSession renewSystemCredentials:^(ACAccountCredentialRenewResult result, NSError *error) {}];
+                                                     break;
+                                                 default:
+                                                     break;
+                                             }
+                                             
+                                             if (error) {
+                                                 [LXUtils showFBAuthError:error];
+                                                 buttonFacebook.selected = false;
+                                             }
+                                         }];
+    } else {
+        [[LatteAPIv2Client sharedClient] POST:@"user/me"
+                                   parameters:@{@"picture_auto_facebook_upload": @""}
+                                      success:nil failure:nil];
+        buttonFacebook.selected = false;
+        LXAppDelegate* app = [LXAppDelegate currentDelegate];
+        app.currentUser.pictureAutoFacebookUpload = false;
+    }
+    
 }
 
 - (IBAction)touchTwitter:(id)sender {
-    buttonTwitter.selected = !buttonTwitter.selected;
+    if (!buttonTwitter.selected) {
+        BOOL twitterAvailable = [SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter];
+        
+        if (!twitterAvailable) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"")
+                                                            message:NSLocalizedString(@"error_no_twitter", @"")
+                                                           delegate:nil
+                                                  cancelButtonTitle:NSLocalizedString(@"CLOSE", @"")
+                                                  otherButtonTitles:nil];
+            [alert show];
+        } else {
+            [self _obtainAccessToAccountsWithBlock:^(BOOL granted) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (granted) {
+                        accountTwitter = _accounts[0];
+                        buttonTwitter.selected = YES;
+                        
+                        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                        [defaults setBool:true forKey:@"LatteAutoTweet"];
+                        [defaults synchronize];
+
+                    } else {
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"")
+                                                                        message:NSLocalizedString(@"Please allow Latte camera to access Twitter in iPhone Setting", @"")
+                                                                       delegate:nil
+                                                              cancelButtonTitle:NSLocalizedString(@"close", @"")
+                                                              otherButtonTitles:nil];
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [alert show];
+                            buttonTwitter.selected = NO;
+                        });
+                    }
+                });
+            }];
+        }
+    } else {
+        buttonTwitter.selected = false;
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setBool:false forKey:@"LatteAutoTweet"];
+        [defaults synchronize];}
+}
+
+- (void)_obtainAccessToAccountsWithBlock:(void (^)(BOOL))block
+{
+    _accountStore = [[ACAccountStore alloc] init];
+    ACAccountType *twitterType = [_accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+    ACAccountStoreRequestAccessCompletionHandler handler = ^(BOOL granted, NSError *error) {
+        if (granted) {
+            self.accounts = [_accountStore accountsWithAccountType:twitterType];
+        }
+        
+        block(granted);
+    };
+    [_accountStore requestAccessToAccountsWithType:twitterType options:NULL completion:handler];
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification
@@ -346,28 +481,9 @@
 }
 
 - (void)saveImage {
-    if (buttonFacebook.selected) {
-        [FBSession openActiveSessionWithPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]
-                                           defaultAudience:FBSessionDefaultAudienceFriends
-                                              allowLoginUI:YES
-                                         completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
-                                             if (error) {
-                                                 [LXUtils showFBAuthError:error];
-                                             }
-                                         }];
-    }
-    
-    MBProgressHUD* HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:HUD];
-    HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
-    HUD.mode = MBProgressHUDModeCustomView;
-    [HUD show:YES];
-    [HUD hide:YES afterDelay:1];
-    
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
     LXUploadObject *uploadLatte = [[LXUploadObject alloc]init];
-    uploadLatte.facebook = buttonFacebook.selected;
     uploadLatte.imageFile = _imageData;
     uploadLatte.imagePreview = _preview;
     uploadLatte.imageDescription = textDesc.text;
@@ -381,15 +497,14 @@
     [app.uploader addObject:uploadLatte];
     [uploadLatte upload];
     
-    
     if (buttonTwitter.selected) {
-        LXUploadObject *uploadFacebook = [[LXUploadObject alloc]init];
-        uploadFacebook.imageFile = _imageData;
-        uploadFacebook.imagePreview = _preview;
-        uploadFacebook.imageDescription = textDesc.text;
+        LXUploadObject *uploader = [[LXUploadObject alloc]init];
+        uploader.imageFile = _imageData;
+        uploader.imagePreview = _preview;
+        uploader.imageDescription = textDesc.text;
         
-        [app.uploader addObject:uploadFacebook];
-        [uploadFacebook uploadTwitter];
+        [app.uploader addObject:uploader];
+        [uploader uploadTwitter:accountTwitter];
     }
     
     [self backToCamera];

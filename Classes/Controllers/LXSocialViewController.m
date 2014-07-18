@@ -41,8 +41,11 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
-    switchTwitter.on = app.currentUser.pictureAutoTweet;
+    switchTwitter.on = [defaults boolForKey:@"LatteAutoTweet"];
     swtichFacebook.on = app.currentUser.pictureAutoFacebookUpload;
 }
 
@@ -94,8 +97,6 @@
 }
 
 - (IBAction)toggleTwitter:(id)sender {
-
-    
     if (switchTwitter.on) {
         ACAccountStore *account = [[ACAccountStore alloc] init];
         ACAccountType *accountType = [account accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
@@ -116,9 +117,9 @@
                         switchTwitter.on = NO;
                     });
                 } else {
-                    LXAppDelegate *app = [LXAppDelegate currentDelegate];
-                    app.currentUser.pictureAutoTweet = switchTwitter.on;
-                    [self updateUserInfo:@"picture_auto_tweet" value:switchTwitter.on];
+                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                    [defaults setBool:true forKey:@"LatteAutoTweet"];
+                    [defaults synchronize];
                 }
             } else {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"")
@@ -135,9 +136,9 @@
             // Handle any error state here as you wish
         }];
     } else {
-        LXAppDelegate *app = [LXAppDelegate currentDelegate];
-        app.currentUser.pictureAutoTweet = switchTwitter.on;
-        [self updateUserInfo:@"picture_auto_tweet" value:switchTwitter.on];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setBool:false forKey:@"LatteAutoTweet"];
+        [defaults synchronize];
     }
 }
 

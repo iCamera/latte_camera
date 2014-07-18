@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Picture.h"
+#import <Accounts/ACAccount.h>
 
 typedef enum {
     kUploadStateProgress,
@@ -35,7 +36,6 @@ typedef enum {
 @property (assign, nonatomic) PictureStatus showGPS;
 @property (assign, nonatomic) PictureStatus showTakenAt;
 @property (assign, nonatomic) PictureStatus showLarge;
-@property (assign, nonatomic) BOOL facebook;
 @property (assign, nonatomic) PictureStatus status;
 @property (readonly, nonatomic) float percent;
 @property (readonly, nonatomic) UploadState uploadState;
@@ -43,6 +43,6 @@ typedef enum {
 @property (weak, nonatomic) id<LXUploadObjectDelegate> delegate;
 
 - (void)upload;
-- (void)uploadTwitter;
+- (void)uploadTwitter:(ACAccount*)account;
 
 @end
