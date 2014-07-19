@@ -517,11 +517,12 @@
     } else {
         destructiveButtonTitle = NSLocalizedString(@"report", @"");
     }
+    
     UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:nil
                                                         delegate:self
                                                cancelButtonTitle:NSLocalizedString(@"Cancel", @"")
                                           destructiveButtonTitle:nil
-                                               otherButtonTitles:@"Copy URL", @"Facebook", @"Twitter", @"Email", destructiveButtonTitle, nil];
+                                               otherButtonTitles:NSLocalizedString(@"Copy URL", @""), NSLocalizedString(@"Share to Facebook", @""), NSLocalizedString(@"Share to Twitter", @""), NSLocalizedString(@"Send email", @""), destructiveButtonTitle, nil];
     action.destructiveButtonIndex = 4;
     action.tag = 2;
     [action showInView:self.view];
