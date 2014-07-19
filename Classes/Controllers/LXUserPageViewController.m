@@ -23,6 +23,7 @@
 #import "LXCellTimelineMulti.h"
 #import "MBProgressHUD.h"
 #import "LXPhotoGridCVC.h"
+#import "LXReportAbuseUserViewController.h"
 
 #import "LXCellGrid.h"
 #import "LXCellDataField.h"
@@ -421,14 +422,14 @@ typedef enum {
                                                            delegate:self
                                                   cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
                                              destructiveButtonTitle:NSLocalizedString(@"Unblock User", @"ブロックを解除")
-                                                  otherButtonTitles:nil];
+                                                  otherButtonTitles:NSLocalizedString(@"report", @""), nil];
         [sheet showInView:self.view];
     } else {
         UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil
                                                            delegate:self
                                                   cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
                                              destructiveButtonTitle:NSLocalizedString(@"Block User", @"ブロックする")
-                                                  otherButtonTitles:nil];
+                                                  otherButtonTitles:NSLocalizedString(@"report", @""), nil];
         [sheet showInView:self.view];
     }
 }
@@ -1011,6 +1012,14 @@ typedef enum {
             }
         }
             break;
+        case 1: {
+            UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+            LXReportAbuseUserViewController *viewReport = [mainStoryboard instantiateViewControllerWithIdentifier:@"ReportUser"];
+            
+            viewReport.user = _user;
+            
+            [self.navigationController pushViewController:viewReport animated:YES];
+        }
         default:
             break;
     }

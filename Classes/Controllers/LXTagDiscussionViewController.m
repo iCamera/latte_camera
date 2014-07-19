@@ -13,6 +13,7 @@
 #import "LXUtils.h"
 #import "LXAppDelegate.h"
 #import "LXUserPageViewController.h"
+#import "LXReportAbuseMessageViewController.h"
 #import <CommonCrypto/CommonDigest.h>
 #import "LXSocketIO.h"
 #import "User.h"
@@ -47,7 +48,7 @@
                                     outgoingMessageBubbleImageViewWithColor:[UIColor jsq_messageBubbleLightGrayColor]];
     
     self.incomingBubbleImageView = [JSQMessagesBubbleImageFactory
-                                    incomingMessageBubbleImageViewWithColor:[UIColor jsq_messageBubbleGreenColor]];
+                                    incomingMessageBubbleImageViewWithColor:[UIColor colorWithRed:111.0/255.0 green:189.0/255.0 blue:187.0/255.0 alpha:1]];
     
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
     
@@ -349,16 +350,47 @@
 }
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapAvatarImageView:(UIImageView *)avatarImageView atIndexPath:(NSIndexPath *)indexPath {
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                             bundle:nil];
-    LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
     
-    User *user = [User instanceFromDictionary:rawMessages[indexPath.item][@"user"]];
-    viewUserPage.user = user;
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                             delegate:self
+                                                    cancelButtonTitle:NSLocalizedString(@"cancel", @"")
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:NSLocalizedString(@"View Profile", @""), NSLocalizedString(@"report", @""), nil];
+    actionSheet.destructiveButtonIndex = 1;
+    actionSheet.tag = indexPath.item;
+    [actionSheet showInView:self.view];
     
-    [self.navigationController pushViewController:viewUserPage animated:YES];
 
 }
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSDictionary *rawMessage = rawMessages[actionSheet.tag];
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    if (buttonIndex == 0) {
+        LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+        
+        User *user = [User instanceFromDictionary:rawMessage[@"user"]];
+        viewUserPage.user = user;
+        
+        [self.navigationController pushViewController:viewUserPage animated:YES];
+    } else if(buttonIndex == 1) {
+        
+        LXReportAbuseMessageViewController *viewReport = [mainStoryboard instantiateViewControllerWithIdentifier:@"ReportMessage"];
+        
+        viewReport.message = rawMessage;
+        
+        [self.navigationController pushViewController:viewReport animated:YES];
+
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self.inputToolbar.contentView.textView resignFirstResponder];
+}
+
 
 - (void)didReceiveMemoryWarning
 {

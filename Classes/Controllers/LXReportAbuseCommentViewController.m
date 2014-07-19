@@ -67,7 +67,7 @@
     [[LatteAPIClient sharedClient] POST:path
                                  parameters:[NSDictionary dictionaryWithObject:textComment.text forKey:@"report_comment"]
                                     success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Report", @"")
+                                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"report", @"")
                                                                                         message:NSLocalizedString(@"Report sent", @"")
                                                                                        delegate:nil
                                                                               cancelButtonTitle:NSLocalizedString(@"OK", @"")

@@ -1,21 +1,23 @@
 PODS:
-  - AFNetworking (2.2.4):
+  - AFNetworking (2.3.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
     - AFNetworking/UIKit
-  - AFNetworking/NSURLConnection (2.2.4):
+  - AFNetworking/NSURLConnection (2.3.1):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.2.4):
-    - AFNetworking/NSURLConnection
-  - AFNetworking/Reachability (2.2.4)
-  - AFNetworking/Security (2.2.4)
-  - AFNetworking/Serialization (2.2.4)
-  - AFNetworking/UIKit (2.2.4):
+  - AFNetworking/NSURLSession (2.3.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.3.1)
+  - AFNetworking/Security (2.3.1)
+  - AFNetworking/Serialization (2.3.1)
+  - AFNetworking/UIKit (2.3.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - CHTCollectionViewWaterfallLayout (0.7)
@@ -29,14 +31,14 @@ PODS:
   - MZAppearance (1.1.3)
   - MZFormSheetController (2.3.4):
     - MZAppearance (~> 1.1.3)
-  - REFrostedViewController (2.4.5)
+  - REFrostedViewController (2.4.6)
   - socket.IO (0.5.2):
     - SocketRocket (~> 0.2)
   - SocketRocket (0.3.1-beta2)
   - STTweetLabel (3.1.12)
-  - TTTAttributedLabel (1.10.0)
+  - TTTAttributedLabel (1.10.1)
   - UAProgressView (0.1.1)
-  - YIPopupTextView (1.1.0)
+  - YIPopupTextView (1.1.1)
 
 DEPENDENCIES:
   - AFNetworking
@@ -55,7 +57,7 @@ DEPENDENCIES:
   - YIPopupTextView
 
 SPEC CHECKSUMS:
-  AFNetworking: ab63e259fe91eef4519b371ef0a4955af0e73e64
+  AFNetworking: 6d7b76aa5d04c8c37daad3eef4b7e3f2a7620da3
   CHTCollectionViewWaterfallLayout: 184d3b6d5456b48e93ac97e93e606bd8b68aedcc
   GPUImage: ac2bde5f4dbea02a81ced6313964cec1f2043ca9
   HPGrowingTextView: 07d5ab1f1e867acfb7a6f498b819948c9e97d07c
@@ -65,12 +67,12 @@ SPEC CHECKSUMS:
   MBProgressHUD: c356980b0cd097f19acec959b49dca5eb8ec31be
   MZAppearance: c88502c0c2345120630c34e09d5ff09e2969ba30
   MZFormSheetController: 8c453908080c338274e68908849029435d3e2736
-  REFrostedViewController: 93c85bf09c95c8166fc5314aa6811fb33611afb7
+  REFrostedViewController: 0f6bb16aeb4b384da25cc3c97bc1a16926583c62
   socket.IO: db3e71805c862038ab73209dda2b0ad6babc54b2
   SocketRocket: 79a68ae186063c65e1fe6f638b1ae2927aa5f304
   STTweetLabel: 5acb62e6a64449520f242c002364bd3ec3a44592
-  TTTAttributedLabel: c3a11b538bc7beb4815f156e2ba4b066929e13f9
+  TTTAttributedLabel: 94bb04f1e005616002dd2cee0262a0082e533627
   UAProgressView: c393bc53d1cabc077279e957c5898a5bb7bdb3ce
-  YIPopupTextView: 38ae0b8c75c671569e3175c29f8be73ebf91f318
+  YIPopupTextView: 608b1f61349a1838e6c11e773fdd4c5104db6b37
 
 COCOAPODS: 0.33.1
