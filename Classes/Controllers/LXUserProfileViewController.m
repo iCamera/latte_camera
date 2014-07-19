@@ -7,8 +7,9 @@
 //
 
 #import "LXUserProfileViewController.h"
-#import "UIImageView+AFNetworking.h"
+#import "UIImageView+loadProgress.h"
 #import "LXAppDelegate.h"
+#import "LXCellDataField.h"
 
 @interface LXUserProfileViewController () {
     NSMutableSet *showSet;
@@ -34,7 +35,7 @@
 {
     [super viewDidLoad];
     
-    showSet = [NSMutableSet setWithObjects:@"gender", @"residence", @"age", @"birthdate", @"bloodtype", @"occupation", @"introduction", @"hobby", @"nationality", nil];
+    showSet = [NSMutableSet setWithObjects: @"introduction", @"gender", @"residence", @"age", @"birthdate", @"bloodtype", @"occupation", @"hobby", @"nationality", nil];
 
     
     // Uncomment the following line to preserve selection between presentations.
@@ -58,7 +59,17 @@
                                    [showSet intersectSet:allField];
                                    showField = [showSet allObjects];
                                    
-                                   [_imageProfile setImageWithURL:[NSURL URLWithString:userDict[@"profile_picture_hi"]]];
+                                   if (userDict[@"profile_picture_hi"]) {
+                                       [_imageProfile setImageWithURL:[NSURL URLWithString:userDict[@"profile_picture_hi"]]];
+                                       [_imageProfile loadProgess:userDict[@"profile_picture_hi"] withCompletion:^(BOOL isCache) {
+                                           
+                                       } progress:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+                                           _imageProgress.progress = (float)totalBytesRead/(float)totalBytesExpectedToRead;
+                                       }];
+                                   } else {
+                                       self.tableView.tableHeaderView = nil;
+                                   }
+                                   
                                    
                                    [self.tableView reloadData];
                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -88,65 +99,65 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Profile" forIndexPath:indexPath];
+    LXCellDataField *cell = [tableView dequeueReusableCellWithIdentifier:@"Profile" forIndexPath:indexPath];
     
     if (indexPath.row == showField.count) {
-        cell.textLabel.text = @"URL";
+        cell.labelField.text = @"URL";
         NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
         if ([language isEqualToString:@"ja"]) {
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"http://latte.la/photo/%ld", (long)[_user.userId integerValue]];
+            cell.labelDetail.text = [NSString stringWithFormat:@"http://latte.la/photo/%ld", (long)[_user.userId integerValue]];
         } else {
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"http://en.latte.la/photo/%ld", (long)[_user.userId integerValue]];
+            cell.labelDetail.text = [NSString stringWithFormat:@"http://en.latte.la/photo/%ld", (long)[_user.userId integerValue]];
         }
-        cell.detailTextLabel.highlighted = YES;
+        cell.labelDetail.highlighted = YES;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleDefault;
         return cell;
     } else {
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.accessoryType = UITableViewCellAccessoryNone;
-        cell.detailTextLabel.highlighted = NO;
+        cell.labelDetail.highlighted = NO;
     }
     
     NSString* strKey = [showField objectAtIndex:indexPath.row];
     if ([strKey isEqualToString:@"gender"]) {
-        cell.textLabel.text = NSLocalizedString(@"gender", @"性別");
+        cell.labelField.text = NSLocalizedString(@"gender", @"性別");
     } else if ([strKey isEqualToString:@"residence"]) {
-        cell.textLabel.text = NSLocalizedString(@"current_residence", @"現住所");
+        cell.labelField.text = NSLocalizedString(@"current_residence", @"現住所");
     } else if ([strKey isEqualToString:@"hometown"]) {
-        cell.textLabel.text = NSLocalizedString(@"hometown", @"出身地");
+        cell.labelField.text = NSLocalizedString(@"hometown", @"出身地");
     } else if ([strKey isEqualToString:@"age"]) {
-        cell.textLabel.text = NSLocalizedString(@"age", @"年齢");
+        cell.labelField.text = NSLocalizedString(@"age", @"年齢");
     } else if ([strKey isEqualToString:@"birthdate"]) {
-        cell.textLabel.text = NSLocalizedString(@"birthdate", @"誕生日");
+        cell.labelField.text = NSLocalizedString(@"birthdate", @"誕生日");
     } else if ([strKey isEqualToString:@"bloodtype"]) {
-        cell.textLabel.text = NSLocalizedString(@"bloodtype", @"血液型");
+        cell.labelField.text = NSLocalizedString(@"bloodtype", @"血液型");
     } else if ([strKey isEqualToString:@"occupation"]) {
-        cell.textLabel.text = NSLocalizedString(@"occupation", @"職業");
+        cell.labelField.text = NSLocalizedString(@"occupation", @"職業");
     } else if ([strKey isEqualToString:@"hobby"]) {
-        cell.textLabel.text = NSLocalizedString(@"hobby", @"趣味");
+        cell.labelField.text = NSLocalizedString(@"hobby", @"趣味");
     } else if ([strKey isEqualToString:@"introduction"]) {
-        cell.textLabel.text = NSLocalizedString(@"introduction", @"自己紹介");
+        cell.labelField.text = NSLocalizedString(@"introduction", @"自己紹介");
     } else if ([strKey isEqualToString:@"nationality"]) {
-        cell.textLabel.text = NSLocalizedString(@"nationality", @"国籍");
+        cell.labelField.text = NSLocalizedString(@"nationality", @"国籍");
     }
     
     if ([strKey isEqualToString:@"gender"]) {
         switch ([[userDict objectForKey:strKey] integerValue]) {
             case 1:
-                cell.detailTextLabel.text = NSLocalizedString(@"male", @"男性");
+                cell.labelDetail.text = NSLocalizedString(@"male", @"男性");
                 break;
             case 2:
-                cell.detailTextLabel.text = NSLocalizedString(@"female", @"女性");
+                cell.labelDetail.text = NSLocalizedString(@"female", @"女性");
                 break;
         }
     } else if ([strKey isEqualToString:@"nationality"]) {
         NSLocale *locale = [NSLocale currentLocale];
         NSString *countryCode = [userDict objectForKey:strKey];
         NSString *displayNameString = [locale displayNameForKey:NSLocaleCountryCode value:countryCode];
-        cell.detailTextLabel.text = displayNameString;
+        cell.labelDetail.text = displayNameString;
     } else {
-        cell.detailTextLabel.text = [userDict objectForKey:strKey];
+        cell.labelDetail.text = [userDict objectForKey:strKey];
     }
     
 //    CGRect frame = cell.detailTextLabel.frame;
@@ -161,17 +172,17 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == showField.count) {
-        return 44;
+        return 30;
     }
     NSString* strKey = [showField objectAtIndex:indexPath.row];
     
     if ([strKey isEqualToString:@"hobby"] || [strKey isEqualToString:@"introduction"]) {
         CGSize size = [[userDict objectForKey:strKey] sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:14.0]
-                                                 constrainedToSize:CGSizeMake(153.0, CGFLOAT_MAX)
+                                                 constrainedToSize:CGSizeMake(212.0, CGFLOAT_MAX)
                                                      lineBreakMode:NSLineBreakByWordWrapping];
-        return size.height + 27;
+        return size.height + 12;
     } else {
-        return 44;
+        return 30;
     }
 }
 

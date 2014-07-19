@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "User.h"
+#import "UAProgressView.h"
 
 @interface LXUserProfileViewController : UITableViewController
 
+@property (weak, nonatomic) IBOutlet UAProgressView *imageProgress;
 @property (strong, nonatomic) IBOutlet UIImageView *imageProfile;
 @property (strong, nonatomic) User *user;
 

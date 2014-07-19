@@ -1671,39 +1671,61 @@ or you can try to send another confirmation email.</string>
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <imageView key="tableHeaderView" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user.gif" id="Oy1-h0-qUE">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="Cdw-4X-hzh">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        </imageView>
+                            <subviews>
+                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xB6-nP-X4c" customClass="UAProgressView">
+                                    <rect key="frame" x="110" y="110" width="100" height="100"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="tintColor" red="0.43529415129999999" green="0.74117648599999997" blue="0.73333334920000004" alpha="1" colorSpace="deviceRGB"/>
+                                </view>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Oy1-h0-qUE">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="ovF-mN-A30">
-                            <rect key="frame" x="0.0" y="316" width="320" height="44"/>
+                            <rect key="frame" x="0.0" y="372" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Profile" textLabel="bLv-FE-9X8" detailTextLabel="CFT-nW-GTN" style="IBUITableViewCellStyleValue2" id="0F6-2D-nq5">
-                                <rect key="frame" x="0.0" y="272" width="320" height="44"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="Profile" rowHeight="30" id="5is-2E-l2A" customClass="LXCellDataField">
+                                <rect key="frame" x="0.0" y="342" width="320" height="30"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0F6-2D-nq5" id="Rcf-ck-BvK">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5is-2E-l2A" id="iyQ-CX-exk">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="29"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bLv-FE-9X8">
-                                            <rect key="frame" x="15" y="14" width="91" height="16"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
-                                            <color key="textColor" red="0.62745098040000002" green="0.56862745100000001" blue="0.34509803919999998" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" fixedFrame="YES" text="Tags" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="4" translatesAutoresizingMaskIntoConstraints="NO" id="bwb-gK-Ab9">
+                                            <rect key="frame" x="5" y="5" width="72" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
+                                            <color key="textColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="34" id="CFT-nW-GTN">
-                                            <rect key="frame" x="112" y="13" width="34" height="17"/>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="5" preferredMaxLayoutWidth="212" translatesAutoresizingMaskIntoConstraints="NO" id="qj7-mt-gZ2">
+                                            <rect key="frame" x="89" y="5" width="212" height="17"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
+                                            <color key="highlightedColor" red="0.43529415129999999" green="0.74117648599999997" blue="0.73333334920000004" alpha="1" colorSpace="deviceRGB"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="qj7-mt-gZ2" firstAttribute="leading" secondItem="iyQ-CX-exk" secondAttribute="leading" constant="89" id="5f0-PF-ARJ"/>
+                                        <constraint firstAttribute="trailing" secondItem="qj7-mt-gZ2" secondAttribute="trailing" constant="19" id="6gM-rn-qZo"/>
+                                        <constraint firstItem="qj7-mt-gZ2" firstAttribute="top" secondItem="iyQ-CX-exk" secondAttribute="top" constant="5" id="MBM-aH-a1M"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="labelDetail" destination="qj7-mt-gZ2" id="W8t-qY-99N"/>
+                                    <outlet property="labelField" destination="bwb-gK-Ab9" id="HhI-qg-4nk"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -1713,6 +1735,7 @@ or you can try to send another confirmation email.</string>
                     </tableView>
                     <connections>
                         <outlet property="imageProfile" destination="Oy1-h0-qUE" id="pIb-9r-eiw"/>
+                        <outlet property="imageProgress" destination="xB6-nP-X4c" id="cEe-hB-8cU"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Ii-cU-EWi" userLabel="First Responder" sceneMemberID="firstResponder"/>

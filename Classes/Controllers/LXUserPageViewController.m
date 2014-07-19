@@ -1188,7 +1188,7 @@ typedef enum {
         MZFormSheetSegue *sheet = (MZFormSheetSegue*)segue;
         sheet.formSheetController.cornerRadius = 0;
         sheet.formSheetController.shouldDismissOnBackgroundViewTap = YES;
-        sheet.formSheetController.presentedFormSheetSize = CGSizeMake(250, self.view.bounds.size.height - sheet.formSheetController.portraitTopInset);
+        sheet.formSheetController.presentedFormSheetSize = CGSizeMake(320, self.view.bounds.size.height - sheet.formSheetController.portraitTopInset);
     }
     
     if ([segue.identifier isEqualToString:@"Follower"]) {
