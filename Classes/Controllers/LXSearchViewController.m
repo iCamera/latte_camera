@@ -72,7 +72,14 @@
     [_searchBar becomeFirstResponder];
     
     page = 1;
-    [self loadPhotoSearch];
+    if (searchView == kSearchPhoto) {
+        [self loadPhotoSearch];
+    } else if (searchView == kSearchTag) {
+        _buttonPhoto.selected = NO;
+        _buttonTag.selected = YES;
+        [self loadTagSearch];
+    }
+    
 }
 
 
@@ -215,6 +222,7 @@
                                        
                                        page += 1;
                                        loadEnded = data.count == 0;
+                                       searchView = kSearchPhoto;
                                        
                                        [self.tableView reloadData];
                                        [activityLoad stopAnimating];
@@ -240,7 +248,7 @@
                                          users = [User mutableArrayFromDictionary:JSON withKey:@"profiles"];
                                          loadEnded = users.count >= [JSON[@"total"] integerValue];
                                          page += 1;
-                                         
+                                         searchView = kSearchUser;
                                          [self.tableView reloadData];
                                          [activityLoad stopAnimating];
                                      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -267,7 +275,7 @@
                                          
                                          page += 1;
                                          loadEnded = users.count >= [JSON[@"total"] integerValue];
-                                         
+                                         searchView = kSearchUser;
                                          [self.tableView reloadData];
                                          [activityLoad stopAnimating];
                                      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -288,6 +296,7 @@
                                                    parameters:@{@"type": @"popular"}
                                                     success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                                         tags = [JSON objectForKey:@"tags"];
+                                                        searchView = kSearchTag;
                                                         [self.tableView reloadData];
                                                         [activityLoad stopAnimating];
                                                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -301,7 +310,7 @@
             }
             
             loadEnded = YES;
-            
+            searchView = kSearchTag;
             [self.tableView reloadData];
             [activityLoad stopAnimating];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -390,20 +399,14 @@
     sender.selected = YES;
     
     if (sender.tag == 0) {
-        searchView = kSearchPhoto;
-        [self.tableView reloadData];
         [self loadPhotoSearch];
     }
     
     if (sender.tag == 1) {
-        searchView = kSearchUser;
-        [self.tableView reloadData];
         [self loadUserSearch];
     }
     
     if (sender.tag == 2) {
-        searchView = kSearchTag;
-        [self.tableView reloadData];
         [self loadTagSearch];
     }
 }

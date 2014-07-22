@@ -235,9 +235,9 @@ typedef enum {
                 
                 [self.tableView insertRowsAtIndexPaths:arrayOfIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
             }
-            [_loadIndicator stopAnimating];
         }
         
+        [_loadIndicator stopAnimating];
         [self.tableView reloadData];
         [self.refreshControl endRefreshing];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

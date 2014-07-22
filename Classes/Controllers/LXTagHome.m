@@ -15,6 +15,10 @@
 #import "LXStreamBrickCell.h"
 #import "LXStreamFooter.h"
 #import "LXCollectionCellUser.h"
+#import "JSQMessagesInputToolbar.h"
+#import "JSQMessagesToolbarContentView.h"
+#import "JSQMessagesComposerTextView.h"
+
 
 typedef enum {
     kGridPic,
@@ -35,6 +39,7 @@ typedef enum {
     AFHTTPRequestOperation *currentRequest;
     UIActivityIndicatorView *indicatorLoading;
     TagGridData gridView;
+    LXTagDiscussionViewController *tagChat;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -109,6 +114,7 @@ typedef enum {
                                                     
                                                     NSMutableArray *data = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
                                                     [_buttonGridPhoto setTitle:[JSON[@"total"] stringValue] forState:UIControlStateNormal];
+                                                    [_buttonGridPhoto setTitle:[JSON[@"total"] stringValue] forState:UIControlStateSelected];
                                                     
                                                     if (reset) {
                                                         pictures = data;
@@ -174,7 +180,7 @@ typedef enum {
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"TagChat"]) {
-        LXTagDiscussionViewController *tagChat = segue.destinationViewController;
+        tagChat = segue.destinationViewController;
         tagChat.tag = _tag;
     }
     // Get the new view controller using [segue destinationViewController].
@@ -242,6 +248,15 @@ typedef enum {
     _buttonGridFollower.selected = NO;
     _buttonGridPhoto.selected = NO;
     sender.selected = YES;
+    
+    [tagChat.inputToolbar.contentView.textView resignFirstResponder];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        _constraintHeight.constant = 260;
+        [self.view layoutIfNeeded];
+    }];
+    showingKeyboard = false;
+
     
     if (sender.tag == 0) {
         [self loadMorePublicTagPhoto:YES];
