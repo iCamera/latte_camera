@@ -342,11 +342,11 @@ typedef enum {
 
 - (IBAction)switchTab:(UIButton*)sender {
     if (_buttonUser.selected && sender.tag == 0) {
-        UIActionSheet *actionSwitchTimeline = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Timeline", @"")
+        UIActionSheet *actionSwitchTimeline = [[UIActionSheet alloc] initWithTitle:nil
                                                                           delegate:self
-                                                                 cancelButtonTitle:NSLocalizedString(@"Close", @"")
+                                                                 cancelButtonTitle:NSLocalizedString(@"cancel", @"")
                                                             destructiveButtonTitle:nil
-                                                                 otherButtonTitles:NSLocalizedString(@"All", @""), NSLocalizedString(@"Follow", @""), NSLocalizedString(@"Mutual Follow", @""), NSLocalizedString(@"Me Only", @""), nil];
+                                                                 otherButtonTitles:NSLocalizedString(@"All", @""), NSLocalizedString(@"Follow", @""), NSLocalizedString(@"Mutual Follow", @""), NSLocalizedString(@"Me", @""), nil];
         [actionSwitchTimeline showFromTabBar:self.tabBarController.tabBar];
     } else {
         [UIView transitionWithView:self.tableView.tableHeaderView
