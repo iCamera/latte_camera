@@ -59,7 +59,7 @@ typedef enum {
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    _labelSp.layer.cornerRadius = 8;
+    _buttonSp.layer.cornerRadius = 8;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
@@ -190,9 +190,6 @@ typedef enum {
 
 
 - (IBAction)panView:(UIPanGestureRecognizer *)sender {
-    if (showingKeyboard) {
-        return;
-    }
     [self.view bringSubviewToFront:[(UIPanGestureRecognizer*)sender view]];
     CGPoint translatedPoint = [(UIPanGestureRecognizer*)sender translationInView:self.view];
     
@@ -203,6 +200,10 @@ typedef enum {
     
     if (newHeight > 320) {
         newHeight = 320;
+    }
+    
+    if (newHeight > 100) {
+        [tagChat.inputToolbar.contentView.textView resignFirstResponder];
     }
     
     _constraintHeight.constant = newHeight;
@@ -268,6 +269,21 @@ typedef enum {
 - (IBAction)touchTagInfo:(id)sender {
     NSString *strUrl = [NSString stringWithFormat:@"http://latte.la/photo/tag/%@", [_tag stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strUrl]];
+}
+
+- (IBAction)toggleHeight:(id)sender {
+    if (_constraintHeight.constant <= 130) {
+        _constraintHeight.constant = 260;
+        [tagChat.inputToolbar.contentView.textView resignFirstResponder];
+    } else {
+        _constraintHeight.constant = 0;
+    }
+
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.view layoutIfNeeded];
+    }];
+
 }
 
 - (void)keyboardWillShow:(id)sender {

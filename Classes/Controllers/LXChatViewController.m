@@ -152,6 +152,13 @@
     return nil;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    if (loadEnded && conversations.count == 0) {
+        return 200;
+    }
+    return 0;
+}
+
 - (void)searchTag:(id)sender {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     LXSearchViewController *viewSearch = [mainStoryboard instantiateViewControllerWithIdentifier:@"Search"];

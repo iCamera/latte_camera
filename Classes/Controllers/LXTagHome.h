@@ -14,7 +14,7 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintHeight;
 @property (strong, nonatomic) NSString *tag;
 @property (strong, nonatomic) IBOutlet UIView *containerChat;
-@property (strong, nonatomic) IBOutlet UILabel *labelSp;
+@property (strong, nonatomic) IBOutlet UIButton *buttonSp;
 @property (strong, nonatomic) IBOutlet UIButton *buttonFollow;
 @property (weak, nonatomic) IBOutlet UIButton *buttonGridPhoto;
 @property (weak, nonatomic) IBOutlet UIButton *buttonGridFollower;
@@ -25,6 +25,7 @@
 - (IBAction)toggleFollow:(id)sender;
 - (IBAction)touchTab:(UIButton *)sender;
 - (IBAction)touchTagInfo:(id)sender;
+- (IBAction)toggleHeight:(id)sender;
 
 
 @end

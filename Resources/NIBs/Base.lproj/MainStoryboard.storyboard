@@ -768,16 +768,6 @@
                                     <segue destination="FUG-mk-N2R" kind="embed" identifier="TagChat" id="gji-Cu-gYb"/>
                                 </connections>
                             </containerView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Discussion" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Noh-UG-Bb8">
-                                <rect key="frame" x="129" y="308" width="62" height="16"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.90588241820000004" green="0.89411771299999998" blue="0.85490202900000001" alpha="1" colorSpace="deviceRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="16" id="igq-jB-nLP"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="10"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LNA-aE-Jew">
                                 <rect key="frame" x="240" y="0.0" width="80" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -830,20 +820,36 @@
                                     <action selector="touchTab:" destination="9YB-Rx-kkz" eventType="touchUpInside" id="1fl-FO-Kmc"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ejq-mR-tIk">
+                                <rect key="frame" x="113" y="304" width="95" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="26" id="LFv-MX-cBM"/>
+                                    <constraint firstAttribute="width" constant="95" id="kbr-a7-vMq"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
+                                <state key="normal" title="Discussion">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="toggleHeight:" destination="9YB-Rx-kkz" eventType="touchUpInside" id="fbo-vg-1DG"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="QTp-mm-ahZ" firstAttribute="top" secondItem="uYh-An-L7n" secondAttribute="bottom" constant="40" id="7TP-g4-ByN"/>
-                            <constraint firstItem="N7M-mh-zVV" firstAttribute="top" secondItem="Noh-UG-Bb8" secondAttribute="bottom" constant="10" id="APz-cX-oMh"/>
+                            <constraint firstItem="ejq-mR-tIk" firstAttribute="top" secondItem="QTp-mm-ahZ" secondAttribute="bottom" constant="4" id="Chd-NT-N6b"/>
                             <constraint firstItem="QTp-mm-ahZ" firstAttribute="leading" secondItem="RlL-bJ-Dcz" secondAttribute="leading" id="I35-IQ-bJI"/>
                             <constraint firstItem="01O-Pe-PaN" firstAttribute="top" secondItem="N7M-mh-zVV" secondAttribute="bottom" id="Jey-SI-8Wo"/>
                             <constraint firstAttribute="trailing" secondItem="N7M-mh-zVV" secondAttribute="trailing" id="KUe-xL-CXe"/>
-                            <constraint firstAttribute="trailing" secondItem="Noh-UG-Bb8" secondAttribute="trailing" constant="129" id="OQj-YJ-rZ7"/>
-                            <constraint firstItem="Noh-UG-Bb8" firstAttribute="leading" secondItem="RlL-bJ-Dcz" secondAttribute="leading" constant="129" id="PyP-L9-80C"/>
-                            <constraint firstItem="Noh-UG-Bb8" firstAttribute="top" secondItem="QTp-mm-ahZ" secondAttribute="bottom" constant="8" id="Qhw-b8-wgi"/>
                             <constraint firstItem="N7M-mh-zVV" firstAttribute="leading" secondItem="RlL-bJ-Dcz" secondAttribute="leading" id="Ydp-zF-fIq"/>
+                            <constraint firstAttribute="trailing" secondItem="ejq-mR-tIk" secondAttribute="trailing" constant="112" id="bxg-ZO-w7Q"/>
                             <constraint firstAttribute="trailing" secondItem="QTp-mm-ahZ" secondAttribute="trailing" id="i3V-rr-lGX"/>
+                            <constraint firstItem="ejq-mR-tIk" firstAttribute="leading" secondItem="RlL-bJ-Dcz" secondAttribute="leading" constant="113" id="qad-Rh-dAn"/>
+                            <constraint firstItem="N7M-mh-zVV" firstAttribute="top" secondItem="ejq-mR-tIk" secondAttribute="bottom" constant="4" id="sa7-jF-NaX"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="yeZ-6u-wY1" appends="YES" id="ihn-jT-rel"/>
@@ -872,14 +878,14 @@
                         <outlet property="buttonFollow" destination="B47-Oy-2yj" id="Wlc-SZ-gNM"/>
                         <outlet property="buttonGridFollower" destination="Cpl-qz-yLZ" id="5Yd-H0-DDq"/>
                         <outlet property="buttonGridPhoto" destination="H6I-L6-XCr" id="541-7l-ylY"/>
+                        <outlet property="buttonSp" destination="ejq-mR-tIk" id="b87-6b-7sB"/>
                         <outlet property="collectionView" destination="QTp-mm-ahZ" id="Bra-HM-Gem"/>
                         <outlet property="constraintHeight" destination="pdB-vX-sr1" id="Pba-eT-try"/>
                         <outlet property="containerChat" destination="N7M-mh-zVV" id="yE8-8D-L5h"/>
-                        <outlet property="labelSp" destination="Noh-UG-Bb8" id="DW0-7I-QPc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uKH-Hd-dhN" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer cancelsTouchesInView="NO" minimumNumberOfTouches="1" id="yeZ-6u-wY1">
+                <panGestureRecognizer minimumNumberOfTouches="1" id="yeZ-6u-wY1">
                     <connections>
                         <action selector="panView:" destination="9YB-Rx-kkz" id="LRC-ko-dfa"/>
                     </connections>
