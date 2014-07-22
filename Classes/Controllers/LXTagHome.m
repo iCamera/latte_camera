@@ -18,6 +18,7 @@
 #import "JSQMessagesInputToolbar.h"
 #import "JSQMessagesToolbarContentView.h"
 #import "JSQMessagesComposerTextView.h"
+#import "LXUserPageViewController.h"
 
 
 typedef enum {
@@ -186,7 +187,6 @@ typedef enum {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
-
 
 
 - (IBAction)panView:(UIPanGestureRecognizer *)sender {
@@ -401,7 +401,15 @@ typedef enum {
     return CGSizeMake(100, 100);
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (gridView == kGridUser) {
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+        LXUserPageViewController *viewUser = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+        viewUser.user = [User instanceFromDictionary:users[indexPath.item]];
+        [self.navigationController pushViewController:viewUser animated:YES];
 
+    }
+}
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
     if (loadEnded)

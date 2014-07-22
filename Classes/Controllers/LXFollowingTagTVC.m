@@ -9,15 +9,24 @@
 #import "LXFollowingTagTVC.h"
 #import "LatteAPIv2Client.h"
 #import "LXTagHome.h"
+#import "LXButtonOrange.h"
+#import "LXSearchViewController.h"
 
 @interface LXFollowingTagTVC ()
 
 @end
 
+typedef enum {
+    kTagFollowing,
+    kTagSearch
+} TagData;
+
 @implementation LXFollowingTagTVC {
     NSMutableArray *tags;
     NSMutableArray *results;
     AFHTTPRequestOperation *currentRequest;
+    BOOL loadEnded;
+    TagData tagData;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -40,13 +49,37 @@
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTag" bundle:nil] forCellReuseIdentifier:@"Tag"];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    loadEnded = false;
     
     LatteAPIv2Client *api2 = [LatteAPIv2Client sharedClient];
     
     [_activityLoad startAnimating];
     [api2 GET:@"tag/following" parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
         tags = JSON[@"tags"];
+        loadEnded = true;
+        tagData = kTagFollowing;
         [self.tableView reloadData];
+        
+        if (tags.count == 0) {
+            [_activityLoad startAnimating];
+            
+            currentRequest = [[LatteAPIv2Client sharedClient] GET:@"picture/get_tag_cloud"
+                                                       parameters:@{@"type": @"popular"}
+                                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                                              results = [JSON objectForKey:@"tags"];
+                                                              tagData = kTagSearch;
+                                                              [self.tableView reloadData];
+                                                              [_activityLoad stopAnimating];
+                                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                              [_activityLoad stopAnimating];
+                                                          }];
+            
+        }
         [_activityLoad stopAnimating];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [_activityLoad stopAnimating];
@@ -68,7 +101,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (_searchBar.text.length > 0) {
+    if (tagData == kTagSearch) {
         return results.count;
     } else {
         return tags.count;
@@ -78,7 +111,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_searchBar.text.length > 0) {
+    if (tagData == kTagSearch) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Tag" forIndexPath:indexPath];
         cell.textLabel.text = results[indexPath.row][@"term"];
         cell.detailTextLabel.text = [results[indexPath.row][@"count"] stringValue];
@@ -126,13 +159,14 @@
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
     LXTagHome *viewTag = [mainStoryboard instantiateViewControllerWithIdentifier:@"TagHome"];
-    if (_searchBar.text.length > 0) {
+    if (tagData == kTagSearch) {
         viewTag.tag = results[indexPath.row][@"term"];
     } else {
         viewTag.tag = tags[indexPath.row];
     }
     
     [self.navigationController pushViewController:viewTag animated:YES];
+    
 }
 
 
@@ -147,6 +181,7 @@
             [results addObject:@{@"term": tag[@"label"], @"count": tag[@"picture_count"]}];
         }
         
+        tagData = kTagSearch;
         [self.tableView reloadData];
         [_activityLoad stopAnimating];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -161,6 +196,7 @@
         [self.tableView setEditing:NO animated:NO];
     } else {
         self.navigationItem.rightBarButtonItem = self.editButtonItem;
+        tagData = kTagFollowing;
         [self.tableView reloadData];
     }
 
@@ -171,6 +207,13 @@
     [searchBar resignFirstResponder];
 }
 
+
+- (void)searchTag:(id)sender {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    LXSearchViewController *viewSearch = [mainStoryboard instantiateViewControllerWithIdentifier:@"Search"];
+    viewSearch.searchView = kSearchTag;
+    [self.navigationController pushViewController:viewSearch animated:YES];
+}
 
 /*
 #pragma mark - Navigation

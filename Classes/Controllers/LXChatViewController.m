@@ -41,9 +41,15 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    LatteAPIv2Client *api2 = [LatteAPIv2Client sharedClient];
+    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateConversation:) name:@"update_conversation" object:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    LatteAPIv2Client *api2 = [LatteAPIv2Client sharedClient];
     
     [api2 GET:@"message/recent" parameters:@{@"kind": @"tag"} success:^(AFHTTPRequestOperation *operation, NSMutableArray *JSON) {
         conversations = JSON;

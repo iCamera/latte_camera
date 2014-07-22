@@ -847,7 +847,6 @@
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="yeZ-6u-wY1" appends="YES" id="ihn-jT-rel"/>
-                            <outletCollection property="gestureRecognizers" destination="rVE-K7-vNR" appends="YES" id="dlh-ED-XaM"/>
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" id="xfF-c4-ahD">
@@ -885,11 +884,6 @@
                         <action selector="panView:" destination="9YB-Rx-kkz" id="LRC-ko-dfa"/>
                     </connections>
                 </panGestureRecognizer>
-                <tapGestureRecognizer id="rVE-K7-vNR">
-                    <connections>
-                        <action selector="tapView:" destination="9YB-Rx-kkz" id="TlG-xH-yMt"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-140" y="607"/>
         </scene>
