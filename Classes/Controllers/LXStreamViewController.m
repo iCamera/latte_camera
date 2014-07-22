@@ -93,7 +93,7 @@
     browsingCountry = notify.object;
     NSString *countryImage;
     if (browsingCountry && [browsingCountry isEqualToString:@"World"]) {
-        countryImage = @"icon_area.png";
+        countryImage = @"icon40-earth-color.png";
     } else {
         countryImage = [NSString stringWithFormat:@"%@.png", browsingCountry];
     }
