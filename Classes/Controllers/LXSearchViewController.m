@@ -20,12 +20,6 @@
 #import "LXTagHome.h"
 #import "LXUserPageViewController.h"
 
-typedef enum {
-    kSearchPhoto,
-    kSearchUser,
-    kSearchTag,
-} SearchView;
-
 @interface LXSearchViewController ()
 
 @end
@@ -36,17 +30,25 @@ typedef enum {
     NSMutableArray *tags;
     NSInteger page;
     BOOL loadEnded;
-    SearchView searchView;
     AFHTTPRequestOperation *currentRequest;
 }
 
 @synthesize activityLoad;
+@synthesize searchView;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+    }
+    return self;
+}
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        searchView = kSearchPhoto;
     }
     return self;
 }
@@ -67,7 +69,7 @@ typedef enum {
     [self.tableView registerClass:[LXCellGrid class] forCellReuseIdentifier:@"Grid"];
     [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTag" bundle:nil] forCellReuseIdentifier:@"Tag"];
     
-    _searchBar.showsCancelButton = NO;
+    [_searchBar becomeFirstResponder];
     
     page = 1;
     [self loadPhotoSearch];

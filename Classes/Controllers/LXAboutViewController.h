@@ -12,6 +12,7 @@
 @interface LXAboutViewController : UITableViewController<UIAlertViewDelegate>
 @property (strong, nonatomic) IBOutlet UITextView *textForm;
 @property (strong, nonatomic) IBOutlet UITextField *textEmail;
+@property (weak, nonatomic) IBOutlet UITextView *textIntro;
 
 - (IBAction)touchSend:(id)sender;
 

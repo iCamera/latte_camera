@@ -10,6 +10,12 @@
 #import "LXGalleryViewController.h"
 #import "LXButtonBrown30.h"
 
+typedef enum {
+    kSearchPhoto,
+    kSearchUser,
+    kSearchTag,
+} SearchView;
+
 @interface LXSearchViewController : UITableViewController<LXGalleryViewControllerDataSource, UIScrollViewDelegate, UISearchBarDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *buttonPhoto;
 @property (weak, nonatomic) IBOutlet UIButton *buttonUser;
@@ -17,6 +23,9 @@
 
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityLoad;
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
+
+@property (assign, nonatomic) SearchView searchView;
+
 - (IBAction)switchTab:(UIButton *)sender;
 
 @end

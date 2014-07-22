@@ -75,7 +75,7 @@
     textUsername.tag = 0;
     textUsername.text = user.name;
     //Gender
-    genders = [NSArray arrayWithObjects:NSLocalizedString(@"Male", @"Male"), NSLocalizedString(@"Female", @"Female"), nil];
+    genders = [NSArray arrayWithObjects:NSLocalizedString(@"male", @""), NSLocalizedString(@"female", @""), nil];
     textGender.tag = 1;
     if (user.gender) {
         textGender.text = genders[[user.gender integerValue] - 1];

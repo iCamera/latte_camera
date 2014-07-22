@@ -39,6 +39,8 @@
                value:@"About Screen"];
     
     [app.tracker send:[[GAIDictionaryBuilder createAppView] build]];
+    
+    _textIntro.text = NSLocalizedString(@"inquiry_text", @"");
 	// Do any additional setup after loading the view.
 }
 
