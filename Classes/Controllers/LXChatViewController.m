@@ -45,13 +45,13 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateConversation:) name:@"update_conversation" object:nil];
     
-    [api2 GET:@"message/recent" parameters:@{@"type": @"tag"} success:^(AFHTTPRequestOperation *operation, NSMutableArray *JSON) {
+    [api2 GET:@"message/recent" parameters:@{@"kind": @"tag"} success:^(AFHTTPRequestOperation *operation, NSMutableArray *JSON) {
         conversations = JSON;
         loadEnded = true;
         [self.tableView reloadData];
     } failure:nil];
     
-    [api2 POST:@"message/markread" parameters:@{@"type": @"tag"} success:nil failure:nil];
+    [api2 POST:@"message/markread" parameters:@{@"kind": @"tag"} success:nil failure:nil];
 }
 
 - (void)didReceiveMemoryWarning
