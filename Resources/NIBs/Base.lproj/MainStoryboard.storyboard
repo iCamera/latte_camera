@@ -918,31 +918,59 @@
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="40" sectionHeaderHeight="22" sectionFooterHeight="22" id="6zW-xw-jVs">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.90588241820000004" green="0.89411771299999998" blue="0.85490202900000001" alpha="1" colorSpace="deviceRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="4hO-v5-iT9">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="88"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="84"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <searchBar contentMode="redraw" fixedFrame="YES" placeholder="Anything" translucent="NO" showsScopeBar="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lbv-wb-bwt">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="88"/>
+                                <searchBar contentMode="redraw" fixedFrame="YES" placeholder="Anything" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lbv-wb-bwt">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                     <color key="tintColor" red="0.20784313730000001" green="0.18823529410000001" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
                                     <color key="barTintColor" red="0.90588241820000004" green="0.89411771299999998" blue="0.85490202900000001" alpha="1" colorSpace="deviceRGB"/>
                                     <textInputTraits key="textInputTraits"/>
-                                    <scopeButtonTitles>
-                                        <string>Photo</string>
-                                        <string>User</string>
-                                        <string>Tag</string>
-                                    </scopeButtonTitles>
                                     <connections>
                                         <outlet property="delegate" destination="oup-QU-2wo" id="G2i-kT-Wc6"/>
                                     </connections>
                                 </searchBar>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RKu-2e-a99" customClass="LXTabButton">
+                                    <rect key="frame" x="0.0" y="44" width="120" height="40"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="icon36-grid-brown.png">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="selected" image="icon36-grid-blue.png"/>
+                                    <connections>
+                                        <action selector="switchTab:" destination="oup-QU-2wo" eventType="touchUpInside" id="pjq-ns-dbA"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dQa-Dh-NRg" customClass="LXTabButton">
+                                    <rect key="frame" x="240" y="44" width="80" height="40"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="icon36-tag-brown.png">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="selected" image="icon36-tag-blue.png"/>
+                                    <connections>
+                                        <action selector="switchTab:" destination="oup-QU-2wo" eventType="touchUpInside" id="Ih9-5f-zJl"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vp3-Bf-z3E" customClass="LXTabButton">
+                                    <rect key="frame" x="120" y="44" width="120" height="40"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="icon36-following-brown.png">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="selected" image="icon36-following-blue.png"/>
+                                    <connections>
+                                        <action selector="switchTab:" destination="oup-QU-2wo" eventType="touchUpInside" id="Xdd-An-pbY"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="T9C-4B-P4m">
-                            <rect key="frame" x="0.0" y="150" width="320" height="44"/>
+                            <rect key="frame" x="0.0" y="146" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Ba8-BL-TZh">
@@ -954,7 +982,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Rk6-Pe-t4k">
-                                <rect key="frame" x="0.0" y="110" width="320" height="40"/>
+                                <rect key="frame" x="0.0" y="106" width="320" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Rk6-Pe-t4k" id="8Ez-nt-Yaq">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="39"/>
@@ -970,6 +998,9 @@
                     <navigationItem key="navigationItem" title="Search" id="2hN-W4-E2Z"/>
                     <connections>
                         <outlet property="activityLoad" destination="Ba8-BL-TZh" id="EXa-b3-7rU"/>
+                        <outlet property="buttonPhoto" destination="RKu-2e-a99" id="NPP-Ag-ZtZ"/>
+                        <outlet property="buttonTag" destination="dQa-Dh-NRg" id="X5N-Dr-aoo"/>
+                        <outlet property="buttonUser" destination="vp3-Bf-z3E" id="weR-jW-LzX"/>
                         <outlet property="searchBar" destination="Lbv-wb-bwt" id="rW1-Xy-OQ6"/>
                     </connections>
                 </tableViewController>

@@ -11,8 +11,12 @@
 #import "LXButtonBrown30.h"
 
 @interface LXSearchViewController : UITableViewController<LXGalleryViewControllerDataSource, UIScrollViewDelegate, UISearchBarDelegate>
+@property (weak, nonatomic) IBOutlet UIButton *buttonPhoto;
+@property (weak, nonatomic) IBOutlet UIButton *buttonUser;
+@property (weak, nonatomic) IBOutlet UIButton *buttonTag;
 
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityLoad;
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
+- (IBAction)switchTab:(UIButton *)sender;
 
 @end

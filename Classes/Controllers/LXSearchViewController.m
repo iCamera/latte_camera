@@ -20,6 +20,12 @@
 #import "LXTagHome.h"
 #import "LXUserPageViewController.h"
 
+typedef enum {
+    kSearchPhoto,
+    kSearchUser,
+    kSearchTag,
+} SearchView;
+
 @interface LXSearchViewController ()
 
 @end
@@ -30,6 +36,7 @@
     NSMutableArray *tags;
     NSInteger page;
     BOOL loadEnded;
+    SearchView searchView;
     AFHTTPRequestOperation *currentRequest;
 }
 
@@ -96,20 +103,20 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_searchBar.selectedScopeButtonIndex == 0) {
+    if (searchView == kSearchPhoto) {
         LXCellGrid *cell = [tableView dequeueReusableCellWithIdentifier:@"Grid" forIndexPath:indexPath];
         cell.viewController = self;
         [cell setPictures:pictures forRow:indexPath.row];
         return cell;
     }
     
-    if (_searchBar.selectedScopeButtonIndex == 1) {
+    if (searchView == kSearchUser) {
         LXCellFriend *cell = [tableView dequeueReusableCellWithIdentifier:@"User" forIndexPath:indexPath];
         cell.user = users[indexPath.row];
         return cell;
     }
     
-    if (_searchBar.selectedScopeButtonIndex == 2) {
+    if (searchView == kSearchTag) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Tag" forIndexPath:indexPath];
         cell.textLabel.text = tags[indexPath.row][@"term"];
         cell.detailTextLabel.text = [tags[indexPath.row][@"count"] stringValue];
@@ -162,15 +169,15 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (_searchBar.selectedScopeButtonIndex == 0) {
+    if (searchView == kSearchPhoto) {
         return 104;
     }
     
-    if (_searchBar.selectedScopeButtonIndex == 1) {
+    if (searchView == kSearchUser) {
         return 44;
     }
     
-    if (_searchBar.selectedScopeButtonIndex == 2) {
+    if (searchView == kSearchTag) {
         return 44;
     }
     
@@ -306,18 +313,18 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UIStoryboard *mainStory = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     
-    if (_searchBar.selectedScopeButtonIndex == 0) {
+    if (searchView == kSearchPhoto) {
         
     }
     
-    if (_searchBar.selectedScopeButtonIndex == 1) {
+    if (searchView == kSearchUser) {
         LXUserPageViewController *viewUserPage = [mainStory instantiateViewControllerWithIdentifier:@"UserPage"];
         viewUserPage.user = users[indexPath.row];
         [self.navigationController pushViewController:viewUserPage animated:YES];
         
     }
     
-    if (_searchBar.selectedScopeButtonIndex == 2) {
+    if (searchView == kSearchTag) {
         [_searchBar resignFirstResponder];
         LXTagHome *controllerTag = (LXTagHome*)[mainStory instantiateViewControllerWithIdentifier:@"TagHome"];
         controllerTag.tag = tags[indexPath.row][@"term"];
@@ -350,33 +357,17 @@
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     page = 1;
     
-    if (searchBar.selectedScopeButtonIndex == 0) {
+    if (searchView == kSearchPhoto) {
         [self loadPhotoSearch];
     }
     
-    if (searchBar.selectedScopeButtonIndex == 1) {
+    if (searchView == kSearchUser) {
         [self loadUserSearch];
     }
     
-    if (searchBar.selectedScopeButtonIndex == 2) {
+    if (searchView == kSearchTag) {
         [self loadTagSearch];
         
-    }
-}
-
-
-- (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
-    page = 1;
-    if (selectedScope == 0) {
-        [self loadPhotoSearch];
-    }
-    
-    if (selectedScope == 1) {
-        [self loadUserSearch];
-    }
-    
-    if (selectedScope == 2) {
-        [self loadTagSearch];
     }
 }
 
@@ -387,4 +378,32 @@
 - (void)viewDidUnload {
     [super viewDidUnload];
 }
+
+- (IBAction)switchTab:(UIButton *)sender {
+    page = 1;
+    _buttonPhoto.selected = NO;
+    _buttonUser.selected = NO;
+    _buttonTag.selected = NO;
+    
+    sender.selected = YES;
+    
+    if (sender.tag == 0) {
+        searchView = kSearchPhoto;
+        [self.tableView reloadData];
+        [self loadPhotoSearch];
+    }
+    
+    if (sender.tag == 1) {
+        searchView = kSearchUser;
+        [self.tableView reloadData];
+        [self loadUserSearch];
+    }
+    
+    if (sender.tag == 2) {
+        searchView = kSearchTag;
+        [self.tableView reloadData];
+        [self loadTagSearch];
+    }
+}
+
 @end
