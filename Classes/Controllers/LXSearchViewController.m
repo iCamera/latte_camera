@@ -69,7 +69,7 @@
     [self.tableView registerClass:[LXCellGrid class] forCellReuseIdentifier:@"Grid"];
     [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTag" bundle:nil] forCellReuseIdentifier:@"Tag"];
     
-    [_searchBar becomeFirstResponder];
+    //[_searchBar becomeFirstResponder];
     
     page = 1;
     if (searchView == kSearchPhoto) {
@@ -95,15 +95,15 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (_searchBar.selectedScopeButtonIndex == 0) {
+    if (searchView == kSearchPhoto) {
         return (pictures.count/3) + (pictures.count%3>0?1:0);
     }
     
-    if (_searchBar.selectedScopeButtonIndex == 1) {
+    if (searchView == kSearchUser) {
         return users.count;
     }
     
-    if (_searchBar.selectedScopeButtonIndex == 2) {
+    if (searchView == kSearchTag) {
         return tags.count;
     }
     
@@ -129,6 +129,7 @@
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Tag" forIndexPath:indexPath];
         cell.textLabel.text = tags[indexPath.row][@"term"];
         cell.detailTextLabel.text = [tags[indexPath.row][@"count"] stringValue];
+        cell.imageView.image = nil;
         return cell;
     }
     
@@ -197,7 +198,7 @@
 #pragma mark - Table view delegate
 
 - (void)loadMore {
-    if (_searchBar.selectedScopeButtonIndex == 0) {
+    if (searchView == kSearchPhoto) {
         [self loadPhotoSearch];
     }
 }

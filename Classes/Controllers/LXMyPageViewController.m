@@ -23,9 +23,12 @@
 #import "LXCellTimelineSingle.h"
 #import "LXCellTimelineMulti.h"
 #import "MBProgressHUD.h"
+#import "LXSearchViewController.h"
 
 #import "LXCellGrid.h"
 #import "REFrostedViewController.h"
+
+#import "LXButtonOrange.h"
 
 typedef enum {
     kTimelineAll = 10,
@@ -115,7 +118,7 @@ typedef enum {
     
     [[LatteAPIv2Client sharedClient] GET:@"user/me" parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
         if (app.currentUser) {
-            NSInteger messageCount = [JSON[@"unread_message"] integerValue];
+            NSInteger messageCount = [JSON[@"unread_message_tag"] integerValue];
             _labelMessage.hidden = messageCount == 0;
             _labelMessage.text = [NSString stringWithFormat:@"%ld", (long)messageCount];
             
@@ -288,6 +291,15 @@ typedef enum {
         UIImageView *emptyImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nopict.png"]];
         emptyImage.center = emptyView.center;
         [emptyView addSubview:emptyImage];
+        
+        if (homeTab == kHomeTag) {
+            LXButtonOrange *buttonFind = [[LXButtonOrange alloc] initWithFrame:CGRectMake(20, 150, 280, 35)];
+            buttonFind.titleLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:16];
+            [buttonFind setTitle:NSLocalizedString(@"find_tag", @"") forState:UIControlStateNormal];
+            [buttonFind addTarget:self action:@selector(searchTag:) forControlEvents:UIControlEventTouchUpInside];
+            [emptyView addSubview:buttonFind];
+        }
+        
         return emptyView;
     }
     return nil;
@@ -491,11 +503,11 @@ typedef enum {
 
 - (void)userUpdate:(NSNotification *)notification {
     NSDictionary *rawUser = notification.object;
-    if (rawUser[@"unread_message"]) {
+    if (rawUser[@"unread_message_tag"]) {
         LXAppDelegate* app = [LXAppDelegate currentDelegate];
         if (app.currentUser) {
             if ([app.currentUser.userId integerValue] == [rawUser[@"id"] integerValue]) {
-                NSInteger messageCount = [rawUser[@"unread_message"] integerValue];
+                NSInteger messageCount = [rawUser[@"unread_message_tag"] integerValue];
                 _labelMessage.hidden = messageCount == 0;
                 _labelMessage.text = [NSString stringWithFormat:@"%ld", (long)messageCount];
             }
@@ -520,6 +532,13 @@ typedef enum {
         }
 
     }
+}
+
+- (void)searchTag:(id)sender {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    LXSearchViewController *viewSearch = [mainStoryboard instantiateViewControllerWithIdentifier:@"Search"];
+    viewSearch.searchView = kSearchTag;
+    [self.navigationController pushViewController:viewSearch animated:YES];
 }
 
 @end

@@ -9,9 +9,13 @@
 #import "LXChatViewController.h"
 #import "LatteAPIv2Client.h"
 #import "LXTagDiscussionViewController.h"
+#import "UIImageView+AFNetworking.h"
+#import "LXButtonOrange.h"
+#import "LXSearchViewController.h"
 
 @interface LXChatViewController () {
     NSMutableArray *conversations;
+    BOOL loadEnded;
 }
 
 @end
@@ -41,12 +45,13 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateConversation:) name:@"update_conversation" object:nil];
     
-    [api2 GET:@"message/recent" parameters:nil success:^(AFHTTPRequestOperation *operation, NSMutableArray *JSON) {
+    [api2 GET:@"message/recent" parameters:@{@"type": @"tag"} success:^(AFHTTPRequestOperation *operation, NSMutableArray *JSON) {
         conversations = JSON;
+        loadEnded = true;
         [self.tableView reloadData];
     } failure:nil];
     
-    [api2 POST:@"message/markread" parameters:nil success:nil failure:nil];
+    [api2 POST:@"message/markread" parameters:@{@"type": @"tag"} success:nil failure:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -76,6 +81,7 @@
     NSDictionary *conversation = conversations[indexPath.row];
     cell.textLabel.text = conversation[@"title"];
     cell.detailTextLabel.text = conversation[@"preview"];
+    
     // Configure the cell...
     
     return cell;
@@ -121,6 +127,32 @@
 
     [self.navigationController pushViewController:viewConversation animated:YES];
 }
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    if (loadEnded && conversations.count == 0) {
+        UIView *emptyView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 200)];
+        UIImageView *emptyImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nopict.png"]];
+        emptyImage.center = emptyView.center;
+        [emptyView addSubview:emptyImage];
+        
+        LXButtonOrange *buttonFind = [[LXButtonOrange alloc] initWithFrame:CGRectMake(20, 150, 280, 35)];
+        buttonFind.titleLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:16];
+        [buttonFind setTitle:NSLocalizedString(@"find_tag", @"") forState:UIControlStateNormal];
+        [buttonFind addTarget:self action:@selector(searchTag:) forControlEvents:UIControlEventTouchUpInside];
+        [emptyView addSubview:buttonFind];
+        
+        return emptyView;
+    }
+    return nil;
+}
+
+- (void)searchTag:(id)sender {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    LXSearchViewController *viewSearch = [mainStoryboard instantiateViewControllerWithIdentifier:@"Search"];
+    viewSearch.searchView = kSearchTag;
+    [self.navigationController pushViewController:viewSearch animated:YES];
+}
+
 
 /*
 // Override to support rearranging the table view.
