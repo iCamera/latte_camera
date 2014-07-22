@@ -11,7 +11,6 @@
 
 typedef enum {
     kPhotoGridUserTag,
-    kPhotoGridPublicTag,
     kPhotoGridUserLiked,
 } PhotoGridKind;
 

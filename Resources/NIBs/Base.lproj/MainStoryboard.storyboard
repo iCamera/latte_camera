@@ -377,85 +377,26 @@
             <objects>
                 <collectionViewController storyboardIdentifier="PhotoGrid" autoresizesArchivedViewToFullSize="NO" id="64y-Lt-Fes" customClass="LXPhotoGridCVC" sceneMemberID="viewController">
                     <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="hKB-MS-wkZ">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.90588241820000004" green="0.89411771299999998" blue="0.85490202900000001" alpha="1" colorSpace="deviceRGB"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="4" minimumInteritemSpacing="4" id="3lv-OV-Awf">
                             <size key="itemSize" width="50" height="50"/>
-                            <size key="headerReferenceSize" width="50" height="40"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="6" minY="6" maxX="6" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Kpf-oc-slb">
-                                <rect key="frame" x="6" y="46" width="50" height="50"/>
+                                <rect key="frame" x="6" y="6" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
-                            </collectionViewCell>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="User" id="xyC-TE-XJv" customClass="LXCollectionCellUser">
-                                <rect key="frame" x="71" y="46" width="50" height="50"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="user.gif" translatesAutoresizingMaskIntoConstraints="NO" id="Ow4-wr-Dnr">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        </imageView>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Nickname" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MUW-z0-fKG">
-                                            <rect key="frame" x="0.0" y="32" width="50" height="18"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="10"/>
-                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                                <connections>
-                                    <outlet property="imageUser" destination="Ow4-wr-Dnr" id="20h-JQ-g0X"/>
-                                    <outlet property="labelUser" destination="MUW-z0-fKG" id="c8V-j1-X6C"/>
-                                </connections>
                             </collectionViewCell>
                         </cells>
-                        <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Header" id="QeL-4d-cof">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vlb-Ex-dog" customClass="LXTabButton">
-                                    <rect key="frame" x="0.0" y="0.0" width="120" height="40"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" image="icon36-grid-brown.png">
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <state key="selected" image="icon36-grid-blue.png"/>
-                                    <state key="highlighted" image="icon36-grid-blue.png"/>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PPs-e2-MjR" customClass="LXTabButton">
-                                    <rect key="frame" x="120" y="0.0" width="120" height="40"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" image="icon36-following-brown.png">
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <state key="selected" image="icon36-following-blue.png"/>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoDark" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aWP-t7-5C9">
-                                    <rect key="frame" x="279" y="9" width="22" height="22"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="tintColor" red="0.2078431547" green="0.18823531269999999" blue="0.13333334029999999" alpha="1" colorSpace="deviceRGB"/>
-                                    <state key="normal">
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                </button>
-                            </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </collectionReusableView>
                         <connections>
                             <outlet property="dataSource" destination="64y-Lt-Fes" id="VAi-6i-bKt"/>
                             <outlet property="delegate" destination="64y-Lt-Fes" id="K4u-Yc-nnP"/>
@@ -759,17 +700,62 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cFM-lT-vSe">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
+                            <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="QTp-mm-ahZ">
+                                <rect key="frame" x="0.0" y="40" width="320" height="260"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.90588241820000004" green="0.89411771299999998" blue="0.85490202900000001" alpha="1" colorSpace="deviceRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="300" id="k3P-Fq-roK"/>
+                                    <constraint firstAttribute="height" constant="260" id="pdB-vX-sr1"/>
                                 </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="4" minimumInteritemSpacing="4" id="OZz-Dy-2XH">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="6" minY="6" maxX="6" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="OQH-yG-TzS">
+                                        <rect key="frame" x="6" y="6" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="User" id="2PX-vx-hL6" customClass="LXCollectionCellUser">
+                                        <rect key="frame" x="71" y="6" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="user.gif" translatesAutoresizingMaskIntoConstraints="NO" id="6Ql-9f-K6Q">
+                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Nickname" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tRb-78-wqg">
+                                                    <rect key="frame" x="0.0" y="32" width="50" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="10"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <connections>
+                                            <outlet property="imageUser" destination="6Ql-9f-K6Q" id="s4n-ie-vjc"/>
+                                            <outlet property="labelUser" destination="tRb-78-wqg" id="LoF-tH-H97"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
                                 <connections>
-                                    <segue destination="64y-Lt-Fes" kind="embed" identifier="TagPhoto" id="PHz-hZ-dV7"/>
+                                    <outlet property="dataSource" destination="9YB-Rx-kkz" id="DeL-41-yrq"/>
+                                    <outlet property="delegate" destination="9YB-Rx-kkz" id="u9E-BI-vdB"/>
                                 </connections>
-                            </containerView>
+                            </collectionView>
                             <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N7M-mh-zVV">
                                 <rect key="frame" x="0.0" y="334" width="320" height="82"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -788,20 +774,72 @@
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="10"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LNA-aE-Jew">
+                                <rect key="frame" x="240" y="0.0" width="80" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" red="0.2078431547" green="0.18823531269999999" blue="0.13333334029999999" alpha="1" colorSpace="deviceRGB"/>
+                                <state key="normal" image="icon36-info-brown.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted" image="icon36-info-blue.png">
+                                    <color key="titleColor" red="0.43529415129999999" green="0.74117648599999997" blue="0.73333334920000004" alpha="1" colorSpace="deviceRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="touchTagInfo:" destination="9YB-Rx-kkz" eventType="touchUpInside" id="Gi0-BK-dr1"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H6I-L6-XCr" customClass="LXTabButton">
+                                <rect key="frame" x="0.0" y="0.0" width="120" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
+                                <inset key="imageEdgeInsets" minX="-12" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" title="0" image="icon36-grid-brown.png">
+                                    <color key="titleColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" image="icon36-grid-blue.png">
+                                    <color key="titleColor" red="0.43529415129999999" green="0.74117648599999997" blue="0.73333334920000004" alpha="1" colorSpace="deviceRGB"/>
+                                </state>
+                                <state key="highlighted" image="icon36-grid-blue.png">
+                                    <color key="titleColor" red="0.43529415129999999" green="0.74117648599999997" blue="0.73333334920000004" alpha="1" colorSpace="deviceRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="touchTab:" destination="9YB-Rx-kkz" eventType="touchUpInside" id="eVw-NT-LVx"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cpl-qz-yLZ" customClass="LXTabButton">
+                                <rect key="frame" x="120" y="0.0" width="120" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
+                                <inset key="imageEdgeInsets" minX="-12" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" title="0" image="icon36-following-brown.png">
+                                    <color key="titleColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" image="icon36-following-blue.png">
+                                    <color key="titleColor" red="0.43529415129999999" green="0.74117648599999997" blue="0.73333334920000004" alpha="1" colorSpace="deviceRGB"/>
+                                </state>
+                                <state key="highlighted" image="icon36-following-blue.png">
+                                    <color key="titleColor" red="0.43529415129999999" green="0.74117648599999997" blue="0.73333334920000004" alpha="1" colorSpace="deviceRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="touchTab:" destination="9YB-Rx-kkz" eventType="touchUpInside" id="1fl-FO-Kmc"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="cFM-lT-vSe" firstAttribute="leading" secondItem="RlL-bJ-Dcz" secondAttribute="leading" id="5YF-5v-ac1"/>
-                            <constraint firstItem="cFM-lT-vSe" firstAttribute="top" secondItem="uYh-An-L7n" secondAttribute="bottom" id="6kN-oK-Lx3"/>
+                            <constraint firstItem="QTp-mm-ahZ" firstAttribute="top" secondItem="uYh-An-L7n" secondAttribute="bottom" constant="40" id="7TP-g4-ByN"/>
                             <constraint firstItem="N7M-mh-zVV" firstAttribute="top" secondItem="Noh-UG-Bb8" secondAttribute="bottom" constant="10" id="APz-cX-oMh"/>
+                            <constraint firstItem="QTp-mm-ahZ" firstAttribute="leading" secondItem="RlL-bJ-Dcz" secondAttribute="leading" id="I35-IQ-bJI"/>
                             <constraint firstItem="01O-Pe-PaN" firstAttribute="top" secondItem="N7M-mh-zVV" secondAttribute="bottom" id="Jey-SI-8Wo"/>
                             <constraint firstAttribute="trailing" secondItem="N7M-mh-zVV" secondAttribute="trailing" id="KUe-xL-CXe"/>
                             <constraint firstAttribute="trailing" secondItem="Noh-UG-Bb8" secondAttribute="trailing" constant="129" id="OQj-YJ-rZ7"/>
                             <constraint firstItem="Noh-UG-Bb8" firstAttribute="leading" secondItem="RlL-bJ-Dcz" secondAttribute="leading" constant="129" id="PyP-L9-80C"/>
+                            <constraint firstItem="Noh-UG-Bb8" firstAttribute="top" secondItem="QTp-mm-ahZ" secondAttribute="bottom" constant="8" id="Qhw-b8-wgi"/>
                             <constraint firstItem="N7M-mh-zVV" firstAttribute="leading" secondItem="RlL-bJ-Dcz" secondAttribute="leading" id="Ydp-zF-fIq"/>
-                            <constraint firstItem="Noh-UG-Bb8" firstAttribute="top" secondItem="cFM-lT-vSe" secondAttribute="bottom" constant="8" id="iRL-1X-z2j"/>
-                            <constraint firstAttribute="trailing" secondItem="cFM-lT-vSe" secondAttribute="trailing" id="ofq-Ee-VP9"/>
+                            <constraint firstAttribute="trailing" secondItem="QTp-mm-ahZ" secondAttribute="trailing" id="i3V-rr-lGX"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="yeZ-6u-wY1" appends="YES" id="ihn-jT-rel"/>
@@ -829,9 +867,11 @@
                     </navigationItem>
                     <connections>
                         <outlet property="buttonFollow" destination="B47-Oy-2yj" id="Wlc-SZ-gNM"/>
-                        <outlet property="constraintHeight" destination="k3P-Fq-roK" id="7w9-XW-dHs"/>
+                        <outlet property="buttonGridFollower" destination="Cpl-qz-yLZ" id="5Yd-H0-DDq"/>
+                        <outlet property="buttonGridPhoto" destination="H6I-L6-XCr" id="541-7l-ylY"/>
+                        <outlet property="collectionView" destination="QTp-mm-ahZ" id="Bra-HM-Gem"/>
+                        <outlet property="constraintHeight" destination="pdB-vX-sr1" id="Pba-eT-try"/>
                         <outlet property="containerChat" destination="N7M-mh-zVV" id="yE8-8D-L5h"/>
-                        <outlet property="containerPhoto" destination="cFM-lT-vSe" id="35O-38-w6g"/>
                         <outlet property="labelSp" destination="Noh-UG-Bb8" id="DW0-7I-QPc"/>
                     </connections>
                 </viewController>
@@ -2258,6 +2298,6 @@ or you can try to send another confirmation email.</string>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="myE-qi-b3h"/>
-        <segue reference="bsm-XB-qQP"/>
+        <segue reference="nqr-PV-YRj"/>
     </inferredMetricsTieBreakers>
 </document>

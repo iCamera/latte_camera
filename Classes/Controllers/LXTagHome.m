@@ -8,9 +8,18 @@
 
 #import "LXTagHome.h"
 #import "LXTagDiscussionViewController.h"
-#import "LXPhotoGridCVC.h"
+#import "LatteAPIv2Client.h"
+#import "AFNetworking.h"
 #import "LXAppDelegate.h"
 #import "LatteAPIv2Client.h"
+#import "LXStreamBrickCell.h"
+#import "LXStreamFooter.h"
+#import "LXCollectionCellUser.h"
+
+typedef enum {
+    kGridPic,
+    kGridUser,
+} TagGridData;
 
 @interface LXTagHome ()
 
@@ -18,6 +27,14 @@
 
 @implementation LXTagHome {
     BOOL showingKeyboard;
+    NSMutableArray *pictures;
+    NSMutableArray *users;
+    NSInteger page;
+    NSInteger limit;
+    BOOL loadEnded;
+    AFHTTPRequestOperation *currentRequest;
+    UIActivityIndicatorView *indicatorLoading;
+    TagGridData gridView;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -51,15 +68,97 @@
     
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
     
+    LatteAPIv2Client *api2 = [LatteAPIv2Client sharedClient];
+    
     if (app.currentUser) {
-        LatteAPIv2Client *api2 = [LatteAPIv2Client sharedClient];
         [api2 GET:@"tag/follow" parameters:@{@"tag": _tag} success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
             _buttonFollow.enabled = YES;
             _buttonFollow.selected = [JSON[@"is_following"] boolValue];
         } failure:nil];
+    } else {
+        self.navigationItem.rightBarButtonItem = nil;
     }
     
+    [api2 GET:@"tag/followers" parameters:@{@"tag": _tag} success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+        [_buttonGridFollower setTitle:[JSON[@"total"] stringValue] forState:UIControlStateNormal];
+    } failure:nil];
+    
+    [self.collectionView registerNib:[UINib nibWithNibName:@"LXCellBrick" bundle:nil] forCellWithReuseIdentifier:@"Brick"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"LXStreamFooter" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"Footer"];
+    
     self.navigationItem.title = _tag;
+    
+    [self loadMorePublicTagPhoto:YES];
+}
+
+- (void)loadMorePublicTagPhoto:(BOOL)reset {
+    [indicatorLoading startAnimating];
+    if (reset) {
+        if (currentRequest.isExecuting) [currentRequest cancel];
+        loadEnded = false;
+        page = 1;
+        limit = 30;
+    } else {
+        if (currentRequest.isExecuting) return;
+    }
+    currentRequest = [[LatteAPIClient sharedClient] GET:@"picture/tag"
+                                             parameters:@{@"tag": _tag,
+                                                          @"limit": [NSNumber numberWithInteger:limit],
+                                                          @"page": [NSNumber numberWithInteger:page]}
+                                                success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                                    
+                                                    NSMutableArray *data = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
+                                                    [_buttonGridPhoto setTitle:[JSON[@"total"] stringValue] forState:UIControlStateNormal];
+                                                    
+                                                    if (reset) {
+                                                        pictures = data;
+                                                        gridView = kGridPic;
+                                                    } else {
+                                                        [pictures addObjectsFromArray:data];
+                                                    }
+                                                    
+                                                    page += 1;
+                                                    loadEnded = data.count == 0;
+                                                    //[self.refreshControl endRefreshing];
+                                                    [self.collectionView reloadData];
+                                                    [indicatorLoading stopAnimating];
+                                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                    [indicatorLoading stopAnimating];
+                                                    //[self.refreshControl endRefreshing];
+                                                }];
+}
+
+- (void)loadMoreFollower:(BOOL)reset {
+    [indicatorLoading startAnimating];
+    if (reset) {
+        if (currentRequest.isExecuting) [currentRequest cancel];
+        loadEnded = false;
+        page = 1;
+        limit = 30;
+    } else {
+        if (currentRequest.isExecuting) return;
+    }
+    currentRequest = [[LatteAPIv2Client sharedClient] GET:@"tag/followers"
+                                             parameters:@{@"tag": _tag,
+                                                          @"limit": [NSNumber numberWithInteger:limit],
+                                                          @"page": [NSNumber numberWithInteger:page]}
+                                                success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                                    
+                                                    if (reset) {
+                                                        users = JSON[@"profiles"];
+                                                        gridView = kGridUser;
+                                                    } else {
+                                                        [users addObjectsFromArray:JSON[@"profiles"]];
+                                                    }
+                                                    
+                                                    page += 1;
+                                                    loadEnded = users.count >= [JSON[@"total"] integerValue];
+                                                    [self.collectionView reloadData];
+                                                    [indicatorLoading stopAnimating];
+                                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                    [indicatorLoading stopAnimating];
+                                                    //[self.refreshControl endRefreshing];
+                                                }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -77,10 +176,6 @@
     if ([segue.identifier isEqualToString:@"TagChat"]) {
         LXTagDiscussionViewController *tagChat = segue.destinationViewController;
         tagChat.tag = _tag;
-    } else if ([segue.identifier isEqualToString:@"TagPhoto"]) {
-        LXPhotoGridCVC *tagPhoto = segue.destinationViewController;
-        tagPhoto.gridType = kPhotoGridPublicTag;
-        tagPhoto.keyword = _tag;
     }
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
@@ -135,6 +230,31 @@
     }
 }
 
+- (IBAction)touchGridPic:(id)sender {
+    [self loadMorePublicTagPhoto:YES];
+}
+
+- (IBAction)touchGridFollower:(id)sender {
+    [self loadMoreFollower:YES];
+}
+    
+- (IBAction)touchTab:(UIButton *)sender {
+    _buttonGridFollower.selected = NO;
+    _buttonGridPhoto.selected = NO;
+    sender.selected = YES;
+    
+    if (sender.tag == 0) {
+        [self loadMorePublicTagPhoto:YES];
+    } else if (sender.tag == 1) {
+        [self loadMoreFollower:YES];
+    }
+}
+
+- (IBAction)touchTagInfo:(id)sender {
+    NSString *strUrl = [NSString stringWithFormat:@"http://latte.la/photo/tag/%@", [_tag stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strUrl]];
+}
+
 - (void)keyboardWillShow:(id)sender {
     [UIView animateWithDuration:0.3 animations:^{
         _constraintHeight.constant = 0;
@@ -146,5 +266,149 @@
 - (void)keyboardWillHide:(id)sender {
     showingKeyboard = false;
 }
+
+- (NSDictionary *)pictureAfterPicture:(Picture *)picture {
+    NSUInteger current = [pictures indexOfObject:picture];
+    if (current == pictures.count-1) {
+        return nil;
+    }
+    Picture *picNext = pictures[current+1];
+    NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
+                         picNext, @"picture",
+                         nil];
+    
+    if (current > pictures.count - 6) {
+        [self loadMorePublicTagPhoto:NO];
+    }
+    
+    return ret;
+}
+
+- (NSDictionary *)pictureBeforePicture:(Picture *)picture {
+    NSUInteger current = [pictures indexOfObject:picture];
+    if (current == 0) {
+        return nil;
+    }
+    Picture *picPrev = pictures[current-1];
+    NSDictionary *ret = [NSDictionary dictionaryWithObjectsAndKeys:
+                         picPrev, @"picture",
+                         nil];
+    return ret;
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    
+    if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
+        LXStreamFooter *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                                        withReuseIdentifier:@"Footer"
+                                                                               forIndexPath:indexPath];
+        indicatorLoading = footerView.indicatorLoading;
+        
+        if ([currentRequest isExecuting]) {
+            [indicatorLoading startAnimating];
+        }
+        
+        if (loadEnded) {
+            footerView.imageEmpty.hidden = pictures.count > 0;
+        } else {
+            footerView.imageEmpty.hidden = YES;
+        }
+
+        return footerView;
+    }
+    
+    return nil;
+}
+
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (gridView == kGridPic) {
+        LXStreamBrickCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Brick" forIndexPath:indexPath];
+        Picture *picture = pictures[indexPath.item];
+        cell.picture = picture;
+        //cell.user = picture.user;
+        
+        // Hide
+        cell.buttonUser.hidden = YES;
+        cell.viewBg.hidden = YES;
+        cell.labelUsername.hidden = YES;
+        
+        cell.delegate = self;
+        return cell;
+    }
+    
+    if (gridView == kGridUser) {
+        LXCollectionCellUser *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"User" forIndexPath:indexPath];
+        cell.user = [User instanceFromDictionary:users[indexPath.item]];
+        return cell;
+    }
+
+    
+    return nil;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    if (gridView == kGridPic) {
+        return pictures.count;
+    }
+    
+    if (gridView == kGridUser) {
+        return users.count;
+    }
+    
+    return 0;
+    
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
+}
+
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
+    if (loadEnded) {
+        if (gridView == kGridPic && pictures.count == 0) {
+            return CGSizeMake(320, 320);
+        }
+        if (gridView == kGridUser && pictures.count == 0) {
+            return CGSizeMake(320, 320);
+        }
+    } else {
+        return CGSizeMake(320, 50);
+    }
+    
+    return CGSizeZero;
+}
+
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CGSizeMake(100, 100);
+}
+
+
+
+- (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
+    if (loadEnded)
+        return;
+    CGPoint offset = aScrollView.contentOffset;
+    CGRect bounds = aScrollView.bounds;
+    CGSize size = aScrollView.contentSize;
+    UIEdgeInsets inset = aScrollView.contentInset;
+    float y = offset.y + bounds.size.height - inset.bottom;
+    float h = size.height;
+    
+    float reload_distance = -100;
+    if(y > h + reload_distance) {
+        if (gridView == kGridPic) {
+            [self loadMorePublicTagPhoto:NO];
+        }
+        if (gridView == kGridUser) {
+            [self loadMoreFollower:NO];
+        }
+        
+    }
+}
+
 
 @end

@@ -60,40 +60,11 @@
         }
     }
 
-    if (_gridType == kPhotoGridPublicTag) {
-        [self loadMorePublicTagPhoto:reset];
-    } else if (_gridType == kPhotoGridUserLiked) {
+    if (_gridType == kPhotoGridUserLiked) {
         [self loadMoreUserLiked:reset];
     } else if (_gridType == kPhotoGridUserTag) {
         [self loadMoreUserTag:reset];
     }
-}
-
-- (void)loadMorePublicTagPhoto:(BOOL)reset {
-    [indicatorLoading startAnimating];
-    currentRequest = [[LatteAPIClient sharedClient] GET:@"picture/tag"
-                            parameters:@{@"tag": _keyword,
-                                         @"limit": [NSNumber numberWithInteger:limit],
-                                         @"page": [NSNumber numberWithInteger:page]}
-                               success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                   
-                                   NSMutableArray *data = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
-                                   
-                                   if (reset) {
-                                       pictures = data;
-                                   } else {
-                                       [pictures addObjectsFromArray:data];
-                                   }
-                                   
-                                   page += 1;
-                                   loadEnded = data.count == 0;
-                                   //[self.refreshControl endRefreshing];
-                                   [self.collectionView reloadData];
-                                   [indicatorLoading stopAnimating];
-                               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                   [indicatorLoading stopAnimating];
-                                   //[self.refreshControl endRefreshing];
-                               }];
 }
 
 - (void)loadMoreUserLiked:(BOOL)reset {
@@ -200,15 +171,13 @@
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    if ([kind isEqualToString:UICollectionElementKindSectionHeader] && (_gridType == kPhotoGridPublicTag)) {
-        return [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"Header" forIndexPath:indexPath];
-    }
     
     if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
         LXStreamFooter *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind
                                                                         withReuseIdentifier:@"Footer"
                                                                                forIndexPath:indexPath];
         indicatorLoading = footerView.indicatorLoading;
+        
         if (loadEnded) {
             footerView.imageEmpty.hidden = pictures.count > 0;
         } else {
