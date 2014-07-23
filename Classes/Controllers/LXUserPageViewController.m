@@ -61,8 +61,7 @@ typedef enum {
     int pagePic;
     int pageVote;
     NSMutableArray *pictures;
-    NSMutableArray *followers;
-    NSMutableArray *followings;
+    
     NSMutableDictionary *currentMonthPics;
     NSMutableDictionary *currentDayPics;
     NSMutableArray *feeds;
@@ -97,6 +96,9 @@ typedef enum {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    feeds = [[NSMutableArray alloc] init];
+    pictures = [[NSMutableArray alloc] init];
     
 
     endedPic = false;

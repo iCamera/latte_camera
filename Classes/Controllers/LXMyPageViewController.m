@@ -82,6 +82,8 @@ typedef enum {
 {
     [super viewDidLoad];
     
+    feeds = [[NSMutableArray alloc] init];
+    
     endedTimeline = false;
     
     timelineKind = kTimelineAll;

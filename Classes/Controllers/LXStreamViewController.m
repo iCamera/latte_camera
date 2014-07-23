@@ -45,6 +45,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    feeds = [[NSMutableArray alloc] init];
     // Do any additional setup after loading the view.
     layoutGrid = self.collectionView.collectionViewLayout;
     layoutWaterfall = [[CHTCollectionViewWaterfallLayout alloc] init];
