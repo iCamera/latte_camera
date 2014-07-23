@@ -40,9 +40,12 @@ typedef enum {
 @property (readonly, nonatomic) float percent;
 @property (readonly, nonatomic) UploadState uploadState;
 
+@property (assign, nonatomic) BOOL twitter;
+@property (strong, nonatomic) ACAccount* twitterAccount;
+
 @property (weak, nonatomic) id<LXUploadObjectDelegate> delegate;
 
 - (void)upload;
-- (void)uploadTwitter:(ACAccount*)account;
+- (void)finishedUpload;
 
 @end

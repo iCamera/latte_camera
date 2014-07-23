@@ -82,7 +82,7 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
         // to remove
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderSuccess" object:_uploader];
+        [_uploader finishedUpload];
     } else if (buttonIndex == 1) {
         [_uploader upload];
     }

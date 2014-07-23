@@ -90,7 +90,7 @@
                                  success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                      [_buttonProfilePicture setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:JSON[@"profile_picture"]]];
                                      [_imageCover setImageWithURL:[NSURL URLWithString:JSON[@"cover_picture"]]];
-                                     _labelLike.text = [NSString stringWithFormat:@"%ld likes", [JSON[@"vote_count"] integerValue]];
+                                     _labelLike.text = [NSString stringWithFormat:@"%ld likes", [JSON[@"vote_count"] longValue]];
                                      _labelPV.text = [NSString stringWithFormat:NSLocalizedString(@"d_views", @""), [JSON[@"page_views"] integerValue]];
                                      
                                  } failure:nil];

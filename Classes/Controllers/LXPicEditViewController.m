@@ -100,18 +100,15 @@
         buttonTwitter.selected = [defaults boolForKey:@"LatteAutoTweet"];;
         
         if (buttonTwitter.selected) {
-            ACAccountStore *account = [[ACAccountStore alloc] init];
-            ACAccountType *accountType = [account accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-            
-            [account requestAccessToAccountsWithType:accountType options:nil completion:^(BOOL granted, NSError *error) {
+            [self _obtainAccessToAccountsWithBlock:^(BOOL granted) {
                 if(granted) {
-                    NSArray *arrayOfAccounts = [account accountsWithAccountType:accountType];
-                    
-                    if ([arrayOfAccounts count] == 0) {
+                    if (_accounts.count == 0) {
                         
                         dispatch_async(dispatch_get_main_queue(), ^{
                             buttonTwitter.selected = NO;
                         });
+                    } else {
+                        accountTwitter = _accounts[0];
                     }
                 } else {
                     dispatch_async(dispatch_get_main_queue(), ^{
@@ -119,8 +116,8 @@
                     });
                     
                 }
-                // Handle any error state here as you wish
             }];
+            
         }
         
         tags = [[NSMutableArray alloc]init];
@@ -493,19 +490,16 @@
     uploadLatte.showLarge = imageShowOriginal;
     uploadLatte.tags = tags;
     uploadLatte.status = imageStatus;
+    uploadLatte.twitter = buttonTwitter.selected;
+    
+    if (buttonTwitter.selected) {
+        uploadLatte.twitterAccount = accountTwitter;
+    }
     
     [app.uploader addObject:uploadLatte];
     [uploadLatte upload];
     
-    if (buttonTwitter.selected) {
-        LXUploadObject *uploader = [[LXUploadObject alloc]init];
-        uploader.imageFile = _imageData;
-        uploader.imagePreview = _preview;
-        uploader.imageDescription = textDesc.text;
-        
-        [app.uploader addObject:uploader];
-        [uploader uploadTwitter:accountTwitter];
-    }
+    
     
     [self backToCamera];
 }

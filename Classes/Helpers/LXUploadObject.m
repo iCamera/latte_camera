@@ -12,10 +12,10 @@
 #import "LXAppDelegate.h"
 
 @implementation LXUploadObject {
-    Picture *picture;
+    NSDictionary *picture;
 }
 
-- (void)uploadTwitter:(ACAccount*)account {
+- (void)uploadTwitter {
     // Build a twitter request
     
     SLRequestHandler requestHandler =
@@ -28,12 +28,15 @@
                                                 options:NSJSONReadingMutableContainers
                                                   error:NULL];
                 NSLog(@"[SUCCESS!] Created Tweet with ID: %@", postResponseData[@"id_str"]);
-                [self finishedUpload];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self finishedUpload];
+                });
             }
             else {
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderFail" object:self];
                 _uploadState = kUploadStateFail;
-                NSLog(@"[ERROR] Server responded: status code %d %@", statusCode,
+                NSLog(@"[ERROR] Server responded: status code %ld %@", (long)statusCode,
                       [NSHTTPURLResponse localizedStringForStatusCode:statusCode]);
             }
         }
@@ -47,7 +50,14 @@
     
     NSURL *url = [NSURL URLWithString:@"https://api.twitter.com"
                   @"/1.1/statuses/update_with_media.json"];
-    NSDictionary *params = @{@"status" : _imageDescription};
+    NSDictionary *params;
+    NSString *picUrl = [NSString stringWithFormat:@"http://latte.la/photo/%ld/%ld", [picture[@"user_id"] longValue], [picture[@"id"] longValue]];
+    if (_imageDescription.length > 0) {
+        params = @{@"status" : [NSString stringWithFormat:@"%@ %@", _imageDescription, picUrl ]};
+    } else {
+        params = @{@"status" : picUrl};
+    }
+
     SLRequest *request = [SLRequest requestForServiceType:SLServiceTypeTwitter
                                             requestMethod:SLRequestMethodPOST
                                                       URL:url
@@ -57,10 +67,9 @@
                      withName:@"media[]"
                          type:@"image/jpeg"
                      filename:@"image.jpg"];
-    [request setAccount:account];
+    [request setAccount:_twitterAccount];
     
     // Block handler to manage the response
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"LXUploaderStart" object:self];
     [request performRequestWithHandler:requestHandler];
     
 }
@@ -101,7 +110,17 @@
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     
     void (^successUpload)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, NSData *data) {
-        [self finishedUpload];
+        
+        
+        if (_twitter) {
+            NSError *error;
+            NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+            picture = JSON[@"picture"];
+            
+            [self uploadTwitter];
+        } else {
+            [self finishedUpload];
+        }
     };
     
     void (^failUpload)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
