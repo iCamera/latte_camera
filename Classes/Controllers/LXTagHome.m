@@ -59,7 +59,7 @@ typedef enum {
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    _buttonSp.layer.cornerRadius = 8;
+    _buttonSp.layer.cornerRadius = 13;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
