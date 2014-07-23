@@ -1273,33 +1273,23 @@ typedef enum {
     if ([segue.identifier isEqualToString:@"Profile"]) {
         LXUserProfileViewController *view = segue.destinationViewController;
         view.user = _user;
-        
-        MZFormSheetSegue *sheet = (MZFormSheetSegue*)segue;
-        sheet.formSheetController.cornerRadius = 0;
-        
-        sheet.formSheetController.shouldDismissOnBackgroundViewTap = YES;
-        sheet.formSheetController.presentedFormSheetSize = CGSizeMake(320, self.view.bounds.size.height - sheet.formSheetController.portraitTopInset);
     }
     
     if ([segue.identifier isEqualToString:@"Follower"]) {
         LXUserListViewController *view = segue.destinationViewController;
         [view loadFollowerForUser:[_user.userId integerValue]];
-        
-        MZFormSheetSegue *sheet = (MZFormSheetSegue*)segue;
-        sheet.formSheetController.cornerRadius = 0;
-        sheet.formSheetController.shouldDismissOnBackgroundViewTap = YES;
-        sheet.formSheetController.presentedFormSheetSize = CGSizeMake(250, self.view.bounds.size.height - sheet.formSheetController.portraitTopInset);
     }
     
     if ([segue.identifier isEqualToString:@"Following"]) {
         LXUserListViewController *view = segue.destinationViewController;
         [view loadFollowingForUser:[_user.userId integerValue]];
-        
-        MZFormSheetSegue *sheet = (MZFormSheetSegue*)segue;
-        sheet.formSheetController.cornerRadius = 0;
-        sheet.formSheetController.shouldDismissOnBackgroundViewTap = YES;
-        sheet.formSheetController.presentedFormSheetSize = CGSizeMake(250, self.view.bounds.size.height - sheet.formSheetController.portraitTopInset);
     }
+    
+    MZFormSheetSegue *sheet = (MZFormSheetSegue*)segue;
+    sheet.formSheetController.transitionStyle = MZFormSheetTransitionStyleSlideFromBottom;
+    sheet.formSheetController.cornerRadius = 0;
+    sheet.formSheetController.shouldDismissOnBackgroundViewTap = YES;
+    sheet.formSheetController.presentedFormSheetSize = CGSizeMake(320, self.view.bounds.size.height - sheet.formSheetController.portraitTopInset);
 }
 
 

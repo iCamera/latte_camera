@@ -561,8 +561,12 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rxu-4E-T7t">
-                                                    <rect key="frame" x="51" y="40" width="27" height="19"/>
+                                                    <rect key="frame" x="51" y="40" width="42" height="19"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="19" id="Hjq-zn-rnF"/>
+                                                        <constraint firstAttribute="width" constant="42" id="vcP-6G-y7M"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
                                                     <inset key="titleEdgeInsets" minX="4" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                     <state key="normal" title="0" image="icon28-like-brown.png">
@@ -628,7 +632,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="spI-ig-vIB">
-                                                    <rect key="frame" x="86" y="35" width="36" height="28"/>
+                                                    <rect key="frame" x="94" y="35" width="36" height="28"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="28" id="PV0-eG-SZG"/>
@@ -668,7 +672,7 @@
                                                 <constraint firstAttribute="bottom" secondItem="cVL-xA-beg" secondAttribute="bottom" id="8Ml-QO-c8H"/>
                                                 <constraint firstItem="E2z-bN-F6K" firstAttribute="leading" secondItem="NAs-Sm-ZHd" secondAttribute="trailing" constant="6" id="8ZX-TW-A0Y"/>
                                                 <constraint firstItem="rxu-4E-T7t" firstAttribute="leading" secondItem="v4G-Ph-f9B" secondAttribute="trailing" constant="8" id="Bw6-YJ-Ytj"/>
-                                                <constraint firstItem="spI-ig-vIB" firstAttribute="leading" secondItem="rxu-4E-T7t" secondAttribute="trailing" constant="8" id="IOA-ME-40N"/>
+                                                <constraint firstItem="spI-ig-vIB" firstAttribute="leading" secondItem="rxu-4E-T7t" secondAttribute="trailing" constant="1" id="Ip3-sK-UGO"/>
                                                 <constraint firstItem="v4G-Ph-f9B" firstAttribute="leading" secondItem="abX-kb-SeK" secondAttribute="leading" constant="8" id="LL1-C9-RC0"/>
                                                 <constraint firstAttribute="trailing" secondItem="kxb-oT-Vsh" secondAttribute="trailing" constant="8" id="XDC-vM-0p8"/>
                                                 <constraint firstAttribute="bottom" secondItem="spI-ig-vIB" secondAttribute="bottom" id="YiW-pe-Hgr"/>
