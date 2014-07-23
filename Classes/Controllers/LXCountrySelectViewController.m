@@ -49,6 +49,8 @@
     }
     
     countryCodes = [[countryDict keysSortedByValueUsingSelector:@selector(localizedCompare:)] mutableCopy];
+    [countryCodes removeObject:@"JP"];
+    [countryCodes insertObject:@"JP" atIndex:0];
     
     
     for (NSString *countryCode in countryCodes)

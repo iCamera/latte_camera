@@ -34,10 +34,12 @@
     
     UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognized:)];
-    tap.cancelsTouchesInView = NO;
-    //[self.view addGestureRecognizer:];
+
     [self.navigationBar addGestureRecognizer:pan];
-    [self.navigationBar addGestureRecognizer:tap];
+    
+    UIView *titleView = self.navigationBar.subviews[1];
+    titleView.userInteractionEnabled = YES;
+    [titleView addGestureRecognizer:tap];
 }
 
 - (void)panGestureRecognized:(UIPanGestureRecognizer *)sender
