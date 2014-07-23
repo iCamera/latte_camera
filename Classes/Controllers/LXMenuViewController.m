@@ -52,6 +52,14 @@
 -(void)viewWillAppear:(BOOL)animated {
 
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    
+    NSString *language = [[NSLocale preferredLanguages] objectAtIndex:0];
+
+    if (![language isEqualToString:@"ja"]) {
+        _menuBlog.hidden = YES;
+    }
+
+    
 
     if (app.currentUser) {
         [_buttonProfilePicture setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:app.currentUser.profilePicture]];
@@ -139,6 +147,8 @@
         [self presentViewController:[storyMain instantiateViewControllerWithIdentifier:@"LoginModal"] animated:YES completion:nil];
     } else if ([tableView cellForRowAtIndexPath:indexPath] == menuFeedback) {
         [navCurrent pushViewController:[storySetting instantiateViewControllerWithIdentifier:@"About"] animated:YES];
+    } else if ([tableView cellForRowAtIndexPath:indexPath] == _menuBlog) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/column/photo_camera"]];
     }
 }
 

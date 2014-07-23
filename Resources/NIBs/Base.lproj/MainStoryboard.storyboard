@@ -2032,8 +2032,26 @@ or you can try to send another confirmation email.</string>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="2" indentationWidth="10" textLabel="BNE-Js-T0Z" style="IBUITableViewCellStyleDefault" id="0IH-JV-52M" customClass="LXCellMenu">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="2" indentationWidth="10" textLabel="bMu-uQ-icC" style="IBUITableViewCellStyleDefault" id="SXW-eh-xwF" customClass="LXCellMenu">
                                         <rect key="frame" x="0.0" y="439" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SXW-eh-xwF" id="cmR-w5-VTf">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="コラム" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bMu-uQ-icC">
+                                                    <rect key="frame" x="35" y="0.0" width="270" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
+                                                    <color key="textColor" red="0.44113026490000001" green="0.44113026490000001" blue="0.44113026490000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="2" indentationWidth="10" textLabel="BNE-Js-T0Z" style="IBUITableViewCellStyleDefault" id="0IH-JV-52M" customClass="LXCellMenu">
+                                        <rect key="frame" x="0.0" y="483" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0IH-JV-52M" id="Yec-Xo-gBS">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -2060,6 +2078,7 @@ or you can try to send another confirmation email.</string>
                     </tableView>
                     <connections>
                         <outlet property="buttonProfilePicture" destination="v2f-gk-gff" id="sU1-FC-GTM"/>
+                        <outlet property="menuBlog" destination="SXW-eh-xwF" id="8qf-YJ-fqY"/>
                         <outlet property="menuFeedback" destination="8BP-3j-f16" id="flL-5G-oYr"/>
                         <outlet property="menuFollowingTags" destination="vVh-bG-fue" id="lXX-0a-KIr"/>
                         <outlet property="menuLikedPhotos" destination="Vkt-cR-Dhm" id="xfl-Ac-erI"/>

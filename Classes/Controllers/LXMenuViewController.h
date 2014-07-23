@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *menuFeedback;
 @property (strong, nonatomic) IBOutlet UITableViewCell *menuLogin;
 @property (strong, nonatomic) IBOutlet UITableViewCell *menuSettings;
+@property (weak, nonatomic) IBOutlet UITableViewCell *menuBlog;
 
 @property (strong, nonatomic) IBOutlet UILabel *textUsername;
 @property (strong, nonatomic) IBOutlet UIButton *buttonProfilePicture;
