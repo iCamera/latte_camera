@@ -15,7 +15,6 @@
 #import "LXAppDelegate.h"
 #import "LXAboutViewController.h"
 #import "LXUserPageViewController.h"
-#import "LXNavMypageController.h"
 #import "LXUploadStatusViewController.h"
 #import "LXUploadObject.h"
 #import "LXTableConfirmEmailController.h"
@@ -76,13 +75,6 @@
     // Init View
     self.delegate = self;
     
-    LXAppDelegate* app = [LXAppDelegate currentDelegate];
-    if (app.currentUser != nil) {
-        [self setUser];
-    } else {
-        [self setGuest];
-    }
-    
     UIScreen *screen = [UIScreen mainScreen];
     
     hudUpload = [[UAProgressView alloc] initWithFrame:CGRectMake(280, screen.bounds.size.height-110, 30, 30)];
@@ -142,37 +134,13 @@
 }
 
 
-- (void)setGuest {
-    UIStoryboard* storyAuth = [UIStoryboard storyboardWithName:@"Authentication" bundle:nil];
-    UIViewController *navLogin = [storyAuth instantiateViewControllerWithIdentifier:@"NavLogin"];
-    
-    NSMutableArray *views = [NSMutableArray arrayWithArray:self.viewControllers];
-    views[4] = navLogin;
-    self.selectedIndex = 0;
-    
-    [self setViewControllers:views animated:YES];
-}
-
-- (void)setUser {
-    UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    UIViewController *viewMypage = [storyMain instantiateViewControllerWithIdentifier:@"MyPage"];
-    
-    NSMutableArray *views = [NSMutableArray arrayWithArray:self.viewControllers];
-    views[4] = viewMypage;
-    self.selectedIndex = 0;
-    
-    [self setViewControllers:views animated:YES];
-}
-
 - (void)receiveLoggedIn:(NSNotification *) notification {
-    [self setUser];
-    
     // Register for Push Notification
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
 }
 
 - (void)receiveLoggedOut:(NSNotification *) notification {
-    [self setGuest];
+    self.selectedIndex = 0;
 }
 
 - (void)showUser:(NSNotification *)notify {
@@ -227,6 +195,18 @@
 }
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+    if (self.viewControllers.count == 0)
+        return false;
+    
+    LXAppDelegate* app = [LXAppDelegate currentDelegate];
+    if (!app.currentUser) {
+        if ((viewController == tabBarController.viewControllers[3]) || (viewController == tabBarController.viewControllers[4])) {
+            UIStoryboard *storyAuth = [UIStoryboard storyboardWithName:@"Authentication" bundle:nil];
+            [self presentViewController:[storyAuth instantiateInitialViewController] animated:YES completion:nil];
+            return false;
+        }
+    }
+    
     if (viewController == tabBarController.viewControllers[2]) {
         UIActionSheet *actionUpload = [[UIActionSheet alloc] initWithTitle:@""
                                                    delegate:self

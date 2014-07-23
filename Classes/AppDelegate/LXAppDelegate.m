@@ -229,10 +229,8 @@
     _currentUser = currentUser;
     if (currentUser == nil) {
         ((UITabBarItem *)_viewMainTab.tabBar.items[3]).enabled = NO;
-        ((UITabBarItem *)_viewMainTab.tabBar.items[4]).enabled = NO;
     } else {
         ((UITabBarItem *)_viewMainTab.tabBar.items[3]).enabled = YES;
-        ((UITabBarItem *)_viewMainTab.tabBar.items[4]).enabled = YES;
     }
 }
 #pragma mark - Core Data stack

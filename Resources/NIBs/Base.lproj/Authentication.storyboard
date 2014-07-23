@@ -1,10 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="mAe-Lg-ucz">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="84p-tB-b8N">
     <dependencies>
         <deployment version="1536" defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
+        <!--Modal Navigation Controller-->
+        <scene sceneID="RFz-ZE-S5M">
+            <objects>
+                <navigationController storyboardIdentifier="LoginModal" definesPresentationContext="YES" id="84p-tB-b8N" customClass="LXModalNavigationController" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="wuZ-AX-WvU">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.2078431547" green="0.18823531269999999" blue="0.13333334029999999" alpha="1" colorSpace="deviceRGB"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Qbv-S2-pdO" kind="relationship" relationship="rootViewController" id="cs2-3v-oeh"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="neJ-1m-TYf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-652" y="-658"/>
+        </scene>
         <!--Email Confirm Popup Controller-->
         <scene sceneID="GTL-Yc-NS5">
             <objects>
@@ -360,43 +377,6 @@
             </objects>
             <point key="canvasLocation" x="292" y="-658"/>
         </scene>
-        <!--Modal Navigation Controller-->
-        <scene sceneID="cI2-Th-REi">
-            <objects>
-                <navigationController storyboardIdentifier="LoginModal" definesPresentationContext="YES" toolbarHidden="NO" id="EFt-fq-8DL" customClass="LXModalNavigationController" sceneMemberID="viewController">
-                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="90R-k6-oCe">
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="barTintColor" red="0.20784313730000001" green="0.18823529410000001" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="Qbv-S2-pdO" kind="relationship" relationship="rootViewController" id="wsB-vi-hoP"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9go-6n-TLU" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-846" y="-1254"/>
-        </scene>
-        <!--Navigation Controller - Log In-->
-        <scene sceneID="eVo-Xs-YHH">
-            <objects>
-                <navigationController storyboardIdentifier="NavLogin" definesPresentationContext="YES" id="mAe-Lg-ucz" customClass="LXNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Log In" image="icon_login.png" id="dlf-VV-oNq"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="0xq-8F-8VS">
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="barTintColor" red="0.2078431547" green="0.18823531269999999" blue="0.13333334029999999" alpha="1" colorSpace="deviceRGB"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="Qbv-S2-pdO" kind="relationship" relationship="rootViewController" id="ftp-Rj-wXi"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hui-mH-HUU" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-855" y="-539"/>
-        </scene>
     </scenes>
     <resources>
         <image name="box_acount.png" width="22" height="22"/>
@@ -415,7 +395,4 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="ftp-Rj-wXi"/>
-    </inferredMetricsTieBreakers>
 </document>

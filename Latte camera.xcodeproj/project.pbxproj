@@ -1035,7 +1035,6 @@
 		887379BB17586FF400C1549B /* LXCellFontPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 887379BA17586FF400C1549B /* LXCellFontPreview.m */; };
 		887379BD1758842F00C1549B /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 887379BC1758842F00C1549B /* CoreText.framework */; };
 		887379BE1758CC3500C1549B /* fonts.plist in Resources */ = {isa = PBXBuildFile; fileRef = 887379C01758CC3500C1549B /* fonts.plist */; };
-		8874DBC316E8BF3600FDF60B /* LXNavMypageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8874DBC216E8BF3500FDF60B /* LXNavMypageController.m */; };
 		8874DBD216E8C58200FDF60B /* LXNavGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8874DBD116E8C58200FDF60B /* LXNavGalleryViewController.m */; };
 		88795EBF171E52BC009EA487 /* calendar_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 88795EB9171E52BC009EA487 /* calendar_off.png */; };
 		88795EC0171E52BC009EA487 /* calendar_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88795EBA171E52BC009EA487 /* calendar_off@2x.png */; };
@@ -3261,8 +3260,6 @@
 		887379BA17586FF400C1549B /* LXCellFontPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCellFontPreview.m; sourceTree = "<group>"; };
 		887379BC1758842F00C1549B /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		887379BF1758CC3500C1549B /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = ja; path = ja.lproj/fonts.plist; sourceTree = "<group>"; };
-		8874DBC116E8BF3500FDF60B /* LXNavMypageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXNavMypageController.h; sourceTree = "<group>"; };
-		8874DBC216E8BF3500FDF60B /* LXNavMypageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXNavMypageController.m; sourceTree = "<group>"; };
 		8874DBD016E8C58100FDF60B /* LXNavGalleryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXNavGalleryViewController.h; sourceTree = "<group>"; };
 		8874DBD116E8C58200FDF60B /* LXNavGalleryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXNavGalleryViewController.m; sourceTree = "<group>"; };
 		88795EB9171E52BC009EA487 /* calendar_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar_off.png; sourceTree = "<group>"; };
@@ -5607,8 +5604,6 @@
 				8874DBD116E8C58200FDF60B /* LXNavGalleryViewController.m */,
 				889093ED16F8714C00E98DF4 /* LXNavigationController.h */,
 				889093EE16F8714C00E98DF4 /* LXNavigationController.m */,
-				8874DBC116E8BF3500FDF60B /* LXNavMypageController.h */,
-				8874DBC216E8BF3500FDF60B /* LXNavMypageController.m */,
 				8890724A16770EBB0013DF7A /* LXNotifySideViewController.h */,
 				8890724B16770EBB0013DF7A /* LXNotifySideViewController.m */,
 				881C019E197587AB009ED466 /* LXPhotoGridCVC.h */,
@@ -9344,7 +9339,6 @@
 				88A5F41816E11D8B00118996 /* LXSettingRootViewController.m in Sources */,
 				881C00AB1973B608009ED466 /* LXStreamFooter.m in Sources */,
 				88F0075016E4A29B0071369C /* LXSettingNotifyViewController.m in Sources */,
-				8874DBC316E8BF3600FDF60B /* LXNavMypageController.m in Sources */,
 				8874DBD216E8C58200FDF60B /* LXNavGalleryViewController.m in Sources */,
 				8866D30416E9EE4400CAE6E5 /* LXSearchViewController.m in Sources */,
 				882E14A516EF0BF100839B92 /* LXFacebookFriendViewController.m in Sources */,
