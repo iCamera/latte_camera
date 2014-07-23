@@ -150,7 +150,15 @@
         viewVote.picture = _feed.targets[sender.tag];
         [_parent.navigationController pushViewController:viewVote animated:YES];
     } else {
-        [LXUtils toggleLike:sender ofPicture:picture];
+        LXAppDelegate* app = [LXAppDelegate currentDelegate];
+        if (!app.currentUser) {
+            UIStoryboard *storyAuth = [UIStoryboard storyboardWithName:@"Authentication" bundle:nil];
+            UIViewController *viewLogin = [storyAuth instantiateInitialViewController];
+            
+            [_parent presentViewController:viewLogin animated:YES completion:nil];
+        } else {
+            [LXUtils toggleLike:sender ofPicture:picture];
+        }
     }
 }
 

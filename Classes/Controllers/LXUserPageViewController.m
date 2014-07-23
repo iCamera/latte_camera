@@ -172,13 +172,13 @@ typedef enum {
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
+    [super viewWillAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
+    [super viewWillDisappear:animated];
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -455,26 +455,34 @@ typedef enum {
 }
 
 - (IBAction)touchFollow:(id)sender {
-    if (!_user.isFollowing) {
-        _buttonFollow.selected = YES;
-        _user.isFollowing = YES;
+    LXAppDelegate* app = [LXAppDelegate currentDelegate];
+    if (!app.currentUser) {
+        UIStoryboard *storyAuth = [UIStoryboard storyboardWithName:@"Authentication" bundle:nil];
+        UIViewController *viewLogin = [storyAuth instantiateInitialViewController];
         
-        [[LatteAPIClient sharedClient] POST:[NSString stringWithFormat:@"user/follow/%ld", (long)_userId]
-                                 parameters:nil
-                                    success:nil
-                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        _buttonFollow.selected = NO;
-                                        _user.isFollowing = NO;
-                                    }];
-   
+        [self presentViewController:viewLogin animated:YES completion:nil];
     } else {
-        UIActionSheet *actionUnfollow = [[UIActionSheet alloc] initWithTitle:nil
-                                                                    delegate:self
-                                                           cancelButtonTitle:NSLocalizedString(@"cancel", @"")
-                                                      destructiveButtonTitle:NSLocalizedString(@"unfollow", @"")
-                                                           otherButtonTitles:nil];
-        actionUnfollow.tag = 99;
-        [actionUnfollow showInView:self.view];
+        if (!_user.isFollowing) {
+            _buttonFollow.selected = YES;
+            _user.isFollowing = YES;
+            
+            [[LatteAPIClient sharedClient] POST:[NSString stringWithFormat:@"user/follow/%ld", (long)_userId]
+                                     parameters:nil
+                                        success:nil
+                                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                            _buttonFollow.selected = NO;
+                                            _user.isFollowing = NO;
+                                        }];
+            
+        } else {
+            UIActionSheet *actionUnfollow = [[UIActionSheet alloc] initWithTitle:nil
+                                                                        delegate:self
+                                                               cancelButtonTitle:NSLocalizedString(@"cancel", @"")
+                                                          destructiveButtonTitle:NSLocalizedString(@"unfollow", @"")
+                                                               otherButtonTitles:nil];
+            actionUnfollow.tag = 99;
+            [actionUnfollow showInView:self.view];
+        }
     }
 }
 

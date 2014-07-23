@@ -243,7 +243,15 @@
         
         [viewController.navigationController pushViewController:viewVote animated:YES];
     } else {
-        [LXUtils toggleLike:buttonLike ofPicture:pic];
+        LXAppDelegate* app = [LXAppDelegate currentDelegate];
+        if (!app.currentUser) {
+            UIStoryboard *storyAuth = [UIStoryboard storyboardWithName:@"Authentication" bundle:nil];
+            UIViewController *viewLogin = [storyAuth instantiateInitialViewController];
+            
+            [viewController presentViewController:viewLogin animated:YES completion:nil];
+        } else {
+            [LXUtils toggleLike:buttonLike ofPicture:pic];
+        }
     }
 }
 
