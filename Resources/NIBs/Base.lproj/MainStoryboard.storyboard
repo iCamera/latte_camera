@@ -1524,33 +1524,36 @@ or you can try to send another confirmation email.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.90588241820000004" green="0.89411771299999998" blue="0.85490202900000001" alpha="1" colorSpace="deviceRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="CF0-wx-KGd">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="220"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="default-cover.gif" translatesAutoresizingMaskIntoConstraints="NO" id="XIy-D3-oA1">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="170"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
                                 <view alpha="0.59999999999999998" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Fw-lt-UFv" customClass="LXGradientView">
-                                    <rect key="frame" x="0.0" y="95" width="320" height="75"/>
+                                    <rect key="frame" x="0.0" y="105" width="320" height="75"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kc8-8B-lDc">
-                                    <rect key="frame" x="260" y="170" width="60" height="40"/>
+                                    <rect key="frame" x="240" y="140" width="80" height="40"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <state key="normal" image="icon28-more-brown.png">
+                                    <state key="normal" image="icon28-more-white.png">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <connections>
                                         <action selector="touchMore:" destination="21a-Kc-kfo" eventType="touchUpInside" id="AXH-fP-NfK"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vEm-kz-mRV">
-                                    <rect key="frame" x="120" y="24" width="80" height="80"/>
+                                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vEm-kz-mRV">
+                                    <rect key="frame" x="130" y="17" width="60" height="60"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="60" id="9yq-Bm-7KB"/>
+                                        <constraint firstAttribute="height" constant="60" id="PiU-c8-HOz"/>
+                                    </constraints>
                                     <state key="normal" backgroundImage="user.gif">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
@@ -1559,13 +1562,12 @@ or you can try to send another confirmation email.</string>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ylh-RA-SXN">
-                                    <rect key="frame" x="130" y="170" width="130" height="40"/>
+                                    <rect key="frame" x="80" y="140" width="80" height="40"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="20"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                     <inset key="titleEdgeInsets" minX="6" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    <state key="normal" title="0" image="icon36-follower-brown.png">
-                                        <color key="titleColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                    <state key="normal" title="0" image="icon36-follower-white.png">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="titleShadowColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                                     </state>
                                     <connections>
@@ -1573,21 +1575,20 @@ or you can try to send another confirmation email.</string>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VG6-0T-eya">
-                                    <rect key="frame" x="0.0" y="170" width="130" height="40"/>
+                                    <rect key="frame" x="0.0" y="140" width="80" height="40"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="20"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                     <inset key="titleEdgeInsets" minX="6" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    <state key="normal" title="0" image="icon36-following-brown.png">
-                                        <color key="titleColor" red="0.39607846740000002" green="0.36078432199999999" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                    <state key="normal" title="0" image="icon36-following-white.png">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="titleShadowColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                                     </state>
                                     <connections>
                                         <segue destination="OZE-UL-Mh9" kind="custom" identifier="Following" customClass="MZFormSheetSegue" id="nqr-PV-YRj"/>
                                     </connections>
                                 </button>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="line line" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="tdE-Mv-kGb">
-                                    <rect key="frame" x="20" y="131" width="280" height="30"/>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="line" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="tdE-Mv-kGb">
+                                    <rect key="frame" x="20" y="108" width="280" height="16"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -1609,8 +1610,8 @@ or you can try to send another confirmation email.</string>
                                         <action selector="touchFollow:" destination="21a-Kc-kfo" eventType="touchUpInside" id="nuw-Q7-rL1"/>
                                     </connections>
                                 </button>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Nickname" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GRW-fA-OJh">
-                                    <rect key="frame" x="68" y="105" width="185" height="27"/>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nickname" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GRW-fA-OJh">
+                                    <rect key="frame" x="116" y="79" width="88" height="23"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="19"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1627,7 +1628,7 @@ or you can try to send another confirmation email.</string>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dIM-YO-l6p" customClass="LXTabButton">
-                                    <rect key="frame" x="0.0" y="210" width="80" height="40"/>
+                                    <rect key="frame" x="0.0" y="180" width="80" height="40"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <state key="normal" image="icon36-menu-brown.png">
@@ -1639,7 +1640,7 @@ or you can try to send another confirmation email.</string>
                                     </connections>
                                 </button>
                                 <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qH4-dd-00c" customClass="LXTabButton">
-                                    <rect key="frame" x="80" y="210" width="80" height="40"/>
+                                    <rect key="frame" x="80" y="180" width="80" height="40"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <state key="normal" image="icon36-grid-brown.png">
@@ -1651,7 +1652,7 @@ or you can try to send another confirmation email.</string>
                                     </connections>
                                 </button>
                                 <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HYg-9W-cBj" customClass="LXTabButton">
-                                    <rect key="frame" x="160" y="210" width="80" height="40"/>
+                                    <rect key="frame" x="160" y="180" width="80" height="40"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <state key="normal" image="icon36-tag-brown.png">
@@ -1663,7 +1664,7 @@ or you can try to send another confirmation email.</string>
                                     </connections>
                                 </button>
                                 <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SIh-u5-mBH" customClass="LXTabButton">
-                                    <rect key="frame" x="240" y="210" width="80" height="40"/>
+                                    <rect key="frame" x="240" y="180" width="80" height="40"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <state key="normal" image="icon36-calendar-brown.png">
@@ -1676,9 +1677,18 @@ or you can try to send another confirmation email.</string>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="centerX" secondItem="vEm-kz-mRV" secondAttribute="centerX" id="3S3-iC-ypV"/>
+                                <constraint firstItem="tdE-Mv-kGb" firstAttribute="leading" secondItem="CF0-wx-KGd" secondAttribute="leading" constant="20" id="KFw-Kr-et2"/>
+                                <constraint firstAttribute="centerX" secondItem="GRW-fA-OJh" secondAttribute="centerX" id="ZVN-OU-7Pd"/>
+                                <constraint firstItem="vEm-kz-mRV" firstAttribute="top" secondItem="CF0-wx-KGd" secondAttribute="top" constant="17" id="dbi-st-OQe"/>
+                                <constraint firstItem="GRW-fA-OJh" firstAttribute="top" secondItem="vEm-kz-mRV" secondAttribute="bottom" constant="2" id="qDP-jS-o5G"/>
+                                <constraint firstItem="tdE-Mv-kGb" firstAttribute="top" secondItem="GRW-fA-OJh" secondAttribute="bottom" constant="6" id="quy-qI-kVS"/>
+                                <constraint firstAttribute="trailing" secondItem="tdE-Mv-kGb" secondAttribute="trailing" constant="20" id="qyz-Vo-rZS"/>
+                            </constraints>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="1fX-HW-NsB">
-                            <rect key="frame" x="0.0" y="316" width="320" height="44"/>
+                            <rect key="frame" x="0.0" y="286" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="60r-SL-Uvf">
@@ -1690,7 +1700,7 @@ or you can try to send another confirmation email.</string>
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Grid" id="vUJ-m3-IyL" userLabel="Cell Grid" customClass="LXCellGrid">
-                                <rect key="frame" x="0.0" y="272" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="242" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vUJ-m3-IyL" id="fjV-jP-SJ6">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -2334,7 +2344,7 @@ or you can try to send another confirmation email.</string>
         <image name="default-cover.gif" width="1200" height="100"/>
         <image name="icon-trend-blue.png" width="14" height="14"/>
         <image name="icon-trend-brown.png" width="14" height="14"/>
-        <image name="icon28-more-brown.png" width="18" height="14"/>
+        <image name="icon28-more-white.png" width="18" height="14"/>
         <image name="icon36-bg.png" width="160" height="40"/>
         <image name="icon36-calendar-blue.png" width="18" height="18"/>
         <image name="icon36-calendar-brown.png" width="18" height="18"/>
@@ -2342,8 +2352,10 @@ or you can try to send another confirmation email.</string>
         <image name="icon36-comment-bronw.png" width="18" height="18"/>
         <image name="icon36-follower-blue.png" width="25" height="18"/>
         <image name="icon36-follower-brown.png" width="25" height="18"/>
+        <image name="icon36-follower-white.png" width="25" height="18"/>
         <image name="icon36-following-blue.png" width="25" height="18"/>
         <image name="icon36-following-brown.png" width="25" height="18"/>
+        <image name="icon36-following-white.png" width="25" height="18"/>
         <image name="icon36-grid-blue.png" width="18" height="18"/>
         <image name="icon36-grid-brown.png" width="18" height="18"/>
         <image name="icon36-info-blue.png" width="18" height="18"/>

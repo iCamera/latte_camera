@@ -11,5 +11,5 @@
 #import "REFrostedViewController.h"
 
 @interface LXNavigationController : UINavigationController<UINavigationControllerDelegate>
-
+- (void)scrollToTop;
 @end

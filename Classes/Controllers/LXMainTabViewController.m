@@ -21,6 +21,7 @@
 #import "LXTableConfirmEmailController.h"
 #import "MZFormSheetSegue.h"
 #import "LXNotifySideViewController.h"
+#import "LXNavigationController.h"
 #import "UAProgressView.h"
 
 @interface LXMainTabViewController ()
@@ -236,6 +237,11 @@
         [actionUpload showFromTabBar:self.tabBar];
         
         return false;
+    } else if (tabBarController.selectedViewController == viewController) {
+        LXNavigationController *navTab = (LXNavigationController*)viewController;
+        if (navTab.topViewController == navTab.viewControllers[0]) {
+            [navTab scrollToTop];
+        }
     }
     
     return true;

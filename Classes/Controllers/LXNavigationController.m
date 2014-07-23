@@ -52,19 +52,22 @@
 
 - (void)tapGestureRecognized:(UIPanGestureRecognizer *)sender
 {
+    [self scrollToTop];
+}
+
+- (void)scrollToTop {
     if ([self.topViewController respondsToSelector:@selector(tableView)]) {
         UITableViewController *view = (UITableViewController*)self.topViewController;
         // No animation to prevent too much pageview counter request
-        [view.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+        [view.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
     }
     
     if ([self.topViewController respondsToSelector:@selector(collectionView)]) {
         UICollectionViewController *view = (UICollectionViewController*)self.topViewController;
         // No animation to prevent too much pageview counter request
-        [view.collectionView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+        [view.collectionView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
     }
 }
-
 
 
 

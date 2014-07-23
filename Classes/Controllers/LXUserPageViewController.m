@@ -121,7 +121,7 @@ typedef enum {
     
     [[LatteAPIClient sharedClient] GET:url parameters:nil success:nil failure:nil];
     
-    _buttonUser.layer.cornerRadius = 40;
+    _buttonUser.layer.cornerRadius = 30;
     _buttonUser.layer.borderWidth = 2;
     _buttonUser.layer.borderColor = [[UIColor whiteColor] CGColor];
     
