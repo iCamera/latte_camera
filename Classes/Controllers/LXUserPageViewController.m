@@ -33,6 +33,11 @@
 #import "LXUserListViewController.h"
 #import "LXSocketIO.h"
 
+#import "UIImageView+LBBlurredImage.h"
+
+CGFloat const kMGOffsetEffects = 40.0;
+CGFloat const kMGOffsetBlurEffect = 2.0;
+
 typedef enum {
     kPhotoTimeline = 0,
     kPhotoGrid = 1,
@@ -116,9 +121,11 @@ typedef enum {
     
     [[LatteAPIClient sharedClient] GET:url parameters:nil success:nil failure:nil];
     
-    _buttonUser.layer.cornerRadius = 30;
+    _buttonUser.layer.cornerRadius = 40;
+    _buttonUser.layer.borderWidth = 2;
+    _buttonUser.layer.borderColor = [[UIColor whiteColor] CGColor];
     
-    self.navigationItem.title = _user.name;
+    _labelUsername.text = _user.name;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTimelineSingle" bundle:nil] forCellReuseIdentifier:@"Single"];
     [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTimelineMulti" bundle:nil] forCellReuseIdentifier:@"Multi"];
@@ -142,6 +149,20 @@ typedef enum {
     [self loadTimeline:YES];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return YES;
+}
+
 - (void)renderProfile {
     [UIView transitionWithView:self.tableView.tableHeaderView
                       duration:kGlobalAnimationSpeed
@@ -161,9 +182,25 @@ typedef enum {
     
     [[LatteAPIv2Client sharedClient] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
         userv2 = JSON;
-        [_imageCover setImageWithURL:[NSURL URLWithString:JSON[@"cover_picture"]]];
+        
+        if (JSON[@"cover_picture"]) {
+            [_imageCover setImageWithURL:[NSURL URLWithString:JSON[@"cover_picture"]]];
+        } else if (JSON[@"profile_picture"]) {
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:JSON[@"profile_picture"]]];
+            [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
+            
+            __weak __typeof(UIImageView*)weakSelf = _imageCover;
+            [_imageCover setContentMode:UIViewContentModeScaleAspectFill];
+            [_imageCover setImageWithURLRequest:request
+                               placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                                   __strong __typeof(weakSelf)strongSelf = weakSelf;
+                                   [strongSelf setImageToBlur:image blurRadius:kLBBlurredImageDefaultBlurRadius completionBlock:nil];
+                               } failure:nil];
+            
+        }
+        
 
-        self.navigationItem.title = JSON[@"name"];
+        _labelUsername.text = JSON[@"name"];
         
         _user.profilePicture = JSON[@"profile_picture"];
         _user.countFollows = JSON[@"count_follows"];
@@ -435,6 +472,10 @@ typedef enum {
                                                   otherButtonTitles:NSLocalizedString(@"report", @""), nil];
         [sheet showInView:self.view];
     }
+}
+
+- (IBAction)touchBack:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)loadMore {
@@ -1205,6 +1246,7 @@ typedef enum {
         
         MZFormSheetSegue *sheet = (MZFormSheetSegue*)segue;
         sheet.formSheetController.cornerRadius = 0;
+        
         sheet.formSheetController.shouldDismissOnBackgroundViewTap = YES;
         sheet.formSheetController.presentedFormSheetSize = CGSizeMake(320, self.view.bounds.size.height - sheet.formSheetController.portraitTopInset);
     }
@@ -1229,6 +1271,7 @@ typedef enum {
         sheet.formSheetController.presentedFormSheetSize = CGSizeMake(250, self.view.bounds.size.height - sheet.formSheetController.portraitTopInset);
     }
 }
+
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
     if (photoMode == kPhotoGrid || photoMode == kPhotoTimeline) {

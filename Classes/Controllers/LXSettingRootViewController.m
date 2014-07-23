@@ -56,7 +56,9 @@
     lxShare = [[LXShare alloc] init];
     lxShare.controller = self;
     
-    _buttonProfilePicture.layer.cornerRadius = 25;
+    _buttonProfilePicture.layer.cornerRadius = 40;
+    _buttonProfilePicture.layer.borderColor = [[UIColor whiteColor] CGColor];
+    _buttonProfilePicture.layer.borderWidth = 2;
     
     if (app.currentUser) {
         [self reloadInfo];
@@ -88,8 +90,8 @@
                                  success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                      [_buttonProfilePicture setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:JSON[@"profile_picture"]]];
                                      [_imageCover setImageWithURL:[NSURL URLWithString:JSON[@"cover_picture"]]];
-                                     _labelLike.text = [JSON[@"vote_count"] stringValue];
-                                     _labelPV.text = [JSON[@"page_views"] stringValue];
+                                     _labelLike.text = [NSString stringWithFormat:@"%ld likes", [JSON[@"vote_count"] integerValue]];
+                                     _labelPV.text = [NSString stringWithFormat:NSLocalizedString(@"d_views", @""), [JSON[@"page_views"] integerValue]];
                                      
                                  } failure:nil];
 }

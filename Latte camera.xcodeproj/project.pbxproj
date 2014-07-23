@@ -1214,6 +1214,10 @@
 		8883EED7173220EA00AA2D5E /* LXTextTemplateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8883EED6173220E900AA2D5E /* LXTextTemplateViewController.m */; };
 		88849718197ACCDA0021EC71 /* LXReportAbuseMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88849717197ACCDA0021EC71 /* LXReportAbuseMessageViewController.m */; };
 		8884971B197AD49E0021EC71 /* LXReportAbuseUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8884971A197AD49E0021EC71 /* LXReportAbuseUserViewController.m */; };
+		88849725197F8F6F0021EC71 /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 8884971E197F8F6F0021EC71 /* UIImage+Alpha.m */; };
+		88849726197F8F6F0021EC71 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 88849720197F8F6F0021EC71 /* UIImage+ImageEffects.m */; };
+		88849727197F8F6F0021EC71 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 88849722197F8F6F0021EC71 /* UIImage+RoundedCorner.m */; };
+		88849728197F8F6F0021EC71 /* UIImageView+LBBlurredImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 88849724197F8F6F0021EC71 /* UIImageView+LBBlurredImage.m */; };
 		8884E35B16A811A700DCBAC7 /* icon_time2_none.png in Resources */ = {isa = PBXBuildFile; fileRef = 8884E35916A811A700DCBAC7 /* icon_time2_none.png */; };
 		8884E35C16A811A700DCBAC7 /* icon_time2_none@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8884E35A16A811A700DCBAC7 /* icon_time2_none@2x.png */; };
 		8884E45616A8ECB100DCBAC7 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8884E45516A8ECB100DCBAC7 /* MessageUI.framework */; };
@@ -3446,6 +3450,14 @@
 		88849717197ACCDA0021EC71 /* LXReportAbuseMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXReportAbuseMessageViewController.m; sourceTree = "<group>"; };
 		88849719197AD49E0021EC71 /* LXReportAbuseUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXReportAbuseUserViewController.h; sourceTree = "<group>"; };
 		8884971A197AD49E0021EC71 /* LXReportAbuseUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXReportAbuseUserViewController.m; sourceTree = "<group>"; };
+		8884971D197F8F6F0021EC71 /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
+		8884971E197F8F6F0021EC71 /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
+		8884971F197F8F6F0021EC71 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		88849720197F8F6F0021EC71 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		88849721197F8F6F0021EC71 /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
+		88849722197F8F6F0021EC71 /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
+		88849723197F8F6F0021EC71 /* UIImageView+LBBlurredImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+LBBlurredImage.h"; sourceTree = "<group>"; };
+		88849724197F8F6F0021EC71 /* UIImageView+LBBlurredImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+LBBlurredImage.m"; sourceTree = "<group>"; };
 		8884E35916A811A700DCBAC7 /* icon_time2_none.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_time2_none.png; sourceTree = "<group>"; };
 		8884E35A16A811A700DCBAC7 /* icon_time2_none@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_time2_none@2x.png"; sourceTree = "<group>"; };
 		8884E45516A8ECB100DCBAC7 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -5760,6 +5772,14 @@
 		8890728F16770EBB0013DF7A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				8884971D197F8F6F0021EC71 /* UIImage+Alpha.h */,
+				8884971E197F8F6F0021EC71 /* UIImage+Alpha.m */,
+				8884971F197F8F6F0021EC71 /* UIImage+ImageEffects.h */,
+				88849720197F8F6F0021EC71 /* UIImage+ImageEffects.m */,
+				88849721197F8F6F0021EC71 /* UIImage+RoundedCorner.h */,
+				88849722197F8F6F0021EC71 /* UIImage+RoundedCorner.m */,
+				88849723197F8F6F0021EC71 /* UIImageView+LBBlurredImage.h */,
+				88849724197F8F6F0021EC71 /* UIImageView+LBBlurredImage.m */,
 				8890729816770EBB0013DF7A /* LatteAPIClient.h */,
 				8890729916770EBB0013DF7A /* LatteAPIClient.m */,
 				887A66BE194561BD000E07F2 /* LatteAPIv2Client.h */,
@@ -9348,6 +9368,7 @@
 				88FB5C191921E1E20018F757 /* LXStreamHeader.m in Sources */,
 				888F64BC16FB2BB500ED74BB /* LXCellInfoTag.m in Sources */,
 				888F651316FBFB8F00ED74BB /* LXLeftSideUserViewController.m in Sources */,
+				88849727197F8F6F0021EC71 /* UIImage+RoundedCorner.m in Sources */,
 				888F651616FC09E100ED74BB /* LXLeftGuestViewController.m in Sources */,
 				88673B6616FF5219007CF6BD /* LXCellSearchConnection.m in Sources */,
 				88992C97196E44720002E502 /* LXFollowingTagTVC.m in Sources */,
@@ -9356,6 +9377,7 @@
 				88675373170C274A009B5BBE /* LXImageFilter.m in Sources */,
 				8880F00C170D69C700478E42 /* LXImageLens.m in Sources */,
 				8835FCC1171BEB3700A48346 /* NSDate+TKCategory.m in Sources */,
+				88849725197F8F6F0021EC71 /* UIImage+Alpha.m in Sources */,
 				8835FCC4171BEB6300A48346 /* NSDate+CalendarGrid.m in Sources */,
 				8835FCC8171CE31900A48346 /* LXCellGridUser.m in Sources */,
 				88F621061724E6AE00CDD1EC /* LXFBOpenGraph.m in Sources */,
@@ -9364,6 +9386,7 @@
 				8C8F582E193EF35E004A9EB9 /* LXTableSettingViewController.m in Sources */,
 				8883EED4173212EC00AA2D5E /* LXImageTextViewController.m in Sources */,
 				8883EED7173220EA00AA2D5E /* LXTextTemplateViewController.m in Sources */,
+				88849726197F8F6F0021EC71 /* UIImage+ImageEffects.m in Sources */,
 				88C095C8173A47BD007CED90 /* UIImage+fixOrientation.m in Sources */,
 				88E617BE173BD0C000E6E909 /* LXFilterDOF.m in Sources */,
 				88CE8A06174E10B500C6A6B6 /* UIColor+MLPFlatColors.m in Sources */,
@@ -9405,6 +9428,7 @@
 				8837738817B0C164005B0826 /* LXEmailConfirmPopupController.m in Sources */,
 				887D5DD21957F50A00519186 /* LXUserProfileViewController.m in Sources */,
 				88C67F3A17C5B324002A5D56 /* LXModalNavigationController.m in Sources */,
+				88849728197F8F6F0021EC71 /* UIImageView+LBBlurredImage.m in Sources */,
 				88D86DD017CB446400EC62A2 /* LXSocialViewController.m in Sources */,
 				88FCB2D517CC83CA0010169E /* LXReportAbuseCommentViewController.m in Sources */,
 			);
