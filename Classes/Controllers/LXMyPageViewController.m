@@ -386,15 +386,23 @@ typedef enum {
     switch (buttonIndex) {
         case 0:
             timelineKind = kTimelineAll;
+            [_buttonUser setImage:[UIImage imageNamed:@"icon36-all-brown.png"] forState:UIControlStateNormal];
+            [_buttonUser setImage:[UIImage imageNamed:@"icon36-all-blue.png"] forState:UIControlStateSelected];
             break;
         case 1:
             timelineKind = kTimelineFollowing;
+            [_buttonUser setImage:[UIImage imageNamed:@"icon36-following-brown.png"] forState:UIControlStateNormal];
+            [_buttonUser setImage:[UIImage imageNamed:@"icon36-following-blue.png"] forState:UIControlStateSelected];
             break;
         case 2:
             timelineKind = kTimelineFriends;
+            [_buttonUser setImage:[UIImage imageNamed:@"icon36-f4f-brown.png"] forState:UIControlStateNormal];
+            [_buttonUser setImage:[UIImage imageNamed:@"icon36-f4f-blue.png"] forState:UIControlStateSelected];
             break;
         case 3:
             timelineKind = kTimelineMe;
+            [_buttonUser setImage:[UIImage imageNamed:@"icon36-me-brown.png"] forState:UIControlStateNormal];
+            [_buttonUser setImage:[UIImage imageNamed:@"icon36-me-blue.png"] forState:UIControlStateSelected];
             break;
         default:
             return;
