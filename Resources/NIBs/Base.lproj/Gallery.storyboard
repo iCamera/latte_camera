@@ -560,8 +560,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="63"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rxu-4E-T7t">
-                                                    <rect key="frame" x="51" y="39" width="53" height="23"/>
+                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rxu-4E-T7t">
+                                                    <rect key="frame" x="51" y="40" width="27" height="19"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
                                                     <inset key="titleEdgeInsets" minX="4" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -627,9 +627,13 @@
                                                         <constraint firstAttribute="width" constant="16" id="r0w-Wa-XJX"/>
                                                     </constraints>
                                                 </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="spI-ig-vIB">
-                                                    <rect key="frame" x="86" y="36" width="36" height="28"/>
+                                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="spI-ig-vIB">
+                                                    <rect key="frame" x="86" y="35" width="36" height="28"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="28" id="PV0-eG-SZG"/>
+                                                        <constraint firstAttribute="width" constant="36" id="yyT-Gh-beN"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                                                     <state key="normal" image="icon28-re-brown.png">
                                                         <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -663,6 +667,8 @@
                                                 <constraint firstAttribute="trailing" secondItem="cVL-xA-beg" secondAttribute="trailing" constant="8" id="6dW-w3-LGh"/>
                                                 <constraint firstAttribute="bottom" secondItem="cVL-xA-beg" secondAttribute="bottom" id="8Ml-QO-c8H"/>
                                                 <constraint firstItem="E2z-bN-F6K" firstAttribute="leading" secondItem="NAs-Sm-ZHd" secondAttribute="trailing" constant="6" id="8ZX-TW-A0Y"/>
+                                                <constraint firstItem="rxu-4E-T7t" firstAttribute="leading" secondItem="v4G-Ph-f9B" secondAttribute="trailing" constant="8" id="Bw6-YJ-Ytj"/>
+                                                <constraint firstItem="spI-ig-vIB" firstAttribute="leading" secondItem="rxu-4E-T7t" secondAttribute="trailing" constant="8" id="IOA-ME-40N"/>
                                                 <constraint firstItem="v4G-Ph-f9B" firstAttribute="leading" secondItem="abX-kb-SeK" secondAttribute="leading" constant="8" id="LL1-C9-RC0"/>
                                                 <constraint firstAttribute="trailing" secondItem="kxb-oT-Vsh" secondAttribute="trailing" constant="8" id="XDC-vM-0p8"/>
                                                 <constraint firstAttribute="bottom" secondItem="spI-ig-vIB" secondAttribute="bottom" id="YiW-pe-Hgr"/>

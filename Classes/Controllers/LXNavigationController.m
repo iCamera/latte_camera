@@ -31,10 +31,12 @@
     //self.delegate = app.viewMainTab;
     self.delegate = self;
 	// Do any additional setup after loading the view.
-    [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)]];
     
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognized:)];
     tap.cancelsTouchesInView = NO;
+    //[self.view addGestureRecognizer:];
+    [self.navigationBar addGestureRecognizer:pan];
     [self.navigationBar addGestureRecognizer:tap];
 }
 
