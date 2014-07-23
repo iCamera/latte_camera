@@ -183,9 +183,11 @@ typedef enum {
                     [arrayOfIndexPaths addObject:path];
                 }
                 
+                [self.tableView beginUpdates];
                 [feeds addObjectsFromArray:newFeed];
                 
                 [self.tableView insertRowsAtIndexPaths:arrayOfIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+                [self.tableView endUpdates];
             }
             [_loadIndicator stopAnimating];
         }
@@ -234,9 +236,11 @@ typedef enum {
                     [arrayOfIndexPaths addObject:path];
                 }
                 
+                [self.tableView beginUpdates];
                 [feeds addObjectsFromArray:newFeed];
                 
                 [self.tableView insertRowsAtIndexPaths:arrayOfIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+                [self.tableView endUpdates];
             }
         }
         

@@ -236,8 +236,10 @@ typedef enum {
                                                [arrayOfIndexPaths addObject:path];
                                            }
                                            
+                                           [self.tableView beginUpdates];
                                            [feeds addObjectsFromArray:newFeed];
                                            [self.tableView insertRowsAtIndexPaths:arrayOfIndexPaths withRowAnimation:UITableViewRowAnimationBottom];
+                                           [self.tableView endUpdates];
                                        }
                                    }
                                    
@@ -394,26 +396,27 @@ typedef enum {
 }
 
 - (IBAction)touchFollow:(id)sender {
-    _buttonFollow.selected = !_buttonFollow.selected;
-    _user.isFollowing = _buttonFollow.selected;
-    NSString *url;
-    
-    if (_user.isFollowing) {
-        url = [NSString stringWithFormat:@"user/follow/%ld", (long)_userId];
+    if (!_user.isFollowing) {
+        _buttonFollow.selected = YES;
+        _user.isFollowing = YES;
         
+        [[LatteAPIClient sharedClient] POST:[NSString stringWithFormat:@"user/follow/%ld", (long)_userId]
+                                 parameters:nil
+                                    success:nil
+                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                        _buttonFollow.selected = NO;
+                                        _user.isFollowing = NO;
+                                    }];
+   
     } else {
-        url = [NSString stringWithFormat:@"user/unfollow/%ld", (long)_userId];
+        UIActionSheet *actionUnfollow = [[UIActionSheet alloc] initWithTitle:nil
+                                                                    delegate:self
+                                                           cancelButtonTitle:NSLocalizedString(@"cancel", @"")
+                                                      destructiveButtonTitle:NSLocalizedString(@"unfollow", @"")
+                                                           otherButtonTitles:nil];
+        actionUnfollow.tag = 99;
+        [actionUnfollow showInView:self.view];
     }
-    
-    [[LatteAPIClient sharedClient] POST:url
-                             parameters:nil
-                                success:nil
-                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                    _buttonFollow.selected = !_buttonFollow.selected;
-                                    _user.isFollowing = _buttonFollow.selected;
-                                    DLog(@"Something went wrong (User - follow)");
-                                }];
-
 }
 
 - (IBAction)touchMore:(id)sender {
@@ -997,31 +1000,46 @@ typedef enum {
 
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    switch (buttonIndex) {
-        case 0: {
-            if ([userv2[@"is_blocking"] boolValue]) {
-                NSString *url = [NSString stringWithFormat:@"user/%ld/unblock", (long)_userId];
-                [[LatteAPIv2Client sharedClient] POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                    [self reloadProfile];
-                } failure:nil];
-            } else {
-                NSString *url = [NSString stringWithFormat:@"user/%ld/block", (long)_userId];
-                [[LatteAPIv2Client sharedClient] POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                    [self reloadProfile];
-                } failure:nil];
+    if (actionSheet.tag == 99) {
+        if (buttonIndex == 0) {
+            _buttonFollow.selected = NO;
+            _user.isFollowing = NO;
+            
+            [[LatteAPIClient sharedClient] POST:[NSString stringWithFormat:@"user/unfollow/%ld", (long)_userId]
+                                     parameters:nil
+                                        success:nil
+                                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                            _buttonFollow.selected = !_buttonFollow.selected;
+                                            _user.isFollowing = _buttonFollow.selected;
+                                        }];
+        }
+    } else {
+        switch (buttonIndex) {
+            case 0: {
+                if ([userv2[@"is_blocking"] boolValue]) {
+                    NSString *url = [NSString stringWithFormat:@"user/%ld/unblock", (long)_userId];
+                    [[LatteAPIv2Client sharedClient] POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                        [self reloadProfile];
+                    } failure:nil];
+                } else {
+                    NSString *url = [NSString stringWithFormat:@"user/%ld/block", (long)_userId];
+                    [[LatteAPIv2Client sharedClient] POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                        [self reloadProfile];
+                    } failure:nil];
+                }
             }
+                break;
+            case 1: {
+                UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+                LXReportAbuseUserViewController *viewReport = [mainStoryboard instantiateViewControllerWithIdentifier:@"ReportUser"];
+                
+                viewReport.user = _user;
+                
+                [self.navigationController pushViewController:viewReport animated:YES];
+            }
+            default:
+                break;
         }
-            break;
-        case 1: {
-            UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-            LXReportAbuseUserViewController *viewReport = [mainStoryboard instantiateViewControllerWithIdentifier:@"ReportUser"];
-            
-            viewReport.user = _user;
-            
-            [self.navigationController pushViewController:viewReport animated:YES];
-        }
-        default:
-            break;
     }
 }
 
