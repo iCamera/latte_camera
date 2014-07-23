@@ -73,6 +73,7 @@ typedef enum {
     NSMutableArray *currentMonthPicsFlat;
     
     AFHTTPRequestOperation *currentRequest;
+    UIButton *buttonScroll;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -144,9 +145,28 @@ typedef enum {
     LXSocketIO *socket = [LXSocketIO sharedClient];
     [socket sendEvent:@"join" withData:[NSString stringWithFormat:@"user_%ld", (long)_userId]];
     
+    buttonScroll = [[UIButton alloc] initWithFrame:CGRectMake(120, 10, 80, 30)];
+    buttonScroll.layer.cornerRadius = 15;
+    buttonScroll.layer.borderColor = [[UIColor whiteColor] CGColor];
+    buttonScroll.layer.borderWidth = 2;
+    [buttonScroll setTitleColor:[UIColor colorWithRed:53.0/255.0 green:48.0/255.0 blue:34.0/255.0 alpha:1] forState:UIControlStateNormal];
+    buttonScroll.titleLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:14];
+    
+    buttonScroll.backgroundColor = [UIColor colorWithRed:222.0/255.0 green:238.0/255.0 blue:236.0/255.0 alpha:1];
+    
+    [buttonScroll setTitle:@"TOP" forState:UIControlStateNormal];
+    [buttonScroll addTarget:self action:@selector(jumpToTop:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:buttonScroll];
+    buttonScroll.enabled = NO;
+    buttonScroll.alpha = 0;
+    
     [self renderProfile];
     [self reloadProfile];
     [self loadTimeline:YES];
+}
+
+- (void)jumpToTop:(id)sender {
+    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -1274,6 +1294,22 @@ typedef enum {
 
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
+    CGRect floatingButtonFrame = buttonScroll.frame;
+    floatingButtonFrame.origin.y = aScrollView.contentOffset.y + 10;
+    buttonScroll.frame = floatingButtonFrame;
+    
+    if (aScrollView.contentOffset.y > self.tableView.bounds.size.height) {
+        buttonScroll.enabled = YES;
+        [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
+            buttonScroll.alpha = 1;
+        }];
+    } else {
+        buttonScroll.enabled = NO;
+        [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
+            buttonScroll.alpha = 0;
+        }];
+    }
+    
     if (photoMode == kPhotoGrid || photoMode == kPhotoTimeline) {
         if (endedPic)
             return;
