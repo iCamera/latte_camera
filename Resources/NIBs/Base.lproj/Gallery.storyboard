@@ -624,11 +624,11 @@
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E2z-bN-F6K">
-                                                    <rect key="frame" x="92" y="7" width="16" height="16"/>
+                                                    <rect key="frame" x="92" y="9" width="17" height="13"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="16" id="Jud-fd-h2X"/>
-                                                        <constraint firstAttribute="width" constant="16" id="r0w-Wa-XJX"/>
+                                                        <constraint firstAttribute="height" constant="13" id="Jud-fd-h2X"/>
+                                                        <constraint firstAttribute="width" constant="17" id="r0w-Wa-XJX"/>
                                                     </constraints>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="spI-ig-vIB">
@@ -681,7 +681,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="jtV-Fy-boJ" secondAttribute="trailing" constant="8" id="i8C-ZU-wZF"/>
                                                 <constraint firstItem="NAs-Sm-ZHd" firstAttribute="leading" secondItem="v4G-Ph-f9B" secondAttribute="trailing" constant="8" id="kAT-ya-30k"/>
                                                 <constraint firstItem="kxb-oT-Vsh" firstAttribute="top" secondItem="abX-kb-SeK" secondAttribute="top" constant="24" id="ljX-bv-vog"/>
-                                                <constraint firstItem="E2z-bN-F6K" firstAttribute="top" secondItem="abX-kb-SeK" secondAttribute="top" constant="7" id="mpT-4S-T4S"/>
+                                                <constraint firstItem="E2z-bN-F6K" firstAttribute="top" secondItem="abX-kb-SeK" secondAttribute="top" constant="9" id="mpT-4S-T4S"/>
                                                 <constraint firstItem="NAs-Sm-ZHd" firstAttribute="top" secondItem="abX-kb-SeK" secondAttribute="top" constant="7" id="rwD-w1-JDs"/>
                                                 <constraint firstAttribute="bottom" secondItem="rxu-4E-T7t" secondAttribute="bottom" constant="4" id="x8R-I2-N53"/>
                                             </constraints>

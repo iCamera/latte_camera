@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -64,13 +64,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </scrollView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="81W-bV-dZq">
-                        <rect key="frame" x="82" y="17" width="16" height="16"/>
+                        <rect key="frame" x="82" y="18" width="17" height="13"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="16" id="DGe-5k-owb"/>
-                            <constraint firstAttribute="height" constant="16" id="ZkF-gw-B2s"/>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="16" id="bYC-Jj-ry3"/>
-                            <constraint firstAttribute="width" constant="16" id="om8-4y-l8i"/>
+                            <constraint firstAttribute="height" constant="13" id="ZkF-gw-B2s"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="13" id="bYC-Jj-ry3"/>
+                            <constraint firstAttribute="width" constant="17" id="om8-4y-l8i"/>
                         </constraints>
                     </imageView>
                 </subviews>
@@ -87,7 +87,7 @@
                     <constraint firstItem="aYS-oY-FVA" firstAttribute="top" secondItem="8Vf-W0-a8C" secondAttribute="top" constant="16" id="pkb-wY-qSd"/>
                     <constraint firstAttribute="bottom" secondItem="dLJ-g2-uPx" secondAttribute="bottom" id="vwU-BE-gVR"/>
                     <constraint firstItem="Ijy-pY-iTJ" firstAttribute="top" secondItem="8Vf-W0-a8C" secondAttribute="top" constant="16" id="wEv-6k-naL"/>
-                    <constraint firstItem="81W-bV-dZq" firstAttribute="top" secondItem="8Vf-W0-a8C" secondAttribute="top" constant="17" id="zo5-6G-cC7"/>
+                    <constraint firstItem="81W-bV-dZq" firstAttribute="top" secondItem="8Vf-W0-a8C" secondAttribute="top" constant="18" id="zo5-6G-cC7"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.90588241820000004" green="0.89411771299999998" blue="0.85490202900000001" alpha="1" colorSpace="deviceRGB"/>

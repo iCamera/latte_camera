@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -85,11 +85,11 @@
                                 <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lYO-HX-5iE">
-                                <rect key="frame" x="81" y="8" width="16" height="16"/>
+                                <rect key="frame" x="81" y="10" width="17" height="13"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="16" id="dzZ-v8-HhF"/>
-                                    <constraint firstAttribute="height" constant="16" id="nVE-tW-pOI"/>
+                                    <constraint firstAttribute="width" constant="17" id="dzZ-v8-HhF"/>
+                                    <constraint firstAttribute="height" constant="13" id="nVE-tW-pOI"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IRU-xe-0cL">
@@ -206,7 +206,7 @@
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="JjG-Mz-LKY" secondAttribute="bottom" id="0xB-hz-HKk"/>
                             <constraint firstItem="pvv-O2-smk" firstAttribute="top" secondItem="kVr-nQ-NVd" secondAttribute="top" constant="8" id="1To-4Z-nXm"/>
-                            <constraint firstItem="lYO-HX-5iE" firstAttribute="top" secondItem="kVr-nQ-NVd" secondAttribute="top" constant="8" id="FRk-ee-kPe"/>
+                            <constraint firstItem="lYO-HX-5iE" firstAttribute="top" secondItem="kVr-nQ-NVd" secondAttribute="top" constant="10" id="FRk-ee-kPe"/>
                             <constraint firstItem="UBn-eV-xcx" firstAttribute="leading" secondItem="kVr-nQ-NVd" secondAttribute="leading" constant="8" id="Gtr-KX-ILq"/>
                             <constraint firstItem="JjG-Mz-LKY" firstAttribute="leading" secondItem="Jdq-LS-Fzv" secondAttribute="trailing" id="IrE-M6-3FL"/>
                             <constraint firstItem="lno-hb-10J" firstAttribute="centerX" secondItem="OCB-8Z-moT" secondAttribute="centerX" id="JVl-ho-sDA"/>
