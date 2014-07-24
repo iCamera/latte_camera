@@ -98,7 +98,7 @@
     
     _viewMainTab = [mainStoryboard instantiateViewControllerWithIdentifier:@"contentController"];
     UIViewController *underLeftViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"menuController"];
-    UIViewController *underRightViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"FollowingTag"];
+    //UIViewController *underRightViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"FollowingTag"];
     
     REFrostedViewController *root = [[REFrostedViewController alloc] init];
     root.contentViewController = _viewMainTab;

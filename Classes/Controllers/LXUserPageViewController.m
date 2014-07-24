@@ -241,9 +241,9 @@ typedef enum {
             if ([JSON[@"is_following"] boolValue]) {
                 
                 if ([JSON[@"is_followed_by"] boolValue]) {
-                    [_buttonFollow setImage:[UIImage imageNamed:@"icon40-f4f.png"] forState:UIControlStateSelected];
+                    [_buttonFollow setImage:[UIImage imageNamed:@"icon40-f4f-green.png"] forState:UIControlStateSelected];
                 } else {
-                    [_buttonFollow setImage:[UIImage imageNamed:@"icon40-followed.png"] forState:UIControlStateSelected];
+                    [_buttonFollow setImage:[UIImage imageNamed:@"icon40-followed-blue.png"] forState:UIControlStateSelected];
                 }
             }
             
