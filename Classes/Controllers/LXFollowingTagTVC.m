@@ -115,7 +115,11 @@ typedef enum {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Tag" forIndexPath:indexPath];
         cell.textLabel.text = results[indexPath.row][@"term"];
         cell.detailTextLabel.text = [results[indexPath.row][@"count"] stringValue];
-        cell.imageView.highlighted = [tags containsObject:results[indexPath.row][@"term"]];
+        if ([tags containsObject:results[indexPath.row][@"term"]]) {
+            cell.imageView.image = [UIImage imageNamed:@"icon36-tag-blue.png"];
+        } else {
+            cell.imageView.image = [UIImage imageNamed:@"icon36-tag-brown.png"];
+        }
         
         return cell;
     } else {
@@ -123,7 +127,7 @@ typedef enum {
         
         cell.textLabel.text = tags[indexPath.row];
         cell.detailTextLabel.text = @"";
-        cell.imageView.highlighted = YES;
+        cell.imageView.image = [UIImage imageNamed:@"icon36-tag-blue.png"];
         
         return cell;
     }
