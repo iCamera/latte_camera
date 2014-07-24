@@ -349,11 +349,18 @@
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapAvatarImageView:(UIImageView *)avatarImageView atIndexPath:(NSIndexPath *)indexPath {
     
+    NSString *destructiveButtonTitle = NSLocalizedString(@"report", @"");
+    
+    JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
+    if ([message.sender isEqualToString:self.sender]) {
+        destructiveButtonTitle = NSLocalizedString(@"Remove This Message", @"");
+    }
+    
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                              delegate:self
                                                     cancelButtonTitle:NSLocalizedString(@"cancel", @"")
                                                destructiveButtonTitle:nil
-                                                    otherButtonTitles:NSLocalizedString(@"View Profile", @""), NSLocalizedString(@"report", @""), nil];
+                                                    otherButtonTitles:NSLocalizedString(@"View Profile", @""), destructiveButtonTitle, nil];
     actionSheet.destructiveButtonIndex = 1;
     actionSheet.tag = indexPath.item;
     [actionSheet showInView:self.view];
@@ -373,13 +380,35 @@
         
         [self.navigationController pushViewController:viewUserPage animated:YES];
     } else if(buttonIndex == 1) {
-        
-        LXReportAbuseMessageViewController *viewReport = [mainStoryboard instantiateViewControllerWithIdentifier:@"ReportMessage"];
-        
-        viewReport.message = rawMessage;
-        
-        [self.navigationController pushViewController:viewReport animated:YES];
+        JSQMessage *message = [self.messages objectAtIndex:actionSheet.tag];
+        if ([message.sender isEqualToString:self.sender]) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                            message:NSLocalizedString(@"Are you sure you want to remove this message?", @"")
+                                                           delegate:self
+                                                  cancelButtonTitle:NSLocalizedString(@"cancel", @"")
+                                                  otherButtonTitles:NSLocalizedString(@"Remove", @""), nil];
+            alert.tag = actionSheet.tag;
+            [alert show];
+        } else {
+            LXReportAbuseMessageViewController *viewReport = [mainStoryboard instantiateViewControllerWithIdentifier:@"ReportMessage"];
+            
+            viewReport.message = rawMessage;
+            
+            [self.navigationController pushViewController:viewReport animated:YES];
+        }
+    }
+}
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        NSDictionary *rawMessage = rawMessages[alertView.tag];
+        NSString *url = [NSString stringWithFormat:@"message/%ld", [rawMessage[@"id"] longValue]];
+        [[LatteAPIv2Client sharedClient] DELETE:url parameters:nil
+                                        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                            [rawMessages removeObjectAtIndex:alertView.tag];
+                                            [self.messages removeObjectAtIndex:alertView.tag];
+                                            [self.collectionView reloadData];
+                                        } failure:nil];
     }
 }
 

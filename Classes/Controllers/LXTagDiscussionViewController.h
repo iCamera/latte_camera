@@ -8,7 +8,7 @@
 
 #import "JSQMessagesViewController.h"
 
-@interface LXTagDiscussionViewController : JSQMessagesViewController<UIActionSheetDelegate>
+@interface LXTagDiscussionViewController : JSQMessagesViewController<UIActionSheetDelegate, UIAlertViewDelegate>
 
 @property (strong, nonatomic) UIImageView *outgoingBubbleImageView;
 @property (strong, nonatomic) UIImageView *incomingBubbleImageView;
