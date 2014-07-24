@@ -1,55 +1,59 @@
-/* Class = "IBUILabel"; text = "Show original file"; ObjectID = "26g-5P-Ccf"; */
+
+/* Class = "IBUILabel"; text = "元サイズの写真"; ObjectID = "26g-5P-Ccf"; */
 "26g-5P-Ccf.text" = "元サイズの写真";
 
-/* Class = "IBUILabel"; text = "Show taken date"; ObjectID = "2oW-2S-zuT"; */
+/* Class = "IBUILabel"; text = "撮影日"; ObjectID = "2oW-2S-zuT"; */
 "2oW-2S-zuT.text" = "撮影日";
 
-/* Class = "IBUITableViewSection"; headerTitle = "SHARE"; ObjectID = "2t8-JW-Cbd"; */
+/* Class = "IBUITableViewSection"; headerTitle = "シェア"; ObjectID = "2t8-JW-Cbd"; */
 "2t8-JW-Cbd.headerTitle" = "シェア";
 
-/* Class = "IBUILabel"; text = "Camera Information"; ObjectID = "38G-wM-Y3u"; */
+/* Class = "IBUILabel"; text = "カメラ情報"; ObjectID = "38G-wM-Y3u"; */
 "38G-wM-Y3u.text" = "カメラ情報";
 
-/* Class = "IBUILabel"; text = "Photo Privacy"; ObjectID = "4BX-G8-qHW"; */
+/* Class = "IBUILabel"; text = "写真の公開設定"; ObjectID = "4BX-G8-qHW"; */
 "4BX-G8-qHW.text" = "写真の公開設定";
 
-/* Class = "IBUITextField"; placeholder = "Add new tag"; ObjectID = "6d1-Fr-YEG"; */
+/* Class = "IBUITextField"; placeholder = "入力して新しいタグを作成"; ObjectID = "6d1-Fr-YEG"; */
 "6d1-Fr-YEG.placeholder" = "入力して新しいタグを作成";
 
-/* Class = "IBUITableViewSection"; footerTitle = "The original file is the photo in full resolution which can be viewed on the web version of Latte."; ObjectID = "AGb-7N-cGk"; */
+/* Class = "IBUITableViewSection"; footerTitle = "「元のサイズの写真」とは、ウェブ版のLatteでのみ表示することが可能な「最大解像度の写真」です。"; ObjectID = "AGb-7N-cGk"; */
 "AGb-7N-cGk.footerTitle" = "「元のサイズの写真」とは、ウェブ版のLatteでのみ表示することが可能な「最大解像度の写真」です。";
 
-/* Class = "IBUITableViewSection"; headerTitle = "Privacy Settings"; ObjectID = "AGb-7N-cGk"; */
+/* Class = "IBUITableViewSection"; headerTitle = "公開設定"; ObjectID = "AGb-7N-cGk"; */
 "AGb-7N-cGk.headerTitle" = "公開設定";
 
-/* Class = "IBUILabel"; text = "Details"; ObjectID = "Ebs-8Z-BUO"; */
+/* Class = "IBUILabel"; text = "詳細情報"; ObjectID = "Ebs-8Z-BUO"; */
 "Ebs-8Z-BUO.text" = "詳細情報";
 
-/* Class = "IBUILabel"; text = "Tags"; ObjectID = "EsO-yj-9On"; */
+/* Class = "IBUILabel"; text = "タグ"; ObjectID = "EsO-yj-9On"; */
 "EsO-yj-9On.text" = "タグ";
 
-/* Class = "IBUILabel"; text = "Report abuse"; ObjectID = "EvW-gJ-9iA"; */
+/* Class = "IBUILabel"; text = "この写真を事務局に報告します"; ObjectID = "EvW-gJ-9iA"; */
 "EvW-gJ-9iA.text" = "この写真を事務局に報告します";
 
 /* Class = "IBUINavigationItem"; title = "Latte"; ObjectID = "FxI-2W-E1d"; */
 "FxI-2W-E1d.title" = "Latte";
 
-/* Class = "IBUIButton"; normalTitle = "SEND"; ObjectID = "IGt-sZ-7Eg"; */
+/* Class = "IBUIButton"; normalTitle = "投稿"; ObjectID = "IGt-sZ-7Eg"; */
 "IGt-sZ-7Eg.normalTitle" = "投稿";
 
-/* Class = "IBUIButton"; normalTitle = "---"; ObjectID = "JNz-uA-38y"; */
+/* Class = "IBUIBarButtonItem"; title = "Post"; ObjectID = "ItS-vx-LIs"; */
+"ItS-vx-LIs.title" = "投稿";
+
+/* Class = "IBUIButton"; normalTitle = "コメント"; ObjectID = "JNz-uA-38y"; */
 "JNz-uA-38y.normalTitle" = "コメント";
 
-/* Class = "IBUILabel"; text = "Location Information"; ObjectID = "LjO-lp-gdF"; */
+/* Class = "IBUILabel"; text = "位置情報"; ObjectID = "LjO-lp-gdF"; */
 "LjO-lp-gdF.text" = "位置情報";
 
-/* Class = "IBUILabel"; text = "Author"; ObjectID = "NAs-Sm-ZHd"; */
+/* Class = "IBUILabel"; text = "作成者"; ObjectID = "NAs-Sm-ZHd"; */
 "NAs-Sm-ZHd.text" = "作成者";
 
-/* Class = "IBUILabel"; text = "Report abuse"; ObjectID = "OQk-AC-QWZ"; */
+/* Class = "IBUILabel"; text = "このコメントを事務局に報告します"; ObjectID = "OQk-AC-QWZ"; */
 "OQk-AC-QWZ.text" = "このコメントを事務局に報告します";
 
-/* Class = "IBUILabel"; text = "Public"; ObjectID = "RmS-JM-4cw"; */
+/* Class = "IBUILabel"; text = "公開"; ObjectID = "RmS-JM-4cw"; */
 "RmS-JM-4cw.text" = "公開";
 
 /* Class = "IBUILabel"; text = "---"; ObjectID = "S7J-P5-R5U"; */
@@ -58,57 +62,68 @@
 /* Class = "IBUIButton"; normalTitle = "Twitter"; ObjectID = "Uj6-qq-mJO"; */
 "Uj6-qq-mJO.normalTitle" = "Twitter";
 
-/* Class = "IBUILabel"; text = "Tags"; ObjectID = "YEp-c4-7uz"; */
+/* Class = "IBUILabel"; text = "タグ"; ObjectID = "YEp-c4-7uz"; */
 "YEp-c4-7uz.text" = "タグ";
 
-/* Class = "IBUINavigationItem"; title = "Comment"; ObjectID = "ZkK-ef-hca"; */
+/* Class = "IBUIBarButtonItem"; title = "Send"; ObjectID = "Z6S-NN-3hQ"; */
+"Z6S-NN-3hQ.title" = "送信";
+
+/* Class = "IBUINavigationItem"; title = "コメント"; ObjectID = "ZkK-ef-hca"; */
 "ZkK-ef-hca.title" = "コメント";
 
 /* Class = "IBUIButton"; normalTitle = "---"; ObjectID = "aai-dv-xYK"; */
+"aai-dv-xYK.normalTitle" = "---";
+
+/* Class = "IBUIButton"; selectedTitle = "いいね"; ObjectID = "aai-dv-xYK"; */
 "aai-dv-xYK.selectedTitle" = "いいね";
 
 /* Class = "IBUIButton"; normalTitle = "Facebook"; ObjectID = "aqY-0L-IBS"; */
 "aqY-0L-IBS.normalTitle" = "Facebook";
 
-/* Class = "IBUIButton"; normalTitle = "Report"; ObjectID = "cVL-xA-beg"; */
+/* Class = "IBUIButton"; normalTitle = "報告"; ObjectID = "cVL-xA-beg"; */
 "cVL-xA-beg.normalTitle" = "報告";
 
-/* Class = "IBUINavigationItem"; title = "Like"; ObjectID = "eqV-zA-kxz"; */
+/* Class = "IBUINavigationItem"; title = "いいね"; ObjectID = "eqV-zA-kxz"; */
 "eqV-zA-kxz.title" = "いいね";
 
-/* Class = "IBUILabel"; text = "Tags"; ObjectID = "i0b-HX-oU1"; */
+/* Class = "IBUILabel"; text = "タグ"; ObjectID = "i0b-HX-oU1"; */
 "i0b-HX-oU1.text" = "タグ";
 
-/* Class = "IBUILabel"; text = "Nickname"; ObjectID = "iH2-NC-wpc"; */
+/* Class = "IBUILabel"; text = "ニックネーム"; ObjectID = "iH2-NC-wpc"; */
 "iH2-NC-wpc.text" = "ニックネーム";
 
-/* Class = "IBUILabel"; text = "Just now"; ObjectID = "jtV-Fy-boJ"; */
+/* Class = "IBUILabel"; text = "数秒前"; ObjectID = "jtV-Fy-boJ"; */
 "jtV-Fy-boJ.text" = "数秒前";
 
-/* Class = "IBUILabel"; text = "Comment"; ObjectID = "kxb-oT-Vsh"; */
+/* Class = "IBUILabel"; text = "コメント"; ObjectID = "kxb-oT-Vsh"; */
 "kxb-oT-Vsh.text" = "コメント";
 
 /* Class = "IBUILabel"; text = "+10"; ObjectID = "lCh-GE-tQD"; */
 "lCh-GE-tQD.text" = "+10";
 
-/* Class = "IBUILabel"; text = "Public"; ObjectID = "lUo-8F-Woh"; */
+/* Class = "IBUILabel"; text = "公開"; ObjectID = "lUo-8F-Woh"; */
 "lUo-8F-Woh.text" = "公開";
 
-/* Class = "IBUILabel"; text = "Public"; ObjectID = "lzG-4Q-qEZ"; */
+/* Class = "IBUILabel"; text = "公開"; ObjectID = "lzG-4Q-qEZ"; */
 "lzG-4Q-qEZ.text" = "公開";
 
 /* Class = "IBUILabel"; text = "---"; ObjectID = "o8T-e9-IaH"; */
 "o8T-e9-IaH.text" = "---";
 
-/* Class = "IBUIButton"; normalTitle = "DELETE THIS PHOTO"; ObjectID = "qDo-Im-f02"; */
+/* Class = "IBUIBarButtonItem"; title = "Send"; ObjectID = "oIS-ZZ-kIM"; */
+"oIS-ZZ-kIM.title" = "送信";
+
+/* Class = "IBUIButton"; normalTitle = "写真を削除する"; ObjectID = "qDo-Im-f02"; */
 "qDo-Im-f02.normalTitle" = "写真を削除する";
 
 /* Class = "IBUIButton"; normalTitle = "0"; ObjectID = "rxu-4E-T7t"; */
+"rxu-4E-T7t.normalTitle" = "0";
+
+/* Class = "IBUIButton"; selectedTitle = "いいねを取り消す"; ObjectID = "rxu-4E-T7t"; */
 "rxu-4E-T7t.selectedTitle" = "いいねを取り消す";
 
-/* Class = "IBUILabel"; text = "Public"; ObjectID = "sUT-aY-ELU"; */
+/* Class = "IBUILabel"; text = "公開"; ObjectID = "sUT-aY-ELU"; */
 "sUT-aY-ELU.text" = "公開";
 
-/* Class = "IBUILabel"; text = "Public"; ObjectID = "uXr-hm-lp7"; */
+/* Class = "IBUILabel"; text = "公開"; ObjectID = "uXr-hm-lp7"; */
 "uXr-hm-lp7.text" = "公開";
-

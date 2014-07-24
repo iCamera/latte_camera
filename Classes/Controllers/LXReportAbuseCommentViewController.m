@@ -66,18 +66,16 @@
     
     [[LatteAPIClient sharedClient] POST:path
                                  parameters:[NSDictionary dictionaryWithObject:textComment.text forKey:@"report_comment"]
-                                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"report", @"")
-                                                                                        message:NSLocalizedString(@"Report sent", @"")
-                                                                                       delegate:nil
-                                                                              cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                                                                              otherButtonTitles:nil];
-                                        [alert show];
-                                        [self.navigationController popViewControllerAnimated:YES];
-                                    } 
-                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        NSLog(@"[HTTPClient Error]: %@", error.localizedDescription);
-                                    }];
+                                    success:nil
+                                    failure:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"report", @"")
+                                                    message:NSLocalizedString(@"Report sent", @"")
+                                                   delegate:nil
+                                          cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                          otherButtonTitles:nil];
+    [alert show];
+    [self.navigationController popViewControllerAnimated:YES];
+
 }
 
 @end

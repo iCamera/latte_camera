@@ -3061,7 +3061,8 @@
 		8834260E1981057800661CE5 /* nl_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nl_7.png; sourceTree = "<group>"; };
 		8834260F1981057800661CE5 /* nl_8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nl_8.png; sourceTree = "<group>"; };
 		883426101981057800661CE5 /* nl_9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nl_9.png; sourceTree = "<group>"; };
-		8834261B198152CA00661CE5 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
+		883426201981779A00661CE5 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Gallery.strings; sourceTree = "<group>"; };
+		88342624198178F800661CE5 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
 		8835FCBF171BEB3700A48346 /* NSDate+TKCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+TKCategory.h"; sourceTree = "<group>"; };
 		8835FCC0171BEB3700A48346 /* NSDate+TKCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+TKCategory.m"; sourceTree = "<group>"; };
 		8835FCC2171BEB6200A48346 /* NSDate+CalendarGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+CalendarGrid.h"; sourceTree = "<group>"; };
@@ -3139,7 +3140,6 @@
 		884ACB1118EE7D9500B2924B /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Authentication.strings; sourceTree = "<group>"; };
 		884ACB1218EE7D9E00B2924B /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Camera.strings; sourceTree = "<group>"; };
 		884ACB1318EE7DA100B2924B /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Camera.strings; sourceTree = "<group>"; };
-		884ACB1618EE7DB500B2924B /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Gallery.strings; sourceTree = "<group>"; };
 		884ACB1718EE7DB900B2924B /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Gallery.strings; sourceTree = "<group>"; };
 		884ACB1A18EE7DCD00B2924B /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Setting.strings; sourceTree = "<group>"; };
 		884ACB1C18EEB4C000B2924B /* LXStreamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXStreamViewController.h; sourceTree = "<group>"; };
@@ -9595,8 +9595,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				884ACB0D18EE7D7600B2924B /* Base */,
-				884ACB1618EE7DB500B2924B /* ja */,
 				884ACB1718EE7DB900B2924B /* vi */,
+				883426201981779A00661CE5 /* ja */,
 			);
 			name = Gallery.storyboard;
 			sourceTree = "<group>";
@@ -9616,7 +9616,7 @@
 			children = (
 				88491EC01921BD1700CAF0A2 /* Base */,
 				88491EC31921BD2700CAF0A2 /* vi */,
-				8834261B198152CA00661CE5 /* ja */,
+				88342624198178F800661CE5 /* ja */,
 			);
 			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";
