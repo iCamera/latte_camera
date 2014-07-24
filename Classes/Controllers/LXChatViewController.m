@@ -12,6 +12,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "LXButtonOrange.h"
 #import "LXSearchViewController.h"
+#import "LXTagHome.h"
 
 @interface LXChatViewController () {
     NSMutableArray *conversations;
@@ -125,13 +126,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
-    LXTagDiscussionViewController *viewConversation = [mainStoryboard instantiateViewControllerWithIdentifier:@"Discussion"];
+    LXTagHome *viewTagHome = [mainStoryboard instantiateViewControllerWithIdentifier:@"TagHome"];
     
     NSDictionary* conversation = conversations[indexPath.row];
-    viewConversation.navigationItem.title = conversation[@"title"];
-    viewConversation.conversationHash = conversation[@"hash"];
-
-    [self.navigationController pushViewController:viewConversation animated:YES];
+    viewTagHome.tag = conversation[@"title"];
+    [self.navigationController pushViewController:viewTagHome animated:YES];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {

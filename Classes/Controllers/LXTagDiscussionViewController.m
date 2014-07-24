@@ -17,6 +17,7 @@
 #import <CommonCrypto/CommonDigest.h>
 #import "LXSocketIO.h"
 #import "User.h"
+#import "LXTagHome.h"
 
 @interface LXTagDiscussionViewController ()
 
@@ -58,10 +59,7 @@
 //    self.showLoadEarlierMessagesHeader = YES;
     
     [self loadMore:YES];
-    
-    if (!_tag) {
-        self.navigationItem.rightBarButtonItem = nil;
-    }
+
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newMessage:) name:@"new_message" object:nil];
     
@@ -455,4 +453,12 @@
 }
 
 
+- (IBAction)touchPhoto:(id)sender {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+
+    LXTagHome *tagHome = [mainStoryboard instantiateViewControllerWithIdentifier:@"TagHome"];
+    tagHome.tag = _tag;
+    [self.navigationController pushViewController:tagHome animated:YES];
+}
 @end

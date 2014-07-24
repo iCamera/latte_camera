@@ -17,5 +17,6 @@
 @property (strong, nonatomic) NSString *conversationHash;
 
 @property (strong, nonatomic) NSMutableArray *messages;
+- (IBAction)touchPhoto:(id)sender;
 
 @end
