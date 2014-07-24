@@ -102,6 +102,7 @@
     _scrollTags.parent = self;
     
     if (_feed.tags.count > 0) {
+        _scrollTags.followingTags = _feed.followingTags;
         _scrollTags.tags = _feed.tags;
         _scrollTags.hidden = NO;
     } else {

@@ -32,6 +32,7 @@
     PictureStatus status;
     NSDictionary *exif;
     NSMutableArray *tagsOld;
+    NSMutableArray *followingTags;
 }
 
 @property (nonatomic, assign) BOOL canComment;
@@ -61,6 +62,7 @@
 @property (nonatomic, copy) NSNumber *width;
 @property (nonatomic, copy) NSDictionary *exif;
 @property (nonatomic, copy) NSMutableArray *tagsOld;
+@property (nonatomic, copy) NSMutableArray *followingTags;
 @property (nonatomic, assign) PictureStatus status;
 @property (nonatomic, assign) PictureStatus showGPS;
 @property (nonatomic, assign) PictureStatus showEXIF;

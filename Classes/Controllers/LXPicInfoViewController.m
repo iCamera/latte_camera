@@ -144,6 +144,7 @@
     if (indexPath.section == 0)
         if ([[keyBasic objectAtIndex:indexPath.row] isEqualToString:@"tags"]) {
             LXCellInfoTag *cellTag = [tableView dequeueReusableCellWithIdentifier:@"Tag"];
+            cellTag.followingTags = _picture.followingTags;
             cellTag.tags = _picture.tagsOld;
             if (_isModal) {
                 cellTag.parent = _parent;

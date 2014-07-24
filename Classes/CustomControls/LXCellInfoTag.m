@@ -30,6 +30,11 @@
     // Configure the view for the selected state
 }
 
+- (void)setFollowingTags:(NSArray *)followingTags {
+    _followingTags = followingTags;
+    scrollTag.followingTags = _followingTags;
+}
+
 - (void)setTags:(NSArray *)tags {
     _tags = tags;
     scrollTag.parent = self;

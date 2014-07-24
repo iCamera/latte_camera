@@ -25,5 +25,6 @@
 + (NSMutableArray *)mutableArrayFromPictures:(NSArray *)pictures;
 - (void)setAttributesFromDictionary:(NSDictionary *)aDictionary;
 - (NSArray*)tags;
+- (NSArray*)followingTags;
 
 @end

@@ -10,6 +10,7 @@
 
 @interface LXScrollTag : UIScrollView
 
+@property (strong, nonatomic) NSArray* followingTags;
 @property (strong, nonatomic) NSArray* tags;
 @property (weak, nonatomic) id parent;
 

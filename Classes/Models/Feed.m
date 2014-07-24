@@ -48,6 +48,21 @@
     return ret;
 }
 
+- (NSArray *)followingTags {
+    if ([model integerValue] != 1) return nil;
+    NSMutableArray *ret = [[NSMutableArray alloc] init];
+    for (Picture *picture in targets) {
+        for (NSString *tag in picture.followingTags) {
+            if (![ret containsObject:tag]) {
+                [ret addObject:tag];
+            }
+        }
+    }
+    
+    return ret;
+}
+
+
 - (void)setAttributesFromDictionary:(NSDictionary *)aDictionary {
 
     if (![aDictionary isKindOfClass:[NSDictionary class]]) {

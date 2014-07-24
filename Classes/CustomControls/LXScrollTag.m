@@ -36,7 +36,11 @@
         [button setTitle:tag forState:UIControlStateNormal];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [button setBackgroundColor:[UIColor colorWithRed:111.0/255.0 green:189.0/255.0 blue:187.0/255.0 alpha:1]];
+
         button.layer.cornerRadius = 3;
+        if ([_followingTags containsObject:tag]) {
+            [button setBackgroundColor:[UIColor colorWithRed:107.0/255.0 green:202.5/255.0 blue:197.0/255.0 alpha:1]];
+        }
         size.width += textSize.width + 20;
         
         [button addTarget:_parent action:@selector(showNormalTag:) forControlEvents:UIControlEventTouchUpInside];

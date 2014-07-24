@@ -152,6 +152,7 @@
     
     // Tag
     if (pic.tagsOld.count > 0) {
+        _scrollTags.followingTags = _feed.followingTags;
         _scrollTags.tags = pic.tagsOld;
         _scrollTags.hidden = NO;
     } else {

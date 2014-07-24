@@ -76,6 +76,11 @@
         if ([value isKindOfClass:[NSArray class]]) {
             self.tagsOld = [NSMutableArray arrayWithArray:value];
         }
+    } else if ([key isEqualToString:@"following_tags"]) {
+        if ([value isKindOfClass:[NSArray class]]) {
+            self.followingTags = [NSMutableArray arrayWithArray:value];
+        }
+
     } else if ([key isEqualToString:@"user"]) {
         if ([value isKindOfClass:[NSDictionary class]]) {
             _user = [User instanceFromDictionary:value];
