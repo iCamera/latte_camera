@@ -510,7 +510,15 @@
                 imageFinalThumb = [self getFinalThumb];
                 imageFinalData = [self getFinalImage];
                 [self preparePipe];
-                [HUD hide:YES];
+                
+                HUD.mode = MBProgressHUDModeText;
+                HUD.labelText = NSLocalizedString(@"saved_photo", @"Saved to Camera Roll") ;
+                HUD.margin = 10.f;
+                HUD.yOffset = 150.f;
+                HUD.removeFromSuperViewOnHide = YES;
+                HUD.dimBackground = NO;
+                [HUD hide:YES afterDelay:2];
+
                 [LXUtils saveImageDateToLib:imageFinalData metadata:nil];
                 
             } else {
