@@ -360,7 +360,7 @@
                         <viewControllerLayoutGuide type="bottom" id="hbO-H8-5bX"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="OhT-9B-KMP">
-                        <rect key="frame" x="0.0" y="44" width="320" height="38"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="82"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -371,7 +371,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l43-nT-RgO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -410,7 +409,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8hC-yq-sUf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="465" y="559"/>
+            <point key="canvasLocation" x="765" y="589"/>
         </scene>
         <!--Notify Side View Controller - Notifications-->
         <scene sceneID="kYt-5Z-oXR">
@@ -1602,16 +1601,17 @@ or you can try to send another confirmation email.</string>
                                     <color key="shadowColor" red="0.2078431547" green="0.18823531269999999" blue="0.13333334029999999" alpha="1" colorSpace="deviceRGB"/>
                                     <size key="shadowOffset" width="0.0" height="0.0"/>
                                 </label>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vzL-yW-JEX">
-                                    <rect key="frame" x="275" y="5" width="40" height="40"/>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vzL-yW-JEX">
+                                    <rect key="frame" x="210" y="5" width="110" height="40"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" image="icon40-follow-yellow.png">
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                    <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <size key="titleShadowOffset" width="0.0" height="1"/>
+                                    <state key="normal" title="Follow" image="icon40-follow.png">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="titleShadowColor" red="0.2078431547" green="0.18823531269999999" blue="0.13333334029999999" alpha="1" colorSpace="deviceRGB"/>
                                     </state>
-                                    <state key="selected" image="icon40-followed-blue.png">
-                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
+                                    <state key="selected" title="Following" image="icon40-followed.png"/>
                                     <connections>
                                         <action selector="touchFollow:" destination="21a-Kc-kfo" eventType="touchUpInside" id="nuw-Q7-rL1"/>
                                     </connections>
@@ -2398,8 +2398,9 @@ or you can try to send another confirmation email.</string>
         <image name="icon40-camera-brown.png" width="20" height="20"/>
         <image name="icon40-chat-white.png" width="20" height="20"/>
         <image name="icon40-earth-color.png" width="20" height="20"/>
-        <image name="icon40-follow-yellow.png" width="20" height="20"/>
+        <image name="icon40-follow.png" width="20" height="20"/>
         <image name="icon40-followed-blue.png" width="20" height="20"/>
+        <image name="icon40-followed.png" width="20" height="20"/>
         <image name="icon40-home-brown.png" width="20" height="20"/>
         <image name="icon40-menu-white.png" width="20" height="20"/>
         <image name="icon40-notify-brown.png" width="20" height="20"/>

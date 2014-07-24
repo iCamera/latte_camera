@@ -102,8 +102,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Country" forIndexPath:indexPath];
-    
-    NSString *countryImage = [NSString stringWithFormat:@"%@.png", countryCodes[indexPath.row]];
+    NSString *countryCode = countryCodes[indexPath.row];
+    NSString *countryImage;
+    if ([countryCode isEqualToString:@"World"]) {
+        countryImage = @"icon40-earth-color.png";
+    } else {
+        countryImage = [NSString stringWithFormat:@"%@.png", countryCode];
+    }
     cell.imageView.image = [UIImage imageNamed:countryImage];
     cell.textLabel.text = countryString[indexPath.row];
 

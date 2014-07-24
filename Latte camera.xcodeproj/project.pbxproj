@@ -3061,6 +3061,7 @@
 		8834260E1981057800661CE5 /* nl_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nl_7.png; sourceTree = "<group>"; };
 		8834260F1981057800661CE5 /* nl_8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nl_8.png; sourceTree = "<group>"; };
 		883426101981057800661CE5 /* nl_9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nl_9.png; sourceTree = "<group>"; };
+		8834261B198152CA00661CE5 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
 		8835FCBF171BEB3700A48346 /* NSDate+TKCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+TKCategory.h"; sourceTree = "<group>"; };
 		8835FCC0171BEB3700A48346 /* NSDate+TKCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+TKCategory.m"; sourceTree = "<group>"; };
 		8835FCC2171BEB6200A48346 /* NSDate+CalendarGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+CalendarGrid.h"; sourceTree = "<group>"; };
@@ -3122,7 +3123,6 @@
 		88418F3D174382F8004EFBA1 /* print25.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = print25.jpg; sourceTree = "<group>"; };
 		88418F5217438302004EFBA1 /* blend6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = blend6.jpg; sourceTree = "<group>"; };
 		88491EC01921BD1700CAF0A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		88491EC21921BD2100CAF0A2 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
 		88491EC31921BD2700CAF0A2 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
 		8849DFFE19614BA200578987 /* LXTagHome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXTagHome.h; sourceTree = "<group>"; };
 		8849DFFF19614BA200578987 /* LXTagHome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXTagHome.m; sourceTree = "<group>"; };
@@ -9615,8 +9615,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				88491EC01921BD1700CAF0A2 /* Base */,
-				88491EC21921BD2100CAF0A2 /* ja */,
 				88491EC31921BD2700CAF0A2 /* vi */,
+				8834261B198152CA00661CE5 /* ja */,
 			);
 			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";
