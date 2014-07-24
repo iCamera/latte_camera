@@ -112,9 +112,9 @@
             UIViewController *viewConfirm = [storyAuth instantiateViewControllerWithIdentifier:@"ConfirmPopup"];
             viewConfirm.view.alpha = 0;
             viewConfirm.view.frame = app.viewMainTab.view.bounds;
-            [app.viewMainTab.view addSubview:viewConfirm.view];
-            [app.viewMainTab addChildViewController:viewConfirm];
-            [viewConfirm didMoveToParentViewController:app.viewMainTab];
+            [self.view addSubview:viewConfirm.view];
+            [self addChildViewController:viewConfirm];
+            [viewConfirm didMoveToParentViewController:self];
             [UIView animateWithDuration:0.3 animations:^{
                 viewConfirm.view.alpha = 1;
             }];

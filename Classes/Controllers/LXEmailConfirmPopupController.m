@@ -39,12 +39,7 @@
 }
 
 - (IBAction)touchClose:(id)sender {
-    [UIView animateWithDuration:0.3 animations:^{
-        self.view.alpha = 0;
-    } completion:^(BOOL finished) {
-        [self.view removeFromSuperview];
-        [self removeFromParentViewController];
-        
+    [self dismissViewControllerAnimated:YES completion:^{
         [[NSNotificationCenter defaultCenter]
          postNotificationName:@"LoggedIn"
          object:self];

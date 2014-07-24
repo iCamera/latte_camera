@@ -34,6 +34,7 @@
 #import "LXSocketIO.h"
 
 #import "UIImageView+LBBlurredImage.h"
+#import "UIImage+ImageEffects.h"
 
 CGFloat const kMGOffsetEffects = 40.0;
 CGFloat const kMGOffsetBlurEffect = 2.0;
@@ -216,7 +217,9 @@ typedef enum {
             [_imageCover setImageWithURLRequest:request
                                placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                                    __strong __typeof(weakSelf)strongSelf = weakSelf;
-                                   [strongSelf setImageToBlur:image blurRadius:kLBBlurredImageDefaultBlurRadius completionBlock:nil];
+                                   UIImage *darkBg = [image applyBlurWithRadius:5 tintColor:[UIColor colorWithWhite:0.11 alpha:0.1] saturationDeltaFactor:1.8 maskImage:nil];
+                                   [strongSelf setImage:darkBg];
+                                   //[strongSelf setImageToBlur:darkBg blurRadius:5.0 completionBlock:nil];
                                } failure:nil];
             
         }
@@ -238,9 +241,9 @@ typedef enum {
             if ([JSON[@"is_following"] boolValue]) {
                 
                 if ([JSON[@"is_followed_by"] boolValue]) {
-                    [_buttonFollow setImage:[UIImage imageNamed:@"icon40-f4f-green.png"] forState:UIControlStateSelected];
+                    [_buttonFollow setImage:[UIImage imageNamed:@"icon40-f4f.png"] forState:UIControlStateSelected];
                 } else {
-                    [_buttonFollow setImage:[UIImage imageNamed:@"icon40-followed-blue.png"] forState:UIControlStateSelected];
+                    [_buttonFollow setImage:[UIImage imageNamed:@"icon40-followed.png"] forState:UIControlStateSelected];
                 }
             }
             

@@ -833,6 +833,12 @@
 		883278A0170173690053C8A2 /* ZM@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 883276BE170173690053C8A2 /* ZM@2x.png */; };
 		883278A1170173690053C8A2 /* ZW.png in Resources */ = {isa = PBXBuildFile; fileRef = 883276BF170173690053C8A2 /* ZW.png */; };
 		883278A2170173690053C8A2 /* ZW@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 883276C0170173690053C8A2 /* ZW@2x.png */; };
+		883426021980DAC900661CE5 /* icon40-f4f.png in Resources */ = {isa = PBXBuildFile; fileRef = 883425FC1980DAC900661CE5 /* icon40-f4f.png */; };
+		883426031980DAC900661CE5 /* icon40-f4f@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 883425FD1980DAC900661CE5 /* icon40-f4f@2x.png */; };
+		883426041980DAC900661CE5 /* icon40-follow.png in Resources */ = {isa = PBXBuildFile; fileRef = 883425FE1980DAC900661CE5 /* icon40-follow.png */; };
+		883426051980DAC900661CE5 /* icon40-follow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 883425FF1980DAC900661CE5 /* icon40-follow@2x.png */; };
+		883426061980DAC900661CE5 /* icon40-followed.png in Resources */ = {isa = PBXBuildFile; fileRef = 883426001980DAC900661CE5 /* icon40-followed.png */; };
+		883426071980DAC900661CE5 /* icon40-followed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 883426011980DAC900661CE5 /* icon40-followed@2x.png */; };
 		8835FCC1171BEB3700A48346 /* NSDate+TKCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8835FCC0171BEB3700A48346 /* NSDate+TKCategory.m */; };
 		8835FCC4171BEB6300A48346 /* NSDate+CalendarGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 8835FCC3171BEB6300A48346 /* NSDate+CalendarGrid.m */; };
 		8835FCC8171CE31900A48346 /* LXCellGridUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8835FCC7171CE31900A48346 /* LXCellGridUser.m */; };
@@ -3031,6 +3037,12 @@
 		883276BE170173690053C8A2 /* ZM@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ZM@2x.png"; sourceTree = "<group>"; };
 		883276BF170173690053C8A2 /* ZW.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ZW.png; sourceTree = "<group>"; };
 		883276C0170173690053C8A2 /* ZW@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ZW@2x.png"; sourceTree = "<group>"; };
+		883425FC1980DAC900661CE5 /* icon40-f4f.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon40-f4f.png"; sourceTree = "<group>"; };
+		883425FD1980DAC900661CE5 /* icon40-f4f@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon40-f4f@2x.png"; sourceTree = "<group>"; };
+		883425FE1980DAC900661CE5 /* icon40-follow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon40-follow.png"; sourceTree = "<group>"; };
+		883425FF1980DAC900661CE5 /* icon40-follow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon40-follow@2x.png"; sourceTree = "<group>"; };
+		883426001980DAC900661CE5 /* icon40-followed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon40-followed.png"; sourceTree = "<group>"; };
+		883426011980DAC900661CE5 /* icon40-followed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon40-followed@2x.png"; sourceTree = "<group>"; };
 		8835FCBF171BEB3700A48346 /* NSDate+TKCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+TKCategory.h"; sourceTree = "<group>"; };
 		8835FCC0171BEB3700A48346 /* NSDate+TKCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+TKCategory.m"; sourceTree = "<group>"; };
 		8835FCC2171BEB6200A48346 /* NSDate+CalendarGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+CalendarGrid.h"; sourceTree = "<group>"; };
@@ -4617,6 +4629,12 @@
 		881C00AF1973EADC009ED466 /* newimages */ = {
 			isa = PBXGroup;
 			children = (
+				883425FC1980DAC900661CE5 /* icon40-f4f.png */,
+				883425FD1980DAC900661CE5 /* icon40-f4f@2x.png */,
+				883425FE1980DAC900661CE5 /* icon40-follow.png */,
+				883425FF1980DAC900661CE5 /* icon40-follow@2x.png */,
+				883426001980DAC900661CE5 /* icon40-followed.png */,
+				883426011980DAC900661CE5 /* icon40-followed@2x.png */,
 				8892ADE7197FDEAD00D41B80 /* icon36-all-blue.png */,
 				8892ADE8197FDEAD00D41B80 /* icon36-all-blue@2x.png */,
 				8892ADE9197FDEAD00D41B80 /* icon36-all-brown.png */,
@@ -7324,6 +7342,7 @@
 				88675396170C343C009B5BBE /* latte.fsh in Resources */,
 				887E40A116257A310060623C /* Default@2x.png in Resources */,
 				887E40A316257B950060623C /* Default.png in Resources */,
+				883426031980DAC900661CE5 /* icon40-f4f@2x.png in Resources */,
 				8883CBC51978FF44003DB760 /* icon36-following-brown@2x.png in Resources */,
 				88FE4197166C93D7004DCE53 /* blend1.png in Resources */,
 				88FE41A1166C93D7004DCE53 /* 37x-Checkmark.png in Resources */,
@@ -7915,6 +7934,7 @@
 				888F64F616FBEE7500ED74BB /* box_login_s@2x.png in Resources */,
 				888F64F716FBEE7500ED74BB /* box_logout_s.png in Resources */,
 				888F64F816FBEE7500ED74BB /* box_logout_s@2x.png in Resources */,
+				883426071980DAC900661CE5 /* icon40-followed@2x.png in Resources */,
 				888F64F916FBEE7500ED74BB /* box_mail_s.png in Resources */,
 				888F64FA16FBEE7500ED74BB /* box_mail_s@2x.png in Resources */,
 				888F64FB16FBEE7500ED74BB /* box_notice_s.png in Resources */,
@@ -8004,6 +8024,7 @@
 				883276F2170173690053C8A2 /* BI@2x.png in Resources */,
 				883276F3170173690053C8A2 /* BJ.png in Resources */,
 				881C01871973EADD009ED466 /* icon40-notify-brown@2x.png in Resources */,
+				883426061980DAC900661CE5 /* icon40-followed.png in Resources */,
 				883276F4170173690053C8A2 /* BJ@2x.png in Resources */,
 				883276F5170173690053C8A2 /* BL.png in Resources */,
 				883276F6170173690053C8A2 /* BL@2x.png in Resources */,
@@ -8372,6 +8393,7 @@
 				88327825170173690053C8A2 /* PS.png in Resources */,
 				88327826170173690053C8A2 /* PS@2x.png in Resources */,
 				88327827170173690053C8A2 /* PT.png in Resources */,
+				883426051980DAC900661CE5 /* icon40-follow@2x.png in Resources */,
 				88327828170173690053C8A2 /* PT@2x.png in Resources */,
 				88327829170173690053C8A2 /* PW.png in Resources */,
 				8832782A170173690053C8A2 /* PW@2x.png in Resources */,
@@ -8767,6 +8789,7 @@
 				8855F984173CB3C1006892FD /* flower-9.jpg in Resources */,
 				8855F985173CB3C1006892FD /* heart-1.jpg in Resources */,
 				881C01781973EADD009ED466 /* icon40-followed-blue.png in Resources */,
+				883426041980DAC900661CE5 /* icon40-follow.png in Resources */,
 				8855F986173CB3C1006892FD /* heart-10.jpg in Resources */,
 				8855F987173CB3C1006892FD /* heart-11.jpg in Resources */,
 				8855F988173CB3C1006892FD /* heart-12.jpg in Resources */,
@@ -9024,6 +9047,7 @@
 				88AAA28E1769E142007610BB /* gradient2-12.png in Resources */,
 				88AAA28F1769E142007610BB /* gradient2-13.png in Resources */,
 				88AAA2901769E142007610BB /* gradient2-14.png in Resources */,
+				883426021980DAC900661CE5 /* icon40-f4f.png in Resources */,
 				88AAA2911769E142007610BB /* gradient2-15.png in Resources */,
 				88AAA2921769E142007610BB /* gradient2-16.png in Resources */,
 				88AAA2931769E142007610BB /* gradient2-17.png in Resources */,
