@@ -32,6 +32,9 @@
     BOOL isFirst;
 
     UAProgressView *hudUpload;
+    
+    CLLocationManager *locationManager;
+    CLLocation *bestEffortAtLocation;
 }
 
 
@@ -91,6 +94,28 @@
     
 
     [[UITabBar appearance] setTintColor:[UIColor colorWithRed:35.0/255.0 green:183.0/255.0 blue:223.0/255.00 alpha:1]];
+}
+
+- (void)startGPS {
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    [locationManager startUpdatingLocation];
+    [locationManager performSelector:@selector(stopUpdatingLocation) withObject:nil afterDelay:45];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+    NSTimeInterval locationAge = -[newLocation.timestamp timeIntervalSinceNow];
+    if (locationAge > 5.0) return;
+    
+    if (newLocation.horizontalAccuracy < 0) return;
+    
+    if (bestEffortAtLocation == nil || bestEffortAtLocation.horizontalAccuracy > newLocation.horizontalAccuracy) {
+        bestEffortAtLocation = newLocation;
+        if (newLocation.horizontalAccuracy <= locationManager.desiredAccuracy) {
+            [locationManager stopUpdatingLocation];
+        }
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -251,7 +276,7 @@
         imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
         imagePicker.cameraFlashMode = UIImagePickerControllerCameraFlashModeOff;
         imagePicker.delegate = self;
-        
+        [self startGPS];
         [self presentViewController:imagePicker animated:YES completion:nil];
     }
 }
@@ -271,8 +296,18 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *image =  [info objectForKey:UIImagePickerControllerOriginalImage];
+    NSMutableDictionary *imageMeta;
     
     if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+        
+        // Save GPS & Correct orientation
+        imageMeta = [NSMutableDictionary dictionaryWithDictionary:[info objectForKey:UIImagePickerControllerMediaMetadata]];
+        NSDictionary *location;
+        if (bestEffortAtLocation != nil) {
+            location = [LXUtils getGPSDictionaryForLocation:bestEffortAtLocation];
+            [imageMeta setObject:location forKey:(NSString *)kCGImagePropertyGPSDictionary];
+        }
+        
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         BOOL save;
         if ([defaults objectForKey:@"LatteSaveOrigin"]) {
@@ -282,7 +317,7 @@
         }
         
         if (save) {
-            [LXUtils saveImageRefToLib:image.CGImage metadata:[info objectForKey:UIImagePickerControllerMediaMetadata]];
+            [LXUtils saveImageRefToLib:image.CGImage metadata:imageMeta];
         }
     }
     
@@ -296,7 +331,7 @@
             LXCanvasViewController *controllerCanvas = [storyCamera instantiateViewControllerWithIdentifier:@"Canvas"];
             controllerCanvas.imageOriginal = editedImage;
             if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
-                controllerCanvas.info = [info objectForKey:UIImagePickerControllerMediaMetadata];
+                controllerCanvas.info = imageMeta;
                 [picker pushViewController:controllerCanvas animated:YES];
             } else {
 

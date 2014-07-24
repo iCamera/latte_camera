@@ -12,7 +12,7 @@
 
 #define kAnimationDuration .3
 
-@interface LXMainTabViewController : UITabBarController<UINavigationControllerDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UITabBarControllerDelegate, LXImagePickerDelegate, SocketIODelegate>
+@interface LXMainTabViewController : UITabBarController<UINavigationControllerDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UITabBarControllerDelegate, LXImagePickerDelegate, SocketIODelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) NSMutableArray *notifies;
 
