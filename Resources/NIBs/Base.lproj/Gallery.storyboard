@@ -633,10 +633,14 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cVL-xA-beg">
-                                                    <rect key="frame" x="276" y="36" width="36" height="27"/>
+                                                    <rect key="frame" x="277" y="43" width="30" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="W7Y-eF-GII"/>
+                                                        <constraint firstAttribute="width" constant="30" id="bAH-9g-1eP"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
-                                                    <state key="normal" title="Report">
+                                                    <state key="normal" image="icon28-more-brown-mini.png">
                                                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -650,7 +654,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="kxb-oT-Vsh" firstAttribute="leading" secondItem="abX-kb-SeK" secondAttribute="leading" constant="51" id="272-4g-gRe"/>
-                                                <constraint firstAttribute="trailing" secondItem="cVL-xA-beg" secondAttribute="trailing" constant="8" id="6dW-w3-LGh"/>
+                                                <constraint firstAttribute="trailing" secondItem="cVL-xA-beg" secondAttribute="trailing" constant="13" id="6dW-w3-LGh"/>
                                                 <constraint firstAttribute="bottom" secondItem="cVL-xA-beg" secondAttribute="bottom" id="8Ml-QO-c8H"/>
                                                 <constraint firstItem="E2z-bN-F6K" firstAttribute="leading" secondItem="NAs-Sm-ZHd" secondAttribute="trailing" constant="6" id="8ZX-TW-A0Y"/>
                                                 <constraint firstItem="rxu-4E-T7t" firstAttribute="leading" secondItem="v4G-Ph-f9B" secondAttribute="trailing" constant="8" id="Bw6-YJ-Ytj"/>
@@ -1207,6 +1211,7 @@
         <image name="icon28-like-brown.png" width="14" height="14"/>
         <image name="icon28-like-white.png" width="14" height="14"/>
         <image name="icon28-more-blue.png" width="18" height="14"/>
+        <image name="icon28-more-brown-mini.png" width="14" height="14"/>
         <image name="icon28-more-white.png" width="18" height="14"/>
         <image name="icon28-re-blue.png" width="14" height="14"/>
         <image name="icon28-re-brown.png" width="14" height="14"/>
