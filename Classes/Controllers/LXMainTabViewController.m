@@ -201,7 +201,7 @@
         self.selectedIndex = 4;
         UINavigationController *navMypage = (UINavigationController*)self.selectedViewController;
         if ([navMypage.viewControllers[0] respondsToSelector:@selector(reloadView)]) {
-            [navMypage.viewControllers[0] performSelector:@selector(reloadView)];
+            [navMypage.viewControllers[0] performSelector:@selector(reloadView) withObject:nil afterDelay:1];
         }
     }
 }
