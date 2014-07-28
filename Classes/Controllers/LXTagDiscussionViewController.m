@@ -405,9 +405,7 @@
         NSString *url = [NSString stringWithFormat:@"message/%ld", [rawMessage[@"id"] longValue]];
         [[LatteAPIv2Client sharedClient] DELETE:url parameters:nil
                                         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                            [rawMessages removeObjectAtIndex:alertView.tag];
-                                            [self.messages removeObjectAtIndex:alertView.tag];
-                                            [self.collectionView reloadData];
+                                            [self loadMore:YES];
                                         } failure:nil];
     }
 }
