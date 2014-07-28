@@ -124,7 +124,7 @@ typedef enum {
     viewTop = [storyComponent instantiateViewControllerWithIdentifier:@"UserTop"];
     viewTop.view.alpha = 0;
     [viewTop.buttonUsername addTarget:self action:@selector(jumpToTop:) forControlEvents:UIControlEventTouchUpInside];
-    
+    viewTop.view.frame = CGRectMake(0, 0, 320, 50);
     [self.view addSubview:viewTop.view];
     [self addChildViewController:viewTop];
     [viewTop didMoveToParentViewController:self];
