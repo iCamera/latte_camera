@@ -1536,6 +1536,11 @@ or you can try to send another confirmation email.</string>
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
+                                <view alpha="0.59999999999999998" tag="1" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="79L-La-khP" customClass="LXGradientView">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="75"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
                                 <view alpha="0.59999999999999998" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Fw-lt-UFv" customClass="LXGradientView">
                                     <rect key="frame" x="0.0" y="105" width="320" height="75"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1606,7 +1611,6 @@ or you can try to send another confirmation email.</string>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                     <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    <size key="titleShadowOffset" width="0.0" height="1"/>
                                     <state key="normal" title="Follow" image="icon40-follow.png">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="titleShadowColor" red="0.2078431547" green="0.18823531269999999" blue="0.13333334029999999" alpha="1" colorSpace="deviceRGB"/>
