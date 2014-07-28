@@ -35,6 +35,7 @@
 
 #import "UIImageView+LBBlurredImage.h"
 #import "UIImage+ImageEffects.h"
+#import "LXUserPageHead.h"
 
 CGFloat const kMGOffsetEffects = 40.0;
 CGFloat const kMGOffsetBlurEffect = 2.0;
@@ -73,7 +74,7 @@ typedef enum {
     NSMutableArray *currentMonthPicsFlat;
     
     AFHTTPRequestOperation *currentRequest;
-    UIButton *buttonScroll;
+    LXUserPageHead *viewTop;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -117,6 +118,19 @@ typedef enum {
     
     photoMode = kPhotoTimeline;
     
+    UIStoryboard *storyComponent = [UIStoryboard storyboardWithName:@"Component"
+                                                             bundle:nil];
+    
+    viewTop = [storyComponent instantiateViewControllerWithIdentifier:@"UserTop"];
+    viewTop.view.alpha = 0;
+    [viewTop.buttonUsername addTarget:self action:@selector(jumpToTop:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:viewTop.view];
+    [self addChildViewController:viewTop];
+    [viewTop didMoveToParentViewController:self];
+    
+    [viewTop.buttonUsername setTitle:_user.name forState:UIControlStateNormal];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userUpdate:) name:@"user_update" object:nil];
     
     // Increase count
@@ -147,21 +161,6 @@ typedef enum {
     
     LXSocketIO *socket = [LXSocketIO sharedClient];
     [socket sendEvent:@"join" withData:[NSString stringWithFormat:@"user_%ld", (long)_userId]];
-    
-    buttonScroll = [[UIButton alloc] initWithFrame:CGRectMake(120, 10, 80, 30)];
-    buttonScroll.layer.cornerRadius = 15;
-    buttonScroll.layer.borderColor = [[UIColor whiteColor] CGColor];
-    buttonScroll.layer.borderWidth = 2;
-    [buttonScroll setTitleColor:[UIColor colorWithRed:53.0/255.0 green:48.0/255.0 blue:34.0/255.0 alpha:1] forState:UIControlStateNormal];
-    buttonScroll.titleLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:14];
-    
-    buttonScroll.backgroundColor = [UIColor colorWithRed:222.0/255.0 green:238.0/255.0 blue:236.0/255.0 alpha:1];
-    
-    [buttonScroll setTitle:@"TOP" forState:UIControlStateNormal];
-    [buttonScroll addTarget:self action:@selector(jumpToTop:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:buttonScroll];
-    buttonScroll.enabled = NO;
-    buttonScroll.alpha = 0;
     
     [self renderProfile];
     [self reloadProfile];
@@ -226,6 +225,7 @@ typedef enum {
         
 
         _labelUsername.text = JSON[@"name"];
+        [viewTop.buttonUsername setTitle:_user.name forState:UIControlStateNormal];
         
         _user.profilePicture = JSON[@"profile_picture"];
         _user.countFollows = JSON[@"count_follows"];
@@ -1297,19 +1297,21 @@ typedef enum {
 
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
-    CGRect floatingButtonFrame = buttonScroll.frame;
-    floatingButtonFrame.origin.y = aScrollView.contentOffset.y + 10;
-    buttonScroll.frame = floatingButtonFrame;
+    CGRect floatingButtonFrame = viewTop.view.frame;
+    floatingButtonFrame.origin.y = aScrollView.contentOffset.y;
+    viewTop.view.frame = floatingButtonFrame;
     
     if (aScrollView.contentOffset.y > self.tableView.bounds.size.height) {
-        buttonScroll.enabled = YES;
+        viewTop.buttonUsername.enabled = YES;
+        viewTop.buttonBack.enabled = YES;
         [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
-            buttonScroll.alpha = 1;
+            viewTop.view.alpha = 1;
         }];
     } else {
-        buttonScroll.enabled = NO;
+        viewTop.buttonUsername.enabled = NO;
+        viewTop.buttonBack.enabled = NO;
         [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
-            buttonScroll.alpha = 0;
+            viewTop.view.alpha = 0;
         }];
     }
     

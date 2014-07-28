@@ -856,6 +856,8 @@
 		883426301986528F00661CE5 /* icon36-grid2-brown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8834262C1986528F00661CE5 /* icon36-grid2-brown@2x.png */; };
 		8834263519866C9E00661CE5 /* icon28-more-brown-mini.png in Resources */ = {isa = PBXBuildFile; fileRef = 8834263319866C9E00661CE5 /* icon28-more-brown-mini.png */; };
 		8834263619866C9E00661CE5 /* icon28-more-brown-mini@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8834263419866C9E00661CE5 /* icon28-more-brown-mini@2x.png */; };
+		8834263F1986A39C00661CE5 /* LXUserPageHead.m in Sources */ = {isa = PBXBuildFile; fileRef = 8834263D1986A39C00661CE5 /* LXUserPageHead.m */; };
+		883426401986A39C00661CE5 /* LXUserPageHead.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8834263E1986A39C00661CE5 /* LXUserPageHead.xib */; };
 		8835FCC1171BEB3700A48346 /* NSDate+TKCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8835FCC0171BEB3700A48346 /* NSDate+TKCategory.m */; };
 		8835FCC4171BEB6300A48346 /* NSDate+CalendarGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 8835FCC3171BEB6300A48346 /* NSDate+CalendarGrid.m */; };
 		8835FCC8171CE31900A48346 /* LXCellGridUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8835FCC7171CE31900A48346 /* LXCellGridUser.m */; };
@@ -3079,6 +3081,9 @@
 		8834262C1986528F00661CE5 /* icon36-grid2-brown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon36-grid2-brown@2x.png"; sourceTree = "<group>"; };
 		8834263319866C9E00661CE5 /* icon28-more-brown-mini.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon28-more-brown-mini.png"; sourceTree = "<group>"; };
 		8834263419866C9E00661CE5 /* icon28-more-brown-mini@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon28-more-brown-mini@2x.png"; sourceTree = "<group>"; };
+		8834263C1986A39C00661CE5 /* LXUserPageHead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXUserPageHead.h; sourceTree = "<group>"; };
+		8834263D1986A39C00661CE5 /* LXUserPageHead.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXUserPageHead.m; sourceTree = "<group>"; };
+		8834263E1986A39C00661CE5 /* LXUserPageHead.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LXUserPageHead.xib; sourceTree = "<group>"; };
 		8835FCBF171BEB3700A48346 /* NSDate+TKCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+TKCategory.h"; sourceTree = "<group>"; };
 		8835FCC0171BEB3700A48346 /* NSDate+TKCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+TKCategory.m"; sourceTree = "<group>"; };
 		8835FCC2171BEB6200A48346 /* NSDate+CalendarGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+CalendarGrid.h"; sourceTree = "<group>"; };
@@ -5874,6 +5879,9 @@
 				881C01951973F62B009ED466 /* LXTabButton.m */,
 				881C01971974D8FE009ED466 /* LXScrollTag.h */,
 				881C01981974D8FE009ED466 /* LXScrollTag.m */,
+				8834263C1986A39C00661CE5 /* LXUserPageHead.h */,
+				8834263D1986A39C00661CE5 /* LXUserPageHead.m */,
+				8834263E1986A39C00661CE5 /* LXUserPageHead.xib */,
 			);
 			path = CustomControls;
 			sourceTree = "<group>";
@@ -7567,6 +7575,7 @@
 				881C020E19764E9E009ED466 /* icon44-facebook-cicle.png in Resources */,
 				88FE42B4166C93D7004DCE53 /* icon_help.png in Resources */,
 				88FE42B5166C93D7004DCE53 /* icon_help@2x.png in Resources */,
+				883426401986A39C00661CE5 /* LXUserPageHead.xib in Resources */,
 				88FE42B6166C93D7004DCE53 /* icon_home.png in Resources */,
 				88FE42B7166C93D7004DCE53 /* icon_home@2x.png in Resources */,
 				88FE42B8166C93D7004DCE53 /* icon_iine.png in Resources */,
@@ -9459,6 +9468,7 @@
 				88F550B1194AD118007217CF /* LXImageCropViewController.m in Sources */,
 				889072C716770EBB0013DF7A /* LXRankingViewController.m in Sources */,
 				889072C816770EBB0013DF7A /* LXRegisterViewController.m in Sources */,
+				8834263F1986A39C00661CE5 /* LXUserPageHead.m in Sources */,
 				889072CA16770EBB0013DF7A /* LXNotifySideViewController.m in Sources */,
 				889072CC16770EBB0013DF7A /* LXMainTabViewController.m in Sources */,
 				889072CF16770EBB0013DF7A /* LXButtonBack.m in Sources */,
