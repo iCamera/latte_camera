@@ -134,7 +134,9 @@
 {
     [self.navigationController setNavigationBarHidden:NO animated:animated];
     [super viewWillAppear:animated];
-    labelTag.text = [tags componentsJoinedByString:@", "];
+    [tags removeObject:@""];
+    NSSet *tagSet = [NSSet setWithArray:tags];
+    labelTag.text = [[tagSet allObjects] componentsJoinedByString:@", "];
 }
 
 - (void)setStatusLabel:(UILabel*)label status:(PictureStatus)status {

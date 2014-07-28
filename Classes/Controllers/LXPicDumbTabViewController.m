@@ -23,7 +23,9 @@ typedef enum {
 @implementation LXPicDumbTabViewController {
     TagTable tableMode;
     AFHTTPRequestOperation *currentRequest;
+    UITextField *lastField;
     NSArray *results;
+    BOOL focused;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -48,12 +50,22 @@ typedef enum {
     
     tableMode = kTagTableInput;
     [self.tableView setEditing:YES animated:YES];
+    focused = NO;
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (!focused) {
+        focused = YES;
+        [lastField becomeFirstResponder];
+    }
+    
 }
 
 #pragma mark - Table view data source
@@ -84,6 +96,7 @@ typedef enum {
             cell.textTag.text = _tags[indexPath.row];
         } else {
             cell.textTag.text = @"";
+            lastField = cell.textTag;
         }
         
         return cell;
