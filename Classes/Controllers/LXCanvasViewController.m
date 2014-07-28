@@ -40,6 +40,7 @@
     NSArray *arrayTone;
     NSMutableArray *effectPreview;
     NSMutableArray *effectPreviewPreset;
+    NSMutableArray *effectButtons;
     
     NSLayoutConstraint *cameraAspect;
     NSInteger timerMode;
@@ -210,6 +211,7 @@
     effectNum = arrayTone.count;
     
     effectPreview = [[NSMutableArray alloc] init];
+    effectButtons = [[NSMutableArray alloc] init];
     for (int i=0; i < effectNum; i++) {
         UILabel *labelEffect = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 70, 12)];
         labelEffect.backgroundColor = [UIColor clearColor];
@@ -238,10 +240,12 @@
         buttonEffect.layer.cornerRadius = 5;
         buttonEffect.clipsToBounds = YES;
         buttonEffect.tag = i;
+        buttonEffect.layer.borderColor = [[UIColor colorWithWhite:1 alpha:0.3] CGColor];
         labelEffect.text = arrayTone[i][@"title"];
         [scrollEffect addSubview:buttonEffect];
         [scrollEffect addSubview:labelEffect];
         [effectPreview addObject:viewPreset];
+        [effectButtons addObject:buttonEffect];
     }
     scrollEffect.contentSize = CGSizeMake(effectNum*75+10, 70);
     
@@ -1000,6 +1004,14 @@
 }
 
 - (void)resetSetting {
+    for (NSInteger i = 0; i < effectButtons.count; i++) {
+        if (i == 0) {
+            ((UIButton*)effectButtons[i]).layer.borderWidth = 0.5;
+        } else {
+            ((UIButton*)effectButtons[i]).layer.borderWidth = 0;
+        }
+    }
+    
     sliderExposure.value = 0.0;
     sliderBrightness.value = 0.0;
     sliderContrast.value = 1.0;
@@ -1355,6 +1367,10 @@
 }
 
 - (void)setTone:(UIButton*)button {
+    for (UIButton *effectButton in effectButtons) {
+        effectButton.layer.borderWidth = 0;
+    }
+    button.layer.borderWidth = 0.5;
     NSDictionary *preset = arrayTone[button.tag];
     [filterMain setValuesForKeysWithDictionary:preset];
     [self processImage];
