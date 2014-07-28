@@ -10,6 +10,10 @@
 #import "HFImageEditorFrameView.h"
 
 @interface LXImageCropViewController : HFImageEditorViewController
+@property (weak, nonatomic) IBOutlet UIButton *buttonCrop11;
+@property (weak, nonatomic) IBOutlet UIButton *buttonCrop43;
+@property (weak, nonatomic) IBOutlet UIButton *buttonCrop34;
+@property (weak, nonatomic) IBOutlet UIButton *buttonCropNo;
 
 @property (strong, nonatomic) IBOutlet UIImageView *imageCropSize;
 

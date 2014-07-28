@@ -55,6 +55,11 @@
 
 
 - (IBAction)panSize:(UIPanGestureRecognizer *)sender {
+    _buttonCrop11.selected = NO;
+    _buttonCrop34.selected = NO;
+    _buttonCrop43.selected = NO;
+    _buttonCropNo.selected = NO;
+    
     CGPoint translation = [sender translationInView:self.view];
     CGSize size = self.cropSize;
     size.width += translation.x*2;
@@ -85,6 +90,11 @@
 }
 
 - (IBAction)setCropRatio:(UIButton*)sender {
+    _buttonCrop11.selected = NO;
+    _buttonCrop34.selected = NO;
+    _buttonCrop43.selected = NO;
+    _buttonCropNo.selected = NO;
+    sender.selected = YES;
     switch (sender.tag) {
         case 1:
             self.cropSize = CGSizeMake(280, 280);
@@ -112,6 +122,9 @@
     self.doneCallback(self.sourceImage, NO);
 }
 
+- (BOOL)prefersStatusBarHidden {
+    return YES;
+}
 
 
 @end

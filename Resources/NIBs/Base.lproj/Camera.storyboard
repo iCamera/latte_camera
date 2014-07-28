@@ -73,7 +73,7 @@
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <state key="highlighted" backgroundImage="bg_camera_bt3_on.png">
+                                        <state key="highlighted">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1402,20 +1402,19 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <view contentMode="scaleToFill" id="XQd-W2-KOT" customClass="HFImageEditorFrameView">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="430"/>
+                                <rect key="frame" x="0.0" y="40" width="320" height="430"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" id="Fdu-mU-oln">
-                                <rect key="frame" x="0.0" y="430" width="320" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="hVT-wz-T6n">
-                                        <rect key="frame" x="260" y="5" width="58" height="40"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="hVT-wz-T6n">
+                                        <rect key="frame" x="260" y="0.0" width="58" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                        <state key="normal" image="icon_ok.png">
+                                        <state key="normal" image="icon_ok2.png">
                                             <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -1423,12 +1422,10 @@
                                             <action selector="doneAction:" destination="7Fc-rr-87L" eventType="touchUpInside" id="geS-Uj-PLz"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Zdt-4b-dhi">
-                                        <rect key="frame" x="-1" y="5" width="58" height="40"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Zdt-4b-dhi">
+                                        <rect key="frame" x="-1" y="0.0" width="58" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
-                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                        <state key="normal" image="icon_escape.png">
+                                        <state key="normal" image="icon_no2.png">
                                             <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -1436,56 +1433,72 @@
                                             <action selector="cancelAction:" destination="7Fc-rr-87L" eventType="touchUpInside" id="gvx-76-Rj5"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="67F-2h-hcf">
-                                        <rect key="frame" x="63" y="5" width="40" height="40"/>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="67F-2h-hcf">
+                                        <rect key="frame" x="63" y="0.0" width="40" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                        <color key="tintColor" white="1" alpha="0.10000000000000001" colorSpace="calibratedWhite"/>
                                         <state key="normal" title="1:1">
-                                            <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="selected">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="setCropRatio:" destination="7Fc-rr-87L" eventType="touchUpInside" id="gKl-Hh-hU2"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="mIh-my-AA8">
-                                        <rect key="frame" x="111" y="5" width="40" height="40"/>
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="mIh-my-AA8">
+                                        <rect key="frame" x="111" y="0.0" width="40" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                        <color key="tintColor" white="1" alpha="0.10000000000000001" colorSpace="calibratedWhite"/>
                                         <state key="normal" title="4:3">
-                                            <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="selected">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="setCropRatio:" destination="7Fc-rr-87L" eventType="touchUpInside" id="jov-To-mqy"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="qcf-Tw-6Ui">
-                                        <rect key="frame" x="159" y="5" width="40" height="40"/>
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="qcf-Tw-6Ui">
+                                        <rect key="frame" x="159" y="0.0" width="40" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                        <color key="tintColor" white="1" alpha="0.10000000000000001" colorSpace="calibratedWhite"/>
                                         <state key="normal" title="3:4">
-                                            <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="selected">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="setCropRatio:" destination="7Fc-rr-87L" eventType="touchUpInside" id="hNS-Eh-VS4"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="VwG-c4-a0s">
-                                        <rect key="frame" x="209" y="5" width="54" height="40"/>
+                                    <button opaque="NO" tag="4" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="VwG-c4-a0s">
+                                        <rect key="frame" x="209" y="0.0" width="54" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
+                                        <color key="tintColor" white="1" alpha="0.10000000000000001" colorSpace="calibratedWhite"/>
                                         <state key="normal" title="No Crop">
-                                            <color key="titleColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="selected">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="setCropRatio:" destination="7Fc-rr-87L" eventType="touchUpInside" id="2Ug-YU-YzG"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="backgroundColor" red="0.20784313730000001" green="0.18823529410000001" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
                             </view>
                             <imageView contentMode="center" image="crop_rb.png" id="t1P-U4-RwE">
                                 <rect key="frame" x="278" y="311" width="40" height="40"/>
@@ -1499,6 +1512,10 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="buttonCrop11" destination="67F-2h-hcf" id="Vuc-cW-G5e"/>
+                        <outlet property="buttonCrop34" destination="qcf-Tw-6Ui" id="htb-pw-CEV"/>
+                        <outlet property="buttonCrop43" destination="mIh-my-AA8" id="IRX-tQ-I3L"/>
+                        <outlet property="buttonCropNo" destination="VwG-c4-a0s" id="Slx-Sf-ljD"/>
                         <outlet property="frameView" destination="XQd-W2-KOT" id="LVR-7s-FjC"/>
                         <outlet property="imageCropSize" destination="t1P-U4-RwE" id="ViN-Wo-c99"/>
                         <outlet property="panRecognizer" destination="kmG-XG-Q5E" id="asv-Wy-0mD"/>
@@ -1567,7 +1584,6 @@
         <image name="icon_lens3.png" width="20" height="20"/>
         <image name="icon_light.png" width="12" height="12"/>
         <image name="icon_no2.png" width="15" height="15"/>
-        <image name="icon_ok.png" width="15" height="14"/>
         <image name="icon_ok2.png" width="15" height="14"/>
         <image name="icon_preset.png" width="27" height="20"/>
         <image name="icon_reset.png" width="15" height="15"/>
