@@ -493,11 +493,11 @@ typedef enum {
     
     UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                            bundle:nil];
-    UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
-    LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
+    LXGalleryViewController *viewGallery = [storyGallery instantiateInitialViewController];
+
     viewGallery.delegate = self;
     viewGallery.picture = pic;
-    [self presentViewController:navGalerry animated:YES completion:nil];
+    [self.navigationController pushViewController:viewGallery animated:YES];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -571,11 +571,10 @@ typedef enum {
 - (void)didSelectPic:(UIButton*)buttonImage {
     UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                            bundle:nil];
-    UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
-    LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
+    LXGalleryViewController *viewGallery = [storyGallery instantiateInitialViewController];
     viewGallery.delegate = self;
     viewGallery.picture = [[pics filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:[NSString stringWithFormat:@"pictureId == %ld", (long)buttonImage.tag]]] lastObject];
-    [self presentViewController:navGalerry animated:YES completion:nil];
+    [self.navigationController pushViewController:viewGallery animated:YES];
 }
 
 

@@ -46,12 +46,11 @@
             UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                                    bundle:nil];
             
-            UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
-            LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
+            LXGalleryViewController *viewGallery = [storyGallery instantiateInitialViewController];
             
             viewGallery.picture = pic;
             viewGallery.delegate = _parent;
-            [_parent presentViewController:navGalerry animated:YES completion:nil];
+            [_parent.navigationController pushViewController:viewGallery animated:YES];
         }
             
             break;

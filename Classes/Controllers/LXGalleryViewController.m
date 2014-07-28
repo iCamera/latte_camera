@@ -228,11 +228,14 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:YES animated:animated];
+    [self setTabBarVisible:NO animated:animated];
+    
     [super viewWillAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:NO animated:animated];
+    [self setTabBarVisible:YES animated:animated];
     
     [super viewWillDisappear:animated];
 }
@@ -444,7 +447,7 @@
 }
 
 - (IBAction)touchClose:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)toggleLike:(UIButton *)sender {
@@ -476,10 +479,7 @@
     else if (currentPage.picture.user)
         viewUserPage.user = currentPage.picture.user;
     
-    [self dismissViewControllerAnimated:YES completion:^{
-        [_delegate.navigationController pushViewController:viewUserPage animated:YES];
-    }];
-    
+    [self.navigationController pushViewController:viewUserPage animated:YES];
 }
 
 - (IBAction)touchShare:(id)sender {
@@ -562,12 +562,11 @@
             NSString *url = [NSString stringWithFormat:@"picture/%ld/delete", [pic.pictureId longValue]];
             
             [[LatteAPIClient sharedClient] POST:url parameters: nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                [self dismissViewControllerAnimated:YES completion:^{
-                    if ([_delegate respondsToSelector:@selector(reloadView)]) {
-                        [_delegate performSelector:@selector(reloadView)];
-                    }
-                }];
+                [self.navigationController popViewControllerAnimated:YES];
                 
+                if ([_delegate respondsToSelector:@selector(reloadView)]) {
+                    [_delegate performSelector:@selector(reloadView)];
+                }
             } failure:nil];
         }
     } else if (actionSheet.tag == 2) {
@@ -634,4 +633,28 @@
     }
 }
 
+// a param to describe the state change, and an animated flag
+// optionally add a completion block which matches UIView animation
+- (void)setTabBarVisible:(BOOL)visible animated:(BOOL)animated {
+    
+    // bail if the current state matches the desired state
+    if ([self tabBarIsVisible] == visible) return;
+    
+    // get a frame calculation ready
+    CGRect frame = self.tabBarController.tabBar.frame;
+    CGFloat height = frame.size.height;
+    CGFloat offsetY = (visible)? -height : height;
+    
+    // zero duration means no animation
+    CGFloat duration = (animated)? 0.3 : 0.0;
+    
+    [UIView animateWithDuration:duration animations:^{
+        self.navigationController.tabBarController.tabBar.frame = CGRectOffset(frame, 0, offsetY);
+    }];
+}
+
+// know the current state
+- (BOOL)tabBarIsVisible {
+    return self.navigationController.tabBarController.tabBar.frame.origin.y < CGRectGetMaxY(self.view.frame);
+}
 @end

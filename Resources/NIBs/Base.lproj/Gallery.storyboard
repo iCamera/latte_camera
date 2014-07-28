@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="cpi-oe-1tO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="IuH-xf-ibI">
     <dependencies>
         <deployment version="1536" defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
@@ -217,8 +217,8 @@
                             <constraint firstAttribute="trailing" secondItem="elZ-1B-Ddf" secondAttribute="trailing" id="CbG-xx-FQp"/>
                             <constraint firstItem="elZ-1B-Ddf" firstAttribute="leading" secondItem="ngI-6m-NTy" secondAttribute="leading" id="F51-sC-ShB"/>
                             <constraint firstItem="KWF-Xb-pkH" firstAttribute="leading" secondItem="ngI-6m-NTy" secondAttribute="leading" id="IWw-JP-0ab"/>
-                            <constraint firstItem="rAo-l9-dqf" firstAttribute="top" secondItem="elZ-1B-Ddf" secondAttribute="bottom" id="NMc-47-Mq5"/>
                             <constraint firstAttribute="trailing" secondItem="KWF-Xb-pkH" secondAttribute="trailing" id="Ud7-ER-InV"/>
+                            <constraint firstAttribute="bottom" secondItem="elZ-1B-Ddf" secondAttribute="bottom" id="Y7Y-aM-OJI"/>
                             <constraint firstItem="KWF-Xb-pkH" firstAttribute="top" secondItem="XSI-IX-Xa1" secondAttribute="bottom" id="jxR-Ag-TDi"/>
                         </constraints>
                     </view>
@@ -335,24 +335,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eOh-TN-Act" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2579" y="-3383"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="k1Z-Zm-DcJ">
-            <objects>
-                <navigationController wantsFullScreenLayout="YES" definesPresentationContext="YES" modalTransitionStyle="crossDissolve" id="cpi-oe-1tO" sceneMemberID="viewController">
-                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="CJY-7h-e10" customClass="LXNavBar">
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="barTintColor" red="0.20784313730000001" green="0.18823529410000001" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="IuH-xf-ibI" kind="relationship" relationship="rootViewController" id="ugY-8F-0tR"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Hie-7B-Wv9" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-3599" y="-2678"/>
         </scene>
         <!--Pic Info View Controller-->
         <scene sceneID="UPZ-4p-5Lk">

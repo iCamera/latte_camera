@@ -1120,8 +1120,8 @@ typedef enum {
 - (void)showPic:(UIButton*)sender {
     UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                            bundle:nil];
-    UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
-    LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
+    LXGalleryViewController *viewGallery = [storyGallery instantiateInitialViewController];
+
     viewGallery.delegate = self;
     switch (photoMode) {
         case kPhotoGrid:
@@ -1141,7 +1141,7 @@ typedef enum {
             break;
     }
     
-    [self presentViewController:navGalerry animated:YES completion:nil];
+    [self.navigationController pushViewController:viewGallery animated:YES];
 }
 
 - (NSMutableArray*)flatPictureArray {

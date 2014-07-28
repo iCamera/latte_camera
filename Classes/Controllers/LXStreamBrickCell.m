@@ -75,16 +75,11 @@
 - (IBAction)touchPicture:(UIButton *)sender {
     UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                            bundle:nil];
-    UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
-    navGalerry.modalPresentationStyle = UIModalPresentationFullScreen;
-    navGalerry.modalPresentationCapturesStatusBarAppearance = YES;
-    
-    LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
+    LXGalleryViewController *viewGallery = [storyGallery instantiateInitialViewController];
     viewGallery.delegate = _delegate;
     viewGallery.picture = _picture;
     viewGallery.user = _user;
-    
-    [_delegate presentViewController:navGalerry animated:YES completion:nil];
+    [_delegate.navigationController pushViewController:viewGallery animated:YES];
 }
 
 - (IBAction)touchUser:(id)sender {

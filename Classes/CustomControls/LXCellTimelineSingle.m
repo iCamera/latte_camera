@@ -200,13 +200,12 @@
     
     UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                            bundle:nil];
-    UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
-    LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
+    LXGalleryViewController *viewGallery = [storyGallery instantiateInitialViewController];
     viewGallery.delegate = viewController;
     viewGallery.user = _feed.user;
     viewGallery.picture = pic;
     
-    [viewController presentViewController:navGalerry animated:YES completion:nil];
+    [viewController.navigationController pushViewController:viewGallery animated:YES];
 }
 
 - (IBAction)showComment:(id)sender {

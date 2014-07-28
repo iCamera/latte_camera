@@ -138,13 +138,12 @@
 
 - (void)showPic:(UIButton*)sender {
     UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery" bundle:nil];
-    UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
-    LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
+    LXGalleryViewController *viewGallery = [storyGallery instantiateInitialViewController];
     viewGallery.delegate = self;
     
     viewGallery.picture = pictures[sender.tag];
     
-    [self presentViewController:navGalerry animated:YES completion:nil];
+    [self.navigationController pushViewController:viewGallery animated:YES];
 }
 
 - (NSDictionary *)pictureAfterPicture:(Picture *)picture {

@@ -124,13 +124,12 @@
 - (void)showPicture:(UIButton*)sender {
     UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery"
                                                            bundle:nil];
-    UINavigationController *navGalerry = [storyGallery instantiateInitialViewController];
-    LXGalleryViewController *viewGallery = navGalerry.viewControllers[0];
+    LXGalleryViewController *viewGallery = [storyGallery instantiateInitialViewController];
     viewGallery.delegate = _parent;
     viewGallery.user = _feed.user;
     viewGallery.picture = _feed.targets[sender.tag];
     
-    [_parent presentViewController:navGalerry animated:YES completion:nil];
+    [_parent.navigationController pushViewController:viewGallery animated:YES];
 }
 
 - (void)showComment:(UIButton*)sender {
