@@ -240,7 +240,7 @@
         buttonEffect.layer.cornerRadius = 5;
         buttonEffect.clipsToBounds = YES;
         buttonEffect.tag = i;
-        buttonEffect.layer.borderColor = [[UIColor colorWithWhite:1 alpha:0.3] CGColor];
+        buttonEffect.layer.borderColor = [[UIColor colorWithRed:107.0/255.0 green:202.5/255.0 blue:197.0/255.0 alpha:1] CGColor];
         labelEffect.text = arrayTone[i][@"title"];
         [scrollEffect addSubview:buttonEffect];
         [scrollEffect addSubview:labelEffect];
@@ -1006,7 +1006,7 @@
 - (void)resetSetting {
     for (NSInteger i = 0; i < effectButtons.count; i++) {
         if (i == 0) {
-            ((UIButton*)effectButtons[i]).layer.borderWidth = 0.5;
+            ((UIButton*)effectButtons[i]).layer.borderWidth = 1.5;
         } else {
             ((UIButton*)effectButtons[i]).layer.borderWidth = 0;
         }
@@ -1370,7 +1370,7 @@
     for (UIButton *effectButton in effectButtons) {
         effectButton.layer.borderWidth = 0;
     }
-    button.layer.borderWidth = 0.5;
+    button.layer.borderWidth = 1.5;
     NSDictionary *preset = arrayTone[button.tag];
     [filterMain setValuesForKeysWithDictionary:preset];
     [self processImage];
