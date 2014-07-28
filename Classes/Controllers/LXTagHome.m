@@ -414,7 +414,12 @@ typedef enum {
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(100, 100);
+    if (gridView == kGridPic) {
+        return CGSizeMake(100, 100);
+    } else {
+        return CGSizeMake(50, 50);
+    }
+    
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
