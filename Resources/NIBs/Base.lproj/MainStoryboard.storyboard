@@ -427,10 +427,10 @@
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rtd-Yg-sFx" customClass="LXTabButton">
                                     <rect key="frame" x="0.0" y="0.0" width="64" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" image="icon36-menu-brown.png">
+                                    <state key="normal" image="icon40-list-brown.png">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
-                                    <state key="selected" image="icon36-menu-blue.png"/>
+                                    <state key="selected" image="icon40-list-blue.png"/>
                                     <connections>
                                         <action selector="switchTab:" destination="muX-Hh-Ats" eventType="touchUpInside" id="hTH-Nr-Kdk"/>
                                     </connections>
@@ -2406,6 +2406,8 @@ or you can try to send another confirmation email.</string>
         <image name="icon40-followed-blue.png" width="20" height="20"/>
         <image name="icon40-followed.png" width="20" height="20"/>
         <image name="icon40-home-brown.png" width="20" height="20"/>
+        <image name="icon40-list-blue.png" width="20" height="20"/>
+        <image name="icon40-list-brown.png" width="20" height="20"/>
         <image name="icon40-menu-white.png" width="20" height="20"/>
         <image name="icon40-notify-brown.png" width="20" height="20"/>
         <image name="icon40-rank-brown.png" width="20" height="20"/>
