@@ -113,6 +113,7 @@
                 case 2:
                 case 3:
                 case 4:
+                case 5:
                     return;
                     break;
                 default:
@@ -158,6 +159,7 @@
                 case 2:
                 case 3:
                 case 4:
+                case 5:
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     for (UIView *view in cell.subviews)
                         view.alpha = 0.5;
