@@ -254,11 +254,15 @@
                                        parameters: nil
                                           success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                               [HUD hide:YES];
-                                              [self.navigationController dismissViewControllerAnimated:YES completion:^{
-                                                  if ([self.navigationController.presentingViewController respondsToSelector:@selector(reloadView)]) {
-                                                      [self.navigationController.presentingViewController performSelector:@selector(reloadView)];
-                                                  }
-                                              }];
+                                              
+                                              NSInteger numberOfViewControllers = self.navigationController.viewControllers.count;
+                                              
+                                              UIViewController *backView = [self.navigationController.viewControllers objectAtIndex:numberOfViewControllers - 3];
+                                              
+                                              [self.navigationController popToViewController:backView animated:YES];
+                                              if ([backView respondsToSelector:@selector(reloadView)]) {
+                                                  [backView performSelector:@selector(reloadView)];
+                                              }
                                           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                               [HUD hide:YES];
                                           }];
@@ -470,15 +474,6 @@
                                   }];
 }
 
-- (void)backToCamera {
-    UIViewController *tmp2 = self.navigationController.presentingViewController;
-    [self.navigationController dismissViewControllerAnimated:NO completion:nil];
-    
-    if (tmp2 != self.navigationController) {
-        [tmp2 dismissViewControllerAnimated:YES completion:nil];
-    }
-}
-
 - (void)saveImage {
     LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
     
@@ -501,9 +496,7 @@
     [app.uploader addObject:uploadLatte];
     [uploadLatte upload];
     
-    
-    
-    [self backToCamera];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

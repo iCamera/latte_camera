@@ -50,6 +50,7 @@
 
     if (comment.user.isUnregister) {
         labelAuthor.text = NSLocalizedString(@"guest", @"ゲスト");
+        [buttonUser setBackgroundImage:[UIImage imageNamed:@"user.gif"] forState:UIControlStateNormal];
     } else {
         [buttonUser loadBackground:comment.user.profilePicture placeholderImage:@"user.gif"];
         labelAuthor.text = comment.user.name;
