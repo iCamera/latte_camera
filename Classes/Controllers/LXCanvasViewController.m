@@ -321,7 +321,7 @@
 
 - (void)addBlendButton:(UIScrollView*)scroll target:(SEL)target {
     // Blend
-    for (int i=0; i < 9; i++) {
+    for (int i=0; i < 5; i++) {
         UILabel *labelBlend = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 10)];
         labelBlend.backgroundColor = [UIColor clearColor];
         labelBlend.textColor = [UIColor whiteColor];
@@ -349,27 +349,15 @@
                 title = @"Lightleak";
                 break;
             case 1:
-                title = @"Circle";
+                title = @"Bokeh";
                 break;
             case 2:
-                title = @"Flower";
-                break;
-            case 3:
-                title = @"Star";
-                break;
-            case 4:
-                title = @"Heart";
-                break;
-            case 5:
-                title = @"Lightblur";
-                break;
-            case 6:
                 title = @"Vintage";
                 break;
-            case 7:
+            case 3:
                 title = @"Gradient 1";
                 break;
-            case 8:
+            case 4:
                 title = @"Gradient 2";
                 break;
         }
@@ -380,7 +368,7 @@
         [scroll addSubview:buttonBlend];
         [scroll addSubview:labelBlend];
     }
-    scroll.contentSize = CGSizeMake(9*55+10, 60);
+    scroll.contentSize = CGSizeMake(5*55+10, 60);
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -1138,30 +1126,14 @@
             blend = [NSString stringWithFormat:@"bokehcircle-%d.jpg", blendid];
             break;
         case 2:
-            blendid = 1 + rand() % 20;
-            blend = [NSString stringWithFormat:@"flower-%d.jpg", blendid];
-            break;
-        case 3:
-            blendid = 1 + rand() % 20;
-            blend = [NSString stringWithFormat:@"star-%d.jpg", blendid];
-            break;
-        case 4:
-            blendid = 1 + rand() % 22;
-            blend = [NSString stringWithFormat:@"heart-%d.jpg", blendid];
-            break;
-        case 5:
-            blendid = 1 + rand() % 25;
-            blend = [NSString stringWithFormat:@"lightblur-%d.JPG", blendid];
-            break;
-        case 6:
             blendid = 1 + rand() % 25;
             blend = [NSString stringWithFormat:@"print%d.jpg", blendid];
             break;
-        case 7:
+        case 3:
             blendid = 1 + rand() % 150;
             blend = [NSString stringWithFormat:@"gradient1-%d.png", blendid];
             break;
-        case 8:
+        case 4:
             blendid = 1 + rand() % 50;
             blend = [NSString stringWithFormat:@"gradient2-%d.png", blendid];
             break;
