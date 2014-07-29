@@ -20,7 +20,7 @@
 - (void)showUserFromComment:(Comment*)comment;
 @end
 
-@interface LXPicCommentViewController : UIViewController<HPGrowingTextViewDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface LXPicCommentViewController : UIViewController<HPGrowingTextViewDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
 
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintInputPadding;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintTextHeight;

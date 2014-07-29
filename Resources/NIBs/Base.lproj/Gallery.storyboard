@@ -520,7 +520,7 @@
                                 <color key="backgroundColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
                                 <color key="separatorColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="97n-FP-h8h">
-                                    <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                                    <rect key="frame" x="0.0" y="130" width="320" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="8gt-nq-4Hs">
@@ -535,7 +535,7 @@
                                     </constraints>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="Comment" rowHeight="64" id="sXR-T7-xsm" customClass="LXCellComment">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="Comment" rowHeight="64" id="sXR-T7-xsm" customClass="LXCellComment">
                                         <rect key="frame" x="0.0" y="22" width="320" height="64"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sXR-T7-xsm" id="abX-kb-SeK">
@@ -632,14 +632,15 @@
                                                         <action selector="touchReply:" destination="Cl7-HT-jiB" eventType="touchUpInside" id="6q6-mX-mi0"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cVL-xA-beg">
-                                                    <rect key="frame" x="277" y="43" width="30" height="20"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cVL-xA-beg">
+                                                    <rect key="frame" x="280" y="23" width="40" height="40"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="20" id="W7Y-eF-GII"/>
-                                                        <constraint firstAttribute="width" constant="30" id="bAH-9g-1eP"/>
+                                                        <constraint firstAttribute="height" constant="40" id="W7Y-eF-GII"/>
+                                                        <constraint firstAttribute="width" constant="40" id="bAH-9g-1eP"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
+                                                    <inset key="contentEdgeInsets" minX="0.0" minY="13" maxX="0.0" maxY="0.0"/>
                                                     <state key="normal" image="icon28-more-brown-mini.png">
                                                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -654,7 +655,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="kxb-oT-Vsh" firstAttribute="leading" secondItem="abX-kb-SeK" secondAttribute="leading" constant="51" id="272-4g-gRe"/>
-                                                <constraint firstAttribute="trailing" secondItem="cVL-xA-beg" secondAttribute="trailing" constant="13" id="6dW-w3-LGh"/>
+                                                <constraint firstAttribute="trailing" secondItem="cVL-xA-beg" secondAttribute="trailing" id="6dW-w3-LGh"/>
                                                 <constraint firstAttribute="bottom" secondItem="cVL-xA-beg" secondAttribute="bottom" id="8Ml-QO-c8H"/>
                                                 <constraint firstItem="E2z-bN-F6K" firstAttribute="leading" secondItem="NAs-Sm-ZHd" secondAttribute="trailing" constant="6" id="8ZX-TW-A0Y"/>
                                                 <constraint firstItem="rxu-4E-T7t" firstAttribute="leading" secondItem="v4G-Ph-f9B" secondAttribute="trailing" constant="8" id="Bw6-YJ-Ytj"/>
@@ -682,6 +683,23 @@
                                             <outlet property="labelDate" destination="jtV-Fy-boJ" id="YYJ-rr-yuD"/>
                                             <outlet property="textComment" destination="kxb-oT-Vsh" id="hA1-R9-PDJ"/>
                                         </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Blocked" id="uII-dh-vgc">
+                                        <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uII-dh-vgc" id="mln-6w-RQt">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="This comment was hidden" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xJE-ZS-aFh">
+                                                    <rect key="frame" x="36" y="11" width="249" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>

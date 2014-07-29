@@ -15,6 +15,7 @@
 #import "MBProgressHUD.h"
 #import "LXReportAbuseCommentViewController.h"
 #import "MZFormSheetController.h"
+#import "LatteAPIv2Client.h"
 
 @interface LXPicCommentViewController ()
 
@@ -86,20 +87,24 @@
         self.tableView.tableFooterView = nil;
         
     } else {
-        NSString *urlDetail = [NSString stringWithFormat:@"picture/%ld", [_picture.pictureId longValue]];
-        [activityLoad startAnimating];
-        self.tableView.tableFooterView = _viewFooter;
-        [[LatteAPIClient sharedClient] GET:urlDetail parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-            comments = [Comment mutableArrayFromDictionary:JSON withKey:@"comments"];
-            [self.tableView reloadData];
-            [self scrollToComment];
-            [activityLoad stopAnimating];
-            self.tableView.tableFooterView = nil;
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [activityLoad stopAnimating];
-        }];
+        [self loadComment];
     }
+}
 
+- (void)loadComment {
+    NSString *urlDetail = [NSString stringWithFormat:@"picture/%ld", [_picture.pictureId longValue]];
+    [activityLoad startAnimating];
+    self.tableView.tableFooterView = _viewFooter;
+    [[LatteAPIClient sharedClient] GET:urlDetail parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+        comments = [Comment mutableArrayFromDictionary:JSON withKey:@"comments"];
+        [self.tableView reloadData];
+        [self scrollToComment];
+        [activityLoad stopAnimating];
+        self.tableView.tableFooterView = nil;
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [activityLoad stopAnimating];
+    }];
+    
 }
 
 - (void)scrollToComment {
@@ -124,7 +129,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self scrollToComment];
+    //[self scrollToComment];
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification
@@ -322,24 +327,28 @@
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    LXCellComment* cellComment = [tableView dequeueReusableCellWithIdentifier:@"Comment" forIndexPath:indexPath];
+    
         
     Comment *comment = comments[indexPath.row];
-    
-    cellComment.parent = self;
-    cellComment.comment = comment;
-    
-    if (!comment.user.isUnregister) {
-        cellComment.buttonUser.tag = indexPath.row;
-        cellComment.buttonLike.tag = indexPath.row;
-        cellComment.buttonReply.tag = indexPath.row;
-        cellComment.buttonReport.tag = indexPath.row;
-        [cellComment.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
-        [cellComment.buttonReply addTarget:self action:@selector(touchReply:) forControlEvents:UIControlEventTouchUpInside];
-        [cellComment.buttonReport addTarget:self action:@selector(touchReport:) forControlEvents:UIControlEventTouchUpInside];
+    if (comment.commentBlocked) {
+        return [tableView dequeueReusableCellWithIdentifier:@"Blocked" forIndexPath:indexPath];;
+    } else {
+        LXCellComment* cellComment = [tableView dequeueReusableCellWithIdentifier:@"Comment" forIndexPath:indexPath];
+        cellComment.parent = self;
+        cellComment.comment = comment;
+        
+        if (!comment.user.isUnregister) {
+            cellComment.buttonUser.tag = indexPath.row;
+            cellComment.buttonLike.tag = indexPath.row;
+            cellComment.buttonReply.tag = indexPath.row;
+            cellComment.buttonReport.tag = indexPath.row;
+            [cellComment.buttonUser addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
+            [cellComment.buttonReply addTarget:self action:@selector(touchReply:) forControlEvents:UIControlEventTouchUpInside];
+            [cellComment.buttonReport addTarget:self action:@selector(touchReport:) forControlEvents:UIControlEventTouchUpInside];
+        }
+        
+        return cellComment;
     }
-    
-    return cellComment;
 }
 
 - (void)touchReply:(UIButton*)sender {
@@ -353,30 +362,56 @@
 }
 
 - (void)touchReport:(UIButton*)sender {
-    Comment *comment = comments[sender.tag];
-    UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery" bundle:nil];
-    LXReportAbuseCommentViewController *controllerReport = [storyGallery instantiateViewControllerWithIdentifier:@"ReportComment"];
-    controllerReport.comment = comment;
-    
-    if (_isModal) {
-        [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController *formSheetController) {
-            [_parent.navigationController pushViewController:controllerReport animated:YES];
-        }];
-    } else {
-        [self.navigationController pushViewController:controllerReport animated:YES];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                             delegate:self
+                                                    cancelButtonTitle:NSLocalizedString(@"cancel", @"")
+                                               destructiveButtonTitle:NSLocalizedString(@"Block User", @"")
+                                                    otherButtonTitles:NSLocalizedString(@"report", @""), nil];
+    actionSheet.tag = sender.tag;
+    [actionSheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    Comment *comment = comments[actionSheet.tag];
+    if (buttonIndex == 0) {
+        NSString *url = [NSString stringWithFormat:@"user/%ld/block", [comment.user.userId longValue]];
+        [[LatteAPIv2Client sharedClient] POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+            [self loadComment];
+        } failure:nil];
+
     }
+    
+    if (buttonIndex == 1) {
+        UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"Gallery" bundle:nil];
+        LXReportAbuseCommentViewController *controllerReport = [storyGallery instantiateViewControllerWithIdentifier:@"ReportComment"];
+        controllerReport.comment = comment;
+        
+        if (_isModal) {
+            [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController *formSheetController) {
+                [_parent.navigationController pushViewController:controllerReport animated:YES];
+            }];
+        } else {
+            [self.navigationController pushViewController:controllerReport animated:YES];
+        }
+    }
+    
+    
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     Comment *comment = comments[indexPath.row];
-    NSString *strComment = comment.descriptionText;
-
-    CGRect labelRect = [strComment boundingRectWithSize:CGSizeMake(261.0f, MAXFLOAT)
-                                                options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                             attributes:@{ NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:13] }
-                                                context:nil];
-    return labelRect.size.height + 49;
+    if (comment.commentBlocked) {
+        return 44;
+    } else {
+        NSString *strComment = comment.descriptionText;
+        
+        CGRect labelRect = [strComment boundingRectWithSize:CGSizeMake(261.0f, MAXFLOAT)
+                                                    options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
+                                                 attributes:@{ NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:13] }
+                                                    context:nil];
+        return labelRect.size.height + 49;
+    }
 }
 
 #pragma mark - Table view delegate

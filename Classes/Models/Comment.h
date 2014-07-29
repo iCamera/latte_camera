@@ -23,6 +23,7 @@
 @property (nonatomic, assign) BOOL canEdit;
 @property (nonatomic, assign) BOOL canVote;
 @property (nonatomic, assign) BOOL isVoted;
+@property (nonatomic, assign) BOOL commentBlocked;
 @property (nonatomic, strong) User *user;
 
 @property (nonatomic, copy) NSNumber *pictureId;
