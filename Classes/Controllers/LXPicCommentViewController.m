@@ -374,11 +374,13 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     Comment *comment = comments[actionSheet.tag];
     if (buttonIndex == 0) {
-        NSString *url = [NSString stringWithFormat:@"user/%ld/block", [comment.user.userId longValue]];
-        [[LatteAPIv2Client sharedClient] POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-            [self loadComment];
-        } failure:nil];
-
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:NSLocalizedString(@"Are you sure you want to block this user?", @"")
+                                                       delegate:self
+                                              cancelButtonTitle:NSLocalizedString(@"cancel", @"")
+                                              otherButtonTitles:NSLocalizedString(@"Block User", @""), nil];
+        alert.tag = actionSheet.tag;
+        [alert show];
     }
     
     if (buttonIndex == 1) {
@@ -394,8 +396,17 @@
             [self.navigationController pushViewController:controllerReport animated:YES];
         }
     }
-    
-    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    Comment *comment = comments[alertView.tag];
+    if (buttonIndex == 1) {
+        NSString *url = [NSString stringWithFormat:@"user/%ld/block", [comment.user.userId longValue]];
+        [[LatteAPIv2Client sharedClient] POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+            [self loadComment];
+        } failure:nil];
+    }
+
 }
 
 

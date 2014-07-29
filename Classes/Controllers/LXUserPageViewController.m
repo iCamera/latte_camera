@@ -1096,10 +1096,12 @@ typedef enum {
                         [self reloadProfile];
                     } failure:nil];
                 } else {
-                    NSString *url = [NSString stringWithFormat:@"user/%ld/block", (long)_userId];
-                    [[LatteAPIv2Client sharedClient] POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                        [self reloadProfile];
-                    } failure:nil];
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                                    message:NSLocalizedString(@"Are you sure you want to block this user?", @"")
+                                                                   delegate:self
+                                                          cancelButtonTitle:NSLocalizedString(@"cancel", @"")
+                                                          otherButtonTitles:NSLocalizedString(@"Block User", @""), nil];
+                    [alert show];
                 }
             }
                 break;
@@ -1114,6 +1116,15 @@ typedef enum {
             default:
                 break;
         }
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        NSString *url = [NSString stringWithFormat:@"user/%ld/block", (long)_userId];
+        [[LatteAPIv2Client sharedClient] POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+            [self reloadProfile];
+        } failure:nil];
     }
 }
 
