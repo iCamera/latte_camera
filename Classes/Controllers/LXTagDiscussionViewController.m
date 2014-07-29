@@ -212,7 +212,11 @@
      */
     if (indexPath.item % 3 == 0) {
         JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
-        return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:message.date];
+        JSQMessagesTimestampFormatter *formater = [JSQMessagesTimestampFormatter sharedFormatter];
+
+        NSString *relativeDate = [formater relativeDateForDate:message.date];
+        return [[NSMutableAttributedString alloc] initWithString:relativeDate
+                                               attributes:formater.dateTextAttributes];
     }
     
     return nil;
