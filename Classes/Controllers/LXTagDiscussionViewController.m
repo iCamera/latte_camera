@@ -125,7 +125,9 @@
     if (_tag) {
         params[@"tag"] = _tag;
     }
-    [api2 POST:url parameters:params success:nil failure:nil];
+    [api2 POST:url parameters:params success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+        [self insertMessage:JSON];
+    } failure:nil];
 }
 
 - (void)didPressAccessoryButton:(UIButton *)sender
@@ -457,8 +459,17 @@
 
 - (void)newMessage:(NSNotification *)notification {
     NSDictionary *rawMessage = notification.object;
-    
+    [self insertMessage:rawMessage];
+}
+
+- (void)insertMessage:(NSDictionary*)rawMessage {
     if ([rawMessage[@"hash"] isEqualToString:_conversationHash]) {
+        for (NSDictionary *message in rawMessages) {
+            if ([message[@"id"] longValue] == [rawMessage[@"id"] longValue ]) {
+                return;
+            }
+        }
+        
         JSQMessage *message = [[JSQMessage alloc] initWithText:rawMessage[@"body"] sender:rawMessage[@"user"][@"name"] date:[LXUtils dateFromString:rawMessage[@"created_at"]]];
         [rawMessages addObject:rawMessage];
         [self.messages addObject:message];
