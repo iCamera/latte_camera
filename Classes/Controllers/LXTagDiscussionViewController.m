@@ -210,16 +210,23 @@
      *
      *  Show a timestamp for every 3rd message
      */
-    if (indexPath.item % 3 == 0) {
-        JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
-        JSQMessagesTimestampFormatter *formater = [JSQMessagesTimestampFormatter sharedFormatter];
-
-        NSString *relativeDate = [formater relativeDateForDate:message.date];
-        return [[NSMutableAttributedString alloc] initWithString:relativeDate
-                                               attributes:formater.dateTextAttributes];
+    
+    JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
+    JSQMessagesTimestampFormatter *formater = [JSQMessagesTimestampFormatter sharedFormatter];
+    NSString *relativeDate = [formater relativeDateForDate:message.date];
+    
+    if (indexPath.item - 1 > 0) {
+        JSQMessage *previousMessage = [self.messages objectAtIndex:indexPath.item - 1];
+        
+        NSString *prevRelativeDate = [formater relativeDateForDate:previousMessage.date];
+        
+        if ([relativeDate isEqualToString:prevRelativeDate]) {
+            return nil;
+        }
     }
     
-    return nil;
+    return [[NSMutableAttributedString alloc] initWithString:relativeDate
+                                                  attributes:formater.dateTextAttributes];
 }
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath
@@ -311,11 +318,22 @@
      *
      *  Show a timestamp for every 3rd message
      */
-    if (indexPath.item % 3 == 0) {
-        return kJSQMessagesCollectionViewCellLabelHeightDefault;
+    
+    JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
+    JSQMessagesTimestampFormatter *formater = [JSQMessagesTimestampFormatter sharedFormatter];
+    NSString *relativeDate = [formater relativeDateForDate:message.date];
+    
+    if (indexPath.item - 1 > 0) {
+        JSQMessage *previousMessage = [self.messages objectAtIndex:indexPath.item - 1];
+        
+        NSString *prevRelativeDate = [formater relativeDateForDate:previousMessage.date];
+        
+        if ([relativeDate isEqualToString:prevRelativeDate]) {
+            return 0.0f;
+        }
     }
     
-    return 0.0f;
+    return kJSQMessagesCollectionViewCellLabelHeightDefault;
 }
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
