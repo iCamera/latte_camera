@@ -358,7 +358,15 @@
                         </subviews>
                         <color key="backgroundColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Yem-as-x7l"/>
+                    <navigationItem key="navigationItem" id="Yem-as-x7l">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="OkE-C7-szb">
+                            <view key="customView" contentMode="scaleToFill" id="RRr-EX-Haw">
+                                <rect key="frame" x="233" y="5" width="71" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="scrollView" destination="0Bu-Ad-iFk" id="xi6-GZ-idR"/>
                         <outlet property="textMail" destination="eV3-O4-CuV" id="RQd-Jq-RY4"/>
