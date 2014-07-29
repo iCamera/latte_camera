@@ -431,12 +431,16 @@
                             <rect key="frame" x="0.0" y="994" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Copyright 2014 LUXEYS." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Kyv-1L-Fye">
+                                <label opaque="NO" clipsSubviews="YES" contentMode="left" text="Copyright 2014 LUXEYS." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Kyv-1L-Fye">
                                     <rect key="frame" x="34" y="11" width="253" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <gestureRecognizers/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <color key="textColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
                                     <nil key="highlightedColor"/>
+                                    <connections>
+                                        <outletCollection property="gestureRecognizers" destination="gAC-VW-rR6" appends="YES" id="Obz-dD-ZTP"/>
+                                    </connections>
                                 </label>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -830,6 +834,7 @@
                     <connections>
                         <outlet property="buttonProfilePicture" destination="spK-rA-JJ3" id="NkP-V8-2KB"/>
                         <outlet property="imageCover" destination="xU5-OF-ASV" id="7P6-pL-8Qd"/>
+                        <outlet property="labelCopy" destination="Kyv-1L-Fye" id="mUS-0m-8G4"/>
                         <outlet property="labelLike" destination="wrI-Ac-Pig" id="SkM-dA-JlX"/>
                         <outlet property="labelPV" destination="iZi-gY-BIo" id="VIA-3U-nhf"/>
                         <outlet property="labelVersion" destination="cQb-06-rty" id="Zew-yT-YMj"/>
@@ -840,6 +845,11 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pcB-wR-Hh0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="gAC-VW-rR6">
+                    <connections>
+                        <action selector="swipeCopy:" destination="BA8-7X-K8C" id="xl6-0U-JeS"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-1034" y="-964"/>
         </scene>

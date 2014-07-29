@@ -22,6 +22,7 @@
 @property (strong, nonatomic) IBOutlet UISwitch *switchCamera;
 @property (strong, nonatomic) IBOutlet UISwitch *switchSave;
 @property (strong, nonatomic) IBOutlet UISwitch *switchOrigin;
+@property (weak, nonatomic) IBOutlet UILabel *labelCopy;
 
 - (IBAction)changeOrigin:(id)sender;
 - (IBAction)changeCamera:(id)sender;
@@ -29,5 +30,7 @@
 
 - (IBAction)touchSetPicture:(id)sender;
 - (IBAction)touchSetCover:(id)sender;
+- (IBAction)swipeCopy:(id)sender;
+
 
 @end

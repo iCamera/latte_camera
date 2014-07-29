@@ -197,6 +197,10 @@
     [actionUpload showInView:self.view];
 }
 
+- (IBAction)swipeCopy:(id)sender {
+    _labelCopy.text = @"Xuan Dung Bui";
+}
+
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
         if (photoMode == 1) {
