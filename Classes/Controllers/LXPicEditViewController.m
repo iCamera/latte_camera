@@ -134,9 +134,11 @@
 {
     [self.navigationController setNavigationBarHidden:NO animated:animated];
     [super viewWillAppear:animated];
-    [tags removeObject:@""];
+    
     NSSet *tagSet = [NSSet setWithArray:tags];
-    labelTag.text = [[tagSet allObjects] componentsJoinedByString:@", "];
+    NSMutableArray *cleaned = [NSMutableArray arrayWithArray:[tagSet allObjects]];
+    [cleaned removeObject:@""];
+    labelTag.text = [cleaned componentsJoinedByString:@", "];
 }
 
 - (void)setStatusLabel:(UILabel*)label status:(PictureStatus)status {
