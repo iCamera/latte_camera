@@ -48,7 +48,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        searchView = kSearchPhoto;
+        
     }
     return self;
 }
@@ -72,14 +72,8 @@
     //[_searchBar becomeFirstResponder];
     
     page = 1;
-    if (searchView == kSearchPhoto) {
-        [self loadPhotoSearch];
-    } else if (searchView == kSearchTag) {
-        _buttonPhoto.selected = NO;
-        _buttonTag.selected = YES;
-        [self loadTagSearch];
-    }
-    
+    searchView = kSearchTag;
+    [self loadTagSearch];
 }
 
 
