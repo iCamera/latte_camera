@@ -25,12 +25,12 @@
 @implementation LXStreamViewController {
     NSMutableArray *feeds;
     BOOL loadEnded;
-    BOOL loading;
     UIRefreshControl *refresh;
     NSInteger currentTab;
     UICollectionViewLayout *layoutGrid;
     CHTCollectionViewWaterfallLayout *layoutWaterfall;
     NSString *browsingCountry;
+    AFHTTPRequestOperation *currentRequest;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -68,7 +68,6 @@
     [self.collectionView registerNib:[UINib nibWithNibName:@"LXStreamFooter" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"Footer"];
     
     loadEnded = false;
-    loading = false;
     currentTab = 0;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -121,36 +120,33 @@
 }
 
 - (void)loadMore:(BOOL)reset {
-    if (loading) {
-        return;
-    }
-    
-    Feed *feed = feeds.lastObject;
-    
     NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
 
     if (browsingCountry) {
         param[@"country"] = browsingCountry;
     }
-    
-    if (!reset) {
+ 
+    if (reset) {
+        if (currentRequest.isExecuting) [currentRequest cancel];
+        loadEnded = false;
+    } else {
+        if (currentRequest.isExecuting) return;
+        Feed *feed = feeds.lastObject;
         if (feed) {
             [param setObject:feed.feedID forKey:@"last_id"];
         }
     }
     
-    loading = true;
-    [[LatteAPIClient sharedClient] GET:@"user/everyone/timeline" parameters: param success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-        loading = false;
+    currentRequest = [[LatteAPIClient sharedClient] GET:@"user/everyone/timeline" parameters: param success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
         
+        NSMutableArray *newFeeds = [Feed mutableArrayFromDictionary:JSON withKey:@"feeds"];
+
+        loadEnded = newFeeds.count == 0;
         if (reset) {
-            feeds = [Feed mutableArrayFromDictionary:JSON withKey:@"feeds"];
-            loadEnded = feeds.count == 0;
+            feeds = newFeeds;
             layoutWaterfall.footerHeight = loadEnded?320:50;
             [self.collectionView reloadData];
         } else {
-            NSMutableArray *newFeeds = [Feed mutableArrayFromDictionary:JSON withKey:@"feeds"];
-            
             if (newFeeds.count > 0) {
                 NSMutableArray *indexes = [[NSMutableArray alloc] init];
                 for (NSInteger i = feeds.count; i < feeds.count + newFeeds.count; i++) {
@@ -160,14 +156,11 @@
                 
                 [feeds addObjectsFromArray:newFeeds];
                 [self.collectionView insertItemsAtIndexPaths:indexes];
-            } else {
-                loadEnded = true;
             }
         }
         
         [refresh endRefreshing];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        loading = false;
         [refresh endRefreshing];
         DLog(@"Something went wrong (Welcome)");
     }];
