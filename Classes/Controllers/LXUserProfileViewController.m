@@ -54,6 +54,13 @@
                                success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                    userDict = [JSON objectForKey:@"user"];
                                    
+                                   _labelFollowingCount.text = [userDict[@"count_follows"] stringValue];
+                                   _labelFollowerCount.text = [userDict[@"count_followers"] stringValue];
+                                   _labelPictureCount.text = [userDict[@"count_pictures"] stringValue];
+                                   _labelViewCount.text = [userDict[@"page_views"] stringValue];
+                                   _labelLikeCount.text = [userDict[@"vote_count"] stringValue];
+                                   
+                                   
                                    NSSet *allField = [NSSet setWithArray:[userDict allKeys]];
                                    
                                    [showSet intersectSet:allField];
@@ -67,9 +74,9 @@
                                            _imageProgress.progress = (float)totalBytesRead/(float)totalBytesExpectedToRead;
                                        }];
                                    } else {
-                                       self.tableView.tableHeaderView = nil;
+                                       self.tableView.tableHeaderView.frame = CGRectMake(0, 0, 320, 60);
+                                       self.tableView.tableHeaderView = self.tableView.tableHeaderView;
                                    }
-                                   
                                    
                                    [self.tableView reloadData];
                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
