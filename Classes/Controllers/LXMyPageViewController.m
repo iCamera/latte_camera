@@ -50,7 +50,7 @@ typedef enum {
 @end
 
 @implementation LXMyPageViewController  {
-    BOOL reloading;
+    BOOL loading;
     BOOL endedTimeline;
     
     NSInteger pagePic;
@@ -86,6 +86,7 @@ typedef enum {
     feeds = [[NSMutableArray alloc] init];
     
     endedTimeline = false;
+    loading = NO;
     
     timelineKind = kTimelineAll;
     homeTab = kHomeUser;
@@ -145,11 +146,11 @@ typedef enum {
 - (void)loadMore:(BOOL)reset {
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:@{@"listtype": [NSNumber numberWithInteger:timelineKind]}];
     if (reset) {
-        if (currentRequest.isExecuting) [currentRequest cancel];
+        if (loading) [currentRequest cancel];
         endedTimeline = false;
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     } else {
-        if (currentRequest.isExecuting) return;
+        if (loading) return;
         Feed *feed = feeds.lastObject;
         if (feed) {
             [params setObject:feed.feedID forKey:@"last_id"];
@@ -158,8 +159,9 @@ typedef enum {
         
     }
     
-    
+    loading = YES;
     currentRequest = [[LatteAPIClient sharedClient] GET: @"user/me/timeline" parameters: params success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+        loading = NO;
         
         NSMutableArray *newFeed = [Feed mutableArrayFromDictionary:JSON
                                                            withKey:@"feeds"];
@@ -189,8 +191,8 @@ typedef enum {
             }
             [_loadIndicator stopAnimating];
         }
-
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        loading = NO;
         if (reset) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             [self.refreshControl endRefreshing];
@@ -202,18 +204,18 @@ typedef enum {
 
 - (void)loadMoreTag:(BOOL)reset {
     if (reset) {
-        if (currentRequest.isExecuting) [currentRequest cancel];
+        if (loading) [currentRequest cancel];
         endedTimeline = false;
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         pagePic = 1;
     } else {
-        if (currentRequest.isExecuting) return;
+        if (loading) return;
         [_loadIndicator startAnimating];
     }
     
-    
+    loading = YES;
     currentRequest = [[LatteAPIv2Client sharedClient] GET: @"picture" parameters: @{@"follow_tag": @"True", @"page": [NSNumber numberWithInteger:pagePic]} success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-        
+        loading = NO;
         pagePic += 1;
 
         NSMutableArray *newFeed = [Feed mutableArrayFromPictures:[Picture mutableArrayFromDictionary:JSON withKey:@"pictures"]];
@@ -246,6 +248,8 @@ typedef enum {
         [self.tableView reloadData];
         [self.refreshControl endRefreshing];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        loading = NO;
+        
         if (reset) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             [self.refreshControl endRefreshing];
