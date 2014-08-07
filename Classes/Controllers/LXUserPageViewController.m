@@ -148,15 +148,10 @@ typedef enum {
     [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTimelineSingle" bundle:nil] forCellReuseIdentifier:@"Single"];
     [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTimelineMulti" bundle:nil] forCellReuseIdentifier:@"Multi"];
     [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTag" bundle:nil] forCellReuseIdentifier:@"Tag"];
-    
-    
-    if (!app.currentUser) {
-        _buttonMore.hidden = YES;
-    }
 
     if (app.currentUser && (_userId == [app.currentUser.userId integerValue])) {
         _buttonFollow.hidden = YES;
-        _buttonMore.hidden = YES;
+        _buttonMore.selected = YES;
     }
     
     LXSocketIO *socket = [LXSocketIO sharedClient];
@@ -191,6 +186,7 @@ typedef enum {
                        options:UIViewAnimationOptionTransitionCrossDissolve
                     animations:^{
                         [_buttonUser setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:_user.profilePicture]];
+                        [_buttonPhoto setTitle:[_user.countPictures stringValue] forState:UIControlStateNormal];
                         [_buttonFollower setTitle:[_user.countFollowers stringValue] forState:UIControlStateNormal];
                         [_buttonFollowing setTitle:[_user.countFollows stringValue] forState:UIControlStateNormal];
                         _labelIntro.text = _user.introduction;
@@ -230,7 +226,9 @@ typedef enum {
         _user.profilePicture = JSON[@"profile_picture"];
         _user.countFollows = JSON[@"count_follows"];
         _user.countFollowers = JSON[@"count_followers"];
+        _user.countPictures = JSON[@"count_pictures"];
         _user.introduction = JSON[@"introduction"];
+        
         
         [self renderProfile];
 
@@ -490,20 +488,33 @@ typedef enum {
 }
 
 - (IBAction)touchMore:(id)sender {
-    if ([userv2[@"is_blocking"] boolValue]) {
-        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                           delegate:self
-                                                  cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
-                                             destructiveButtonTitle:NSLocalizedString(@"Unblock User", @"ブロックを解除")
-                                                  otherButtonTitles:NSLocalizedString(@"report", @""), nil];
-        [sheet showInView:self.view];
+    LXAppDelegate* app = [LXAppDelegate currentDelegate];
+    if (!app.currentUser) {
+        UIStoryboard *storyAuth = [UIStoryboard storyboardWithName:@"Authentication" bundle:nil];
+        UIViewController *viewLogin = [storyAuth instantiateViewControllerWithIdentifier:@"Login"];
+        
+        [self.navigationController pushViewController:viewLogin animated:YES];
     } else {
-        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                           delegate:self
-                                                  cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
-                                             destructiveButtonTitle:NSLocalizedString(@"Block User", @"ブロックする")
-                                                  otherButtonTitles:NSLocalizedString(@"report", @""), nil];
-        [sheet showInView:self.view];
+        if (app.currentUser.userId.longValue == _userId) {
+            UIStoryboard* storySetting = [UIStoryboard storyboardWithName:@"Setting" bundle:nil];
+            [self presentViewController:[storySetting instantiateInitialViewController] animated:YES completion:nil];
+        } else {
+            if ([userv2[@"is_blocking"] boolValue]) {
+                UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                                   delegate:self
+                                                          cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
+                                                     destructiveButtonTitle:NSLocalizedString(@"Unblock User", @"ブロックを解除")
+                                                          otherButtonTitles:NSLocalizedString(@"report", @""), nil];
+                [sheet showInView:self.view];
+            } else {
+                UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                                   delegate:self
+                                                          cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
+                                                     destructiveButtonTitle:NSLocalizedString(@"Block User", @"ブロックする")
+                                                          otherButtonTitles:NSLocalizedString(@"report", @""), nil];
+                [sheet showInView:self.view];
+            }
+        }
     }
 }
 

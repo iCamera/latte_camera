@@ -1541,9 +1541,10 @@ or you can try to send another confirmation email.</string>
                                     <rect key="frame" x="240" y="140" width="80" height="40"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <state key="normal" image="icon28-more-white.png">
+                                    <state key="normal" image="icon36-more-white.png">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
+                                    <state key="selected" image="icon36-gear-white.png"/>
                                     <connections>
                                         <action selector="touchMore:" destination="21a-Kc-kfo" eventType="touchUpInside" id="AXH-fP-NfK"/>
                                     </connections>
@@ -1563,7 +1564,7 @@ or you can try to send another confirmation email.</string>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ylh-RA-SXN">
-                                    <rect key="frame" x="80" y="140" width="80" height="40"/>
+                                    <rect key="frame" x="160" y="140" width="80" height="40"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                     <inset key="titleEdgeInsets" minX="6" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -1576,7 +1577,7 @@ or you can try to send another confirmation email.</string>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VG6-0T-eya">
-                                    <rect key="frame" x="0.0" y="140" width="80" height="40"/>
+                                    <rect key="frame" x="80" y="140" width="80" height="40"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                     <inset key="titleEdgeInsets" minX="6" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -1587,6 +1588,16 @@ or you can try to send another confirmation email.</string>
                                     <connections>
                                         <segue destination="OZE-UL-Mh9" kind="custom" identifier="Following" customClass="MZFormSheetSegue" id="nqr-PV-YRj"/>
                                     </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VpA-Bw-5P1">
+                                    <rect key="frame" x="0.0" y="140" width="80" height="40"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                    <inset key="titleEdgeInsets" minX="6" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <state key="normal" title="0" image="icon36-photo-white.png">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="titleShadowColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                                    </state>
                                 </button>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="line" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="tdE-Mv-kGb">
                                     <rect key="frame" x="20" y="108" width="280" height="15"/>
@@ -1731,7 +1742,8 @@ or you can try to send another confirmation email.</string>
                         <outlet property="buttonFollow" destination="vzL-yW-JEX" id="vcE-ni-LdU"/>
                         <outlet property="buttonFollower" destination="ylh-RA-SXN" id="hJZ-aE-Gap"/>
                         <outlet property="buttonFollowing" destination="VG6-0T-eya" id="rxI-8X-OHp"/>
-                        <outlet property="buttonMore" destination="Kc8-8B-lDc" id="kCz-J2-xdp"/>
+                        <outlet property="buttonMore" destination="Kc8-8B-lDc" id="vXF-ka-yWN"/>
+                        <outlet property="buttonPhoto" destination="VpA-Bw-5P1" id="pNB-iJ-YvX"/>
                         <outlet property="buttonTabCalendar" destination="SIh-u5-mBH" id="ZD9-zU-qWO"/>
                         <outlet property="buttonTabGrid" destination="qH4-dd-00c" id="i2t-db-YXR"/>
                         <outlet property="buttonTabTag" destination="HYg-9W-cBj" id="MpT-kz-e2w"/>
@@ -2364,7 +2376,6 @@ or you can try to send another confirmation email.</string>
         <image name="default-cover.gif" width="1200" height="100"/>
         <image name="icon-trend-blue.png" width="14" height="14"/>
         <image name="icon-trend-brown.png" width="14" height="14"/>
-        <image name="icon28-more-white.png" width="18" height="14"/>
         <image name="icon36-all-blue.png" width="23" height="18"/>
         <image name="icon36-all-brown.png" width="23" height="18"/>
         <image name="icon36-bg.png" width="160" height="40"/>
@@ -2378,6 +2389,7 @@ or you can try to send another confirmation email.</string>
         <image name="icon36-following-blue.png" width="25" height="18"/>
         <image name="icon36-following-brown.png" width="25" height="18"/>
         <image name="icon36-following-white.png" width="25" height="18"/>
+        <image name="icon36-gear-white.png" width="18" height="18"/>
         <image name="icon36-grid-blue.png" width="18" height="18"/>
         <image name="icon36-grid-brown.png" width="18" height="18"/>
         <image name="icon36-info-blue.png" width="18" height="18"/>
@@ -2387,6 +2399,7 @@ or you can try to send another confirmation email.</string>
         <image name="icon36-me-brown.png" width="18" height="18"/>
         <image name="icon36-menu-blue.png" width="20" height="18"/>
         <image name="icon36-menu-brown.png" width="20" height="18"/>
+        <image name="icon36-more-white.png" width="18" height="18"/>
         <image name="icon36-photo-white.png" width="18" height="18"/>
         <image name="icon36-tag-blue.png" width="18" height="18"/>
         <image name="icon36-tag-brown.png" width="18" height="18"/>

@@ -18,9 +18,11 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonUser;
 @property (strong, nonatomic) IBOutlet UIImageView *imageCover;
+@property (weak, nonatomic) IBOutlet UIButton *buttonPhoto;
 @property (strong, nonatomic) IBOutlet UIButton *buttonFollow;
 @property (strong, nonatomic) IBOutlet UIButton *buttonFollowing;
 @property (strong, nonatomic) IBOutlet UIButton *buttonFollower;
+@property (weak, nonatomic) IBOutlet UIButton *buttonMore;
 @property (weak, nonatomic) IBOutlet LXTabButton *buttonTabTimeline;
 @property (weak, nonatomic) IBOutlet LXTabButton *buttonTabGrid;
 @property (weak, nonatomic) IBOutlet LXTabButton *buttonTabTag;
@@ -30,7 +32,6 @@
 
 @property (strong, nonatomic) User *user;
 @property (assign, nonatomic) NSInteger userId;
-@property (strong, nonatomic) IBOutlet UIButton *buttonMore;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicatorLoad;
 
 - (void)expandHeader;

@@ -1204,6 +1204,10 @@
 		88992C94196D4C7C0002E502 /* LXCellFriend.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88992C93196D4C7C0002E502 /* LXCellFriend.xib */; };
 		88992C97196E44720002E502 /* LXFollowingTagTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 88992C96196E44720002E502 /* LXFollowingTagTVC.m */; };
 		889E01B8199355B100343C03 /* LXNotificationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 889E01B7199355B100343C03 /* LXNotificationBar.m */; };
+		889E01BD199374F000343C03 /* icon36-gear-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 889E01B9199374F000343C03 /* icon36-gear-white.png */; };
+		889E01BE199374F000343C03 /* icon36-gear-white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 889E01BA199374F000343C03 /* icon36-gear-white@2x.png */; };
+		889E01BF199374F000343C03 /* icon36-more-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 889E01BB199374F000343C03 /* icon36-more-white.png */; };
+		889E01C0199374F000343C03 /* icon36-more-white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 889E01BC199374F000343C03 /* icon36-more-white@2x.png */; };
 		88A43B0216703340001A8BB3 /* bt_twitter2_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A43AFE16703340001A8BB3 /* bt_twitter2_on.png */; };
 		88A43B0316703340001A8BB3 /* bt_twitter2_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A43AFF16703340001A8BB3 /* bt_twitter2_on@2x.png */; };
 		88A43B0416703340001A8BB3 /* bt_twitter2.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A43B0016703340001A8BB3 /* bt_twitter2.png */; };
@@ -3015,6 +3019,10 @@
 		88992C96196E44720002E502 /* LXFollowingTagTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFollowingTagTVC.m; sourceTree = "<group>"; };
 		889E01B6199355B100343C03 /* LXNotificationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXNotificationBar.h; sourceTree = "<group>"; };
 		889E01B7199355B100343C03 /* LXNotificationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXNotificationBar.m; sourceTree = "<group>"; };
+		889E01B9199374F000343C03 /* icon36-gear-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon36-gear-white.png"; sourceTree = "<group>"; };
+		889E01BA199374F000343C03 /* icon36-gear-white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon36-gear-white@2x.png"; sourceTree = "<group>"; };
+		889E01BB199374F000343C03 /* icon36-more-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon36-more-white.png"; sourceTree = "<group>"; };
+		889E01BC199374F000343C03 /* icon36-more-white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon36-more-white@2x.png"; sourceTree = "<group>"; };
 		88A43AFE16703340001A8BB3 /* bt_twitter2_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bt_twitter2_on.png; sourceTree = "<group>"; };
 		88A43AFF16703340001A8BB3 /* bt_twitter2_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bt_twitter2_on@2x.png"; sourceTree = "<group>"; };
 		88A43B0016703340001A8BB3 /* bt_twitter2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bt_twitter2.png; sourceTree = "<group>"; };
@@ -3625,6 +3633,10 @@
 		881C00AF1973EADC009ED466 /* newimages */ = {
 			isa = PBXGroup;
 			children = (
+				889E01B9199374F000343C03 /* icon36-gear-white.png */,
+				889E01BA199374F000343C03 /* icon36-gear-white@2x.png */,
+				889E01BB199374F000343C03 /* icon36-more-white.png */,
+				889E01BC199374F000343C03 /* icon36-more-white@2x.png */,
 				8834274D1987953300661CE5 /* icon40-list-blue.png */,
 				8834274E1987953300661CE5 /* icon40-list-blue@2x.png */,
 				8834274F1987953300661CE5 /* icon40-list-brown.png */,
@@ -6027,6 +6039,7 @@
 				8883CBC01978FF44003DB760 /* icon36-comment-blue@2x.png in Resources */,
 				883427511987953300661CE5 /* icon40-list-blue.png in Resources */,
 				8834274819876D4200661CE5 /* hicon_menu@2x.png in Resources */,
+				889E01C0199374F000343C03 /* icon36-more-white@2x.png in Resources */,
 				8883C06B16DC9A4E003510A1 /* icon_mail_l@2x.jpg in Resources */,
 				88A5F41216E11B8500118996 /* icon_iphone_l_off.jpg in Resources */,
 				88A5F41316E11B8500118996 /* icon_iphone_l.jpg in Resources */,
@@ -6309,6 +6322,7 @@
 				88992C94196D4C7C0002E502 /* LXCellFriend.xib in Resources */,
 				88327780170173690053C8A2 /* HT@2x.png in Resources */,
 				883426141981057800661CE5 /* nl_4.png in Resources */,
+				889E01BF199374F000343C03 /* icon36-more-white.png in Resources */,
 				88327781170173690053C8A2 /* HU.png in Resources */,
 				881C01651973EADD009ED466 /* icon36-tag-brown@2x.png in Resources */,
 				88327782170173690053C8A2 /* HU@2x.png in Resources */,
@@ -6727,6 +6741,7 @@
 				88EDBED8170A7EE3003D7B15 /* bokehcircle-27.jpg in Resources */,
 				88EDBED9170A7EE3003D7B15 /* bokehcircle-28.jpg in Resources */,
 				88EDBEDA170A7EE3003D7B15 /* bokehcircle-29.jpg in Resources */,
+				889E01BE199374F000343C03 /* icon36-gear-white@2x.png in Resources */,
 				88EDBEDB170A7EE3003D7B15 /* bokehcircle-3.jpg in Resources */,
 				88EDBEDC170A7EE3003D7B15 /* bokehcircle-30.jpg in Resources */,
 				88EDBEE2170A7EE3003D7B15 /* bokehcircle-4.jpg in Resources */,
@@ -6770,6 +6785,7 @@
 				88EDBEFD170A7EE3003D7B15 /* leak29.jpg in Resources */,
 				881C01341973EADD009ED466 /* icon28-like-blue.png in Resources */,
 				88EDBEFE170A7EE3003D7B15 /* leak3.jpg in Resources */,
+				889E01BD199374F000343C03 /* icon36-gear-white.png in Resources */,
 				881C017E1973EADD009ED466 /* icon40-home-brown.png in Resources */,
 				881C016B1973EADD009ED466 /* icon40-addphoto-brown@2x.png in Resources */,
 				8834272319876D4200661CE5 /* calendar_label.png in Resources */,
