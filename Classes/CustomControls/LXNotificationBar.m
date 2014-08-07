@@ -29,7 +29,11 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        buttonNotify = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 33, 33)];
+        
+        buttonNotify = [UIButton buttonWithType:UIButtonTypeSystem];
+        buttonNotify.frame = CGRectMake(0, 0, 33, 33);
+        buttonNotify.tintColor = [UIColor whiteColor];
+        
         labelNotifyCount = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 14, 14)];
         labelNotifyCount.backgroundColor = [UIColor redColor];
         labelNotifyCount.textColor = [UIColor whiteColor];
@@ -39,7 +43,7 @@
         labelNotifyCount.layer.cornerRadius = 7;
         labelNotifyCount.hidden = YES;
         
-        [buttonNotify setImage:[UIImage imageNamed:@"icon40-chat-white.png"] forState:UIControlStateNormal];
+        [buttonNotify setImage:[UIImage imageNamed:@"icon40-notify-brown.png"] forState:UIControlStateNormal];
         [buttonNotify addTarget:self action:@selector(showNotify:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:buttonNotify];
         [self addSubview:labelNotifyCount];
