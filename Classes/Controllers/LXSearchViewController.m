@@ -20,6 +20,10 @@
 #import "LXTagHome.h"
 #import "LXUserPageViewController.h"
 
+#import "REFrostedViewController.h"
+
+#import "LXNotificationBar.h"
+
 @interface LXSearchViewController ()
 
 @end
@@ -74,6 +78,11 @@
     page = 1;
     searchView = kSearchTag;
     [self loadTagSearch];
+    
+    LXNotificationBar *viewNotification = [[LXNotificationBar alloc] initWithFrame:CGRectMake(0, 0, 33, 33)];
+    viewNotification.parent = self;
+    UIBarButtonItem *rightNav = [[UIBarButtonItem alloc] initWithCustomView:viewNotification];
+    self.navigationItem.rightBarButtonItem = rightNav;
 }
 
 
@@ -403,6 +412,18 @@
     if (sender.tag == 2) {
         [self loadTagSearch];
     }
+}
+
+- (IBAction)showMenu:(id)sender {
+    // Dismiss keyboard (optional)
+    //
+    [self.view endEditing:YES];
+    [self.frostedViewController.view endEditing:YES];
+    
+    // Present the view controller
+    //
+    [self.frostedViewController presentMenuViewController];
+
 }
 
 @end

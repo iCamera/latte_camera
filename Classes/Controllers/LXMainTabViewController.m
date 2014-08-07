@@ -63,8 +63,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadSuccess:) name:@"LXUploaderSuccess" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadProgess:) name:@"LXUploaderProgress" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadStart:) name:@"LXUploaderStart" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userUpdate:) name:@"user_update" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive:) name:@"BecomeActive" object:nil];
     
     isFirst = true;
     
@@ -252,13 +250,6 @@
     return true;
 }
 
-- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
-    if (viewController == tabBarController.viewControllers[3]) {
-        viewController.tabBarItem.badgeValue = nil;
-        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-    }
-}
-
 - (void)startCamera {
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         
@@ -366,48 +357,6 @@
         MZFormSheetSegue *sheet = (MZFormSheetSegue*)segue;
         sheet.formSheetController.cornerRadius = 0;
         sheet.formSheetController.shouldDismissOnBackgroundViewTap = YES;
-    }
-}
-
-- (void)userUpdate:(NSNotification *)notification {
-    NSDictionary *rawUser = notification.object;
-    if (rawUser[@"notification_count"]) {
-        LXAppDelegate* app = [LXAppDelegate currentDelegate];
-        if (app.currentUser) {
-            if ([app.currentUser.userId integerValue] == [rawUser[@"id"] integerValue]) {
-                UINavigationController* notifyNav = self.viewControllers[3];
-                
-                if (self.selectedIndex != 3) {
-                    NSInteger notifyCount = [rawUser[@"notification_count"] integerValue];
-                    if (notifyCount > 0) {
-                        notifyNav.tabBarItem.badgeValue = [NSString stringWithFormat:@"%ld", (long)notifyCount];
-                    } else {
-                        notifyNav.tabBarItem.badgeValue = nil;
-                    }
-                    [UIApplication sharedApplication].applicationIconBadgeNumber = notifyCount;
-                } else {
-                    LXNotifySideViewController *viewNotify = notifyNav.viewControllers[0];
-                    [viewNotify reloadView];
-                    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-                }
-            }
-        }
-    }
-}
-
-- (void)becomeActive:(NSNotification *) notification {
-    if (self.selectedIndex != 3) {
-        [[LatteAPIClient sharedClient] GET:@"user/me/unread_notify" parameters: nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-            NSInteger count = [JSON[@"notify_count"] integerValue];
-            UIViewController *viewNotify = self.viewControllers[3];
-            if (count > 0) {
-                viewNotify.tabBarItem.badgeValue = [JSON[@"notify_count"] stringValue];
-            } else {
-                viewNotify.tabBarItem.badgeValue = nil;
-            }
-            [UIApplication sharedApplication].applicationIconBadgeNumber = count;
-            
-        } failure: nil];
     }
 }
 

@@ -29,6 +29,7 @@
 #import "REFrostedViewController.h"
 
 #import "LXButtonOrange.h"
+#import "LXNotificationBar.h"
 
 typedef enum {
     kTimelineAll = 10,
@@ -96,38 +97,20 @@ typedef enum {
     
     [app.tracker send:[[GAIDictionaryBuilder createAppView] build]];
     
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTimeline:) name:@"LoggedIn" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive:) name:@"BecomeActive" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userUpdate:) name:@"user_update" object:nil];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTimelineSingle" bundle:nil] forCellReuseIdentifier:@"Single"];
     [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTimelineMulti" bundle:nil] forCellReuseIdentifier:@"Multi"];
-    
-    _labelMessage.layer.cornerRadius = 7;
+
+    //Notification
+    LXNotificationBar *viewNotification = [[LXNotificationBar alloc] initWithFrame:CGRectMake(0, 0, 33, 33)];
+    viewNotification.parent = self;
+    UIBarButtonItem *rightNav = [[UIBarButtonItem alloc] initWithCustomView:viewNotification];
+    self.navigationItem.rightBarButtonItem = rightNav;
     
     [self reloadView];
 }
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    [self reloadProfile];
-}
-
-- (void)reloadProfile {
-    LXAppDelegate* app = [LXAppDelegate currentDelegate];
-    
-    [[LatteAPIv2Client sharedClient] GET:@"user/me" parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-        if (app.currentUser) {
-            NSInteger messageCount = [JSON[@"unread_message_tag"] integerValue];
-            _labelMessage.hidden = messageCount == 0;
-            _labelMessage.text = [NSString stringWithFormat:@"%ld", (long)messageCount];
-            
-        }
-    } failure:nil];
-}
-
 
 - (void)reloadView {
     if (homeTab == kHomeUser) {
@@ -144,6 +127,19 @@ typedef enum {
     } else {
         [self loadMoreTag:YES];
     }
+}
+
+- (IBAction)touchHome:(id)sender {
+    if (self.tableView.contentOffset.y == 0) {
+        LXAppDelegate *app = [LXAppDelegate currentDelegate];
+        UINavigationController *navCurrent = (UINavigationController*)app.viewMainTab.selectedViewController;
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                                 bundle:nil];
+        LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+        viewUserPage.user = app.currentUser;
+        [navCurrent pushViewController:viewUserPage animated:YES];
+    }
+
 }
 
 - (void)loadMore:(BOOL)reset {
@@ -515,19 +511,6 @@ typedef enum {
     [self.frostedViewController presentMenuViewController];
 }
 
-- (void)userUpdate:(NSNotification *)notification {
-    NSDictionary *rawUser = notification.object;
-    if (rawUser[@"unread_message_tag"]) {
-        LXAppDelegate* app = [LXAppDelegate currentDelegate];
-        if (app.currentUser) {
-            if ([app.currentUser.userId integerValue] == [rawUser[@"id"] integerValue]) {
-                NSInteger messageCount = [rawUser[@"unread_message_tag"] integerValue];
-                _labelMessage.hidden = messageCount == 0;
-                _labelMessage.text = [NSString stringWithFormat:@"%ld", (long)messageCount];
-            }
-        }
-    }
-}
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGPoint offset = scrollView.contentOffset;

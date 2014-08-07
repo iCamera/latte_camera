@@ -19,6 +19,8 @@
 #import "REFrostedViewController.h"
 #import "MZFormSheetSegue.h"
 
+#import "LXNotificationBar.h"
+
 typedef enum {
     kLayoutNormal,
     kLayoutCalendar,
@@ -90,6 +92,11 @@ typedef enum {
     }
     
     [self reloadView];
+    
+    LXNotificationBar *viewNotification = [[LXNotificationBar alloc] initWithFrame:CGRectMake(0, 0, 33, 33)];
+    viewNotification.parent = self;
+    UIBarButtonItem *rightNav = [[UIBarButtonItem alloc] initWithCustomView:viewNotification];
+    self.navigationItem.rightBarButtonItem = rightNav;
 }
 
 - (void)becomeActive:(id)sender {
@@ -628,6 +635,12 @@ typedef enum {
     // Present the view controller
     //
     [self.frostedViewController presentMenuViewController];
+}
+
+- (IBAction)touchCountry:(id)sender {
+    if (self.tableView.contentOffset.y == 0) {
+        [self performSegueWithIdentifier:@"Country" sender:self];
+    }
 }
 
 #pragma mark - Navigation

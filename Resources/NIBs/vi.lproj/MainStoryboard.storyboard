@@ -29,11 +29,11 @@
             </objects>
             <point key="canvasLocation" x="-1705" y="-9"/>
         </scene>
-        <!--Navigation Controller - Trending-->
+        <!--Navigation Controller - Xếp hạng-->
         <scene sceneID="0hi-1C-sJs">
             <objects>
                 <navigationController storyboardIdentifier="NavigationRank" definesPresentationContext="YES" id="xio-iO-9Qi" customClass="LXNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Trending" image="icon40-rank-brown.png" id="FCv-Eh-u4w"/>
+                    <tabBarItem key="tabBarItem" title="Xếp hạng" image="icon40-rank-brown.png" id="FCv-Eh-u4w"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="e2T-D0-L2O" customClass="LXNavBar">
                         <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -333,7 +333,7 @@
             </objects>
             <point key="canvasLocation" x="-687" y="628"/>
         </scene>
-        <!--View Controller - Post-->
+        <!--View Controller - Item-->
         <scene sceneID="jk0-Pd-LrH">
             <objects>
                 <viewController id="GvO-78-dmB" sceneMemberID="viewController">
@@ -346,7 +346,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Post" image="icon_camera2.png" id="pGG-TV-7yk"/>
+                    <tabBarItem key="tabBarItem" title="Item" image="icon_camera2.png" id="pGG-TV-7yk"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QFE-EX-yLw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -361,7 +361,7 @@
                         <viewControllerLayoutGuide type="bottom" id="hbO-H8-5bX"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="OhT-9B-KMP">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="126"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="82"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -651,7 +651,7 @@
         <!--Chat View Controller - Message-->
         <scene sceneID="6Eg-2j-Ncc">
             <objects>
-                <tableViewController storyboardIdentifier="Message" id="IsL-ha-Fbg" customClass="LXChatViewController" sceneMemberID="viewController">
+                <tableViewController id="IsL-ha-Fbg" customClass="LXChatViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="WLz-ZQ-8ly">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -706,11 +706,11 @@
                         <viewControllerLayoutGuide type="bottom" id="01O-Pe-PaN"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="RlL-bJ-Dcz">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="QTp-mm-ahZ">
-                                <rect key="frame" x="0.0" y="60" width="320" height="260"/>
+                                <rect key="frame" x="0.0" y="40" width="320" height="260"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="0.90588241820000004" green="0.89411771299999998" blue="0.85490202900000001" alpha="1" colorSpace="deviceRGB"/>
                                 <constraints>
@@ -766,7 +766,7 @@
                                 </connections>
                             </collectionView>
                             <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N7M-mh-zVV">
-                                <rect key="frame" x="0.0" y="354" width="320" height="126"/>
+                                <rect key="frame" x="0.0" y="334" width="320" height="82"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <connections>
@@ -826,7 +826,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ejq-mR-tIk">
-                                <rect key="frame" x="20" y="324" width="280" height="26"/>
+                                <rect key="frame" x="20" y="304" width="280" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.90588241820000004" green="0.89411771299999998" blue="0.85490202900000001" alpha="1" colorSpace="deviceRGB"/>
                                 <constraints>
@@ -862,7 +862,7 @@
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" id="xfF-c4-ahD">
-                        <barButtonItem key="rightBarButtonItem" id="8vs-lB-rrq">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="8vs-lB-rrq">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="right" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="B47-Oy-2yj">
                                 <rect key="frame" x="284" y="11" width="20" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -899,11 +899,11 @@
             </objects>
             <point key="canvasLocation" x="-140" y="607"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Navigation Controller - Notifications-->
         <scene sceneID="NPe-9h-C9N">
             <objects>
                 <navigationController definesPresentationContext="YES" id="VwC-Ow-z6p" customClass="LXNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="search" id="D39-Yx-4Gc"/>
+                    <tabBarItem key="tabBarItem" title="Notifications" systemItem="search" id="D39-Yx-4Gc"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="JEo-cs-8hT">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1022,9 +1022,9 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U2c-Yq-iFg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-699" y="1281"/>
+            <point key="canvasLocation" x="-297" y="1262"/>
         </scene>
-        <!--My Page View Controller-->
+        <!--My Page View Controller - Latte-->
         <scene sceneID="1GG-um-JKQ">
             <objects>
                 <tableViewController storyboardIdentifier="Home" id="Ftc-ZZ-Upd" customClass="LXMyPageViewController" sceneMemberID="viewController">
@@ -1081,8 +1081,7 @@
                             <outlet property="delegate" destination="Ftc-ZZ-Upd" id="Dcr-cU-gUY"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="IuJ-4O-GVS">
-                        <nil key="title"/>
+                    <navigationItem key="navigationItem" title="Latte" id="IuJ-4O-GVS">
                         <barButtonItem key="leftBarButtonItem" image="icon40-menu-white.png" id="BX6-Vl-RyL">
                             <connections>
                                 <action selector="showMenu" destination="Ftc-ZZ-Upd" id="Qgd-lF-DeG"/>
@@ -1111,17 +1110,18 @@
                         <outlet property="buttonTag" destination="oG6-7W-Nd3" id="BUC-GU-wRF"/>
                         <outlet property="buttonUser" destination="7Po-fa-u3n" id="SMS-w5-4Og"/>
                         <outlet property="loadIndicator" destination="fOB-Lf-FTn" id="0ko-hk-sA4"/>
+                        <segue destination="9YB-Rx-kkz" kind="push" id="aAa-9F-ZgU"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HVc-Wm-P1o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-680" y="18"/>
         </scene>
-        <!--Navigation Controller - Home-->
+        <!--Navigation Controller - Tôi-->
         <scene sceneID="w3S-Mf-elA">
             <objects>
                 <navigationController storyboardIdentifier="MyPage" definesPresentationContext="YES" id="xVP-9E-OKe" customClass="LXNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="5" title="Home" image="icon40-home-brown.png" id="SW9-u7-WQa"/>
+                    <tabBarItem key="tabBarItem" tag="5" title="Tôi" image="icon40-home-brown.png" id="SW9-u7-WQa"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="TbP-bX-20h" customClass="LXNavBar">
                         <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
@@ -1276,7 +1276,7 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
                                     <size key="titleShadowOffset" width="0.0" height="1"/>
-                                    <state key="normal" title="Resend">
+                                    <state key="normal" title="Gửi lại">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="titleShadowColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
@@ -2414,7 +2414,7 @@ or you can try to send another confirmation email.</string>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Zcq-Xd-wE1"/>
-        <segue reference="bsm-XB-qQP"/>
+        <segue reference="XpG-jj-45W"/>
+        <segue reference="nqr-PV-YRj"/>
     </inferredMetricsTieBreakers>
 </document>

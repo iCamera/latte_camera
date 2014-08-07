@@ -29,11 +29,11 @@
             </objects>
             <point key="canvasLocation" x="-1705" y="-9"/>
         </scene>
-        <!--Navigation Controller - Trending-->
+        <!--Navigation Controller - ランキング-->
         <scene sceneID="0hi-1C-sJs">
             <objects>
                 <navigationController storyboardIdentifier="NavigationRank" definesPresentationContext="YES" id="xio-iO-9Qi" customClass="LXNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Trending" image="icon40-rank-brown.png" id="FCv-Eh-u4w"/>
+                    <tabBarItem key="tabBarItem" title="ランキング" image="icon40-rank-brown.png" id="FCv-Eh-u4w"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="e2T-D0-L2O" customClass="LXNavBar">
                         <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -291,8 +291,7 @@
                             <outlet property="delegate" destination="HL7-KM-o46" id="bOV-aK-SjC"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="73I-gl-Maa">
-                        <nil key="title"/>
+                    <navigationItem key="navigationItem" title="ランキング" id="73I-gl-Maa">
                         <barButtonItem key="leftBarButtonItem" image="icon40-menu-white.png" id="y7S-ve-IZm">
                             <connections>
                                 <action selector="showMenu" destination="HL7-KM-o46" id="XzL-o9-K51"/>
@@ -333,7 +332,7 @@
             </objects>
             <point key="canvasLocation" x="-687" y="628"/>
         </scene>
-        <!--View Controller - Post-->
+        <!--View Controller - 投稿-->
         <scene sceneID="jk0-Pd-LrH">
             <objects>
                 <viewController id="GvO-78-dmB" sceneMemberID="viewController">
@@ -346,7 +345,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Post" image="icon_camera2.png" id="pGG-TV-7yk"/>
+                    <tabBarItem key="tabBarItem" title="投稿" image="icon_camera2.png" id="pGG-TV-7yk"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QFE-EX-yLw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -491,9 +490,12 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="1 line 2 line 3 line" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="244" translatesAutoresizingMaskIntoConstraints="NO" id="xAM-Jx-dAd">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="244" translatesAutoresizingMaskIntoConstraints="NO" id="xAM-Jx-dAd">
                                             <rect key="frame" x="68" y="3" width="244" height="43"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <string key="text">1 line
+2 line
+3 line</string>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
@@ -743,7 +745,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Nickname" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tRb-78-wqg">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ニックネーム" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tRb-78-wqg">
                                                     <rect key="frame" x="0.0" y="32" width="50" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
@@ -899,11 +901,11 @@
             </objects>
             <point key="canvasLocation" x="-140" y="607"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Navigation Controller - 通知-->
         <scene sceneID="NPe-9h-C9N">
             <objects>
                 <navigationController definesPresentationContext="YES" id="VwC-Ow-z6p" customClass="LXNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="search" id="D39-Yx-4Gc"/>
+                    <tabBarItem key="tabBarItem" title="通知" systemItem="search" id="D39-Yx-4Gc"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="JEo-cs-8hT">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -921,7 +923,7 @@
             </objects>
             <point key="canvasLocation" x="-1170" y="1281"/>
         </scene>
-        <!--Search View Controller - Search-->
+        <!--Search View Controller - 検索-->
         <scene sceneID="Def-pZ-mYx">
             <objects>
                 <tableViewController storyboardIdentifier="Search" id="oup-QU-2wo" customClass="LXSearchViewController" sceneMemberID="viewController">
@@ -1005,7 +1007,7 @@
                             <outlet property="delegate" destination="oup-QU-2wo" id="Nsw-ke-hxl"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Search" id="2hN-W4-E2Z">
+                    <navigationItem key="navigationItem" title="検索" id="2hN-W4-E2Z">
                         <barButtonItem key="leftBarButtonItem" image="icon40-menu-white.png" id="uZ2-rZ-Xzd">
                             <connections>
                                 <action selector="showMenu:" destination="oup-QU-2wo" id="NPe-74-l0z"/>
@@ -1024,7 +1026,7 @@
             </objects>
             <point key="canvasLocation" x="-699" y="1281"/>
         </scene>
-        <!--My Page View Controller-->
+        <!--My Page View Controller - ホーム-->
         <scene sceneID="1GG-um-JKQ">
             <objects>
                 <tableViewController storyboardIdentifier="Home" id="Ftc-ZZ-Upd" customClass="LXMyPageViewController" sceneMemberID="viewController">
@@ -1081,8 +1083,7 @@
                             <outlet property="delegate" destination="Ftc-ZZ-Upd" id="Dcr-cU-gUY"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="IuJ-4O-GVS">
-                        <nil key="title"/>
+                    <navigationItem key="navigationItem" title="ホーム" id="IuJ-4O-GVS">
                         <barButtonItem key="leftBarButtonItem" image="icon40-menu-white.png" id="BX6-Vl-RyL">
                             <connections>
                                 <action selector="showMenu" destination="Ftc-ZZ-Upd" id="Qgd-lF-DeG"/>
@@ -1117,11 +1118,11 @@
             </objects>
             <point key="canvasLocation" x="-680" y="18"/>
         </scene>
-        <!--Navigation Controller - Home-->
+        <!--Navigation Controller - ホーム-->
         <scene sceneID="w3S-Mf-elA">
             <objects>
                 <navigationController storyboardIdentifier="MyPage" definesPresentationContext="YES" id="xVP-9E-OKe" customClass="LXNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="5" title="Home" image="icon40-home-brown.png" id="SW9-u7-WQa"/>
+                    <tabBarItem key="tabBarItem" tag="5" title="ホーム" image="icon40-home-brown.png" id="SW9-u7-WQa"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="TbP-bX-20h" customClass="LXNavBar">
                         <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
@@ -1258,7 +1259,7 @@
                                     <rect key="frame" x="0.0" y="4" width="43" height="31"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Registration has not yet been completed" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sYU-ch-T6S">
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Latteへの本登録が完了していません" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sYU-ch-T6S">
                                     <rect key="frame" x="40" y="9" width="271" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
@@ -1276,7 +1277,7 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
                                     <size key="titleShadowOffset" width="0.0" height="1"/>
-                                    <state key="normal" title="Resend">
+                                    <state key="normal" title="再送する">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="titleShadowColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
@@ -1327,11 +1328,9 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="300" height="189"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                    <string key="text">Seems like you have not confirmed your email address yet. Please click on the URL in the email we have sent to you.
+                                                    <string key="text">メールアドレスに登録確認メールを送信しました。まだ本登録の手続きは完了しておりません。本登録の手続きを完了するには、登録確認メールに記載されているURLをクリックしてください。
 
-In case you entered a wrong email address, you can change it at the box below, 
-
-or you can try to send another confirmation email.</string>
+登録確認メールが届かない場合、お手数ですが入力されたアドレスに誤りがないかをご確認の上、「再送する」ボタンを押してください。</string>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
@@ -1906,7 +1905,7 @@ or you can try to send another confirmation email.</string>
                                         <action selector="clickShowUser:" destination="SLc-hF-3Sq" eventType="touchUpInside" id="qvV-00-To2"/>
                                     </connections>
                                 </button>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nickname" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wuz-sA-siW">
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ニックネーム" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wuz-sA-siW">
                                     <rect key="frame" x="123" y="146" width="74" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
@@ -1932,7 +1931,7 @@ or you can try to send another confirmation email.</string>
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Log In" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KOh-sr-H4a">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="ログイン" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KOh-sr-H4a">
                                                     <rect key="frame" x="35" y="0.0" width="270" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
@@ -1950,7 +1949,7 @@ or you can try to send another confirmation email.</string>
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Search" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="foE-bc-NMM">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="検索" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="foE-bc-NMM">
                                                     <rect key="frame" x="35" y="0.0" width="270" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
@@ -2022,7 +2021,7 @@ or you can try to send another confirmation email.</string>
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Feedback" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Wz1-jS-OP8">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="機能要望・ご意見" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Wz1-jS-OP8">
                                                     <rect key="frame" x="35" y="0.0" width="270" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
@@ -2094,7 +2093,7 @@ or you can try to send another confirmation email.</string>
             </objects>
             <point key="canvasLocation" x="-2557" y="677"/>
         </scene>
-        <!--Following TagTVC - Following Tags-->
+        <!--Following TagTVC - フォロー中のタグ-->
         <scene sceneID="Q0y-eF-4Wb">
             <objects>
                 <tableViewController storyboardIdentifier="FollowingTag" id="3Rl-AM-Gib" customClass="LXFollowingTagTVC" sceneMemberID="viewController">
@@ -2150,7 +2149,7 @@ or you can try to send another confirmation email.</string>
                             <outlet property="delegate" destination="3Rl-AM-Gib" id="nw1-bO-s9Y"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Following Tags" id="CWE-hg-mls"/>
+                    <navigationItem key="navigationItem" title="フォロー中のタグ" id="CWE-hg-mls"/>
                     <connections>
                         <outlet property="activityLoad" destination="KAz-LT-gDt" id="d4t-UX-Gw5"/>
                         <outlet property="searchBar" destination="1PT-5c-PN7" id="lUv-OJ-fgi"/>

@@ -72,6 +72,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveLoggedIn:) name:@"LoggedIn" object:nil];
+    
 //    [GAI sharedInstance].trackUncaughtExceptions = YES;
     [GAI sharedInstance].dispatchInterval = 20;
     tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-242292-26"];
@@ -139,6 +141,11 @@
                                     success:nil
                                     failure:nil];
 }
+
+- (void)receiveLoggedIn:(NSNotification *) notification {
+    [self checkNotify];
+}
+
 
 - (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err {
     DLog(@"Error in registration. Error: %@", err);
@@ -215,7 +222,20 @@
                                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                            DLog(@"Something went wrong (Login check)");
                                        }];
+        
+        [self checkNotify];
     }
+}
+
+- (void)checkNotify {
+    [[LatteAPIClient sharedClient] GET:@"user/me/unread_notify" parameters: nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyCount" object:JSON[@"notify_count"]];
+        
+        NSInteger count = [JSON[@"notify_count"] integerValue];
+        [UIApplication sharedApplication].applicationIconBadgeNumber = count;
+        
+    } failure: nil];
 }
 
 - (void)clearNotification {
@@ -227,11 +247,6 @@
 
 - (void)setCurrentUser:(User *)currentUser {
     _currentUser = currentUser;
-    if (currentUser == nil) {
-        ((UITabBarItem *)_viewMainTab.tabBar.items[3]).enabled = NO;
-    } else {
-        ((UITabBarItem *)_viewMainTab.tabBar.items[3]).enabled = YES;
-    }
 }
 #pragma mark - Core Data stack
 

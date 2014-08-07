@@ -63,9 +63,6 @@
 {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveLoggedIn:) name:@"LoggedIn" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive:) name:@"BecomeActive" object:nil];
-    
     // This will remove extra separators from tableview
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
@@ -188,14 +185,6 @@
                                              }
                                              [self.refreshControl endRefreshing];
                                          }];
-}
-
-- (void)receiveLoggedIn:(NSNotification *) notification {
-    [self reloadView];
-}
-
-- (void)becomeActive:(NSNotification *) notification {
-    [self reloadView];
 }
 
 

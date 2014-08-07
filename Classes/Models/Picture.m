@@ -32,6 +32,7 @@
 @synthesize tagsOld;
 @synthesize status;
 @synthesize isOwner;
+@synthesize followingTags;
 
 + (Picture *)instanceFromDictionary:(NSDictionary *)aDictionary {
     Picture *instance = [[Picture alloc] init];

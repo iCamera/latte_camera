@@ -15,7 +15,6 @@
 
 @interface LXMyPageViewController : UITableViewController <UIActionSheetDelegate, LXImagePickerDelegate, LXGalleryViewControllerDataSource>
 
-@property (strong, nonatomic) IBOutlet UILabel *labelMessage;
 @property (strong, nonatomic) IBOutlet UIButton *buttonTag;
 @property (strong, nonatomic) IBOutlet UIButton *buttonUser;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadIndicator;
@@ -24,6 +23,7 @@
 
 - (IBAction)switchTab:(UIButton*)sender;
 - (IBAction)refresh:(id)sender;
+- (IBAction)touchHome:(id)sender;
 - (void)reloadView;
 
 @end

@@ -217,7 +217,7 @@
     JSQMessagesTimestampFormatter *formater = [JSQMessagesTimestampFormatter sharedFormatter];
     NSString *relativeDate = [formater relativeDateForDate:message.date];
     
-    if (indexPath.item - 1 > 0) {
+    if (indexPath.item > 0) {
         JSQMessage *previousMessage = [self.messages objectAtIndex:indexPath.item - 1];
         
         NSString *prevRelativeDate = [formater relativeDateForDate:previousMessage.date];
@@ -325,7 +325,7 @@
     JSQMessagesTimestampFormatter *formater = [JSQMessagesTimestampFormatter sharedFormatter];
     NSString *relativeDate = [formater relativeDateForDate:message.date];
     
-    if (indexPath.item - 1 > 0) {
+    if (indexPath.item > 0) {
         JSQMessage *previousMessage = [self.messages objectAtIndex:indexPath.item - 1];
         
         NSString *prevRelativeDate = [formater relativeDateForDate:previousMessage.date];

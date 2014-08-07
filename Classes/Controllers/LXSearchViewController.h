@@ -27,5 +27,6 @@ typedef enum {
 @property (assign, nonatomic) SearchView searchView;
 
 - (IBAction)switchTab:(UIButton *)sender;
+- (IBAction)showMenu:(id)sender;
 
 @end

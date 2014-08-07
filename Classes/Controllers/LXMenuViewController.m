@@ -137,7 +137,7 @@
         [self dismissViewControllerAnimated:YES completion:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"LoggedOut" object:self];
     } else if ([tableView cellForRowAtIndexPath:indexPath] == menuSearch) {
-        [navCurrent pushViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"Search"] animated:YES];
+        app.viewMainTab.selectedIndex = 3;
     } else if ([tableView cellForRowAtIndexPath:indexPath] == menuLikedPhotos) {
         LXPhotoGridCVC *viewLikedGrid = [mainStoryboard instantiateViewControllerWithIdentifier:@"PhotoGrid"];
         viewLikedGrid.gridType = kPhotoGridUserLiked;

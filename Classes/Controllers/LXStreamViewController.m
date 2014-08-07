@@ -14,6 +14,7 @@
 #import "LatteAPIClient.h"
 #import "LXUserPageViewController.h"
 #import "LXStreamHeader.h"
+#import "LXNotificationBar.h"
 
 #import "REFrostedViewController.h"
 #import "MZFormSheetSegue.h"
@@ -88,6 +89,11 @@
     [refresh addTarget:self action:@selector(reloadView) forControlEvents:UIControlEventValueChanged];
     [self.collectionView addSubview:refresh];
     [self loadMore:YES];
+    
+    LXNotificationBar *viewNotification = [[LXNotificationBar alloc] initWithFrame:CGRectMake(0, 0, 33, 33)];
+    viewNotification.parent = self;
+    UIBarButtonItem *rightNav = [[UIBarButtonItem alloc] initWithCustomView:viewNotification];
+    self.navigationItem.rightBarButtonItem = rightNav;
 }
 
 - (void)changedBrowsingCountry:(NSNotification*)notify {
@@ -350,6 +356,12 @@
     // Present the view controller
     //
     [self.frostedViewController presentMenuViewController];
+}
+
+- (IBAction)touchCountry:(id)sender {
+    if (self.collectionView.contentOffset.y == 0) {
+        [self performSegueWithIdentifier:@"Country" sender:self];
+    }
 }
 
 

@@ -14,5 +14,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonCountry;
 
 - (IBAction)showMenu;
+- (IBAction)touchCountry:(id)sender;
 
 @end

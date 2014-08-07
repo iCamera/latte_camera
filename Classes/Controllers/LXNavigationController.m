@@ -34,6 +34,7 @@
     
     UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognized:)];
+    tap.cancelsTouchesInView = NO;
 
     [self.navigationBar addGestureRecognizer:pan];
     
