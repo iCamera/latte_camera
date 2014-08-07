@@ -69,7 +69,14 @@
     [self.collectionView registerNib:[UINib nibWithNibName:@"LXStreamFooter" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"Footer"];
     
     loadEnded = false;
-    currentTab = 0;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    currentTab = [defaults integerForKey:@"LatteStreamView"];
+    if (currentTab == 0) {
+        [self.collectionView setCollectionViewLayout:layoutWaterfall animated:NO];
+    } else {
+        [self.collectionView setCollectionViewLayout:layoutGrid animated:NO];
+    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(becomeActive:)
@@ -79,7 +86,6 @@
                                              selector:@selector(changedBrowsingCountry:)
                                                  name:@"ChangedBrowsingCountry" object:nil];
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     browsingCountry = [defaults objectForKey:@"BrowsingCountry"];
     if (browsingCountry) {
         NSString *countryImage = [NSString stringWithFormat:@"%@.png", browsingCountry];
@@ -338,6 +344,11 @@
 
 - (void)switchTab:(UIButton *)sender {
     currentTab = sender.tag;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setInteger:currentTab forKey:@"LatteStreamView"];
+    [defaults synchronize];
+    
     if (currentTab == 0) {
         [self.collectionView selectItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] animated:NO scrollPosition:UICollectionViewScrollPositionNone];
         [self.collectionView setCollectionViewLayout:layoutWaterfall animated:YES];

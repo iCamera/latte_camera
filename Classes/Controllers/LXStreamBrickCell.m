@@ -11,7 +11,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "LXUserPageViewController.h"
 #import "Picture.h"
-#import  "LatteAPIClient.h"
+#import "LatteAPIClient.h"
 
 @implementation LXStreamBrickCell
 
@@ -93,7 +93,22 @@
 }
 
 - (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {
+    if (self.bounds.size.width == 100) {
+        _buttonUser.userInteractionEnabled = NO;
+    } else {
+        _buttonUser.userInteractionEnabled = YES;
+    }
+    
     [UIView animateWithDuration:0.3 animations:^{
+        if (self.bounds.size.width == 100) {
+            _buttonUser.alpha = 0;
+            _viewBg.alpha = 0;
+            _labelUsername.alpha = 0;
+        } else {
+            _buttonUser.alpha = 1;
+            _viewBg.alpha = 1;
+            _labelUsername.alpha = 1;
+        }
         [self layoutIfNeeded];
     }];
 }
