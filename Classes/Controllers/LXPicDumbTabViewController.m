@@ -161,8 +161,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     if (searchText.length > 0) {
+        [self.tableView setEditing:NO animated:YES];
+        tableMode = kTagTableResult;
+        [self.tableView reloadData];
         [self loadResult:searchText];
     } else {
+        [currentRequest cancel];
         tableMode = kTagTableInput;
         [self.tableView setEditing:YES animated:YES];
         [self.tableView reloadData];
