@@ -198,8 +198,8 @@ typedef enum {
         newHeight = 0;
     }
     
-    if (newHeight > 320) {
-        newHeight = 320;
+    if (newHeight > 260) {
+        newHeight = 260;
     }
     
     if (newHeight > 100) {
