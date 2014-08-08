@@ -25,6 +25,17 @@
     return self;
 }
 
+- (id)initWithRootViewController:(UIViewController *)rootViewController {
+    self = [super initWithRootViewController:rootViewController];
+    if (self) {
+        // Custom initialization
+        self.navigationBar.barTintColor = [UIColor blackColor];
+        self.navigationBar.tintColor = [UIColor whiteColor];
+        self.navigationBar.barStyle = UIBarStyleBlack;
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

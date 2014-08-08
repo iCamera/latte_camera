@@ -7,6 +7,7 @@
 //
 
 #import "LXNotifySideViewController.h"
+#import "LXModalNavigationController.h"
 
 #import "LXAppDelegate.h"
 #import "LatteAPIClient.h"
@@ -223,7 +224,8 @@
                     viewComment.picture = picture;
                     
                     
-                    [self.navigationController pushViewController:viewComment animated:YES];
+                    LXModalNavigationController *modalComment = [[LXModalNavigationController alloc] initWithRootViewController:viewComment];
+                    [self.formSheetController presentViewController:modalComment animated:YES completion:nil];
                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                     [MBProgressHUD hideHUDForView:self.view animated:YES];
                 }];
@@ -240,27 +242,29 @@
             if (notifyKind == kNotifyKindComment) {
                 LXPicCommentViewController *viewComment = [storyGallery instantiateViewControllerWithIdentifier:@"Comment"];
                 viewComment.picture = pic;
-                [self.navigationController pushViewController:viewComment animated:YES];
+                LXModalNavigationController *modalComment = [[LXModalNavigationController alloc] initWithRootViewController:viewComment];
+                [self.formSheetController presentViewController:modalComment animated:YES completion:nil];
             }
             
             if (notifyKind == kNotifyKindLike) {
                 LXPicVoteCollectionController *viewVote = [storyGallery instantiateViewControllerWithIdentifier:@"Like"];
                 viewVote.picture = pic;
-                [self.navigationController pushViewController:viewVote animated:YES];
+                LXModalNavigationController *modalVote = [[LXModalNavigationController alloc] initWithRootViewController:viewVote];
+                [self.formSheetController presentViewController:modalVote animated:YES completion:nil];
             }
 
             break;
         }
         case kNotifyTargetUser: {
-            LXAppDelegate *app = [LXAppDelegate currentDelegate];
-            UINavigationController *currentNav = (UINavigationController*)app.viewMainTab.selectedViewController;
             User *user = [User instanceFromDictionary:[notify objectForKey:@"target"]];
             
             UIStoryboard *storyGallery = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                                    bundle:nil];
-            LXUserPageViewController  *viewMypage = [storyGallery instantiateViewControllerWithIdentifier:@"UserPage"];
-            viewMypage.user = user;
-            [currentNav pushViewController:viewMypage animated:YES];
+            LXUserPageViewController  *viewUserPage = [storyGallery instantiateViewControllerWithIdentifier:@"UserPage"];
+            viewUserPage.user = user;
+            LXModalNavigationController *modalUser = [[LXModalNavigationController alloc] initWithRootViewController:viewUserPage];
+            [self.formSheetController presentViewController:modalUser animated:YES completion:nil];
+
             break;
         }
         default:

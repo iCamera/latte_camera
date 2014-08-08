@@ -13,6 +13,8 @@
 #import "LatteAPIClient.h"
 #import "LXGalleryViewController.h"
 #import <MBProgressHUD/MBProgressHUD.h>
+#import "LXModalNavigationController.h"
+#import "MZFormSheetController.h"
 
 @implementation LXCellNotify
 
@@ -50,7 +52,9 @@
             
             viewGallery.picture = pic;
             viewGallery.delegate = _parent;
-            [_parent.navigationController pushViewController:viewGallery animated:YES];
+            
+            LXModalNavigationController *modalGallery = [[LXModalNavigationController alloc] initWithRootViewController:viewGallery];
+            [_parent.formSheetController presentViewController:modalGallery animated:YES completion:nil];
         }
             
             break;

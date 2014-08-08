@@ -447,7 +447,11 @@
 }
 
 - (IBAction)touchClose:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    if (self.navigationController.viewControllers[0] == self) {
+        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (IBAction)toggleLike:(UIButton *)sender {
