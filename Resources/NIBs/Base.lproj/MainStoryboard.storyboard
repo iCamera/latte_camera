@@ -291,24 +291,36 @@
                             <outlet property="delegate" destination="HL7-KM-o46" id="bOV-aK-SjC"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="73I-gl-Maa">
-                        <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" image="icon40-menu-white.png" id="y7S-ve-IZm">
-                            <connections>
-                                <action selector="showMenu" destination="HL7-KM-o46" id="XzL-o9-K51"/>
-                            </connections>
+                    <navigationItem key="navigationItem" title="Trending" id="73I-gl-Maa">
+                        <barButtonItem key="leftBarButtonItem" id="9Sb-Gl-1Qt">
+                            <view key="customView" contentMode="scaleToFill" id="q8P-iO-ids">
+                                <rect key="frame" x="16" y="5" width="71" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MZg-b3-jOc">
+                                        <rect key="frame" x="0.0" y="0.0" width="33" height="33"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="icon40-menu-white.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="showMenu:" destination="HL7-KM-o46" eventType="touchUpInside" id="SBV-Tr-r2e"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2GK-F9-9va">
+                                        <rect key="frame" x="38" y="0.0" width="33" height="33"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="icon40-earth-color.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="touchCountry:" destination="HL7-KM-o46" eventType="touchUpInside" id="CJX-z0-PIR"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                         </barButtonItem>
-                        <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="2GK-F9-9va">
-                            <rect key="frame" x="110" y="11" width="100" height="22"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" title="Trending" image="icon40-earth-color.png">
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="touchCountry:" destination="HL7-KM-o46" eventType="touchUpInside" id="CJX-z0-PIR"/>
-                            </connections>
-                        </button>
                     </navigationItem>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="7h9-DV-X2L">
                         <autoresizingMask key="autoresizingMask"/>
@@ -1024,7 +1036,7 @@
             </objects>
             <point key="canvasLocation" x="-699" y="1281"/>
         </scene>
-        <!--My Page View Controller-->
+        <!--My Page View Controller - Home-->
         <scene sceneID="1GG-um-JKQ">
             <objects>
                 <tableViewController storyboardIdentifier="Home" id="Ftc-ZZ-Upd" customClass="LXMyPageViewController" sceneMemberID="viewController">
@@ -1081,24 +1093,12 @@
                             <outlet property="delegate" destination="Ftc-ZZ-Upd" id="Dcr-cU-gUY"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="IuJ-4O-GVS">
-                        <nil key="title"/>
+                    <navigationItem key="navigationItem" title="Home" id="IuJ-4O-GVS">
                         <barButtonItem key="leftBarButtonItem" image="icon40-menu-white.png" id="BX6-Vl-RyL">
                             <connections>
                                 <action selector="showMenu" destination="Ftc-ZZ-Upd" id="Qgd-lF-DeG"/>
                             </connections>
                         </barButtonItem>
-                        <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="u5G-by-916">
-                            <rect key="frame" x="110" y="11" width="100" height="22"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" title="Home" image="icon36-me-brown.png"/>
-                            <connections>
-                                <action selector="touchHome:" destination="Ftc-ZZ-Upd" eventType="touchUpInside" id="RZr-YF-EDZ"/>
-                            </connections>
-                        </button>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="hgg-06-ltH">
@@ -1137,7 +1137,7 @@
             </objects>
             <point key="canvasLocation" x="-1170" y="-9"/>
         </scene>
-        <!--Stream View Controller-->
+        <!--Stream View Controller - Stream-->
         <scene sceneID="l9p-Lm-AEt">
             <objects>
                 <collectionViewController autoresizesArchivedViewToFullSize="NO" id="qmv-g0-Tf4" customClass="LXStreamViewController" sceneMemberID="viewController">
@@ -1157,24 +1157,36 @@
                             <outlet property="delegate" destination="qmv-g0-Tf4" id="Cl5-9D-6JR"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="bjP-Z5-U6b">
-                        <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" image="icon40-menu-white.png" id="IcD-Jh-dMT">
-                            <connections>
-                                <action selector="showMenu" destination="qmv-g0-Tf4" id="kFQ-NM-nGh"/>
-                            </connections>
+                    <navigationItem key="navigationItem" title="Stream" id="bjP-Z5-U6b">
+                        <barButtonItem key="leftBarButtonItem" id="fAQ-xU-sfH">
+                            <view key="customView" contentMode="scaleToFill" id="0IU-MP-DWk">
+                                <rect key="frame" x="16" y="5" width="71" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6NJ-nK-3Ua">
+                                        <rect key="frame" x="0.0" y="0.0" width="33" height="33"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="icon40-menu-white.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="showMenu" destination="qmv-g0-Tf4" eventType="touchUpInside" id="23g-3R-AdM"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GaG-lA-WrJ">
+                                        <rect key="frame" x="38" y="0.0" width="33" height="33"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="icon40-earth-color.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="touchCountry:" destination="qmv-g0-Tf4" eventType="touchUpInside" id="Y0j-p5-srM"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                         </barButtonItem>
-                        <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="GaG-lA-WrJ">
-                            <rect key="frame" x="100" y="11" width="120" height="22"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" title="Stream" image="icon40-earth-color.png">
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="touchCountry:" destination="qmv-g0-Tf4" eventType="touchUpInside" id="Y0j-p5-srM"/>
-                            </connections>
-                        </button>
                     </navigationItem>
                     <connections>
                         <outlet property="buttonCountry" destination="GaG-lA-WrJ" id="lTa-HP-xY0"/>
@@ -2471,7 +2483,6 @@ or you can try to send another confirmation email.</string>
         <image name="icon36-info-brown.png" width="18" height="18"/>
         <image name="icon36-like-blue.png" width="14" height="14"/>
         <image name="icon36-like-brown.png" width="14" height="14"/>
-        <image name="icon36-me-brown.png" width="18" height="18"/>
         <image name="icon36-menu-blue.png" width="20" height="18"/>
         <image name="icon36-menu-brown.png" width="20" height="18"/>
         <image name="icon36-more-white.png" width="18" height="18"/>

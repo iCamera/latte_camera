@@ -10,8 +10,10 @@
 #import "LXAppDelegate.h"
 #import "LatteAPIClient.h"
 #import "MZFormSheetController.h"
+#import "LXUserPageViewController.h"
 
 @implementation LXNotificationBar {
+    UIButton *buttonProfile;
     UIButton *buttonNotify;
     UILabel *labelNotifyCount;
 }
@@ -30,11 +32,15 @@
     if (self) {
         // Initialization code
         
+        buttonProfile = [UIButton buttonWithType:UIButtonTypeSystem];
+        buttonProfile.frame = CGRectMake(0, 0, 33, 33);
+        buttonProfile.tintColor = [UIColor whiteColor];
+        
         buttonNotify = [UIButton buttonWithType:UIButtonTypeSystem];
-        buttonNotify.frame = CGRectMake(0, 0, 33, 33);
+        buttonNotify.frame = CGRectMake(35, 0, 33, 33);
         buttonNotify.tintColor = [UIColor whiteColor];
         
-        labelNotifyCount = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 14, 14)];
+        labelNotifyCount = [[UILabel alloc] initWithFrame:CGRectMake(33, 0, 14, 14)];
         labelNotifyCount.backgroundColor = [UIColor redColor];
         labelNotifyCount.textColor = [UIColor whiteColor];
         labelNotifyCount.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0];
@@ -45,6 +51,11 @@
         
         [buttonNotify setImage:[UIImage imageNamed:@"icon40-notify-brown.png"] forState:UIControlStateNormal];
         [buttonNotify addTarget:self action:@selector(showNotify:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [buttonProfile setImage:[UIImage imageNamed:@"icon36-me-brown.png"] forState:UIControlStateNormal];
+        [buttonProfile addTarget:self action:@selector(showProfile:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [self addSubview:buttonProfile];
         [self addSubview:buttonNotify];
         [self addSubview:labelNotifyCount];
         
@@ -124,6 +135,17 @@
         //do sth
     }];
 }
+
+- (void)showProfile:(id)sender {
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    UINavigationController *navCurrent = (UINavigationController*)app.viewMainTab.selectedViewController;
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    LXUserPageViewController *viewUserPage = [mainStoryboard instantiateViewControllerWithIdentifier:@"UserPage"];
+    viewUserPage.user = app.currentUser;
+    [navCurrent pushViewController:viewUserPage animated:YES];
+}
+
 
 
 /*

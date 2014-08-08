@@ -105,7 +105,7 @@ typedef enum {
     [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTimelineMulti" bundle:nil] forCellReuseIdentifier:@"Multi"];
 
     //Notification
-    LXNotificationBar *viewNotification = [[LXNotificationBar alloc] initWithFrame:CGRectMake(0, 0, 33, 33)];
+    LXNotificationBar *viewNotification = [[LXNotificationBar alloc] initWithFrame:CGRectMake(0, 0, 70, 33)];
     viewNotification.parent = self;
     UIBarButtonItem *rightNav = [[UIBarButtonItem alloc] initWithCustomView:viewNotification];
     self.navigationItem.rightBarButtonItem = rightNav;

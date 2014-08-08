@@ -96,7 +96,7 @@
     [self.collectionView addSubview:refresh];
     [self loadMore:YES];
     
-    LXNotificationBar *viewNotification = [[LXNotificationBar alloc] initWithFrame:CGRectMake(0, 0, 33, 33)];
+    LXNotificationBar *viewNotification = [[LXNotificationBar alloc] initWithFrame:CGRectMake(0, 0, 70, 33)];
     viewNotification.parent = self;
     UIBarButtonItem *rightNav = [[UIBarButtonItem alloc] initWithCustomView:viewNotification];
     self.navigationItem.rightBarButtonItem = rightNav;

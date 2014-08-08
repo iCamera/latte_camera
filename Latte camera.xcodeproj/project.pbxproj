@@ -2834,6 +2834,7 @@
 		888027981994E61300CF5AED /* icon28-following-brown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon28-following-brown@2x.png"; sourceTree = "<group>"; };
 		888027991994E61300CF5AED /* icon28-view-brown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon28-view-brown.png"; sourceTree = "<group>"; };
 		8880279A1994E61300CF5AED /* icon28-view-brown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon28-view-brown@2x.png"; sourceTree = "<group>"; };
+		888027A41994EB8200CF5AED /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
 		8880F00A170D69C700478E42 /* LXImageLens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXImageLens.h; sourceTree = "<group>"; };
 		8880F00B170D69C700478E42 /* LXImageLens.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXImageLens.m; sourceTree = "<group>"; };
 		8880F015170D6AFD00478E42 /* lattelens.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lattelens.fsh; sourceTree = "<group>"; };
@@ -3203,7 +3204,6 @@
 		88C095C6173A47BD007CED90 /* UIImage+fixOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+fixOrientation.h"; sourceTree = "<group>"; };
 		88C095C7173A47BD007CED90 /* UIImage+fixOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+fixOrientation.m"; sourceTree = "<group>"; };
 		88C0FF4717212C0600F8CA2D /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		88C441E819939EDB0018054A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
 		88C67F3817C5B324002A5D56 /* LXModalNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXModalNavigationController.h; sourceTree = "<group>"; };
 		88C67F3917C5B324002A5D56 /* LXModalNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXModalNavigationController.m; sourceTree = "<group>"; };
 		88CE89DD174E101A00C6A6B6 /* aqua_pfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = aqua_pfont.ttf; sourceTree = "<group>"; };
@@ -7588,7 +7588,7 @@
 			children = (
 				88491EC01921BD1700CAF0A2 /* Base */,
 				88491EC31921BD2700CAF0A2 /* vi */,
-				88C441E819939EDB0018054A /* ja */,
+				888027A41994EB8200CF5AED /* ja */,
 			);
 			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";
