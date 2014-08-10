@@ -38,11 +38,13 @@
     [super viewDidLoad];
         
     gestureTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchBackground:)];
-    
+
+    _textComment.placeholder = NSLocalizedString(@"New Message", @"");
     _textComment.layer.borderWidth = 1;
     _textComment.layer.borderColor = [UIColor grayColor].CGColor;
     _textComment.layer.cornerRadius = 5;
     _textComment.layer.masksToBounds = YES;
+    _textComment.contentInset = UIEdgeInsetsZero;
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -212,7 +214,7 @@
         userTag = [[NSMutableArray alloc] init];
     }
     
-    _constraintTextHeight.constant = MIN(textView.contentSize.height + 20, 100);
+    _constraintTextHeight.constant = MIN(textView.contentSize.height + 12, 100);
     [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
         [viewHeader layoutIfNeeded];
     }];

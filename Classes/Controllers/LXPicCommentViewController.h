@@ -10,6 +10,7 @@
 #import "Picture.h"
 #import "LXButtonBrown30.h"
 #import "LXGalleryViewController.h"
+#import "LXTextView.h"
 
 @class Comment;
 
@@ -24,7 +25,7 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintInputPadding;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintTextHeight;
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
-@property (weak, nonatomic) IBOutlet UITextView *textComment;
+@property (weak, nonatomic) IBOutlet LXTextView *textComment;
 @property (strong, nonatomic) IBOutlet LXButtonBrown30 *buttonSend;
 @property (strong, nonatomic) Picture *picture;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityLoad;
