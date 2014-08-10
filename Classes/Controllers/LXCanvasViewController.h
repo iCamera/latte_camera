@@ -71,7 +71,6 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIView *viewBlendControl;
 @property (strong, nonatomic) IBOutlet UIView *viewPresetControl;
 
-@property (strong, nonatomic) IBOutlet UIScrollView *scrollCamera;
 @property (strong, nonatomic) IBOutlet UIView *viewCameraWraper;
 @property (strong, nonatomic) IBOutlet LXDrawView *viewDraw;
 

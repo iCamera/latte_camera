@@ -306,9 +306,6 @@
     imageSize = imageOriginal.size;
     scrollLayer.contentSize = CGSizeMake(245, 220);
     
-    _scrollCamera.contentSize = CGSizeMake(320, heightPreview);
-    viewCameraWraper.frame = CGRectMake(0, (_scrollCamera.bounds.size.height - heightPreview) * 0.5, 320, heightPreview);
-    
     controllerText.image = imageOriginal;
     
     [self switchEditImage];
@@ -848,8 +845,14 @@
         height -= 110;
     }
 
-    
-    frame.origin = CGPointMake(frame.origin.x, (height - frame.size.height)/2);
+    CGFloat horizontalRatio = 320.0 / imageSize.width;
+    CGFloat verticalRatio = height / imageSize.height;
+    CGFloat ratio;
+    ratio = MIN(horizontalRatio, verticalRatio);
+
+    frame.size = CGSizeMake(imageSize.width*ratio, imageSize.height*ratio);
+    frame.origin = CGPointMake((320-frame.size.width)/2, (height - frame.size.height)/2 + 40.0);
+
     
     viewTopBar.hidden = false;
 
@@ -900,7 +903,7 @@
     blendIndicator.hidden = true;
     filmIndicator.hidden = true;
     
-    [self resizeCameraViewWithAnimation:YES];
+    [self resizeCameraViewWithAnimation:NO];
     
     previewFilter = [[GPUImagePicture alloc] initWithImage:imagePreview smoothlyScaleOutput:NO];
     

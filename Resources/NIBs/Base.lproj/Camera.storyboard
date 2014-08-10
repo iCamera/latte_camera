@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="7Fc-rr-87L">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="7Fc-rr-87L">
     <dependencies>
         <deployment version="1536" defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
@@ -13,42 +13,35 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="7lu-NZ-HNd">
-                                <rect key="frame" x="0.0" y="40" width="320" height="390"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" heightSizable="YES"/>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" id="ka1-np-HUY" userLabel="Wrapper Camera">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <view clipsSubviews="YES" contentMode="scaleToFill" id="ka1-np-HUY" userLabel="Wrapper Camera">
+                                    <view autoresizesSubviews="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" id="j8m-v1-vzj" userLabel="CameraView" customClass="GPUImageView">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <gestureRecognizers/>
+                                    </view>
+                                    <view hidden="YES" multipleTouchEnabled="YES" alpha="0.80000001192092896" contentMode="scaleToFill" id="hpW-DZ-zhc" userLabel="Subject Mask" customClass="LXDrawView">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
-                                            <view autoresizesSubviews="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" id="j8m-v1-vzj" userLabel="CameraView" customClass="GPUImageView">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="lkl-ua-X2k" userLabel="Hand Draw">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                <gestureRecognizers/>
-                                            </view>
-                                            <view hidden="YES" multipleTouchEnabled="YES" alpha="0.80000001192092896" contentMode="scaleToFill" id="hpW-DZ-zhc" userLabel="Subject Mask" customClass="LXDrawView">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="lkl-ua-X2k" userLabel="Hand Draw">
-                                                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    </imageView>
-                                                </subviews>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                <gestureRecognizers/>
-                                                <connections>
-                                                    <outlet property="drawImageView" destination="lkl-ua-X2k" id="vqn-kL-ile"/>
-                                                </connections>
-                                            </view>
+                                            </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <gestureRecognizers/>
+                                        <connections>
+                                            <outlet property="drawImageView" destination="lkl-ua-X2k" id="vqn-kL-ile"/>
+                                        </connections>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            </scrollView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                            </view>
                             <view contentMode="scaleToFill" id="5gH-Jh-hXY" userLabel="Top Bar">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -742,7 +735,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.39607846740000002" green="0.35294118520000001" blue="0.2196078598" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                     </view>
                     <navigationItem key="navigationItem" id="506-03-wiK"/>
@@ -777,7 +770,6 @@
                         <outlet property="imageNext" destination="TU5-lO-n3g" id="ouM-YR-g1g"/>
                         <outlet property="imagePrev" destination="5Rc-ai-IPG" id="prd-kG-WpK"/>
                         <outlet property="scrollBlend" destination="Jqe-oV-WUx" id="yuA-R6-fqH"/>
-                        <outlet property="scrollCamera" destination="7lu-NZ-HNd" id="uzZ-Qd-JV8"/>
                         <outlet property="scrollDetail" destination="bZm-0H-5z8" id="oA6-VX-r1d"/>
                         <outlet property="scrollEffect" destination="EDY-bj-4DP" id="ZFj-H6-qG4"/>
                         <outlet property="scrollFilm" destination="Vm3-IB-ELW" id="FVb-UR-X1X"/>
