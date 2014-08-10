@@ -279,13 +279,6 @@
     [self sendComment];
 }
 
-- (void)setIsModal:(BOOL)isModal {
-    _isModal = isModal;
-    if (isModal) {
-        self.tableView.tableHeaderView = nil;
-    }
-}
-
 
 - (void)showUser:(UIButton *)sender {
     Comment *comment = comments[sender.tag];
