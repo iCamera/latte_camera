@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="7Fc-rr-87L">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="IgC-G0-Nfq">
     <dependencies>
         <deployment version="1536" defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
@@ -85,6 +85,16 @@
                                         </state>
                                         <connections>
                                             <action selector="touchSave:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="Wa5-6K-YRT"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="TBe-Tk-6I8">
+                                        <rect key="frame" x="80" y="5" width="40" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="icon_crop.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="touchCrop:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="idl-Ap-C3b"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -724,16 +734,6 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
                             </view>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0jV-MA-2rR">
-                                <rect key="frame" x="0.0" y="50" width="73" height="44"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Save">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="printTemplate:" destination="IgC-G0-Nfq" eventType="touchUpInside" id="Cxg-aC-dJe"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -756,7 +756,6 @@
                         <outlet property="buttonLensWide" destination="SD5-lJ-lQy" id="DMf-SZ-ubk"/>
                         <outlet property="buttonNo" destination="9jE-Vo-OQn" id="sal-i1-xzB"/>
                         <outlet property="buttonReset" destination="nb5-ZL-yq6" id="ILI-RJ-vRv"/>
-                        <outlet property="buttonSavePreset" destination="0jV-MA-2rR" id="WL4-Io-JGE"/>
                         <outlet property="buttonToggleBasic" destination="CP0-Lp-GWs" id="D0t-1c-xIq"/>
                         <outlet property="buttonToggleBlend" destination="Uwq-sI-myn" id="352-VU-uLi"/>
                         <outlet property="buttonToggleEffect" destination="QUq-85-XIf" id="w0f-iF-mFz"/>
@@ -1543,7 +1542,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-3222" y="342"/>
+            <point key="canvasLocation" x="-3242" y="-150"/>
         </scene>
     </scenes>
     <resources>
@@ -1568,6 +1567,7 @@
         <image name="icon_boke.png" width="13" height="20"/>
         <image name="icon_boke2.png" width="10" height="15"/>
         <image name="icon_close.png" width="20" height="20"/>
+        <image name="icon_crop.png" width="18" height="18"/>
         <image name="icon_detail.png" width="20" height="20"/>
         <image name="icon_escape.png" width="15" height="15"/>
         <image name="icon_filter.png" width="20" height="20"/>

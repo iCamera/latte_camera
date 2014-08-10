@@ -314,38 +314,25 @@
     }
     
     UIStoryboard *storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
-    LXImageCropViewController *controllerCrop = [storyCamera instantiateInitialViewController];
+    LXCanvasViewController *controllerCanvas = [storyCamera instantiateViewControllerWithIdentifier:@"Canvas"];
+    controllerCanvas.imageOriginal = image;
+    controllerCanvas.imageToProcess = image;
     
-    controllerCrop.sourceImage = image;
-    controllerCrop.doneCallback = ^(UIImage *editedImage, BOOL canceled){
-        if(!canceled) {
-            UIStoryboard *storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
-            LXCanvasViewController *controllerCanvas = [storyCamera instantiateViewControllerWithIdentifier:@"Canvas"];
-            controllerCanvas.imageOriginal = editedImage;
-            if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
-                controllerCanvas.info = imageMeta;
-                [picker pushViewController:controllerCanvas animated:YES];
-            } else {
-
-                NSURL *assetURL = [info objectForKey:UIImagePickerControllerReferenceURL];
-                
-                ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-                [library assetForURL:assetURL
-                         resultBlock:^(ALAsset *asset)  {
-                             controllerCanvas.info = asset.defaultRepresentation.metadata;
-                             [picker pushViewController:controllerCanvas animated:YES];
-                         }
-                        failureBlock:^(NSError *error) {
-                        }];
-            }
-        } else {
-            [picker popViewControllerAnimated:YES];
-            [picker setNavigationBarHidden:NO animated:YES];
-        }
-    };
-    
-    [picker setNavigationBarHidden:YES animated:YES];
-    [picker pushViewController:controllerCrop animated:YES];
+    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+        controllerCanvas.info = imageMeta;
+        [picker pushViewController:controllerCanvas animated:YES];
+    } else {        
+        NSURL *assetURL = [info objectForKey:UIImagePickerControllerReferenceURL];
+        
+        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+        [library assetForURL:assetURL
+                 resultBlock:^(ALAsset *asset)  {
+                     controllerCanvas.info = asset.defaultRepresentation.metadata;
+                     [picker pushViewController:controllerCanvas animated:YES];
+                 }
+                failureBlock:^(NSError *error) {
+                }];
+    }
 }
 
 

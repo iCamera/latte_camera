@@ -15,6 +15,7 @@
 #import "LXFilterDOF.h"
 #import "LXFilterDOF2.h"
 #import "UIImage+Resize.h"
+#import "LXImageCropViewController.h"
 
 @interface LXCanvasViewController ()  {
     GPUImageFilterPipeline *pipe;
@@ -24,7 +25,6 @@
     BOOL isSaved;
     BOOL isWatingToUpload;
     BOOL initedPreviewPreset;
-    BOOL initedPreviewTone;
     
     NSInteger currentLens;
     NSInteger currentPreset;
@@ -53,6 +53,7 @@
     NSData *imageFinalData;
     UIImage *imageFinalThumb;
     
+    LXImageCropViewController *controllerCrop;
     LXImageTextViewController *controllerText;
     
     NSMutableDictionary *imageMeta;
@@ -158,8 +159,21 @@
         // Init Crop Controller
         UIStoryboard *storyCamera = [UIStoryboard storyboardWithName:@"Camera" bundle:nil];
 
+        controllerCrop = [storyCamera instantiateViewControllerWithIdentifier:@"Crop"];
         controllerText = [storyCamera instantiateViewControllerWithIdentifier:@"Text"];
         controllerText.delegate = self;
+        
+        __weak LXCanvasViewController *weakController = self;
+
+        controllerCrop.doneCallback = ^(UIImage *editedImage, BOOL canceled){
+            if(!canceled) {
+                weakController.imageToProcess = editedImage;
+                [weakController switchEditImage];
+                weakController.buttonReset.enabled = true;
+            }
+            [weakController.navigationController popViewControllerAnimated:YES];
+        };
+
     }
     return self;
 }
@@ -292,28 +306,35 @@
         [effectPreviewPreset addObject:viewPreset];
     }
     
-    
     scrollPreset.contentSize = CGSizeMake(arrayPreset.count*75+10, 70);
     
     [self addBlendButton:scrollBlend target:@selector(toggleBlending:)];
     [self addBlendButton:scrollFilm target:@selector(toggleFilm:)];
     
-    // Set Image
-    CGFloat heightThumb = [LXUtils heightFromWidth:70 width:imageOriginal.size.width height:imageOriginal.size.height];
-    CGFloat heightPreview = [LXUtils heightFromWidth:320 width:imageOriginal.size.width height:imageOriginal.size.height];
-    imageThumbnail = [LXUtils imageWithImage:imageOriginal scaledToSize:CGSizeMake(140, heightThumb*2)];
-    imagePreview = [LXUtils imageWithImage:imageOriginal scaledToSize:CGSizeMake(640, heightPreview*2)];
-    imageSize = imageOriginal.size;
+    scrollDetail.contentSize = CGSizeMake(320, 180);
     scrollLayer.contentSize = CGSizeMake(245, 220);
     
-    controllerText.image = imageOriginal;
+    controllerCrop.sourceImage = imageOriginal;
+    controllerText.image = _imageToProcess;
     
-    [self switchEditImage];
+    CGFloat heightThumb = [LXUtils heightFromWidth:70 width:imageOriginal.size.width height:imageOriginal.size.height];
+    imageThumbnail = [LXUtils imageWithImage:imageOriginal scaledToSize:CGSizeMake(140, heightThumb*2)];
     
-#if DEBUG
-    buttonSavePreset.hidden = NO;
-#endif
-    scrollDetail.contentSize = CGSizeMake(320, 180);
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self initPreviewPic];
+        [self switchEditImage];
+        
+        buttonYes.enabled = YES;
+    });
+}
+
+- (void)setImageToProcess:(UIImage *)imageToProcess {
+    _imageToProcess = imageToProcess;
+    // Set Image
+    CGFloat heightPreview = [LXUtils heightFromWidth:320 width:_imageToProcess.size.width height:_imageToProcess.size.height];
+    
+    imagePreview = [LXUtils imageWithImage:_imageToProcess scaledToSize:CGSizeMake(640, heightPreview*2)];
+    imageSize = _imageToProcess.size;
 }
 
 - (void)addBlendButton:(UIScrollView*)scroll target:(SEL)target {
@@ -369,12 +390,6 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    if (!initedPreviewTone) {
-        initedPreviewTone = YES;
-        [self initPreviewPic];
-        
-        buttonYes.enabled = YES;
-    }
     [super viewDidAppear:animated];
 }
 
@@ -645,17 +660,17 @@
     [imageMeta setObject:dictForTIFF forKey:(NSString *)kCGImagePropertyTIFFDictionary];
     
     // After cropping, image orientation is UP
-    if (imageOriginal.imageOrientation == UIImageOrientationUp) {
+    if (_imageToProcess.imageOrientation == UIImageOrientationUp) {
         [dictForTIFF removeObjectForKey:(NSString *)kCGImagePropertyTIFFOrientation];
         [imageMeta removeObjectForKey:(NSString *)kCGImagePropertyOrientation];
     }
     
     NSData *jpeg;
     // skip processing if prevew pic same size with fullsize
-    if (CGSizeEqualToSize(imageOriginal.size, imagePreview.size)) {
+    if (CGSizeEqualToSize(_imageToProcess.size, imagePreview.size)) {
         jpeg = UIImageJPEGRepresentation(imageFinalThumb, 1.0);
     } else {
-        GPUImagePicture *imageToProcess = [[GPUImagePicture alloc] initWithImage:imageOriginal];
+        GPUImagePicture *imageToProcess = [[GPUImagePicture alloc] initWithImage:_imageToProcess];
         [self preparePipe:imageToProcess];
         
         [pipe.filters.lastObject useNextFrameForImageCapture];
@@ -903,7 +918,9 @@
     blendIndicator.hidden = true;
     filmIndicator.hidden = true;
     
-    [self resizeCameraViewWithAnimation:NO];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self resizeCameraViewWithAnimation:NO];
+    });
     
     previewFilter = [[GPUImagePicture alloc] initWithImage:imagePreview smoothlyScaleOutput:NO];
     
@@ -990,6 +1007,7 @@
 }
 
 - (IBAction)touchReset:(id)sender {
+    self.imageToProcess = imageOriginal;
     [self switchEditImage];
     buttonReset.enabled = false;
 }
@@ -1313,7 +1331,7 @@
 }
 
 - (IBAction)touchCrop:(id)sender {
-    
+    [self.navigationController pushViewController:controllerCrop animated:YES];
 }
 
 - (IBAction)touchText:(id)sender {

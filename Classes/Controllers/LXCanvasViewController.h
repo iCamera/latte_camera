@@ -139,6 +139,7 @@ typedef enum {
 - (IBAction)toggleFisheye:(UIButton *)sender;
 - (IBAction)setBlend:(UIButton *)sender;
 - (IBAction)toggleMono:(id)sender;
+- (IBAction)touchCrop:(id)sender;
 - (IBAction)touchText:(id)sender;
 - (IBAction)printTemplate:(id)sender;
 - (IBAction)touchBlendSetting:(id)sender;
@@ -147,5 +148,6 @@ typedef enum {
 
 @property (strong, nonatomic) NSDictionary *info;
 @property (strong, nonatomic) UIImage *imageOriginal;
+@property (strong, nonatomic) UIImage *imageToProcess;
 
 @end
