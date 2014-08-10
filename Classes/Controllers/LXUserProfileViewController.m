@@ -13,7 +13,7 @@
 
 @interface LXUserProfileViewController () {
     NSMutableSet *showSet;
-    NSArray *showField;
+    NSMutableArray *showField;
     NSDictionary *userDict;
 
 }
@@ -35,7 +35,7 @@
 {
     [super viewDidLoad];
     
-    showSet = [NSMutableSet setWithObjects: @"introduction", @"gender", @"residence", @"age", @"birthdate", @"bloodtype", @"occupation", @"hobby", @"nationality", nil];
+    showSet = [NSMutableSet setWithObjects: @"name", @"introduction", @"gender", @"residence", @"age", @"birthdate", @"bloodtype", @"occupation", @"hobby", @"nationality", nil];
 
     
     // Uncomment the following line to preserve selection between presentations.
@@ -64,7 +64,10 @@
                                    NSSet *allField = [NSSet setWithArray:[userDict allKeys]];
                                    
                                    [showSet intersectSet:allField];
-                                   showField = [showSet allObjects];
+                                   showField = [NSMutableArray arrayWithArray:[showSet allObjects]];
+                                   [showField removeObject:@"name"];
+                                   [showField insertObject:@"name" atIndex:0];
+                                   
                                    
                                    if (userDict[@"profile_picture_hi"]) {
                                        [_imageProfile setImageWithURL:[NSURL URLWithString:userDict[@"profile_picture_hi"]]];
@@ -147,6 +150,8 @@
         cell.labelField.text = NSLocalizedString(@"introduction", @"自己紹介");
     } else if ([strKey isEqualToString:@"nationality"]) {
         cell.labelField.text = NSLocalizedString(@"nationality", @"国籍");
+    } else if ([strKey isEqualToString:@"name"]) {
+        cell.labelField.text = NSLocalizedString(@"username", @"ニックネーム");
     }
     
     if ([strKey isEqualToString:@"gender"]) {
