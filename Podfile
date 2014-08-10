@@ -15,7 +15,6 @@ pod 'TTTAttributedLabel'
 pod 'socket.IO'
 pod 'ios-image-editor'
 pod 'YIPopupTextView'
-pod 'HPGrowingTextView'
 pod 'UAProgressView'
 
 end

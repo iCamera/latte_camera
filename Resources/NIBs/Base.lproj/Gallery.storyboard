@@ -731,14 +731,24 @@
                                             <action selector="touchSend:" destination="Cl7-HT-jiB" eventType="touchUpInside" id="bJg-xe-6SV"/>
                                         </connections>
                                     </button>
-                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gJw-LX-gFU" customClass="HPGrowingTextView">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dCA-2l-Hfn">
                                         <rect key="frame" x="5" y="8" width="255" height="30"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    </view>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="Cl7-HT-jiB" id="dfT-rv-kWy"/>
+                                        </connections>
+                                    </textView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.69411764710000001" green="0.6705882353" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstItem="IGt-sZ-7Eg" firstAttribute="leading" secondItem="dCA-2l-Hfn" secondAttribute="trailing" constant="5" id="HK5-CB-6Mg"/>
+                                    <constraint firstAttribute="bottom" secondItem="dCA-2l-Hfn" secondAttribute="bottom" constant="7" id="KD3-qJ-Pjy"/>
+                                    <constraint firstItem="dCA-2l-Hfn" firstAttribute="leading" secondItem="fVy-Ab-ZMG" secondAttribute="leading" constant="5" id="NxK-el-mVp"/>
                                     <constraint firstAttribute="height" constant="45" id="YUW-8H-r43"/>
+                                    <constraint firstItem="dCA-2l-Hfn" firstAttribute="top" secondItem="fVy-Ab-ZMG" secondAttribute="top" constant="8" id="lgX-c3-8cb"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -761,9 +771,9 @@
                         <outlet property="buttonSend" destination="IGt-sZ-7Eg" id="FtK-x8-BZv"/>
                         <outlet property="constraintInputPadding" destination="UdA-lf-Eq7" id="ZOU-q1-f5D"/>
                         <outlet property="constraintTextHeight" destination="YUW-8H-r43" id="2D0-MT-mte"/>
-                        <outlet property="growingComment" destination="gJw-LX-gFU" id="IM8-sh-PqY"/>
                         <outlet property="imageHead" destination="hyq-70-sZm" id="aFx-5x-GyN"/>
                         <outlet property="tableView" destination="2dA-O6-tna" id="OjB-Vk-c2J"/>
+                        <outlet property="textComment" destination="dCA-2l-Hfn" id="xMv-C1-SYG"/>
                         <outlet property="viewFooter" destination="97n-FP-h8h" id="I6c-Rf-ffj"/>
                         <outlet property="viewHeader" destination="fVy-Ab-ZMG" id="uVL-xZ-Lsx"/>
                     </connections>

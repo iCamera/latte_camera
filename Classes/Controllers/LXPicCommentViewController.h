@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "Picture.h"
-#import "HPGrowingTextView.h"
 #import "LXButtonBrown30.h"
 #import "LXGalleryViewController.h"
 
@@ -20,12 +19,12 @@
 - (void)showUserFromComment:(Comment*)comment;
 @end
 
-@interface LXPicCommentViewController : UIViewController<HPGrowingTextViewDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
+@interface LXPicCommentViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UITextViewDelegate>
 
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintInputPadding;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintTextHeight;
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
-@property (strong, nonatomic) IBOutlet HPGrowingTextView *growingComment;
+@property (weak, nonatomic) IBOutlet UITextView *textComment;
 @property (strong, nonatomic) IBOutlet LXButtonBrown30 *buttonSend;
 @property (strong, nonatomic) Picture *picture;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityLoad;

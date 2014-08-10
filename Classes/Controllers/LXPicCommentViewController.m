@@ -30,23 +30,19 @@
 }
 
 @synthesize viewHeader;
-@synthesize growingComment;
 @synthesize buttonSend;
 @synthesize activityLoad;
 
 - (void)viewDidLoad
 {
-    growingComment.delegate = self;
     [super viewDidLoad];
         
     gestureTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchBackground:)];
     
-    growingComment.layer.borderWidth = 1;
-    growingComment.layer.borderColor = [UIColor grayColor].CGColor;
-    growingComment.layer.cornerRadius = 5;
-    growingComment.layer.masksToBounds = YES;
-    growingComment.internalTextView.keyboardAppearance = UIKeyboardTypeTwitter;
-    growingComment.internalTextView.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
+    _textComment.layer.borderWidth = 1;
+    _textComment.layer.borderColor = [UIColor grayColor].CGColor;
+    _textComment.layer.cornerRadius = 5;
+    _textComment.layer.masksToBounds = YES;
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -207,29 +203,29 @@
     [self.tableView setEditing:!self.tableView.editing animated:YES];
 }
 
-- (void)growingTextViewDidChange:(HPGrowingTextView *)growingTextView {
-    buttonSend.enabled = growingTextView.text.length > 0;
+
+- (void)textViewDidChange:(UITextView *)textView {
+    buttonSend.enabled = textView.text.length > 0;
     
     // Remove all user tag if empty
-    if (growingTextView.text.length == 0) {
+    if (textView.text.length == 0) {
         userTag = [[NSMutableArray alloc] init];
     }
-}
-
-- (void)growingTextView:(HPGrowingTextView *)growingTextView willChangeHeight:(float)height
-{
-    _constraintTextHeight.constant = height + 20;
+    
+    _constraintTextHeight.constant = MIN(textView.contentSize.height + 20, 100);
+    [UIView animateWithDuration:kGlobalAnimationSpeed animations:^{
+        [viewHeader layoutIfNeeded];
+    }];
+    
 }
 
 
 - (BOOL)sendComment {
-    if (growingComment.text.length < 3000) {
+    if (_textComment.text.length < 3000) {
         // Submit comment
-        LXAppDelegate* app = (LXAppDelegate*)[UIApplication sharedApplication].delegate;
-        
+    
         NSMutableDictionary *param = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                               [app getToken], @"token",
-                               growingComment.text, @"description",
+                               _textComment.text, @"description",
                                nil];
         if (userTag.count > 0) {
             NSString* mention = [userTag componentsJoinedByString:@","];
@@ -239,7 +235,7 @@
         NSString *url = [NSString stringWithFormat:@"picture/%ld/comment_post", [_picture.pictureId longValue]];
         
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        [growingComment resignFirstResponder];
+        [_textComment resignFirstResponder];
         
         [[LatteAPIClient sharedClient] POST:url
                                      parameters:param
@@ -249,7 +245,7 @@
                                             NSIndexPath *path = [NSIndexPath indexPathForRow:comments.count-1 inSection:0];
                                             [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationRight];
                                             [self.tableView scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionTop animated:YES];
-                                            growingComment.text = @"";
+                                            _textComment.text = @"";
                                             userTag = [[NSMutableArray alloc] init];
                                             buttonSend.enabled = false;
                                             [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -272,7 +268,7 @@
 }
 
 - (void)touchBackground:(id)sender {
-    [growingComment resignFirstResponder];
+    [_textComment resignFirstResponder];
 }
 
 - (IBAction)touchSend:(id)sender {
@@ -357,11 +353,11 @@
 - (void)touchReply:(UIButton*)sender {
     Comment *comment = comments[sender.tag];
     NSString *append = [NSString stringWithFormat:@"> %@: ", comment.user.name];
-    growingComment.text = [growingComment.text stringByAppendingString:append];
+    _textComment.text = [_textComment.text stringByAppendingString:append];
     if ([userTag indexOfObject:comment.user.userId] == NSNotFound)
         [userTag addObject:comment.user.userId];
     
-    [growingComment becomeFirstResponder];
+    [_textComment becomeFirstResponder];
 }
 
 - (void)touchReport:(UIButton*)sender {
