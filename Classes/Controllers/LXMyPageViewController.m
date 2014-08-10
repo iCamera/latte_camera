@@ -542,10 +542,8 @@ typedef enum {
 }
 
 - (void)searchTag:(id)sender {
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    LXSearchViewController *viewSearch = [mainStoryboard instantiateViewControllerWithIdentifier:@"Search"];
-    viewSearch.searchView = kSearchTag;
-    [self.navigationController pushViewController:viewSearch animated:YES];
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    app.viewMainTab.selectedIndex = 3;
 }
 
 @end

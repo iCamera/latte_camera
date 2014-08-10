@@ -11,6 +11,7 @@
 #import "LXTagHome.h"
 #import "LXButtonOrange.h"
 #import "LXSearchViewController.h"
+#import "LXAppDelegate.h"
 
 @interface LXFollowingTagTVC ()
 
@@ -65,6 +66,7 @@ typedef enum {
         tagData = kTagFollowing;
         [self.tableView reloadData];
         
+        /*
         if (tags.count == 0) {
             [_activityLoad startAnimating];
             
@@ -79,7 +81,8 @@ typedef enum {
                                                               [_activityLoad stopAnimating];
                                                           }];
             
-        }
+        }*/
+        
         [_activityLoad stopAnimating];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [_activityLoad stopAnimating];
@@ -213,11 +216,36 @@ typedef enum {
 
 
 - (void)searchTag:(id)sender {
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    LXSearchViewController *viewSearch = [mainStoryboard instantiateViewControllerWithIdentifier:@"Search"];
-    viewSearch.searchView = kSearchTag;
-    [self.navigationController pushViewController:viewSearch animated:YES];
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    app.viewMainTab.selectedIndex = 3;
 }
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    if (tags.count == 0 && loadEnded) {
+        UIView *emptyView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 200)];
+        UIImageView *emptyImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nopict.png"]];
+        emptyImage.center = emptyView.center;
+        [emptyView addSubview:emptyImage];
+        
+        
+        LXButtonOrange *buttonFind = [[LXButtonOrange alloc] initWithFrame:CGRectMake(20, 150, 280, 35)];
+        buttonFind.titleLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:16];
+        [buttonFind setTitle:NSLocalizedString(@"find_tag", @"") forState:UIControlStateNormal];
+        [buttonFind addTarget:self action:@selector(searchTag:) forControlEvents:UIControlEventTouchUpInside];
+        [emptyView addSubview:buttonFind];
+        
+        return emptyView;
+    }
+    return nil;
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    if (tags.count == 0 && loadEnded)
+        return 200;
+    return 0;
+}
+
 
 /*
 #pragma mark - Navigation
