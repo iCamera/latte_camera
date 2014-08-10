@@ -628,16 +628,10 @@ typedef enum {
         Feed *feed = feeds[indexPath.row];
         if (feed.targets.count > 1) {
             CGFloat feedHeight = 260;
-            if (feed.tags.count > 0) {
-                feedHeight += 36;
-            }
             return feedHeight;
         } else if (feed.targets.count == 1) {
             Picture *pic = feed.targets[0];
             CGFloat feedHeight = [LXUtils heightFromWidth:304.0 width:[pic.width floatValue] height:[pic.height floatValue]] +8+52+34;
-            if (pic.tagsOld.count > 0) {
-                feedHeight += 36;
-            }
             return feedHeight;
         } else
             return 1;
@@ -916,6 +910,7 @@ typedef enum {
             feed.user = _user;
             cell.feed = feed;
             cell.buttonUser.tag = indexPath.row;
+            cell.scrollTags.hidden = YES;
             
             return cell;
         } else {
@@ -925,6 +920,7 @@ typedef enum {
             feed.user = _user;
             cell.feed = feed;
             cell.buttonUser.tag = indexPath.row;
+            cell.scrollTags.hidden = YES;
             
             return cell;
         }
