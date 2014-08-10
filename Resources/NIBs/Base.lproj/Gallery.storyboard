@@ -519,8 +519,12 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
                                 <color key="separatorColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.92941176469999998" alpha="1" colorSpace="deviceRGB"/>
+                                <imageView key="tableHeaderView" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default-cover.gif" id="hyq-70-sZm">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="97n-FP-h8h">
-                                    <rect key="frame" x="0.0" y="130" width="320" height="44"/>
+                                    <rect key="frame" x="0.0" y="230" width="320" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="8gt-nq-4Hs">
@@ -536,7 +540,7 @@
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="Comment" rowHeight="64" id="sXR-T7-xsm" customClass="LXCellComment">
-                                        <rect key="frame" x="0.0" y="22" width="320" height="64"/>
+                                        <rect key="frame" x="0.0" y="122" width="320" height="64"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sXR-T7-xsm" id="abX-kb-SeK">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="63"/>
@@ -685,7 +689,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Blocked" id="uII-dh-vgc">
-                                        <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="186" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uII-dh-vgc" id="mln-6w-RQt">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -758,6 +762,7 @@
                         <outlet property="constraintInputPadding" destination="UdA-lf-Eq7" id="ZOU-q1-f5D"/>
                         <outlet property="constraintTextHeight" destination="YUW-8H-r43" id="2D0-MT-mte"/>
                         <outlet property="growingComment" destination="gJw-LX-gFU" id="IM8-sh-PqY"/>
+                        <outlet property="imageHead" destination="hyq-70-sZm" id="aFx-5x-GyN"/>
                         <outlet property="tableView" destination="2dA-O6-tna" id="OjB-Vk-c2J"/>
                         <outlet property="viewFooter" destination="97n-FP-h8h" id="I6c-Rf-ffj"/>
                         <outlet property="viewHeader" destination="fVy-Ab-ZMG" id="uVL-xZ-Lsx"/>
@@ -1221,6 +1226,7 @@
         <image name="bt_delete_on.png" width="300" height="30"/>
         <image name="checkbox_off.png" width="15" height="15"/>
         <image name="checkbox_on.png" width="15" height="15"/>
+        <image name="default-cover.gif" width="1200" height="100"/>
         <image name="icon28-close-white.png" width="14" height="14"/>
         <image name="icon28-comment-blue.png" width="14" height="14"/>
         <image name="icon28-comment-white.png" width="14" height="14"/>

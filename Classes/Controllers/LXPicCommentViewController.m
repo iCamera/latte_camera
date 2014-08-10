@@ -16,6 +16,7 @@
 #import "LXReportAbuseCommentViewController.h"
 #import "MZFormSheetController.h"
 #import "LatteAPIv2Client.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface LXPicCommentViewController ()
 
@@ -74,7 +75,7 @@
     userTag = [[NSMutableArray alloc] init];
     
     [LXUtils globalShadow:viewHeader];
-    
+    [_imageHead setImageWithURL:[NSURL URLWithString:_picture.urlMedium]];
 }
 
 - (void)setPicture:(Picture *)picture {
@@ -96,6 +97,8 @@
     [activityLoad startAnimating];
     self.tableView.tableFooterView = _viewFooter;
     [[LatteAPIClient sharedClient] GET:urlDetail parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+        _picture = [Picture instanceFromDictionary:JSON[@"picture"]];
+        [_imageHead setImageWithURL:[NSURL URLWithString:_picture.urlMedium]];
         comments = [Comment mutableArrayFromDictionary:JSON withKey:@"comments"];
         [self.tableView reloadData];
         [self scrollToComment];
@@ -274,6 +277,13 @@
 
 - (IBAction)touchSend:(id)sender {
     [self sendComment];
+}
+
+- (void)setIsModal:(BOOL)isModal {
+    _isModal = isModal;
+    if (isModal) {
+        self.tableView.tableHeaderView = nil;
+    }
 }
 
 

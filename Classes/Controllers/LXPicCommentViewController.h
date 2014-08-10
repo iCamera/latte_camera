@@ -31,8 +31,10 @@
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityLoad;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIView *viewFooter;
+@property (weak, nonatomic) IBOutlet UIImageView *imageHead;
 
 @property (assign, nonatomic) BOOL isModal;
+
 @property (assign, nonatomic) NSInteger commentId;
 
 @property (weak, nonatomic) UIViewController *parent;
