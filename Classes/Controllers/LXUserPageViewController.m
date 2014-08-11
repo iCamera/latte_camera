@@ -504,14 +504,14 @@ typedef enum {
                                                                    delegate:self
                                                           cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
                                                      destructiveButtonTitle:NSLocalizedString(@"Unblock User", @"ブロックを解除")
-                                                          otherButtonTitles:NSLocalizedString(@"report", @""), nil];
+                                                          otherButtonTitles:NSLocalizedString(@"Profile", @""), NSLocalizedString(@"report", @""), nil];
                 [sheet showInView:self.view];
             } else {
                 UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil
                                                                    delegate:self
                                                           cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
                                                      destructiveButtonTitle:NSLocalizedString(@"Block User", @"ブロックする")
-                                                          otherButtonTitles:NSLocalizedString(@"report", @""), nil];
+                                                          otherButtonTitles:NSLocalizedString(@"Profile", @""), NSLocalizedString(@"report", @""), nil];
                 [sheet showInView:self.view];
             }
         }
@@ -1117,6 +1117,10 @@ typedef enum {
             }
                 break;
             case 1: {
+                [self performSegueWithIdentifier:@"Profile" sender:self];
+                break;
+            }
+            case 2: {
                 UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
                 LXReportAbuseUserViewController *viewReport = [mainStoryboard instantiateViewControllerWithIdentifier:@"ReportUser"];
                 
