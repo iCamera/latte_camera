@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Picture.h"
 
-@interface LXPicDumbTabViewController : UITableViewController<UISearchBarDelegate>
+@interface LXPicDumbTabViewController : UITableViewController<UISearchBarDelegate, UITextFieldDelegate>
 
 @property (strong, nonatomic) NSMutableArray *tags;
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;

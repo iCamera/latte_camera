@@ -109,15 +109,7 @@ typedef enum {
 }
 
 - (void)editEnd:(UITextField*)textField {
-    if (textField.text.length == 0) {
-        if (textField.tag < _tags.count) {
-            [_tags removeObjectAtIndex:textField.tag];
-            NSArray* indexes = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:textField.tag inSection:0]];
-            [self.tableView deleteRowsAtIndexPaths:indexes withRowAnimation:UITableViewRowAnimationAutomatic];
-        }
-    } else {
-        _tags[textField.tag] = textField.text;
-    }
+    _tags[textField.tag] = textField.text;
 }
 
 - (void)editBegin:(UITextField*)textField {
