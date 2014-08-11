@@ -40,7 +40,7 @@
         buttonNotify.frame = CGRectMake(35, 0, 33, 33);
         buttonNotify.tintColor = [UIColor whiteColor];
         
-        labelNotifyCount = [[UILabel alloc] initWithFrame:CGRectMake(33, 0, 14, 14)];
+        labelNotifyCount = [[UILabel alloc] initWithFrame:CGRectMake(55, 0, 14, 14)];
         labelNotifyCount.backgroundColor = [UIColor redColor];
         labelNotifyCount.textColor = [UIColor whiteColor];
         labelNotifyCount.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0];

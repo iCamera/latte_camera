@@ -29,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet LXTabButton *buttonTabCalendar;
 @property (strong, nonatomic) IBOutlet UILabel *labelIntro;
 @property (weak, nonatomic) IBOutlet UILabel *labelUsername;
+@property (weak, nonatomic) IBOutlet UIButton *buttonSetting;
 
 @property (strong, nonatomic) User *user;
 @property (assign, nonatomic) NSInteger userId;
@@ -43,6 +44,7 @@
 - (IBAction)touchFollow:(id)sender;
 - (IBAction)touchMore:(id)sender;
 - (IBAction)touchBack:(id)sender;
+- (IBAction)touchSetting:(id)sender;
 
 
 

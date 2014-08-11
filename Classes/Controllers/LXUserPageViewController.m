@@ -151,7 +151,7 @@ typedef enum {
 
     if (app.currentUser && (_userId == [app.currentUser.userId integerValue])) {
         _buttonFollow.hidden = YES;
-        _buttonMore.selected = YES;
+        _buttonSetting.hidden = NO;
     }
     
     LXSocketIO *socket = [LXSocketIO sharedClient];
@@ -496,8 +496,7 @@ typedef enum {
         [self.navigationController pushViewController:viewLogin animated:YES];
     } else {
         if (app.currentUser.userId.longValue == _userId) {
-            UIStoryboard* storySetting = [UIStoryboard storyboardWithName:@"Setting" bundle:nil];
-            [self presentViewController:[storySetting instantiateInitialViewController] animated:YES completion:nil];
+            [self performSegueWithIdentifier:@"Profile" sender:self];
         } else {
             if ([userv2[@"is_blocking"] boolValue]) {
                 UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil
@@ -524,6 +523,11 @@ typedef enum {
     } else {
         [self.navigationController popViewControllerAnimated:YES];
     }
+}
+
+- (IBAction)touchSetting:(id)sender {
+    UIStoryboard* storySetting = [UIStoryboard storyboardWithName:@"Setting" bundle:nil];
+    [self presentViewController:[storySetting instantiateInitialViewController] animated:YES completion:nil];
 }
 
 - (void)loadMore {

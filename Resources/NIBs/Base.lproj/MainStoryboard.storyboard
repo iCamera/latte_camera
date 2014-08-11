@@ -1556,7 +1556,6 @@ or you can try to send another confirmation email.</string>
                                     <state key="normal" image="icon36-more-white.png">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
-                                    <state key="selected" image="icon36-gear-white.png"/>
                                     <connections>
                                         <action selector="touchMore:" destination="21a-Kc-kfo" eventType="touchUpInside" id="AXH-fP-NfK"/>
                                     </connections>
@@ -1699,6 +1698,16 @@ or you can try to send another confirmation email.</string>
                                         <action selector="switchView:" destination="21a-Kc-kfo" eventType="touchUpInside" id="BrK-g5-3Da"/>
                                     </connections>
                                 </button>
+                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fHm-9K-llZ">
+                                    <rect key="frame" x="275" y="10" width="40" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="icon36-gear-white.png">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="touchSetting:" destination="21a-Kc-kfo" eventType="touchUpInside" id="vl2-EQ-uuO"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
@@ -1756,6 +1765,7 @@ or you can try to send another confirmation email.</string>
                         <outlet property="buttonFollowing" destination="VG6-0T-eya" id="rxI-8X-OHp"/>
                         <outlet property="buttonMore" destination="Kc8-8B-lDc" id="vXF-ka-yWN"/>
                         <outlet property="buttonPhoto" destination="VpA-Bw-5P1" id="pNB-iJ-YvX"/>
+                        <outlet property="buttonSetting" destination="fHm-9K-llZ" id="YHN-5c-BwS"/>
                         <outlet property="buttonTabCalendar" destination="SIh-u5-mBH" id="ZD9-zU-qWO"/>
                         <outlet property="buttonTabGrid" destination="qH4-dd-00c" id="i2t-db-YXR"/>
                         <outlet property="buttonTabTag" destination="HYg-9W-cBj" id="MpT-kz-e2w"/>
