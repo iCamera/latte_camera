@@ -638,9 +638,7 @@ typedef enum {
 }
 
 - (IBAction)touchCountry:(id)sender {
-    if (self.tableView.contentOffset.y == 0) {
-        [self performSegueWithIdentifier:@"Country" sender:self];
-    }
+    [self performSegueWithIdentifier:@"Country" sender:self];
 }
 
 #pragma mark - Navigation
