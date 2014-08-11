@@ -11,6 +11,8 @@
 #import "LXCollectionCellUser.h"
 #import "LXUserPageViewController.h"
 #import "MZFormSheetController.h"
+#import "LXCellLikeHeader.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface LXPicVoteCollectionController ()
 
@@ -43,6 +45,7 @@
 }
 
 - (void)setPicture:(Picture *)picture {
+    _picture = picture;
     if (picture.isOwner && ([picture.voteCount integerValue] > 0)) {
         
         NSString *url = [NSString stringWithFormat:@"picture/%ld/votes", [picture.pictureId longValue]];
@@ -101,6 +104,26 @@
         [self.navigationController pushViewController:viewUser animated:YES];
     }
 }
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    if ([kind isEqualToString:UICollectionElementKindSectionHeader] && !_isModal) {
+        LXCellLikeHeader *header = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                                      withReuseIdentifier:@"Header"
+                                                                             forIndexPath:indexPath];
+        [header.imageHeader setImageWithURL:[NSURL URLWithString:_picture.urlMedium]];
+        return header;
+    }
+    return nil;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    if (!_isModal) {
+        return CGSizeMake(320, 100);
+    }
+    return CGSizeZero;
+}
+
+
 
 - (BOOL)prefersStatusBarHidden {
     return _isModal;

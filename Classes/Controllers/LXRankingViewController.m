@@ -625,7 +625,7 @@ typedef enum {
     [self reloadView];
 }
 
-- (IBAction)showMenu
+- (IBAction)showMenu:(id)sender
 {
     // Dismiss keyboard (optional)
     //

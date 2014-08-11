@@ -69,9 +69,12 @@
                                    [showField insertObject:@"name" atIndex:0];
                                    
                                    
-                                   if (userDict[@"profile_picture_hi"]) {
-                                       [_imageProfile setImageWithURL:[NSURL URLWithString:userDict[@"profile_picture_hi"]]];
-                                       [_imageProfile loadProgess:userDict[@"profile_picture_hi"] withCompletion:^(BOOL isCache) {
+                                   NSString *profilePic = userDict[@"profile_picture_hi"];
+                                   if (!profilePic) profilePic = userDict[@"profile_picture"];
+                                   
+                                   if (profilePic) {
+                                       [_imageProfile setImageWithURL:[NSURL URLWithString:profilePic]];
+                                       [_imageProfile loadProgess:profilePic withCompletion:^(BOOL isCache) {
                                            
                                        } progress:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
                                            _imageProgress.progress = (float)totalBytesRead/(float)totalBytesExpectedToRead;

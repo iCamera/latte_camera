@@ -76,6 +76,13 @@
     [_imageHead setImageWithURL:[NSURL URLWithString:_picture.urlMedium]];
 }
 
+- (void)setIsModal:(BOOL)isModal {
+    _isModal = isModal;
+    if (_isModal) {
+        self.tableView.tableHeaderView = nil;
+    }
+}
+
 - (void)setPicture:(Picture *)picture {
     _picture = picture;
     
