@@ -22,6 +22,7 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         // Initialization code
+        [self addControl];
     }
     return self;
 }
@@ -30,55 +31,67 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
-        
-        buttonProfile = [UIButton buttonWithType:UIButtonTypeSystem];
-        buttonProfile.frame = CGRectMake(0, 0, 33, 33);
-        buttonProfile.tintColor = [UIColor whiteColor];
-        
-        buttonNotify = [UIButton buttonWithType:UIButtonTypeSystem];
-        buttonNotify.frame = CGRectMake(35, 0, 33, 33);
-        buttonNotify.tintColor = [UIColor whiteColor];
-        
-        labelNotifyCount = [[UILabel alloc] initWithFrame:CGRectMake(55, 0, 14, 14)];
-        labelNotifyCount.backgroundColor = [UIColor redColor];
-        labelNotifyCount.textColor = [UIColor whiteColor];
-        labelNotifyCount.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0];
-        labelNotifyCount.textAlignment = NSTextAlignmentCenter;
-        labelNotifyCount.layer.masksToBounds = YES;
-        labelNotifyCount.layer.cornerRadius = 7;
-        labelNotifyCount.hidden = YES;
-        
-        [buttonNotify setImage:[UIImage imageNamed:@"icon40-notify-brown.png"] forState:UIControlStateNormal];
-        [buttonNotify addTarget:self action:@selector(showNotify:) forControlEvents:UIControlEventTouchUpInside];
-        
-        [buttonProfile setImage:[UIImage imageNamed:@"icon36-me-brown.png"] forState:UIControlStateNormal];
-        [buttonProfile addTarget:self action:@selector(showProfile:) forControlEvents:UIControlEventTouchUpInside];
-        
-        [self addSubview:buttonProfile];
-        [self addSubview:buttonNotify];
-        [self addSubview:labelNotifyCount];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCount:) name:@"NotifyCount" object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveLoggedIn:) name:@"LoggedIn" object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveLoggedOut:) name:@"LoggedOut" object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userUpdate:) name:@"user_update" object:nil];
-        
-        LXAppDelegate *app = [LXAppDelegate currentDelegate];
-        if (app.currentUser) {
-            self.hidden = NO;
-        } else {
-            self.hidden = YES;
-        }
-        
-        if ([UIApplication sharedApplication].applicationIconBadgeNumber > 0) {
-            labelNotifyCount.hidden = NO;
-            labelNotifyCount.text = [NSString stringWithFormat:@"%ld", (long)[UIApplication sharedApplication].applicationIconBadgeNumber];
-        } else {
-            labelNotifyCount.hidden = YES;
-        }
+        [self addControl];
     }
     return self;
+}
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        [self addControl];
+    }
+    return self;
+}
+
+- (void)addControl {
+    // Initialization code
+    
+    buttonProfile = [UIButton buttonWithType:UIButtonTypeSystem];
+    buttonProfile.frame = CGRectMake(0, 0, 33, 33);
+    buttonProfile.tintColor = [UIColor whiteColor];
+    
+    buttonNotify = [UIButton buttonWithType:UIButtonTypeSystem];
+    buttonNotify.frame = CGRectMake(35, 0, 33, 33);
+    buttonNotify.tintColor = [UIColor whiteColor];
+    
+    labelNotifyCount = [[UILabel alloc] initWithFrame:CGRectMake(55, 0, 14, 14)];
+    labelNotifyCount.backgroundColor = [UIColor redColor];
+    labelNotifyCount.textColor = [UIColor whiteColor];
+    labelNotifyCount.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0];
+    labelNotifyCount.textAlignment = NSTextAlignmentCenter;
+    labelNotifyCount.layer.masksToBounds = YES;
+    labelNotifyCount.layer.cornerRadius = 7;
+    labelNotifyCount.hidden = YES;
+    
+    [buttonNotify setImage:[UIImage imageNamed:@"icon40-notify-brown.png"] forState:UIControlStateNormal];
+    [buttonNotify addTarget:self action:@selector(showNotify:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [buttonProfile setImage:[UIImage imageNamed:@"icon36-me-brown.png"] forState:UIControlStateNormal];
+    [buttonProfile addTarget:self action:@selector(showProfile:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self addSubview:buttonProfile];
+    [self addSubview:buttonNotify];
+    [self addSubview:labelNotifyCount];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCount:) name:@"NotifyCount" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveLoggedIn:) name:@"LoggedIn" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveLoggedOut:) name:@"LoggedOut" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userUpdate:) name:@"user_update" object:nil];
+    
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    if (app.currentUser) {
+        self.hidden = NO;
+    } else {
+        self.hidden = YES;
+    }
+    
+    if ([UIApplication sharedApplication].applicationIconBadgeNumber > 0) {
+        labelNotifyCount.hidden = NO;
+        labelNotifyCount.text = [NSString stringWithFormat:@"%ld", (long)[UIApplication sharedApplication].applicationIconBadgeNumber];
+    } else {
+        labelNotifyCount.hidden = YES;
+    }
 }
 
 - (void)receiveLoggedIn:(NSNotification *) notification {

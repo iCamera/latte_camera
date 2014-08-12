@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "LXGalleryViewController.h"
 #import "LXButtonBrown30.h"
+#import "LXNotificationBar.h"
 
 typedef enum {
     kSearchPhoto,
@@ -25,6 +26,7 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @property (assign, nonatomic) SearchView searchView;
+@property (weak, nonatomic) IBOutlet LXNotificationBar *viewNotification;
 
 - (IBAction)switchTab:(UIButton *)sender;
 - (IBAction)showMenu:(id)sender;

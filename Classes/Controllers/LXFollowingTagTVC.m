@@ -48,7 +48,7 @@ typedef enum {
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"LXCellTag" bundle:nil] forCellReuseIdentifier:@"Tag"];
 }
@@ -221,8 +221,11 @@ typedef enum {
 
 
 - (void)searchTag:(id)sender {
-    LXAppDelegate *app = [LXAppDelegate currentDelegate];
-    app.viewMainTab.selectedIndex = 3;
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    UIViewController *viewSearch = [mainStoryboard instantiateViewControllerWithIdentifier:@"Search"];
+    viewSearch.navigationItem.leftBarButtonItem = nil;
+    viewSearch.navigationItem.rightBarButtonItem = nil;
+    [self.navigationController pushViewController:viewSearch animated:YES];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
@@ -231,7 +234,6 @@ typedef enum {
         UIImageView *emptyImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nopict.png"]];
         emptyImage.center = emptyView.center;
         [emptyView addSubview:emptyImage];
-        
         
         LXButtonOrange *buttonFind = [[LXButtonOrange alloc] initWithFrame:CGRectMake(20, 150, 280, 35)];
         buttonFind.titleLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:16];

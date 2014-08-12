@@ -23,6 +23,7 @@
 
 #import "LXUserPageViewController.h"
 #import "LXPhotoGridCVC.h"
+#import "LXModalNavigationController.h"
 
 //#import "UIStoryboard.h"
 
@@ -120,11 +121,12 @@
     [self.frostedViewController hideMenuViewController];
     LXAppDelegate *app = [LXAppDelegate currentDelegate];
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    UINavigationController *navCurrent = (UINavigationController*)app.viewMainTab.selectedViewController;
     UIStoryboard* storySetting = [UIStoryboard storyboardWithName:@"Setting" bundle:nil];
     
     if ([tableView cellForRowAtIndexPath:indexPath] == menuFollowingTags) {
-        [navCurrent pushViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"FollowingTag"] animated:YES];
+        UIViewController *viewFollowingTag = [mainStoryboard instantiateViewControllerWithIdentifier:@"FollowingTag"];
+        LXModalNavigationController *modalFollowingTag = [[LXModalNavigationController alloc] initWithRootViewController:viewFollowingTag];
+        [app.viewMainTab presentViewController:modalFollowingTag animated:YES completion:nil];
     } else if ([tableView cellForRowAtIndexPath:indexPath] ==  menuSettings) {
         
         [self presentViewController:[storySetting instantiateInitialViewController] animated:YES completion:nil];
@@ -141,12 +143,15 @@
     } else if ([tableView cellForRowAtIndexPath:indexPath] == menuLikedPhotos) {
         LXPhotoGridCVC *viewLikedGrid = [mainStoryboard instantiateViewControllerWithIdentifier:@"PhotoGrid"];
         viewLikedGrid.gridType = kPhotoGridUserLiked;
-        [navCurrent pushViewController:viewLikedGrid animated:YES];
+        LXModalNavigationController *modalLiked = [[LXModalNavigationController alloc] initWithRootViewController:viewLikedGrid];
+        [app.viewMainTab presentViewController:modalLiked animated:YES completion:nil];
     } else if ([tableView cellForRowAtIndexPath:indexPath] == menuLogin) {
         UIStoryboard* storyMain = [UIStoryboard storyboardWithName:@"Authentication" bundle:nil];
-        [self presentViewController:[storyMain instantiateViewControllerWithIdentifier:@"LoginModal"] animated:YES completion:nil];
+        [app.viewMainTab presentViewController:[storyMain instantiateViewControllerWithIdentifier:@"LoginModal"] animated:YES completion:nil];
     } else if ([tableView cellForRowAtIndexPath:indexPath] == menuFeedback) {
-        [navCurrent pushViewController:[storySetting instantiateViewControllerWithIdentifier:@"About"] animated:YES];
+        UIViewController *viewAbout = [storySetting instantiateViewControllerWithIdentifier:@"About"];
+        LXModalNavigationController *modalAbout = [[LXModalNavigationController alloc] initWithRootViewController:viewAbout];
+        [app.viewMainTab presentViewController:modalAbout animated:YES completion:nil];
     } else if ([tableView cellForRowAtIndexPath:indexPath] == _menuBlog) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://latte.la/column/photo_camera"]];
     }

@@ -1023,6 +1023,13 @@
                                 <action selector="showMenu:" destination="oup-QU-2wo" id="NPe-74-l0z"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="xnL-z8-T3F">
+                            <view key="customView" contentMode="scaleToFill" id="RzO-Ft-Ee5" customClass="LXNotificationBar">
+                                <rect key="frame" x="234" y="5" width="70" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="activityLoad" destination="Ba8-BL-TZh" id="EXa-b3-7rU"/>
@@ -1030,6 +1037,7 @@
                         <outlet property="buttonTag" destination="dQa-Dh-NRg" id="X5N-Dr-aoo"/>
                         <outlet property="buttonUser" destination="vp3-Bf-z3E" id="weR-jW-LzX"/>
                         <outlet property="searchBar" destination="Lbv-wb-bwt" id="rW1-Xy-OQ6"/>
+                        <outlet property="viewNotification" destination="RzO-Ft-Ee5" id="AH8-mV-Qnm"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U2c-Yq-iFg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2232,7 +2240,7 @@ or you can try to send another confirmation email.</string>
             <objects>
                 <tableViewController storyboardIdentifier="FollowingTag" id="3Rl-AM-Gib" customClass="LXFollowingTagTVC" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="aZC-W5-Pc7">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <searchBar key="tableHeaderView" contentMode="redraw" placeholder="Anything" translucent="NO" id="1PT-5c-PN7">
@@ -2245,7 +2253,7 @@ or you can try to send another confirmation email.</string>
                             </connections>
                         </searchBar>
                         <view key="tableFooterView" contentMode="scaleToFill" id="tbo-cs-naj">
-                            <rect key="frame" x="0.0" y="480" width="320" height="44"/>
+                            <rect key="frame" x="0.0" y="416" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="KAz-LT-gDt">
@@ -2284,6 +2292,7 @@ or you can try to send another confirmation email.</string>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Following Tags" id="CWE-hg-mls"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="activityLoad" destination="KAz-LT-gDt" id="d4t-UX-Gw5"/>
                         <outlet property="searchBar" destination="1PT-5c-PN7" id="lUv-OJ-fgi"/>
