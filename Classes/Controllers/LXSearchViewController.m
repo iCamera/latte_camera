@@ -34,6 +34,7 @@
     NSMutableArray *tags;
     NSInteger page;
     BOOL loadEnded;
+    BOOL loading;
     AFHTTPRequestOperation *currentRequest;
 }
 
@@ -210,12 +211,14 @@
                             @"limit": @"30",
                             @"page": [NSNumber numberWithInteger:page]};
     
-    if (currentRequest && currentRequest.isExecuting)
+    if (loading)
         [currentRequest cancel];
     [activityLoad startAnimating];
+    loading = YES;
     currentRequest = [[LatteAPIv2Client sharedClient] GET:@"picture"
                                 parameters:param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       loading = NO;
                                        NSMutableArray *data = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
                                        if (page == 1) {
                                            pictures = data;
@@ -230,6 +233,7 @@
                                        [self.tableView reloadData];
                                        [activityLoad stopAnimating];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       loading = NO;
                                        [activityLoad stopAnimating];
                                    }];
 }
@@ -243,11 +247,14 @@
         NSDictionary *param = @{@"limit": [NSNumber numberWithInteger:20],
                                 @"page": [NSNumber numberWithInteger:page]};
         
-        if (currentRequest && currentRequest.isExecuting)
+        if (loading)
             [currentRequest cancel];
+        
+        loading = YES;
         currentRequest = [[LatteAPIv2Client sharedClient] GET:url
                                   parameters:param
                                      success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                         loading = NO;
                                          users = [User mutableArrayFromDictionary:JSON withKey:@"profiles"];
                                          loadEnded = users.count >= [JSON[@"total"] integerValue];
                                          page += 1;
@@ -255,6 +262,7 @@
                                          [self.tableView reloadData];
                                          [activityLoad stopAnimating];
                                      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                         loading = NO;
                                          loadEnded = true;
                                          [activityLoad stopAnimating];
                                      }];
@@ -264,11 +272,13 @@
         NSDictionary *param = @{@"keyword": _searchBar.text,
                                 @"page": [NSNumber numberWithInteger:page]};
         
-        if (currentRequest && currentRequest.isExecuting)
+        if (loading)
             [currentRequest cancel];
+        loading = YES;
         currentRequest = [[LatteAPIv2Client sharedClient] GET:url
                                   parameters:param
                                      success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                         loading = NO;
                                          NSMutableArray *data = [User mutableArrayFromDictionary:JSON withKey:@"profiles"];
                                          if (page == 1) {
                                              users = data;
@@ -282,6 +292,7 @@
                                          [self.tableView reloadData];
                                          [activityLoad stopAnimating];
                                      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                         loading = NO;
                                          loadEnded = true;
                                          [activityLoad stopAnimating];
                                      }];
@@ -290,23 +301,27 @@
 
 - (void)loadTagSearch {
     [activityLoad startAnimating];
-    if (currentRequest && currentRequest.isExecuting)
+    if (loading)
         [currentRequest cancel];
     
     if (_searchBar.text.length == 0) {
-        
+        loading = YES;
         currentRequest = [[LatteAPIv2Client sharedClient] GET:@"picture/get_tag_cloud"
                                                    parameters:@{@"type": @"popular"}
                                                     success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                                        loading = NO;
                                                         tags = [JSON objectForKey:@"tags"];
                                                         searchView = kSearchTag;
                                                         [self.tableView reloadData];
                                                         [activityLoad stopAnimating];
                                                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                        loading = NO;
                                                         [activityLoad stopAnimating];
                                                     }];
     } else {
+        loading = YES;
         currentRequest = [[LatteAPIv2Client sharedClient] GET:@"tag/search" parameters:@{@"keyword": _searchBar.text, @"app": @"true"} success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+            loading = NO;
             tags = [[NSMutableArray alloc] init];
             for (NSDictionary *tag in JSON[@"tags"]) {
                 [tags addObject:@{@"term": tag[@"label"], @"count": tag[@"picture_count"]}];
@@ -317,6 +332,7 @@
             [self.tableView reloadData];
             [activityLoad stopAnimating];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            loading = NO;
             [self.tableView reloadData];
             loadEnded = true;
             [activityLoad stopAnimating];

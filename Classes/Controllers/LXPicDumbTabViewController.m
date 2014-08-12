@@ -26,6 +26,7 @@ typedef enum {
     UITextField *lastField;
     NSArray *results;
     BOOL focused;
+    BOOL loading;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -166,15 +167,19 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)loadResult: (NSString*)searchText {
-    if (currentRequest && currentRequest.isExecuting)
+    if (loading)
         [currentRequest cancel];
     
+    loading = YES;
     currentRequest = [[LatteAPIv2Client sharedClient] GET:@"tag/search" parameters:@{@"keyword": _searchBar.text, @"app": @"true"} success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+        loading = NO;
         [self.tableView setEditing:NO animated:YES];
         tableMode = kTagTableResult;
         results = JSON[@"tags"];
         [self.tableView reloadData];
-    } failure:nil];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        loading = NO;
+    }];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {

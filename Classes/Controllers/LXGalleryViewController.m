@@ -38,6 +38,7 @@
     LXShare *lxShare;
     UIScrollView *viewDesc;
     AFHTTPRequestOperation *currentRequest;
+    BOOL loading;
 }
 
 @synthesize buttonComment;
@@ -195,13 +196,18 @@
 - (void)reloadPicture {
     LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
     NSString *url = [NSString stringWithFormat:@"picture/%ld", [currentPage.picture.pictureId longValue]];
-    if (currentRequest && currentRequest.isExecuting) {
+    if (loading) {
         [currentRequest cancel];
     }
+    
+    loading = YES;
     currentRequest = [[LatteAPIClient sharedClient] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+        loading = NO;
         [currentPage.picture setAttributesFromDictionary:JSON[@"picture"]];
         [self renderPicture];
-    } failure:nil];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        loading = NO;
+    }];
 }
 
 - (void)tapZoom:(UITapGestureRecognizer*)sender {

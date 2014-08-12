@@ -57,7 +57,7 @@ typedef enum {
     UserPagePhotoMode photoMode;
     NSDictionary *userv2;
     NSArray *allTab;
-    BOOL reloading;
+    BOOL loading;
     BOOL endedPic;
     
     int pagePic;
@@ -256,10 +256,10 @@ typedef enum {
         endedPic = false;
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         
-        if (currentRequest)
+        if (loading)
             [currentRequest cancel];
     } else {
-        if (currentRequest.isExecuting)
+        if (loading)
             return;
         Feed *feed = feeds.lastObject;
         if (feed) {
@@ -271,10 +271,11 @@ typedef enum {
     
     NSString *url = [NSString stringWithFormat:@"user/%ld/timeline", (long)_userId];
     
+    loading = YES;
     currentRequest = [[LatteAPIClient sharedClient] GET: url
                             parameters: params
                                success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                   
+                                   loading = NO;
                                    NSMutableArray *newFeed = [Feed mutableArrayFromDictionary:JSON
                                                                                       withKey:@"feeds"];
                                    
@@ -305,6 +306,7 @@ typedef enum {
                                    
                                    [_indicatorLoad stopAnimating];
                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                   loading = NO;
                                    if (reset) {
                                        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                                        [self.refreshControl endRefreshing];
@@ -315,12 +317,14 @@ typedef enum {
 
 - (void)loadTag {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    if (currentRequest)
+    if (loading)
         [currentRequest cancel];
     
+    loading = YES;
     currentRequest = [[LatteAPIv2Client sharedClient] GET: @"picture"
                                                parameters: @{@"user_id": [NSNumber numberWithInteger:_userId]}
                                                 success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                                    loading = NO;
                                                     
                                                     tags = JSON[@"result"][@"facets"][@"tags"][@"terms"];
                                                     photoMode = kPhotoTag;
@@ -330,6 +334,7 @@ typedef enum {
                                                     [self.refreshControl endRefreshing];
                                                     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                    loading = NO;
                                                     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                                                     [self.refreshControl endRefreshing];
                                                 }];
@@ -341,10 +346,10 @@ typedef enum {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         pagePic = 1;
         
-        if (currentRequest)
+        if (loading)
             [currentRequest cancel];
     } else {
-        if (currentRequest.isExecuting)
+        if (loading)
             return;
         
         [_indicatorLoad startAnimating];
@@ -354,9 +359,11 @@ typedef enum {
                             @"limit": [NSNumber numberWithInt:30]};
 
     NSString *url = [NSString stringWithFormat:@"picture/user/%ld", (long)_userId];
+    loading = YES;
     currentRequest = [[LatteAPIClient sharedClient] GET:url
                                 parameters: param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       loading = NO;
                                        pagePic += 1;
                                        
                                        NSArray *newPics = [Picture mutableArrayFromDictionary:JSON
@@ -394,6 +401,7 @@ typedef enum {
                                        [self.refreshControl endRefreshing];
                                        [_indicatorLoad stopAnimating];
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       loading = NO;
                                        endedPic = true;
                                        if (reset) {
                                            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -546,13 +554,15 @@ typedef enum {
     NSString* urlPhotos = [NSString stringWithFormat:@"picture/album/by_month/%@/%ld", [dateFormat stringFromDate:currentMonth], (long)_userId];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
-    if (currentRequest) {
+    if (loading) {
         [currentRequest cancel];
     }
 
+    loading = YES;
     currentRequest = [[LatteAPIClient sharedClient] GET:urlPhotos
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                       loading = NO;
                                        photoMode = kPhotoCalendar;
                                        currentMonthPicsFlat = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
                                        currentMonthPics = [[NSMutableDictionary alloc]init];
@@ -585,6 +595,7 @@ typedef enum {
                                        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                                        
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       loading = NO;
                                        DLog(@"Something went wrong (User - Calendar)");
                                        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                                    }];

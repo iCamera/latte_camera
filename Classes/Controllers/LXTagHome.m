@@ -37,6 +37,7 @@ typedef enum {
     NSInteger page;
     NSInteger limit;
     BOOL loadEnded;
+    BOOL loading;
     AFHTTPRequestOperation *currentRequest;
     UIActivityIndicatorView *indicatorLoading;
     TagGridData gridView;
@@ -100,19 +101,22 @@ typedef enum {
 - (void)loadMorePublicTagPhoto:(BOOL)reset {
     [indicatorLoading startAnimating];
     if (reset) {
-        if (currentRequest.isExecuting) [currentRequest cancel];
+        if (loading)
+            [currentRequest cancel];
         loadEnded = false;
         page = 1;
         limit = 30;
     } else {
-        if (currentRequest.isExecuting) return;
+        if (loading) return;
     }
+    
+    loading = YES;
     currentRequest = [[LatteAPIClient sharedClient] GET:@"picture/tag"
                                              parameters:@{@"tag": _tag,
                                                           @"limit": [NSNumber numberWithInteger:limit],
                                                           @"page": [NSNumber numberWithInteger:page]}
                                                 success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                    
+                                                    loading = NO;
                                                     NSMutableArray *data = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
                                                     [_buttonGridPhoto setTitle:[JSON[@"total"] stringValue] forState:UIControlStateNormal];
                                                     [_buttonGridPhoto setTitle:[JSON[@"total"] stringValue] forState:UIControlStateSelected];
@@ -130,6 +134,7 @@ typedef enum {
                                                     [self.collectionView reloadData];
                                                     [indicatorLoading stopAnimating];
                                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                    loading = NO;
                                                     [indicatorLoading stopAnimating];
                                                     //[self.refreshControl endRefreshing];
                                                 }];
@@ -138,19 +143,21 @@ typedef enum {
 - (void)loadMoreFollower:(BOOL)reset {
     [indicatorLoading startAnimating];
     if (reset) {
-        if (currentRequest.isExecuting) [currentRequest cancel];
+        if (loading) [currentRequest cancel];
         loadEnded = false;
         page = 1;
         limit = 30;
     } else {
-        if (currentRequest.isExecuting) return;
+        if (loading) return;
     }
+    
+    loading = YES;
     currentRequest = [[LatteAPIv2Client sharedClient] GET:@"tag/followers"
                                              parameters:@{@"tag": _tag,
                                                           @"limit": [NSNumber numberWithInteger:limit],
                                                           @"page": [NSNumber numberWithInteger:page]}
                                                 success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                    
+                                                    loading = NO;
                                                     if (reset) {
                                                         users = JSON[@"profiles"];
                                                         gridView = kGridUser;
@@ -163,6 +170,7 @@ typedef enum {
                                                     [self.collectionView reloadData];
                                                     [indicatorLoading stopAnimating];
                                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                    loading = NO;
                                                     [indicatorLoading stopAnimating];
                                                     //[self.refreshControl endRefreshing];
                                                 }];
@@ -335,7 +343,7 @@ typedef enum {
                                                                                forIndexPath:indexPath];
         indicatorLoading = footerView.indicatorLoading;
         
-        if ([currentRequest isExecuting]) {
+        if (loading) {
             [indicatorLoading startAnimating];
         }
         

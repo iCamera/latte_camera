@@ -23,6 +23,7 @@
     NSInteger page;
     NSInteger limit;
     BOOL loadEnded;
+    BOOL loading;
     AFHTTPRequestOperation *currentRequest;
     UIActivityIndicatorView *indicatorLoading;
 }
@@ -51,11 +52,11 @@
 - (void)loadMore:(BOOL)reset {
     if (reset) {
         page = 1;
-        if (currentRequest && currentRequest.isExecuting) {
+        if (loading) {
             [currentRequest cancel];
         }
     } else {
-        if (currentRequest && currentRequest.isExecuting) {
+        if (loading) {
             return;
         }
     }
@@ -69,11 +70,12 @@
 
 - (void)loadMoreUserLiked:(BOOL)reset {
     [indicatorLoading startAnimating];
+    loading = YES;
     currentRequest = [[LatteAPIClient sharedClient] GET:@"picture/user/me/voted"
                             parameters:@{@"limit": [NSNumber numberWithInteger:limit],
                                          @"page": [NSNumber numberWithInteger:page]}
                                success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                   
+                                   loading = NO;
                                    NSMutableArray *data = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
                                    
                                    if (reset) {
@@ -88,6 +90,7 @@
                                    [self.collectionView reloadData];
                                    [indicatorLoading stopAnimating];
                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                   loading = NO;
                                    //[self.refreshControl endRefreshing];
                                    [indicatorLoading stopAnimating];
                                }];
@@ -95,13 +98,14 @@
 
 - (void)loadMoreUserTag:(BOOL)reset {
     [indicatorLoading startAnimating];
+    loading = YES;
     currentRequest = [[LatteAPIv2Client sharedClient] GET:@"picture"
                                              parameters:@{@"user_id": [NSNumber numberWithInteger:_userId],
                                                           @"tag": _keyword,
                                                           @"limit": [NSNumber numberWithInteger:limit],
                                                           @"page": [NSNumber numberWithInteger:page]}
                                                 success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                    
+                                                    loading = NO;
                                                     NSMutableArray *data = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
                                                     
                                                     if (reset) {
@@ -116,6 +120,7 @@
                                                     [self.collectionView reloadData];
                                                     [indicatorLoading stopAnimating];
                                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                    loading = NO;
                                                     [indicatorLoading stopAnimating];
                                                     //[self.refreshControl endRefreshing];
                                                 }];

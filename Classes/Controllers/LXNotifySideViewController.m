@@ -37,6 +37,7 @@
     NSInteger limit;
     NSInteger currentTab;
     BOOL loadEnded;
+    BOOL loading;
     
     AFHTTPRequestOperation *currentRequest;
 }
@@ -141,10 +142,10 @@
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         
         page = 1;
-        if (currentRequest && currentRequest.isExecuting)
+        if (loading)
             [currentRequest cancel];
     } else {
-        if (currentRequest && currentRequest.isExecuting)
+        if (loading)
             return;
     }
     
@@ -154,9 +155,11 @@
                            [NSNumber numberWithInteger:currentTab], @"tab",
                            nil];
 
+    loading = YES;
     currentRequest = [[LatteAPIClient sharedClient] GET:@"user/me/notify"
                                       parameters: params
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                             loading = NO;
                                              page += 1;
                                              
                                              NSArray *newData = [JSON objectForKey:@"notifies"];
@@ -179,6 +182,7 @@
 
                                              [self.refreshControl endRefreshing];
                                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                             loading = NO;
                                              loadEnded = true;
                                              [self.tableView reloadData];
                                              if (reset) {
