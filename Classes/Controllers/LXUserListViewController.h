@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface LXUserListViewController : UITableViewController
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadIndicator;
 
 - (void)loadFollowerForUser:(NSInteger)userId;
 - (void)loadFollowingForUser:(NSInteger)userId;

@@ -12,13 +12,20 @@
 #import "LXUserPageViewController.h"
 #import "MZFormSheetController.h"
 #import "LXCellFriend.h"
+#import "AFNetworking.h"
 
 @interface LXUserListViewController ()
 
 @end
 
 @implementation LXUserListViewController {
-    NSArray *users;
+    NSMutableArray *users;
+    NSInteger mode;
+    NSInteger _userId;
+    NSInteger page;
+    BOOL loading;
+    BOOL endedLoad;
+    AFHTTPRequestOperation *currentRequest;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -36,44 +43,92 @@
     // Uncomment the following line to preserve selection between presentations.
     self.clearsSelectionOnViewWillAppear = NO;
     [self.tableView registerNib:[UINib nibWithNibName:@"LXCellFriend" bundle:nil] forCellReuseIdentifier:@"User"];
+    users = [[NSMutableArray alloc] init];
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)loadFollowerForUser:(NSInteger)userId {
-    NSString *url = [NSString stringWithFormat:@"user/%ld/follower", (long)userId];
-    [[LatteAPIv2Client sharedClient] GET:url
-                            parameters: nil
-                               success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                   users = [User mutableArrayFromDictionary:JSON
-                                                                    withKey:@"profiles"];
-                                   
-                                   [self.tableView reloadData];
-                                   
-                                   self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-                                   [self.refreshControl endRefreshing];
-                                   
-                               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                   DLog(@"Something went wrong (Follower)");
-                                   self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-                               }];
+    _userId = userId;
+    mode = 1;
+    [self loadMore:YES];
 }
 
 - (void)loadFollowingForUser:(NSInteger)userId {
-    NSString *url = [NSString stringWithFormat:@"user/%ld/following", (long)userId];
-    [[LatteAPIv2Client sharedClient] GET:url
-                            parameters: nil
-                               success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                   users = [User mutableArrayFromDictionary:JSON
-                                                                    withKey:@"profiles"];
-                                   
-                                   self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-                                   [self.tableView reloadData];
-                               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                   DLog(@"Something went wrong (Reload Following)");
-                                   self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-                               }];
+    mode = 2;
+    _userId = userId;
+    [self loadMore:YES];
+}
+
+- (void)loadMore:(BOOL)reset {
+    NSString *url;
+    if (mode == 1) {
+        url = [NSString stringWithFormat:@"user/%ld/follower", (long)_userId];
+    }
+
+    if (mode == 2) {
+        url = [NSString stringWithFormat:@"user/%ld/following", (long)_userId];
+    }
+    
+    if (reset) {
+        if (loading) [currentRequest cancel];
+        endedLoad = false;
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        page = 1;
+    } else {
+        if (loading) return;
+        [_loadIndicator startAnimating];
+    }
+    
+    loading = YES;
+    
+    NSDictionary *params = @{@"page": [NSNumber numberWithInteger:page]};
+    
+    currentRequest = [[LatteAPIv2Client sharedClient] GET:url
+                              parameters: params
+                                 success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                     page += 1;
+                                     NSMutableArray *newUser = [User mutableArrayFromDictionary:JSON
+                                                                      withKey:@"profiles"];
+                                     endedLoad = newUser.count == 0;
+                                     
+                                     if (reset) {
+                                         users = newUser;
+                                         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                     } else {
+                                         if (newUser.count > 0) {
+                                             
+                                             NSMutableArray *arrayOfIndexPaths = [[NSMutableArray alloc] init];
+                                             
+                                             for(int i = 0 ; i < newUser.count ; i++)
+                                             {
+                                                 NSIndexPath *path = [NSIndexPath indexPathForRow:users.count+i inSection:0];
+                                                 [arrayOfIndexPaths addObject:path];
+                                             }
+                                             
+                                             [self.tableView beginUpdates];
+                                             [users addObjectsFromArray:newUser];
+                                             
+                                             [self.tableView insertRowsAtIndexPaths:arrayOfIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+                                             [self.tableView endUpdates];
+                                         }
+                                     }
+                                     
+                                     [_loadIndicator stopAnimating];
+                                     [self.tableView reloadData];
+                                     [self.refreshControl endRefreshing];
+                                     loading = NO;
+
+                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                     if (reset) {
+                                         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                         [self.refreshControl endRefreshing];
+                                     } else {
+                                         [_loadIndicator stopAnimating];
+                                     }
+                                     loading = NO;
+                                 }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -124,6 +179,21 @@
     
     return cellUser;
 }
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGPoint offset = scrollView.contentOffset;
+    CGRect bounds = scrollView.bounds;
+    CGSize size = scrollView.contentSize;
+    UIEdgeInsets inset = scrollView.contentInset;
+    float y = offset.y + bounds.size.height - inset.bottom;
+    float h = size.height;
+    
+    float reload_distance = -100;
+    if(y > h + reload_distance) {
+        [self loadMore:NO];
+    }
+}
+
 
 
 /*
