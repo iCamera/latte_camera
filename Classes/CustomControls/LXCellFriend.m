@@ -45,6 +45,7 @@
     [imageUser setImageWithURL:[NSURL URLWithString:user.profilePicture] placeholderImage:[UIImage imageNamed:@"user.gif"]];
     labelIntro.text = user.introduction;
     labelName.text = user.name;
+    _imageMutual.hidden = !user.isFriend;
     [LXUtils setNationalityOfUser:user forImage:imageNationality nextToLabel:labelName];
 }
 

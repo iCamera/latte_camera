@@ -7,7 +7,7 @@
 //
 
 #import "LXUserListViewController.h"
-#import "LatteAPIClient.h"
+#import "LatteAPIv2Client.h"
 #import "LXAppDelegate.h"
 #import "LXUserPageViewController.h"
 #import "MZFormSheetController.h"
@@ -43,11 +43,11 @@
 
 - (void)loadFollowerForUser:(NSInteger)userId {
     NSString *url = [NSString stringWithFormat:@"user/%ld/follower", (long)userId];
-    [[LatteAPIClient sharedClient] GET:url
+    [[LatteAPIv2Client sharedClient] GET:url
                             parameters: nil
                                success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                    users = [User mutableArrayFromDictionary:JSON
-                                                                    withKey:@"followers"];
+                                                                    withKey:@"profiles"];
                                    
                                    [self.tableView reloadData];
                                    
@@ -62,11 +62,11 @@
 
 - (void)loadFollowingForUser:(NSInteger)userId {
     NSString *url = [NSString stringWithFormat:@"user/%ld/following", (long)userId];
-    [[LatteAPIClient sharedClient] GET:url
+    [[LatteAPIv2Client sharedClient] GET:url
                             parameters: nil
                                success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
                                    users = [User mutableArrayFromDictionary:JSON
-                                                                    withKey:@"following"];
+                                                                    withKey:@"profiles"];
                                    
                                    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
                                    [self.tableView reloadData];
