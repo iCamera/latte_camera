@@ -118,7 +118,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     if (!_isModal) {
-        return CGSizeMake(320, 100);
+        return CGSizeMake(320, 150);
     }
     return CGSizeZero;
 }
