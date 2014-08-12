@@ -12,7 +12,6 @@
 #import "LXUserPageViewController.h"
 
 @interface LXUserProfileViewController : UITableViewController
-@property (weak, nonatomic) IBOutlet UIImageView *imageBg;
 
 @property (weak, nonatomic) IBOutlet UAProgressView *imageProgress;
 @property (strong, nonatomic) IBOutlet UIImageView *imageProfile;

@@ -11,8 +11,6 @@
 #import "LXAppDelegate.h"
 #import "LatteAPIv2Client.h"
 #import "LXCellDataField.h"
-#import "UIImageView+LBBlurredImage.h"
-#import "UIImage+ImageEffects.h"
 #import "MZFormSheetSegue.h"
 
 @interface LXUserProfileViewController () {
@@ -39,11 +37,6 @@
     [super viewDidLoad];
     
     showSet = [NSMutableSet setWithObjects: @"name", @"introduction", @"gender", @"residence", @"age", @"birthdate", @"bloodtype", @"occupation", @"hobby", @"nationality", nil];
-
-    _imageProfile.layer.cornerRadius = 90;
-    _imageProfile.layer.masksToBounds = YES;
-    _imageProfile.layer.borderWidth = 2;
-    _imageProfile.layer.borderColor = [[UIColor whiteColor] CGColor];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -97,18 +90,6 @@
                                        } progress:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
                                            _imageProgress.progress = (float)totalBytesRead/(float)totalBytesExpectedToRead;
                                        }];
-                                       
-                                       NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:userDict[@"profile_picture"]]];
-                                       [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
-                                       __weak __typeof(UIImageView*)weakSelf = _imageBg;
-                                       [_imageBg setImageWithURLRequest:request
-                                                          placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                                              __strong __typeof(weakSelf)strongSelf = weakSelf;
-                                                              UIImage *darkBg = [image applyBlurWithRadius:5 tintColor:[UIColor colorWithWhite:0.11 alpha:0.1] saturationDeltaFactor:1.8 maskImage:nil];
-                                                              [strongSelf setImage:darkBg];
-                                                              //[strongSelf setImageToBlur:darkBg blurRadius:5.0 completionBlock:nil];
-                                                          } failure:nil];
-
                                    } else {
                                        self.tableView.tableHeaderView.frame = CGRectMake(0, 0, 320, 60);
                                        self.tableView.tableHeaderView = self.tableView.tableHeaderView;
