@@ -36,7 +36,7 @@
 {
     [super viewDidLoad];
     
-    showSet = [NSMutableSet setWithObjects: @"name", @"introduction", @"gender", @"residence", @"age", @"birthdate", @"bloodtype", @"occupation", @"hobby", @"nationality", nil];
+    showSet = [NSMutableSet setWithObjects: @"name", @"introduction", @"gender", @"current_residence", @"hometown", @"age", @"birthdate", @"bloodtype", @"occupation", @"hobby", @"nationality", nil];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -146,7 +146,7 @@
     NSString* strKey = [showField objectAtIndex:indexPath.row];
     if ([strKey isEqualToString:@"gender"]) {
         cell.labelField.text = NSLocalizedString(@"gender", @"性別");
-    } else if ([strKey isEqualToString:@"residence"]) {
+    } else if ([strKey isEqualToString:@"current_residence"]) {
         cell.labelField.text = NSLocalizedString(@"current_residence", @"現住所");
     } else if ([strKey isEqualToString:@"hometown"]) {
         cell.labelField.text = NSLocalizedString(@"hometown", @"出身地");
