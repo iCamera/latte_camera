@@ -496,33 +496,7 @@ typedef enum {
 }
 
 - (IBAction)touchMore:(id)sender {
-    LXAppDelegate* app = [LXAppDelegate currentDelegate];
-    if (!app.currentUser) {
-        UIStoryboard *storyAuth = [UIStoryboard storyboardWithName:@"Authentication" bundle:nil];
-        UIViewController *viewLogin = [storyAuth instantiateViewControllerWithIdentifier:@"Login"];
-        
-        [self.navigationController pushViewController:viewLogin animated:YES];
-    } else {
-        if (app.currentUser.userId.longValue == _userId) {
-            [self performSegueWithIdentifier:@"Profile" sender:self];
-        } else {
-            if ([userv2[@"is_blocking"] boolValue]) {
-                UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                                   delegate:self
-                                                          cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
-                                                     destructiveButtonTitle:NSLocalizedString(@"Unblock User", @"ブロックを解除")
-                                                          otherButtonTitles:NSLocalizedString(@"Profile", @""), NSLocalizedString(@"report", @""), nil];
-                [sheet showInView:self.view];
-            } else {
-                UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                                   delegate:self
-                                                          cancelButtonTitle:NSLocalizedString(@"cancel", @"キャンセル")
-                                                     destructiveButtonTitle:NSLocalizedString(@"Block User", @"ブロックする")
-                                                          otherButtonTitles:NSLocalizedString(@"Profile", @""), NSLocalizedString(@"report", @""), nil];
-                [sheet showInView:self.view];
-            }
-        }
-    }
+    [self performSegueWithIdentifier:@"Profile" sender:self];
 }
 
 - (void)showBlockUser {
