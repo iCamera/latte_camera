@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface LXMenuViewController : UITableViewController
-@property (strong, nonatomic) IBOutlet UITableViewCell *menuSearch;
 @property (strong, nonatomic) IBOutlet UITableViewCell *menuFollowingTags;
 @property (strong, nonatomic) IBOutlet UITableViewCell *menuLikedPhotos;
 @property (strong, nonatomic) IBOutlet UITableViewCell *menuLogOut;

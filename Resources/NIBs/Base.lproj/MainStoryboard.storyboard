@@ -1510,7 +1510,7 @@ or you can try to send another confirmation email.</string>
                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="kxT-QN-pg2">
+                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="kxT-QN-pg2">
                                     <rect key="frame" x="150" y="12" width="20" height="20"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </activityIndicatorView>
@@ -1526,6 +1526,9 @@ or you can try to send another confirmation email.</string>
                             <outlet property="delegate" destination="OZE-UL-Mh9" id="wQp-5E-Hcg"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="loadIndicator" destination="kxT-QN-pg2" id="dGJ-kQ-4rZ"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hT2-lE-wtM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2084,26 +2087,8 @@ or you can try to send another confirmation email.</string>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="2" indentationWidth="10" textLabel="foE-bc-NMM" style="IBUITableViewCellStyleDefault" id="U6D-GO-3s1">
-                                        <rect key="frame" x="0.0" y="219" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="U6D-GO-3s1" id="dJi-L0-lv7">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Search" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="foE-bc-NMM">
-                                                    <rect key="frame" x="35" y="0.0" width="270" height="43"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
-                                                    <color key="textColor" red="0.44113026494565222" green="0.44113026494565222" blue="0.44113026494565222" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="2" indentationWidth="10" textLabel="l56-pf-ao2" style="IBUITableViewCellStyleDefault" id="vVh-bG-fue" customClass="LXCellMenu">
-                                        <rect key="frame" x="0.0" y="263" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="219" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vVh-bG-fue" id="qnd-p7-ptR">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -2121,7 +2106,7 @@ or you can try to send another confirmation email.</string>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="2" indentationWidth="10" textLabel="HKT-Vj-lyU" style="IBUITableViewCellStyleDefault" id="Vkt-cR-Dhm" customClass="LXCellMenu">
-                                        <rect key="frame" x="0.0" y="307" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="263" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Vkt-cR-Dhm" id="myE-JQ-oeD">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -2139,7 +2124,7 @@ or you can try to send another confirmation email.</string>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="2" indentationWidth="10" textLabel="guS-7J-4X6" style="IBUITableViewCellStyleDefault" id="Wbt-YI-tOm" customClass="LXCellMenu">
-                                        <rect key="frame" x="0.0" y="351" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="307" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Wbt-YI-tOm" id="Sgt-y1-jxN">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -2157,7 +2142,7 @@ or you can try to send another confirmation email.</string>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="2" indentationWidth="10" textLabel="Wz1-jS-OP8" style="IBUITableViewCellStyleDefault" id="8BP-3j-f16" customClass="LXCellMenu">
-                                        <rect key="frame" x="0.0" y="395" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="351" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8BP-3j-f16" id="nK4-Jg-ggk">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -2175,7 +2160,7 @@ or you can try to send another confirmation email.</string>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="2" indentationWidth="10" textLabel="bMu-uQ-icC" style="IBUITableViewCellStyleDefault" id="SXW-eh-xwF" customClass="LXCellMenu">
-                                        <rect key="frame" x="0.0" y="439" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="395" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SXW-eh-xwF" id="cmR-w5-VTf">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -2193,7 +2178,7 @@ or you can try to send another confirmation email.</string>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="2" indentationWidth="10" textLabel="BNE-Js-T0Z" style="IBUITableViewCellStyleDefault" id="0IH-JV-52M" customClass="LXCellMenu">
-                                        <rect key="frame" x="0.0" y="483" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="439" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0IH-JV-52M" id="Yec-Xo-gBS">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -2226,7 +2211,6 @@ or you can try to send another confirmation email.</string>
                         <outlet property="menuLikedPhotos" destination="Vkt-cR-Dhm" id="xfl-Ac-erI"/>
                         <outlet property="menuLogOut" destination="0IH-JV-52M" id="OkK-x2-Pcj"/>
                         <outlet property="menuLogin" destination="eqx-Nl-yQI" id="QOB-Jf-ckw"/>
-                        <outlet property="menuSearch" destination="U6D-GO-3s1" id="yrd-w7-GsQ"/>
                         <outlet property="menuSettings" destination="Wbt-YI-tOm" id="ZKE-9t-d6d"/>
                         <outlet property="textUsername" destination="Wuz-sA-siW" id="y2Z-Oo-CEF"/>
                     </connections>

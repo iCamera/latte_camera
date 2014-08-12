@@ -36,7 +36,6 @@
 @synthesize menuFollowingTags;
 @synthesize menuLikedPhotos;
 @synthesize menuLogOut;
-@synthesize menuSearch;
 @synthesize menuLogin;
 @synthesize menuSettings;
 @synthesize menuFeedback;
@@ -138,8 +137,6 @@
         app.currentUser = nil;
         [self dismissViewControllerAnimated:YES completion:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"LoggedOut" object:self];
-    } else if ([tableView cellForRowAtIndexPath:indexPath] == menuSearch) {
-        app.viewMainTab.selectedIndex = 3;
     } else if ([tableView cellForRowAtIndexPath:indexPath] == menuLikedPhotos) {
         LXPhotoGridCVC *viewLikedGrid = [mainStoryboard instantiateViewControllerWithIdentifier:@"PhotoGrid"];
         viewLikedGrid.gridType = kPhotoGridUserLiked;
