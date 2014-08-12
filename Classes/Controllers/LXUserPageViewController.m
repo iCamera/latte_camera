@@ -275,7 +275,7 @@ typedef enum {
     currentRequest = [[LatteAPIClient sharedClient] GET: url
                             parameters: params
                                success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                   loading = NO;
+                                   
                                    NSMutableArray *newFeed = [Feed mutableArrayFromDictionary:JSON
                                                                                       withKey:@"feeds"];
                                    
@@ -305,13 +305,15 @@ typedef enum {
                                    }
                                    
                                    [_indicatorLoad stopAnimating];
-                               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                    loading = NO;
+                               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                   
                                    if (reset) {
                                        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                                        [self.refreshControl endRefreshing];
                                    }
                                    [_indicatorLoad stopAnimating];
+                                   loading = NO;
                                }];
 }
 
@@ -324,8 +326,7 @@ typedef enum {
     currentRequest = [[LatteAPIv2Client sharedClient] GET: @"picture"
                                                parameters: @{@"user_id": [NSNumber numberWithInteger:_userId]}
                                                 success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                    loading = NO;
-                                                    
+
                                                     tags = JSON[@"result"][@"facets"][@"tags"][@"terms"];
                                                     photoMode = kPhotoTag;
                                                     endedPic = YES;
@@ -333,6 +334,7 @@ typedef enum {
                                                     [self.tableView reloadData];
                                                     [self.refreshControl endRefreshing];
                                                     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                                    loading = NO;
                                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                     loading = NO;
                                                     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -363,7 +365,6 @@ typedef enum {
     currentRequest = [[LatteAPIClient sharedClient] GET:url
                                 parameters: param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       loading = NO;
                                        pagePic += 1;
                                        
                                        NSArray *newPics = [Picture mutableArrayFromDictionary:JSON
@@ -400,14 +401,15 @@ typedef enum {
                                        
                                        [self.refreshControl endRefreshing];
                                        [_indicatorLoad stopAnimating];
-                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        loading = NO;
+                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        endedPic = true;
                                        if (reset) {
                                            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                                        }
                                        [self.refreshControl endRefreshing];
                                        [_indicatorLoad stopAnimating];
+                                       loading = NO;
                                    }];
 }
 
@@ -552,7 +554,6 @@ typedef enum {
     currentRequest = [[LatteAPIClient sharedClient] GET:urlPhotos
                                 parameters: [NSDictionary dictionaryWithObjectsAndKeys:[app getToken], @"token", nil]
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       loading = NO;
                                        photoMode = kPhotoCalendar;
                                        currentMonthPicsFlat = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
                                        currentMonthPics = [[NSMutableDictionary alloc]init];
@@ -583,7 +584,7 @@ typedef enum {
                                        [self.tableView reloadData];
                                        
                                        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                                       
+                                       loading = NO;
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        loading = NO;
                                        DLog(@"Something went wrong (User - Calendar)");

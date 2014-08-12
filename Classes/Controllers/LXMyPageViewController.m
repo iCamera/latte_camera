@@ -161,7 +161,6 @@ typedef enum {
     
     loading = YES;
     currentRequest = [[LatteAPIClient sharedClient] GET: @"user/me/timeline" parameters: params success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-        loading = NO;
         
         NSMutableArray *newFeed = [Feed mutableArrayFromDictionary:JSON
                                                            withKey:@"feeds"];
@@ -191,14 +190,15 @@ typedef enum {
             }
             [_loadIndicator stopAnimating];
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         loading = NO;
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (reset) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             [self.refreshControl endRefreshing];
         } else {
             [_loadIndicator stopAnimating];
         }
+        loading = NO;
     }];
 }
 
@@ -215,7 +215,6 @@ typedef enum {
     
     loading = YES;
     currentRequest = [[LatteAPIv2Client sharedClient] GET: @"picture" parameters: @{@"follow_tag": @"True", @"page": [NSNumber numberWithInteger:pagePic]} success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-        loading = NO;
         pagePic += 1;
 
         NSMutableArray *newFeed = [Feed mutableArrayFromPictures:[Picture mutableArrayFromDictionary:JSON withKey:@"pictures"]];
@@ -247,16 +246,15 @@ typedef enum {
         [_loadIndicator stopAnimating];
         [self.tableView reloadData];
         [self.refreshControl endRefreshing];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         loading = NO;
-        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (reset) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             [self.refreshControl endRefreshing];
         } else {
             [_loadIndicator stopAnimating];
         }
-        
+        loading = NO;
     }];
 }
 

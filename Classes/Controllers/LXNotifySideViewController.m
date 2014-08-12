@@ -159,7 +159,6 @@
     currentRequest = [[LatteAPIClient sharedClient] GET:@"user/me/notify"
                                       parameters: params
                                          success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                             loading = NO;
                                              page += 1;
                                              
                                              NSArray *newData = [JSON objectForKey:@"notifies"];
@@ -181,14 +180,15 @@
                                              [self.tableView reloadData];
 
                                              [self.refreshControl endRefreshing];
-                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                              loading = NO;
+                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                              loadEnded = true;
                                              [self.tableView reloadData];
                                              if (reset) {
                                                  [MBProgressHUD hideHUDForView:self.view animated:YES];
                                              }
                                              [self.refreshControl endRefreshing];
+                                             loading = NO;
                                          }];
 }
 

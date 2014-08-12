@@ -153,8 +153,6 @@
     loading = YES;
     currentRequest = [[LatteAPIClient sharedClient] GET:@"user/everyone/timeline" parameters: param success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
         
-        loading = NO;
-        
         NSMutableArray *newFeeds = [Feed mutableArrayFromDictionary:JSON withKey:@"feeds"];
 
         loadEnded = newFeeds.count == 0;
@@ -176,6 +174,7 @@
         }
         
         [refresh endRefreshing];
+        loading = NO;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         loading = NO;
         [refresh endRefreshing];

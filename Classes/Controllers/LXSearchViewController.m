@@ -218,7 +218,6 @@
     currentRequest = [[LatteAPIv2Client sharedClient] GET:@"picture"
                                 parameters:param
                                    success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                       loading = NO;
                                        NSMutableArray *data = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
                                        if (page == 1) {
                                            pictures = data;
@@ -232,6 +231,7 @@
                                        
                                        [self.tableView reloadData];
                                        [activityLoad stopAnimating];
+                                       loading = NO;
                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        loading = NO;
                                        [activityLoad stopAnimating];
@@ -254,13 +254,14 @@
         currentRequest = [[LatteAPIv2Client sharedClient] GET:url
                                   parameters:param
                                      success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                         loading = NO;
+                                         
                                          users = [User mutableArrayFromDictionary:JSON withKey:@"profiles"];
                                          loadEnded = users.count >= [JSON[@"total"] integerValue];
                                          page += 1;
                                          searchView = kSearchUser;
                                          [self.tableView reloadData];
                                          [activityLoad stopAnimating];
+                                         loading = NO;
                                      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                          loading = NO;
                                          loadEnded = true;
@@ -278,7 +279,7 @@
         currentRequest = [[LatteAPIv2Client sharedClient] GET:url
                                   parameters:param
                                      success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                         loading = NO;
+                                         
                                          NSMutableArray *data = [User mutableArrayFromDictionary:JSON withKey:@"profiles"];
                                          if (page == 1) {
                                              users = data;
@@ -291,6 +292,7 @@
                                          searchView = kSearchUser;
                                          [self.tableView reloadData];
                                          [activityLoad stopAnimating];
+                                         loading = NO;
                                      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                          loading = NO;
                                          loadEnded = true;
@@ -309,11 +311,12 @@
         currentRequest = [[LatteAPIv2Client sharedClient] GET:@"picture/get_tag_cloud"
                                                    parameters:@{@"type": @"popular"}
                                                     success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                        loading = NO;
+                                                        
                                                         tags = [JSON objectForKey:@"tags"];
                                                         searchView = kSearchTag;
                                                         [self.tableView reloadData];
                                                         [activityLoad stopAnimating];
+                                                        loading = NO;
                                                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                         loading = NO;
                                                         [activityLoad stopAnimating];
@@ -321,7 +324,7 @@
     } else {
         loading = YES;
         currentRequest = [[LatteAPIv2Client sharedClient] GET:@"tag/search" parameters:@{@"keyword": _searchBar.text, @"app": @"true"} success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-            loading = NO;
+            
             tags = [[NSMutableArray alloc] init];
             for (NSDictionary *tag in JSON[@"tags"]) {
                 [tags addObject:@{@"term": tag[@"label"], @"count": tag[@"picture_count"]}];
@@ -331,6 +334,7 @@
             searchView = kSearchTag;
             [self.tableView reloadData];
             [activityLoad stopAnimating];
+            loading = NO;
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             loading = NO;
             [self.tableView reloadData];

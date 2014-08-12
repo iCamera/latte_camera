@@ -202,9 +202,9 @@
     
     loading = YES;
     currentRequest = [[LatteAPIClient sharedClient] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
-        loading = NO;
         [currentPage.picture setAttributesFromDictionary:JSON[@"picture"]];
         [self renderPicture];
+        loading = NO;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         loading = NO;
     }];

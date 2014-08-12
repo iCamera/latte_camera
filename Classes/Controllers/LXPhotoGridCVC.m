@@ -75,7 +75,6 @@
                             parameters:@{@"limit": [NSNumber numberWithInteger:limit],
                                          @"page": [NSNumber numberWithInteger:page]}
                                success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                   loading = NO;
                                    NSMutableArray *data = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
                                    
                                    if (reset) {
@@ -89,6 +88,7 @@
                                    //[self.refreshControl endRefreshing];
                                    [self.collectionView reloadData];
                                    [indicatorLoading stopAnimating];
+                                   loading = NO;
                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                    loading = NO;
                                    //[self.refreshControl endRefreshing];
@@ -105,7 +105,6 @@
                                                           @"limit": [NSNumber numberWithInteger:limit],
                                                           @"page": [NSNumber numberWithInteger:page]}
                                                 success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                    loading = NO;
                                                     NSMutableArray *data = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
                                                     
                                                     if (reset) {
@@ -119,6 +118,7 @@
                                                     //[self.refreshControl endRefreshing];
                                                     [self.collectionView reloadData];
                                                     [indicatorLoading stopAnimating];
+                                                    loading = NO;
                                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                     loading = NO;
                                                     [indicatorLoading stopAnimating];

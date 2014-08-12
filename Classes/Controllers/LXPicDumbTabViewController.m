@@ -172,11 +172,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     loading = YES;
     currentRequest = [[LatteAPIv2Client sharedClient] GET:@"tag/search" parameters:@{@"keyword": _searchBar.text, @"app": @"true"} success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-        loading = NO;
         [self.tableView setEditing:NO animated:YES];
         tableMode = kTagTableResult;
         results = JSON[@"tags"];
         [self.tableView reloadData];
+        loading = NO;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         loading = NO;
     }];

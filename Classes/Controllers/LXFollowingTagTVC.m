@@ -185,7 +185,7 @@ typedef enum {
     
     loading = YES;
     currentRequest = [[LatteAPIv2Client sharedClient] GET:@"tag/search" parameters:@{@"keyword": _searchBar.text, @"app": @"true"} success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-        loading = NO;
+        
         results = [[NSMutableArray alloc] init];
         for (NSDictionary *tag in JSON[@"tags"]) {
             [results addObject:@{@"term": tag[@"label"], @"count": tag[@"picture_count"]}];
@@ -194,9 +194,10 @@ typedef enum {
         tagData = kTagSearch;
         [self.tableView reloadData];
         [_activityLoad stopAnimating];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         loading = NO;
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [_activityLoad stopAnimating];
+        loading = NO;
     }];
 }
 

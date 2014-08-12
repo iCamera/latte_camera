@@ -116,7 +116,7 @@ typedef enum {
                                                           @"limit": [NSNumber numberWithInteger:limit],
                                                           @"page": [NSNumber numberWithInteger:page]}
                                                 success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                    loading = NO;
+                                                    
                                                     NSMutableArray *data = [Picture mutableArrayFromDictionary:JSON withKey:@"pictures"];
                                                     [_buttonGridPhoto setTitle:[JSON[@"total"] stringValue] forState:UIControlStateNormal];
                                                     [_buttonGridPhoto setTitle:[JSON[@"total"] stringValue] forState:UIControlStateSelected];
@@ -133,6 +133,7 @@ typedef enum {
                                                     //[self.refreshControl endRefreshing];
                                                     [self.collectionView reloadData];
                                                     [indicatorLoading stopAnimating];
+                                                    loading = NO;
                                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                     loading = NO;
                                                     [indicatorLoading stopAnimating];
@@ -157,7 +158,7 @@ typedef enum {
                                                           @"limit": [NSNumber numberWithInteger:limit],
                                                           @"page": [NSNumber numberWithInteger:page]}
                                                 success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                                                    loading = NO;
+                                                    
                                                     if (reset) {
                                                         users = JSON[@"profiles"];
                                                         gridView = kGridUser;
@@ -169,6 +170,7 @@ typedef enum {
                                                     loadEnded = users.count >= [JSON[@"total"] integerValue];
                                                     [self.collectionView reloadData];
                                                     [indicatorLoading stopAnimating];
+                                                    loading = NO;
                                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                     loading = NO;
                                                     [indicatorLoading stopAnimating];
