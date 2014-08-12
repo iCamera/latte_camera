@@ -373,7 +373,7 @@
                         <viewControllerLayoutGuide type="bottom" id="hbO-H8-5bX"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="OhT-9B-KMP">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="126"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="82"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -718,11 +718,11 @@
                         <viewControllerLayoutGuide type="bottom" id="01O-Pe-PaN"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="RlL-bJ-Dcz">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="QTp-mm-ahZ">
-                                <rect key="frame" x="0.0" y="60" width="320" height="260"/>
+                                <rect key="frame" x="0.0" y="40" width="320" height="260"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="0.90588241820000004" green="0.89411771299999998" blue="0.85490202900000001" alpha="1" colorSpace="deviceRGB"/>
                                 <constraints>
@@ -778,7 +778,7 @@
                                 </connections>
                             </collectionView>
                             <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N7M-mh-zVV">
-                                <rect key="frame" x="0.0" y="354" width="320" height="126"/>
+                                <rect key="frame" x="0.0" y="334" width="320" height="82"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <connections>
@@ -838,7 +838,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ejq-mR-tIk">
-                                <rect key="frame" x="20" y="324" width="280" height="26"/>
+                                <rect key="frame" x="20" y="304" width="280" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.90588241820000004" green="0.89411771299999998" blue="0.85490202900000001" alpha="1" colorSpace="deviceRGB"/>
                                 <constraints>
@@ -892,6 +892,7 @@
                             </button>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="buttonFollow" destination="B47-Oy-2yj" id="Wlc-SZ-gNM"/>
                         <outlet property="buttonGridFollower" destination="Cpl-qz-yLZ" id="5Yd-H0-DDq"/>
@@ -1017,6 +1018,7 @@
                             <outlet property="delegate" destination="oup-QU-2wo" id="Nsw-ke-hxl"/>
                         </connections>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="Search" id="2hN-W4-E2Z">
                         <barButtonItem key="leftBarButtonItem" image="icon40-menu-white.png" id="uZ2-rZ-Xzd">
                             <connections>
@@ -2219,6 +2221,23 @@ or you can try to send another confirmation email.</string>
             </objects>
             <point key="canvasLocation" x="-2557" y="677"/>
         </scene>
+        <!--Modal Navigation Controller-->
+        <scene sceneID="EWt-Lj-md2">
+            <objects>
+                <navigationController storyboardIdentifier="ModalFollowingTag" definesPresentationContext="YES" id="s91-eL-9cj" customClass="LXModalNavigationController" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="veb-gj-0vQ">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.20784313730000001" green="0.18823529410000001" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="3Rl-AM-Gib" kind="relationship" relationship="rootViewController" id="FIJ-cF-ePc"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hhc-9M-4qX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-6" y="223"/>
+        </scene>
         <!--Following TagTVC - Following Tags-->
         <scene sceneID="Q0y-eF-4Wb">
             <objects>
@@ -2276,7 +2295,6 @@ or you can try to send another confirmation email.</string>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Following Tags" id="CWE-hg-mls"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="activityLoad" destination="KAz-LT-gDt" id="d4t-UX-Gw5"/>
                         <outlet property="searchBar" destination="1PT-5c-PN7" id="lUv-OJ-fgi"/>
@@ -2284,7 +2302,7 @@ or you can try to send another confirmation email.</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H4D-xI-fOL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="230" y="0.0"/>
+            <point key="canvasLocation" x="348" y="230"/>
         </scene>
         <!--Report Abuse Message View Controller-->
         <scene sceneID="64E-jF-cKi">

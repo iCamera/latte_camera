@@ -204,10 +204,11 @@ typedef enum {
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     if (searchText.length > 0) {
         [self loadTagSearch];
-        self.navigationItem.rightBarButtonItem = nil;
+        self.navigationItem.leftBarButtonItem = nil;
         [self.tableView setEditing:NO animated:NO];
     } else {
-        self.navigationItem.rightBarButtonItem = self.editButtonItem;
+        [currentRequest cancel];
+        self.navigationItem.leftBarButtonItem = self.editButtonItem;
         tagData = kTagFollowing;
         [self.tableView reloadData];
     }
@@ -248,7 +249,7 @@ typedef enum {
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    if (tags.count == 0 && loadEnded)
+    if (tags.count == 0 && loadEnded && tagData == kTagFollowing)
         return 200;
     return 0;
 }

@@ -31,7 +31,7 @@
         // Custom initialization
         self.navigationBar.barTintColor = [UIColor blackColor];
         self.navigationBar.tintColor = [UIColor whiteColor];
-        self.navigationBar.barStyle = UIBarStyleBlack;
+        self.navigationBar.barStyle = UIBarStyleBlackOpaque;
     }
     return self;
 }

@@ -123,8 +123,7 @@
     UIStoryboard* storySetting = [UIStoryboard storyboardWithName:@"Setting" bundle:nil];
     
     if ([tableView cellForRowAtIndexPath:indexPath] == menuFollowingTags) {
-        UIViewController *viewFollowingTag = [mainStoryboard instantiateViewControllerWithIdentifier:@"FollowingTag"];
-        LXModalNavigationController *modalFollowingTag = [[LXModalNavigationController alloc] initWithRootViewController:viewFollowingTag];
+        UIViewController *modalFollowingTag = [mainStoryboard instantiateViewControllerWithIdentifier:@"ModalFollowingTag"];
         [app.viewMainTab presentViewController:modalFollowingTag animated:YES completion:nil];
     } else if ([tableView cellForRowAtIndexPath:indexPath] ==  menuSettings) {
         
