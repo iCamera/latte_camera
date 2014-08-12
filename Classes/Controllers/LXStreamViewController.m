@@ -26,6 +26,7 @@
 @implementation LXStreamViewController {
     NSMutableArray *feeds;
     BOOL loadEnded;
+    BOOL loading;
     UIRefreshControl *refresh;
     NSInteger currentTab;
     UICollectionViewLayout *layoutGrid;
@@ -139,17 +140,20 @@
     }
  
     if (reset) {
-        if (currentRequest.isExecuting) [currentRequest cancel];
+        if (loading) [currentRequest cancel];
         loadEnded = false;
     } else {
-        if (currentRequest.isExecuting) return;
+        if (loading) return;
         Feed *feed = feeds.lastObject;
         if (feed) {
             [param setObject:feed.feedID forKey:@"last_id"];
         }
     }
     
+    loading = YES;
     currentRequest = [[LatteAPIClient sharedClient] GET:@"user/everyone/timeline" parameters: param success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+        
+        loading = NO;
         
         NSMutableArray *newFeeds = [Feed mutableArrayFromDictionary:JSON withKey:@"feeds"];
 
@@ -173,6 +177,7 @@
         
         [refresh endRefreshing];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        loading = NO;
         [refresh endRefreshing];
         DLog(@"Something went wrong (Welcome)");
     }];
