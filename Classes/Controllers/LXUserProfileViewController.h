@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "User.h"
 #import "UAProgressView.h"
+#import "LXUserPageViewController.h"
 
 @interface LXUserProfileViewController : UITableViewController
+@property (weak, nonatomic) IBOutlet UIImageView *imageBg;
 
 @property (weak, nonatomic) IBOutlet UAProgressView *imageProgress;
 @property (strong, nonatomic) IBOutlet UIImageView *imageProfile;
@@ -20,5 +22,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelFollowingCount;
 @property (weak, nonatomic) IBOutlet UILabel *labelViewCount;
 @property (weak, nonatomic) IBOutlet UILabel *labelLikeCount;
+@property (weak, nonatomic) IBOutlet UIButton *buttonBlock;
+
+@property (weak, nonatomic) LXUserPageViewController *parent;
+
+- (IBAction)touchBlock:(id)sender;
+- (IBAction)touchReport:(id)sender;
 
 @end

@@ -525,6 +525,22 @@ typedef enum {
     }
 }
 
+- (void)showBlockUser {
+    if ([userv2[@"is_blocking"] boolValue]) {
+        NSString *url = [NSString stringWithFormat:@"user/%ld/unblock", (long)_userId];
+        [[LatteAPIv2Client sharedClient] POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+            [self reloadProfile];
+        } failure:nil];
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:NSLocalizedString(@"Are you sure you want to block this user?", @"")
+                                                       delegate:self
+                                              cancelButtonTitle:NSLocalizedString(@"cancel", @"")
+                                              otherButtonTitles:NSLocalizedString(@"Block User", @""), nil];
+        [alert show];
+    }
+}
+
 - (IBAction)touchBack:(id)sender {
     if (self.navigationController.viewControllers[0] == self) {
         [self.navigationController dismissViewControllerAnimated:YES completion:nil];
@@ -1116,19 +1132,7 @@ typedef enum {
     } else {
         switch (buttonIndex) {
             case 0: {
-                if ([userv2[@"is_blocking"] boolValue]) {
-                    NSString *url = [NSString stringWithFormat:@"user/%ld/unblock", (long)_userId];
-                    [[LatteAPIv2Client sharedClient] POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
-                        [self reloadProfile];
-                    } failure:nil];
-                } else {
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                                    message:NSLocalizedString(@"Are you sure you want to block this user?", @"")
-                                                                   delegate:self
-                                                          cancelButtonTitle:NSLocalizedString(@"cancel", @"")
-                                                          otherButtonTitles:NSLocalizedString(@"Block User", @""), nil];
-                    [alert show];
-                }
+                [self showBlockUser];
             }
                 break;
             case 1: {
@@ -1136,17 +1140,21 @@ typedef enum {
                 break;
             }
             case 2: {
-                UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-                LXReportAbuseUserViewController *viewReport = [mainStoryboard instantiateViewControllerWithIdentifier:@"ReportUser"];
-                
-                viewReport.user = _user;
-                
-                [self.navigationController pushViewController:viewReport animated:YES];
+                [self showReport];
             }
             default:
                 break;
         }
     }
+}
+
+- (void)showReport {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    LXReportAbuseUserViewController *viewReport = [mainStoryboard instantiateViewControllerWithIdentifier:@"ReportUser"];
+    
+    viewReport.user = _user;
+    
+    [self.navigationController pushViewController:viewReport animated:YES];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -1316,6 +1324,7 @@ typedef enum {
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"Profile"]) {
         LXUserProfileViewController *view = segue.destinationViewController;
+        view.parent = self;
         view.user = _user;
     }
     

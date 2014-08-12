@@ -38,6 +38,8 @@
 - (void)expandHeader;
 - (void)collapseHeader;
 - (void)reloadView;
+- (void)showBlockUser;
+- (void)showReport;
 
 - (IBAction)refresh:(id)sender;
 - (IBAction)switchView:(UIButton*)sender;
