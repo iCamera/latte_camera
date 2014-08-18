@@ -143,19 +143,33 @@
         cell.labelDetail.highlighted = NO;
     }
     
+    cell.imageStatus.hidden = YES;
+    
     NSString* strKey = [showField objectAtIndex:indexPath.row];
     if ([strKey isEqualToString:@"gender"]) {
         cell.labelField.text = NSLocalizedString(@"gender", @"性別");
+        cell.imageStatus.hidden = NO;
+        cell.imageStatus.image = [self imageFromStatus:[userDict[@"gender_public"] integerValue]];
     } else if ([strKey isEqualToString:@"current_residence"]) {
         cell.labelField.text = NSLocalizedString(@"current_residence", @"現住所");
+        cell.imageStatus.hidden = NO;
+        cell.imageStatus.image = [self imageFromStatus:[userDict[@"current_residence_public"] integerValue]];
     } else if ([strKey isEqualToString:@"hometown"]) {
         cell.labelField.text = NSLocalizedString(@"hometown", @"出身地");
+        cell.imageStatus.hidden = NO;
+        cell.imageStatus.image = [self imageFromStatus:[userDict[@"hometown_public"] integerValue]];
     } else if ([strKey isEqualToString:@"age"]) {
         cell.labelField.text = NSLocalizedString(@"age", @"年齢");
+        cell.imageStatus.hidden = NO;
+        cell.imageStatus.image = [self imageFromStatus:[userDict[@"birthyear_public"] integerValue]];
     } else if ([strKey isEqualToString:@"birthdate"]) {
         cell.labelField.text = NSLocalizedString(@"birthdate", @"誕生日");
+        cell.imageStatus.hidden = NO;
+        cell.imageStatus.image = [self imageFromStatus:[userDict[@"birthdate_public"] integerValue]];
     } else if ([strKey isEqualToString:@"bloodtype"]) {
         cell.labelField.text = NSLocalizedString(@"bloodtype", @"血液型");
+        cell.imageStatus.hidden = NO;
+        cell.imageStatus.image = [self imageFromStatus:[userDict[@"bloodtype_public"] integerValue]];
     } else if ([strKey isEqualToString:@"occupation"]) {
         cell.labelField.text = NSLocalizedString(@"occupation", @"職業");
     } else if ([strKey isEqualToString:@"hobby"]) {
@@ -164,8 +178,16 @@
         cell.labelField.text = NSLocalizedString(@"introduction", @"自己紹介");
     } else if ([strKey isEqualToString:@"nationality"]) {
         cell.labelField.text = NSLocalizedString(@"nationality", @"国籍");
+        cell.imageStatus.hidden = NO;
+        cell.imageStatus.image = [self imageFromStatus:[userDict[@"nationality_public"] integerValue]];
     } else if ([strKey isEqualToString:@"name"]) {
         cell.labelField.text = NSLocalizedString(@"username", @"ニックネーム");
+    }
+    
+    LXAppDelegate *app = [LXAppDelegate currentDelegate];
+    if (app.currentUser && ([_user.userId integerValue] == [app.currentUser.userId integerValue])) {
+    } else {
+        cell.imageStatus.hidden = YES;
     }
     
     if ([strKey isEqualToString:@"gender"]) {
@@ -194,6 +216,26 @@
 //    cell.labelDetail.frame = frame;
     
     return cell;
+}
+
+- (UIImage*)imageFromStatus:(NSInteger)status {
+    switch (status) {
+        case PictureStatusPublic:
+            return [UIImage imageNamed:@"icon28-status40-brown.png"];
+            break;
+        case PictureStatusMember:
+            return [UIImage imageNamed:@"icon28-status30-brown.png"];
+            break;
+        case PictureStatusFriendsOnly:
+            return [UIImage imageNamed:@"icon28-status10-brown.png"];
+            break;
+        case PictureStatusPrivate:
+            return [UIImage imageNamed:@"icon28-status0-brown.png"];
+            break;
+        default:
+            break;
+    }
+    return nil;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

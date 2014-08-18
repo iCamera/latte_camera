@@ -11,6 +11,6 @@
 @interface LXCellDataField : UITableViewCell
 @property (strong, nonatomic) IBOutlet UILabel *labelField;
 @property (strong, nonatomic) IBOutlet UILabel *labelDetail;
-@property (strong, nonatomic) IBOutlet UIImageView *imageDisclose;
+@property (strong, nonatomic) IBOutlet UIImageView *imageStatus;
 
 @end
