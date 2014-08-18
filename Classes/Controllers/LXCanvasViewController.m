@@ -13,7 +13,6 @@
 #import "LXImageFilter.h"
 #import "LXImageLens.h"
 #import "LXFilterDOF.h"
-#import "LXFilterDOF2.h"
 #import "UIImage+Resize.h"
 #import "LXImageCropViewController.h"
 
@@ -414,11 +413,11 @@
 }
 
 - (void)preparePipe {
-    [self preparePipe:nil];
+    [self preparePipe:nil orientation:UIImageOrientationUp];
 }
 
 
-- (void)preparePipe:(GPUImagePicture*)source {
+- (void)preparePipe:(GPUImagePicture*)source orientation:(UIImageOrientation)imageOrientation {
     pipe = [[GPUImageFilterPipeline alloc] init];
     pipe.filters = [[NSMutableArray alloc] init];
     
@@ -446,6 +445,36 @@
     }
     
     [pipe addFilter:filterMain];
+    
+    
+    if (source) {
+        [pipe.filters[0] setInputRotation:[self rotationFromImage:imageOrientation] atIndex:0];
+    }
+    else {
+        [pipe.filters[0] setInputRotation:[self rotationFromImage:imagePreview.imageOrientation] atIndex:0];
+    }
+}
+
+- (GPUImageRotationMode)rotationFromImage:(UIImageOrientation)orientation {
+    GPUImageRotationMode imageViewRotationModeIdx1 = kGPUImageNoRotation;
+    switch (orientation) {
+        case UIImageOrientationLeft:
+            imageViewRotationModeIdx1 = kGPUImageRotateLeft;
+            break;
+        case UIImageOrientationRight:
+            imageViewRotationModeIdx1 = kGPUImageRotateRight;
+            break;
+        case UIImageOrientationDown:
+            imageViewRotationModeIdx1 = kGPUImageRotate180;
+            break;
+        case UIImageOrientationUp:
+            imageViewRotationModeIdx1 = kGPUImageNoRotation;
+            break;
+        default:
+            imageViewRotationModeIdx1 = kGPUImageNoRotation;
+            break;
+    }
+    return imageViewRotationModeIdx1;
 }
 
 - (void)applyFilterSetting {
@@ -637,7 +666,7 @@
 }
 
 - (UIImage*)getFinalThumb {
-    [self preparePipe:previewFilter];
+    [self preparePipe:previewFilter orientation:imagePreview.imageOrientation];
     [pipe.filters.lastObject useNextFrameForImageCapture];
     [self processImage];
     UIImage* ret = [pipe currentFilteredFrame];
@@ -659,11 +688,9 @@
     [dictForTIFF setObject:appVersion forKey:(NSString *)kCGImagePropertyTIFFSoftware];
     [imageMeta setObject:dictForTIFF forKey:(NSString *)kCGImagePropertyTIFFDictionary];
     
-    // After cropping, image orientation is UP
-    if (_imageToProcess.imageOrientation == UIImageOrientationUp) {
-        [dictForTIFF removeObjectForKey:(NSString *)kCGImagePropertyTIFFOrientation];
-        [imageMeta removeObjectForKey:(NSString *)kCGImagePropertyOrientation];
-    }
+    // Make final image to UP
+    [dictForTIFF removeObjectForKey:(NSString *)kCGImagePropertyTIFFOrientation];
+    [imageMeta removeObjectForKey:(NSString *)kCGImagePropertyOrientation];
     
     NSData *jpeg;
     // skip processing if prevew pic same size with fullsize
@@ -671,7 +698,7 @@
         jpeg = UIImageJPEGRepresentation(imageFinalThumb, 1.0);
     } else {
         GPUImagePicture *imageToProcess = [[GPUImagePicture alloc] initWithImage:_imageToProcess];
-        [self preparePipe:imageToProcess];
+        [self preparePipe:imageToProcess orientation:_imageToProcess.imageOrientation];
         
         [pipe.filters.lastObject useNextFrameForImageCapture];
         [imageToProcess processImage];
