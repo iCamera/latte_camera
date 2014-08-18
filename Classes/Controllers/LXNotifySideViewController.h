@@ -16,6 +16,7 @@
 @property (strong, nonatomic) IBOutlet LXTabButton *buttonTabComment;
 @property (strong, nonatomic) IBOutlet LXTabButton *buttonTabFollow;
 @property (strong, nonatomic) IBOutlet LXTabButton *buttonTabAnnouncement;
+@property (weak, nonatomic) IBOutlet UILabel *labelOfficialCount;
 
 - (IBAction)showMenu;
 - (IBAction)switchTab:(UIButton *)sender;

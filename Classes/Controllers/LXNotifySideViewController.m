@@ -73,6 +73,20 @@
     limit = 30;
     
     [self loadNotify:YES setRead:YES];
+    
+    _labelOfficialCount.layer.cornerRadius = 7;
+    
+    [[LatteAPIClient sharedClient] GET:@"user/me/unread_announcement"
+                            parameters: nil
+                               success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+                                   NSInteger count = [[JSON objectForKey:@"announcement_count"] integerValue];
+                                   _labelOfficialCount.hidden = count == 0;
+                                   _labelOfficialCount.text = [[JSON objectForKey:@"announcement_count"] stringValue];
+                               }
+                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                   DLog(@"Something went wrong (Announcement count)");
+                               }];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -100,7 +114,6 @@
     } else {
         return notifies.count;
     }
-    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -315,6 +328,9 @@
     
     currentTab = sender.tag;
     [self loadNotify:YES setRead:YES];
+    if (sender.tag == 4) {
+        _labelOfficialCount.hidden = YES;
+    }
 }
 
 - (IBAction)refresh:(id)sender {
