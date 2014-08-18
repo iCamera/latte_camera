@@ -149,6 +149,7 @@
     
     labelDesc.text = pic.descriptionText;
     _viewDescBg.hidden = pic.descriptionText.length == 0;
+    _labelView.text = [pic.pageviews stringValue];
     
     // Tag
     if (pic.tagsOld.count > 0) {

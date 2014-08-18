@@ -32,6 +32,7 @@
 @property (strong, nonatomic) IBOutlet LXScrollTag *scrollTags;
 @property (strong, nonatomic) IBOutlet UIImageView *imageStatus;
 @property (weak, nonatomic) IBOutlet UAProgressView *progressLoad;
+@property (weak, nonatomic) IBOutlet UILabel *labelView;
 
 @property (weak, nonatomic) UIViewController<LXGalleryViewControllerDataSource> *viewController;
 @property (strong, nonatomic) Feed *feed;
