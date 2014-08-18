@@ -170,6 +170,7 @@
 
     [self joinRoom];
     [self renderPicture];
+    [self renderUser];
     [self increaseCounter];
     [self reloadPicture];
     
@@ -204,6 +205,7 @@
     currentRequest = [[LatteAPIClient sharedClient] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
         [currentPage.picture setAttributesFromDictionary:JSON[@"picture"]];
         [self renderPicture];
+        [self renderUser];
         loading = NO;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         loading = NO;
@@ -335,6 +337,7 @@
     if (completed) {
         [self joinRoom];
         [self renderPicture];
+        [self renderUser];
         [self increaseCounter];
         [self reloadPicture];
     }
@@ -387,27 +390,6 @@
                          [viewDesc flashScrollIndicators];
                      }];
     
-    
-    if (currentPage.user) {
-        labelNickname.text = currentPage.user.name;
-        [LXUtils setNationalityOfUser:currentPage.user forImage:imageNationality nextToLabel:labelNickname];
-        [buttonUser setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:currentPage.user.profilePicture]];
-        
-    } else if (newPicture.user) {
-        labelNickname.text = currentPage.picture.user.name;
-        [LXUtils setNationalityOfUser:newPicture.user forImage:imageNationality nextToLabel:labelNickname];
-        [buttonUser setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:newPicture.user.profilePicture]];
-    } else {
-        NSString *url = [NSString stringWithFormat:@"user/%ld", [newPicture.userId longValue]];
-        [[LatteAPIClient sharedClient] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
-            User *user = [User instanceFromDictionary:JSON[@"user"]];
-            currentPage.user = user;
-            labelNickname.text = user.name;
-            [LXUtils setNationalityOfUser:user forImage:imageNationality nextToLabel:labelNickname];
-            [buttonUser setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:user.profilePicture]];
-        } failure:nil];
-    }
-    
     [UIView transitionWithView:self.viewInfoTop duration:kGlobalAnimationSpeed options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
         labelView.text = [NSString stringWithFormat:NSLocalizedString(@"d_views", @""), [newPicture.pageviews integerValue]];
         
@@ -434,6 +416,32 @@
     [buttonComment setTitle:[newPicture.commentCount stringValue] forState:UIControlStateNormal];
     
     buttonEdit.hidden = !newPicture.isOwner;
+}
+
+- (void)renderUser {
+    LXZoomPictureViewController *currentPage = pageController.viewControllers[0];
+    Picture *newPicture = currentPage.picture;
+    
+    if (currentPage.user) {
+        labelNickname.text = currentPage.user.name;
+        [LXUtils setNationalityOfUser:currentPage.user forImage:imageNationality nextToLabel:labelNickname];
+        [buttonUser setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:currentPage.user.profilePicture]];
+        
+    } else if (newPicture.user) {
+        labelNickname.text = currentPage.picture.user.name;
+        [LXUtils setNationalityOfUser:newPicture.user forImage:imageNationality nextToLabel:labelNickname];
+        [buttonUser setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:newPicture.user.profilePicture]];
+    } else {
+        NSString *url = [NSString stringWithFormat:@"user/%ld", [newPicture.userId longValue]];
+        [[LatteAPIClient sharedClient] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+            User *user = [User instanceFromDictionary:JSON[@"user"]];
+            currentPage.user = user;
+            labelNickname.text = user.name;
+            [LXUtils setNationalityOfUser:user forImage:imageNationality nextToLabel:labelNickname];
+            [buttonUser setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:user.profilePicture]];
+        } failure:nil];
+    }
+
 }
 
 - (void)increaseCounter {
@@ -566,6 +574,7 @@
         NSString *url = [NSString stringWithFormat:@"picture/%ld/edit", [_picture.pictureId longValue]];
         pic.status = status;
         [self renderPicture];
+        [self renderUser];
         [[LatteAPIClient sharedClient] POST:url parameters: @{@"status": [NSNumber numberWithInteger:status]} success:nil failure:nil];
     } else if (actionSheet.tag == 10) {
         if (buttonIndex == 0) { // Remove Pic

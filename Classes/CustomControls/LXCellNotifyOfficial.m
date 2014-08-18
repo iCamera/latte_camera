@@ -49,6 +49,11 @@
     //        self.highlighted = ![read boolValue];
     //    }
     
+    if ([notify[@"read"] boolValue]) {
+        self.backgroundColor = [UIColor whiteColor];
+    } else {
+        self.backgroundColor = [UIColor colorWithRed:222.0/255.0 green:238.0/255.0 blue:236.0/255.0 alpha:1];
+    }
 }
 
 @end

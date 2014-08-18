@@ -214,7 +214,10 @@ typedef enum {
     }
     
     loading = YES;
-    currentRequest = [[LatteAPIv2Client sharedClient] GET: @"picture" parameters: @{@"follow_tag": @"True", @"page": [NSNumber numberWithInteger:pagePic]} success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
+    NSDictionary *params = @{@"follow_tag": @"True",
+                             @"page": [NSNumber numberWithInteger:pagePic],
+                             @"limit": @"20"};
+    currentRequest = [[LatteAPIv2Client sharedClient] GET: @"picture" parameters:params success:^(AFHTTPRequestOperation *operation, NSDictionary *JSON) {
         pagePic += 1;
 
         NSMutableArray *newFeed = [Feed mutableArrayFromPictures:[Picture mutableArrayFromDictionary:JSON withKey:@"pictures"]];
